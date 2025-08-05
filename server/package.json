@@ -4,11 +4,17 @@
   "description": "AeroSuite Server - Aerospace Supply Chain Management Platform",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "start": "node src/startup.js",
+    "dev": "nodemon src/startup.js",
     "test": "jest",
     "lint": "eslint .",
-    "format": "prettier --write \"**/*.js\""
+    "format": "prettier --write \"**/*.js\"",
+    "start:cluster": "node src/cluster.js",
+    "start:single": "node src/index.js",
+    "dev:debug": "DEBUG=* nodemon src/startup.js",
+    "test:health": "node -e \"require('http').get('http://localhost:5000/api/health', (r) => {r.on('data', d => console.log(d.toString())); r.on('end', () => process.exit(r.statusCode === 200 ? 0 : 1))})\"",
+    "debug": "node --inspect src/startup.js",
+    "check:env": "node -e \"console.log(require('dotenv').config())\""
   },
   "keywords": [
     "source-inspection",

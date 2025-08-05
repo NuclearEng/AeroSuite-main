@@ -31,7 +31,7 @@ module.exports = {
     },
   },
   env: {
-    apiUrl: 'http://localhost:5000',
+    apiUrl: 'http://localhost:5001',
   },
   retries: {
     runMode: 2,

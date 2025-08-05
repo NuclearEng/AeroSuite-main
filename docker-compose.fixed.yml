@@ -39,7 +39,7 @@ services:
   aerosuite-server:
     build:
       context: ./server
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.fixed
     environment:
       - NODE_ENV=production
       - PORT=5000
@@ -54,7 +54,7 @@ services:
       - WORKER_COUNT=1
       - LOG_LEVEL=info
     ports:
-      - "5001:5000"
+      - "5000:5000"
     restart: unless-stopped
     depends_on:
       mongo:

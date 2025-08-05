@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-08-05T22:31:33.178Z",
+  "system": {
+    "platform": "darwin",
+    "node": "v22.18.0",
+    "memory": {
+      "rss": 63897600,
+      "heapTotal": 25092096,
+      "heapUsed": 18226056,
+      "external": 20602784,
+      "arrayBuffers": 18265037
+    }
+  },
+  "checks": {
+    "mongodb": true,
+    "redis": false,
+    "nodeVersion": true,
+    "dependencies": true
+  }
+}
