@@ -64,7 +64,7 @@ class VersionedApiService {
         })
       );
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -88,7 +88,7 @@ class VersionedApiService {
         this.createRequestConfig(config)
       );
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -112,7 +112,7 @@ class VersionedApiService {
         this.createRequestConfig(config)
       );
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -133,7 +133,7 @@ class VersionedApiService {
         this.createRequestConfig(config)
       );
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -217,7 +217,7 @@ class VersionedApiService {
         }
       );
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }

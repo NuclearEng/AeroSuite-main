@@ -67,7 +67,7 @@ const featureFlagsService = {
       this.saveToCache(key, enabled);
       
       return enabled;
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error checking feature flag ${key}:`, error);
       return false;
     }
@@ -86,7 +86,7 @@ const featureFlagsService = {
       store.dispatch(setFlags(flags));
       
       return flags;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error fetching feature flags:', error);
       return {};
     }
@@ -110,7 +110,7 @@ const featureFlagsService = {
       this.clearCache(key);
       
       return updatedFlag;
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error updating feature flag ${key}:`, error);
       throw error;
     }
@@ -139,7 +139,7 @@ const featureFlagsService = {
       store.dispatch(toggleFlag(key));
       
       return updatedFlag;
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error toggling feature flag ${key}:`, error);
       throw error;
     }
@@ -161,7 +161,7 @@ const featureFlagsService = {
       this.clearCache(key);
       
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error deleting feature flag ${key}:`, error);
       return false;
     }
@@ -182,7 +182,7 @@ const featureFlagsService = {
       this.clearAllCache();
       
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error syncing feature flags:', error);
       return false;
     }

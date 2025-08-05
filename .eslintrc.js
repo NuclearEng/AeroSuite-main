@@ -1,44 +1,21 @@
 module.exports = {
   root: true,
-  env: {
-    browser: true,
-    node: true,
-    es6: true,
-    jest: true,
-  },
+  parser: '@typescript-eslint/parser',
+  plugins: [
+    '@typescript-eslint',
+  ],
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-  settings: {
-    react: {
-      version: 'detect',
-    },
+  env: {
+    browser: true,
+    es2021: true,
+    node: true,
   },
   rules: {
-    'react/prop-types': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
   },
-  overrides: [
-    {
-      files: ['**/*.ts', '**/*.tsx'],
-      parser: '@typescript-eslint/parser',
-      extends: [
-        'plugin:@typescript-eslint/recommended',
-      ],
-      rules: {
-        '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
-        '@typescript-eslint/explicit-module-boundary-types': 'off',
-      },
-    },
-  ],
-}; 
+};

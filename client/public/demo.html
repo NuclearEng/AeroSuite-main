@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:*;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
     <title>AeroSuite API Demo</title>
     <style>
         body {
@@ -54,7 +57,7 @@
     
     <div class="api-section">
         <h2>Server Status</h2>
-        <button onclick="checkHealth()">Check Health</button>
+        <button id="check-health-btn">Check Health</button>
         <pre id="health-result">Click button to check server health...</pre>
     </div>
 
@@ -62,25 +65,25 @@
         <h2>Authentication</h2>
         <input type="email" id="email" placeholder="Email" value="test@example.com">
         <input type="password" id="password" placeholder="Password" value="password">
-        <button onclick="login()">Login</button>
+        <button id="login-btn">Login</button>
         <pre id="auth-result">Enter credentials and click login...</pre>
     </div>
 
     <div class="api-section">
         <h2>Suppliers</h2>
-        <button onclick="getSuppliers()">Get Suppliers</button>
+        <button id="get-suppliers-btn">Get Suppliers</button>
         <pre id="suppliers-result">Click button to load suppliers...</pre>
     </div>
 
     <div class="api-section">
         <h2>Customers</h2>
-        <button onclick="getCustomers()">Get Customers</button>
+        <button id="get-customers-btn">Get Customers</button>
         <pre id="customers-result">Click button to load customers...</pre>
     </div>
 
     <div class="api-section">
         <h2>Inspections</h2>
-        <button onclick="getInspections()">Get Inspections</button>
+        <button id="get-inspections-btn">Get Inspections</button>
         <pre id="inspections-result">Click button to load inspections...</pre>
     </div>
 
@@ -162,10 +165,29 @@
             }
         }
 
-        // Check server health on load
-        window.onload = () => {
+        // Add event listeners when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sanitize output function to prevent XSS
+            function safeOutput(elementId, content, isSuccess = true) {
+                const element = document.getElementById(elementId);
+                element.textContent = content;
+                if (isSuccess) {
+                    element.innerHTML = `<span class="success">✓ ${element.textContent}</span>`;
+                } else {
+                    element.innerHTML = `<span class="error">✗ ${element.textContent}</span>`;
+                }
+            }
+            
+            // Add click event listeners
+            document.getElementById('check-health-btn').addEventListener('click', checkHealth);
+            document.getElementById('login-btn').addEventListener('click', login);
+            document.getElementById('get-suppliers-btn').addEventListener('click', getSuppliers);
+            document.getElementById('get-customers-btn').addEventListener('click', getCustomers);
+            document.getElementById('get-inspections-btn').addEventListener('click', getInspections);
+            
+            // Check server health on load
             checkHealth();
-        };
+        });
     </script>
 </body>
 </html> 

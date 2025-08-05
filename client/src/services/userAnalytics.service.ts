@@ -59,7 +59,7 @@ const trackEvent = async (eventData: EventData): Promise<void> => {
     if (process.env.NODE_ENV === 'development') {
       console.log('Tracked event:', event);
     }
-  } catch (_error) {
+  } catch (error) {
     console.error('Error tracking event:', error);
     
     // Store event locally for later retry
@@ -174,7 +174,7 @@ const getUserAnalytics = async (period: string = '7d'): Promise<any> => {
   try {
     const response = await api.get(`/monitoring/user-analytics?period=${period}`);
     return response.data;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error fetching user analytics:', error);
     throw error;
   }
@@ -190,7 +190,7 @@ const getEventAnalytics = async (eventCategory: EventCategory, period: string = 
   try {
     const response = await api.get(`/monitoring/event-analytics?category=${eventCategory}&period=${period}`);
     return response.data;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error fetching event analytics:', error);
     throw error;
   }
@@ -206,7 +206,7 @@ const getFunnelAnalytics = async (funnelId: string, period: string = '7d'): Prom
   try {
     const response = await api.get(`/monitoring/funnel-analytics/${funnelId}?period=${period}`);
     return response.data;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error fetching funnel analytics:', error);
     throw error;
   }
@@ -233,7 +233,7 @@ const storeEventForRetry = (eventData: EventData): void => {
     
     // Store back to local storage
     localStorage.setItem('aerosuite_pending_events', JSON.stringify(limitedEvents));
-  } catch (_error) {
+  } catch (error) {
     console.error('Error storing event for retry:', error);
   }
 };
@@ -267,10 +267,10 @@ export const retryPendingEvents = async (): Promise<void> => {
         // If sending fails, store the remaining events back
         const remainingEvents = events.slice(i);
         localStorage.setItem('aerosuite_pending_events', JSON.stringify(remainingEvents));
-        throw error;
+        throw _error;
       }
     }
-  } catch (_error) {
+  } catch (error) {
     console.error('Error retrying pending events:', error);
   }
 };

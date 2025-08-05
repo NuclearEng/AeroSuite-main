@@ -1,13 +1,24 @@
 FROM node:20-alpine
 
+# Create app directory with proper permissions
 WORKDIR /app
 
-COPY package*.json ./
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
 
+# Copy package files with correct ownership
+COPY --chown=nodejs:nodejs package*.json ./
+
+# Install dependencies as non-root user
+USER nodejs
 RUN npm install
 
-COPY . .
+# Copy application code
+COPY --chown=nodejs:nodejs . .
 
+# Expose port (documentation only)
 EXPOSE 3000
 
+# Run as non-root user
 CMD ["npm", "start"] 

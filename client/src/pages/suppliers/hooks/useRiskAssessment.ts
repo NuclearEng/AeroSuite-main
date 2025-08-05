@@ -87,7 +87,7 @@ const useRiskAssessment = () => {
         const response = await supplierService.getSuppliers();
         setSuppliers(response.data);
       } catch (_err) {
-        console.error('Error fetching suppliers:', err);
+        console.error('Error fetching suppliers:', _err);
         enqueueSnackbar('Failed to load suppliers', { variant: 'error' });
       } finally {
         setLoading(false);
@@ -104,7 +104,7 @@ const useRiskAssessment = () => {
         const response = await axios.get('/api/risk-assessments/factors/default');
         setRiskFactors(response.data.data);
       } catch (_err) {
-        console.error('Error fetching default risk factors:', err);
+        console.error('Error fetching default risk factors:', _err);
         // Set some basic default factors if the API call fails
         setRiskFactors([
           {
@@ -174,7 +174,7 @@ const useRiskAssessment = () => {
       setSavedAssessments(response.data.data);
       return response.data.data;
     } catch (_err) {
-      console.error('Error fetching supplier assessments:', err);
+              console.error('Error fetching supplier assessments:', _err);
       enqueueSnackbar('Failed to load risk assessments', { variant: 'error' });
       return [];
     } finally {
@@ -311,7 +311,7 @@ const useRiskAssessment = () => {
       
       return savedAssessment;
     } catch (_err) {
-      console.error('Error saving risk assessment:', err);
+              console.error('Error saving risk assessment:', _err);
       enqueueSnackbar('Failed to save risk assessment', { variant: 'error' });
       return null;
     } finally {
@@ -356,7 +356,7 @@ const useRiskAssessment = () => {
       
       enqueueSnackbar('Risk assessment deleted successfully', { variant: 'success' });
     } catch (_err) {
-      console.error('Error deleting risk assessment:', err);
+              console.error('Error deleting risk assessment:', _err);
       enqueueSnackbar('Failed to delete risk assessment', { variant: 'error' });
     } finally {
       setLoading(false);

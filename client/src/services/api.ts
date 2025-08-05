@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import clientCache from './cacheService';
 import { getAuthHeader } from '../utils/auth';
 import { store } from '../redux/store';
-import { setApiVersion, setApiVersionWarning } from '../redux/slices/appSlice';
+import { setApiVersion, setApiVersionWarning } from '../redux/slices/app.slice';
 
 // API configuration
 interface ApiConfig {
@@ -46,13 +46,18 @@ class ApiService {
   private versionCheckPromise: Promise<ApiVersionMetadata> | null = null;
   
   constructor(config?: Partial<ApiConfig>) {
+    // Validate and sanitize environment variables
+    const apiUrl = this.validateUrl(process.env.REACT_APP_API_URL || '/api');
+    const apiVersion = this.validateVersion(process.env.REACT_APP_API_VERSION || 'v1');
+    
     this.config = {
-      baseURL: process.env.REACT_APP_API_URL || '/api',
-      version: process.env.REACT_APP_API_VERSION || 'v1',
+      baseURL: apiUrl,
+      version: apiVersion,
       timeout: 30000, // 30 seconds
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'X-API-Version': apiVersion
       },
       useVendorMediaType: true,
       ...config,
@@ -63,12 +68,46 @@ class ApiService {
   }
   
   /**
+   * Validate and sanitize URL
+   * @param url - URL to validate
+   * @returns Validated URL
+   */
+  private validateUrl(url: string): string {
+    // Remove any potential script tags or malicious content
+    const sanitized = url.replace(/<script[^>]*>.*?<\/script>/gi, '');
+    
+    // Ensure URL starts with / or http(s)://
+    if (!sanitized.match(/^(https?:\/\/|\/)/)) {
+      return '/api';
+    }
+    
+    return sanitized;
+  }
+  
+  /**
+   * Validate API version format
+   * @param version - Version to validate
+   * @returns Validated version
+   */
+  private validateVersion(version: string): string {
+    // Only allow alphanumeric characters, dots, and hyphens
+    const sanitized = version.replace(/[^a-zA-Z0-9.-]/g, '');
+    
+    // Ensure version format is valid (e.g., v1, v2, v1.0)
+    if (!sanitized.match(/^v\d+(\.\d+)?$/)) {
+      return 'v1';
+    }
+    
+    return sanitized;
+  }
+  
+  /**
    * Create an axios request config with authentication and version headers
    * @param config - Additional axios config
    * @returns Axios request config
    */
   private createRequestConfig(config?: AxiosRequestConfig): AxiosRequestConfig {
-    const headers = {
+    const headers: Record<string, string> = {
       ...this.config.headers,
       ...getAuthHeader(),
       'X-API-Version': this.config.version,
@@ -110,7 +149,7 @@ class ApiService {
       
       this.checkResponseVersionHeaders(response);
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -136,7 +175,7 @@ class ApiService {
       
       this.checkResponseVersionHeaders(response);
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -162,7 +201,7 @@ class ApiService {
       
       this.checkResponseVersionHeaders(response);
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -185,7 +224,7 @@ class ApiService {
       
       this.checkResponseVersionHeaders(response);
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -211,7 +250,7 @@ class ApiService {
       
       this.checkResponseVersionHeaders(response);
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -255,11 +294,28 @@ class ApiService {
       }
     }
 
-    // Standard error handling
+    // Standard error handling with sanitized messages
+    const status = error.response?.status || 500;
+    let message = 'An error occurred. Please try again.';
+    
+    // Provide user-friendly error messages based on status
+    if (status === 401) {
+      message = 'Authentication required. Please log in.';
+    } else if (status === 403) {
+      message = 'You do not have permission to perform this action.';
+    } else if (status === 404) {
+      message = 'The requested resource was not found.';
+    } else if (status === 429) {
+      message = 'Too many requests. Please try again later.';
+    } else if (status >= 500) {
+      message = 'Server error. Please try again later.';
+    }
+    
     const errorResponse = {
-      status: error.response?.status || 500,
-      message: error.message || 'Unknown error',
-      data: error.response?.data || {},
+      status,
+      message,
+      // Only include error data in development mode
+      data: process.env.NODE_ENV === 'development' ? error.response?.data : {},
     };
 
     return Promise.reject(errorResponse);
@@ -333,7 +389,7 @@ class ApiService {
         }
         
         resolve(this.versionMetadata);
-      } catch (_error) {
+      } catch (error) {
         reject(error);
       } finally {
         this.versionCheckPromise = null;
@@ -361,7 +417,7 @@ class ApiService {
         }
       );
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -384,7 +440,7 @@ class ApiService {
         }
       );
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       return this.handleError(error as AxiosError);
     }
   }
@@ -417,12 +473,11 @@ class ApiService {
   }
 }
 
-// Create and export default instance
+// Create instance
 const apiService = new ApiService();
-export default apiService;
 
 // Export class for custom instances
-export { ApiService };
+export { ApiService, apiService };
 
 // Cache configuration
 const CACHE_ENABLED = process.env.REACT_APP_ENABLE_CLIENT_CACHE !== 'false';
@@ -491,8 +546,8 @@ const generateCacheKey = (url: string, config?: AxiosRequestConfig): string => {
 
 // Axios instance
 const apiClient = axios.create({
-  baseURL: API_URL,
-  timeout: API_TIMEOUT,
+  baseURL: process.env.REACT_APP_API_URL || '/api',
+  timeout: process.env.REACT_APP_API_TIMEOUT ? parseInt(process.env.REACT_APP_API_TIMEOUT) : 30000,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -572,19 +627,20 @@ const request = async <T>(
     
     // Make the actual request
     const response: AxiosResponse<ApiResponse<T>> = await apiClient(config);
-    const responseData = response.data.data;
+    const responseData = response.data.data || response.data;
     
     // Cache the response if caching is enabled
     if (canUseCache && key) {
       clientCache.set<T>(key, responseData, ttl);
     }
     
-    return responseData;
+    // Return response-like object to maintain compatibility with services
+    return response as any;
   } catch (_error) {
-    if (axios.isAxiosError(error)) {
-      throw apiErrorHandler(error);
+    if (axios.isAxiosError(_error)) {
+      throw apiErrorHandler(_error);
     }
-    throw error;
+    throw _error;
   }
 };
 
@@ -657,10 +713,10 @@ export default api;
  */
 export const fetchPerformanceMetrics = async () => {
   try {
-    const response = await api.get('/api/performance/metrics');
+    const response = await api.get<{ data: any }>('/api/performance/metrics');
     return response.data;
   } catch (_error) {
-    console.error('Error fetching performance metrics:', error);
-    throw error;
+    console.error('Error fetching performance metrics:', _error);
+    throw _error;
   }
 }; 

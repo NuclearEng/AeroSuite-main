@@ -257,7 +257,7 @@ const erpService = {
    */
   syncInventoryFromERP: async (options: SyncOptions = {}): Promise<SyncResult> => {
     const response = await api.post('/erp/sync/inventory/from-erp', options);
-    return response.data;
+    return response;
   },
   
   /**
@@ -268,7 +268,7 @@ const erpService = {
    */
   syncPurchaseOrdersFromERP: async (options: SyncOptions = {}): Promise<SyncResult> => {
     const response = await api.post('/erp/sync/purchase-orders/from-erp', options);
-    return response.data;
+    return response;
   }
 };
 

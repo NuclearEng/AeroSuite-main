@@ -64,7 +64,7 @@ class CalendarService {
       this.cachedEvents.set(cacheKey, events);
       
       return events;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error fetching calendar events:', error);
       return [];
     }
@@ -97,7 +97,7 @@ class CalendarService {
       this.cachedEvents.clear();
       
       return newEvent;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error creating calendar event:', error);
       return null;
     }
@@ -123,7 +123,7 @@ class CalendarService {
         type: updates.type || 'other',
         ...updates
       };
-    } catch (_error) {
+    } catch (error) {
       console.error('Error updating calendar event:', error);
       return null;
     }
@@ -141,7 +141,7 @@ class CalendarService {
       this.cachedEvents.clear();
       
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error deleting calendar event:', error);
       return false;
     }
@@ -181,7 +181,7 @@ class CalendarService {
       }
       
       return this.integrations;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error fetching calendar integrations:', error);
       return [];
     }
@@ -203,7 +203,7 @@ class CalendarService {
       }
       
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error connecting to ${type} calendar:`, error);
       return false;
     }
@@ -225,7 +225,7 @@ class CalendarService {
       }
       
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error disconnecting from ${type} calendar:`, error);
       return false;
     }
@@ -250,7 +250,7 @@ class CalendarService {
       });
       
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error syncing calendars:', error);
       return false;
     }

@@ -13,6 +13,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  SelectChangeEvent,
   FormHelperText,
   Alert,
   Snackbar,
@@ -61,8 +62,32 @@ interface FormErrors {
   [key: string]: string | undefined;
 }
 
+// Form values interface
+interface FormValues {
+  name: string;
+  code: string;
+  description: string;
+  industry: string;
+  status: 'active' | 'inactive' | 'pending';
+  website: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  qualifications: string[];
+  certifications: string[];
+  notes: string;
+  supplierTags: string[];
+}
+
 // Initial form values (will be replaced with actual supplier data)
-const initialFormValues = {
+const initialFormValues: FormValues = {
   name: '',
   code: '',
   description: '',
@@ -138,7 +163,7 @@ const EditSupplier: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   
   // Form state
-  const [formValues, setFormValues] = useState(initialFormValues);
+  const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -177,7 +202,7 @@ const EditSupplier: React.FC = () => {
   }, [id]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => {
     const { name, value } = e.target;
     
     if (!name) return;
@@ -289,10 +314,10 @@ const EditSupplier: React.FC = () => {
       setTimeout(() => {
         navigate(`/suppliers/${id}`);
       }, 1500);
-    } catch (error: any) {
+    } catch (_error: any) {
       setSnackbar({
         open: true,
-        message: error.message || 'Failed to update supplier',
+        message: _error.message || 'Failed to update supplier',
         severity: 'error'
       });
       setIsSubmitting(false);

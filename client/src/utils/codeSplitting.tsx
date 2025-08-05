@@ -336,9 +336,9 @@ export function useDynamicImport<T>(importFn: () => Promise<T>) {
       setModule(result);
       return result;
     } catch (_err) {
-      const error = _err instanceof Error ? err : new Error(String(err));
+      const error = _err instanceof Error ? _err : new Error(String(_err));
       setError(error);
-      throw _error;
+      throw _err;
     } finally {
       setLoading(false);
     }

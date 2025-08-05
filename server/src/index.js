@@ -19,7 +19,7 @@ const { errorHandler, NotFoundError } = require('./utils/errorHandler');
 
 // Import health check system
 const healthCheck = require('./utils/healthCheck');
-const { monitorDiskSpace, checkBackupStatus } = require('./monitoring/health-check');
+const { monitorDiskSpace, checkBackupStatus, checkServiceHealth } = require('./monitoring/health-check');
 
 // Import worker manager
 const workerManager = require('./utils/worker-manager');

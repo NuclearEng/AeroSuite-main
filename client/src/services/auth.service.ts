@@ -84,8 +84,9 @@ const AuthService = {
       return response as TwoFactorRequiredResponse;
     }
     
-    // Regular login - store token in localStorage
-    localStorage.setItem('token', (response as AuthResponse).token);
+    // Regular login - token should be stored in httpOnly cookie by backend
+    // Do not store sensitive tokens in localStorage (XSS vulnerability)
+    // localStorage.setItem('token', (response as AuthResponse).token);
     
     return response as AuthResponse;
   },
@@ -104,8 +105,9 @@ const AuthService = {
   verifyTwoFactorLogin: async (verificationData: { token: string; tempToken: string }): Promise<AuthResponse> => {
     const response = await api.post<AuthResponse>('/auth/2fa/verify-login', verificationData);
     
-    // Store token in localStorage
-    localStorage.setItem('token', response.token);
+    // Token should be stored in httpOnly cookie by backend
+    // Do not store sensitive tokens in localStorage (XSS vulnerability)
+    // localStorage.setItem('token', response.token);
     
     return response;
   },
@@ -134,8 +136,9 @@ const AuthService = {
   register: async (data: RegisterData): Promise<AuthResponse> => {
     const response = await api.post<AuthResponse>('/auth/register', data);
     
-    // Store token in localStorage
-    localStorage.setItem('token', response.token);
+    // Token should be stored in httpOnly cookie by backend
+    // Do not store sensitive tokens in localStorage (XSS vulnerability)
+    // localStorage.setItem('token', response.token);
     
     return response;
   },

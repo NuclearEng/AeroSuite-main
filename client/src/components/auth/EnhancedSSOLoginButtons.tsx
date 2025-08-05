@@ -94,7 +94,7 @@ const EnhancedSSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({
           setProviders([]);
         }
       } catch (_error) {
-        console.error('Failed to fetch SSO providers:', error);
+        console.error('Failed to fetch SSO providers:', _error);
         setProviders([]);
         setLoadError('Failed to load authentication providers');
         if (onError) {

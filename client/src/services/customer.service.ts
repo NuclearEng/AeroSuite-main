@@ -1,4 +1,5 @@
 import api from './api';
+import type { ApiResponse, ApiResponseData } from '../types/api';
 
 // Customer interfaces
 export interface CustomerAddress {
@@ -142,7 +143,7 @@ class CustomerService {
    * Get list of customers with pagination and filtering
    */
   async getCustomers(filters: CustomerFilters = {}): Promise<CustomerListResponse> {
-    const response = await api.get('/api/v1/customers', { params: filters });
+    const response = await api.get<ApiResponseData<CustomerListResponse>>('/api/v1/customers', { params: filters });
     return response.data;
   }
 
@@ -150,7 +151,7 @@ class CustomerService {
    * Get a customer by ID
    */
   async getCustomer(id: string): Promise<Customer> {
-    const response = await api.get(`/api/v1/customers/${id}`);
+    const response = await api.get<ApiResponseData<Customer>>(`/api/v1/customers/${id}`);
     return response.data;
   }
 
@@ -158,7 +159,7 @@ class CustomerService {
    * Create a new customer
    */
   async createCustomer(customerData: CreateCustomerData): Promise<Customer> {
-    const response = await api.post('/api/v1/customers', customerData);
+    const response = await api.post<ApiResponseData<Customer>>('/api/v1/customers', customerData);
     return response.data;
   }
 
@@ -166,7 +167,7 @@ class CustomerService {
    * Update an existing customer
    */
   async updateCustomer(id: string, customerData: UpdateCustomerData): Promise<Customer> {
-    const response = await api.put(`/api/v1/customers/${id}`, customerData);
+    const response = await api.put<ApiResponseData<Customer>>(`/api/v1/customers/${id}`, customerData);
     return response.data;
   }
 
@@ -174,7 +175,7 @@ class CustomerService {
    * Delete a customer
    */
   async deleteCustomer(id: string): Promise<{ success: boolean; message: string }> {
-    const response = await api.delete(`/api/v1/customers/${id}`);
+    const response = await api.delete<ApiResponseData<{ success: boolean; message: string }>>(`/api/v1/customers/${id}`);
     return response.data;
   }
 
@@ -188,7 +189,13 @@ class CustomerService {
     pending: number;
     byIndustry: { [industry: string]: number };
   }> {
-    const response = await api.get('/api/v1/customers/stats');
+    const response = await api.get<ApiResponseData<{
+      total: number;
+      active: number;
+      inactive: number;
+      pending: number;
+      byIndustry: { [industry: string]: number };
+    }>>('/api/v1/customers/stats');
     return response.data;
   }
 
@@ -196,7 +203,7 @@ class CustomerService {
    * Get orders for a specific customer
    */
   async getCustomerOrders(customerId: string, params: { page?: number; limit?: number } = {}): Promise<OrderListResponse> {
-    const response = await api.get(`/api/v1/customers/${customerId}/orders`, { params });
+    const response = await api.get<ApiResponseData<OrderListResponse>>(`/api/v1/customers/${customerId}/orders`, { params });
     return response.data;
   }
 
@@ -204,7 +211,7 @@ class CustomerService {
    * Get all orders
    */
   async getAllOrders(params: { page?: number; limit?: number; status?: string } = {}): Promise<OrderListResponse> {
-    const response = await api.get('/api/v1/orders', { params });
+    const response = await api.get<ApiResponseData<OrderListResponse>>('/api/v1/orders', { params });
     return response.data;
   }
 
@@ -212,7 +219,7 @@ class CustomerService {
    * Get order by ID
    */
   async getOrder(id: string): Promise<Order> {
-    const response = await api.get(`/api/v1/orders/${id}`);
+    const response = await api.get<ApiResponseData<Order>>(`/api/v1/orders/${id}`);
     return response.data;
   }
 
@@ -220,7 +227,7 @@ class CustomerService {
    * Create a new order
    */
   async createOrder(orderData: CreateOrderData): Promise<Order> {
-    const response = await api.post('/api/v1/orders', orderData);
+    const response = await api.post<ApiResponseData<Order>>('/api/v1/orders', orderData);
     return response.data;
   }
 
@@ -228,7 +235,7 @@ class CustomerService {
    * Update an existing order
    */
   async updateOrder(id: string, orderData: UpdateOrderData): Promise<Order> {
-    const response = await api.put(`/api/v1/orders/${id}`, orderData);
+    const response = await api.put<ApiResponseData<Order>>(`/api/v1/orders/${id}`, orderData);
     return response.data;
   }
 
@@ -236,9 +243,9 @@ class CustomerService {
    * Delete an order
    */
   async deleteOrder(id: string): Promise<{ success: boolean; message: string }> {
-    const response = await api.delete(`/api/v1/orders/${id}`);
+    const response = await api.delete<ApiResponseData<{ success: boolean; message: string }>>(`/api/v1/orders/${id}`);
     return response.data;
   }
 }
 
-export default new CustomerService(); 
+export default new CustomerService();

@@ -21,15 +21,7 @@ const SupplierQualityManagement: React.FC = () => {
       <PageHeader
         title="Supplier Quality Management System"
         subtitle="View and manage quality metrics, certifications, non-conformances and documentation"
-        backButton={
-          <Button 
-            variant="outlined" 
-            startIcon={<ArrowBackIcon />} 
-            onClick={handleBack}
-          >
-            Back to Supplier
-          </Button>
-        }
+        onBack={handleBack}
       />
       
       <QualityManagement />

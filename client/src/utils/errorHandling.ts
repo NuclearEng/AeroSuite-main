@@ -296,7 +296,7 @@ export const getErrorRecoveryActions = (
 export const logError = (error: AppError): void => {
   // Log to console in development
   if (process.env.NODE_ENV === 'development') {
-    console.error('Application Error:', _error);
+    console.error('Application Error:', error);
   }
   
   // In production, this would send to a monitoring service like Sentry
@@ -416,7 +416,7 @@ export const retryWithBackoff = async <T>(
       }
       
       // Parse the error to check if it's retryable
-      const appError = parseApiError(error);
+      const appError = parseApiError(_error);
       if (!isRetryableError(appError)) {
         throw _error;
       }

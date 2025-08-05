@@ -62,9 +62,9 @@ async function fetchWithCache<T>(
     }
     
     return data as T;
-  } catch (_error) {
-    console.error('API request failed:', error);
-    throw error;
+      } catch (error) {
+      console.error('API request failed:', error);
+      throw error;
   }
 }
 
@@ -177,8 +177,8 @@ async function getLargeDataset<T>(endpoint: string, params: Record<string, strin
     if (cachedData) {
       return cachedData as T;
     }
-  } catch (_error) {
-    console.error('Error accessing IndexedDB cache:', error);
+      } catch (error) {
+      console.error('Error accessing IndexedDB cache:', error);
   }
   
   // Fetch from API if not in cache
@@ -199,8 +199,8 @@ async function getLargeDataset<T>(endpoint: string, params: Record<string, strin
   // Store in IndexedDB cache
   try {
     await largeDataCache.set(cacheKey, data, TTL.MEDIUM);
-  } catch (_error) {
-    console.error('Error storing in IndexedDB cache:', error);
+      } catch (error) {
+      console.error('Error storing in IndexedDB cache:', error);
   }
   
   return data as T;
@@ -219,8 +219,8 @@ async function clearAllCaches(): Promise<void> {
   // Clear IndexedDB cache
   try {
     await largeDataCache.clear();
-  } catch (_error) {
-    console.error('Error clearing IndexedDB cache:', error);
+      } catch (error) {
+      console.error('Error clearing IndexedDB cache:', error);
   }
 }
 
@@ -237,8 +237,8 @@ async function evictExpired(): Promise<void> {
   // Clear expired entries from IndexedDB cache
   try {
     await largeDataCache.evictExpired();
-  } catch (_error) {
-    console.error('Error evicting expired entries from IndexedDB cache:', error);
+      } catch (error) {
+      console.error('Error evicting expired entries from IndexedDB cache:', error);
   }
 }
 

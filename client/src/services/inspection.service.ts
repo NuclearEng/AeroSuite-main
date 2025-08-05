@@ -65,7 +65,7 @@ class InspectionService {
    */
   async getInspections(filters: InspectionFilters = {}): Promise<InspectionListResponse> {
     const response = await api.get('/api/v1/inspections', { params: filters });
-    return response.data;
+    return response;
   }
 
   /**
@@ -73,7 +73,7 @@ class InspectionService {
    */
   async getInspection(id: string): Promise<Inspection> {
     const response = await api.get(`/api/v1/inspections/${id}`);
-    return response.data;
+    return response;
   }
 
   /**
@@ -81,7 +81,7 @@ class InspectionService {
    */
   async createInspection(inspectionData: Omit<Inspection, '_id' | 'createdAt' | 'updatedAt'>): Promise<Inspection> {
     const response = await api.post('/api/v1/inspections', inspectionData);
-    return response.data;
+    return response;
   }
 
   /**
@@ -89,7 +89,7 @@ class InspectionService {
    */
   async updateInspection(id: string, inspectionData: Partial<Inspection>): Promise<Inspection> {
     const response = await api.put(`/api/v1/inspections/${id}`, inspectionData);
-    return response.data;
+    return response;
   }
 
   /**
@@ -97,7 +97,7 @@ class InspectionService {
    */
   async deleteInspection(id: string): Promise<{ success: boolean; message: string }> {
     const response = await api.delete(`/api/v1/inspections/${id}`);
-    return response.data;
+    return response;
   }
 
   /**
@@ -110,7 +110,7 @@ class InspectionService {
     status: 'open' | 'in-progress' | 'resolved';
   }): Promise<Inspection> {
     const response = await api.post(`/api/v1/inspections/${inspectionId}/findings`, finding);
-    return response.data;
+    return response;
   }
 
   /**
@@ -127,7 +127,7 @@ class InspectionService {
     }>
   ): Promise<Inspection> {
     const response = await api.put(`/api/v1/inspections/${inspectionId}/findings/${findingIndex}`, finding);
-    return response.data;
+    return response;
   }
 
   /**
@@ -143,7 +143,7 @@ class InspectionService {
       }
     });
     
-    return response.data;
+    return response;
   }
 
   /**
@@ -151,7 +151,7 @@ class InspectionService {
    */
   async deleteAttachment(inspectionId: string, attachmentId: string): Promise<Inspection> {
     const response = await api.delete(`/api/v1/inspections/${inspectionId}/attachments/${attachmentId}`);
-    return response.data;
+    return response;
   }
 
   /**
@@ -167,7 +167,7 @@ class InspectionService {
     byPriority: { [priority: string]: number };
   }> {
     const response = await api.get('/api/v1/inspections/stats');
-    return response.data;
+    return response;
   }
 
 /**
@@ -209,9 +209,9 @@ class InspectionService {
     } else {
       // Otherwise make a normal API call and return the result
       const response = await api.get(url);
-      return response.data;
+      return response;
     }
-  } catch (_error) {
+  } catch (error) {
     console.error('Error generating report:', error);
     throw error;
   }
@@ -231,8 +231,8 @@ class InspectionService {
   ): Promise<Inspection> {
     try {
       const response = await api.post(`/api/v1/inspections/${inspectionId}/follow-up`, followUpData);
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error scheduling follow-up for inspection ${inspectionId}:`, error);
       throw error;
     }
@@ -249,8 +249,8 @@ class InspectionService {
   ): Promise<Inspection> {
     try {
       const response = await api.patch(`/api/v1/inspections/${id}/status`, { status, notes });
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error updating status for inspection ${id}:`, error);
       throw error;
     }

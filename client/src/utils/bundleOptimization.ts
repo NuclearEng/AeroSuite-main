@@ -241,7 +241,7 @@ export function createTreeShakingProxy<T extends object>(
             moduleInstance = module.default;
           }
         ).catch(error => {
-          console.error(`Failed to load module ${moduleName}:`, _error);
+          console.error(`Failed to load module ${moduleName}:`, error);
         });
       }
       

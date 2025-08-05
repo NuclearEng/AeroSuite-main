@@ -29,7 +29,7 @@ import {
 } from '@mui/icons-material';
 
 // API services
-import { setupTwoFactor, verifyTwoFactor } from '../../services/auth.service';
+import AuthService from '../../services/auth.service';
 
 const steps = ['Select Method', 'Setup', 'Verify', 'Backup Codes'];
 
@@ -67,7 +67,7 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
     setError(null);
     
     try {
-      const response = await setupTwoFactor(method);
+      const response = await AuthService.setupTwoFactor(method);
       
       if (method === 'app') {
         setQrCode(response.qrCode);
@@ -87,7 +87,7 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
     setError(null);
     
     try {
-      const response = await verifyTwoFactor(verificationCode);
+      const response = await AuthService.verifyTwoFactor(verificationCode);
       setBackupCodes(response.backupCodes);
       handleNext();
     } catch (err: any) {

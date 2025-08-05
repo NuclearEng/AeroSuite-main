@@ -172,7 +172,7 @@ try {
     initialState.activePreset = activePreset;
   }
 } catch (_error) {
-  console.error('Failed to load dashboard settings from localStorage', error);
+  console.error('Failed to load dashboard settings from localStorage', _error);
 }
 
 // Create the dashboard slice

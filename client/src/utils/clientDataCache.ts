@@ -76,10 +76,8 @@ class ClientDataCache {
     this.pendingSyncs = new Map();
     this.listeners = new Map();
     
-    // Initialize IndexedDB
-    this.idbCache.initDatabase().catch(err => {
-      console.warn('Failed to initialize IndexedDB cache, falling back to localStorage', err);
-    });
+    // IndexedDB is initialized in the constructor
+    // No need to call initDatabase explicitly
     
     // Set up a periodic cleanup task
     this.setupCleanupTask();
@@ -440,7 +438,7 @@ class ClientDataCache {
           };
         }
       } catch (_cacheError) {
-        console.warn(`Cache read failed for key: ${cacheKey}`, cacheError);
+        console.warn(`Cache read failed for key: ${cacheKey}`, _cacheError);
       }
       
       // If both network and cache fail, rethrow the original error
@@ -490,9 +488,9 @@ class ClientDataCache {
           return freshData;
         })
         .catch((error) => {
-          console.error(`Background sync failed for key: ${cacheKey}`, _error);
+          console.error(`Background sync failed for key: ${cacheKey}`, error);
           this.pendingSyncs.delete(cacheKey);
-          throw _error;
+          throw error;
         });
       
       this.pendingSyncs.set(cacheKey, syncPromise);

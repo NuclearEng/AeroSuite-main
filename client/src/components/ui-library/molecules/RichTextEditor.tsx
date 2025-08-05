@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 
 export interface RichTextEditorProps {
   value: string;
@@ -21,9 +22,18 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 }) => {
   const editorRef = useRef<HTMLDivElement>(null);
 
+  // Configure DOMPurify to allow only safe HTML
+  const purifyConfig = {
+    ALLOWED_TAGS: ['b', 'i', 'u', 'strong', 'em', 'p', 'br', 'ul', 'ol', 'li', 'a'],
+    ALLOWED_ATTR: ['href', 'target', 'rel'],
+    ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i,
+  };
+
   const handleInput = () => {
     if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
+      // Sanitize HTML before passing to onChange
+      const sanitizedHtml = DOMPurify.sanitize(editorRef.current.innerHTML, purifyConfig);
+      onChange(sanitizedHtml);
     }
   };
 
@@ -69,7 +79,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         }}
         onInput={handleInput}
         data-placeholder={placeholder}
-        dangerouslySetInnerHTML={{ __html: value || '' }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value || '', purifyConfig) }}
       />
     </div>
   );

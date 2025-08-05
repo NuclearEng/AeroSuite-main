@@ -34,10 +34,36 @@ import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { updateUserPreferences } from '../../services/userService';
 import { useThemeContext } from '../../theme/ThemeProvider';
 
+interface UserSettings {
+  theme: 'light' | 'dark' | 'system';
+  language: string;
+  notifications: {
+    email: boolean;
+    browser: boolean;
+    mobile: boolean;
+  };
+  emailNotifications: {
+    newInspections: boolean;
+    inspectionUpdates: boolean;
+    newFindings: boolean;
+    weeklyDigest: boolean;
+  };
+  privacy: {
+    shareUsageData: boolean;
+    allowCookies: boolean;
+  };
+  display: {
+    compactView: boolean;
+    showAnimations: boolean;
+    highContrastMode: boolean;
+    dashboardLayout: string;
+  };
+}
+
 const UserSettings: React.FC = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-  const { mode, toggleColorMode } = useThemeContext();
+  const { mode, setMode } = useThemeContext();
   
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
@@ -45,7 +71,7 @@ const UserSettings: React.FC = () => {
   const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState(false);
   
   // Settings state
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<UserSettings>({
     theme: mode,
     language: 'en',
     notifications: {
@@ -74,17 +100,18 @@ const UserSettings: React.FC = () => {
   // Load user preferences when component mounts
   useEffect(() => {
     if (user?.preferences) {
+      const userPrefs = user.preferences;
       setSettings(prevSettings => ({
         ...prevSettings,
-        theme: user.preferences.theme || prevSettings.theme,
-        language: user.preferences.language || prevSettings.language,
+        theme: (userPrefs.theme as 'light' | 'dark' | 'system') || prevSettings.theme,
+        language: userPrefs.language || prevSettings.language,
         notifications: {
           ...prevSettings.notifications,
-          email: user.preferences.notifications !== undefined ? user.preferences.notifications : prevSettings.notifications.email
+          email: userPrefs.notifications ?? prevSettings.notifications.email
         },
         display: {
           ...prevSettings.display,
-          dashboardLayout: user.preferences.dashboardLayout || prevSettings.display.dashboardLayout
+          dashboardLayout: userPrefs.dashboardLayout || prevSettings.display.dashboardLayout
         }
       }));
     }
@@ -92,7 +119,7 @@ const UserSettings: React.FC = () => {
   
   // Handle theme change
   const handleThemeChange = (event: SelectChangeEvent) => {
-    const newTheme = event.target.value;
+    const newTheme = event.target.value as 'light' | 'dark' | 'system';
     setSettings({
       ...settings,
       theme: newTheme
@@ -100,7 +127,7 @@ const UserSettings: React.FC = () => {
     
     // Update theme in the app
     if (newTheme === 'light' || newTheme === 'dark') {
-      toggleColorMode(newTheme);
+      setMode(newTheme as 'light' | 'dark');
     }
   };
   
@@ -113,13 +140,16 @@ const UserSettings: React.FC = () => {
   };
   
   // Handle switch changes
-  const handleSwitchChange = (section: string, setting: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSettings({
-      ...settings,
-      [section]: {
-        ...settings[section as keyof typeof settings] as Record<string, boolean>,
-        [setting]: event.target.checked
-      }
+  const handleSwitchChange = (section: keyof UserSettings, setting: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSettings(prev => {
+      const sectionData = prev[section] as Record<string, unknown>;
+      return {
+        ...prev,
+        [section]: {
+          ...sectionData,
+          [setting]: event.target.checked
+        }
+      };
     });
   };
   

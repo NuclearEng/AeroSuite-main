@@ -18,11 +18,14 @@ RUN npm install --legacy-peer-deps
 # ---- Build Stage ----
 FROM base AS build
 # Copy deps from previous stage
-COPY --from=deps /app/node_modules ./node_modules
-COPY package*.json ./
+COPY --from=deps --chown=node:node /app/node_modules ./node_modules
+COPY --chown=node:node package*.json ./
 
 # Copy source code (filtered by .dockerignore)
-COPY . .
+COPY --chown=node:node . .
+
+# Ensure /app directory is owned by node user
+RUN chown -R node:node /app
 
 # Build as non-root user
 USER node

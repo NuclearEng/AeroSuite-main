@@ -354,7 +354,7 @@ function _savePendingErrors(): void {
     localStorage.setItem(ERROR_STORAGE_KEY, JSON.stringify(errorsToStore));
   } catch (_err) {
     // Storage might be full or disabled
-    console.error('Failed to save errors to local storage:', err);
+    console.error('Failed to save errors to local storage:', _err);
   }
 }
 
@@ -368,7 +368,7 @@ function _loadPendingErrors(): void {
       pendingErrors = JSON.parse(storedErrors);
     }
   } catch (_err) {
-    console.error('Failed to load errors from local storage:', err);
+    console.error('Failed to load errors from local storage:', _err);
   }
 }
 

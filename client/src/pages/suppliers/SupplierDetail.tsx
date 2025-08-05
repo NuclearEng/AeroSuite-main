@@ -66,6 +66,7 @@ import {
   StatusBadge, 
   ConfirmationDialog 
 } from '../../components/common';
+import { StatusType } from '../../components/common/StatusBadge';
 import supplierService, { Supplier } from '../../services/supplier.service';
 import { format } from 'date-fns';
 import { SupplierAnalytics } from './components/SupplierAnalytics';
@@ -381,8 +382,7 @@ const SupplierDetail: React.FC = () => {
       {/* Status Chip */}
       <Box sx={{ mb: 3 }}>
         <StatusBadge 
-          status={supplier?.status || 'inactive'}
-          variant="outlined"
+          status={(supplier?.status || 'inactive') as StatusType}
           size="medium"
         />
       </Box>
@@ -613,7 +613,7 @@ const SupplierDetail: React.FC = () => {
                             cert.expiryDate ? ` • Expires: ${format(new Date(cert.expiryDate), 'MMM dd, yyyy')}` : ''
                           }`}
                         />
-                        <StatusBadge status={cert.status} />
+                        <StatusBadge status={cert.status as StatusType} />
                       </ListItem>
                     ))}
                   </List>
@@ -811,7 +811,7 @@ const SupplierDetail: React.FC = () => {
 
       {tabValue === 4 && (
         <Box mt={3}>
-          <SupplierMetricsCard supplierId={id} />
+          <SupplierMetricsCard supplierId={id || ''} />
         </Box>
       )}
     </Box>

@@ -21,7 +21,7 @@ const dashboardPreferencesService = {
       const response = await axios.get('/api/users/preferences/dashboard');
       console.log('Loaded dashboard preferences from server:', response.data.data);
       return response.data.data;
-    } catch (_error) {
+    } catch (error) {
       console.error('Failed to load dashboard preferences from server', error);
       return null;
     }
@@ -38,7 +38,7 @@ const dashboardPreferencesService = {
       const response = await axios.post('/api/users/preferences/dashboard', preferences);
       console.log('Saved dashboard preferences to server:', response.data);
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error('Failed to save dashboard preferences to server', error);
       return false;
     }
@@ -54,7 +54,7 @@ const dashboardPreferencesService = {
       const response = await axios.delete('/api/users/preferences/dashboard');
       console.log('Reset dashboard preferences on server:', response.data);
       return true;
-    } catch (_error) {
+    } catch (error) {
       console.error('Failed to reset dashboard preferences on server', error);
       return false;
     }

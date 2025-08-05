@@ -10,10 +10,16 @@ const USER_KEY = 'user';
  * @returns Authentication header object
  */
 export const getAuthHeader = () => {
-  // In a secure implementation, the backend should set httpOnly cookies for tokens.
-  // The client should not access tokens directly, but for API calls, the browser will send cookies automatically.
-  // If you must read the token (e.g., for client-side rendering), use a secure cookie parser (not recommended for SPA).
-  return {};
+  // For httpOnly cookie-based auth, return empty object as cookies are sent automatically
+  // If using Bearer token auth (less secure), it would look like:
+  // const token = sessionStorage.getItem('auth_token');
+  // return token ? { Authorization: `Bearer ${token}` } : {};
+  
+  // Current implementation relies on httpOnly cookies sent automatically by browser
+  return {
+    'X-Requested-With': 'XMLHttpRequest', // CSRF protection header
+    'X-Client-Version': process.env.REACT_APP_VERSION || '1.0.0'
+  };
 };
 
 /**

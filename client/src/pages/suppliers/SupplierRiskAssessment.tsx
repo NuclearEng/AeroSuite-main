@@ -22,8 +22,8 @@ import {
   Tabs,
   List,
   ListItem,
-  DatePicker
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import { Link } from 'react-router-dom';
 import {
   Save as SaveIcon,
@@ -137,7 +137,7 @@ const SupplierRiskAssessment: React.FC = () => {
                   <DatePicker
                     label="Next Review Date"
                     value={nextReviewDate}
-                    onChange={(date) => setNextReviewDate(date)}
+                    onChange={(date: Date | null) => setNextReviewDate(date)}
                     slotProps={{
                       textField: {
                         fullWidth: true,

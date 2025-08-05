@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { encryptionPlugin } = require('../utils/encryption');
+const createEncryptionPlugin = require('../utils/mongoose-encryption-plugin');
 
 const customerSchema = new mongoose.Schema(
   {
@@ -86,7 +86,7 @@ const customerSchema = new mongoose.Schema(
 );
 
 // Apply encryption plugin for sensitive fields
-customerSchema.plugin(encryptionPlugin([
+customerSchema.plugin(createEncryptionPlugin([
   'primaryContactName',
   'primaryContactEmail',
   'primaryContactPhone',

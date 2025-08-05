@@ -59,8 +59,8 @@ class BackupVerificationService {
    * @param days Number of days to look back
    */
   async getVerificationStatus(days = 30): Promise<BackupVerificationStats> {
-    const response = await api.get(`/api/v2/backups/verification/status?days=${days}`);
-    return response.data.data;
+    const response = await api.get<{ data: BackupVerificationStats }>(`/api/v2/backups/verification/status?days=${days}`);
+    return response.data;
   }
 
   /**
@@ -68,8 +68,8 @@ class BackupVerificationService {
    * @param limit Number of logs to retrieve
    */
   async getVerificationLogs(limit = 10): Promise<BackupLog[]> {
-    const response = await api.get(`/api/v2/backups/verification/logs?limit=${limit}`);
-    return response.data.data;
+    const response = await api.get<{ data: BackupLog[] }>(`/api/v2/backups/verification/logs?limit=${limit}`);
+    return response.data;
   }
 
   /**
@@ -77,16 +77,16 @@ class BackupVerificationService {
    * @param limit Number of failures to retrieve
    */
   async getVerificationFailures(limit = 10): Promise<BackupLog[]> {
-    const response = await api.get(`/api/v2/backups/verification/failures?limit=${limit}`);
-    return response.data.data;
+    const response = await api.get<{ data: BackupLog[] }>(`/api/v2/backups/verification/failures?limit=${limit}`);
+    return response.data;
   }
 
   /**
    * Trigger a verification of the most recent backup
    */
   async triggerVerification(): Promise<{ startTime: Date }> {
-    const response = await api.post('/api/v2/backups/verification/verify');
-    return response.data.data;
+    const response = await api.post<{ data: { startTime: Date } }>('/api/v2/backups/verification/verify');
+    return response.data;
   }
 
   /**
@@ -110,8 +110,8 @@ class BackupVerificationService {
       url += `?${params.join('&')}`;
     }
     
-    const response = await api.get(url);
-    return response.data.data;
+    const response = await api.get<{ data: VerificationResults }>(url);
+    return response.data;
   }
 
   /**
@@ -119,8 +119,8 @@ class BackupVerificationService {
    * @param id Backup log ID
    */
   async getVerificationDetails(id: string): Promise<BackupLog> {
-    const response = await api.get(`/api/v2/backups/verification/${id}`);
-    return response.data.data;
+    const response = await api.get<{ data: BackupLog }>(`/api/v2/backups/verification/${id}`);
+    return response.data;
   }
 }
 

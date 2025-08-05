@@ -77,7 +77,7 @@ class WebSocketService {
       this.socket.onmessage = this.handleMessage.bind(this);
       this.socket.onclose = this.handleClose.bind(this);
       this.socket.onerror = this.handleError.bind(this);
-    } catch (_error) {
+    } catch (error) {
       console.error('Failed to create WebSocket connection:', error);
       this.setStatus(WebSocketStatus.CLOSED);
       this.attemptReconnect();
@@ -162,7 +162,7 @@ class WebSocketService {
 
     try {
       this.socket.send(JSON.stringify({ type, data }));
-    } catch (_error) {
+    } catch (error) {
       console.error('Failed to send message:', error);
       this.pendingMessages.push({ type, data });
     }
@@ -221,7 +221,7 @@ class WebSocketService {
       this.messageHandlers
         .filter((handler) => handler.type === type)
         .forEach((handler) => handler.handler(data));
-    } catch (_error) {
+    } catch (error) {
       console.error('Failed to handle WebSocket message:', error);
     }
   }
@@ -264,8 +264,8 @@ class WebSocketService {
     if (this.socket && this.status === WebSocketStatus.OPEN) {
       try {
         this.socket.send(JSON.stringify({ type: 'ping' }));
-      } catch (_error) {
-        console.error('Failed to send ping:', error);
+          } catch (error) {
+      console.error('Failed to send ping:', error);
       }
     }
   }

@@ -166,7 +166,7 @@ class FeedbackService {
    */
   async submitFeedback(data: FormData): Promise<Feedback> {
     const response = await api.post('/feedback', data);
-    return response.data.data;
+    return response.data;
   }
   
   /**
@@ -174,7 +174,7 @@ class FeedbackService {
    */
   async getFeedback(id: string): Promise<Feedback> {
     const response = await api.get(`/feedback/${id}`);
-    return response.data.data;
+    return response.data;
   }
   
   /**
@@ -182,7 +182,7 @@ class FeedbackService {
    */
   async getAllFeedback(options: FeedbackFilterOptions = {}): Promise<FeedbackListResponse> {
     const response = await api.get('/feedback', { params: options });
-    return response.data;
+    return response;
   }
   
   /**
@@ -190,7 +190,7 @@ class FeedbackService {
    */
   async updateFeedback(id: string, data: FeedbackUpdateData): Promise<Feedback> {
     const response = await api.put(`/feedback/${id}`, data);
-    return response.data.data;
+    return response.data;
   }
   
   /**
@@ -205,7 +205,7 @@ class FeedbackService {
    */
   async getFeedbackStatistics(filters: Record<string, any> = {}): Promise<FeedbackStatistics> {
     const response = await api.get('/feedback/statistics', { params: filters });
-    return response.data.data;
+    return response.data;
   }
   
   /**
@@ -213,7 +213,7 @@ class FeedbackService {
    */
   async getCustomerFeedback(customerId: string, options: FeedbackFilterOptions = {}): Promise<FeedbackListResponse> {
     const response = await api.get(`/feedback/customer/${customerId}`, { params: options });
-    return response.data;
+    return response;
   }
 }
 

@@ -31,6 +31,11 @@ COPY . .
 # Production stage
 FROM node:18-slim
 
+# Install dumb-init for proper signal handling
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends dumb-init wget && \
+    rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /app
 
@@ -40,17 +45,18 @@ ENV NODE_ENV=production
 # Increase Node memory limit
 ENV NODE_OPTIONS="--max-old-space-size=2048"
 
-# Create a non-root user and directories
+# Create a non-root user and directories with restricted permissions
 RUN groupadd -g 1001 nodejs && \
-    useradd -u 1001 -g nodejs -s /bin/bash -m nodejs && \
-    mkdir -p /app/logs && \
-    chown -R nodejs:nodejs /app/logs
+    useradd -u 1001 -g nodejs -s /bin/false -m nodejs && \
+    mkdir -p /app/logs /app/uploads && \
+    chown -R nodejs:nodejs /app && \
+    chmod 750 /app/logs /app/uploads
 
 # Copy only production dependencies from build stage
 COPY --from=build /app/package*.json ./
 RUN apt-get update && \
     apt-get install -y --no-install-recommends python3 make g++ && \
-    npm ci --only=production && \
+    npm install --only=production && \
     apt-get purge -y --auto-remove python3 make g++ && \
     rm -rf /var/lib/apt/lists/*
 
@@ -66,6 +72,9 @@ EXPOSE 5000
 # Add health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:5000/health || exit 1
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
 
 # Run the application using the cluster module
 CMD ["node", "src/cluster.js"] 

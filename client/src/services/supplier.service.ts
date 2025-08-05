@@ -145,10 +145,10 @@ class SupplierService {
   async getSuppliers(params?: SupplierListParams): Promise<SupplierListResponse> {
     try {
       const response = await api.get('/api/v1/suppliers', { params });
-      return response.data;
+      return response;
     } catch (_error) {
-      console.error('Error fetching suppliers:', error);
-      throw error;
+      console.error('Error fetching suppliers:', _error);
+      throw _error;
     }
   }
 
@@ -158,8 +158,8 @@ class SupplierService {
   async getSupplier(id: string): Promise<Supplier> {
     try {
       const response = await api.get(`/api/v1/suppliers/${id}`);
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error fetching supplier with ID ${id}:`, error);
       throw error;
     }
@@ -171,8 +171,8 @@ class SupplierService {
   async createSupplier(data: CreateSupplierData): Promise<Supplier> {
     try {
       const response = await api.post('/api/v1/suppliers', data);
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error('Error creating supplier:', error);
       throw error;
     }
@@ -184,8 +184,8 @@ class SupplierService {
   async updateSupplier(id: string, data: UpdateSupplierData): Promise<Supplier> {
     try {
       const response = await api.put(`/api/v1/suppliers/${id}`, data);
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error updating supplier with ID ${id}:`, error);
       throw error;
     }
@@ -197,7 +197,7 @@ class SupplierService {
   async deleteSupplier(id: string): Promise<void> {
     try {
       await api.delete(`/api/v1/suppliers/${id}`);
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error deleting supplier with ID ${id}:`, error);
       throw error;
     }
@@ -217,8 +217,8 @@ class SupplierService {
         }
       });
       
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error uploading logo for supplier with ID ${id}:`, error);
       throw error;
     }
@@ -233,8 +233,8 @@ class SupplierService {
   ): Promise<SupplierAnalyticsData> {
     try {
       const response = await api.get(`/api/v1/suppliers/${id}/analytics`, { params: options });
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error fetching analytics for supplier with ID ${id}:`, error);
       throw error;
     }
@@ -249,8 +249,8 @@ class SupplierService {
   ): Promise<SupplierPerformanceData> {
     try {
       const response = await api.get(`/api/v1/suppliers/${id}/performance`, { params: options });
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error fetching performance data for supplier with ID ${id}:`, error);
       throw error;
     }
@@ -262,8 +262,8 @@ class SupplierService {
   async getSupplierQualification(id: string): Promise<any> {
     try {
       const response = await api.get(`/api/v1/suppliers/${id}/qualification`);
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error fetching qualification data for supplier with ID ${id}:`, error);
       throw error;
     }
@@ -275,8 +275,8 @@ class SupplierService {
   async getSupplierInspections(id: string, params?: { page?: number; limit?: number }): Promise<any> {
     try {
       const response = await api.get(`/api/v1/suppliers/${id}/inspections`, { params });
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error fetching inspections for supplier with ID ${id}:`, error);
       throw error;
     }
@@ -292,8 +292,8 @@ class SupplierService {
   }): Promise<{ success: boolean; message: string }> {
     try {
       const response = await api.post(`/api/v1/suppliers/${supplierId}/customers/${customerId}`, data);
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error associating supplier ${supplierId} with customer ${customerId}:`, error);
       throw error;
     }
@@ -306,8 +306,8 @@ class SupplierService {
   async disassociateFromCustomer(supplierId: string, customerId: string): Promise<{ success: boolean; message: string }> {
     try {
       const response = await api.delete(`/api/v1/suppliers/${supplierId}/customers/${customerId}`);
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error disassociating supplier ${supplierId} from customer ${customerId}:`, error);
       throw error;
     }
@@ -320,8 +320,8 @@ class SupplierService {
   async updateStatus(id: string, status: 'active' | 'inactive' | 'pending', reason?: string): Promise<Supplier> {
     try {
       const response = await api.patch(`/api/v1/suppliers/${id}/status`, { status, reason });
-      return response.data;
-    } catch (_error) {
+      return response;
+    } catch (error) {
       console.error(`Error updating status for supplier with ID ${id}:`, error);
       throw error;
     }

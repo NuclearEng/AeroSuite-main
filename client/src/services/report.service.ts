@@ -349,12 +349,12 @@ class ReportService {
 
   async createReportTemplate(template: Partial<ReportTemplate>): Promise<ReportTemplate> {
     const response = await api.post(`${this.baseUrl}/templates`, template);
-    return response.data.data;
+    return response.data;
   }
 
   async updateReportTemplate(id: string, template: Partial<ReportTemplate>): Promise<ReportTemplate> {
     const response = await api.put(`${this.baseUrl}/templates/${id}`, template);
-    return response.data.data;
+    return response.data;
   }
 
   async deleteReportTemplate(id: string): Promise<void> {

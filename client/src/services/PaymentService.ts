@@ -60,7 +60,7 @@ class PaymentService {
         customerId
       });
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error creating payment session:', error);
       throw error;
     }
@@ -79,7 +79,7 @@ class PaymentService {
         params: { page, limit, status }
       });
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error fetching payment history:', error);
       throw error;
     }
@@ -92,7 +92,7 @@ class PaymentService {
     try {
       const response = await axios.get(`${this.baseUrl}/${id}`);
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error fetching payment details:', error);
       throw error;
     }
@@ -105,7 +105,7 @@ class PaymentService {
     try {
       const response = await axios.post(`${this.baseUrl}/${id}/refund`, { reason });
       return response.data;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error creating refund:', error);
       throw error;
     }

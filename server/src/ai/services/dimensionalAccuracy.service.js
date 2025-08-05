@@ -15,8 +15,8 @@ const logger = require('../utils/logger');
 const { getGDTSymbolRecognition } = require('./gdtRecognition.service');
 
 // Models
-const Inspection = require('../models/inspection.model');
-const Component = require('../models/component.model');
+const Inspection = require('../../models/inspection.model');
+const Component = require('../../models/component.model');
 
 /**
  * Verify dimensional accuracy from an inspection measurement

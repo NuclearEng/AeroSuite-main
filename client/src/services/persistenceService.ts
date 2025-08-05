@@ -72,7 +72,7 @@ const persistenceService = {
   init: async (): Promise<void> => {
     try {
       await initDB();
-    } catch (_error) {
+    } catch (error) {
       console.error('Failed to initialize IndexedDB:', error);
     }
   },
@@ -86,7 +86,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       return db.getAll(storeName);
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error getting items from ${storeName}:`, error);
       return [];
     }
@@ -102,7 +102,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       return db.get(storeName, id);
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error getting item ${id} from ${storeName}:`, error);
       return undefined;
     }
@@ -125,7 +125,7 @@ const persistenceService = {
       };
       await db.put(storeName, itemWithSyncStatus);
       return item.id;
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error adding/updating item in ${storeName}:`, error);
       throw error;
     }
@@ -140,7 +140,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       await db.delete(storeName, id);
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error deleting item ${id} from ${storeName}:`, error);
       throw error;
     }
@@ -154,7 +154,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       await db.clear(storeName);
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error clearing store ${storeName}:`, error);
       throw error;
     }
@@ -177,7 +177,7 @@ const persistenceService = {
       };
       await db.put(STORE_NAMES.PENDING_REQUESTS, pendingRequest);
       return id;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error adding pending request:', error);
       throw error;
     }
@@ -191,7 +191,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       return db.getAll(STORE_NAMES.PENDING_REQUESTS);
-    } catch (_error) {
+    } catch (error) {
       console.error('Error getting pending requests:', error);
       return [];
     }
@@ -205,7 +205,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       await db.delete(STORE_NAMES.PENDING_REQUESTS, id);
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error deleting pending request ${id}:`, error);
       throw error;
     }
@@ -224,7 +224,7 @@ const persistenceService = {
         request.retryCount = retryCount;
         await db.put(STORE_NAMES.PENDING_REQUESTS, request);
       }
-    } catch (_error) {
+    } catch (error) {
       console.error(`Error updating retry count for request ${id}:`, error);
       throw error;
     }
@@ -238,7 +238,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       await db.put(STORE_NAMES.USER_DATA, { id: 'userData', ...userData });
-    } catch (_error) {
+    } catch (error) {
       console.error('Error saving user data:', error);
       throw error;
     }
@@ -252,7 +252,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       return db.get(STORE_NAMES.USER_DATA, 'userData');
-    } catch (_error) {
+    } catch (error) {
       console.error('Error getting user data:', error);
       return undefined;
     }
@@ -266,7 +266,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       await db.put(STORE_NAMES.SETTINGS, { id: 'settings', ...settings });
-    } catch (_error) {
+    } catch (error) {
       console.error('Error saving settings:', error);
       throw error;
     }
@@ -280,7 +280,7 @@ const persistenceService = {
     try {
       const db = await initDB();
       return db.get(STORE_NAMES.SETTINGS, 'settings');
-    } catch (_error) {
+    } catch (error) {
       console.error('Error getting settings:', error);
       return undefined;
     }
@@ -302,7 +302,7 @@ const persistenceService = {
       }
       
       return totalSize;
-    } catch (_error) {
+    } catch (error) {
       console.error('Error calculating database size:', error);
       return 0;
     }
@@ -314,7 +314,7 @@ const persistenceService = {
   deleteDatabase: async (): Promise<void> => {
     try {
       await deleteDB(DB_NAME);
-    } catch (_error) {
+    } catch (error) {
       console.error('Error deleting database:', error);
       throw error;
     }

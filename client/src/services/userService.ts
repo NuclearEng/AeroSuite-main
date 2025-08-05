@@ -13,7 +13,7 @@ export const getUserProfile = async () => {
       headers: getAuthHeader()
     });
     return response.data.data;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error fetching user profile:', error);
     throw error;
   }
@@ -36,7 +36,7 @@ export const updateUserProfile = async (profileData: {
       headers: getAuthHeader()
     });
     return response.data.data;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error updating user profile:', error);
     throw error;
   }
@@ -59,7 +59,7 @@ export const uploadProfileImage = async (imageFile: File) => {
       }
     });
     return response.data.data.imageUrl;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error uploading profile image:', error);
     throw error;
   }
@@ -82,7 +82,7 @@ export const updateUserPreferences = async (preferences: {
       headers: getAuthHeader()
     });
     return response.data.data;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error updating user preferences:', error);
     throw error;
   }
@@ -98,7 +98,7 @@ export const completeOnboarding = async () => {
       headers: getAuthHeader()
     });
     return response.data;
-  } catch (_error) {
+  } catch (error) {
     console.error('Error completing onboarding:', error);
     throw error;
   }

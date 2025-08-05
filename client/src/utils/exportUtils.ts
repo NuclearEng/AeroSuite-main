@@ -66,14 +66,14 @@ export function exportToPDF(data: any[], filename: string) {
     
     // Add headers
     doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
+    doc.setFont('helvetica', 'bold');
     columns.forEach((col, index) => {
       doc.text(col, xPosition + (index * cellWidth), yPosition);
     });
     yPosition += lineHeight;
     
     // Add rows
-    doc.setFont(undefined, 'normal');
+    doc.setFont('helvetica', 'normal');
     rows.forEach((row) => {
       row.forEach((cell, index) => {
         // Truncate long text

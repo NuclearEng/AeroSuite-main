@@ -4,7 +4,7 @@
  * Utilities to verify and improve theme color contrast for accessibility compliance.
  */
 
-import { PaletteOptions } from '@mui/material/styles/createPalette';
+import { PaletteOptions, SimplePaletteColorOptions, TypeText } from '@mui/material/styles/createPalette';
 import { getContrastRatio, checkContrast, getSuggestedColor } from './colorContrastChecker';
 
 /**
@@ -186,42 +186,48 @@ export function createAccessiblePalette(palette: PaletteOptions): PaletteOptions
         accessiblePalette.text = {
           ...accessiblePalette.text,
           primary: check.suggestedColor,
-        };
+        } as Partial<TypeText>;
       } else if (check.color === palette.text?.secondary) {
         accessiblePalette.text = {
           ...accessiblePalette.text,
           secondary: check.suggestedColor,
-        };
+        } as Partial<TypeText>;
       } else if (check.color === palette.primary?.contrastText) {
         accessiblePalette.primary = {
           ...accessiblePalette.primary,
           contrastText: check.suggestedColor,
-        };
+          main: palette.primary?.main || '#000000'
+        } as SimplePaletteColorOptions;
       } else if (check.color === palette.secondary?.contrastText) {
         accessiblePalette.secondary = {
           ...accessiblePalette.secondary,
           contrastText: check.suggestedColor,
-        };
+          main: palette.secondary?.main || '#000000'
+        } as SimplePaletteColorOptions;
       } else if (check.color === palette.error?.contrastText) {
         accessiblePalette.error = {
           ...accessiblePalette.error,
           contrastText: check.suggestedColor,
-        };
+          main: palette.error?.main || '#000000'
+        } as SimplePaletteColorOptions;
       } else if (check.color === palette.warning?.contrastText) {
         accessiblePalette.warning = {
           ...accessiblePalette.warning,
           contrastText: check.suggestedColor,
-        };
+          main: palette.warning?.main || '#000000'
+        } as SimplePaletteColorOptions;
       } else if (check.color === palette.info?.contrastText) {
         accessiblePalette.info = {
           ...accessiblePalette.info,
           contrastText: check.suggestedColor,
-        };
+          main: palette.info?.main || '#000000'
+        } as SimplePaletteColorOptions;
       } else if (check.color === palette.success?.contrastText) {
         accessiblePalette.success = {
           ...accessiblePalette.success,
           contrastText: check.suggestedColor,
-        };
+          main: palette.success?.main || '#000000'
+        } as SimplePaletteColorOptions;
       }
     }
   }

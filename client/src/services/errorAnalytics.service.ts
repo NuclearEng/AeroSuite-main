@@ -24,8 +24,8 @@ interface ErrorAnalyticsService {
 const getErrorAnalytics = async (period: string = '7d'): Promise<any> => {
   try {
     const response = await api.get(`/monitoring/error-analytics?period=${period}`);
-    return response.data;
-  } catch (_error) {
+    return response;
+  } catch (error) {
     console.error('Error fetching error analytics:', error);
     throw error;
   }
@@ -39,8 +39,8 @@ const getErrorAnalytics = async (period: string = '7d'): Promise<any> => {
 const getErrorDetails = async (errorId: string): Promise<any> => {
   try {
     const response = await api.get(`/monitoring/errors/${errorId}`);
-    return response.data;
-  } catch (_error) {
+    return response;
+  } catch (error) {
     console.error('Error fetching error details:', error);
     throw error;
   }

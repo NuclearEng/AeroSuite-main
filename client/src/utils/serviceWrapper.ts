@@ -111,7 +111,7 @@ export async function withServiceWrapper<T>(
       
       // Don't retry if aborted or if we've used all retries
       if (
-        _err instanceof DOMException && _err.name === 'AbortError' ||
+        _error instanceof DOMException && _error.name === 'AbortError' ||
         attempt >= config.retries
       ) {
         break;

@@ -13,6 +13,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  SelectChangeEvent,
   FormHelperText,
   Alert,
   Snackbar,
@@ -124,7 +125,7 @@ const CreateSupplier: React.FC = () => {
   });
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => {
     const { name, value } = e.target;
     
     if (!name) return;
@@ -258,10 +259,10 @@ const CreateSupplier: React.FC = () => {
       setTimeout(() => {
         navigate('/suppliers');
       }, 1500);
-    } catch (error: any) {
+    } catch (_error: any) {
       setSnackbar({
         open: true,
-        message: error.message || 'Failed to create supplier',
+        message: _error.message || 'Failed to create supplier',
         severity: 'error'
       });
       setIsSubmitting(false);

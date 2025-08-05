@@ -114,10 +114,17 @@ registerRoute(
   ({ url }) => url.pathname.startsWith('/api/') && 
     (url.pathname.includes('/submit/') || url.pathname.includes('/update/')),
   async ({ url, request }) => {
-    const promiseChain = fetch(request.clone()).catch((err) => {
-      return bgSyncPlugin.fetchDidFail({ request: request.clone() });
-    });
-    return promiseChain;
+    try {
+      return await fetch(request.clone());
+    } catch (err) {
+      await bgSyncPlugin.fetchDidFail({
+        request: request.clone(),
+        error: err as Error,
+        event: new FetchEvent('fetch', { request: request.clone() }),
+        originalRequest: request.clone()
+      });
+      return new Response(null, { status: 503 });
+    }
   }
 );
 
