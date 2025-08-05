@@ -1,0 +1,85 @@
+{
+  "timestamp": "2025-08-05T20:05:15.860Z",
+  "stats": {
+    "auth.cy.js": {
+      "testCount": 13,
+      "good": [
+        "Uses data-testid selectors (best practice) (2 occurrences)",
+        "Uses beforeEach hooks for setup (1 occurrences)",
+        "Has assertions (13 occurrences)"
+      ],
+      "warnings": [],
+      "errors": []
+    },
+    "customers.cy.js": {
+      "testCount": 27,
+      "good": [
+        "Uses data-testid selectors (best practice) (30 occurrences)",
+        "Uses beforeEach hooks for setup (4 occurrences)",
+        "Uses afterEach hooks for cleanup (1 occurrences)",
+        "Has assertions (36 occurrences)"
+      ],
+      "warnings": [],
+      "errors": []
+    },
+    "dashboard.cy.js": {
+      "testCount": 11,
+      "good": [
+        "Uses data-testid selectors (best practice) (22 occurrences)",
+        "Uses beforeEach hooks for setup (1 occurrences)",
+        "Has assertions (20 occurrences)"
+      ],
+      "warnings": [],
+      "errors": []
+    },
+    "inspections.cy.js": {
+      "testCount": 27,
+      "good": [
+        "Uses data-testid selectors (best practice) (49 occurrences)",
+        "Uses beforeEach hooks for setup (4 occurrences)",
+        "Uses afterEach hooks for cleanup (1 occurrences)",
+        "Has assertions (30 occurrences)"
+      ],
+      "warnings": [],
+      "errors": []
+    },
+    "suppliers.cy.js": {
+      "testCount": 23,
+      "good": [
+        "Uses data-testid selectors (best practice) (20 occurrences)",
+        "Uses beforeEach hooks for setup (4 occurrences)",
+        "Uses afterEach hooks for cleanup (1 occurrences)",
+        "Has assertions (26 occurrences)"
+      ],
+      "warnings": [
+        "Uses class selectors - consider data-testid for stability (2 occurrences)"
+      ],
+      "errors": []
+    }
+  },
+  "issues": {
+    "errors": [],
+    "warnings": [
+      "suppliers.cy.js: Uses class selectors - consider data-testid for stability (2 occurrences)"
+    ],
+    "suggestions": [
+      "auth.cy.js: Add tests for password reset flow",
+      "auth.cy.js: Add tests for remember me functionality",
+      "auth.cy.js: Add tests for SSO login",
+      "customers.cy.js: Add tests for customer merge",
+      "customers.cy.js: Add tests for duplicate detection",
+      "customers.cy.js: Add tests for customer tagging",
+      "dashboard.cy.js: Add tests for data export functionality",
+      "dashboard.cy.js: Add tests for real-time updates",
+      "inspections.cy.js: Add tests for inspection scheduling",
+      "inspections.cy.js: Add tests for inspection templates",
+      "inspections.cy.js: Add tests for mobile view testing",
+      "suppliers.cy.js: Add tests for bulk operations",
+      "suppliers.cy.js: Add tests for import functionality",
+      "suppliers.cy.js: Add tests for archive/restore",
+      "Consider adding cypress-axe for accessibility testing",
+      "Consider adding visual regression tests with cypress-image-snapshot"
+    ]
+  },
+  "score": 100
+}

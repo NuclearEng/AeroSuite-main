@@ -1,0 +1,55 @@
+{
+  "users": {
+    "admin": {
+      "email": "admin@aerosuite.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    "inspector": {
+      "email": "inspector@aerosuite.com",
+      "password": "inspector123",
+      "role": "inspector"
+    },
+    "viewer": {
+      "email": "viewer@aerosuite.com",
+      "password": "viewer123",
+      "role": "viewer"
+    }
+  },
+  "suppliers": {
+    "valid": {
+      "name": "Test Supplier Inc",
+      "email": "contact@testsupplier.com",
+      "phone": "+1234567890",
+      "address": "123 Test Street",
+      "city": "Test City",
+      "country": "Test Country",
+      "contactPerson": "John Doe",
+      "qualityScore": 85,
+      "status": "active"
+    }
+  },
+  "customers": {
+    "valid": {
+      "name": "Test Customer Corp",
+      "email": "info@testcustomer.com",
+      "phone": "+0987654321",
+      "company": "Test Customer Corp",
+      "address": "456 Customer Ave",
+      "city": "Customer City",
+      "country": "Customer Country",
+      "postalCode": "12345",
+      "status": "active"
+    }
+  },
+  "inspections": {
+    "quality": {
+      "type": "quality",
+      "productName": "Test Product",
+      "batchNumber": "BATCH-TEST-001",
+      "quantity": 100,
+      "unit": "pieces",
+      "notes": "Standard quality inspection"
+    }
+  }
+}

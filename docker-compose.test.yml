@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  # MongoDB for testing
+  mongo-test:
+    image: mongo:latest
+    container_name: aerosuite-mongo-test
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=aerosuite_test
+    volumes:
+      - mongo-test-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - aerosuite-test-network
+
+  # Redis for testing
+  redis-test:
+    image: redis:alpine
+    container_name: aerosuite-redis-test
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aerosuite-test-network
+
+  # Backend API Server for testing
+  aerosuite-server-test:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: aerosuite-server-test
+    environment:
+      - NODE_ENV=test
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongo-test:27017/aerosuite_test
+      - REDIS_URL=redis://redis-test:6379
+      - JWT_SECRET=test-secret-key-for-e2e
+      - JWT_EXPIRES_IN=1d
+      - LOG_LEVEL=error
+      - ENABLE_CORS=true
+      - CLIENT_URL=http://localhost:3000
+    ports:
+      - "5000:5000"
+    depends_on:
+      mongo-test:
+        condition: service_healthy
+      redis-test:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    networks:
+      - aerosuite-test-network
+
+  # Frontend Client for testing
+  aerosuite-client-test:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: aerosuite-client-test
+    environment:
+      - NODE_ENV=test
+      - REACT_APP_API_URL=http://localhost:5000
+      - BROWSER=none
+      - CI=true
+    ports:
+      - "3000:3000"
+    depends_on:
+      aerosuite-server-test:
+        condition: service_healthy
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    networks:
+      - aerosuite-test-network
+
+  # Cypress test runner (optional - for running tests inside Docker)
+  cypress:
+    image: cypress/included:14.4.1
+    container_name: aerosuite-cypress
+    depends_on:
+      aerosuite-client-test:
+        condition: service_started
+      aerosuite-server-test:
+        condition: service_healthy
+    environment:
+      - CYPRESS_baseUrl=http://aerosuite-client-test:3000
+      - CYPRESS_apiUrl=http://aerosuite-server-test:5000
+    working_dir: /e2e
+    volumes:
+      - ./cypress:/e2e/cypress
+      - ./cypress.config.js:/e2e/cypress.config.js
+      - ./cypress/videos:/e2e/cypress/videos
+      - ./cypress/screenshots:/e2e/cypress/screenshots
+    networks:
+      - aerosuite-test-network
+    profiles:
+      - cypress
+
+networks:
+  aerosuite-test-network:
+    driver: bridge
+
+volumes:
+  mongo-test-data:

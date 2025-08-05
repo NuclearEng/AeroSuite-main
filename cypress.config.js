@@ -1,7 +1,4 @@
-const { defineConfig } = require('cypress');
-const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
-
-module.exports = defineConfig({
+module.exports = {
   e2e: {
     baseUrl: 'http://localhost:3000',
     viewportWidth: 1200,
@@ -14,7 +11,6 @@ module.exports = defineConfig({
     screenshotOnRunFailure: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
-      addMatchImageSnapshotPlugin(on, config);
       on('task', {
         log(message) {
           console.log(message);
@@ -49,4 +45,4 @@ module.exports = defineConfig({
     html: false,
     json: true,
   },
-}); 
+}; 
