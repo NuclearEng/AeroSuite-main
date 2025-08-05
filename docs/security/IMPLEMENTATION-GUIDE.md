@@ -1,0 +1,301 @@
+# Security Implementation Guide
+
+## Overview
+
+This guide helps developers implement and maintain security features in AeroSuite.
+
+## Quick Start
+
+### 1. Enable Security Features
+
+```javascript
+// In your app.js
+const { 
+  globalRateLimit, 
+  authRateLimit,
+  csrfProtection,
+  sessionSecurity,
+  auditMiddleware 
+} = require('./middleware/security');
+
+// Apply security middleware in correct order
+app.use(securityHeaders());
+app.use(globalRateLimit);
+app.use(sessionMiddleware);
+app.use(sessionSecurity());
+app.use(csrfProtection());
+```
+
+### 2. Implement Audit Logging
+
+```javascript
+// Automatic audit logging for routes
+router.post('/api/inspections',
+  authenticate(),
+  auditMiddleware('DATA_CREATE', {
+    targetType: 'INSPECTION',
+    severity: 'LOW'
+  }),
+  createInspection
+);
+
+// Manual audit logging
+const { auditLogService } = require('./services/auditLog.service');
+
+await auditLogService.log({
+  req,
+  eventType: 'DATA_ACCESS',
+  targetType: 'DOCUMENT',
+  targetId: documentId,
+  action: 'View sensitive document',
+  metadata: { reason: 'Compliance review' }
+});
+```
+
+### 3. Use API Keys
+
+```javascript
+// Protect endpoints with API key authentication
+const { apiKeyAuth } = require('./services/apiKey.service');
+
+router.get('/api/external/inspections',
+  apiKeyAuth('read:inspections'),
+  getInspections
+);
+
+// Create API keys programmatically
+const { apiKeyService } = require('./services/apiKey.service');
+
+const apiKey = await apiKeyService.createApiKey({
+  userId: user._id,
+  name: 'CI/CD Pipeline',
+  scopes: ['read:inspections', 'write:reports'],
+  allowedIps: ['10.0.0.0/8']
+}, req);
+```
+
+### 4. Implement Rate Limiting
+
+```javascript
+// Use different rate limits for different endpoints
+const { 
+  createRateLimitMiddleware,
+  progressiveDelay 
+} = require('./middleware/advancedRateLimit');
+
+// Custom rate limit
+const uploadRateLimit = createRateLimitMiddleware('fileUpload', {
+  byUser: true,
+  byIP: true
+});
+
+// Progressive delay for failed auth
+router.post('/auth/login',
+  progressiveDelay('auth'),
+  authRateLimit,
+  login
+);
+```
+
+### 5. Encrypt Sensitive Data
+
+```javascript
+const { encryptField, decryptField } = require('./utils/encryption');
+
+// Encrypt before saving
+const user = new User({
+  email,
+  ssn: encryptField(ssn, 'user.ssn'),
+  medicalRecord: encryptField(medicalData, 'user.medical')
+});
+
+// Decrypt when reading
+const decryptedSSN = decryptField(user.ssn, 'user.ssn');
+```
+
+## Security Patterns
+
+### Input Validation
+
+```javascript
+const { body, validationResult } = require('express-validator');
+
+const validateInspection = [
+  body('title')
+    .trim()
+    .notEmpty()
+    .isLength({ max: 200 })
+    .matches(/^[a-zA-Z0-9\s\-_.]+$/),
+  body('findings.*.severity')
+    .isIn(['low', 'medium', 'high', 'critical']),
+  body('attachments')
+    .isArray({ max: 10 })
+    .optional()
+];
+
+// In your route handler
+const errors = validationResult(req);
+if (!errors.isEmpty()) {
+  return res.status(400).json({ 
+    error: 'Validation failed',
+    details: errors.array() 
+  });
+}
+```
+
+### Secure File Uploads
+
+```javascript
+const SecureFileUpload = require('./utils/secureFileUpload');
+
+const fileUploader = new SecureFileUpload({
+  allowedMimeTypes: ['image/jpeg', 'image/png', 'application/pdf'],
+  maxFileSize: 5 * 1024 * 1024, // 5MB
+  uploadDir: path.join(__dirname, '../uploads/secure')
+});
+
+// In your route
+router.post('/upload',
+  authenticate(),
+  fileUploadRateLimit,
+  multer({ storage: fileUploader.createMulterStorage() }).single('file'),
+  async (req, res) => {
+    try {
+      const processedFile = await fileUploader.processUploadedFile(req.file, {
+        subDirectory: `user_${req.user.id}`,
+        additionalValidation: async (file, buffer) => {
+          // Custom validation logic
+          return true;
+        }
+      });
+      
+      res.json({ file: processedFile });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+);
+```
+
+### Security Monitoring
+
+```javascript
+const securityMonitoring = require('./services/securityMonitoring');
+
+// Report security events
+securityMonitoring.emit('auth:failed', {
+  userId: user?.id,
+  email: req.body.email,
+  ip: req.ip,
+  userAgent: req.headers['user-agent'],
+  reason: 'Invalid password'
+});
+
+// Monitor suspicious activity
+securityMonitoring.emit('access:suspicious', {
+  url: req.originalUrl,
+  method: req.method,
+  ip: req.ip,
+  headers: req.headers
+});
+```
+
+## Security Checklist for New Features
+
+- [ ] Input validation implemented
+- [ ] Output properly encoded
+- [ ] Authentication required
+- [ ] Authorization checks in place
+- [ ] Rate limiting configured
+- [ ] Audit logging added
+- [ ] Error messages sanitized
+- [ ] File uploads validated
+- [ ] CSRF protection enabled
+- [ ] Security headers applied
+
+## Common Security Mistakes to Avoid
+
+### 1. Storing Secrets in Code
+```javascript
+// BAD
+const apiKey = 'sk_live_abcd1234';
+
+// GOOD
+const apiKey = process.env.API_KEY;
+```
+
+### 2. Exposing Internal Errors
+```javascript
+// BAD
+catch (error) {
+  res.status(500).json({ error: error.stack });
+}
+
+// GOOD
+catch (error) {
+  logger.error('Operation failed:', error);
+  res.status(500).json({ 
+    error: 'An error occurred',
+    code: 'INTERNAL_ERROR' 
+  });
+}
+```
+
+### 3. Missing Rate Limits
+```javascript
+// BAD
+router.post('/api/search', search);
+
+// GOOD
+router.post('/api/search', 
+  apiRateLimit,
+  search
+);
+```
+
+### 4. Unsafe File Handling
+```javascript
+// BAD
+const filePath = req.body.path;
+fs.readFile(filePath, ...);
+
+// GOOD
+const fileName = path.basename(req.body.fileName);
+const safePath = path.join(UPLOAD_DIR, fileName);
+if (!safePath.startsWith(UPLOAD_DIR)) {
+  throw new Error('Invalid file path');
+}
+```
+
+## Testing Security Features
+
+```javascript
+describe('Security Tests', () => {
+  test('should prevent SQL injection', async () => {
+    const maliciousInput = "'; DROP TABLE users; --";
+    const response = await request(app)
+      .post('/api/search')
+      .send({ query: maliciousInput });
+    
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe('Invalid input');
+  });
+  
+  test('should enforce rate limits', async () => {
+    const requests = Array(10).fill().map(() => 
+      request(app).get('/api/data')
+    );
+    
+    const responses = await Promise.all(requests);
+    const rateLimited = responses.filter(r => r.status === 429);
+    
+    expect(rateLimited.length).toBeGreaterThan(0);
+  });
+});
+```
+
+## Security Resources
+
+- OWASP Top 10: https://owasp.org/Top10/
+- Node.js Security Checklist: https://blog.risingstack.com/node-js-security-checklist/
+- Express Security Best Practices: https://expressjs.com/en/advanced/best-practice-security.html

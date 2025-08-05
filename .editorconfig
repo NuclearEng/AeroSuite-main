@@ -1,0 +1,55 @@
+# EditorConfig helps maintain consistent coding styles across different editors
+# https://editorconfig.org
+
+# Root configuration file
+root = true
+
+# Default settings for all files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Markdown files
+[*.md]
+# Preserve trailing whitespace in markdown (for line breaks)
+trim_trailing_whitespace = false
+# Ensure single trailing newline
+insert_final_newline = true
+max_line_length = 80
+
+# JavaScript/TypeScript files
+[*.{js,jsx,ts,tsx}]
+indent_size = 2
+quote_type = single
+
+# JSON files
+[*.json]
+indent_size = 2
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# Python files
+[*.py]
+indent_size = 4
+
+# Shell scripts
+[*.{sh,bash}]
+indent_size = 2
+
+# Makefiles
+[{Makefile,**.mk}]
+indent_style = tab
+
+# Windows batch files
+[*.{cmd,bat}]
+end_of_line = crlf
+
+# Git files
+[{.gitignore,.gitattributes}]
+insert_final_newline = true

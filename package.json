@@ -32,6 +32,8 @@
     "eject": "npm run eject -w client",
     "lint": "npm run lint -w client && npm run lint -w server",
     "format": "npm run format -w client && npm run format -w server",
+    "lint:markdown": "node scripts/fix-markdown-trailing-newlines.js --check",
+    "fix:markdown": "node scripts/fix-markdown-trailing-newlines.js",
     "typecheck": "npm run typecheck -w client",
     "security-test": "node scripts/security-test.js",
     "security-test:full": "node scripts/security-test.js --full",

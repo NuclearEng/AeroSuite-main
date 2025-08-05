@@ -56,4 +56,3 @@ Common memory leak sources:
 - Timers/intervals not cleared
 - Closures holding references to large objects
 - Detached DOM elements
-

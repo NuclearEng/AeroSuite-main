@@ -1,0 +1,56 @@
+#!/bin/bash
+#
+# Pre-commit hook to fix markdown trailing newlines
+# This hook runs before every commit to ensure all markdown files
+# end with exactly one newline character (MD047 compliance)
+#
+
+echo "🔍 Checking markdown files for trailing newlines..."
+
+# Get the list of staged markdown files
+STAGED_MD_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$')
+
+if [ -z "$STAGED_MD_FILES" ]; then
+    echo "✅ No markdown files to check"
+    exit 0
+fi
+
+# Check if Node.js is available
+if ! command -v node &> /dev/null; then
+    echo "⚠️  Warning: Node.js not found. Skipping markdown newline check."
+    exit 0
+fi
+
+# Check if the fix script exists
+if [ ! -f "scripts/fix-markdown-trailing-newlines.js" ]; then
+    echo "⚠️  Warning: fix-markdown-trailing-newlines.js not found. Skipping check."
+    exit 0
+fi
+
+# Fix trailing newlines in staged markdown files
+FIXED_FILES=""
+for FILE in $STAGED_MD_FILES; do
+    if [ -f "$FILE" ]; then
+        # Run the fix script on this specific file
+        OUTPUT=$(node scripts/fix-markdown-trailing-newlines.js --path "$FILE" 2>&1)
+        
+        # Check if file was fixed
+        if echo "$OUTPUT" | grep -q "Fixed: $FILE"; then
+            FIXED_FILES="$FIXED_FILES $FILE"
+            echo "✓ Fixed trailing newline in: $FILE"
+        fi
+    fi
+done
+
+# If files were fixed, add them back to staging
+if [ -n "$FIXED_FILES" ]; then
+    echo ""
+    echo "📝 Re-staging fixed files..."
+    for FILE in $FIXED_FILES; do
+        git add "$FILE"
+    done
+    echo "✅ Markdown files have been fixed and re-staged"
+fi
+
+echo "✨ Pre-commit markdown check complete!"
+exit 0

@@ -132,4 +132,4 @@ Security issues should be reported according to our security vulnerability discl
 - [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
 - [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)
 - [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
-- [AeroSuite Security Policy](./security-policy.md) 
+- [AeroSuite Security Policy](./security-policy.md)
