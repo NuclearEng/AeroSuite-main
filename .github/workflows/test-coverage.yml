@@ -1,0 +1,59 @@
+name: Test Coverage
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      run: npm install --legacy-peer-deps
+    
+    - name: Run tests with coverage
+      run: npm run test:ci
+    
+    - name: Upload Coverage Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage
+        retention-days: 14
+    
+    - name: Check coverage thresholds
+      run: |
+        TOTAL_COVERAGE=$(grep -Po '"lines":\{"total":\d+,"covered":\d+,"skipped":0,"pct":\K[^}]*' coverage/coverage-summary.json)
+        if (( $(echo "$TOTAL_COVERAGE < 75" | bc -l) )); then
+          echo "Coverage $TOTAL_COVERAGE% is below the threshold of 75%"
+          exit 1
+        else
+          echo "Coverage $TOTAL_COVERAGE% meets threshold requirements"
+        fi
+    
+    - name: Add coverage comment to PR
+      if: github.event_name == 'pull_request'
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        header: coverage
+        message: |
+          ## Test Coverage Report
+          
+          Coverage report from running tests with Jest:
+          
+          - **Total**: $(grep -Po '"lines":\{"total":\d+,"covered":\d+,"skipped":0,"pct":\K[^}]*' coverage/coverage-summary.json)%
+          - **Client**: $(grep -Po '"./client/src/".*"lines":\{"total":\d+,"covered":\d+,"skipped":0,"pct":\K[^}]*' coverage/coverage-summary.json)%
+          - **Server**: $(grep -Po '"./server/src/".*"lines":\{"total":\d+,"covered":\d+,"skipped":0,"pct":\K[^}]*' coverage/coverage-summary.json)%
+          
+          [View detailed coverage report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) 

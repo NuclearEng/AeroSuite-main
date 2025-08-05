@@ -1,0 +1,5 @@
+Structure: Architecture analysis for Suppliers
+
+Circular: Circular dependency check for Suppliers
+
+Coupling: Coupling check for Suppliers

@@ -1,0 +1,23 @@
+Simulate: 
+Oops! Something went wrong! :(
+
+ESLint: 9.29.0
+
+No files matching the pattern "client/src/pages/login" were found.
+Please check for typing mistakes in the pattern.
+
+
+Validate: /Users/tannercoker/Desktop/AeroSuite/scripts/test-coverage-setup.js:574
+  console.error(chalk.red(`Fatal error: ${error.message}`));
+                      ^
+
+TypeError: chalk.red is not a function
+    at /Users/tannercoker/Desktop/AeroSuite/scripts/test-coverage-setup.js:574:23
+
+Node.js v20.19.2
+
+A11y: npm error Missing script: "a11y-check"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_57_52_177Z-debug-0.log

@@ -1,0 +1,5 @@
+CI: CI pipeline check for Suppliers
+
+CD: CD pipeline check for Suppliers
+
+Infra: Infrastructure as code check for Suppliers

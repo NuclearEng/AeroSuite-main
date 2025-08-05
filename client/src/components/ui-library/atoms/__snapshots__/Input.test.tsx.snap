@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Component renders correctly when disabled 1`] = `null`;
+
+exports[`Input Component renders correctly with default props 1`] = `null`;
+
+exports[`Input Component renders correctly with different variants 1`] = `null`;
+
+exports[`Input Component renders correctly with error state 1`] = `null`;
+
+exports[`Input Component renders correctly with label 1`] = `null`;

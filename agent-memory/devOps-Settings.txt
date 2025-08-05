@@ -1,0 +1,5 @@
+CI: CI pipeline check for Settings
+
+CD: CD pipeline check for Settings
+
+Infra: Infrastructure as code check for Settings

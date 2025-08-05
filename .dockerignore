@@ -1,0 +1,43 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Node.js
+node_modules
+npm-debug.log
+yarn-error.log
+.npm
+.yarn
+
+# Build artifacts
+dist
+build
+coverage
+*.tsbuildinfo
+
+# Environment and config
+.env*
+.dockerignore
+Dockerfile*
+docker-compose*
+*.md
+*.log
+
+# Development files
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+*.bak
+test
+tests
+__tests__
+jest.config.js
+*.test.*
+*.spec.*
+
+# Large directories
+docs
+examples 

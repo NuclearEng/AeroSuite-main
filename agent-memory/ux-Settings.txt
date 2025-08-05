@@ -1,0 +1,5 @@
+Simulate: Simulate UI for Settings
+
+Validate: Validate UI for Settings
+
+A11y: A11y check for Settings

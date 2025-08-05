@@ -1,0 +1,59 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+interface SupplierMetrics {
+  id: string;
+  name: string;
+  metrics: {
+    onTimeDeliveryRate: number;
+    qualityRate: number;
+    responseTime: number;
+    complianceScore: number;
+  };
+  recentInspections: Array<{
+    id: string;
+    title: string;
+    type: string;
+    status: string;
+    date: string;
+  }>;
+  lastUpdated: string;
+}
+
+/**
+ * Custom hook for fetching supplier metrics
+ * @param supplierId - The ID of the supplier
+ */
+export const useSupplierMetrics = (supplierId: string) => {
+  const [metrics, setMetrics] = useState<SupplierMetrics | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      if (!supplierId) {
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get<SupplierMetrics>(`/api/v1/suppliers/${supplierId}/metrics`);
+        setMetrics(response.data);
+      } catch (err) {
+        console.error('Error fetching supplier metrics:', err);
+        setError('Failed to load supplier metrics. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMetrics();
+  }, [supplierId]);
+
+  return { metrics, loading, error };
+};
+
+export default useSupplierMetrics; 

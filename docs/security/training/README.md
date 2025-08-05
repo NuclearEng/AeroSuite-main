@@ -1,0 +1,93 @@
+# AeroSuite Security Training Program
+
+This directory contains the security training materials for the AeroSuite development team. The training program is designed to raise security awareness and ensure that all team members follow security best practices during development.
+
+## Training Objectives
+
+1. Understand common security vulnerabilities and how to prevent them
+2. Learn secure coding practices specific to our technology stack
+3. Implement security by design in all development activities
+4. Recognize and respond to security incidents effectively
+5. Stay up-to-date with emerging security threats and mitigations
+
+## Training Modules
+
+1. [Security Fundamentals](01-security-fundamentals.md)
+2. [Secure Coding Practices](02-secure-coding-practices.md)
+3. [Authentication & Authorization](03-authentication-authorization.md)
+4. [Data Protection & Privacy](04-data-protection-privacy.md)
+5. [API Security](05-api-security.md)
+6. [Frontend Security](06-frontend-security.md)
+7. [Infrastructure Security](07-infrastructure-security.md)
+8. [Security Testing](08-security-testing.md)
+9. [Incident Response](09-incident-response.md)
+10. [Security Tools & Resources](10-security-tools-resources.md)
+
+## Training Schedule
+
+| Module | Format | Duration | Frequency |
+|--------|--------|----------|-----------|
+| Security Fundamentals | Interactive Workshop | 2 hours | Quarterly for new hires, Annual refresher |
+| Secure Coding Practices | Hands-on Workshop | 3 hours | Quarterly |
+| Authentication & Authorization | Workshop + Lab | 2 hours | Semi-annually |
+| Data Protection & Privacy | Workshop | 2 hours | Semi-annually |
+| API Security | Hands-on Workshop | 3 hours | Semi-annually |
+| Frontend Security | Hands-on Workshop | 3 hours | Semi-annually |
+| Infrastructure Security | Workshop | 2 hours | Annually |
+| Security Testing | Hands-on Workshop | 4 hours | Annually |
+| Incident Response | Tabletop Exercise | 2 hours | Annually |
+| Security Tools & Resources | Self-paced | 1 hour | As needed |
+
+## Training Delivery
+
+The security training program uses a blended learning approach:
+
+1. **Interactive Workshops**: Led by security experts, focusing on practical applications
+2. **Hands-on Labs**: Exercises to practice identifying and fixing security issues
+3. **Self-paced Learning**: Online resources for continuous learning
+4. **Security Champions**: Designated team members who receive advanced training
+5. **Peer Reviews**: Security-focused code reviews to reinforce learning
+
+## Training Materials
+
+Each training module includes:
+
+- Presentation slides
+- Hands-on exercises
+- Reference materials
+- Assessment questions
+- Real-world examples from our codebase
+
+## Training Effectiveness Measurement
+
+The effectiveness of the security training program is measured through:
+
+1. Pre and post-training assessments
+2. Reduction in security vulnerabilities found in code reviews
+3. Improved security testing coverage
+4. Faster identification and response to security issues
+5. Security champions' feedback and observations
+
+## Certification
+
+Developers who complete the full training program receive an internal "AeroSuite Security-Minded Developer" certification. This certification must be renewed annually by completing refresher courses and demonstrating secure coding practices.
+
+## Additional Resources
+
+- [OWASP Top 10](https://owasp.org/Top10/)
+- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
+- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)
+- [AeroSuite Security Practices Guide](../security-practices-guide.md)
+- [AeroSuite Developer Security Checklist](../developer-security-checklist.md)
+
+## Feedback and Continuous Improvement
+
+We continuously improve our security training program based on:
+
+1. Participant feedback
+2. Emerging security threats
+3. Changes in our technology stack
+4. Security incident lessons learned
+5. Industry best practices
+
+Please submit feedback and suggestions for improvement to the security team. 

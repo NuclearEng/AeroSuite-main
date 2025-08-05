@@ -1,0 +1,65 @@
+name: Dependency Vulnerability Scan
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Run every Sunday at midnight
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'client/package.json'
+      - 'client/package-lock.json'
+      - 'server/package.json'
+      - 'server/package-lock.json'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'client/package.json'
+      - 'client/package-lock.json'
+      - 'server/package.json'
+      - 'server/package-lock.json'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  vulnerability-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm ci
+          cd client && npm ci
+          cd ../server && npm ci
+          
+      - name: Make scan script executable
+        run: chmod +x scripts/security-scan.js
+        
+      - name: Run vulnerability scan
+        run: node scripts/security-scan.js
+        env:
+          MAX_ALLOWED_SEVERITY: 'high'  # Set the threshold for failing the build
+          IGNORE_DEV_DEPENDENCIES: 'false'
+          
+      - name: Upload Dependency Scan Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-scan-report
+          path: security-reports/dependencies
+          retention-days: 30
+          
+      - name: Notify if critical vulnerabilities found
+        if: ${{ failure() }}
+        run: |
+          echo "::warning::Critical vulnerabilities found in dependencies. Check the artifact for details." 

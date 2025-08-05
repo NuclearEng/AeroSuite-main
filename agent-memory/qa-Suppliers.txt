@@ -1,0 +1,5 @@
+Manual: Manual QA checklist for Suppliers
+
+Exploratory: Exploratory QA for Suppliers
+
+Regression: Regression QA for Suppliers

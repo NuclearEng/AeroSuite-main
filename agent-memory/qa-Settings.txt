@@ -1,0 +1,5 @@
+Manual: Manual QA checklist for Settings
+
+Exploratory: Exploratory QA for Settings
+
+Regression: Regression QA for Settings

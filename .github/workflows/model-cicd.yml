@@ -1,0 +1,638 @@
+name: ML Model CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'ml-models/**'
+      - 'server/src/ai/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'ml-models/**'
+      - 'server/src/ai/**'
+  workflow_dispatch:
+    inputs:
+      modelName:
+        description: 'Model name'
+        required: true
+      modelVersion:
+        description: 'Model version'
+        required: true
+      datasetIds:
+        description: 'Dataset IDs (comma-separated)'
+        required: false
+        default: ''
+
+jobs:
+  validate:
+    name: Validate Model
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd server
+          npm install
+      
+      - name: Setup ML directories
+        run: |
+          mkdir -p ml-models
+          mkdir -p ml-datasets
+          mkdir -p ml-evaluations
+          mkdir -p ml-registry
+          mkdir -p ml-pipelines
+      
+      - name: Determine model details
+        id: model-details
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "MODEL_NAME=${{ github.event.inputs.modelName }}" >> $GITHUB_ENV
+            echo "MODEL_VERSION=${{ github.event.inputs.modelVersion }}" >> $GITHUB_ENV
+            echo "DATASET_IDS=${{ github.event.inputs.datasetIds }}" >> $GITHUB_ENV
+          else
+            # Extract model details from commit
+            CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
+            MODEL_PATH=$(echo "$CHANGED_FILES" | grep -E "^ml-models/[^/]+/[^/]+/" | head -n 1)
+            if [ -n "$MODEL_PATH" ]; then
+              MODEL_NAME=$(echo "$MODEL_PATH" | cut -d'/' -f2)
+              MODEL_VERSION=$(echo "$MODEL_PATH" | cut -d'/' -f3)
+              echo "MODEL_NAME=$MODEL_NAME" >> $GITHUB_ENV
+              echo "MODEL_VERSION=$MODEL_VERSION" >> $GITHUB_ENV
+              echo "Detected model: $MODEL_NAME@$MODEL_VERSION"
+            else
+              echo "No model changes detected"
+              exit 0
+            fi
+          fi
+      
+      - name: Run model validation
+        env:
+          MONGODB_URI: mongodb://localhost:27017/aerosuite-test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test_jwt_secret
+          NODE_ENV: test
+          MODEL_NAME: ${{ env.MODEL_NAME }}
+          MODEL_VERSION: ${{ env.MODEL_VERSION }}
+          DATASET_IDS: ${{ env.DATASET_IDS }}
+          GIT_SHA: ${{ github.sha }}
+          GIT_REF_NAME: ${{ github.ref_name }}
+          GIT_RUN_ID: ${{ github.run_id }}
+        run: |
+          cd server
+          node -e "
+            const { ModelCICDService, PipelineStage } = require('./src/ai/services/ModelCICDService');
+            const { ModelRegistry } = require('./src/ai/services/ModelRegistry');
+            const { ModelEvaluationService } = require('./src/ai/services/ModelEvaluationService');
+            
+            async function runValidation() {
+              try {
+                console.log('Starting model validation');
+                
+                const modelRegistry = new ModelRegistry();
+                const modelEvaluationService = new ModelEvaluationService();
+                const cicdService = new ModelCICDService({
+                  modelRegistry,
+                  modelEvaluationService
+                });
+                
+                // Create or get model in registry
+                let model;
+                try {
+                  model = await modelRegistry.getModelVersion(process.env.MODEL_NAME, process.env.MODEL_VERSION);
+                } catch (error) {
+                  // Register model if not found
+                  await modelRegistry.registerModel(process.env.MODEL_NAME, {
+                    description: 'Model registered by CI/CD pipeline'
+                  });
+                  
+                  model = await modelRegistry.addModelVersion(process.env.MODEL_NAME, process.env.MODEL_VERSION, {
+                    description: 'Version created by CI/CD pipeline',
+                    path: \`ml-models/\${process.env.MODEL_NAME}/\${process.env.MODEL_VERSION}\`,
+                    gitCommit: process.env.GIT_SHA,
+                    gitBranch: process.env.GIT_REF_NAME
+                  });
+                }
+                
+                console.log('Model in registry:', model);
+                
+                // Register test dataset if needed
+                const datasetIds = process.env.DATASET_IDS.split(',').filter(Boolean);
+                if (datasetIds.length === 0) {
+                  // Create a test dataset
+                  const testDatasetId = \`test-dataset-\${process.env.GIT_RUN_ID}\`;
+                  await modelEvaluationService.registerDataset(testDatasetId, null, {
+                    name: 'Test Dataset',
+                    description: 'Test dataset created by CI/CD pipeline',
+                    type: 'classification',
+                    format: 'csv'
+                  });
+                  datasetIds.push(testDatasetId);
+                }
+                
+                // Create pipeline
+                const pipeline = await cicdService.createPipeline(
+                  \`CI/CD Pipeline for \${process.env.MODEL_NAME}@\${process.env.MODEL_VERSION}\`,
+                  process.env.MODEL_NAME,
+                  process.env.MODEL_VERSION,
+                  {
+                    stages: [PipelineStage.VALIDATION],
+                    evaluationDatasets: {
+                      validation: datasetIds[0]
+                    },
+                    thresholds: {
+                      validation: {
+                        accuracy: { operator: '>=', value: 0.7 }
+                      }
+                    },
+                    tags: ['ci-cd', 'github-actions'],
+                    gitCommit: process.env.GIT_SHA,
+                    gitBranch: process.env.GIT_REF_NAME
+                  }
+                );
+                
+                console.log('Pipeline created:', pipeline);
+                
+                // Start pipeline
+                await cicdService.startPipeline(pipeline.id);
+                console.log('Pipeline started');
+                
+                // Wait for pipeline to complete (simplified)
+                let currentPipeline;
+                do {
+                  await new Promise(resolve => setTimeout(resolve, 1000));
+                  currentPipeline = await cicdService.getPipeline(pipeline.id);
+                  console.log('Pipeline status:', currentPipeline.status);
+                } while (currentPipeline.status === 'running');
+                
+                console.log('Pipeline completed with status:', currentPipeline.status);
+                console.log('Stage results:', JSON.stringify(currentPipeline.stageResults, null, 2));
+                
+                if (currentPipeline.status !== 'completed') {
+                  console.error('Pipeline failed');
+                  process.exit(1);
+                }
+                
+                console.log('Model validation successful');
+              } catch (error) {
+                console.error('Model validation failed:', error);
+                process.exit(1);
+              }
+            }
+            
+            runValidation();
+          "
+      
+      - name: Upload validation results
+        uses: actions/upload-artifact@v3
+        with:
+          name: model-validation-results
+          path: ml-evaluations/
+  
+  test:
+    name: Test Model
+    runs-on: ubuntu-latest
+    needs: validate
+    if: success()
+    
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd server
+          npm install
+      
+      - name: Download validation results
+        uses: actions/download-artifact@v3
+        with:
+          name: model-validation-results
+          path: ml-evaluations/
+      
+      - name: Run model testing
+        env:
+          MONGODB_URI: mongodb://localhost:27017/aerosuite-test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test_jwt_secret
+          NODE_ENV: test
+          MODEL_NAME: ${{ env.MODEL_NAME }}
+          MODEL_VERSION: ${{ env.MODEL_VERSION }}
+          GIT_SHA: ${{ github.sha }}
+          GIT_REF_NAME: ${{ github.ref_name }}
+          GIT_RUN_ID: ${{ github.run_id }}
+        run: |
+          cd server
+          node -e "
+            const { ModelCICDService, PipelineStage } = require('./src/ai/services/ModelCICDService');
+            const { ModelRegistry } = require('./src/ai/services/ModelRegistry');
+            const { ModelEvaluationService } = require('./src/ai/services/ModelEvaluationService');
+            
+            async function runTesting() {
+              try {
+                console.log('Starting model testing');
+                
+                const modelRegistry = new ModelRegistry();
+                const modelEvaluationService = new ModelEvaluationService();
+                const cicdService = new ModelCICDService({
+                  modelRegistry,
+                  modelEvaluationService
+                });
+                
+                // Get model from registry
+                const model = await modelRegistry.getModelVersion(process.env.MODEL_NAME, process.env.MODEL_VERSION);
+                console.log('Model in registry:', model);
+                
+                // Create test dataset
+                const testDatasetId = \`test-dataset-\${process.env.GIT_RUN_ID}-test\`;
+                await modelEvaluationService.registerDataset(testDatasetId, null, {
+                  name: 'Test Dataset for Testing',
+                  description: 'Test dataset created by CI/CD pipeline for testing stage',
+                  type: 'classification',
+                  format: 'csv'
+                });
+                
+                // Create pipeline for testing stage
+                const pipeline = await cicdService.createPipeline(
+                  \`CI/CD Testing Pipeline for \${process.env.MODEL_NAME}@\${process.env.MODEL_VERSION}\`,
+                  process.env.MODEL_NAME,
+                  process.env.MODEL_VERSION,
+                  {
+                    stages: [PipelineStage.TESTING],
+                    evaluationDatasets: {
+                      testing: testDatasetId
+                    },
+                    thresholds: {
+                      testing: {
+                        accuracy: { operator: '>=', value: 0.7 },
+                        f1Score: { operator: '>=', value: 0.7 }
+                      }
+                    },
+                    tags: ['ci-cd', 'github-actions', 'testing'],
+                    gitCommit: process.env.GIT_SHA,
+                    gitBranch: process.env.GIT_REF_NAME
+                  }
+                );
+                
+                console.log('Pipeline created:', pipeline);
+                
+                // Start pipeline
+                await cicdService.startPipeline(pipeline.id);
+                console.log('Pipeline started');
+                
+                // Wait for pipeline to complete
+                let currentPipeline;
+                do {
+                  await new Promise(resolve => setTimeout(resolve, 1000));
+                  currentPipeline = await cicdService.getPipeline(pipeline.id);
+                  console.log('Pipeline status:', currentPipeline.status);
+                } while (currentPipeline.status === 'running');
+                
+                console.log('Pipeline completed with status:', currentPipeline.status);
+                console.log('Stage results:', JSON.stringify(currentPipeline.stageResults, null, 2));
+                
+                if (currentPipeline.status !== 'completed') {
+                  console.error('Pipeline failed');
+                  process.exit(1);
+                }
+                
+                console.log('Model testing successful');
+              } catch (error) {
+                console.error('Model testing failed:', error);
+                process.exit(1);
+              }
+            }
+            
+            runTesting();
+          "
+      
+      - name: Upload testing results
+        uses: actions/upload-artifact@v3
+        with:
+          name: model-testing-results
+          path: ml-evaluations/
+  
+  staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: test
+    if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd server
+          npm install
+      
+      - name: Download testing results
+        uses: actions/download-artifact@v3
+        with:
+          name: model-testing-results
+          path: ml-evaluations/
+      
+      - name: Deploy model to staging
+        env:
+          MONGODB_URI: mongodb://localhost:27017/aerosuite-test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test_jwt_secret
+          NODE_ENV: test
+          MODEL_NAME: ${{ env.MODEL_NAME }}
+          MODEL_VERSION: ${{ env.MODEL_VERSION }}
+          GIT_SHA: ${{ github.sha }}
+          GIT_REF_NAME: ${{ github.ref_name }}
+          GIT_RUN_ID: ${{ github.run_id }}
+        run: |
+          cd server
+          node -e "
+            const { ModelCICDService, PipelineStage } = require('./src/ai/services/ModelCICDService');
+            const { ModelRegistry, ModelStage } = require('./src/ai/services/ModelRegistry');
+            const { ModelEvaluationService } = require('./src/ai/services/ModelEvaluationService');
+            
+            async function deployToStaging() {
+              try {
+                console.log('Starting model deployment to staging');
+                
+                const modelRegistry = new ModelRegistry();
+                const modelEvaluationService = new ModelEvaluationService();
+                const cicdService = new ModelCICDService({
+                  modelRegistry,
+                  modelEvaluationService
+                });
+                
+                // Get model from registry
+                const model = await modelRegistry.getModelVersion(process.env.MODEL_NAME, process.env.MODEL_VERSION);
+                console.log('Model in registry:', model);
+                
+                // Create staging dataset
+                const stagingDatasetId = \`staging-dataset-\${process.env.GIT_RUN_ID}\`;
+                await modelEvaluationService.registerDataset(stagingDatasetId, null, {
+                  name: 'Staging Dataset',
+                  description: 'Staging dataset created by CI/CD pipeline',
+                  type: 'classification',
+                  format: 'csv'
+                });
+                
+                // Create pipeline for staging
+                const pipeline = await cicdService.createPipeline(
+                  \`CI/CD Staging Pipeline for \${process.env.MODEL_NAME}@\${process.env.MODEL_VERSION}\`,
+                  process.env.MODEL_NAME,
+                  process.env.MODEL_VERSION,
+                  {
+                    stages: [PipelineStage.STAGING],
+                    evaluationDatasets: {
+                      staging: stagingDatasetId
+                    },
+                    thresholds: {
+                      staging: {
+                        accuracy: { operator: '>=', value: 0.75 }
+                      }
+                    },
+                    tags: ['ci-cd', 'github-actions', 'staging'],
+                    gitCommit: process.env.GIT_SHA,
+                    gitBranch: process.env.GIT_REF_NAME
+                  }
+                );
+                
+                console.log('Pipeline created:', pipeline);
+                
+                // Start pipeline
+                await cicdService.startPipeline(pipeline.id);
+                console.log('Pipeline started');
+                
+                // Wait for pipeline to complete
+                let currentPipeline;
+                do {
+                  await new Promise(resolve => setTimeout(resolve, 1000));
+                  currentPipeline = await cicdService.getPipeline(pipeline.id);
+                  console.log('Pipeline status:', currentPipeline.status);
+                } while (currentPipeline.status === 'running');
+                
+                console.log('Pipeline completed with status:', currentPipeline.status);
+                console.log('Stage results:', JSON.stringify(currentPipeline.stageResults, null, 2));
+                
+                if (currentPipeline.status !== 'completed') {
+                  console.error('Pipeline failed');
+                  process.exit(1);
+                }
+                
+                // Update model status to staging
+                await modelRegistry.updateModelVersionStage(
+                  process.env.MODEL_NAME,
+                  process.env.MODEL_VERSION,
+                  ModelStage.STAGING
+                );
+                
+                console.log('Model deployed to staging successfully');
+              } catch (error) {
+                console.error('Model deployment to staging failed:', error);
+                process.exit(1);
+              }
+            }
+            
+            deployToStaging();
+          "
+      
+      - name: Upload staging results
+        uses: actions/upload-artifact@v3
+        with:
+          name: model-staging-results
+          path: ml-evaluations/
+  
+  production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: staging
+    if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: |
+          cd server
+          npm install
+      
+      - name: Download staging results
+        uses: actions/download-artifact@v3
+        with:
+          name: model-staging-results
+          path: ml-evaluations/
+      
+      - name: Deploy model to production
+        env:
+          MONGODB_URI: mongodb://localhost:27017/aerosuite-test
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test_jwt_secret
+          NODE_ENV: test
+          MODEL_NAME: ${{ env.MODEL_NAME }}
+          MODEL_VERSION: ${{ env.MODEL_VERSION }}
+          GIT_SHA: ${{ github.sha }}
+          GIT_REF_NAME: ${{ github.ref_name }}
+          GIT_RUN_ID: ${{ github.run_id }}
+        run: |
+          cd server
+          node -e "
+            const { ModelCICDService, PipelineStage } = require('./src/ai/services/ModelCICDService');
+            const { ModelRegistry, ModelStage } = require('./src/ai/services/ModelRegistry');
+            const { ModelEvaluationService } = require('./src/ai/services/ModelEvaluationService');
+            
+            async function deployToProduction() {
+              try {
+                console.log('Starting model deployment to production');
+                
+                const modelRegistry = new ModelRegistry();
+                const modelEvaluationService = new ModelEvaluationService();
+                const cicdService = new ModelCICDService({
+                  modelRegistry,
+                  modelEvaluationService
+                });
+                
+                // Get model from registry
+                const model = await modelRegistry.getModelVersion(process.env.MODEL_NAME, process.env.MODEL_VERSION);
+                console.log('Model in registry:', model);
+                
+                // Create production dataset
+                const productionDatasetId = \`production-dataset-\${process.env.GIT_RUN_ID}\`;
+                await modelEvaluationService.registerDataset(productionDatasetId, null, {
+                  name: 'Production Dataset',
+                  description: 'Production dataset created by CI/CD pipeline',
+                  type: 'classification',
+                  format: 'csv'
+                });
+                
+                // Create pipeline for production
+                const pipeline = await cicdService.createPipeline(
+                  \`CI/CD Production Pipeline for \${process.env.MODEL_NAME}@\${process.env.MODEL_VERSION}\`,
+                  process.env.MODEL_NAME,
+                  process.env.MODEL_VERSION,
+                  {
+                    stages: [PipelineStage.PRODUCTION],
+                    evaluationDatasets: {
+                      production: productionDatasetId
+                    },
+                    thresholds: {
+                      production: {
+                        accuracy: { operator: '>=', value: 0.8 }
+                      }
+                    },
+                    tags: ['ci-cd', 'github-actions', 'production'],
+                    gitCommit: process.env.GIT_SHA,
+                    gitBranch: process.env.GIT_REF_NAME
+                  }
+                );
+                
+                console.log('Pipeline created:', pipeline);
+                
+                // Start pipeline
+                await cicdService.startPipeline(pipeline.id);
+                console.log('Pipeline started');
+                
+                // Wait for pipeline to complete
+                let currentPipeline;
+                do {
+                  await new Promise(resolve => setTimeout(resolve, 1000));
+                  currentPipeline = await cicdService.getPipeline(pipeline.id);
+                  console.log('Pipeline status:', currentPipeline.status);
+                } while (currentPipeline.status === 'running');
+                
+                console.log('Pipeline completed with status:', currentPipeline.status);
+                console.log('Stage results:', JSON.stringify(currentPipeline.stageResults, null, 2));
+                
+                if (currentPipeline.status !== 'completed') {
+                  console.error('Pipeline failed');
+                  process.exit(1);
+                }
+                
+                // Update model status to production
+                await modelRegistry.updateModelVersionStage(
+                  process.env.MODEL_NAME,
+                  process.env.MODEL_VERSION,
+                  ModelStage.PRODUCTION
+                );
+                
+                console.log('Model deployed to production successfully');
+              } catch (error) {
+                console.error('Model deployment to production failed:', error);
+                process.exit(1);
+              }
+            }
+            
+            deployToProduction();
+          "
+      
+      - name: Upload production results
+        uses: actions/upload-artifact@v3
+        with:
+          name: model-production-results
+          path: ml-evaluations/ 

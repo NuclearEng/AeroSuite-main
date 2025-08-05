@@ -1,0 +1,99 @@
+# Stage 1: Build the client
+FROM node:20-alpine AS client-builder
+
+# Install build tools including Python for node-gyp
+RUN apk add --no-cache python3 make g++ pkgconfig pixman-dev cairo-dev pango-dev libjpeg-turbo-dev giflib-dev
+
+# Set up workspace
+WORKDIR /app
+
+# Copy root package files for workspaces
+COPY package*.json ./
+COPY .npmrc ./
+
+# Copy client package.json and .npmrc
+COPY client/package.json ./client/
+COPY client/.npmrc ./client/
+
+# Install all dependencies including dev for build (skip Cypress and Puppeteer)
+ENV CYPRESS_INSTALL_BINARY=0
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+RUN npm install
+
+# Copy client source
+COPY client/ ./client/
+
+# Build client
+RUN cd client && npm run build
+
+# Stage 2: Build the server
+FROM node:20-alpine AS server-builder
+
+# Install build tools including Python
+RUN apk add --no-cache python3 make g++ pkgconfig pixman-dev cairo-dev pango-dev libjpeg-turbo-dev giflib-dev
+
+# Set up workspace
+WORKDIR /app
+
+# Copy root package files for workspaces
+COPY package*.json ./
+COPY .npmrc ./
+
+# Copy server package.json and .npmrc
+COPY server/package.json ./server/
+COPY server/.npmrc ./server/
+
+# Install dependencies from root (skip Cypress and Puppeteer downloads)
+ENV CYPRESS_INSTALL_BINARY=0
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+RUN npm install
+
+# Copy server source
+COPY server/ ./server/
+
+# Stage 3: Production image
+FROM node:20-alpine AS production
+
+# Install runtime dependencies
+RUN apk add --no-cache dumb-init libmount pixman cairo pango giflib libjpeg-turbo
+
+# Create app user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs
+
+# Create app directories
+RUN mkdir -p /app /app/logs /app/uploads && \
+    chown -R nodejs:nodejs /app
+
+# Set working directory and switch to non-root user
+WORKDIR /app
+USER nodejs
+
+# Copy root package files for workspaces
+COPY --chown=nodejs:nodejs package*.json ./
+COPY --chown=nodejs:nodejs .npmrc ./
+
+# Copy server package.json and .npmrc
+COPY --chown=nodejs:nodejs server/package.json ./server/
+COPY --chown=nodejs:nodejs server/.npmrc ./server/
+
+# Install production dependencies from root
+RUN npm install --only=production && npm cache clean --force
+
+# Copy built client and server files
+COPY --chown=nodejs:nodejs --from=client-builder /app/client/build ./client/build
+COPY --chown=nodejs:nodejs --from=server-builder /app/server/src ./src
+COPY --chown=nodejs:nodejs --from=server-builder /app/server/env.example ./.env.example
+
+# Expose port
+EXPOSE 5000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:5000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"
+
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start the application
+CMD ["node", "src/production-server.js"]

@@ -1,0 +1,225 @@
+# AeroSuite Performance Testing
+
+This document describes the performance testing system for AeroSuite, which is designed to measure and monitor the application's performance, identify bottlenecks, and ensure that the system meets performance requirements.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Test Types](#test-types)
+- [Running Performance Tests](#running-performance-tests)
+- [Test Configuration](#test-configuration)
+- [Analyzing Results](#analyzing-results)
+- [Continuous Integration](#continuous-integration)
+- [Custom Tests](#custom-tests)
+- [Troubleshooting](#troubleshooting)
+
+## Overview
+
+The AeroSuite performance testing system provides comprehensive testing capabilities for:
+
+- API endpoint performance
+- Frontend component rendering and load times
+- Database query performance
+- System-wide load testing
+
+The system generates detailed reports showing test results, performance metrics, and recommendations for improvement.
+
+## Test Types
+
+### API Performance Tests
+
+These tests measure API endpoint response times, throughput, and error rates under load. The system tests multiple endpoints and provides both individual and aggregate metrics.
+
+Key metrics:
+- Average response time
+- Requests per second
+- Error rate
+- P95 and P99 response times
+
+### Frontend Performance Tests
+
+These tests measure frontend component rendering performance and page load times using headless browser automation.
+
+Key metrics:
+- First paint time
+- First contentful paint time
+- DOM content loaded time
+- Total page load time
+- Component render times
+- JavaScript heap usage
+
+### Database Performance Tests
+
+These tests measure database query performance by executing common queries and measuring execution time.
+
+Key metrics:
+- Average query time
+- Slowest query
+- Query result counts
+- Database server metrics
+
+### System Load Tests
+
+These tests simulate multiple concurrent users performing various actions to measure system performance under load.
+
+Key metrics:
+- Sustainable requests per second
+- Peak response times
+- CPU and memory utilization
+- Error rates under load
+
+## Running Performance Tests
+
+### Prerequisites
+
+- Node.js 16 or higher
+- MongoDB running
+- AeroSuite server and client installed
+
+### Command Line Usage
+
+The main script for running performance tests is `scripts/performance-test.js`. Here's how to use it:
+
+```bash
+node scripts/performance-test.js [options]
+```
+
+Options:
+- `--api` - Run API performance tests only
+- `--frontend` - Run frontend performance tests only
+- `--database` - Run database performance tests only
+- `--full` - Run all performance tests (default)
+- `--duration <seconds>` - Test duration in seconds (default: 60)
+- `--users <number>` - Simulated concurrent users (default: 10)
+- `--ramp-up <seconds>` - Time to ramp up to full user load (default: 10)
+- `--output <format>` - Output format: json, html, console (default: console)
+- `--report <path>` - Path to save the report (default: ./performance-reports)
+- `--verbose` - Enable verbose output
+- `--help` - Show help message
+
+### Examples
+
+Run a quick API performance test:
+```bash
+node scripts/performance-test.js --api --duration 30 --users 5
+```
+
+Run a comprehensive performance test with HTML report:
+```bash
+node scripts/performance-test.js --full --duration 120 --users 20 --output html
+```
+
+Test specific API endpoints:
+```bash
+node scripts/performance-test.js --api --endpoints /api/suppliers,/api/customers
+```
+
+Test specific frontend components:
+```bash
+node scripts/performance-test.js --frontend --components dashboard,suppliers
+```
+
+## Test Configuration
+
+### Environment Variables
+
+- `API_URL` - Base URL for API tests (default: http://localhost:5000)
+- `FRONTEND_URL` - Base URL for frontend tests (default: http://localhost:3000)
+- `MONGODB_URI` - MongoDB connection string (default: mongodb://localhost:27017/aerosuite)
+- `SERVER_PID` - Process ID of the server for resource monitoring
+
+### Test Data
+
+The performance tests use test data that matches the format of the application's production data. Test fixtures are created automatically when needed.
+
+## Analyzing Results
+
+Performance test results are saved in the specified report directory (default: `./performance-reports`).
+
+### Report Formats
+
+- **Console**: Basic summary printed to the console
+- **JSON**: Complete test results in JSON format for programmatic analysis
+- **HTML**: Interactive HTML report with charts and tables
+
+### Key Performance Indicators (KPIs)
+
+The following KPIs are tracked in the performance reports:
+
+1. **API Performance**
+   - Target: < 200ms average response time
+   - Target: < 1% error rate
+   - Target: > 100 requests/second
+
+2. **Frontend Performance**
+   - Target: < 1s average page load time
+   - Target: < 50ms average component render time
+   - Target: < 100MB JavaScript heap usage
+
+3. **Database Performance**
+   - Target: < 50ms average query time
+   - Target: < 200ms slowest query time
+
+4. **System Performance**
+   - Target: > 50 sustainable requests/second
+   - Target: < 500ms average response time under load
+   - Target: < 80% CPU utilization
+   - Target: < 2GB memory usage
+
+## Continuous Integration
+
+Performance tests can be run automatically using GitHub Actions. The workflow is defined in `.github/workflows/performance-tests.yml`.
+
+### Scheduled Tests
+
+Performance tests run automatically every Monday at 1:00 AM to track performance over time.
+
+### Manual Triggers
+
+You can manually trigger performance tests from the GitHub Actions tab by selecting the "Performance Tests" workflow and clicking "Run workflow."
+
+### Test Results
+
+Test reports are saved as GitHub Actions artifacts and can be downloaded for analysis.
+
+## Custom Tests
+
+### Adding Custom API Endpoints
+
+To add custom API endpoints to test, modify the `DEFAULT_ENDPOINTS` array in `scripts/performance/api-performance.js`.
+
+### Adding Custom Frontend Pages
+
+To add custom frontend pages to test, modify the `DEFAULT_PAGES` array in `scripts/performance/frontend-performance.js`.
+
+### Adding Custom Database Queries
+
+To add custom database queries to test, modify the `DEFAULT_QUERIES` array in `scripts/performance/database-performance.js`.
+
+### Adding Custom Load Test Scenarios
+
+To add custom load test scenarios, modify the `DEFAULT_SCENARIOS` array in `scripts/performance/system-load-test.js`.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Error: Could not connect to database**
+   - Ensure MongoDB is running
+   - Check the MongoDB connection string
+
+2. **Error: Could not get authentication token**
+   - Ensure the server is running
+   - Check that the test user credentials are valid
+
+3. **Error: Could not launch headless browser**
+   - Ensure puppeteer dependencies are installed
+   - Try running with `--no-sandbox` option
+
+4. **Slow test execution**
+   - Reduce the test duration or number of users
+   - Run tests on a more powerful machine
+
+### Getting Help
+
+For more help, please contact the AeroSuite development team or open an issue on the project repository. 

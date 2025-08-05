@@ -1,0 +1,40 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'aerosuite_server'
+    metrics_path: '/api/monitoring/metrics'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['aerosuite-server:5000']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        regex: '(.*)'
+        replacement: '$1'
+
+  # Comment out these exporters since they're not in our docker-compose.yml
+  # - job_name: 'node_exporter'
+  #   static_configs:
+  #     - targets: ['node-exporter:9100']
+
+  # - job_name: 'mongodb_exporter'
+  #   scrape_interval: 10s
+  #   static_configs:
+  #     - targets: ['mongodb-exporter:9216']
+  #   metrics_path: '/metrics'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml" 

@@ -1,0 +1,288 @@
+# Database Schema Optimization
+
+This document outlines the database schema optimization plan implemented as part of RF029 in the AeroSuite project.
+
+## Overview
+
+The AeroSuite application uses MongoDB as its primary database, with Mongoose as the ODM (Object-Document Mapper). After reviewing the current schema design, we've identified several areas for optimization to improve performance, reduce storage requirements, and enhance query efficiency.
+
+## Current Schema Analysis
+
+### Key Issues Identified
+
+1. **Inconsistent Indexing Strategy**: Some collections have appropriate indexes while others are missing critical indexes for commonly queried fields.
+
+2. **Nested Array Growth**: Several models contain unbounded arrays that can grow indefinitely, potentially causing performance issues.
+
+3. **Redundant Data**: Some models store redundant data that could be normalized or computed.
+
+4. **Inconsistent Schema Design**: Variations in field naming conventions and structure across models.
+
+5. **Missing Compound Indexes**: Queries that filter on multiple fields lack compound indexes.
+
+6. **Text Search Performance**: Text search indexes are defined but not optimized for common search patterns.
+
+7. **Lack of Schema Validation**: Some schemas lack proper validation rules.
+
+## Optimization Plan
+
+### 1. Index Optimization
+
+#### Add Strategic Indexes
+
+```javascript
+// Supplier model
+supplierSchema.index({ status: 1 }); // Frequently filtered by status
+supplierSchema.index({ type: 1 }); // Frequently filtered by type
+supplierSchema.index({ 'address.country': 1 }); // Geographical queries
+supplierSchema.index({ overallRating: -1 }); // Sorting by rating
+
+// Customer model
+customerSchema.index({ status: 1 }); // Frequently filtered by status
+customerSchema.index({ industry: 1 }); // Filtered by industry
+customerSchema.index({ serviceLevel: 1 }); // Filtered by service level
+customerSchema.index({ 'billingAddress.country': 1 }); // Geographical queries
+
+// Component model
+componentSchema.index({ status: 1 }); // Frequently filtered by status
+componentSchema.index({ customerId: 1, supplierId: 1 }); // Common query pattern
+componentSchema.index({ 'materialInfo.material': 1 }); // Material-based queries
+
+// User model
+userSchema.index({ role: 1, isActive: 1 }); // Common filtering pattern
+userSchema.index({ customerId: 1, role: 1 }); // Customer-specific user queries
+```
+
+#### Optimize Text Indexes
+
+```javascript
+// Supplier model - weighted text index
+supplierSchema.index(
+  { name: 'text', description: 'text', tags: 'text' },
+  { weights: { name: 10, description: 5, tags: 3 } }
+);
+
+// Component model - weighted text index
+componentSchema.index(
+  { name: 'text', partNumber: 'text', description: 'text', tags: 'text' },
+  { weights: { partNumber: 10, name: 8, description: 3, tags: 2 } }
+);
+```
+
+### 2. Schema Structure Optimization
+
+#### Limit Array Sizes
+
+```javascript
+// Inspection model - limit array sizes
+const MAX_CHECKLIST_ITEMS = 100;
+const MAX_DEFECTS = 50;
+const MAX_ATTACHMENTS = 20;
+
+inspectionSchema.path('checklistItems').validate(function(value) {
+  return value.length <= MAX_CHECKLIST_ITEMS;
+}, `Checklist cannot have more than ${MAX_CHECKLIST_ITEMS} items`);
+
+inspectionSchema.path('defects').validate(function(value) {
+  return value.length <= MAX_DEFECTS;
+}, `Cannot have more than ${MAX_DEFECTS} defects`);
+
+inspectionSchema.path('attachments').validate(function(value) {
+  return value.length <= MAX_ATTACHMENTS;
+}, `Cannot have more than ${MAX_ATTACHMENTS} attachments`);
+```
+
+#### Optimize Embedded Documents
+
+```javascript
+// User model - separate login history to a different collection for large user bases
+const LoginHistory = mongoose.model('LoginHistory', new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+    index: true
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+    index: true
+  },
+  ipAddress: String,
+  userAgent: String,
+  success: Boolean,
+  method: {
+    type: String,
+    enum: ['password', 'sso', 'refreshToken', '2fa'],
+    default: 'password'
+  },
+  failureReason: String
+}));
+
+// Keep only recent login history in user document
+userSchema.pre('save', async function() {
+  if (this.loginHistory && this.loginHistory.length > 10) {
+    this.loginHistory = this.loginHistory.slice(-10);
+  }
+});
+```
+
+### 3. Data Type and Field Optimization
+
+#### Optimize Field Types
+
+```javascript
+// Use appropriate data types
+supplierSchema.add({
+  qualityRating: {
+    type: Number,
+    min: 0,
+    max: 5,
+    get: v => Math.round(v * 10) / 10, // Round to 1 decimal place
+    set: v => Math.round(v * 10) / 10  // Round to 1 decimal place
+  }
+});
+
+// Use appropriate field sizes
+customerSchema.add({
+  description: {
+    type: String,
+    trim: true,
+    maxlength: 2000 // Limit description length
+  }
+});
+```
+
+#### Add Schema Validation
+
+```javascript
+// Add validation to inspection schema
+inspectionSchema.path('quantity').validate(function(value) {
+  return value >= 0;
+}, 'Quantity must be a non-negative number');
+
+// Add validation to component schema
+componentSchema.path('materialInfo.weight').validate(function(value) {
+  return value > 0;
+}, 'Weight must be a positive number');
+```
+
+### 4. Denormalization for Performance
+
+#### Strategic Denormalization
+
+```javascript
+// Add frequently accessed fields from related documents
+inspectionSchema.add({
+  supplierName: {
+    type: String,
+    trim: true
+  },
+  customerName: {
+    type: String,
+    trim: true
+  }
+});
+
+// Update these fields when the related documents change
+inspectionSchema.pre('save', async function() {
+  if (!this.supplierName && this.supplierId) {
+    const supplier = await mongoose.model('Supplier').findById(this.supplierId);
+    if (supplier) {
+      this.supplierName = supplier.name;
+    }
+  }
+  
+  if (!this.customerName && this.customerId) {
+    const customer = await mongoose.model('Customer').findById(this.customerId);
+    if (customer) {
+      this.customerName = customer.name;
+    }
+  }
+});
+```
+
+### 5. Query Optimization
+
+#### Add Projection Hints
+
+```javascript
+// Add projection hints to common queries
+async function getInspectionSummaries() {
+  return await Inspection.find(
+    { status: 'completed' },
+    { 
+      inspectionNumber: 1, 
+      title: 1, 
+      result: 1, 
+      completionDate: 1,
+      supplierName: 1,
+      customerName: 1
+    }
+  ).lean();
+}
+```
+
+#### Implement Pagination
+
+```javascript
+// Implement efficient pagination using _id
+async function getSuppliersPaginated(page = 1, limit = 20, lastId = null) {
+  const query = {};
+  if (lastId) {
+    query._id = { $gt: lastId };
+  }
+  
+  return await Supplier.find(query)
+    .sort({ _id: 1 })
+    .limit(limit)
+    .lean();
+}
+```
+
+## Implementation Plan
+
+### Phase 1: Index Optimization
+
+1. Add missing indexes to all models
+2. Optimize existing text indexes
+3. Add compound indexes for common query patterns
+
+### Phase 2: Schema Structure Optimization
+
+1. Implement array size limits
+2. Extract large embedded arrays to separate collections
+3. Standardize schema design patterns
+
+### Phase 3: Data Type and Field Optimization
+
+1. Review and optimize field types
+2. Add missing validation rules
+3. Implement consistent field naming conventions
+
+### Phase 4: Query Optimization
+
+1. Add projection hints to common queries
+2. Implement efficient pagination
+3. Add query optimization hints
+
+## Performance Metrics
+
+We will measure the following metrics before and after optimization:
+
+1. **Query Response Time**: Average and p95 response time for common queries
+2. **Index Size**: Total size of indexes in the database
+3. **Collection Size**: Size of each collection
+4. **Write Performance**: Average time for document creation and updates
+5. **Index Utilization**: Percentage of queries using indexes
+
+## Monitoring Plan
+
+1. Set up MongoDB performance monitoring
+2. Create dashboards for query performance
+3. Implement alerting for slow queries
+4. Regularly review index usage statistics
+
+## Conclusion
+
+The database schema optimization plan addresses key performance issues in the current schema design. By implementing these optimizations, we expect to see improved query performance, reduced storage requirements, and better scalability for the AeroSuite application. 

@@ -1,0 +1,246 @@
+# Test Report Generation
+
+This document describes the test report generation solution for the AeroSuite application (Task TS357).
+
+## Overview
+
+The test report generation system provides a way to create comprehensive, interactive reports from test results. These reports help track the quality of the application over time, identify trends and issues, and communicate test results to stakeholders.
+
+## Key Features
+
+- **Multiple Output Formats**: Generate reports in HTML, JSON, PDF, or Markdown formats
+- **Interactive Visualizations**: Charts and graphs for test results and code coverage
+- **Test Result Summary**: View a summary of test results including passed, failed, and skipped tests
+- **Code Coverage Integration**: Include code coverage data in reports with visualizations
+- **Trend Visualization**: View historical trends in test results and code coverage
+- **Report Comparison**: Compare current results with previous runs to identify improvements or regressions
+- **Timeline Visualization**: Visualize test execution timeline
+- **CI/CD Integration**: Run in CI mode for automated report generation
+- **Customizable Appearance**: Configure report title, styling, and content
+
+## Components
+
+The solution consists of the following components:
+
+1. **Test Report Generator Class**: `server/src/utils/testReportGenerator.js` - Core class for generating test reports
+2. **Main Report Generator Script**: `scripts/generate-test-report.js` - Command-line script for generating test reports
+3. **Historical Data Tracking**: Tracks test results over time for trend analysis
+4. **Report Templates**: HTML, JSON, and Markdown templates for different output formats
+5. **Visualization Components**: Chart.js integration for interactive visualizations
+
+## Installation
+
+The test report generator uses the following dependencies:
+
+- Jest for running tests and generating test results
+- Jest's coverage reporter for code coverage data
+- Chart.js for visualizations (loaded from CDN in HTML reports)
+- Bootstrap for styling (loaded from CDN in HTML reports)
+
+No additional installation is required as these dependencies are already included in the project.
+
+## Usage
+
+### Command Line Interface
+
+```bash
+# Generate basic HTML report
+node scripts/generate-test-report.js
+
+# Generate report with code coverage
+node scripts/generate-test-report.js --coverage
+
+# Generate report in different formats
+node scripts/generate-test-report.js --format=json
+node scripts/generate-test-report.js --format=markdown
+node scripts/generate-test-report.js --format=pdf
+
+# Generate report with historical data
+node scripts/generate-test-report.js --history
+
+# Generate report with a custom title
+node scripts/generate-test-report.js --title="Sprint 23 Test Report"
+
+# Generate report with timeline visualization
+node scripts/generate-test-report.js --timeline
+
+# Generate report with screenshots
+node scripts/generate-test-report.js --screenshots
+
+# Generate report with a specific coverage threshold
+node scripts/generate-test-report.js --coverage --threshold=80
+
+# Compare with a previous report
+node scripts/generate-test-report.js --compare=./test-reports/latest
+
+# Run in CI mode (no interactive elements)
+node scripts/generate-test-report.js --ci
+```
+
+### Programmatic Usage
+
+You can also use the `TestReportGenerator` class directly in your code:
+
+```javascript
+const TestReportGenerator = require('../server/src/utils/testReportGenerator');
+const testResults = require('./test-results.json');
+const coverageData = require('./coverage/coverage-summary.json');
+
+// Create a report generator
+const reportGenerator = new TestReportGenerator({
+  format: 'html',
+  outputDir: './test-reports',
+  title: 'AeroSuite Test Report',
+  includeCoverage: true,
+  includeHistory: true,
+  includeTimeline: true
+});
+
+// Generate the report
+const reportPath = reportGenerator.generateReport(testResults, coverageData);
+
+console.log(`Report generated: ${reportPath}`);
+```
+
+## Configuration Options
+
+The test report generator supports the following configuration options:
+
+| Option | Description | Default Value |
+|--------|-------------|---------------|
+| `format` | Output format (html, json, markdown, pdf) | `html` |
+| `outputDir` | Output directory | `./test-reports` |
+| `title` | Report title | `AeroSuite Test Report` |
+| `includeCoverage` | Whether to include coverage data | `true` |
+| `includeHistory` | Whether to include historical data | `false` |
+| `compareWith` | Path to previous report for comparison | `null` |
+| `threshold` | Coverage threshold percentage | `70` |
+| `includeScreenshots` | Whether to include screenshots | `false` |
+| `includeTimeline` | Whether to include timeline visualization | `true` |
+
+## Report Formats
+
+### HTML Reports
+
+HTML reports include:
+- Interactive charts for test results and code coverage
+- Detailed test suite and test case information
+- Failure details for failed tests
+- Code coverage data with visual indicators
+- Timeline visualization of test execution
+- Mobile-responsive design
+
+### JSON Reports
+
+JSON reports include:
+- Metadata about the report
+- Summary statistics
+- Detailed test suite and test case information
+- Code coverage data (if included)
+
+### Markdown Reports
+
+Markdown reports include:
+- Summary statistics
+- Test suite and test case information in a readable format
+- Failure details for failed tests
+- Code coverage data in table format
+
+### PDF Reports
+
+PDF reports are generated from HTML reports and include the same information in a printable format.
+
+## Historical Data
+
+When the `--history` option is enabled, the test report generator tracks test results over time in a `history.json` file in the output directory. This allows for trend analysis and comparison between runs.
+
+The historical data includes:
+- Timestamp of each run
+- Summary statistics for each run
+- Code coverage data for each run (if available)
+
+## CI/CD Integration
+
+The test report generator can be integrated into CI/CD pipelines using the `--ci` option, which disables interactive elements and optimizes the report for automated environments.
+
+Example GitHub Actions integration:
+
+```yaml
+name: Test Report
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm ci
+      - name: Generate test report
+        run: node scripts/generate-test-report.js --coverage --ci
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: test-reports/latest
+```
+
+## Best Practices
+
+1. **Include Coverage Data**: Always include coverage data in reports to track code quality.
+2. **Use Historical Data**: Enable historical data tracking to identify trends over time.
+3. **Set Coverage Thresholds**: Use the `--threshold` option to enforce minimum coverage standards.
+4. **Customize Reports**: Use the `--title` option to provide context for each report.
+5. **Integrate with CI/CD**: Automate report generation as part of your CI/CD pipeline.
+6. **Review Regularly**: Schedule regular reviews of test reports to identify issues early.
+
+## Implementation Details
+
+### Test Report Generator Class
+
+The `TestReportGenerator` class (`server/src/utils/testReportGenerator.js`) is the core of the test report generation system. It provides methods for:
+- Generating reports in different formats
+- Processing test results data
+- Creating visualizations
+- Tracking historical data
+- Creating symlinks to the latest report
+
+### Report Generation Script
+
+The `generate-test-report.js` script provides a command-line interface for generating test reports. It:
+- Parses command-line arguments
+- Runs tests using Jest
+- Generates coverage reports if requested
+- Creates a `TestReportGenerator` instance
+- Generates the report
+- Updates historical data if requested
+- Opens the report if not in CI mode
+
+### Visualization
+
+The HTML reports include interactive visualizations using Chart.js:
+- Doughnut chart for test result summary
+- Bar chart for code coverage
+- Bar chart for test execution timeline
+
+### Historical Data Tracking
+
+Historical data is stored in a `history.json` file in the output directory. It includes:
+- Timestamp of each run
+- Summary statistics for each run
+- Code coverage data for each run (if available)
+
+The system keeps the last 30 reports in the history file.
+
+## Conclusion
+
+The test report generation system provides a comprehensive solution for creating, visualizing, and tracking test results. It helps improve code quality by making test results more accessible and actionable. 

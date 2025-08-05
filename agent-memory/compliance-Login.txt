@@ -1,0 +1,5 @@
+Standards: Compliance standards check for Login
+
+Privacy: Privacy/GDPR check for Login
+
+Audit: Audit trail check for Login

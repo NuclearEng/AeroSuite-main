@@ -1,0 +1,5 @@
+Manual: Manual QA checklist for Login
+
+Exploratory: Exploratory QA for Login
+
+Regression: Regression QA for Login

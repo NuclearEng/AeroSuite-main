@@ -1,0 +1,84 @@
+# AeroSuite User Manual
+
+Welcome to the AeroSuite User Manual. This comprehensive guide will help you navigate and utilize all features of the AeroSuite platform effectively.
+
+## How to Use This Manual
+
+This manual is organized by user roles and common tasks. You can:
+
+- Browse the sections below based on your role
+- Use the search function to find specific features
+- Follow step-by-step guides for common workflows
+- Refer to the glossary for terminology
+
+## Quick Start Guides
+
+- [Getting Started Guide](./getting-started.md) - Essential information for new users
+- [Dashboard Overview](./dashboard.md) - Understanding your personalized dashboard
+- [Mobile Access Guide](./mobile-access.md) - Using AeroSuite on mobile devices
+
+## User Role Guides
+
+- [Quality Manager Guide](./roles/quality-manager.md) - For users managing quality processes
+- [Inspector Guide](./roles/inspector.md) - For users conducting inspections
+- [Supplier Manager Guide](./roles/supplier-manager.md) - For users managing supplier relationships
+- [Administrator Guide](./roles/administrator.md) - For system administrators
+
+## Feature Guides
+
+- [Supplier Management](./features/supplier-management.md)
+- [Customer Management](./features/customer-management.md)
+- [Inspection Management](./features/inspection-management.md)
+- [Component Management](./features/component-management.md)
+- [Reporting and Analytics](./features/reporting-analytics.md)
+- [ERP Integration](./features/erp-integration.md)
+- [User Settings and Preferences](./features/user-settings.md)
+
+## Advanced Topics
+
+- [Offline Mode](./advanced/offline-mode.md)
+- [Data Import and Export](./advanced/data-import-export.md)
+- [Custom Reporting](./advanced/custom-reporting.md)
+- [API Access](./advanced/api-access.md)
+- [Security Features](./advanced/security-features.md)
+
+## Multi-Agent QA & Audit System
+
+AeroSuite uses an advanced, automated multi-agent system to ensure the highest standards of quality, security, and user experience. This system:
+- Runs specialized agents for architecture, security, testing, UX/UI, compliance, and more
+- Continuously checks every module and the entire application for issues
+- Learns from previous results to focus on unresolved or high-priority areas
+- Surfaces actionable findings and recommendations to users and administrators
+
+**How it benefits you:**
+- Faster detection and resolution of issues
+- Consistent, best-in-class quality and compliance
+- Adaptive improvement with every code update
+
+**How to view results:**
+- Results are summarized in the dashboard and available in the QA/Audit section
+- For developers/admins: run `npx ts-node automation/orchestrator.ts` to see detailed agent output
+
+See the [Getting Started Guide](./getting-started.md) for more.
+
+## Support Resources
+
+- [Troubleshooting Guide](./support/troubleshooting.md)
+- [Frequently Asked Questions](./support/faq.md)
+- [Contacting Support](./support/contact.md)
+- [Release Notes](./support/release-notes.md)
+
+## Appendices
+
+- [Keyboard Shortcuts](./appendices/keyboard-shortcuts.md)
+- [Glossary](./appendices/glossary.md)
+- [System Requirements](./appendices/system-requirements.md)
+- [File Formats and Compatibility](./appendices/file-formats.md)
+
+## Video Tutorials
+
+Visit our [Video Tutorial Library](https://tutorials.aerosuite.example.com) for step-by-step video guides on using AeroSuite features.
+
+---
+
+*This manual is updated regularly to reflect the latest features and improvements in AeroSuite. Last updated: June 2024.* 

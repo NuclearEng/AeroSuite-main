@@ -1,0 +1,5 @@
+Flows: Business logic flow check for Settings
+
+Rules: Business rules validation for Settings
+
+Edge: Edge case analysis for Settings

@@ -1,0 +1,5 @@
+Structure: Architecture analysis for Settings
+
+Circular: Circular dependency check for Settings
+
+Coupling: Coupling check for Settings

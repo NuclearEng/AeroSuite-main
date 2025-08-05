@@ -1,0 +1,112 @@
+name: Regular Security Scanning
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Run every Monday at 2 AM
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'server/src/**/*.js'
+      - 'client/src/**/*.js'
+      - 'client/src/**/*.jsx'
+      - 'client/src/**/*.ts'
+      - 'client/src/**/*.tsx'
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm ci
+          cd client && npm ci
+          cd ../server && npm ci
+          
+      - name: Install security scanning tools
+        run: |
+          npm install -g eslint
+          npm install chalk ora commander
+          
+      - name: Install OWASP ZAP (if needed)
+        run: |
+          # Only attempt to install ZAP if running a full scan
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            sudo apt-get update
+            sudo apt-get install -y openjdk-11-jre-headless
+            wget https://github.com/zaproxy/zaproxy/releases/download/v2.12.0/ZAP_2.12.0_Linux.tar.gz
+            tar -xvf ZAP_2.12.0_Linux.tar.gz
+            sudo ln -s $(pwd)/ZAP_2.12.0/zap.sh /usr/local/bin/zap.sh
+            sudo pip install zapcli
+          fi
+          
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/regular-security-scan.js
+          chmod +x scripts/owasp-top10-audit.js
+          chmod +x scripts/security-scan.js
+          
+      - name: Run security scan
+        run: node scripts/regular-security-scan.js --full --ci
+        
+      - name: Upload Security Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report
+          path: security-reports
+          retention-days: 30
+          
+      - name: Notify on vulnerabilities
+        if: ${{ failure() }}
+        run: |
+          echo "::warning::Security vulnerabilities found. Check the artifacts for details."
+          
+      - name: Create summary
+        run: |
+          echo "## Security Scan Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Find the latest JSON report
+          LATEST_REPORT=$(ls -t security-reports/security-scan-report-* | grep .json | head -1)
+          
+          if [ -f "$LATEST_REPORT" ]; then
+            # Extract summary information
+            DEPENDENCY_STATUS=$(jq -r '.summary.dependencyScan.status' "$LATEST_REPORT")
+            DEPENDENCY_FINDINGS=$(jq -r '.summary.dependencyScan.findings' "$LATEST_REPORT")
+            
+            CODE_STATUS=$(jq -r '.summary.codeScan.status' "$LATEST_REPORT")
+            CODE_FINDINGS=$(jq -r '.summary.codeScan.findings' "$LATEST_REPORT")
+            
+            API_STATUS=$(jq -r '.summary.apiScan.status' "$LATEST_REPORT")
+            API_FINDINGS=$(jq -r '.summary.apiScan.findings' "$LATEST_REPORT")
+            
+            OWASP_STATUS=$(jq -r '.summary.owaspScan.status' "$LATEST_REPORT")
+            OWASP_FINDINGS=$(jq -r '.summary.owaspScan.findings' "$LATEST_REPORT")
+            OWASP_SCORE=$(jq -r '.summary.owaspScan.complianceScore' "$LATEST_REPORT")
+            
+            SECRETS_STATUS=$(jq -r '.summary.secretsScan.status' "$LATEST_REPORT")
+            SECRETS_FINDINGS=$(jq -r '.summary.secretsScan.findings' "$LATEST_REPORT")
+            
+            # Write summary table
+            echo "| Scan Type | Status | Findings |" >> $GITHUB_STEP_SUMMARY
+            echo "| --- | --- | --- |" >> $GITHUB_STEP_SUMMARY
+            echo "| Dependency Vulnerabilities | $DEPENDENCY_STATUS | $DEPENDENCY_FINDINGS |" >> $GITHUB_STEP_SUMMARY
+            echo "| Static Code Analysis | $CODE_STATUS | $CODE_FINDINGS |" >> $GITHUB_STEP_SUMMARY
+            echo "| API Security | $API_STATUS | $API_FINDINGS |" >> $GITHUB_STEP_SUMMARY
+            echo "| OWASP Top 10 | $OWASP_STATUS | $OWASP_FINDINGS (Score: $OWASP_SCORE%) |" >> $GITHUB_STEP_SUMMARY
+            echo "| Secrets Detection | $SECRETS_STATUS | $SECRETS_FINDINGS |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No security scan report found." >> $GITHUB_STEP_SUMMARY
+          fi 

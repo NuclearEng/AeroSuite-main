@@ -1,0 +1,66 @@
+name: API Security Audit
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Run every Monday at midnight
+  workflow_dispatch:  # Allow manual triggering
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'server/**/*.js'
+      - 'server/**/*.ts'
+      - 'server/routes/**'
+      - 'server/controllers/**'
+      - 'server/middleware/**'
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install -g commander axios
+          
+      - name: Make script executable
+        run: chmod +x scripts/api-security-audit.js
+        
+      - name: Start API server for testing
+        run: |
+          cd server
+          npm ci
+          npm run start:test &
+          sleep 10  # Give the server time to start
+        env:
+          NODE_ENV: test
+          PORT: 3000
+          
+      - name: Run API security audit
+        run: node scripts/api-security-audit.js --target http://localhost:3000 --output api-security-audit-report.json --verbose
+        
+      - name: Upload API Security Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-security-report
+          path: security-reports/api
+          retention-days: 30
+          
+      - name: Fail if critical vulnerabilities found
+        run: |
+          CRITICAL_COUNT=$(node -e "const report = require('./api-security-audit-report.json'); console.log(report.summary.severityCounts.critical + report.summary.severityCounts.high)")
+          if [ "$CRITICAL_COUNT" -gt 0 ]; then
+            echo "::error::Critical or high severity vulnerabilities found in API!"
+            exit 1
+          else
+            echo "No critical vulnerabilities found"
+          fi 

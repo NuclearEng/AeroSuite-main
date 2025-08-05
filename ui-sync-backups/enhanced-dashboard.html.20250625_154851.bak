@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroSuite - Enhanced Business Dashboard</title>
+    <style>
+        :root {
+            /* Apple-inspired color palette */
+            --blue: #0A84FF;
+            --green: #30D158;
+            --red: #FF453A;
+            --orange: #FF9F0A;
+            --purple: #BF5AF2;
+            --text-primary: #1D1D1F;
+            --text-secondary: #515154;
+            --background: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --border-color: #D2D2D7;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display'), local('SFProDisplay');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            font-size: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .btn {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin: 4px;
+        }
+        
+        .btn:hover {
+            background: #0071E3;
+            transform: translateY(-1px);
+        }
+        
+        .btn-success { background: var(--green); }
+        .btn-danger { background: var(--red); }
+        .btn-warning { background: var(--orange); }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            z-index: 10;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .close-btn {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .close-btn:hover {
+            color: var(--red);
+        }
+        
+        .form-section {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        
+        .form-section h3 {
+            margin: 0 0 16px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.2);
+        }
+        
+        .form-group small {
+            display: block;
+            margin-top: 4px;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 32px;
+        }
+        
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 24px;
+            text-align: center;
+            transition: border-color 0.2s;
+            cursor: pointer;
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--blue);
+        }
+        
+        .file-upload-area.dragover {
+            border-color: var(--blue);
+            background-color: rgba(10, 132, 255, 0.1);
+        }
+        
+        .uploaded-files {
+            margin-top: 16px;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .file-item .remove-file {
+            color: var(--red);
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛩️ AeroSuite - Enhanced Business Dashboard</h1>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Suppliers</h2>
+                <p>Manage your supplier network with comprehensive business information</p>
+                <button class="btn" onclick="openModal('add-supplier-modal')">Add New Supplier</button>
+            </div>
+            
+            <div class="card">
+                <h2>Customers</h2>
+                <p>Track customer relationships and business details</p>
+                <button class="btn" onclick="openModal('add-customer-modal')">Add New Customer</button>
+            </div>
+            
+            <div class="card">
+                <h2>Inspections</h2>
+                <p>Schedule and manage quality inspections with full documentation</p>
+                <button class="btn" onclick="openModal('add-inspection-modal')">Schedule Inspection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Supplier Modal -->
+    <div class="modal" id="add-supplier-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="closeModal('add-supplier-modal')">&times;</span>
+                <h2>Add New Supplier</h2>
+            </div>
+            <div class="modal-body">
+                <form id="add-supplier-form">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="supplier-name">Supplier Name *</label>
+                                <input type="text" id="supplier-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier-status">Status *</label>
+                                <select id="supplier-status" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="suspended">Suspended</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Identifiers -->
+                    <div class="form-section">
+                        <h3>Business Identifiers</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="supplier-duns">DUNS Number</label>
+                                <input type="text" id="supplier-duns" pattern="[0-9]{9}" placeholder="123456789">
+                                <small>9-digit Data Universal Numbering System identifier</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier-tin">TIN/EIN</label>
+                                <input type="text" id="supplier-tin" pattern="[0-9]{2}-[0-9]{7}" placeholder="12-3456789">
+                                <small>Tax Identification Number</small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="supplier-cage">CAGE Code</label>
+                                <input type="text" id="supplier-cage" pattern="[0-9A-Z]{5}" placeholder="1A2B3">
+                                <small>Commercial And Government Entity code</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier-naics">NAICS Code</label>
+                                <input type="text" id="supplier-naics" pattern="[0-9]{6}" placeholder="336411">
+                                <small>Industry Classification Code</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ship-To Address -->
+                    <div class="form-section">
+                        <h3>Ship-To Address</h3>
+                        <div class="form-group">
+                            <label for="supplier-ship-address1">Address Line 1</label>
+                            <input type="text" id="supplier-ship-address1">
+                        </div>
+                        <div class="form-group">
+                            <label for="supplier-ship-address2">Address Line 2</label>
+                            <input type="text" id="supplier-ship-address2">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="supplier-ship-city">City</label>
+                                <input type="text" id="supplier-ship-city">
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier-ship-state">State/Province</label>
+                                <input type="text" id="supplier-ship-state">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="supplier-ship-zip">ZIP/Postal Code</label>
+                                <input type="text" id="supplier-ship-zip">
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier-ship-country">Country</label>
+                                <select id="supplier-ship-country">
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="MX">Mexico</option>
+                                    <option value="GB">United Kingdom</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="CN">China</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bill-To Address -->
+                    <div class="form-section">
+                        <h3>Bill-To Address</h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="supplier-same-address"> Same as Ship-To Address
+                            </label>
+                        </div>
+                        <div id="supplier-bill-address-section">
+                            <div class="form-group">
+                                <label for="supplier-bill-address1">Address Line 1</label>
+                                <input type="text" id="supplier-bill-address1">
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier-bill-address2">Address Line 2</label>
+                                <input type="text" id="supplier-bill-address2">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="supplier-bill-city">City</label>
+                                    <input type="text" id="supplier-bill-city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="supplier-bill-state">State/Province</label>
+                                    <input type="text" id="supplier-bill-state">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="supplier-bill-zip">ZIP/Postal Code</label>
+                                    <input type="text" id="supplier-bill-zip">
+                                </div>
+                                <div class="form-group">
+                                    <label for="supplier-bill-country">Country</label>
+                                    <select id="supplier-bill-country">
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="MX">Mexico</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="JP">Japan</option>
+                                        <option value="CN">China</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-danger" onclick="closeModal('add-supplier-modal')">Cancel</button>
+                        <button type="submit" class="btn btn-success">Save Supplier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Customer Modal -->
+    <div class="modal" id="add-customer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="closeModal('add-customer-modal')">&times;</span>
+                <h2>Add New Customer</h2>
+            </div>
+            <div class="modal-body">
+                <form id="add-customer-form">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-name">Customer Name *</label>
+                                <input type="text" id="customer-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-status">Status *</label>
+                                <select id="customer-status" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="suspended">Suspended</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Identifiers -->
+                    <div class="form-section">
+                        <h3>Business Identifiers</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-duns">DUNS Number</label>
+                                <input type="text" id="customer-duns" pattern="[0-9]{9}" placeholder="123456789">
+                                <small>9-digit Data Universal Numbering System identifier</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-tin">TIN/EIN</label>
+                                <input type="text" id="customer-tin" pattern="[0-9]{2}-[0-9]{7}" placeholder="12-3456789">
+                                <small>Tax Identification Number</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ship-To Address -->
+                    <div class="form-section">
+                        <h3>Ship-To Address</h3>
+                        <div class="form-group">
+                            <label for="customer-ship-address1">Address Line 1</label>
+                            <input type="text" id="customer-ship-address1">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-ship-city">City</label>
+                                <input type="text" id="customer-ship-city">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-ship-state">State/Province</label>
+                                <input type="text" id="customer-ship-state">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bill-To Address -->
+                    <div class="form-section">
+                        <h3>Bill-To Address</h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="customer-same-address"> Same as Ship-To Address
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-bill-address1">Address Line 1</label>
+                            <input type="text" id="customer-bill-address1">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-bill-city">City</label>
+                                <input type="text" id="customer-bill-city">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-bill-state">State/Province</label>
+                                <input type="text" id="customer-bill-state">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-danger" onclick="closeModal('add-customer-modal')">Cancel</button>
+                        <button type="submit" class="btn btn-success">Save Customer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Inspection Modal -->
+    <div class="modal" id="add-inspection-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn" onclick="closeModal('add-inspection-modal')">&times;</span>
+                <h2>Schedule New Inspection</h2>
+            </div>
+            <div class="modal-body">
+                <form id="add-inspection-form">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="inspection-supplier">Supplier *</label>
+                                <select id="inspection-supplier" required>
+                                    <option value="">Select Supplier</option>
+                                    <option value="boeing">Boeing</option>
+                                    <option value="airbus">Airbus</option>
+                                    <option value="lockheed">Lockheed Martin</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inspection-type">Inspection Type *</label>
+                                <select id="inspection-type" required>
+                                    <option value="receiving">Receiving Inspection</option>
+                                    <option value="in-process">In-Process Inspection</option>
+                                    <option value="final">Final Inspection</option>
+                                    <option value="source">Source Inspection</option>
+                                    <option value="audit">Supplier Audit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="inspection-date">Inspection Date *</label>
+                                <input type="date" id="inspection-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inspection-inspector">Inspector *</label>
+                                <select id="inspection-inspector" required>
+                                    <option value="">Select Inspector</option>
+                                    <option value="john-doe">John Doe</option>
+                                    <option value="jane-smith">Jane Smith</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Part Information -->
+                    <div class="form-section">
+                        <h3>Part Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="inspection-po-number">PO Number *</label>
+                                <input type="text" id="inspection-po-number" required placeholder="PO-2024-001">
+                            </div>
+                            <div class="form-group">
+                                <label for="inspection-part-number">Part Number *</label>
+                                <input type="text" id="inspection-part-number" required placeholder="AN123-456">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="inspection-lot-number">Lot Number *</label>
+                                <input type="text" id="inspection-lot-number" required placeholder="LOT-2024-001">
+                            </div>
+                            <div class="form-group">
+                                <label for="inspection-serial-number">Serial Number</label>
+                                <input type="text" id="inspection-serial-number" placeholder="SN123456">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="inspection-quantity">Quantity</label>
+                                <input type="number" id="inspection-quantity" min="1" placeholder="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="inspection-uom">Unit of Measure</label>
+                                <select id="inspection-uom">
+                                    <option value="EA">Each</option>
+                                    <option value="LB">Pounds</option>
+                                    <option value="FT">Feet</option>
+                                    <option value="IN">Inches</option>
+                                    <option value="SQ">Square</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certificate of Conformity -->
+                    <div class="form-section">
+                        <h3>Certificate of Conformity</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="inspection-coc-required">CoC Required</label>
+                                <select id="inspection-coc-required">
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inspection-coc-number">CoC Number</label>
+                                <input type="text" id="inspection-coc-number" placeholder="COC-2024-001">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inspection-coc-upload">Upload Certificate of Conformity</label>
+                            <div class="file-upload-area" onclick="document.getElementById('coc-file').click()">
+                                <p>📄 Click to upload or drag and drop</p>
+                                <small>PDF, DOC, DOCX files up to 10MB</small>
+                            </div>
+                            <input type="file" id="coc-file" style="display: none;" accept=".pdf,.doc,.docx" multiple>
+                            <div class="uploaded-files" id="coc-files"></div>
+                        </div>
+                    </div>
+
+                    <!-- Documentation -->
+                    <div class="form-section">
+                        <h3>Documentation & Pictures</h3>
+                        <div class="form-group">
+                            <label for="inspection-documents">Upload Documents</label>
+                            <div class="file-upload-area" onclick="document.getElementById('doc-files').click()">
+                                <p>📋 Click to upload documents</p>
+                                <small>PDF, DOC, DOCX, XLS, XLSX files up to 10MB each</small>
+                            </div>
+                            <input type="file" id="doc-files" style="display: none;" accept=".pdf,.doc,.docx,.xls,.xlsx" multiple>
+                            <div class="uploaded-files" id="document-files"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inspection-pictures">Upload Pictures</label>
+                            <div class="file-upload-area" onclick="document.getElementById('pic-files').click()">
+                                <p>📸 Click to upload pictures</p>
+                                <small>JPG, PNG, GIF files up to 5MB each</small>
+                            </div>
+                            <input type="file" id="pic-files" style="display: none;" accept=".jpg,.jpeg,.png,.gif" multiple>
+                            <div class="uploaded-files" id="picture-files"></div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h3>Additional Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="inspection-country-origin">Country of Origin</label>
+                                <select id="inspection-country-origin">
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="MX">Mexico</option>
+                                    <option value="GB">United Kingdom</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="CN">China</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inspection-priority">Priority</label>
+                                <select id="inspection-priority">
+                                    <option value="normal">Normal</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inspection-notes">Inspection Notes</label>
+                            <textarea id="inspection-notes" rows="4" placeholder="Enter any special instructions or notes for this inspection..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-danger" onclick="closeModal('add-inspection-modal')">Cancel</button>
+                        <button type="submit" class="btn btn-success">Schedule Inspection</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+        
+        // Handle same address checkbox for suppliers
+        document.getElementById('supplier-same-address').addEventListener('change', function() {
+            const billSection = document.getElementById('supplier-bill-address-section');
+            if (this.checked) {
+                billSection.style.display = 'none';
+                // Copy ship-to address to bill-to
+                document.getElementById('supplier-bill-address1').value = document.getElementById('supplier-ship-address1').value;
+                document.getElementById('supplier-bill-city').value = document.getElementById('supplier-ship-city').value;
+                document.getElementById('supplier-bill-state').value = document.getElementById('supplier-ship-state').value;
+                document.getElementById('supplier-bill-zip').value = document.getElementById('supplier-ship-zip').value;
+                document.getElementById('supplier-bill-country').value = document.getElementById('supplier-ship-country').value;
+            } else {
+                billSection.style.display = 'block';
+            }
+        });
+        
+        // Handle same address checkbox for customers
+        document.getElementById('customer-same-address').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('customer-bill-address1').value = document.getElementById('customer-ship-address1').value;
+                document.getElementById('customer-bill-city').value = document.getElementById('customer-ship-city').value;
+                document.getElementById('customer-bill-state').value = document.getElementById('customer-ship-state').value;
+            }
+        });
+        
+        // File upload handlers
+        function handleFileUpload(inputId, containerId) {
+            const input = document.getElementById(inputId);
+            const container = document.getElementById(containerId);
+            
+            input.addEventListener('change', function() {
+                container.innerHTML = '';
+                for (let file of this.files) {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                        <span class="remove-file" onclick="this.parentElement.remove()">×</span>
+                    `;
+                    container.appendChild(fileItem);
+                }
+            });
+        }
+        
+        // Initialize file upload handlers
+        handleFileUpload('coc-file', 'coc-files');
+        handleFileUpload('doc-files', 'document-files');
+        handleFileUpload('pic-files', 'picture-files');
+        
+        // Form submission handlers
+        document.getElementById('add-supplier-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Supplier form submitted! (This is a demo - data would be saved to backend)');
+            closeModal('add-supplier-modal');
+        });
+        
+        document.getElementById('add-customer-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Customer form submitted! (This is a demo - data would be saved to backend)');
+            closeModal('add-customer-modal');
+        });
+        
+        document.getElementById('add-inspection-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Inspection scheduled! (This is a demo - data would be saved to backend)');
+            closeModal('add-inspection-modal');
+        });
+    </script>
+</body>
+</html> 

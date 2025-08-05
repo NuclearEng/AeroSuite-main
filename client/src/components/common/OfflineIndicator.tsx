@@ -1,0 +1,240 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Box, 
+  Snackbar, 
+  Alert, 
+  AlertTitle, 
+  Badge, 
+  IconButton, 
+  Drawer, 
+  List, 
+  ListItem, 
+  ListItemText, 
+  Typography, 
+  Divider,
+  Button,
+  styled,
+  useTheme
+} from '@mui/material';
+import WifiOffIcon from '@mui/icons-material/WifiOff';
+import CloudOffIcon from '@mui/icons-material/CloudOff';
+import CloudSyncIcon from '@mui/icons-material/CloudSync';
+import CloudDoneIcon from '@mui/icons-material/CloudDone';
+import CloseIcon from '@mui/icons-material/Close';
+import useOfflineMode from '../../hooks/useOfflineMode';
+import persistenceService from '../../services/persistenceService';
+
+// Styled components
+const OfflineIcon = styled(WifiOffIcon)(({ theme }) => ({
+  color: theme.palette.warning.main,
+  animation: 'pulse 2s infinite',
+  '@keyframes pulse': {
+    '0%': {
+      opacity: 0.7,
+    },
+    '50%': {
+      opacity: 1,
+    },
+    '100%': {
+      opacity: 0.7,
+    },
+  },
+}));
+
+const DrawerHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: theme.spacing(2),
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+}));
+
+const DrawerContent = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2),
+  width: 300,
+}));
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    backgroundColor: theme.palette.warning.main,
+    color: theme.palette.warning.contrastText,
+  },
+}));
+
+const StatusCard = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: theme.palette.warning.light,
+  color: theme.palette.warning.contrastText,
+}));
+
+/**
+ * A component that indicates when the app is offline and shows pending changes
+ */
+const OfflineIndicator: React.FC = () => {
+  const theme = useTheme();
+  const { isOffline } = useOfflineMode();
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState<number>(0);
+  const [databaseSize, setDatabaseSize] = useState<number>(0);
+
+  // Show snackbar when offline status changes
+  useEffect(() => {
+    if (isOffline) {
+      setShowSnackbar(true);
+    }
+  }, [isOffline]);
+
+  // Load pending changes count
+  useEffect(() => {
+    const loadPendingChanges = async () => {
+      try {
+        const requests = await persistenceService.getPendingRequests();
+        setPendingChanges(requests.length);
+        
+        // Get database size
+        const size = await persistenceService.getDatabaseSize();
+        setDatabaseSize(size);
+      } catch (_error) {
+        console.error('Failed to load pending changes:', error);
+      }
+    };
+
+    loadPendingChanges();
+    
+    // Set up an interval to check for pending changes
+    const interval = setInterval(loadPendingChanges, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Handle snackbar close
+  const handleSnackbarClose = () => {
+    setShowSnackbar(false);
+  };
+
+  // Toggle drawer
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
+  // Format file size
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // If online, don't render the indicator
+  if (!isOffline && pendingChanges === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      {/* Offline indicator icon */}
+      <IconButton
+        color="inherit"
+        onClick={toggleDrawer}
+        sx={{ position: 'fixed', bottom: 16, right: 16, bgcolor: 'background.paper', boxShadow: 2, zIndex: 1000 }}
+      >
+        <StyledBadge badgeContent={pendingChanges} max={99}>
+          {isOffline ? <OfflineIcon /> : <CloudSyncIcon color="warning" />}
+        </StyledBadge>
+      </IconButton>
+
+      {/* Offline notification snackbar */}
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          severity="warning"
+          onClose={handleSnackbarClose}
+          sx={{ width: '100%' }}
+        >
+          <AlertTitle>You are offline</AlertTitle>
+          The app will continue to work, but some features may be limited.
+          Changes will be synced when you're back online.
+        </Alert>
+      </Snackbar>
+
+      {/* Offline status drawer */}
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={toggleDrawer}
+      >
+        <DrawerHeader>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {isOffline ? <CloudOffIcon sx={{ mr: 1 }} /> : <CloudSyncIcon sx={{ mr: 1 }} />}
+            <Typography variant="h6">
+              {isOffline ? 'Offline Mode' : 'Sync Status'}
+            </Typography>
+          </Box>
+          <IconButton color="inherit" onClick={toggleDrawer}>
+            <CloseIcon />
+          </IconButton>
+        </DrawerHeader>
+
+        <DrawerContent>
+          <StatusCard>
+            <Typography variant="subtitle1" gutterBottom>
+              {isOffline ? 'You are currently offline' : 'You are online'}
+            </Typography>
+            <Typography variant="body2">
+              {isOffline
+                ? 'Limited functionality is available. Changes will be synced when you reconnect.'
+                : pendingChanges > 0
+                  ? 'Changes will be synced in the background.'
+                  : 'All changes are synced.'}
+            </Typography>
+          </StatusCard>
+
+          {pendingChanges > 0 && (
+            <>
+              <Typography variant="subtitle1" gutterBottom>
+                Pending Changes
+              </Typography>
+              <Typography variant="body2" paragraph>
+                {pendingChanges} {pendingChanges === 1 ? 'change' : 'changes'} waiting to be synced
+              </Typography>
+
+              <Divider sx={{ my: 2 }} />
+            </>
+          )}
+
+          <Typography variant="subtitle2" gutterBottom>
+            Offline Storage
+          </Typography>
+          <Typography variant="body2">
+            {formatFileSize(databaseSize)} used for offline data
+          </Typography>
+
+          <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<CloudDoneIcon />}
+              disabled={isOffline || pendingChanges === 0}
+              onClick={() => {
+                // Force sync would go here
+                toggleDrawer();
+              }}
+            >
+              Force Sync Now
+            </Button>
+          </Box>
+        </DrawerContent>
+      </Drawer>
+    </>
+  );
+};
+
+export default OfflineIndicator; 

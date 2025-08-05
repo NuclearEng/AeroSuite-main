@@ -1,0 +1,97 @@
+# Task Management Scripts
+
+This directory contains scripts for managing task traceability in the AeroSuite project.
+
+## Available Scripts
+
+### Enhanced Task Reference Manager
+`enhanced-task-reference.js`
+
+This tool helps maintain task references in code files and generates visualizations of task-to-code relationships.
+
+```bash
+# Interactive mode (select a task and add references)
+node scripts/task-management/enhanced-task-reference.js
+
+# Automatic mode (process all tasks)
+node scripts/task-management/enhanced-task-reference.js --auto
+
+# Generate visualization only
+node scripts/task-management/enhanced-task-reference.js --visualize-only
+
+# Process a specific task
+node scripts/task-management/enhanced-task-reference.js TS123
+```
+
+### Git Hooks Setup
+`setup-git-hooks.js`
+
+Sets up Git hooks for enforcing task traceability.
+
+```bash
+node scripts/task-management/setup-git-hooks.js
+```
+
+### Task Metrics Dashboard
+`task-metrics-dashboard.js`
+
+Generates a metrics dashboard showing task completion progress, code coverage, and other metrics.
+
+```bash
+node scripts/task-management/task-metrics-dashboard.js
+```
+
+### JIRA Synchronization
+`task-jira-sync.js`
+
+Synchronizes tasks between the local task.md file and JIRA.
+
+```bash
+# Setup JIRA configuration
+node scripts/task-management/task-jira-sync.js --setup
+
+# Test JIRA connection
+node scripts/task-management/task-jira-sync.js --test-connection
+
+# Export tasks to JIRA
+node scripts/task-management/task-jira-sync.js --export
+
+# Import tasks from JIRA
+node scripts/task-management/task-jira-sync.js --import
+```
+
+## Git Hooks
+
+The following Git hooks are provided:
+
+### Commit Message Hook
+`commit-msg-hook.js`
+
+Enforces task ID in commit messages with the format `[TASKID] commit message`.
+
+### Pre-Commit Hook
+`pre-commit-hook.js`
+
+Checks if files being committed have task references (`@task TASKID`).
+
+### Post-Commit Hook
+`post-commit-hook.js`
+
+Updates the task-to-code relationship report after a commit.
+
+## Generated Reports
+
+The scripts generate the following reports in the `reports/task-management` directory:
+
+- `task-code-mapping.md`: Detailed mapping of tasks to code files
+- `task-dependencies.dot`: GraphViz DOT file for visualizing task dependencies
+- `task-dependencies.png`: Visual representation of task dependencies (if GraphViz is installed)
+- `task-metrics.json`: JSON file containing task metrics
+- `task-metrics-dashboard.html`: Interactive HTML dashboard for task metrics
+
+## Documentation
+
+For more information about the task traceability system, see:
+
+- [Task Traceability](../../docs/task-traceability.md): Overview of the traceability system
+- [JIRA Integration](../../docs/jira-integration.md): Details on JIRA synchronization 

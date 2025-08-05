@@ -1,0 +1,68 @@
+--- Upgrading UI modules ---
+  [CLEANED] client/src/pages/dashboard/Dashboard.test.tsx (removed @ts-ignore/@ts-expect-error)
+  [TODO] client/src/pages/customers/CreateCustomer.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/customers/CreateCustomer.test.tsx
+  [CREATED] client/src/pages/customers/jest.d.ts
+  [CREATED] client/src/pages/customers/CustomerDetail.test.tsx
+  [TODO] client/src/pages/customers/CustomerList.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/customers/CustomerList.test.tsx
+  [TODO] client/src/pages/customers/EditCustomer.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/customers/EditCustomer.test.tsx
+  [TODO] client/src/pages/inspections/ConductInspection.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/inspections/ConductInspection.test.tsx
+  [CREATED] client/src/pages/inspections/jest.d.ts
+  [CREATED] client/src/pages/inspections/InspectionAnalytics.test.tsx
+  [CREATED] client/src/pages/inspections/InspectionDetail.test.tsx
+  [TODO] client/src/pages/inspections/InspectionList.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/inspections/InspectionList.test.tsx
+  [TODO] client/src/pages/inspections/ScheduleInspection.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/inspections/ScheduleInspection.test.tsx
+  [TODO] client/src/pages/suppliers/CreateSupplier.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/CreateSupplier.test.tsx
+  [CREATED] client/src/pages/suppliers/jest.d.ts
+  [TODO] client/src/pages/suppliers/EditSupplier.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/EditSupplier.test.tsx
+  [TODO] client/src/pages/suppliers/SupplierAuditChecklist.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/SupplierAuditChecklist.test.tsx
+  [TODO] client/src/pages/suppliers/SupplierCreate.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/SupplierCreate.test.tsx
+  [CREATED] client/src/pages/suppliers/SupplierDetail.test.tsx
+  [TODO] client/src/pages/suppliers/SupplierEdit.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/SupplierEdit.test.tsx
+  [TODO] client/src/pages/suppliers/SupplierList.tsx: Refactor to accept optional props for testability
+  [TODO] client/src/pages/suppliers/SupplierNetwork.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/SupplierNetwork.test.tsx
+  [TODO] client/src/pages/suppliers/SupplierQualityManagement.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/SupplierQualityManagement.test.tsx
+  [TODO] client/src/pages/suppliers/SupplierRiskAssessment.tsx: Refactor to accept optional props for testability
+  [CREATED] client/src/pages/suppliers/SupplierRiskAssessment.test.tsx
+--- Upgrading agents ---
+  [CREATED] automation/agents/a11yAgent.test.ts
+  [CREATED] automation/agents/aiModelAgent.test.ts
+  [CREATED] automation/agents/bugAgent.test.ts
+  [CREATED] automation/agents/codeQualityAgent.test.ts
+  [CREATED] automation/agents/complianceAgent.test.ts
+  [CREATED] automation/agents/componentAgent.test.ts
+  [CREATED] automation/agents/customerAgent.test.ts
+  [CREATED] automation/agents/devOpsAgent.test.ts
+  [CREATED] automation/agents/devSecOpsAgent.test.ts
+  [CREATED] automation/agents/humanPsychologyAgent.test.ts
+  [CREATED] automation/agents/humanReviewAgent.test.ts
+  [CREATED] automation/agents/inspectionAgent.test.ts
+  [CREATED] automation/agents/lintAgent.test.ts
+  [CREATED] automation/agents/memoryAgent.test.ts
+  [CREATED] automation/agents/parallelismAgent.test.ts
+  [CREATED] automation/agents/performanceAgent.test.ts
+  [CREATED] automation/agents/productLogicAgent.test.ts
+  [CREATED] automation/agents/qaAgent.test.ts
+  [CREATED] automation/agents/securityAgent.test.ts
+  [CREATED] automation/agents/softwareArchitectAgent.test.ts
+  [CREATED] automation/agents/supplierAgent.test.ts
+  [CREATED] automation/agents/systemsAgent.test.ts
+  [CREATED] automation/agents/testAutomationAgent.test.ts
+  [CREATED] automation/agents/testCoverageAgent.test.ts
+  [CREATED] automation/agents/uxAgent.test.ts
+  [CREATED] automation/agents/uxUatAgent.test.ts
+  [CREATED] automation/agents/uxUiAgent.test.ts
+--- Upgrading orchestrator ---
+  [CREATED] automation/orchestrator.test.ts

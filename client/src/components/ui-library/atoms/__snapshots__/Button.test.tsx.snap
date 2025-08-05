@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component renders correctly when disabled 1`] = `null`;
+
+exports[`Button Component renders correctly when loading 1`] = `null`;
+
+exports[`Button Component renders correctly with custom loading text 1`] = `null`;
+
+exports[`Button Component renders correctly with default props 1`] = `null`;
+
+exports[`Button Component renders correctly with different variants 1`] = `null`;

@@ -1,0 +1,62 @@
+name: Test Report Generation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  generate-test-reports:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+      
+      - name: Run tests with coverage
+        run: npm run test:coverage
+        
+      - name: Generate test report
+        run: npm run test:report:ci
+        
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: test-report
+          retention-days: 14
+      
+      - name: Publish test coverage as PR comment
+        if: github.event_name == 'pull_request'
+        run: |
+          COVERAGE_SUMMARY=$(cat coverage/coverage-summary.json)
+          STATEMENTS=$(echo $COVERAGE_SUMMARY | jq -r '.total.statements.pct')
+          BRANCHES=$(echo $COVERAGE_SUMMARY | jq -r '.total.branches.pct')
+          FUNCTIONS=$(echo $COVERAGE_SUMMARY | jq -r '.total.functions.pct')
+          LINES=$(echo $COVERAGE_SUMMARY | jq -r '.total.lines.pct')
+          
+          echo "## Test Coverage Summary" > report.md
+          echo "" >> report.md
+          echo "| Type | Coverage |" >> report.md
+          echo "| ---- | -------- |" >> report.md
+          echo "| Statements | $STATEMENTS% |" >> report.md
+          echo "| Branches | $BRANCHES% |" >> report.md
+          echo "| Functions | $FUNCTIONS% |" >> report.md
+          echo "| Lines | $LINES% |" >> report.md
+          
+          PR_COMMENT=$(cat report.md)
+          
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" \
+            -d "{\"body\":$(echo "$PR_COMMENT" | jq -R -s)}" 

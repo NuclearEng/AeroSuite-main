@@ -1,0 +1,7 @@
+Vuln: Vulnerability scan for Suppliers
+
+RBAC: RBAC check for Suppliers
+
+Encryption: Encryption check for Suppliers
+
+CSP: CSP check for Suppliers

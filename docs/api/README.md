@@ -1,0 +1,17 @@
+# API Documentation
+
+AeroSuite exposes a REST API documented with OpenAPI (Swagger).
+
+## Accessing Docs
+- Start the server: `npm run server:dev`
+- Visit: `http://localhost:5000/api/docs`
+
+## Updating the Spec
+- Edit the OpenAPI YAML/JSON in `server/src/docs/openapi.yaml` (if present)
+- Restart the server to refresh docs
+
+## Main Endpoints
+- `/suppliers`, `/customers`, `/inspections`, `/components`, ...
+
+## Authentication
+- Most endpoints require JWT auth (see docs for details) 

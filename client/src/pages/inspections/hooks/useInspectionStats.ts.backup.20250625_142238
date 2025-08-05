@@ -1,0 +1,60 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+interface InspectionStats {
+  statusCounts: {
+    scheduled: number;
+    'in-progress': number;
+    completed: number;
+    cancelled: number;
+  };
+  typeCounts: {
+    quality: number;
+    compliance: number;
+    safety: number;
+  };
+  monthlyTrends: Array<{
+    month: string;
+    completed: number;
+    scheduled: number;
+  }>;
+  supplierPerformance: Array<{
+    id: string;
+    name: string;
+    passRate: number;
+    inspectionCount: number;
+  }>;
+  lastUpdated: string;
+}
+
+/**
+ * Custom hook for fetching inspection statistics
+ */
+export const useInspectionStats = () => {
+  const [stats, setStats] = useState<InspectionStats | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.get<InspectionStats>('/api/v1/inspections/stats');
+        setStats(response.data);
+      } catch (err) {
+        console.error('Error fetching inspection statistics:', err);
+        setError('Failed to load inspection statistics. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  return { stats, loading, error };
+};
+
+export default useInspectionStats; 

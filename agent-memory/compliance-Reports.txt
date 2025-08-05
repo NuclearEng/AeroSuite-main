@@ -1,0 +1,5 @@
+Standards: Compliance standards check for Reports
+
+Privacy: Privacy/GDPR check for Reports
+
+Audit: Audit trail check for Reports

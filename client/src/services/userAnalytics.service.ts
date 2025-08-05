@@ -1,0 +1,291 @@
+/**
+ * User Analytics Service
+ * 
+ * Provides methods for tracking user actions, events, and analyzing user behavior.
+ */
+
+import api from './api';
+
+// Event categories
+export enum EventCategory {
+  PAGE_VIEW = 'page_view',
+  INTERACTION = 'interaction',
+  FORM = 'form',
+  ERROR = 'error',
+  CONVERSION = 'conversion',
+  FEATURE_USAGE = 'feature_usage',
+  PERFORMANCE = 'performance',
+  CUSTOM = 'custom'
+}
+
+// Event data interface
+export interface EventData {
+  category: EventCategory;
+  action: string;
+  label?: string;
+  value?: number;
+  metadata?: Record<string, any>;
+}
+
+// User analytics service interface
+interface UserAnalyticsService {
+  trackEvent(eventData: EventData): Promise<void>;
+  trackPageView(path: string, title?: string): Promise<void>;
+  trackInteraction(action: string, label?: string, value?: number, metadata?: Record<string, any>): Promise<void>;
+  trackFormInteraction(formId: string, action: string, metadata?: Record<string, any>): Promise<void>;
+  trackFeatureUsage(feature: string, action: string, metadata?: Record<string, any>): Promise<void>;
+  trackConversion(conversionType: string, value?: number, metadata?: Record<string, any>): Promise<void>;
+  getUserAnalytics(period: string): Promise<any>;
+  getEventAnalytics(eventCategory: EventCategory, period: string): Promise<any>;
+  getFunnelAnalytics(funnelId: string, period: string): Promise<any>;
+}
+
+/**
+ * Track a user event
+ * @param eventData Event data to track
+ */
+const trackEvent = async (eventData: EventData): Promise<void> => {
+  try {
+    // Add timestamp if not present
+    const event = {
+      ...eventData,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Send event to the server
+    await api.post('/monitoring/events', { events: [event] });
+    
+    // Log event in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Tracked event:', event);
+    }
+  } catch (_error) {
+    console.error('Error tracking event:', error);
+    
+    // Store event locally for later retry
+    storeEventForRetry(eventData);
+  }
+};
+
+/**
+ * Track a page view event
+ * @param path Page path
+ * @param title Page title
+ */
+const trackPageView = async (path: string, title?: string): Promise<void> => {
+  return trackEvent({
+    category: EventCategory.PAGE_VIEW,
+    action: 'view',
+    label: path,
+    metadata: {
+      title,
+      referrer: document.referrer,
+      url: window.location.href
+    }
+  });
+};
+
+/**
+ * Track a user interaction event
+ * @param action Action performed
+ * @param label Optional label for the action
+ * @param value Optional numeric value
+ * @param metadata Optional additional data
+ */
+const trackInteraction = async (
+  action: string,
+  label?: string,
+  value?: number,
+  metadata?: Record<string, any>
+): Promise<void> => {
+  return trackEvent({
+    category: EventCategory.INTERACTION,
+    action,
+    label,
+    value,
+    metadata
+  });
+};
+
+/**
+ * Track a form interaction event
+ * @param formId Form identifier
+ * @param action Action performed (submit, validate, error)
+ * @param metadata Optional additional data
+ */
+const trackFormInteraction = async (
+  formId: string,
+  action: string,
+  metadata?: Record<string, any>
+): Promise<void> => {
+  return trackEvent({
+    category: EventCategory.FORM,
+    action,
+    label: formId,
+    metadata
+  });
+};
+
+/**
+ * Track feature usage event
+ * @param feature Feature name
+ * @param action Action performed
+ * @param metadata Optional additional data
+ */
+const trackFeatureUsage = async (
+  feature: string,
+  action: string,
+  metadata?: Record<string, any>
+): Promise<void> => {
+  return trackEvent({
+    category: EventCategory.FEATURE_USAGE,
+    action,
+    label: feature,
+    metadata
+  });
+};
+
+/**
+ * Track a conversion event
+ * @param conversionType Type of conversion
+ * @param value Optional value of the conversion
+ * @param metadata Optional additional data
+ */
+const trackConversion = async (
+  conversionType: string,
+  value?: number,
+  metadata?: Record<string, any>
+): Promise<void> => {
+  return trackEvent({
+    category: EventCategory.CONVERSION,
+    action: 'convert',
+    label: conversionType,
+    value,
+    metadata
+  });
+};
+
+/**
+ * Get user analytics data for the specified time period
+ * @param period Time period (24h, 7d, 30d, 90d, all)
+ * @returns Promise with user analytics data
+ */
+const getUserAnalytics = async (period: string = '7d'): Promise<any> => {
+  try {
+    const response = await api.get(`/monitoring/user-analytics?period=${period}`);
+    return response.data;
+  } catch (_error) {
+    console.error('Error fetching user analytics:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get event analytics data for a specific category
+ * @param eventCategory Event category to analyze
+ * @param period Time period (24h, 7d, 30d, 90d, all)
+ * @returns Promise with event analytics data
+ */
+const getEventAnalytics = async (eventCategory: EventCategory, period: string = '7d'): Promise<any> => {
+  try {
+    const response = await api.get(`/monitoring/event-analytics?category=${eventCategory}&period=${period}`);
+    return response.data;
+  } catch (_error) {
+    console.error('Error fetching event analytics:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get funnel analytics data for a specific funnel
+ * @param funnelId Funnel identifier
+ * @param period Time period (24h, 7d, 30d, 90d, all)
+ * @returns Promise with funnel analytics data
+ */
+const getFunnelAnalytics = async (funnelId: string, period: string = '7d'): Promise<any> => {
+  try {
+    const response = await api.get(`/monitoring/funnel-analytics/${funnelId}?period=${period}`);
+    return response.data;
+  } catch (_error) {
+    console.error('Error fetching funnel analytics:', error);
+    throw error;
+  }
+};
+
+/**
+ * Store event for later retry
+ * @param eventData Event data to store
+ */
+const storeEventForRetry = (eventData: EventData): void => {
+  try {
+    // Get existing events from local storage
+    const storedEvents = localStorage.getItem('aerosuite_pending_events');
+    const events = storedEvents ? JSON.parse(storedEvents) : [];
+    
+    // Add new event
+    events.push({
+      ...eventData,
+      timestamp: new Date().toISOString()
+    });
+    
+    // Limit the number of stored events
+    const limitedEvents = events.slice(-100);
+    
+    // Store back to local storage
+    localStorage.setItem('aerosuite_pending_events', JSON.stringify(limitedEvents));
+  } catch (_error) {
+    console.error('Error storing event for retry:', error);
+  }
+};
+
+/**
+ * Retry sending stored events
+ */
+export const retryPendingEvents = async (): Promise<void> => {
+  try {
+    // Get stored events
+    const storedEvents = localStorage.getItem('aerosuite_pending_events');
+    if (!storedEvents) {
+      return;
+    }
+    
+    const events = JSON.parse(storedEvents);
+    if (events.length === 0) {
+      return;
+    }
+    
+    // Clear stored events
+    localStorage.removeItem('aerosuite_pending_events');
+    
+    // Send events in batches
+    const batchSize = 20;
+    for (let i = 0; i < events.length; i += batchSize) {
+      const batch = events.slice(i, i + batchSize);
+      try {
+        await api.post('/monitoring/events', { events: batch });
+      } catch (_error) {
+        // If sending fails, store the remaining events back
+        const remainingEvents = events.slice(i);
+        localStorage.setItem('aerosuite_pending_events', JSON.stringify(remainingEvents));
+        throw error;
+      }
+    }
+  } catch (_error) {
+    console.error('Error retrying pending events:', error);
+  }
+};
+
+// Create the user analytics service
+const userAnalyticsService: UserAnalyticsService = {
+  trackEvent,
+  trackPageView,
+  trackInteraction,
+  trackFormInteraction,
+  trackFeatureUsage,
+  trackConversion,
+  getUserAnalytics,
+  getEventAnalytics,
+  getFunnelAnalytics
+};
+
+export default userAnalyticsService; 

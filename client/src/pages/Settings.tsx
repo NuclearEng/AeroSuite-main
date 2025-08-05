@@ -1,0 +1,586 @@
+import React, { useEffect, useState } from 'react';
+import { Box, Typography, Card, CardContent, Switch, FormControlLabel, Divider, Button, useTheme, Snackbar, Alert, CircularProgress } from '@mui/material';
+import { PageHeader } from '../components/common';
+import ThemeSettings from '../components/common/ThemeSettings';
+import { 
+  Notifications as NotificationsIcon, 
+  Security as SecurityIcon, 
+  VisibilityOff as VisibilityOffIcon, 
+  ColorLens as ThemeIcon
+} from '@mui/icons-material';
+import { useThemeContext } from '../theme/ThemeProvider';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import privacyService, { ConsentSettings } from '../services/privacy.service';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
+
+const Settings: React.FC = () => {
+  const theme = useTheme();
+  const { mode } = useThemeContext();
+  
+  // Local state for settings
+  const [notification, setNotification] = useState<{
+    open: boolean;
+    message: string;
+    severity: 'success' | 'info' | 'warning' | 'error';
+  }>({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
+  
+  // Notification preferences state
+  const [notificationPreferences, setNotificationPreferences] = useState({
+    inspection: true,
+    emailInspection: true,
+    emailFindings: true,
+    browserPush: false,
+    weeklySummary: true
+  });
+  
+  // Appearance preferences state
+  const [appearancePreferences, setAppearancePreferences] = useState({
+    showAnimations: true,
+    compactView: true
+  });
+  
+  // Security preferences state
+  const [securityPreferences, setSecurityPreferences] = useState({
+    twoFactor: true,
+    loginNotifications: true
+  });
+  
+  const [consentSettings, setConsentSettings] = useState<ConsentSettings>({
+    marketing: { value: false },
+    analytics: { value: false },
+    thirdPartySharing: { value: false },
+    cookiePreferences: {
+      necessary: true,
+      preferences: false,
+      analytics: false,
+      marketing: false
+    }
+  });
+  
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState('');
+  const [isExporting, setIsExporting] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
+  
+  // Handle notification close
+  const handleCloseNotification = () => {
+    setNotification({ ...notification, open: false });
+  };
+  
+  // Show notification when theme changes
+  useEffect(() => {
+    // This is just to demonstrate theme change notifications
+    // In a real app, we'd check for changes against previous state
+    document.documentElement.setAttribute('data-theme', mode);
+  }, [mode]);
+  
+  useEffect(() => {
+    // Load user consent settings
+    const loadConsentSettings = async () => {
+      try {
+        const settings = await privacyService.getConsent();
+        if (settings) {
+          setConsentSettings(settings);
+        }
+      } catch (_error) {
+        console.error('Error loading consent settings:', error);
+      }
+    };
+    
+    loadConsentSettings();
+  }, []);
+  
+  const handleConsentChange = (category: keyof ConsentSettings, value: boolean) => {
+    if (category === 'cookiePreferences') return; // Handle separately
+    
+    setConsentSettings(prev => ({
+      ...prev,
+      [category]: {
+        ...(prev[category] || {}),
+        value
+      }
+    }));
+  };
+  
+  const handleCookiePreferenceChange = (type: string, value: boolean) => {
+    setConsentSettings(prev => ({
+      ...prev,
+      cookiePreferences: {
+        ...(prev.cookiePreferences || {}),
+        [type]: value
+      }
+    }));
+  };
+  
+  const saveConsentSettings = async () => {
+    try {
+      await privacyService.updateConsent(consentSettings);
+      setNotification({
+        open: true,
+        message: 'Privacy settings saved successfully',
+        severity: 'success'
+      });
+    } catch (_error) {
+      console.error('Error saving consent settings:', error);
+      setNotification({
+        open: true,
+        message: 'Failed to save privacy settings',
+        severity: 'error'
+      });
+    }
+  };
+  
+  const exportUserData = async () => {
+    setIsExporting(true);
+    setExportError(null);
+    
+    try {
+      const { downloadLink } = await privacyService.exportUserData(false);
+      
+      if (downloadLink) {
+        // Create an invisible link and click it to trigger the download
+        const link = document.createElement('a');
+        link.href = downloadLink;
+        link.click();
+      }
+      
+      setNotification({
+        open: true,
+        message: 'Data export initiated. Download will start shortly.',
+        severity: 'success'
+      });
+    } catch (_error) {
+      console.error('Error exporting user data:', error);
+      setExportError('Failed to export data. Please try again later.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+  
+  // Handle notification preference changes
+  const handleNotificationChange = (key: keyof typeof notificationPreferences) => {
+    setNotificationPreferences(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+    // In a real app, this would save to backend
+    setNotification({
+      open: true,
+      message: 'Notification preferences updated',
+      severity: 'success'
+    });
+  };
+  
+  // Handle appearance preference changes
+  const handleAppearanceChange = (key: keyof typeof appearancePreferences) => {
+    setAppearancePreferences(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+    // In a real app, this would save to backend
+    setNotification({
+      open: true,
+      message: 'Appearance preferences updated',
+      severity: 'success'
+    });
+  };
+  
+  // Handle security preference changes
+  const handleSecurityChange = (key: keyof typeof securityPreferences) => {
+    setSecurityPreferences(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+    // In a real app, this would save to backend
+    setNotification({
+      open: true,
+      message: 'Security preferences updated',
+      severity: 'success'
+    });
+  };
+  
+  // Handle change password
+  const handleChangePassword = () => {
+    // Navigate to change password page
+    window.location.href = '/auth/change-password';
+  };
+  
+  const handleDeleteAccount = async () => {
+    if (deleteConfirmation !== 'DELETE') {
+      setNotification({
+        open: true,
+        message: 'Please type DELETE to confirm account deletion',
+        severity: 'error'
+      });
+      return;
+    }
+    
+    try {
+      await privacyService.deleteAccount();
+      
+      // Log user out after account deletion
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login?deleted=true';
+    } catch (_error) {
+      console.error('Error deleting account:', error);
+      setNotification({
+        open: true,
+        message: 'Failed to delete account. Please contact support.',
+        severity: 'error'
+      });
+    } finally {
+      setDeleteDialogOpen(false);
+      setDeleteConfirmation('');
+    }
+  };
+  
+  return (
+    <Box>
+      <PageHeader
+        title="Settings"
+        subtitle="Configure application preferences"
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Settings' },
+        ]}
+      />
+      
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Box display="flex" alignItems="center" mb={2}>
+            <NotificationsIcon color="primary" sx={{ mr: 1 }} />
+            <Typography variant="h6">Notifications</Typography>
+          </Box>
+          <Divider sx={{ mb: 2 }} />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={notificationPreferences.inspection}
+                onChange={() => handleNotificationChange('inspection')}
+              />
+            }
+            label="Email notifications for new inspections"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={notificationPreferences.emailInspection}
+                onChange={() => handleNotificationChange('emailInspection')}
+              />
+            }
+            label="Email notifications for inspection updates"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={notificationPreferences.emailFindings}
+                onChange={() => handleNotificationChange('emailFindings')}
+              />
+            }
+            label="Email notifications for new findings"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={notificationPreferences.browserPush}
+                onChange={() => handleNotificationChange('browserPush')}
+              />
+            }
+            label="Browser push notifications"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={notificationPreferences.weeklySummary}
+                onChange={() => handleNotificationChange('weeklySummary')}
+              />
+            }
+            label="Weekly inspection summary"
+            sx={{ width: '100%' }}
+          />
+        </CardContent>
+      </Card>
+      
+      {/* Use the ThemeSettings component */}
+      <Box sx={{ mb: 3 }}>
+        <Card>
+          <CardContent>
+            <Box display="flex" alignItems="center" mb={2}>
+              <ThemeIcon color="primary" sx={{ mr: 1 }} />
+              <Typography variant="h6">Appearance</Typography>
+            </Box>
+            <Divider sx={{ mb: 2 }} />
+          </CardContent>
+        </Card>
+        <ThemeSettings showTitle={false} />
+        <Card sx={{ mt: 3 }}>
+          <CardContent>
+            <FormControlLabel
+              control={
+                <Switch 
+                  checked={appearancePreferences.showAnimations}
+                  onChange={() => handleAppearanceChange('showAnimations')}
+                />
+              }
+              label="Show animations"
+              sx={{ width: '100%', mb: 1 }}
+            />
+            
+            <FormControlLabel
+              control={
+                <Switch 
+                  checked={appearancePreferences.compactView}
+                  onChange={() => handleAppearanceChange('compactView')}
+                />
+              }
+              label="Compact view"
+              sx={{ width: '100%' }}
+            />
+          </CardContent>
+        </Card>
+      </Box>
+      
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Box display="flex" alignItems="center" mb={2}>
+            <SecurityIcon color="primary" sx={{ mr: 1 }} />
+            <Typography variant="h6">Security</Typography>
+          </Box>
+          <Divider sx={{ mb: 2 }} />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={securityPreferences.twoFactor}
+                onChange={() => handleSecurityChange('twoFactor')}
+              />
+            }
+            label="Two-factor authentication"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={securityPreferences.loginNotifications}
+                onChange={() => handleSecurityChange('loginNotifications')}
+              />
+            }
+            label="Login notifications"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <Box mt={2}>
+            <Button variant="outlined" color="primary" onClick={handleChangePassword}>
+              Change Password
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+      
+      <Card>
+        <CardContent>
+          <Box display="flex" alignItems="center" mb={2}>
+            <VisibilityOffIcon color="primary" sx={{ mr: 1 }} />
+            <Typography variant="h6">Privacy</Typography>
+          </Box>
+          <Divider sx={{ mb: 2 }} />
+          
+          <Typography variant="subtitle2" gutterBottom>
+            Consent Preferences
+          </Typography>
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={consentSettings.marketing?.value || false}
+                onChange={(e) => handleConsentChange('marketing', e.target.checked)}
+              />
+            }
+            label="Marketing communications"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={consentSettings.analytics?.value || false}
+                onChange={(e) => handleConsentChange('analytics', e.target.checked)}
+              />
+            }
+            label="Analytics and usage data collection"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={consentSettings.thirdPartySharing?.value || false}
+                onChange={(e) => handleConsentChange('thirdPartySharing', e.target.checked)}
+              />
+            }
+            label="Allow data sharing with third parties"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
+            Cookie Preferences
+          </Typography>
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={consentSettings.cookiePreferences?.necessary !== false}
+                disabled={true}
+              />
+            }
+            label="Necessary cookies (required)"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={consentSettings.cookiePreferences?.preferences || false}
+                onChange={(e) => handleCookiePreferenceChange('preferences', e.target.checked)}
+              />
+            }
+            label="Preference cookies"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={consentSettings.cookiePreferences?.analytics || false}
+                onChange={(e) => handleCookiePreferenceChange('analytics', e.target.checked)}
+              />
+            }
+            label="Analytics cookies"
+            sx={{ width: '100%', mb: 1 }}
+          />
+          
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={consentSettings.cookiePreferences?.marketing || false}
+                onChange={(e) => handleCookiePreferenceChange('marketing', e.target.checked)}
+              />
+            }
+            label="Marketing cookies"
+            sx={{ width: '100%', mb: 3 }}
+          />
+          
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={saveConsentSettings}
+            sx={{ mb: 3 }}
+          >
+            Save Privacy Settings
+          </Button>
+          
+          <Divider sx={{ my: 2 }} />
+          
+          <Typography variant="subtitle2" gutterBottom>
+            Your Data
+          </Typography>
+          
+          <Box mt={2} display="flex" justifyContent="space-between" flexWrap="wrap" gap={1}>
+            <Button 
+              variant="outlined" 
+              color="primary"
+              onClick={exportUserData}
+              disabled={isExporting}
+              startIcon={isExporting ? <CircularProgress size={20} /> : undefined}
+            >
+              {isExporting ? 'Exporting...' : 'Export My Data'}
+            </Button>
+            
+            <Button 
+              variant="outlined" 
+              color="error"
+              onClick={() => setDeleteDialogOpen(true)}
+            >
+              Delete Account
+            </Button>
+          </Box>
+          
+          {exportError && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {exportError}
+            </Alert>
+          )}
+        </CardContent>
+      </Card>
+      
+      {/* Notification for theme changes */}
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={3000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleCloseNotification}
+          severity={notification.severity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
+      
+      {/* Account Deletion Dialog */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      >
+        <DialogTitle>Delete Account</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Warning: This action is permanent. Your account will be anonymized and you will lose access to all your data.
+          </DialogContentText>
+          <DialogContentText sx={{ mt: 2, fontWeight: 'bold' }}>
+            Please type DELETE to confirm:
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            fullWidth
+            value={deleteConfirmation}
+            onChange={(e) => setDeleteConfirmation(e.target.value)}
+            variant="outlined"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button onClick={handleDeleteAccount} color="error">
+            Delete My Account
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+};
+
+export default Settings; 

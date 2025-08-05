@@ -1,0 +1,16 @@
+# AeroSuite Database Migration Automation
+# This file contains crontab entries for automated database migration tasks
+# To install: crontab -e and paste these entries
+
+# Check for schema changes and generate migrations daily at 2:00 AM
+0 2 * * * cd /path/to/aerosuite && npm run migrate:generate >> /var/log/aerosuite/migrations-generate.log 2>&1
+
+# Monitor migration status and send notifications if needed (every 6 hours)
+0 */6 * * * cd /path/to/aerosuite && npm run migrate:monitor >> /var/log/aerosuite/migrations-monitor.log 2>&1
+
+# Run pending migrations automatically in development environment (daily at 3:00 AM)
+# Note: For production, migrations should be reviewed before applying
+0 3 * * * cd /path/to/aerosuite && NODE_ENV=development npm run migrate:up >> /var/log/aerosuite/migrations-apply.log 2>&1
+
+# Clean up old migration logs (keep last 30 days)
+0 1 * * 0 find /var/log/aerosuite -name "migrations-*.log" -type f -mtime +30 -delete 

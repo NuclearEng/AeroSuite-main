@@ -1,0 +1,86 @@
+version: 2
+updates:
+  # Enable version updates for npm dependencies
+  - package-ecosystem: "npm"
+    # Look for npm dependencies in the root directory
+    directory: "/"
+    # Check for updates once a week (on Monday)
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    # Group all updates into a single PR
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+    # Specify target branch to create pull requests against
+    target-branch: "main"
+    # Add reviewers
+    reviewers:
+      - "AeroSuite/developers"
+    # Labels on pull requests for version updates only
+    labels:
+      - "dependencies"
+      - "security"
+    # Limit the number of open pull requests
+    open-pull-requests-limit: 10
+    # Allow up to 5 pull requests for security updates
+    security-updates-limit: 5
+    # Raise pull requests for version updates to patch releases
+    versioning-strategy: increase
+
+  # Enable version updates for npm dependencies in client
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+    target-branch: "main"
+    reviewers:
+      - "AeroSuite/frontend-team"
+    labels:
+      - "dependencies"
+      - "frontend"
+      - "security"
+    open-pull-requests-limit: 10
+    security-updates-limit: 5
+    versioning-strategy: increase
+
+  # Enable version updates for npm dependencies in server
+  - package-ecosystem: "npm"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+    target-branch: "main"
+    reviewers:
+      - "AeroSuite/backend-team"
+    labels:
+      - "dependencies"
+      - "backend"
+      - "security"
+    open-pull-requests-limit: 10
+    security-updates-limit: 5
+    versioning-strategy: increase
+    
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    target-branch: "main"
+    reviewers:
+      - "AeroSuite/devops-team"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    open-pull-requests-limit: 5
+    security-updates-limit: 5 

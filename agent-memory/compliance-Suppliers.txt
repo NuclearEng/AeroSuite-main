@@ -1,0 +1,5 @@
+Standards: Compliance standards check for Suppliers
+
+Privacy: Privacy/GDPR check for Suppliers
+
+Audit: Audit trail check for Suppliers

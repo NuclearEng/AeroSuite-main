@@ -1,0 +1,20 @@
+{
+  "name": "production-aerosuite",
+  "version": "1.0.0",
+  "description": "Production AeroSuite Application",
+  "main": "simple-server.js",
+  "scripts": {
+    "start": "node simple-server.js",
+    "start:production": "NODE_ENV=production PORT=5001 node simple-server.js"
+  },
+  "dependencies": {
+    "express": "5.1.0",
+    "cors": "2.8.5"
+  },
+  "keywords": ["aerosuite", "production", "dashboard"],
+  "author": "AeroSuite Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 

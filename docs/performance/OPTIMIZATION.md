@@ -1,0 +1,17 @@
+# Performance Optimization Guide
+
+## Backend
+- Multi-level caching (memory + Redis)
+- Query optimization and indexes
+- Async job processing
+
+## Frontend
+- Code splitting, lazy loading
+- Bundle analysis and optimization
+
+## Infrastructure
+- Horizontal scaling (K8s)
+- Monitoring with Prometheus/Grafana
+
+## Key Scripts
+- `npm run loadtest:baseline`, `npm run perf:report` 

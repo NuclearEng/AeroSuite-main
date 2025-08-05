@@ -1,0 +1,97 @@
+# Test Coverage Reporting
+
+This document outlines the test coverage reporting system for the AeroSuite project.
+
+## Overview
+
+AeroSuite uses Jest for testing and coverage reporting. The system is configured to:
+
+- Track coverage for both client and server code
+- Generate various types of coverage reports (HTML, JSON, LCOV)
+- Enforce minimum coverage thresholds
+- Integrate with CI/CD workflows
+
+## Coverage Metrics
+
+We track the following coverage metrics:
+
+- **Statements**: Percentage of statements that are executed
+- **Branches**: Percentage of branches (if/else, switch/case, etc.) that are executed
+- **Functions**: Percentage of functions that are called
+- **Lines**: Percentage of lines that are executed
+
+## Thresholds
+
+The current minimum thresholds are:
+
+- Statements: 50%
+- Branches: 40%
+- Functions: 50%
+- Lines: 50%
+
+These thresholds are enforced during CI builds.
+
+## Running Coverage Reports
+
+### Local Development
+
+To generate coverage reports locally, run:
+
+```bash
+npm run test:coverage
+```
+
+This will create a `coverage` directory with various report formats:
+
+- HTML report: `coverage/lcov-report/index.html`
+- JSON summary: `coverage/coverage-summary.json`
+- LCOV data: `coverage/lcov.info`
+
+For a quick way to generate and view the report, use:
+
+```bash
+./scripts/test-coverage.sh
+```
+
+This script will:
+1. Generate the coverage report
+2. Display a summary in the terminal
+3. Attempt to open the HTML report in your default browser
+
+### CI/CD Integration
+
+Coverage reports are automatically generated during CI builds for:
+- All pushes to `main` and `develop` branches
+- All pull requests targeting `main` and `develop` branches
+
+Reports are uploaded to Codecov for tracking and visualization.
+
+## Viewing Reports
+
+- **Locally**: Open `coverage/lcov-report/index.html` in a browser
+- **CI/CD**: View reports in the GitHub Actions artifacts
+- **Codecov**: Access detailed reports and history on the Codecov dashboard
+
+## Improving Coverage
+
+When adding new features or refactoring code:
+
+1. Write tests to cover the new or modified code
+2. Run the coverage report to verify that coverage thresholds are met
+3. Focus on testing critical paths and edge cases
+4. Prioritize testing business logic over UI components
+
+## Troubleshooting
+
+### Common Issues
+
+- **Tests failing in CI but passing locally**: Check for environment-specific code or timing issues
+- **Coverage dropping below thresholds**: Add tests for the affected areas
+- **Certain files not being covered**: Check the `collectCoverageFrom` configuration to ensure they're included
+
+### Getting Help
+
+For questions or issues related to test coverage:
+- Check the testing documentation in the `docs` directory
+- Contact the DevOps team
+- Create an issue in the project repository 

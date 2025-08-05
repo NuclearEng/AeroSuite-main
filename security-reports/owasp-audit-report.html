@@ -1,0 +1,417 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP Top 10 Audit Report</title>
+    <style>
+      body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+      h1, h2, h3 { color: #333; }
+      .category { margin-bottom: 30px; border: 1px solid #ddd; padding: 15px; border-radius: 5px; }
+      .category-header { display: flex; justify-content: space-between; align-items: center; }
+      .score { font-size: 1.2em; font-weight: bold; }
+      .score-high { color: green; }
+      .score-medium { color: orange; }
+      .score-low { color: red; }
+      .test { margin: 10px 0; padding: 10px; border-left: 4px solid #ddd; }
+      .test.pass { border-color: green; }
+      .test.fail { border-color: red; }
+      .test.error { border-color: orange; }
+      .test.not_implemented { border-color: gray; }
+      .findings { margin-left: 20px; }
+      .finding { margin: 5px 0; padding: 5px; border-radius: 3px; }
+      .finding.high { background-color: #ffdddd; }
+      .finding.medium { background-color: #ffffdd; }
+      .finding.low { background-color: #ddffdd; }
+      .summary { margin-bottom: 30px; padding: 15px; background-color: #f5f5f5; border-radius: 5px; }
+      .vulnerabilities { margin-bottom: 30px; }
+      .vulnerability { padding: 10px; margin: 5px 0; border-radius: 3px; }
+      .vulnerability.high { background-color: #ffdddd; }
+      .vulnerability.medium { background-color: #ffffdd; }
+      .vulnerability.low { background-color: #ddffdd; }
+    </style>
+  </head>
+  <body>
+    <h1>OWASP Top 10 Audit Report</h1>
+    <div class="summary">
+      <h2>Summary</h2>
+      <p>Timestamp: 2025-06-11T13:21:24.494Z</p>
+      <p>Application URL: http://localhost:3000</p>
+      <p>API URL: http://localhost:5000</p>
+      <p>Total Tests: 2</p>
+      <p>Passed Tests: 0</p>
+      <p>Failed Tests: 2</p>
+      <p>Not Applicable Tests: 0</p>
+      <p>Overall Compliance Score: 0%</p>
+    </div>
+    <div class="vulnerabilities">
+      <h2>Vulnerabilities (2)</h2>
+      <div class="vulnerability high">
+        <h3>OWASP-A02-1: A02:2021 - Check for HTTPS usage</h3>
+        <p><strong>Severity:</strong> high</p>
+        <p><strong>Details:</strong> Application is using HTTP instead of HTTPS</p>
+        
+        <p><strong>Remediation:</strong> Implement HTTPS across the entire application and use HSTS headers</p>
+      </div>
+      <div class="vulnerability medium">
+        <h3>OWASP-A02-2: A02:2021 - Check for HTTPS usage</h3>
+        <p><strong>Severity:</strong> medium</p>
+        <p><strong>Details:</strong> Could not check HSTS header: </p>
+        
+        <p><strong>Remediation:</strong> Implement HTTPS across the entire application and use HSTS headers</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A01:2021 - Broken Access Control</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Access control enforces policy such that users cannot act outside of their intended permissions.</p>
+      <div class="test error">
+        <h3>Check for public access to admin interfaces</h3>
+        <p>Attempts to access admin interfaces without authentication</p>
+        <p><strong>Status:</strong> error</p>
+        <p><strong>Remediation:</strong> Ensure all admin interfaces require proper authentication and authorization</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>Check for horizontal privilege escalation</h3>
+        <p>Tests if users can access resources belonging to other users of the same permission level</p>
+        <p><strong>Status:</strong> not_implemented</p>
+        <p><strong>Remediation:</strong> Implement proper resource-based access control and validate user context for each request</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkVerticalPrivilegeEscalation</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkAccessControlHeaders</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkDirectoryTraversal</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkApiAccessControl</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A02:2021 - Cryptographic Failures</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Failures related to cryptography which often lead to exposure of sensitive data.</p>
+      <div class="test fail">
+        <h3>Check for HTTPS usage</h3>
+        <p>Verifies that the application enforces HTTPS</p>
+        <p><strong>Status:</strong> fail</p>
+        <div class="findings">
+          <h4>Findings:</h4>
+          <div class="finding high">
+            <p><strong>Severity:</strong> high</p>
+            <p><strong>Details:</strong> Application is using HTTP instead of HTTPS</p>
+            
+          </div>
+          <div class="finding medium">
+            <p><strong>Severity:</strong> medium</p>
+            <p><strong>Details:</strong> Could not check HSTS header: </p>
+            
+          </div>
+        </div>
+        <p><strong>Remediation:</strong> Implement HTTPS across the entire application and use HSTS headers</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkSecureHeaders</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkSensitiveDataTransmission</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkPasswordStorage</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkCipherSuites</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkCertificateValidation</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A03:2021 - Injection</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Injection flaws, such as SQL, NoSQL, OS, and LDAP injection.</p>
+      <div class="test not_implemented">
+        <h3>checkSqlInjection</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkNoSqlInjection</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkCommandInjection</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkXssVulnerabilities</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkLdapInjection</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkParameterPollution</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A04:2021 - Insecure Design</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Failures in design and architecture of the application.</p>
+      <div class="test not_implemented">
+        <h3>checkBusinessLogicFlaws</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkRateLimiting</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkDataValidation</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkSecureDefaults</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkErrorHandling</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A05:2021 - Security Misconfiguration</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Security misconfiguration is the most commonly seen issue.</p>
+      <div class="test not_implemented">
+        <h3>checkDefaultCredentials</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkUnnecessaryFeatures</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkServerConfiguration</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkSecurityHeaders</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkErrorMessages</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkDirectoryListing</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A06:2021 - Vulnerable and Outdated Components</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Using components with known vulnerabilities.</p>
+      <div class="test not_implemented">
+        <h3>checkDependencyVulnerabilities</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkOutdatedComponents</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkCmsVulnerabilities</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkFrameworkVulnerabilities</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A07:2021 - Identification and Authentication Failures</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Authentication failures that can compromise passwords, keys, or session tokens.</p>
+      <div class="test not_implemented">
+        <h3>checkWeakPasswords</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkBruteForceProtection</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkSessionManagement</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkPasswordPolicies</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkMultiFactorAuth</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkSessionFixation</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A08:2021 - Software and Data Integrity Failures</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>Software and data integrity failures relate to code and infrastructure that does not protect against integrity violations.</p>
+      <div class="test not_implemented">
+        <h3>checkUnsignedUpdates</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkInsecureDeserialization</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkCiCdSecurity</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkDependencyIntegrity</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkCodeIntegrity</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A09:2021 - Security Logging and Monitoring Failures</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>This category helps detect, escalate, and respond to active breaches.</p>
+      <div class="test not_implemented">
+        <h3>checkLoggingImplementation</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkLogProtection</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkAuditLogging</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkAlertingMechanisms</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkMonitoringCoverage</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+    <div class="category">
+      <div class="category-header">
+        <h2>A10:2021 - Server-Side Request Forgery (SSRF)</h2>
+        <span class="score score-low">0%</span>
+      </div>
+      <p>SSRF flaws occur when a web application fetches a remote resource without validating the user-supplied URL.</p>
+      <div class="test not_implemented">
+        <h3>checkSsrfVulnerabilities</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkUrlValidation</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkServerWhitelisting</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+      <div class="test not_implemented">
+        <h3>checkNetworkSegmentation</h3>
+        <p>This test has not been implemented yet.</p>
+        <p><strong>Status:</strong> not_implemented</p>
+      </div>
+    </div>
+  </body>
+  </html>

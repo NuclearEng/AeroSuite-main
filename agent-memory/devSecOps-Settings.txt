@@ -1,0 +1,7 @@
+Vuln: Vulnerability scan for Settings
+
+RBAC: RBAC check for Settings
+
+Encryption: Encryption check for Settings
+
+CSP: CSP check for Settings

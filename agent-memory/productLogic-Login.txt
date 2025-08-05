@@ -1,0 +1,5 @@
+Flows: Business logic flow check for Login
+
+Rules: Business rules validation for Login
+
+Edge: Edge case analysis for Login

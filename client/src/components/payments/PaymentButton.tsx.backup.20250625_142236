@@ -1,0 +1,99 @@
+import React, { useState } from 'react';
+import { Button, CircularProgress, Tooltip } from '@mui/material';
+import PaymentService from '../../services/PaymentService';
+
+interface PaymentButtonProps {
+  amount: number; // USD
+  description?: string;
+  metadata?: Record<string, any>;
+  customerId?: string;
+  variant?: 'text' | 'outlined' | 'contained';
+  color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+  size?: 'small' | 'medium' | 'large';
+  fullWidth?: boolean;
+  disabled?: boolean;
+  className?: string;
+  label?: string;
+  tooltip?: string;
+  onSuccess?: (sessionId: string) => void;
+  onError?: (error: any) => void;
+}
+
+/**
+ * Payment Button Component
+ * 
+ * A button that initiates a Stripe payment flow when clicked
+ * Task: TS367 - Payment gateway integration
+ */
+const PaymentButton: React.FC<PaymentButtonProps> = ({
+  amount,
+  description,
+  metadata,
+  customerId,
+  variant = 'contained',
+  color = 'primary',
+  size = 'medium',
+  fullWidth = false,
+  disabled = false,
+  className,
+  label,
+  tooltip,
+  onSuccess,
+  onError
+}) => {
+  const [loading, setLoading] = useState(false);
+
+  const handlePayment = async () => {
+    setLoading(true);
+    try {
+      const session = await PaymentService.createSession(
+        amount,
+        description,
+        metadata,
+        customerId
+      );
+      
+      if (session && session.url) {
+        if (onSuccess) {
+          onSuccess(session.id);
+        }
+        window.location.href = session.url;
+      } else {
+        throw new Error('Invalid session response');
+      }
+    } catch (err) {
+      console.error('Payment initiation failed:', err);
+      if (onError) {
+        onError(err);
+      } else {
+        alert('Failed to initiate payment. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const buttonContent = loading ? (
+    <CircularProgress size={24} color="inherit" />
+  ) : (
+    label || `Pay $${amount.toFixed(2)}`
+  );
+
+  const button = (
+    <Button
+      variant={variant}
+      color={color}
+      size={size}
+      fullWidth={fullWidth}
+      disabled={disabled || loading}
+      onClick={handlePayment}
+      className={className}
+    >
+      {buttonContent}
+    </Button>
+  );
+
+  return tooltip ? <Tooltip title={tooltip}>{button}</Tooltip> : button;
+};
+
+export default PaymentButton; 

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Typography Component renders correctly with default props 1`] = `null`;
+
+exports[`Typography Component renders correctly with different alignments 1`] = `null`;
+
+exports[`Typography Component renders correctly with different colors 1`] = `null`;
+
+exports[`Typography Component renders correctly with different variants 1`] = `null`;

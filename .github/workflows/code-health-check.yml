@@ -1,0 +1,72 @@
+name: Code Health Check
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  code-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --legacy-peer-deps
+
+      - name: Install depcheck and madge
+        run: npm install --no-save depcheck@1.4.7 madge@8.0.0
+
+      - name: Run depcheck (client)
+        run: npx depcheck client > depcheck-client.txt || true
+
+      - name: Run depcheck (server)
+        run: npx depcheck server > depcheck-server.txt || true
+
+      - name: Run madge (client)
+        run: npx madge --orphans --circular --extensions ts,tsx,js,jsx client/src > madge-client.txt || true
+
+      - name: Run madge (server)
+        run: npx madge --orphans --circular --extensions js,ts server/src > madge-server.txt || true
+
+      - name: Run lint (if config present)
+        run: |
+          if [ -f eslint.config.js ] || [ -f .eslintrc.js ]; then npm run lint || true; else echo "No ESLint config found."; fi
+
+      - name: Run typecheck (if TypeScript present)
+        run: |
+          if [ -f tsconfig.json ]; then npm run typecheck || true; else echo "No tsconfig.json found."; fi
+
+      - name: Run tests
+        run: npm test || true
+
+      - name: Build frontend
+        run: npm run build || true
+
+      - name: Upload depcheck/madge reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-health-reports
+          path: |
+            depcheck-client.txt
+            depcheck-server.txt
+            madge-client.txt
+            madge-server.txt
+
+      - name: Summarize results
+        run: |
+          echo "==== depcheck (client) ===="
+          cat depcheck-client.txt || echo "No report."
+          echo "\n==== depcheck (server) ===="
+          cat depcheck-server.txt || echo "No report."
+          echo "\n==== madge (client) ===="
+          cat madge-client.txt || echo "No report."
+          echo "\n==== madge (server) ===="
+          cat madge-server.txt || echo "No report." 

@@ -1,0 +1,5 @@
+Standards: Compliance standards check for Settings
+
+Privacy: Privacy/GDPR check for Settings
+
+Audit: Audit trail check for Settings

@@ -1,0 +1,628 @@
+import { useState } from 'react';
+import axios from 'axios';
+import { useAuth } from './useAuth';
+import { API_BASE_URL } from '../config';
+import { retryWithBackoff, ErrorType, ErrorSeverity, createBusinessError } from '../utils/errorHandling';
+
+interface ImportResults {
+  total: number;
+  created: number;
+  updated: number;
+  failed: number;
+  errors: string[];
+}
+
+interface ImportResponse {
+  importResults: ImportResults;
+  importJobId?: string;
+}
+
+/**
+ * Hook for supplier API operations
+ */
+export const useSupplierApi = () => {
+  const auth = useAuth();
+  
+  /**
+   * Get authentication headers for API requests
+   */
+  const getAuthHeaders = async () => {
+    const token = await auth.getToken();
+    return {
+      Authorization: `Bearer ${token}`
+    };
+  };
+  
+  /**
+   * Import suppliers from a file
+   * @param formData Form data containing the file and import options
+   * @returns Import results
+   */
+  const importSuppliers = async (formData: FormData): Promise<ImportResponse> => {
+    try {
+      const headers = await getAuthHeaders();
+      
+      const response = await retryWithBackoff(
+        async () => axios.post(
+          `${API_BASE_URL}/suppliers/import`,
+          formData,
+          {
+            headers: {
+              ...headers,
+              'Content-Type': 'multipart/form-data'
+            },
+            timeout: 60000 // 60 seconds timeout for large files
+          }
+        ),
+        {
+          maxRetries: 2,
+          initialDelay: 2000,
+          onRetry: (attempt) => {
+            console.log(`Retrying import (attempt ${attempt})...`);
+          }
+        }
+      );
+      
+      return response.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Handle specific error cases
+        if (!error.response) {
+          throw createBusinessError(
+            'Network error while importing suppliers. Please check your connection and try again.',
+            { 
+              severity: ErrorSeverity.ERROR,
+              code: 'IMPORT_NETWORK_ERROR'
+            }
+          );
+        }
+        
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 413) {
+          throw createBusinessError(
+            'The file is too large to upload. Please reduce the file size and try again.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'FILE_TOO_LARGE'
+            }
+          );
+        }
+        
+        if (status === 422 || status === 400) {
+          throw createBusinessError(
+            responseData.message || 'Invalid import data. Please check your file format and try again.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'IMPORT_VALIDATION_ERROR'
+            }
+          );
+        }
+        
+        if (status === 403) {
+          throw createBusinessError(
+            'You do not have permission to import suppliers.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'IMPORT_PERMISSION_DENIED'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error importing suppliers',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `IMPORT_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Export suppliers to a file
+   * @param queryParams Query parameters for filtering and format
+   */
+  const exportSuppliers = async (queryParams: string): Promise<void> => {
+    try {
+      // Use a direct window.open approach to trigger file download
+      const token = await auth.getToken();
+      if (!token) {
+        throw createBusinessError(
+          'Authentication required. Please log in again.',
+          { 
+            severity: ErrorSeverity.WARNING,
+            code: 'AUTH_REQUIRED',
+            recoveryPath: '/auth/login'
+          }
+        );
+      }
+      
+      const url = `${API_BASE_URL}/suppliers/export?${queryParams}`;
+      
+      // Create a hidden iframe to handle the download
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      // Create a form within the iframe to submit with authentication
+      const form = document.createElement('form');
+      form.method = 'GET';
+      form.action = url;
+      
+      // Add authentication token as a hidden field
+      const authField = document.createElement('input');
+      authField.type = 'hidden';
+      authField.name = 'Authorization';
+      authField.value = `Bearer ${token}`;
+      form.appendChild(authField);
+      
+      // Append form to iframe and submit
+      if (!iframe.contentDocument) {
+        throw createBusinessError(
+          'Failed to create download frame. Please try again or use a different browser.',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: 'EXPORT_FRAME_ERROR'
+          }
+        );
+      }
+      
+      iframe.contentDocument.body.appendChild(form);
+      form.submit();
+      
+      // Clean up after a delay
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+      }, 5000);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 403) {
+          throw createBusinessError(
+            'You do not have permission to export suppliers.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'EXPORT_PERMISSION_DENIED'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error exporting suppliers',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `EXPORT_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Get import template file
+   * @param format Template format (csv, excel)
+   */
+  const getImportTemplate = async (format: string): Promise<void> => {
+    try {
+      // Use a direct window.open approach to trigger file download
+      const token = await auth.getToken();
+      if (!token) {
+        throw createBusinessError(
+          'Authentication required. Please log in again.',
+          { 
+            severity: ErrorSeverity.WARNING,
+            code: 'AUTH_REQUIRED',
+            recoveryPath: '/auth/login'
+          }
+        );
+      }
+      
+      const url = `${API_BASE_URL}/suppliers/import-template?format=${format}`;
+      
+      // Create a hidden iframe to handle the download
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      // Create a form within the iframe to submit with authentication
+      const form = document.createElement('form');
+      form.method = 'GET';
+      form.action = url;
+      
+      // Add authentication token as a hidden field
+      const authField = document.createElement('input');
+      authField.type = 'hidden';
+      authField.name = 'Authorization';
+      authField.value = `Bearer ${token}`;
+      form.appendChild(authField);
+      
+      // Append form to iframe and submit
+      if (!iframe.contentDocument) {
+        throw createBusinessError(
+          'Failed to create download frame. Please try again or use a different browser.',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: 'TEMPLATE_FRAME_ERROR'
+          }
+        );
+      }
+      
+      iframe.contentDocument.body.appendChild(form);
+      form.submit();
+      
+      // Clean up after a delay
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+      }, 5000);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 403) {
+          throw createBusinessError(
+            'You do not have permission to download templates.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'TEMPLATE_PERMISSION_DENIED'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error getting import template',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `TEMPLATE_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Get import progress
+   * @param importId Import job ID
+   * @returns Import progress status
+   */
+  const getImportProgress = async (importId: string): Promise<any> => {
+    try {
+      const headers = await getAuthHeaders();
+      
+      const response = await retryWithBackoff(
+        async () => axios.get(
+          `${API_BASE_URL}/suppliers/import-progress/${importId}`,
+          { headers }
+        ),
+        {
+          maxRetries: 3,
+          initialDelay: 1000
+        }
+      );
+      
+      return response.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 404) {
+          throw createBusinessError(
+            'Import job not found. It may have been completed or removed.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'IMPORT_JOB_NOT_FOUND'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error getting import progress',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `IMPORT_PROGRESS_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Get all suppliers with optional filtering
+   * @param params Query parameters for filtering and pagination
+   * @returns List of suppliers and pagination info
+   */
+  const getSuppliers = async (params: any = {}): Promise<any> => {
+    try {
+      const headers = await getAuthHeaders();
+      
+      const response = await retryWithBackoff(
+        async () => axios.get(
+          `${API_BASE_URL}/suppliers`,
+          {
+            params,
+            headers
+          }
+        ),
+        {
+          maxRetries: 2,
+          initialDelay: 1000
+        }
+      );
+      
+      return response.data.data;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        throw createBusinessError(
+          responseData.message || 'Error fetching suppliers',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `FETCH_SUPPLIERS_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Get a single supplier by ID
+   * @param id Supplier ID
+   * @returns Supplier details
+   */
+  const getSupplierById = async (id: string): Promise<any> => {
+    try {
+      const headers = await getAuthHeaders();
+      
+      const response = await retryWithBackoff(
+        async () => axios.get(
+          `${API_BASE_URL}/suppliers/${id}`,
+          { headers }
+        ),
+        {
+          maxRetries: 2,
+          initialDelay: 1000
+        }
+      );
+      
+      return response.data.data.supplier;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 404) {
+          throw createBusinessError(
+            'Supplier not found. It may have been deleted or you may not have access.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'SUPPLIER_NOT_FOUND'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error fetching supplier details',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `FETCH_SUPPLIER_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Create a new supplier
+   * @param supplierData Supplier data
+   * @returns Created supplier
+   */
+  const createSupplier = async (supplierData: any): Promise<any> => {
+    try {
+      const headers = await getAuthHeaders();
+      
+      const response = await axios.post(
+        `${API_BASE_URL}/suppliers`,
+        supplierData,
+        { headers }
+      );
+      
+      return response.data.data.supplier;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 422 || status === 400) {
+          throw createBusinessError(
+            responseData.message || 'Invalid supplier data. Please check your input.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'SUPPLIER_VALIDATION_ERROR',
+              field: responseData.errors?.[0]?.field
+            }
+          );
+        }
+        
+        if (status === 409) {
+          throw createBusinessError(
+            'A supplier with this code already exists.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'SUPPLIER_DUPLICATE',
+              field: 'code'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error creating supplier',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `CREATE_SUPPLIER_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Update a supplier
+   * @param id Supplier ID
+   * @param supplierData Updated supplier data
+   * @returns Updated supplier
+   */
+  const updateSupplier = async (id: string, supplierData: any): Promise<any> => {
+    try {
+      const headers = await getAuthHeaders();
+      
+      const response = await axios.put(
+        `${API_BASE_URL}/suppliers/${id}`,
+        supplierData,
+        { headers }
+      );
+      
+      return response.data.data.supplier;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 404) {
+          throw createBusinessError(
+            'Supplier not found. It may have been deleted.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'SUPPLIER_NOT_FOUND'
+            }
+          );
+        }
+        
+        if (status === 422 || status === 400) {
+          throw createBusinessError(
+            responseData.message || 'Invalid supplier data. Please check your input.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'SUPPLIER_VALIDATION_ERROR',
+              field: responseData.errors?.[0]?.field
+            }
+          );
+        }
+        
+        if (status === 409) {
+          throw createBusinessError(
+            'A supplier with this code already exists.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'SUPPLIER_DUPLICATE',
+              field: 'code'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error updating supplier',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `UPDATE_SUPPLIER_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  /**
+   * Delete a supplier
+   * @param id Supplier ID
+   */
+  const deleteSupplier = async (id: string): Promise<void> => {
+    try {
+      const headers = await getAuthHeaders();
+      
+      await axios.delete(
+        `${API_BASE_URL}/suppliers/${id}`,
+        { headers }
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        const responseData = error.response.data;
+        
+        if (status === 404) {
+          throw createBusinessError(
+            'Supplier not found. It may have already been deleted.',
+            { 
+              severity: ErrorSeverity.INFO,
+              code: 'SUPPLIER_NOT_FOUND'
+            }
+          );
+        }
+        
+        if (status === 403) {
+          throw createBusinessError(
+            'You do not have permission to delete this supplier.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'DELETE_PERMISSION_DENIED'
+            }
+          );
+        }
+        
+        if (status === 409) {
+          throw createBusinessError(
+            'This supplier cannot be deleted because it is referenced by other items.',
+            { 
+              severity: ErrorSeverity.WARNING,
+              code: 'SUPPLIER_IN_USE'
+            }
+          );
+        }
+        
+        throw createBusinessError(
+          responseData.message || 'Error deleting supplier',
+          { 
+            severity: ErrorSeverity.ERROR,
+            code: `DELETE_SUPPLIER_ERROR_${status}`
+          }
+        );
+      }
+      
+      throw error;
+    }
+  };
+  
+  return {
+    importSuppliers,
+    exportSuppliers,
+    getImportTemplate,
+    getImportProgress,
+    getSuppliers,
+    getSupplierById,
+    createSupplier,
+    updateSupplier,
+    deleteSupplier
+  };
+}; 

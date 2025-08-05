@@ -1,0 +1,282 @@
+# Calendar Integration Documentation
+
+**Task: TS366 - Calendar integration implementation**
+
+## Overview
+
+The AeroSuite Calendar Integration feature provides a comprehensive solution for managing events within the AeroSuite platform and synchronizing with external calendar services. This feature enables users to:
+
+- View and manage events in a calendar interface
+- Create, edit, and delete events of various types
+- Connect to external calendar services (Google Calendar, Microsoft Outlook)
+- Synchronize events between AeroSuite and external calendars
+
+## Architecture
+
+The calendar integration feature follows a layered architecture:
+
+1. **Frontend**
+   - Calendar widget component for dashboard integration
+   - Full calendar page for comprehensive event management
+   - React hooks for data fetching and state management
+
+2. **Backend**
+   - RESTful API endpoints for calendar operations
+   - MongoDB models for storing events and integration settings
+   - Integration services for external calendar providers
+
+3. **External Integrations**
+   - Google Calendar API integration
+   - Microsoft Graph API integration (for Outlook)
+   - iCalendar format support
+
+## Frontend Components
+
+### CalendarWidget
+
+A lightweight calendar widget that can be embedded in dashboards and other pages. It provides:
+
+- Month view of events
+- Event filtering by type
+- Quick navigation controls
+- Event click handling
+
+Usage:
+```jsx
+<CalendarWidget 
+  height={400} 
+  defaultView="dayGridMonth"
+  onEventClick={(eventId) => handleEventClick(eventId)}
+  onDateClick={(date) => handleDateClick(date)}
+/>
+```
+
+### CalendarPage
+
+A full-featured calendar page that provides comprehensive event management:
+
+- Multiple calendar views (month, week, day, list)
+- Event creation, editing, and deletion
+- Calendar integration management
+- Event filtering and search
+
+## React Hooks
+
+### useCalendar
+
+A custom React hook that provides calendar functionality:
+
+```jsx
+const { 
+  events,
+  isLoading,
+  error,
+  integrations,
+  loadEvents,
+  loadEventsByType,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  loadIntegrations,
+  connectCalendar,
+  disconnectCalendar,
+  syncCalendars
+} = useCalendar({
+  autoLoad: true,
+  eventType: 'inspection',
+  startDate: new Date('2023-01-01'),
+  endDate: new Date('2023-12-31')
+});
+```
+
+## Backend API
+
+### Endpoints
+
+| Method | Endpoint                           | Description                                   |
+|--------|-----------------------------------|-----------------------------------------------|
+| GET    | `/api/v1/calendar/events`         | Get calendar events with optional filtering   |
+| POST   | `/api/v1/calendar/events`         | Create a new calendar event                   |
+| PUT    | `/api/v1/calendar/events/:id`     | Update an existing calendar event            |
+| DELETE | `/api/v1/calendar/events/:id`     | Delete a calendar event                      |
+| GET    | `/api/v1/calendar/integrations`   | Get calendar integrations for the current user|
+| POST   | `/api/v1/calendar/integrations/google/connect` | Connect to Google Calendar       |
+| POST   | `/api/v1/calendar/integrations/outlook/connect` | Connect to Microsoft Outlook    |
+| POST   | `/api/v1/calendar/integrations/:type/disconnect` | Disconnect from a calendar     |
+| POST   | `/api/v1/calendar/sync`           | Sync calendars                               |
+
+### Models
+
+#### CalendarEvent
+
+```javascript
+{
+  title: String,         // Event title
+  start: Date,           // Start date/time
+  end: Date,             // End date/time (optional)
+  allDay: Boolean,       // Whether the event is all day
+  location: String,      // Event location (optional)
+  description: String,   // Event description (optional)
+  url: String,           // URL associated with the event (optional)
+  color: String,         // Event color (optional)
+  type: String,          // Event type (inspection, audit, meeting, deadline, reminder, other)
+  isPublic: Boolean,     // Whether the event is public
+  sourceId: String,      // ID from external source (optional)
+  meta: Object,          // Additional metadata (optional)
+  userId: ObjectId,      // User who owns the event
+  createdBy: ObjectId,   // User who created the event
+  createdAt: Date,       // Creation timestamp
+  updatedAt: Date        // Last update timestamp
+}
+```
+
+#### CalendarIntegration
+
+```javascript
+{
+  type: String,          // Integration type (internal, google, outlook, ical)
+  name: String,          // Integration name
+  isConnected: Boolean,  // Whether the integration is connected
+  accessToken: String,   // OAuth access token (optional)
+  refreshToken: String,  // OAuth refresh token (optional)
+  expiresAt: Date,       // Token expiration date (optional)
+  lastSync: Date,        // Last sync timestamp (optional)
+  settings: Object,      // Integration settings (optional)
+  userId: ObjectId,      // User who owns the integration
+  createdAt: Date,       // Creation timestamp
+  updatedAt: Date        // Last update timestamp
+}
+```
+
+## External Calendar Integration
+
+### Google Calendar
+
+Integration with Google Calendar is implemented using the Google Calendar API. The integration process involves:
+
+1. OAuth 2.0 authentication flow
+2. Requesting appropriate scopes (`https://www.googleapis.com/auth/calendar.readonly` for read-only access, `https://www.googleapis.com/auth/calendar` for full access)
+3. Storing access and refresh tokens
+4. Refreshing tokens when they expire
+
+### Microsoft Outlook
+
+Integration with Microsoft Outlook is implemented using the Microsoft Graph API. The integration process involves:
+
+1. OAuth 2.0 authentication flow
+2. Requesting appropriate scopes (`Calendars.Read` for read-only access, `Calendars.ReadWrite` for full access)
+3. Storing access and refresh tokens
+4. Refreshing tokens when they expire
+
+## Event Types
+
+The calendar supports the following event types:
+
+| Type       | Color    | Description                                    |
+|------------|----------|------------------------------------------------|
+| inspection | Green    | Quality inspections and related activities     |
+| audit      | Orange   | Supplier and internal audits                   |
+| meeting    | Blue     | Meetings and appointments                      |
+| deadline   | Red      | Deadlines and important due dates              |
+| reminder   | Purple   | General reminders                              |
+| other      | Gray     | Other events                                   |
+
+## Usage Examples
+
+### Creating a Calendar Event
+
+```javascript
+// Frontend
+const { createEvent } = useCalendar();
+
+await createEvent({
+  title: 'Quality Inspection - Supplier XYZ',
+  start: new Date('2023-05-15T10:00:00'),
+  end: new Date('2023-05-15T12:00:00'),
+  allDay: false,
+  location: 'Supplier XYZ Facility',
+  description: 'Regular quality inspection of aerospace parts',
+  type: 'inspection'
+});
+
+// Backend API
+fetch('/api/v1/calendar/events', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_TOKEN'
+  },
+  body: JSON.stringify({
+    title: 'Quality Inspection - Supplier XYZ',
+    start: '2023-05-15T10:00:00',
+    end: '2023-05-15T12:00:00',
+    allDay: false,
+    location: 'Supplier XYZ Facility',
+    description: 'Regular quality inspection of aerospace parts',
+    type: 'inspection'
+  })
+});
+```
+
+### Connecting to Google Calendar
+
+```javascript
+// Frontend
+const { connectCalendar } = useCalendar();
+await connectCalendar('google');
+
+// Backend API
+fetch('/api/v1/calendar/integrations/google/connect', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_TOKEN'
+  }
+});
+```
+
+## Security Considerations
+
+1. **Authentication**: All calendar endpoints require authentication.
+2. **Authorization**: Users can only access their own events and integrations.
+3. **OAuth Security**: OAuth tokens are stored securely and never exposed to the frontend.
+4. **Data Validation**: All input data is validated before processing.
+5. **Rate Limiting**: API endpoints are rate-limited to prevent abuse.
+
+## Performance Considerations
+
+1. **Caching**: Calendar events are cached on the client side to reduce API calls.
+2. **Pagination**: API endpoints support pagination for large result sets.
+3. **Indexing**: MongoDB collections are indexed for efficient querying.
+4. **Lazy Loading**: Events are loaded on demand based on the visible date range.
+5. **Batch Processing**: Sync operations are performed in batches to improve performance.
+
+## Future Enhancements
+
+1. **iCalendar Import/Export**: Support for importing and exporting events in iCalendar format.
+2. **Calendar Sharing**: Ability to share calendars with other users.
+3. **Event Notifications**: Email and push notifications for upcoming events.
+4. **Recurring Events**: Support for recurring events with complex patterns.
+5. **Event Categories**: Custom event categories and color coding.
+6. **Calendar Views**: Additional calendar views such as agenda and timeline.
+7. **Mobile Support**: Enhanced mobile experience for calendar management.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Sync Issues**: If events are not syncing properly, check the integration status and try reconnecting.
+2. **Event Display Issues**: If events are not displaying correctly, try clearing the cache and refreshing the page.
+3. **Authentication Errors**: If you encounter authentication errors, try logging out and logging back in.
+4. **Performance Issues**: If the calendar is slow to load, try reducing the date range or filtering by event type.
+
+### Logging
+
+Calendar-related activities are logged for debugging purposes:
+
+- Frontend: Console logs with `[Calendar]` prefix
+- Backend: Server logs with `calendar` tag
+
+## Conclusion
+
+The AeroSuite Calendar Integration feature provides a comprehensive solution for managing events within the AeroSuite platform and synchronizing with external calendar services. It is designed to be flexible, secure, and performant, with a focus on user experience and integration capabilities. 

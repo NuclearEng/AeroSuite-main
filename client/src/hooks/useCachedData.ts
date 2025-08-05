@@ -1,0 +1,119 @@
+/**
+ * useCachedData Hook
+ * 
+ * A custom hook for fetching and caching data from API endpoints
+ * with configurable caching options.
+ * 
+ * Task: TS364 - Query result caching implementation
+ */
+
+import { useState, useEffect, useCallback } from 'react';
+import api, { CacheOptions } from '../services/api';
+import { AxiosRequestConfig } from 'axios';
+
+interface UseCachedDataOptions extends CacheOptions {
+  initialData?: any;
+  autoFetch?: boolean;
+  deps?: any[];
+}
+
+interface UseCachedDataResult<T> {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => Promise<void>;
+}
+
+/**
+ * Hook for fetching data with client-side caching
+ * @param url API endpoint URL
+ * @param options Request and cache options
+ * @returns Data, loading state, error, and refetch function
+ */
+function useCachedData<T>(
+  url: string,
+  options: UseCachedDataOptions & AxiosRequestConfig = {}
+): UseCachedDataResult<T> {
+  // Extract options
+  const {
+    initialData = null,
+    autoFetch = true,
+    deps = [],
+    useCache = true,
+    ttl,
+    cacheKey,
+    ...axiosConfig
+  } = options;
+
+  // State
+  const [data, setData] = useState<T | null>(initialData);
+  const [loading, setLoading] = useState<boolean>(autoFetch);
+  const [error, setError] = useState<Error | null>(null);
+
+  // Cache options
+  const cacheOptions: CacheOptions = {
+    useCache,
+    ttl,
+    cacheKey
+  };
+
+  // Fetch function
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const result = await api.get<T>(url, axiosConfig, cacheOptions);
+      setData(result);
+    } catch (_err) {
+      setError(err instanceof Error ? err : new Error('Failed to fetch data'));
+      console.error('Error fetching data:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [url, JSON.stringify(axiosConfig), JSON.stringify(cacheOptions), ...deps]);
+
+  // Fetch on mount or when dependencies change if autoFetch is true
+  useEffect(() => {
+    if (autoFetch) {
+      fetchData();
+    }
+  }, [fetchData]);
+
+  return { data, loading, error, refetch: fetchData };
+}
+
+/**
+ * Hook for accessing and managing cached user preferences
+ * 
+ * @param key Preference key
+ * @param defaultValue Default value if preference doesn't exist
+ * @returns [value, setValue] tuple
+ */
+function useCachedPreference<T>(
+  key: string,
+  defaultValue: T
+): [T, (value: T) => void] {
+  const [value, setValue] = useState<T>(() => {
+    const cached = localStorage.getItem(`prefs:${key}`);
+    if (cached !== null) {
+      try {
+        return JSON.parse(cached);
+      } catch (_e) {
+        return defaultValue;
+      }
+    }
+    return defaultValue;
+  });
+
+  // Update the value and persist to localStorage
+  const updateValue = (newValue: T) => {
+    setValue(newValue);
+    localStorage.setItem(`prefs:${key}`, JSON.stringify(newValue));
+  };
+
+  return [value, updateValue];
+}
+
+export default useCachedData;
+export { useCachedPreference }; 

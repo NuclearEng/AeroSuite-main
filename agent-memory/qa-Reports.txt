@@ -1,0 +1,5 @@
+Manual: Manual QA checklist for Reports
+
+Exploratory: Exploratory QA for Reports
+
+Regression: Regression QA for Reports

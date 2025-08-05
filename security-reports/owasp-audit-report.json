@@ -1,0 +1,498 @@
+{
+  "summary": {
+    "timestamp": "2025-06-11T13:21:24.494Z",
+    "applicationUrl": "http://localhost:3000",
+    "apiUrl": "http://localhost:5000",
+    "totalTests": 2,
+    "passedTests": 0,
+    "failedTests": 2,
+    "notApplicableTests": 0,
+    "complianceScore": 0,
+    "categoryResults": {
+      "A01": {
+        "totalTests": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "complianceScore": 0
+      },
+      "A02": {
+        "totalTests": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "complianceScore": 0
+      },
+      "A03": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      },
+      "A04": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      },
+      "A05": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      },
+      "A06": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      },
+      "A07": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      },
+      "A08": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      },
+      "A09": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      },
+      "A10": {
+        "totalTests": 0,
+        "passedTests": 0,
+        "failedTests": 0,
+        "complianceScore": 0
+      }
+    }
+  },
+  "vulnerabilities": [
+    {
+      "id": "OWASP-A02-1",
+      "category": "A02:2021",
+      "test": "Check for HTTPS usage",
+      "severity": "high",
+      "details": "Application is using HTTP instead of HTTPS",
+      "remediation": "Implement HTTPS across the entire application and use HSTS headers"
+    },
+    {
+      "id": "OWASP-A02-2",
+      "category": "A02:2021",
+      "test": "Check for HTTPS usage",
+      "severity": "medium",
+      "details": "Could not check HSTS header: ",
+      "remediation": "Implement HTTPS across the entire application and use HSTS headers"
+    }
+  ],
+  "detailedResults": {
+    "A01": {
+      "id": "A01:2021",
+      "name": "Broken Access Control",
+      "description": "Access control enforces policy such that users cannot act outside of their intended permissions.",
+      "testResults": [
+        {
+          "name": "Check for public access to admin interfaces",
+          "category": "A01",
+          "status": "error",
+          "description": "Attempts to access admin interfaces without authentication",
+          "findings": [],
+          "remediation": "Ensure all admin interfaces require proper authentication and authorization",
+          "error": ""
+        },
+        {
+          "name": "Check for horizontal privilege escalation",
+          "category": "A01",
+          "status": "not_implemented",
+          "description": "Tests if users can access resources belonging to other users of the same permission level",
+          "findings": [],
+          "remediation": "Implement proper resource-based access control and validate user context for each request"
+        },
+        {
+          "name": "checkVerticalPrivilegeEscalation",
+          "category": "A01",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkAccessControlHeaders",
+          "category": "A01",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkDirectoryTraversal",
+          "category": "A01",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkApiAccessControl",
+          "category": "A01",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A02": {
+      "id": "A02:2021",
+      "name": "Cryptographic Failures",
+      "description": "Failures related to cryptography which often lead to exposure of sensitive data.",
+      "testResults": [
+        {
+          "name": "Check for HTTPS usage",
+          "category": "A02",
+          "status": "fail",
+          "description": "Verifies that the application enforces HTTPS",
+          "findings": [
+            {
+              "severity": "high",
+              "details": "Application is using HTTP instead of HTTPS"
+            },
+            {
+              "severity": "medium",
+              "details": "Could not check HSTS header: "
+            }
+          ],
+          "remediation": "Implement HTTPS across the entire application and use HSTS headers"
+        },
+        {
+          "name": "checkSecureHeaders",
+          "category": "A02",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkSensitiveDataTransmission",
+          "category": "A02",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkPasswordStorage",
+          "category": "A02",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkCipherSuites",
+          "category": "A02",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkCertificateValidation",
+          "category": "A02",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A03": {
+      "id": "A03:2021",
+      "name": "Injection",
+      "description": "Injection flaws, such as SQL, NoSQL, OS, and LDAP injection.",
+      "testResults": [
+        {
+          "name": "checkSqlInjection",
+          "category": "A03",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkNoSqlInjection",
+          "category": "A03",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkCommandInjection",
+          "category": "A03",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkXssVulnerabilities",
+          "category": "A03",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkLdapInjection",
+          "category": "A03",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkParameterPollution",
+          "category": "A03",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A04": {
+      "id": "A04:2021",
+      "name": "Insecure Design",
+      "description": "Failures in design and architecture of the application.",
+      "testResults": [
+        {
+          "name": "checkBusinessLogicFlaws",
+          "category": "A04",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkRateLimiting",
+          "category": "A04",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkDataValidation",
+          "category": "A04",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkSecureDefaults",
+          "category": "A04",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkErrorHandling",
+          "category": "A04",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A05": {
+      "id": "A05:2021",
+      "name": "Security Misconfiguration",
+      "description": "Security misconfiguration is the most commonly seen issue.",
+      "testResults": [
+        {
+          "name": "checkDefaultCredentials",
+          "category": "A05",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkUnnecessaryFeatures",
+          "category": "A05",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkServerConfiguration",
+          "category": "A05",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkSecurityHeaders",
+          "category": "A05",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkErrorMessages",
+          "category": "A05",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkDirectoryListing",
+          "category": "A05",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A06": {
+      "id": "A06:2021",
+      "name": "Vulnerable and Outdated Components",
+      "description": "Using components with known vulnerabilities.",
+      "testResults": [
+        {
+          "name": "checkDependencyVulnerabilities",
+          "category": "A06",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkOutdatedComponents",
+          "category": "A06",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkCmsVulnerabilities",
+          "category": "A06",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkFrameworkVulnerabilities",
+          "category": "A06",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A07": {
+      "id": "A07:2021",
+      "name": "Identification and Authentication Failures",
+      "description": "Authentication failures that can compromise passwords, keys, or session tokens.",
+      "testResults": [
+        {
+          "name": "checkWeakPasswords",
+          "category": "A07",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkBruteForceProtection",
+          "category": "A07",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkSessionManagement",
+          "category": "A07",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkPasswordPolicies",
+          "category": "A07",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkMultiFactorAuth",
+          "category": "A07",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkSessionFixation",
+          "category": "A07",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A08": {
+      "id": "A08:2021",
+      "name": "Software and Data Integrity Failures",
+      "description": "Software and data integrity failures relate to code and infrastructure that does not protect against integrity violations.",
+      "testResults": [
+        {
+          "name": "checkUnsignedUpdates",
+          "category": "A08",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkInsecureDeserialization",
+          "category": "A08",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkCiCdSecurity",
+          "category": "A08",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkDependencyIntegrity",
+          "category": "A08",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkCodeIntegrity",
+          "category": "A08",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A09": {
+      "id": "A09:2021",
+      "name": "Security Logging and Monitoring Failures",
+      "description": "This category helps detect, escalate, and respond to active breaches.",
+      "testResults": [
+        {
+          "name": "checkLoggingImplementation",
+          "category": "A09",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkLogProtection",
+          "category": "A09",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkAuditLogging",
+          "category": "A09",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkAlertingMechanisms",
+          "category": "A09",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkMonitoringCoverage",
+          "category": "A09",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    },
+    "A10": {
+      "id": "A10:2021",
+      "name": "Server-Side Request Forgery (SSRF)",
+      "description": "SSRF flaws occur when a web application fetches a remote resource without validating the user-supplied URL.",
+      "testResults": [
+        {
+          "name": "checkSsrfVulnerabilities",
+          "category": "A10",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkUrlValidation",
+          "category": "A10",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkServerWhitelisting",
+          "category": "A10",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        },
+        {
+          "name": "checkNetworkSegmentation",
+          "category": "A10",
+          "status": "not_implemented",
+          "description": "This test has not been implemented yet."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroSuite API Documentation</title>
+  <style>
+    :root {
+      --primary-color: #0066cc;
+      --secondary-color: #004080;
+      --accent-color: #66b3ff;
+      --text-color: #333;
+      --light-bg: #f5f8fa;
+      --border-color: #ddd;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-bg);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1.5rem 0;
+      margin-bottom: 2rem;
+    }
+    
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    h1, h2, h3, h4 {
+      color: var(--secondary-color);
+      margin-top: 0;
+    }
+    
+    header h1 {
+      color: white;
+      margin: 0;
+    }
+    
+    .version-badge {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .resource-card {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    
+    .btn:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    .btn-secondary {
+      background-color: #6c757d;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    
+    footer {
+      margin-top: 3rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    
+    .feature-item {
+      background-color: #f0f7ff;
+      padding: 1rem;
+      border-radius: 6px;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .version-selector {
+      margin-bottom: 2rem;
+    }
+    
+    .version-selector select {
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      margin-right: 0.5rem;
+    }
+    
+    #api-versions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    
+    .version-link {
+      padding: 0.75rem 1.5rem;
+      background-color: white;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .version-link:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .version-link.default {
+      border-color: var(--primary-color);
+      background-color: #e6f2ff;
+    }
+    
+    .version-link .description {
+      font-size: 0.8rem;
+      color: #666;
+      display: block;
+      margin-top: 0.25rem;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #666;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      header .container {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>AeroSuite API Documentation</h1>
+      <div>
+        <a href="/api/docs/reference" class="btn">API Reference</a>
+        <a href="/api/docs/versioning" class="btn">Versioning Guide</a>
+        <a href="/api/docs/contracts" class="btn">API Contracts</a>
+      </div>
+    </div>
+  </header>
+  
+  <div class="container">
+    <section class="card">
+      <h2>Welcome to the AeroSuite API</h2>
+      <p>
+        AeroSuite API provides a comprehensive interface for quality management in aerospace manufacturing.
+        This documentation covers all endpoints, request/response formats, and authentication requirements.
+      </p>
+      <p>
+        Use the links below to access the API reference documentation for different versions of the API.
+      </p>
+    </section>
+    
+    <section class="card">
+      <h2>API Versions</h2>
+      <div id="api-versions" class="loading">
+        Loading API versions...
+      </div>
+    </section>
+    
+    <section class="card">
+      <h2>Getting Started</h2>
+      <p>To use the AeroSuite API, you'll need to:</p>
+      <ol>
+        <li>Register for an API key</li>
+        <li>Authenticate using JWT tokens or API keys</li>
+        <li>Make requests to the appropriate endpoints</li>
+      </ol>
+      <p>
+        <a href="/api/docs/versioning" class="btn">Read the API Versioning Guide</a>
+        <a href="/api/docs/contracts" class="btn">Read the API Contracts Guide</a>
+      </p>
+    </section>
+    
+    <section class="card">
+      <h2>Key Features</h2>
+      <ul class="feature-list">
+        <li class="feature-item">
+          <strong>Versioned APIs</strong>
+          <p>Support for multiple API versions with clear migration paths</p>
+        </li>
+        <li class="feature-item">
+          <strong>Standardized Responses</strong>
+          <p>Consistent response formats across all endpoints</p>
+        </li>
+        <li class="feature-item">
+          <strong>Authentication Options</strong>
+          <p>Support for JWT tokens and API keys</p>
+        </li>
+        <li class="feature-item">
+          <strong>Rate Limiting</strong>
+          <p>Fair usage limits with clear headers</p>
+        </li>
+        <li class="feature-item">
+          <strong>Comprehensive Error Handling</strong>
+          <p>Detailed error responses with clear codes and messages</p>
+        </li>
+        <li class="feature-item">
+          <strong>Pagination</strong>
+          <p>Efficient handling of large result sets</p>
+        </li>
+      </ul>
+    </section>
+  </div>
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 AeroSuite. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // Fetch API versions
+    fetch('/api/versions')
+      .then(response => response.json())
+      .then(data => {
+        const versionsContainer = document.getElementById('api-versions');
+        versionsContainer.innerHTML = '';
+        
+        if (data.success && data.data && data.data.versions) {
+          data.data.versions.forEach(version => {
+            const versionLink = document.createElement('a');
+            versionLink.href = `/api/docs/${version.version}`;
+            versionLink.className = `version-link ${version.isDefault ? 'default' : ''}`;
+            
+            const versionText = document.createElement('span');
+            versionText.textContent = version.version.toUpperCase();
+            
+            const descriptionText = document.createElement('span');
+            descriptionText.className = 'description';
+            descriptionText.textContent = version.description || '';
+            
+            versionLink.appendChild(versionText);
+            versionLink.appendChild(descriptionText);
+            
+            versionsContainer.appendChild(versionLink);
+          });
+        } else {
+          versionsContainer.textContent = 'No API versions available';
+        }
+      })
+      .catch(error => {
+        const versionsContainer = document.getElementById('api-versions');
+        versionsContainer.textContent = 'Error loading API versions';
+        console.error('Error loading API versions:', error);
+      });
+  </script>
+</body>
+</html> 

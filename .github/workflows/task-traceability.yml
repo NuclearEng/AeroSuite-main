@@ -1,0 +1,106 @@
+name: Task Traceability Check
+
+on:
+  push:
+    branches: [ main, master, develop ]
+    paths:
+      - 'task.md'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.py'
+  pull_request:
+    branches: [ main, master, develop ]
+    paths:
+      - 'task.md'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.py'
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  task-traceability:
+    name: Check Task-Code Traceability
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run full task analysis
+        run: npm run task:full-analysis
+        
+      - name: Run CI task check
+        run: npm run task:ci-check
+        # In real-world usage, you might want to start with less strict checks
+        # and gradually increase requirements as coverage improves
+        continue-on-error: true  # Don't fail builds initially
+
+      - name: Upload Traceability Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-traceability-report
+          path: reports/task-management
+          retention-days: 30
+
+      - name: Comment on PR with task coverage
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            
+            // Read the mapping file
+            const mappingContent = fs.readFileSync('task-code-mapping.md', 'utf8');
+            
+            // Extract statistics
+            const totalTasksMatch = mappingContent.match(/Total tasks: (\d+)/);
+            const tasksWithRefsMatch = mappingContent.match(/Tasks with code references: (\d+)/);
+            const completedTasksMatch = mappingContent.match(/Completed tasks: (\d+)/);
+            const missingRefsMatch = mappingContent.match(/Completed tasks missing code references: (\d+)/);
+            
+            if (totalTasksMatch && tasksWithRefsMatch && completedTasksMatch && missingRefsMatch) {
+              const totalTasks = parseInt(totalTasksMatch[1]);
+              const tasksWithRefs = parseInt(tasksWithRefsMatch[1]);
+              const completedTasks = parseInt(completedTasksMatch[1]);
+              const missingRefs = parseInt(missingRefsMatch[1]);
+              
+              const completedTasksWithRefs = completedTasks - missingRefs;
+              const completedTaskCoverage = completedTasks > 0 ? 
+                (completedTasksWithRefs / completedTasks) * 100 : 0;
+              
+              // Generate PR comment
+              const comment = `## 📊 Task Traceability Report\n\n` +
+                `| Metric | Value |\n` +
+                `|--------|-------|\n` +
+                `| Total Tasks | ${totalTasks} |\n` +
+                `| Tasks with Code References | ${tasksWithRefs} |\n` +
+                `| Completed Tasks | ${completedTasks} |\n` +
+                `| Completed Tasks with References | ${completedTasksWithRefs} |\n` +
+                `| Completed Task Coverage | ${completedTaskCoverage.toFixed(2)}% |\n\n` +
+                `${completedTaskCoverage < 80 ? '⚠️ **Warning**: Completed task coverage is below 80%. Please add task references to your code.' : '✅ Completed task coverage is good!'}\n\n` +
+                `[View full report](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            } 

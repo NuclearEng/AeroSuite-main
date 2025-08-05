@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroSuite Task Traceability Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .header p {
+      margin: 5px 0 0;
+      opacity: 0.8;
+    }
+    .metrics-overview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-gap: 20px;
+      margin-bottom: 20px;
+    }
+    .metric-card {
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .metric-card h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+    .metric-value {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #3498db;
+    }
+    .metric-description {
+      font-size: 12px;
+      color: #7f8c8d;
+    }
+    .progress-container {
+      margin-top: 10px;
+    }
+    .progress-bar {
+      height: 8px;
+      background-color: #ecf0f1;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-value {
+      height: 100%;
+      background-color: #3498db;
+      border-radius: 4px;
+    }
+    .charts-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+      margin-bottom: 20px;
+    }
+    .chart-card {
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .chart-card h2 {
+      margin: 0 0 15px;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+    .coverage-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .coverage-table th,
+    .coverage-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .coverage-table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    .coverage-table tbody tr:hover {
+      background-color: #f5f7fa;
+    }
+    .coverage-bar {
+      height: 8px;
+      width: 100%;
+      background-color: #ecf0f1;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .coverage-value {
+      height: 100%;
+      border-radius: 4px;
+    }
+    .recent-activity {
+      background-color: white;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    .recent-activity h2 {
+      margin: 0 0 15px;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+    .activity-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #ecf0f1;
+    }
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+    .activity-message {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    .activity-details {
+      font-size: 12px;
+      color: #7f8c8d;
+    }
+    .task-badge {
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 12px;
+      margin-right: 5px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    .status-completed {
+      background-color: #2ecc71;
+      color: white;
+    }
+    .status-in-progress {
+      background-color: #f39c12;
+      color: white;
+    }
+    .status-todo {
+      background-color: #95a5a6;
+      color: white;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      font-size: 12px;
+      color: #7f8c8d;
+    }
+    @media (max-width: 768px) {
+      .charts-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>AeroSuite Task Traceability Dashboard</h1>
+      <p>Last updated: 6/12/2025, 11:25:55 AM</p>
+    </div>
+    
+    <div class="metrics-overview">
+      <div class="metric-card">
+        <h2>Task Completion</h2>
+        <div class="metric-value">86%</div>
+        <div class="metric-description">309 of 359 tasks completed</div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-value" style="width: 86%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="metric-card">
+        <h2>Code Coverage</h2>
+        <div class="metric-value">0%</div>
+        <div class="metric-description">0 of 751 files have task references</div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-value" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="metric-card">
+        <h2>Tasks by Status</h2>
+        <div class="metric-value">359</div>
+        <div class="metric-description">
+          <span class="status-badge status-completed">309 Completed</span>
+          <span class="status-badge status-in-progress">3 In Progress</span>
+          <span class="status-badge status-todo">47 Todo</span>
+        </div>
+      </div>
+      
+      <div class="metric-card">
+        <h2>Traceability</h2>
+        <div class="metric-value">0</div>
+        <div class="metric-description">Average files per task</div>
+      </div>
+    </div>
+    
+    <div class="charts-container">
+      <div class="chart-card">
+        <h2>Tasks by Category</h2>
+        <canvas id="categoryChart"></canvas>
+      </div>
+      
+      <div class="chart-card">
+        <h2>Tasks by Priority</h2>
+        <canvas id="priorityChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h2>Top Tasks by File Count</h2>
+      <canvas id="topTasksChart"></canvas>
+    </div>
+    
+    <div class="chart-card">
+      <h2>Task Coverage Analysis</h2>
+      <table class="coverage-table">
+        <thead>
+          <tr>
+            <th>Task ID</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Files</th>
+            <th>Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+                <tr>
+                  <td><span class="task-badge">TS001</span></td>
+                  <td>Health check system implementation</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 6</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS002</span></td>
+                  <td>Error handling middleware for server</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 2</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS003</span></td>
+                  <td>Client-side error boundary</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 2</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS004</span></td>
+                  <td>Error tracking utility</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 1</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS005</span></td>
+                  <td>Monitoring API endpoints</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 2</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS006</span></td>
+                  <td>Database validation at startup</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 1</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS007</span></td>
+                  <td>System resources monitoring</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 2</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS008</span></td>
+                  <td>Client error reporting to server</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 2</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS009</span></td>
+                  <td>User authentication improvements</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 3</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+                <tr>
+                  <td><span class="task-badge">TS010</span></td>
+                  <td>Supplier management module enhancements</td>
+                  <td><span class="status-badge status-completed">✅ Completed</span></td>
+                  <td>0 / 8</td>
+                  <td>
+                    <div class="coverage-bar">
+                      <div class="coverage-value" style="width: 0%; background-color: #e74c3c"></div>
+                    </div>
+                    0%
+                  </td>
+                </tr>
+              
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="recent-activity">
+      <h2>Recent Activity</h2>
+      
+          <div class="activity-item">
+            <div class="activity-message">
+              <span class="task-badge">TS008</span>
+              [TS008] Implement best-in-class task traceability system
+            </div>
+            <div class="activity-details">
+              NuclearEng on 6/12/2025 at 10:38:09 AM (3502195)
+            </div>
+          </div>
+        
+          <div class="activity-item">
+            <div class="activity-message">
+              <span class="task-badge">TS008</span>
+              [TS008] Add task references to client error reporting files
+            </div>
+            <div class="activity-details">
+              NuclearEng on 6/12/2025 at 10:11:57 AM (e3b8d32)
+            </div>
+          </div>
+        
+          <div class="activity-item">
+            <div class="activity-message">
+              <span class="task-badge">TS008</span>
+              [TS008] Implement client error reporting system and related improvements
+            </div>
+            <div class="activity-details">
+              NuclearEng on 6/12/2025 at 10:09:50 AM (8bbfdc1)
+            </div>
+          </div>
+        
+          <div class="activity-item">
+            <div class="activity-message">
+              <span class="task-badge">TS008</span>
+              [TS008] Add documentation for client error reporting system
+            </div>
+            <div class="activity-details">
+              NuclearEng on 6/12/2025 at 9:56:32 AM (345b71d)
+            </div>
+          </div>
+        
+          <div class="activity-item">
+            <div class="activity-message">
+              <span class="task-badge">TS347</span>
+              [TS347] Complete developer documentation. Add comprehensive docs for developer guide, architecture, code style, best practices, and contribution guidelines. Update task.md to mark TS347 as completed.
+            </div>
+            <div class="activity-details">
+              NuclearEng on 6/12/2025 at 9:52:52 AM (41d61c3)
+            </div>
+          </div>
+        
+    </div>
+    
+    <div class="footer">
+      <p>Generated by AeroSuite Task Metrics Dashboard Generator</p>
+    </div>
+  </div>
+  
+  <script>
+    // Tasks by Category Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    const categoryChart = new Chart(categoryCtx, {
+      type: 'pie',
+      data: {
+        labels: ["Core","AI/ML"],
+        datasets: [{
+          data: [334,25],
+          backgroundColor: [
+            '#3498db',
+            '#2ecc71',
+            '#e74c3c',
+            '#f39c12',
+            '#9b59b6',
+            '#1abc9c'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right'
+          }
+        }
+      }
+    });
+    
+    // Tasks by Priority Chart
+    const priorityCtx = document.getElementById('priorityChart').getContext('2d');
+    const priorityChart = new Chart(priorityCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['High', 'Medium', 'Low'],
+        datasets: [{
+          data: [
+            170,
+            157,
+            32
+          ],
+          backgroundColor: [
+            '#e74c3c',
+            '#f39c12',
+            '#3498db'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right'
+          }
+        }
+      }
+    });
+    
+    // Top Tasks by File Count Chart
+    const topTasksCtx = document.getElementById('topTasksChart').getContext('2d');
+    const topTasksChart = new Chart(topTasksCtx, {
+      type: 'bar',
+      data: {
+        labels: ["TS001","TS002","TS003","TS004","TS005","TS006","TS007","TS008","TS009","TS010"],
+        datasets: [{
+          label: 'Number of Files',
+          data: [0,0,0,0,0,0,0,0,0,0],
+          backgroundColor: '#3498db'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              title: function(tooltipItems) {
+                const index = tooltipItems[0].dataIndex;
+                return [{"id":"TS001","title":"Health check system implementation","fileCount":0},{"id":"TS002","title":"Error handling middleware for server","fileCount":0},{"id":"TS003","title":"Client-side error boundary","fileCount":0},{"id":"TS004","title":"Error tracking utility","fileCount":0},{"id":"TS005","title":"Monitoring API endpoints","fileCount":0},{"id":"TS006","title":"Database validation at startup","fileCount":0},{"id":"TS007","title":"System resources monitoring","fileCount":0},{"id":"TS008","title":"Client error reporting to server","fileCount":0},{"id":"TS009","title":"User authentication improvements","fileCount":0},{"id":"TS010","title":"Supplier management module enhancements","fileCount":0}].map(t => t.id)[index];
+              },
+              label: function(context) {
+                const index = context.dataIndex;
+                const title = [{"id":"TS001","title":"Health check system implementation","fileCount":0},{"id":"TS002","title":"Error handling middleware for server","fileCount":0},{"id":"TS003","title":"Client-side error boundary","fileCount":0},{"id":"TS004","title":"Error tracking utility","fileCount":0},{"id":"TS005","title":"Monitoring API endpoints","fileCount":0},{"id":"TS006","title":"Database validation at startup","fileCount":0},{"id":"TS007","title":"System resources monitoring","fileCount":0},{"id":"TS008","title":"Client error reporting to server","fileCount":0},{"id":"TS009","title":"User authentication improvements","fileCount":0},{"id":"TS010","title":"Supplier management module enhancements","fileCount":0}].map(t => t.title)[index];
+                return title + ': ' + context.raw + ' files';
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Number of Files'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Task ID'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+  

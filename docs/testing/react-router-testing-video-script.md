@@ -1,0 +1,164 @@
+# React Router Testing Video Tutorial Script
+
+## Introduction (0:00 - 0:30)
+
+Hello everyone! In this tutorial, we'll be looking at how to test React components that use React Router hooks in the AeroSuite application.
+
+If you've tried to test components that use hooks like `useNavigate`, `useParams`, or other React Router hooks, you might have encountered errors like this:
+
+```
+Error: useNavigate() may be used only in the context of a <Router> component.
+```
+
+Today, we'll show you how to solve this problem using our new testing utilities.
+
+## The Problem (0:30 - 1:30)
+
+Let's start by understanding the problem. React Router hooks need to be used within a Router context. When we render a component in isolation during testing, that context is missing, which causes the error.
+
+Let's look at a typical test file:
+
+```jsx
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import CustomerDetail from './CustomerDetail';
+
+describe('CustomerDetail', () => {
+  it('renders without crashing', () => {
+    render(<CustomerDetail />);
+    expect(screen.getByText(/customer/i)).toBeInTheDocument();
+  });
+});
+```
+
+If `CustomerDetail` uses React Router hooks, this test will fail because there's no Router context.
+
+## The Solution (1:30 - 3:00)
+
+We've created several testing utilities to solve this problem:
+
+1. `renderWithRouter` for components that only use React Router hooks
+2. `renderWithTheme` for components that only use Material-UI Theme
+3. `renderWithRouterAndTheme` for components that use both
+
+Let's see how to use these utilities:
+
+```jsx
+import React from 'react';
+import { screen } from '@testing-library/react';
+import { renderWithRouterAndTheme } from '../../test-utils/combined-wrapper';
+import CustomerDetail from './CustomerDetail';
+
+describe('CustomerDetail', () => {
+  it('renders without crashing', () => {
+    renderWithRouterAndTheme(<CustomerDetail />, {
+      path: '/customers/:id',
+      route: '/customers/123',
+      initialEntries: ['/customers/123']
+    });
+    expect(screen.getByText(/customer/i)).toBeInTheDocument();
+  });
+});
+```
+
+Notice how we've replaced `render` with `renderWithRouterAndTheme` and added some options:
+- `path` defines the route pattern with parameter placeholders
+- `route` is the actual URL we want to test
+- `initialEntries` is an array of routes for the history stack
+
+## Choosing the Right Utility (3:00 - 4:00)
+
+How do you know which utility to use? It depends on what your component needs:
+
+1. If your component uses React Router hooks like `useNavigate` or `useParams`, use `renderWithRouter`
+2. If your component uses Material-UI Theme hooks like `useTheme`, use `renderWithTheme`
+3. If your component uses both, use `renderWithRouterAndTheme`
+
+Let's look at some examples:
+
+```jsx
+// For a component that uses useNavigate
+renderWithRouter(<NavigationComponent />, {
+  path: '/dashboard',
+  route: '/dashboard',
+  initialEntries: ['/dashboard']
+});
+
+// For a component that uses useTheme
+renderWithTheme(<ThemeComponent />);
+
+// For a component that uses both
+renderWithRouterAndTheme(<ComplexComponent />, {
+  path: '/dashboard',
+  route: '/dashboard',
+  initialEntries: ['/dashboard']
+});
+```
+
+## Route Parameters (4:00 - 5:00)
+
+If your component uses route parameters (e.g., from `useParams`), make sure to:
+
+1. Set the `path` prop to include the parameter placeholders (e.g., `/customers/:id`)
+2. Set the `route` prop to the actual URL you want to test (e.g., `/customers/123`)
+3. Include the route in the `initialEntries` array
+
+For example:
+
+```jsx
+renderWithRouter(<CustomerDetail />, {
+  path: '/customers/:id',
+  route: '/customers/123',
+  initialEntries: ['/customers/123']
+});
+```
+
+This will make the `id` parameter available to your component via `useParams()`.
+
+## Automated Fixes (5:00 - 6:30)
+
+We've also created scripts to help automate the process of fixing tests:
+
+```bash
+cd client
+./scripts/fix-router-tests.sh
+```
+
+This script offers three modes:
+1. Interactive mode: Fix tests one by one with confirmation
+2. Batch mode: Fix all tests at once
+3. Directory mode: Fix tests in a specific directory
+
+Let's try the interactive mode:
+
+[Demo of running the script and fixing a test]
+
+The script will:
+1. Scan your test files for React Router hooks
+2. Add the appropriate imports
+3. Replace `render` calls with the appropriate wrapper function
+4. Add a task reference comment
+
+## Best Practices (6:30 - 7:30)
+
+Here are some best practices for testing React Router components:
+
+1. Use the most specific path possible to match your component's needs
+2. Include all necessary route parameters in the path and route
+3. Use the same route in both the `route` and `initialEntries` props
+4. Mock any API calls or services that your component uses
+5. Test navigation by using `userEvent` to click on links or buttons
+6. Verify that the correct route is navigated to by checking the screen content
+
+## Conclusion (7:30 - 8:00)
+
+That's it! You now know how to test React components that use React Router hooks in the AeroSuite application.
+
+Remember, you can find more information in our documentation:
+- The React Router Testing documentation in `docs/testing/react-router-testing.md`
+- The Testing Utilities README in `client/src/test-utils/README.md`
+- The Quick Start Guide in `docs/testing/react-router-testing-quickstart.md`
+
+If you have any questions, feel free to reach out to the team.
+
+Thanks for watching! 

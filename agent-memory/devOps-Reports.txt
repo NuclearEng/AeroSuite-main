@@ -1,0 +1,5 @@
+CI: CI pipeline check for Reports
+
+CD: CD pipeline check for Reports
+
+Infra: Infrastructure as code check for Reports

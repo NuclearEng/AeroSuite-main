@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2025-06-12T03:58:12.898Z",
+  "summary": {
+    "totalItems": 0,
+    "totalScore": 0,
+    "healthStatus": "GOOD",
+    "bySeverity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0
+    }
+  },
+  "topIssues": [],
+  "fileRanking": [],
+  "allItems": []
+}

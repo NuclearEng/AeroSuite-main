@@ -1,0 +1,159 @@
+name: Performance Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Type of performance test to run'
+        required: true
+        default: 'full'
+        type: 'choice'
+        options:
+          - api
+          - frontend
+          - database
+          - full
+      duration:
+        description: 'Test duration in seconds'
+        required: true
+        default: '60'
+        type: string
+      users:
+        description: 'Number of concurrent users to simulate'
+        required: true
+        default: '10'
+        type: string
+      output_format:
+        description: 'Report output format'
+        required: true
+        default: 'html'
+        type: 'choice'
+        options:
+          - html
+          - json
+          - console
+  schedule:
+    # Run performance tests weekly on Monday at 1:00 AM
+    - cron: '0 1 * * 1'
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  performance-tests:
+    name: Run Performance Tests
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          
+      - name: Install Dependencies
+        run: |
+          npm ci
+          npm install -g autocannon puppeteer chart.js chartjs-node-canvas pidusage nanospinner commander chalk
+          
+      - name: Setup Server for Testing
+        run: |
+          cd server
+          npm ci
+          npm run start:test &
+          sleep 10
+        env:
+          NODE_ENV: test
+          PORT: 5000
+          MONGODB_URI: mongodb://localhost:27017/aerosuite-test
+          
+      - name: Setup Client for Testing
+        run: |
+          cd client
+          npm ci
+          npm run start:test &
+          sleep 15
+        env:
+          REACT_APP_API_URL: http://localhost:5000
+          PORT: 3000
+          
+      - name: Run Performance Tests
+        run: |
+          mkdir -p performance-reports
+          node scripts/performance-test.js --${{ github.event.inputs.test_type || 'full' }} --duration ${{ github.event.inputs.duration || '60' }} --users ${{ github.event.inputs.users || '10' }} --output ${{ github.event.inputs.output_format || 'html' }} --report ./performance-reports --verbose
+        env:
+          SERVER_PID: ${{ steps.start-server.outputs.pid }}
+          API_URL: http://localhost:5000
+          FRONTEND_URL: http://localhost:3000
+          
+      - name: Upload Performance Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-report
+          path: performance-reports
+          retention-days: 30
+          
+      - name: Upload Performance Metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-metrics
+          path: metrics
+          retention-days: 30
+          
+      - name: Archive Performance Test Charts
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-test-charts
+          path: performance-reports/charts
+          retention-days: 30
+
+  k6-performance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install k6
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg software-properties-common
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 33C235A34C46AA3FFB293709A328C3A2C3C45C06
+          echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Start backend server
+        run: npm run start:server &
+
+      - name: Wait for server to be ready
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          url: http://localhost:3000
+          timeout: 60
+
+      - name: Run k6 performance test
+        run: k6 run scripts/performance/load-testing/ai-analysis-load.test.js --out json=results.json
+
+      - name: Upload k6 results
+        uses: actions/upload-artifact@v3
+        with:
+          name: k6-results
+          path: results.json 

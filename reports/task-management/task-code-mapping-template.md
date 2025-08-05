@@ -1,0 +1,74 @@
+# Task-to-Code Relationship Report
+
+This report shows the relationship between tasks and code files in the AeroSuite project. It is automatically generated and updated by the post-commit hook.
+
+## Overview
+
+| Task Category | Completed | In Progress | Todo | Total |
+|---------------|-----------|-------------|------|-------|
+| Core Tasks    | 0         | 0           | 0    | 0     |
+| Features      | 0         | 0           | 0    | 0     |
+| Security      | 0         | 0           | 0    | 0     |
+| AI/ML         | 0         | 0           | 0    | 0     |
+| **Total**     | 0         | 0           | 0    | 0     |
+
+## Task Coverage
+
+| Files with Task References | Files without References | Coverage |
+|---------------------------|--------------------------|----------|
+| 0                         | 0                        | 0%       |
+
+## Recent Changes
+
+*This section will be updated automatically by the post-commit hook.*
+
+## Task-to-Code Mapping
+
+*This section will be populated with detailed task-to-code relationships.*
+
+### Example Task Mapping
+
+#### TS001: Health check system implementation
+
+**Status:** ✅ Completed  
+**Priority:** 🔴 High  
+**Dependencies:** None  
+
+##### Associated Files
+
+| File Path | Type |
+|-----------|------|
+| server/src/services/health.service.js | Service |
+| server/src/controllers/health.controller.js | Controller |
+| server/src/routes/health.routes.js | Route |
+| client/src/utils/healthCheck.ts | Utility |
+| client/src/components/common/HealthStatus.tsx | Component |
+
+## Dependency Graph
+
+*A visual representation of task dependencies will be generated here.*
+
+## How to Use This Report
+
+1. **Find files related to a task**: Use the task-to-code mapping to find all files related to a specific task.
+2. **Understand dependencies**: View the dependency graph to understand task relationships.
+3. **Identify coverage gaps**: Check the task coverage section to identify areas with insufficient traceability.
+
+## Maintaining Traceability
+
+To improve task traceability:
+
+1. Add task references to files using:
+   ```
+   node scripts/task-management/enhanced-task-reference.js
+   ```
+
+2. Always include task IDs in commit messages:
+   ```
+   git commit -m "[TS123] Implement feature X"
+   ```
+
+3. Run the visualization tool to update this report:
+   ```
+   node scripts/task-management/enhanced-task-reference.js --visualize-only
+   ``` 

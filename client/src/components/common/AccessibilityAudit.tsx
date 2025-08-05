@@ -1,0 +1,345 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Typography,
+  Button,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Chip,
+  CircularProgress,
+  Divider,
+  Alert,
+  Link
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ErrorIcon from '@mui/icons-material/Error';
+import WarningIcon from '@mui/icons-material/Warning';
+import InfoIcon from '@mui/icons-material/Info';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import {
+  runAccessibilityAudit,
+  AccessibilityAuditResult,
+  AccessibilityIssue,
+  AccessibilitySeverity,
+  saveAccessibilityReport
+} from '../../utils/accessibilityAudit';
+
+interface AccessibilityAuditProps {
+  targetSelector?: string;
+  autoRun?: boolean;
+  showControls?: boolean;
+  onAuditComplete?: (results: AccessibilityAuditResult) => void;
+}
+
+/**
+ * Component for running accessibility audits and displaying results
+ */
+export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
+  targetSelector,
+  autoRun = false,
+  showControls = true,
+  onAuditComplete
+}) => {
+  const [auditResults, setAuditResults] = useState<AccessibilityAuditResult | null>(null);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Run audit when component mounts if autoRun is true
+  useEffect(() => {
+    if (autoRun) {
+      runAudit();
+    }
+  }, [autoRun]);
+
+  // Function to run the accessibility audit
+  const runAudit = async () => {
+    setIsRunning(true);
+    setError(null);
+
+    try {
+      // Get target element if selector is provided
+      let context: Element | Document = document;
+      if (targetSelector) {
+        const targetElement = document.querySelector(targetSelector);
+        if (targetElement) {
+          context = targetElement;
+        } else {
+          throw new Error(`Element not found: ${targetSelector}`);
+        }
+      }
+
+      // Run the audit
+      const results = await runAccessibilityAudit({
+        context
+      });
+
+      setAuditResults(results);
+      
+      // Call the callback if provided
+      if (onAuditComplete) {
+        onAuditComplete(results);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+      console.error('Accessibility audit error:', err);
+    } finally {
+      setIsRunning(false);
+    }
+  };
+
+  // Function to download the audit report
+  const downloadReport = () => {
+    if (!auditResults) return;
+    
+    const reportUrl = saveAccessibilityReport(auditResults);
+    
+    // Create a temporary link and trigger download
+    const link = document.createElement('a');
+    link.href = reportUrl;
+    link.download = `accessibility-report-${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Clean up the blob URL
+    setTimeout(() => URL.revokeObjectURL(reportUrl), 100);
+  };
+
+  // Helper function to get severity icon
+  const getSeverityIcon = (severity: AccessibilitySeverity) => {
+    switch (severity) {
+      case AccessibilitySeverity.CRITICAL:
+        return <ErrorIcon color="error" />;
+      case AccessibilitySeverity.SERIOUS:
+        return <ErrorIcon color="error" />;
+      case AccessibilitySeverity.MODERATE:
+        return <WarningIcon color="warning" />;
+      case AccessibilitySeverity.MINOR:
+        return <InfoIcon color="info" />;
+      default:
+        return <InfoIcon />;
+    }
+  };
+
+  // Helper function to get severity color
+  const getSeverityColor = (severity: AccessibilitySeverity) => {
+    switch (severity) {
+      case AccessibilitySeverity.CRITICAL:
+        return 'error';
+      case AccessibilitySeverity.SERIOUS:
+        return 'error';
+      case AccessibilitySeverity.MODERATE:
+        return 'warning';
+      case AccessibilitySeverity.MINOR:
+        return 'info';
+      default:
+        return 'default';
+    }
+  };
+
+  // Count issues by severity
+  const getIssueCounts = () => {
+    if (!auditResults) return {};
+    
+    return auditResults.violations.reduce((counts, violation) => {
+      counts[violation.severity] = (counts[violation.severity] || 0) + 1;
+      return counts;
+    }, {} as Record<string, number>);
+  };
+
+  const issueCounts = getIssueCounts();
+
+  return (
+    <Box sx={{ mb: 4 }}>
+      {showControls && (
+        <Box sx={{ mb: 2, display: 'flex', gap: 2 }}>
+          <Button 
+            variant="contained" 
+            onClick={runAudit}
+            disabled={isRunning}
+            startIcon={isRunning ? <CircularProgress size={20} /> : undefined}
+          >
+            {isRunning ? 'Running Audit...' : 'Run Accessibility Audit'}
+          </Button>
+          
+          {auditResults && (
+            <Button 
+              variant="outlined"
+              onClick={downloadReport}
+            >
+              Download Report
+            </Button>
+          )}
+        </Box>
+      )}
+
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+
+      {isRunning && !auditResults && (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, my: 4 }}>
+          <CircularProgress size={24} />
+          <Typography>Running accessibility audit...</Typography>
+        </Box>
+      )}
+
+      {auditResults && (
+        <Paper sx={{ p: 3 }}>
+          <Typography variant="h5" gutterBottom>
+            Accessibility Audit Results
+          </Typography>
+          
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" gutterBottom>
+              Summary
+            </Typography>
+            
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+              <Chip 
+                icon={<ErrorIcon />} 
+                label={`Critical: ${issueCounts[AccessibilitySeverity.CRITICAL] || 0}`} 
+                color="error" 
+                variant="outlined" 
+              />
+              <Chip 
+                icon={<ErrorIcon />} 
+                label={`Serious: ${issueCounts[AccessibilitySeverity.SERIOUS] || 0}`} 
+                color="error" 
+                variant="outlined" 
+              />
+              <Chip 
+                icon={<WarningIcon />} 
+                label={`Moderate: ${issueCounts[AccessibilitySeverity.MODERATE] || 0}`} 
+                color="warning" 
+                variant="outlined" 
+              />
+              <Chip 
+                icon={<InfoIcon />} 
+                label={`Minor: ${issueCounts[AccessibilitySeverity.MINOR] || 0}`} 
+                color="info" 
+                variant="outlined" 
+              />
+              <Chip 
+                icon={<CheckCircleIcon />} 
+                label={`Passes: ${auditResults.passes.length}`} 
+                color="success" 
+                variant="outlined" 
+              />
+            </Box>
+            
+            {auditResults.violations.length === 0 ? (
+              <Alert severity="success">
+                No accessibility issues found!
+              </Alert>
+            ) : (
+              <Alert severity="warning">
+                Found {auditResults.violations.length} accessibility {auditResults.violations.length === 1 ? 'issue' : 'issues'}.
+              </Alert>
+            )}
+          </Box>
+
+          {auditResults.violations.length > 0 && (
+            <>
+              <Typography variant="h6" gutterBottom>
+                Issues
+              </Typography>
+              
+              {auditResults.violations.map((violation, index) => (
+                <Accordion key={`${violation.id}-${index}`} sx={{ mb: 1 }}>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
+                      {getSeverityIcon(violation.severity)}
+                      <Typography sx={{ flex: 1 }}>
+                        {violation.id}: {violation.description}
+                      </Typography>
+                      <Chip 
+                        label={violation.impact || violation.severity} 
+                        size="small" 
+                        color={getSeverityColor(violation.severity) as any}
+                        sx={{ ml: 2 }}
+                      />
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography variant="body2" paragraph>
+                      {violation.help}
+                    </Typography>
+                    
+                    <Link 
+                      href={violation.helpUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      sx={{ display: 'block', mb: 2 }}
+                    >
+                      Learn more about this issue
+                    </Link>
+                    
+                    <Divider sx={{ my: 2 }} />
+                    
+                    <Typography variant="subtitle2" gutterBottom>
+                      Affected Elements ({violation.nodes.length})
+                    </Typography>
+                    
+                    <List dense>
+                      {violation.nodes.map((node, nodeIndex) => (
+                        <ListItem key={nodeIndex} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                          <ListItemText 
+                            primary={`Element ${nodeIndex + 1}`} 
+                            secondary={
+                              <Box component="pre" sx={{ 
+                                mt: 1, 
+                                p: 1, 
+                                bgcolor: 'grey.100', 
+                                borderRadius: 1,
+                                overflow: 'auto',
+                                fontSize: '0.8rem'
+                              }}>
+                                {node.html}
+                              </Box>
+                            }
+                          />
+                          
+                          {node.failureSummary && (
+                            <Box sx={{ mt: 1, color: 'text.secondary', fontSize: '0.875rem' }}>
+                              <Typography variant="caption" component="div" sx={{ fontWeight: 'bold' }}>
+                                Failure:
+                              </Typography>
+                              <Typography variant="caption" component="div">
+                                {node.failureSummary}
+                              </Typography>
+                            </Box>
+                          )}
+                          
+                          {node.fix && (
+                            <Box sx={{ mt: 1, color: 'success.main', fontSize: '0.875rem' }}>
+                              <Typography variant="caption" component="div" sx={{ fontWeight: 'bold' }}>
+                                Suggested fix:
+                              </Typography>
+                              <Typography variant="caption" component="div">
+                                {node.fix.action} {node.fix.type}: {node.fix.value}
+                              </Typography>
+                            </Box>
+                          )}
+                        </ListItem>
+                      ))}
+                    </List>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </>
+          )}
+        </Paper>
+      )}
+    </Box>
+  );
+};
+
+export default AccessibilityAudit; 

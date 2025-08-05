@@ -1,0 +1,858 @@
+Module: Login
+Issues:
+softwareArchitect: Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+(Memory updated)
+devSecOps: Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+(Memory updated)
+testAutomation: Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+(Memory updated)
+qa: Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+(Memory updated)
+devOps: CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+(Memory updated)
+productLogic: Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+(Memory updated)
+ux: Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+(Memory updated)
+compliance: Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+(Memory updated)
+---
+Module: Reports
+Issues:
+softwareArchitect: Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+(Memory updated)
+devSecOps: Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+(Memory updated)
+testAutomation: Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+(Memory updated)
+qa: Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+(Memory updated)
+devOps: CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+(Memory updated)
+productLogic: Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+(Memory updated)
+ux: Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+(Memory updated)
+compliance: Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+(Memory updated)
+---
+Module: Login
+Issues:
+softwareArchitect: Previous findings:
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+---
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+(Memory updated)
+devSecOps: Previous findings:
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+---
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+(Memory updated)
+testAutomation: Previous findings:
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+---
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+(Memory updated)
+qa: Previous findings:
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+---
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+(Memory updated)
+devOps: Previous findings:
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+---
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+(Memory updated)
+productLogic: Previous findings:
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+---
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+(Memory updated)
+ux: Previous findings:
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+---
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+(Memory updated)
+compliance: Previous findings:
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+---
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+(Memory updated)
+---
+Module: Reports
+Issues:
+softwareArchitect: Previous findings:
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+---
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+(Memory updated)
+devSecOps: Previous findings:
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+---
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+(Memory updated)
+testAutomation: Previous findings:
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+---
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+(Memory updated)
+qa: Previous findings:
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+---
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+(Memory updated)
+devOps: Previous findings:
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+---
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+(Memory updated)
+productLogic: Previous findings:
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+---
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+(Memory updated)
+ux: Previous findings:
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+---
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+(Memory updated)
+compliance: Previous findings:
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+---
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+(Memory updated)
+---
+Module: Login
+Issues:
+softwareArchitect: Previous findings:
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+---
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+(Memory updated)
+devSecOps: Previous findings:
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+---
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+(Memory updated)
+testAutomation: Previous findings:
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+---
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+(Memory updated)
+qa: Previous findings:
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+---
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+(Memory updated)
+devOps: Previous findings:
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+---
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+(Memory updated)
+productLogic: Previous findings:
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+---
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+(Memory updated)
+ux: Previous findings:
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+---
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+(Memory updated)
+compliance: Previous findings:
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+---
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+(Memory updated)
+---
+Module: Reports
+Issues:
+softwareArchitect: Previous findings:
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+---
+Structure: /bin/sh: cursor: command not found
+
+Circular: /bin/sh: cursor: command not found
+
+Coupling: /bin/sh: cursor: command not found
+
+(Memory updated)
+devSecOps: Previous findings:
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+---
+Vuln: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Encryption: /bin/sh: cursor: command not found
+
+CSP: /bin/sh: cursor: command not found
+
+(Memory updated)
+testAutomation: Previous findings:
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+---
+Coverage: /bin/sh: cursor: command not found
+
+E2E: /bin/sh: cursor: command not found
+
+Mocks: /bin/sh: cursor: command not found
+
+(Memory updated)
+qa: Previous findings:
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+---
+Feature: /bin/sh: cursor: command not found
+
+Edge: /bin/sh: cursor: command not found
+
+Bug: /bin/sh: cursor: command not found
+
+(Memory updated)
+devOps: Previous findings:
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+---
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+(Memory updated)
+productLogic: Previous findings:
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+---
+Flows: /bin/sh: cursor: command not found
+
+Calc: /bin/sh: cursor: command not found
+
+Features: /bin/sh: cursor: command not found
+
+(Memory updated)
+ux: Previous findings:
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+---
+Simulate: /bin/sh: cursor: command not found
+
+Validate: /bin/sh: cursor: command not found
+
+A11y: /bin/sh: cursor: command not found
+
+(Memory updated)
+compliance: Previous findings:
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+---
+Encryption: /bin/sh: cursor: command not found
+
+RBAC: /bin/sh: cursor: command not found
+
+Audit: /bin/sh: cursor: command not found
+
+Docs: /bin/sh: cursor: command not found
+
+(Memory updated)
+---
+Module: Login
+Issues:
+devSecOps: Vuln: npm error Missing script: "scan-vuln"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_697Z-debug-0.log
+
+RBAC: npm error Missing script: "check-rbac"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
+
+Encryption: npm error Missing script: "check-encryption"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_204Z-debug-0.log
+
+CSP: npm error Missing script: "check-csp"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_441Z-debug-0.log
+
+(Memory updated)
+ux: Simulate: npm error Missing script: "simulate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_704Z-debug-0.log
+
+Validate: npm error Missing script: "validate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
+
+A11y: npm error Missing script: "check-a11y"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_205Z-debug-0.log
+
+(Memory updated)
+---
+Module: Reports
+Issues:
+devSecOps: Vuln: npm error Missing script: "scan-vuln"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_001Z-debug-0.log
+
+RBAC: npm error Missing script: "check-rbac"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_245Z-debug-0.log
+
+Encryption: npm error Missing script: "check-encryption"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_477Z-debug-0.log
+
+CSP: npm error Missing script: "check-csp"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_716Z-debug-0.log
+
+(Memory updated)
+ux: Simulate: npm error Missing script: "simulate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_004Z-debug-0.log
+
+Validate: npm error Missing script: "validate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_244Z-debug-0.log
+
+A11y: npm error Missing script: "check-a11y"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_480Z-debug-0.log
+
+(Memory updated)
+---
+Module: Settings
+Issues:
+devSecOps: Vuln: npm error Missing script: "scan-vuln"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_324Z-debug-0.log
+
+RBAC: npm error Missing script: "check-rbac"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_557Z-debug-0.log
+
+Encryption: npm error Missing script: "check-encryption"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_789Z-debug-0.log
+
+CSP: npm error Missing script: "check-csp"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_022Z-debug-0.log
+
+(Memory updated)
+ux: Simulate: npm error Missing script: "simulate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_327Z-debug-0.log
+
+Validate: npm error Missing script: "validate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_559Z-debug-0.log
+
+A11y: npm error Missing script: "check-a11y"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_788Z-debug-0.log
+
+(Memory updated)
+---
+Module: Suppliers
+Issues:
+devSecOps: Vuln: npm error Missing script: "scan-vuln"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_541Z-debug-0.log
+
+RBAC: npm error Missing script: "check-rbac"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
+
+Encryption: npm error Missing script: "check-encryption"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_012Z-debug-0.log
+
+CSP: npm error Missing script: "check-csp"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_255Z-debug-0.log
+
+(Memory updated)
+ux: Simulate: npm error Missing script: "simulate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_549Z-debug-0.log
+
+Validate: npm error Missing script: "validate-ui"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
+
+A11y: npm error Missing script: "check-a11y"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_013Z-debug-0.log
+
+(Memory updated)
+---

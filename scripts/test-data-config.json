@@ -1,0 +1,77 @@
+{
+  "outputDir": "./test-data",
+  "format": "json",
+  "count": {
+    "users": 20,
+    "customers": 50,
+    "suppliers": 30,
+    "inspections": 100,
+    "components": 80,
+    "documents": 60
+  },
+  "relationships": true,
+  "seed": 12345,
+  "locale": "en_US",
+  "includeImages": false,
+  "environments": {
+    "development": {
+      "count": {
+        "users": 10,
+        "customers": 25,
+        "suppliers": 15,
+        "inspections": 50,
+        "components": 40,
+        "documents": 30
+      },
+      "outputDir": "./test-data/dev"
+    },
+    "testing": {
+      "count": {
+        "users": 20,
+        "customers": 50,
+        "suppliers": 30,
+        "inspections": 100,
+        "components": 80,
+        "documents": 60
+      },
+      "outputDir": "./test-data/test"
+    },
+    "ci": {
+      "count": {
+        "users": 5,
+        "customers": 10,
+        "suppliers": 8,
+        "inspections": 20,
+        "components": 15,
+        "documents": 10
+      },
+      "outputDir": "./test-data/ci"
+    }
+  },
+  "templates": {
+    "minimal": {
+      "users": 5,
+      "customers": 5,
+      "suppliers": 5,
+      "inspections": 10,
+      "components": 10,
+      "documents": 5
+    },
+    "standard": {
+      "users": 20,
+      "customers": 50,
+      "suppliers": 30,
+      "inspections": 100,
+      "components": 80,
+      "documents": 60
+    },
+    "full": {
+      "users": 50,
+      "customers": 200,
+      "suppliers": 100,
+      "inspections": 500,
+      "components": 300,
+      "documents": 200
+    }
+  }
+} 

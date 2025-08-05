@@ -1,0 +1,559 @@
+/**
+ * Simple Express Server
+ * 
+ * A lightweight server for development purposes
+ */
+
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const PORT = 5001;
+const path = require('path');
+const fs = require('fs');
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Simple logging middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
+// Serve static files
+app.use(express.static(path.join(__dirname)));
+
+// Root route to serve dashboard.html
+app.get('/', (req, res) => {
+  const dashboardPath = path.join(__dirname, 'dashboard.html');
+  if (fs.existsSync(dashboardPath)) {
+    res.sendFile(dashboardPath);
+  } else {
+    const demoPath = path.join(__dirname, 'demo.html');
+    if (fs.existsSync(demoPath)) {
+      res.sendFile(demoPath);
+    } else {
+      res.send('<h1>AeroSuite API</h1><p>API is running. Use /api/health to check status.</p>');
+    }
+  }
+});
+
+// Demo page route
+app.get('/demo', (req, res) => {
+  const demoPath = path.join(__dirname, 'demo.html');
+  if (fs.existsSync(demoPath)) {
+    res.sendFile(demoPath);
+  } else {
+    res.redirect('/');
+  }
+});
+
+// Apple design demo page route
+app.get('/apple-design', (req, res) => {
+  const appleDemoPath = path.join(__dirname, 'apple-design-demo.html');
+  if (fs.existsSync(appleDemoPath)) {
+    res.sendFile(appleDemoPath);
+  } else {
+    res.redirect('/demo');
+  }
+});
+
+// Org chart relationship page route
+app.get('/org-chart', (req, res) => {
+  const orgChartPath = path.join(__dirname, 'org-chart.html');
+  if (fs.existsSync(orgChartPath)) {
+    res.sendFile(orgChartPath);
+  } else {
+    res.redirect('/demo');
+  }
+});
+
+// Enhanced dashboard with comprehensive business modals
+app.get('/enhanced-dashboard', (req, res) => {
+  const enhancedDashboardPath = path.join(__dirname, 'enhanced-dashboard.html');
+  if (fs.existsSync(enhancedDashboardPath)) {
+    res.sendFile(enhancedDashboardPath);
+  } else {
+    res.redirect('/');
+  }
+});
+
+// Serve individual static files
+app.get('/dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dashboard.html'));
+});
+
+app.get('/demo.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'demo.html'));
+});
+
+app.get('/apple-design-demo.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'apple-design-demo.html'));
+});
+
+app.get('/org-chart.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'org-chart.html'));
+});
+
+app.get('/enhanced-dashboard.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'enhanced-dashboard.html'));
+});
+
+// Serve demo detection script
+app.get('/demo-detection.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(path.join(__dirname, 'demo-detection.js'));
+});
+
+// Routes
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Server is running' });
+});
+
+// Auth routes
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  
+  // Mock authentication
+  if (email && password) {
+    res.json({
+      success: true,
+      data: {
+        user: {
+          id: '123',
+          email: email,
+          name: 'Test User',
+          role: 'admin'
+        },
+        token: 'mock-jwt-token'
+      }
+    });
+  } else {
+    res.status(400).json({
+      success: false,
+      message: 'Email and password are required'
+    });
+  }
+});
+
+// Sample data
+const suppliers = [
+  {
+    id: '1',
+    name: 'Aerospace Components Inc.',
+    status: 'active',
+    rating: 4.8,
+    location: 'Seattle, WA',
+    contactEmail: 'info@aerospacecomp.com',
+    coordinates: { lat: 47.6062, lng: -122.3321 },
+    duns: '123456789',
+    tin: '91-1234567',
+    cage: '1A2B3',
+    shipTo: '1234 Jet Ave, Seattle, WA 98101',
+    billTo: 'PO Box 5678, Seattle, WA 98109',
+    phone: '206-555-1234',
+    fax: '206-555-5678',
+    website: 'https://aerospacecomp.com',
+    certifications: ['AS9100', 'ISO 9001'],
+    supplierType: 'Manufacturer',
+    bankTerms: 'Net 30',
+    primaryContact: { name: 'Jane Smith', email: 'jane@aerospacecomp.com' }
+  },
+  {
+    id: '2',
+    name: 'Global Aviation Parts',
+    status: 'active',
+    rating: 4.2,
+    location: 'Los Angeles, CA',
+    contactEmail: 'sales@globalaviation.com',
+    coordinates: { lat: 34.0522, lng: -118.2437 }
+  },
+  {
+    id: '3',
+    name: 'Precision Aero Manufacturing',
+    status: 'pending',
+    rating: 3.9,
+    location: 'Dallas, TX',
+    contactEmail: 'contact@precisionaero.com',
+    coordinates: { lat: 32.7767, lng: -96.7970 }
+  },
+  {
+    id: '4',
+    name: 'SkyTech Industries',
+    status: 'active',
+    rating: 4.5,
+    location: 'Denver, CO',
+    contactEmail: 'info@skytech.com',
+    coordinates: { lat: 39.7392, lng: -104.9903 }
+  },
+  {
+    id: '5',
+    name: 'AeroElectronics Ltd',
+    status: 'inactive',
+    rating: 3.2,
+    location: 'Chicago, IL',
+    contactEmail: 'support@aeroelectronics.com',
+    coordinates: { lat: 41.8781, lng: -87.6298 }
+  },
+  {
+    id: '6',
+    name: 'FlightSystems Corp',
+    status: 'active',
+    rating: 4.7,
+    location: 'Boston, MA',
+    contactEmail: 'info@flightsystems.com',
+    coordinates: { lat: 42.3601, lng: -71.0589 }
+  },
+  {
+    id: '7',
+    name: 'JetParts Manufacturing',
+    status: 'active',
+    rating: 4.3,
+    location: 'Atlanta, GA',
+    contactEmail: 'sales@jetparts.com',
+    coordinates: { lat: 33.7490, lng: -84.3880 }
+  }
+];
+
+const customers = [
+  {
+    id: '1',
+    name: 'American Airlines',
+    status: 'active',
+    industry: 'Commercial Aviation',
+    location: 'Fort Worth, TX',
+    contactEmail: 'procurement@aa.com',
+    duns: '987654321',
+    tin: '75-9876543',
+    cage: '4C5D6',
+    shipTo: '4333 Amon Carter Blvd, Fort Worth, TX 76155',
+    billTo: 'PO Box 619616, DFW Airport, TX 75261',
+    phone: '817-555-4321',
+    fax: '817-555-8765',
+    website: 'https://aa.com',
+    primaryContact: { name: 'John Buyer', email: 'john.buyer@aa.com' }
+  },
+  {
+    id: '2',
+    name: 'Delta Air Lines',
+    status: 'active',
+    industry: 'Commercial Aviation',
+    location: 'Atlanta, GA',
+    contactEmail: 'suppliers@delta.com'
+  },
+  {
+    id: '3',
+    name: 'Lockheed Martin',
+    status: 'active',
+    industry: 'Defense',
+    location: 'Bethesda, MD',
+    contactEmail: 'vendor-relations@lockheedmartin.com'
+  },
+  {
+    id: '4',
+    name: 'Boeing',
+    status: 'active',
+    industry: 'Aerospace Manufacturing',
+    location: 'Chicago, IL',
+    contactEmail: 'suppliers@boeing.com'
+  }
+];
+
+const inspections = [
+  {
+    id: '1',
+    supplierId: '1',
+    type: 'quality',
+    status: 'completed',
+    date: '2023-06-15',
+    inspector: 'John Smith',
+    result: 'passed',
+    poNumber: 'PO-10001',
+    partNumber: 'PN-AC-1234',
+    lotNumber: 'LOT-5678',
+    certificateOfConformity: 'coc-1.pdf',
+    countryOfOrigin: 'USA',
+    materialProperties: {
+      composition: 'Aluminum 7075',
+      grade: 'A',
+      hardness: '85 HRB',
+      tensileStrength: '570 MPa'
+    },
+    documents: [
+      { name: 'Test Report', file: 'test-report-1.pdf' },
+      { name: 'MSDS', file: 'msds-1.pdf' }
+    ]
+  },
+  {
+    id: '2',
+    supplierId: '2',
+    type: 'safety',
+    status: 'scheduled',
+    date: '2023-07-20',
+    inspector: 'Sarah Johnson',
+    result: 'pending'
+  },
+  {
+    id: '3',
+    supplierId: '1',
+    type: 'compliance',
+    status: 'completed',
+    date: '2023-05-10',
+    inspector: 'Robert Davis',
+    result: 'passed'
+  },
+  {
+    id: '4',
+    supplierId: '3',
+    type: 'quality',
+    status: 'completed',
+    date: '2023-06-05',
+    inspector: 'Emily Wilson',
+    result: 'issues-found'
+  },
+  {
+    id: '5',
+    supplierId: '4',
+    type: 'environmental',
+    status: 'scheduled',
+    date: '2023-07-25',
+    inspector: 'Michael Brown',
+    result: 'pending'
+  }
+];
+
+const relationships = [
+  { id: '1', customerId: '1', supplierId: '1', type: 'primary' },
+  { id: '2', customerId: '1', supplierId: '2', type: 'secondary' },
+  { id: '3', customerId: '1', supplierId: '4', type: 'secondary' },
+  { id: '4', customerId: '2', supplierId: '1', type: 'secondary' },
+  { id: '5', customerId: '2', supplierId: '3', type: 'primary' },
+  { id: '6', customerId: '3', supplierId: '5', type: 'primary' },
+  { id: '7', customerId: '3', supplierId: '6', type: 'secondary' },
+  { id: '8', customerId: '4', supplierId: '2', type: 'primary' },
+  { id: '9', customerId: '4', supplierId: '7', type: 'secondary' }
+];
+
+// Kanban tasks data
+const tasks = [
+  {
+    id: '1',
+    title: 'Schedule inspection for Aerospace Components',
+    description: 'Need to schedule quarterly quality inspection',
+    status: 'backlog',
+    priority: 'high',
+    assignee: 'John Smith',
+    dueDate: '2023-08-15',
+    createdDate: '2023-07-25',
+    category: 'inspection',
+    relatedTo: { type: 'supplier', id: '1' }
+  },
+  {
+    id: '2',
+    title: 'Review supplier application',
+    description: 'Review new supplier application for JetTech Systems',
+    status: 'backlog',
+    priority: 'medium',
+    assignee: 'Sarah Johnson',
+    dueDate: '2023-08-10',
+    createdDate: '2023-07-26',
+    category: 'supplier',
+    relatedTo: { type: 'supplier', id: null }
+  },
+  {
+    id: '3',
+    title: 'Update customer contract',
+    description: 'Update service agreement with Delta Air Lines',
+    status: 'in-progress',
+    priority: 'high',
+    assignee: 'Michael Brown',
+    dueDate: '2023-08-05',
+    createdDate: '2023-07-20',
+    category: 'customer',
+    relatedTo: { type: 'customer', id: '2' }
+  },
+  {
+    id: '4',
+    title: 'Follow up on inspection findings',
+    description: 'Address issues found during last inspection of Precision Aero',
+    status: 'in-progress',
+    priority: 'high',
+    assignee: 'Emily Wilson',
+    dueDate: '2023-08-03',
+    createdDate: '2023-07-15',
+    category: 'inspection',
+    relatedTo: { type: 'supplier', id: '3' }
+  },
+  {
+    id: '5',
+    title: 'Generate monthly quality report',
+    description: 'Create quality metrics report for July 2023',
+    status: 'review',
+    priority: 'medium',
+    assignee: 'Robert Davis',
+    dueDate: '2023-08-02',
+    createdDate: '2023-07-28',
+    category: 'report',
+    relatedTo: { type: 'report', id: null }
+  },
+  {
+    id: '6',
+    title: 'Approve supplier invoices',
+    description: 'Review and approve pending invoices from SkyTech Industries',
+    status: 'review',
+    priority: 'low',
+    assignee: 'Sarah Johnson',
+    dueDate: '2023-08-08',
+    createdDate: '2023-07-27',
+    category: 'finance',
+    relatedTo: { type: 'supplier', id: '4' }
+  },
+  {
+    id: '7',
+    title: 'Update safety protocols',
+    description: 'Revise safety inspection checklist based on new regulations',
+    status: 'done',
+    priority: 'high',
+    assignee: 'Michael Brown',
+    dueDate: '2023-07-30',
+    createdDate: '2023-07-10',
+    category: 'compliance',
+    relatedTo: { type: 'inspection', id: null }
+  },
+  {
+    id: '8',
+    title: 'Customer onboarding',
+    description: 'Complete onboarding process for new customer',
+    status: 'done',
+    priority: 'medium',
+    assignee: 'John Smith',
+    dueDate: '2023-07-25',
+    createdDate: '2023-07-05',
+    category: 'customer',
+    relatedTo: { type: 'customer', id: '4' }
+  }
+];
+
+// API routes
+app.get('/api/suppliers', (req, res) => {
+  res.json({ success: true, data: suppliers });
+});
+
+app.get('/api/customers', (req, res) => {
+  res.json({ success: true, data: customers });
+});
+
+app.get('/api/inspections', (req, res) => {
+  res.json({ success: true, data: inspections });
+});
+
+app.get('/api/relationships', (req, res) => {
+  res.json({ success: true, data: relationships });
+});
+
+// Kanban task routes
+app.get('/api/tasks', (req, res) => {
+  res.json({ success: true, data: tasks });
+});
+
+app.get('/api/tasks/:id', (req, res) => {
+  const task = tasks.find(t => t.id === req.params.id);
+  if (task) {
+    res.json({ success: true, data: task });
+  } else {
+    res.status(404).json({ success: false, message: 'Task not found' });
+  }
+});
+
+app.post('/api/tasks', (req, res) => {
+  const newTask = {
+    id: (tasks.length + 1).toString(),
+    ...req.body,
+    createdDate: new Date().toISOString().split('T')[0]
+  };
+  
+  tasks.push(newTask);
+  res.status(201).json({ success: true, data: newTask });
+});
+
+app.put('/api/tasks/:id', (req, res) => {
+  const taskIndex = tasks.findIndex(t => t.id === req.params.id);
+  
+  if (taskIndex !== -1) {
+    // Update task but preserve id and createdDate
+    const updatedTask = {
+      ...tasks[taskIndex],
+      ...req.body,
+      id: tasks[taskIndex].id,
+      createdDate: tasks[taskIndex].createdDate
+    };
+    
+    tasks[taskIndex] = updatedTask;
+    res.json({ success: true, data: updatedTask });
+  } else {
+    res.status(404).json({ success: false, message: 'Task not found' });
+  }
+});
+
+app.delete('/api/tasks/:id', (req, res) => {
+  const taskIndex = tasks.findIndex(t => t.id === req.params.id);
+  
+  if (taskIndex !== -1) {
+    const deletedTask = tasks.splice(taskIndex, 1)[0];
+    res.json({ success: true, data: deletedTask });
+  } else {
+    res.status(404).json({ success: false, message: 'Task not found' });
+  }
+});
+
+// Get supplier by ID
+app.get('/api/suppliers/:id', (req, res) => {
+  const supplier = suppliers.find(s => s.id === req.params.id);
+  if (supplier) {
+    res.json({ success: true, data: supplier });
+  } else {
+    res.status(404).json({ success: false, message: 'Supplier not found' });
+  }
+});
+
+// Get customer by ID
+app.get('/api/customers/:id', (req, res) => {
+  const customer = customers.find(c => c.id === req.params.id);
+  if (customer) {
+    res.json({ success: true, data: customer });
+  } else {
+    res.status(404).json({ success: false, message: 'Customer not found' });
+  }
+});
+
+// Get inspection by ID
+app.get('/api/inspections/:id', (req, res) => {
+  const inspection = inspections.find(i => i.id === req.params.id);
+  if (inspection) {
+    res.json({ success: true, data: inspection });
+  } else {
+    res.status(404).json({ success: false, message: 'Inspection not found' });
+  }
+});
+
+// Get suppliers for a specific customer
+app.get('/api/customers/:customerId/suppliers', (req, res) => {
+  const customerId = req.params.customerId;
+  const customerRelationships = relationships.filter(rel => rel.customerId === customerId);
+  
+  if (customerRelationships.length === 0) {
+    return res.json({ success: true, data: [] });
+  }
+  
+  const supplierIds = customerRelationships.map(rel => rel.supplierId);
+  const customerSuppliers = suppliers.filter(supplier => supplierIds.includes(supplier.id));
+  
+  res.json({ success: true, data: customerSuppliers });
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Simple server running on port ${PORT}`);
+}); 

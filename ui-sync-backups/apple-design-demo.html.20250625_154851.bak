@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroSuite - Apple Design Demo</title>
+    <style>
+        :root {
+            /* Apple-inspired color palette */
+            --blue: #0A84FF;
+            --green: #30D158;
+            --indigo: #5E5CE6;
+            --orange: #FF9F0A;
+            --pink: #FF375F;
+            --purple: #BF5AF2;
+            --red: #FF453A;
+            --teal: #64D2FF;
+            --yellow: #FFD60A;
+            
+            /* Neutral colors */
+            --text-primary: #1D1D1F;
+            --text-secondary: #515154;
+            --text-tertiary: #86868B;
+            --background: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --border-color: #D2D2D7;
+            --separator: rgba(60, 60, 67, 0.1);
+            
+            /* Status colors */
+            --success: var(--green);
+            --warning: var(--orange);
+            --error: var(--red);
+            --info: var(--blue);
+            
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display'), 
+                 local('SFProDisplay'),
+                 url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display Medium'), 
+                 local('SFProDisplay-Medium'),
+                 url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display Semibold'), 
+                 local('SFProDisplay-Semibold'),
+                 url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display Bold'), 
+                 local('SFProDisplay-Bold'),
+                 url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        
+        /* Demo Watermark Styles */
+        .demo-watermark {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--orange), var(--red));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(255, 159, 10, 0.3);
+            animation: pulse 2s infinite;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-watermark::before {
+            content: "🎬";
+            margin-right: 6px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 4px 12px rgba(255, 159, 10, 0.3);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 6px 16px rgba(255, 159, 10, 0.4);
+            }
+        }
+        
+        /* Background watermark for large screens */
+        .demo-background-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 120px;
+            font-weight: 900;
+            color: rgba(255, 159, 10, 0.03);
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: 10px;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: var(--space-md) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--separator);
+        }
+        
+        .logo {
+            font-weight: 600;
+            font-size: 24px;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: var(--space-lg);
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        
+        nav a:hover {
+            color: var(--blue);
+        }
+        
+        nav a.active {
+            color: var(--blue);
+            font-weight: 600;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: var(--space-xxl) 0;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-md);
+            background: linear-gradient(90deg, var(--blue), var(--indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto var(--space-xl);
+        }
+        
+        .cta-button {
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(10, 132, 255, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4);
+            background-color: #0071E3;
+        }
+        
+        .cta-button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 4px rgba(10, 132, 255, 0.3);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-xl);
+            margin: var(--space-xxl) 0;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: var(--space-xl);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: var(--space-md);
+            background-color: var(--background);
+        }
+        
+        .feature-icon svg {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .components {
+            margin: var(--space-xxl) 0;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .component-item {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: var(--space-lg);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+        
+        .component-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-sm);
+        }
+        
+        /* Button styles */
+        .button {
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .button-primary {
+            background-color: var(--blue);
+            color: white;
+            box-shadow: 0 2px 4px rgba(10, 132, 255, 0.3);
+        }
+        
+        .button-primary:hover {
+            background-color: #0071E3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(10, 132, 255, 0.4);
+        }
+        
+        .button-secondary {
+            background-color: rgba(10, 132, 255, 0.1);
+            color: var(--blue);
+        }
+        
+        .button-secondary:hover {
+            background-color: rgba(10, 132, 255, 0.15);
+        }
+        
+        .button-success {
+            background-color: var(--green);
+            color: white;
+        }
+        
+        .button-danger {
+            background-color: var(--red);
+            color: white;
+        }
+        
+        /* Input styles */
+        .input {
+            font-family: inherit;
+            font-size: 14px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.2);
+        }
+        
+        /* Badge styles */
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-blue {
+            background-color: rgba(10, 132, 255, 0.1);
+            color: var(--blue);
+        }
+        
+        .badge-green {
+            background-color: rgba(48, 209, 88, 0.1);
+            color: var(--green);
+        }
+        
+        .badge-red {
+            background-color: rgba(255, 69, 58, 0.1);
+            color: var(--red);
+        }
+        
+        .badge-yellow {
+            background-color: rgba(255, 214, 10, 0.1);
+            color: #B87800;
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        
+        footer {
+            background-color: var(--card-bg);
+            padding: var(--space-xl) 0;
+            text-align: center;
+            border-top: 1px solid var(--separator);
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Watermarks -->
+    <div class="demo-watermark">Demo Mode</div>
+    <div class="demo-background-watermark">DEMO</div>
+    
+    <header>
+        <div class="logo">AeroSuite</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Components</a></li>
+                <li><a href="#">Documentation</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1 class="animate-in">Apple-Inspired Design</h1>
+            <p class="subtitle animate-in delay-1">Experience the elegance and simplicity of Apple's Human Interface Guidelines in AeroSuite</p>
+            <button class="cta-button animate-in delay-2">Get Started</button>
+        </section>
+        
+        <section class="features">
+            <div class="feature-card animate-in delay-1">
+                <div class="feature-icon" style="color: var(--blue);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Clarity</h3>
+                <p class="feature-description">Text is legible at every size, icons are precise and lucid, adornments are subtle and appropriate, and a sharpened focus on functionality motivates the design.</p>
+            </div>
+            
+            <div class="feature-card animate-in delay-2">
+                <div class="feature-icon" style="color: var(--green);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                        <path d="M7.5 12.5L10.5 15.5 16.5 9.5"></path>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Deference</h3>
+                <p class="feature-description">Fluid motion and a crisp, beautiful interface help people understand and interact with content while never competing with it.</p>
+            </div>
+            
+            <div class="feature-card animate-in delay-3">
+                <div class="feature-icon" style="color: var(--purple);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <path d="M12 22.5v-6.5"></path>
+                        <path d="M12 15.5 3.5 10"></path>
+                        <path d="M20.5 10 12 15.5"></path>
+                        <path d="M3.5 14 12 9"></path>
+                        <path d="M12 9l8.5 5"></path>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Depth</h3>
+                <p class="feature-description">Visual layers and realistic motion impart vitality and heighten people's delight and understanding.</p>
+            </div>
+        </section>
+        
+        <section class="components">
+            <h2 class="section-title">UI Components</h2>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <div class="component-label">Buttons</div>
+                    <button class="button button-primary">Primary</button>
+                    <button class="button button-secondary">Secondary</button>
+                    <button class="button button-success">Success</button>
+                    <button class="button button-danger">Danger</button>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">Inputs</div>
+                    <input type="text" class="input" placeholder="Enter text...">
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">Badges</div>
+                    <span class="badge badge-blue">Info</span>
+                    <span class="badge badge-green">Success</span>
+                    <span class="badge badge-red">Error</span>
+                    <span class="badge badge-yellow">Warning</span>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">Typography</div>
+                    <h1 style="font-size: 24px; margin-bottom: 8px;">Heading 1</h1>
+                    <h2 style="font-size: 20px; margin-bottom: 8px;">Heading 2</h2>
+                    <h3 style="font-size: 18px; margin-bottom: 8px;">Heading 3</h3>
+                    <p style="font-size: 16px; margin-bottom: 8px;">Paragraph text</p>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Secondary text</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>© 2025 AeroSuite. Designed with Apple Human Interface Guidelines.</p>
+    </footer>
+    
+    <script>
+        // Add animation observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.animate-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html> 

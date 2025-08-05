@@ -1,0 +1,10 @@
+Coverage: No tests found, exiting with code 0
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+----------|---------|----------|---------|---------|-------------------
+All files |       0 |        0 |       0 |       0 |                   
+----------|---------|----------|---------|---------|-------------------
+
+E2E: E2E placeholder for Login
+
+Mocks: Mocks/fixtures check for Login

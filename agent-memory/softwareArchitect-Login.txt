@@ -1,0 +1,5 @@
+Structure: Architecture analysis for Login
+
+Circular: Circular dependency check for Login
+
+Coupling: Coupling check for Login

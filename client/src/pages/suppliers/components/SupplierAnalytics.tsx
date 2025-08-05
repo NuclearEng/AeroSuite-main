@@ -1,0 +1,501 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Divider,
+  Chip,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Paper,
+  LinearProgress,
+  SelectChangeEvent,
+  Stack,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Alert,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@mui/material';
+import {
+  TrendingUp as TrendingUpIcon,
+  TrendingDown as TrendingDownIcon,
+  Warning as WarningIcon,
+  CheckCircle as CheckCircleIcon,
+  Timeline as TimelineIcon,
+  Assignment as AssignmentIcon,
+  Assessment as AssessmentIcon,
+  Speed as SpeedIcon,
+  LocalShipping as LocalShippingIcon,
+  BugReport as BugReportIcon,
+  Chat as ChatIcon,
+  AttachMoney as MoneyIcon,
+  Compare as CompareIcon
+} from '@mui/icons-material';
+import { Line, Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import { useSupplierAnalytics } from '../hooks/useSupplierAnalytics';
+import supplierService from '../../../services/supplier.service';
+import SupplierPerformanceCharts from './SupplierPerformanceCharts';
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+interface SupplierAnalyticsProps {
+  supplierId: string;
+}
+
+export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId }) => {
+  const [period, setPeriod] = useState<'3months' | '6months' | '1year' | '2years'>('6months');
+  const [selectedMetric, setSelectedMetric] = useState<string>('quality');
+  const [metrics, setMetrics] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const loadMetrics = async () => {
+      if (!supplierId) return;
+      
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Make a direct API call to the new endpoint
+        const response = await fetch(`/api/suppliers/${supplierId}/metrics?period=${period}`);
+        if (!response.ok) {
+          throw new Error('Failed to load supplier metrics');
+        }
+        
+        const data = await response.json();
+        setMetrics(data.data);
+      } catch (err: any) {
+        console.error('Error loading supplier metrics:', err);
+        setError(err.message || 'Failed to load supplier metrics');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadMetrics();
+  }, [supplierId, period]);
+  
+  if (loading) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+        <Typography variant="body2" sx={{ mt: 1 }}>
+          Loading supplier analytics...
+        </Typography>
+      </Box>
+    );
+  }
+  
+  if (error) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <Typography color="error" variant="body1">
+          Error loading supplier analytics: {error}
+        </Typography>
+      </Box>
+    );
+  }
+  
+  if (!metrics) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <Typography variant="body1">
+          No analytics data available for this supplier.
+        </Typography>
+      </Box>
+    );
+  }
+  
+  const handlePeriodChange = (event: SelectChangeEvent) => {
+    setPeriod(event.target.value as '3months' | '6months' | '1year' | '2years');
+  };
+  
+  const handleMetricChange = (event: SelectChangeEvent) => {
+    setSelectedMetric(event.target.value);
+  };
+  
+  // Get overall performance score
+  const performanceScore = metrics.metrics.overallScore;
+  
+  // Get risk level
+  const riskLevel = metrics.riskAssessment.overallRisk;
+  
+  // Prepare trend chart data
+  const trendData = {
+    labels: metrics.trends.map((item: any) => item.month),
+    datasets: [
+      {
+        label: 'Pass Rate (%)',
+        data: metrics.trends.map((item: any) => item.passRate.toFixed(1)),
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        tension: 0.1
+      }
+    ]
+  };
+  
+  const trendOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Quality Trend Over Time',
+      },
+    },
+    scales: {
+      y: {
+        min: 0,
+        max: 100,
+        ticks: {
+          callback: (value: any) => `${value}%`,
+        },
+      },
+    },
+  };
+  
+  // Prepare comparison chart data
+  const comparisonData = {
+    labels: ['Quality Score'],
+    datasets: [
+      {
+        label: 'This Supplier',
+        data: [metrics.industryComparison.qualityScore],
+        backgroundColor: 'rgba(53, 162, 235, 0.7)',
+      },
+      {
+        label: 'Industry Average',
+        data: [metrics.industryComparison.industryAverage],
+        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+      }
+    ]
+  };
+  
+  const comparisonOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Quality Score Comparison',
+      },
+    },
+    scales: {
+      y: {
+        min: 0,
+        max: 100,
+        ticks: {
+          callback: (value: any) => `${value}%`,
+        },
+      },
+    },
+  };
+  
+  // Get risk level color
+  const getRiskLevelColor = (level: string) => {
+    switch (level) {
+      case 'high':
+        return 'error';
+      case 'medium':
+        return 'warning';
+      case 'low':
+        return 'success';
+      default:
+        return 'default';
+    }
+  };
+  
+  // Get corresponding icon for each metric
+  const getMetricIcon = (metricName: string) => {
+    switch (metricName.toLowerCase()) {
+      case 'quality':
+        return <CheckCircleIcon />;
+      case 'delivery':
+        return <LocalShippingIcon />;
+      case 'defectrate':
+        return <BugReportIcon />;
+      case 'responsiveness':
+        return <ChatIcon />;
+      case 'cost':
+        return <MoneyIcon />;
+      case 'overallscore':
+        return <AssessmentIcon />;
+      default:
+        return <AssessmentIcon />;
+    }
+  };
+  
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={3}>
+        {/* Controls */}
+        <Grid item xs={12}>
+          <Paper sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h6" component="h2">
+              Supplier Performance Analytics
+            </Typography>
+            
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <FormControl size="small" sx={{ minWidth: 120 }}>
+                <InputLabel>Period</InputLabel>
+                <Select
+                  value={period}
+                  label="Period"
+                  onChange={handlePeriodChange}
+                >
+                  <MenuItem value="3months">Last 3 Months</MenuItem>
+                  <MenuItem value="6months">Last 6 Months</MenuItem>
+                  <MenuItem value="1year">Last Year</MenuItem>
+                  <MenuItem value="2years">Last 2 Years</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </Paper>
+        </Grid>
+        
+        {/* Enhanced Performance Charts - New Component */}
+        <Grid item xs={12}>
+          <SupplierPerformanceCharts supplierId={supplierId} />
+        </Grid>
+        
+        {/* Performance Score */}
+        <Grid item xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Overall Performance
+              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Typography variant="h3" component="div" sx={{ mr: 2 }}>
+                  {performanceScore}%
+                </Typography>
+                <Chip 
+                  label={riskLevel.toUpperCase()} 
+                  color={getRiskLevelColor(riskLevel) as any}
+                  size="small"
+                />
+              </Box>
+              <LinearProgress 
+                variant="determinate" 
+                value={performanceScore} 
+                color={getRiskLevelColor(riskLevel) as any}
+                sx={{ height: 8, borderRadius: 5, mb: 2 }}
+              />
+              
+              <Divider sx={{ my: 2 }} />
+              
+              <Typography variant="subtitle2" gutterBottom>
+                Risk Assessment
+              </Typography>
+              
+              <List dense>
+                {metrics.riskAssessment.factors.map((factor: any, index: number) => (
+                  <ListItem key={index} disablePadding>
+                    <ListItemIcon sx={{ minWidth: 36 }}>
+                      <WarningIcon color={getRiskLevelColor(factor.level) as any} fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText 
+                      primary={factor.name} 
+                      secondary={`${factor.level} risk, ${factor.impact} impact`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        {/* Metrics */}
+        <Grid item xs={12} md={8}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Performance Metrics
+              </Typography>
+              <Grid container spacing={2}>
+                {Object.entries(metrics.metrics).map(([key, value]: [string, any]) => (
+                  <Grid item xs={6} sm={4} key={key}>
+                    <Box sx={{ textAlign: 'center', p: 1 }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
+                        {getMetricIcon(key)}
+                      </Box>
+                      <Typography variant="body2" color="text.secondary">
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                      </Typography>
+                      <Typography variant="h6" component="div">
+                        {typeof value === 'number' ? (key === 'overallScore' ? `${value}%` : `${value}`) : value}
+                      </Typography>
+                      <LinearProgress 
+                        variant="determinate" 
+                        value={typeof value === 'number' ? Math.min(value, 100) : 0} 
+                        sx={{ height: 4, borderRadius: 5, mt: 1 }}
+                      />
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        {/* Quality Trend */}
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Quality Trend
+              </Typography>
+              <Box sx={{ height: 300 }}>
+                <Line data={trendData} options={trendOptions} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        {/* Industry Comparison */}
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
+                <CompareIcon sx={{ mr: 1 }} /> Industry Comparison
+              </Typography>
+              <Box sx={{ height: 300 }}>
+                <Bar data={comparisonData} options={comparisonOptions} />
+              </Box>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
+                Compared to {metrics.industryComparison.totalSuppliers} other suppliers in the same industry
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        {/* Recommendations */}
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Recommendations
+              </Typography>
+              <Alert severity={getRiskLevelColor(riskLevel) as any} sx={{ mb: 2 }}>
+                This supplier has a {riskLevel} risk level based on current performance metrics.
+              </Alert>
+              
+              <Typography variant="body1">
+                Based on the performance data, we recommend the following actions:
+              </Typography>
+              
+              <List>
+                {riskLevel === 'high' && (
+                  <>
+                    <ListItem>
+                      <ListItemIcon>
+                        <WarningIcon color="error" />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary="Schedule urgent review meeting" 
+                        secondary="Discuss performance issues and establish an improvement plan"
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemIcon>
+                        <AssignmentIcon color="error" />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary="Increase inspection frequency" 
+                        secondary="Monitor quality more closely with additional inspections"
+                      />
+                    </ListItem>
+                  </>
+                )}
+                
+                {riskLevel === 'medium' && (
+                  <>
+                    <ListItem>
+                      <ListItemIcon>
+                        <AssignmentIcon color="warning" />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary="Review key performance areas" 
+                        secondary="Focus on metrics below industry average"
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemIcon>
+                        <TimelineIcon color="warning" />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary="Monitor performance trends" 
+                        secondary="Check for improvement in the next quarterly review"
+                      />
+                    </ListItem>
+                  </>
+                )}
+                
+                {riskLevel === 'low' && (
+                  <>
+                    <ListItem>
+                      <ListItemIcon>
+                        <CheckCircleIcon color="success" />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary="Maintain current performance" 
+                        secondary="Continue regular monitoring and feedback"
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemIcon>
+                        <TrendingUpIcon color="success" />
+                      </ListItemIcon>
+                      <ListItemText 
+                        primary="Consider expanding partnership" 
+                        secondary="This supplier is performing well and may be suitable for additional business"
+                      />
+                    </ListItem>
+                  </>
+                )}
+              </List>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}; 

@@ -1,0 +1,198 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Paper,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Chip,
+  CircularProgress,
+  Button,
+  IconButton,
+  Tooltip,
+  Alert
+} from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import PaymentService, { Payment } from '../../services/PaymentService';
+import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
+
+interface PaymentHistoryProps {
+  limit?: number;
+  showPagination?: boolean;
+  showTitle?: boolean;
+  status?: string;
+}
+
+/**
+ * Payment History Component
+ * 
+ * Displays a list of payment transactions
+ * Task: TS367 - Payment gateway integration
+ */
+const PaymentHistory: React.FC<PaymentHistoryProps> = ({
+  limit = 10,
+  showPagination = true,
+  showTitle = true,
+  status
+}) => {
+  const [payments, setPayments] = useState<Payment[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const navigate = useNavigate();
+
+  const fetchPayments = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await PaymentService.getPaymentHistory(page + 1, limit, status);
+      setPayments(response.payments);
+      setTotalCount(response.pagination.total);
+    } catch (_err) {
+      console.error('Error fetching payment history:', err);
+      setError('Failed to load payment history. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPayments();
+  }, [page, limit, status]);
+
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPage(0);
+    limit = parseInt(event.target.value, 10);
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'success';
+      case 'pending':
+        return 'warning';
+      case 'failed':
+        return 'error';
+      case 'refunded':
+        return 'info';
+      case 'canceled':
+        return 'default';
+      default:
+        return 'default';
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    return format(new Date(dateString), 'MMM d, yyyy h:mm a');
+  };
+
+  const handleViewDetails = (paymentId: string) => {
+    navigate(`/payments/${paymentId}`);
+  };
+
+  return (
+    <Paper elevation={2} sx={{ p: 2 }}>
+      {showTitle && (
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="h6">Payment History</Typography>
+          <Tooltip title="Refresh">
+            <IconButton onClick={fetchPayments} disabled={loading}>
+              <RefreshIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      )}
+
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+
+      {loading && payments.length === 0 ? (
+        <Box display="flex" justifyContent="center" p={4}>
+          <CircularProgress />
+        </Box>
+      ) : payments.length === 0 ? (
+        <Box p={2} textAlign="center">
+          <Typography color="textSecondary">No payment records found</Typography>
+        </Box>
+      ) : (
+        <>
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell align="right">Amount</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell align="center">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {payments.map((payment) => (
+                  <TableRow key={payment._id} hover>
+                    <TableCell>{formatDate(payment.createdAt)}</TableCell>
+                    <TableCell>
+                      {payment.description || 'Payment'}
+                    </TableCell>
+                    <TableCell align="right">
+                      {new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: payment.currency.toUpperCase()
+                      }).format(payment.amount)}
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
+                        size="small"
+                        color={getStatusColor(payment.status) as any}
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Tooltip title="View Details">
+                        <IconButton
+                          size="small"
+                          onClick={() => handleViewDetails(payment._id)}
+                        >
+                          <ReceiptIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          {showPagination && (
+            <TablePagination
+              component="div"
+              count={totalCount}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={limit}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              rowsPerPageOptions={[5, 10, 25, 50]}
+            />
+          )}
+        </>
+      )}
+    </Paper>
+  );
+};
+
+export default PaymentHistory; 

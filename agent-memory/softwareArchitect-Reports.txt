@@ -1,0 +1,5 @@
+Structure: Architecture analysis for Reports
+
+Circular: Circular dependency check for Reports
+
+Coupling: Coupling check for Reports

@@ -1,0 +1,36 @@
+name: Automated Dependency Upgrade & Migration
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  upgrade-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run codemods (auto-migrate)
+        run: |
+          if [ -f scripts/auto-migrate.js ]; then
+            node scripts/auto-migrate.js
+          fi
+
+      - name: Run tests
+        run: npm test
+
+      - name: Auto-merge if all pass (Renovate PRs only)
+        if: github.actor == 'renovate[bot]' && success()
+        uses: pascalgn/automerge-action@v0.16.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

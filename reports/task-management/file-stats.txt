@@ -1,0 +1,10 @@
+File type statistics:
+JavaScript files: 144412
+React JSX files: 6
+TypeScript files: 64773
+React TSX files: 263
+CSS files: 53
+SCSS files: 0
+HTML files: 175
+Total source files:
+  209684

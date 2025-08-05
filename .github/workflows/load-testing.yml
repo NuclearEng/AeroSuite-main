@@ -1,0 +1,199 @@
+name: Load Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Load test profile to run'
+        required: true
+        default: 'baseline'
+        type: choice
+        options:
+          - baseline
+          - production
+          - stress
+      scenario:
+        description: 'Test scenario to run (leave empty to use profile default)'
+        required: false
+        type: choice
+        options:
+          - none
+          - authentication
+          - browsing
+          - crud
+          - stress
+          - concurrent
+          - session
+      target:
+        description: 'Target environment URL'
+        required: true
+        default: 'http://localhost:5000'
+      duration:
+        description: 'Test duration in seconds'
+        required: false
+        default: '60'
+      users:
+        description: 'Number of concurrent users'
+        required: false
+        default: '20'
+  schedule:
+    # Run weekly on Sunday at midnight
+    - cron: '0 0 * * 0'
+
+jobs:
+  load-test:
+    name: Run Load Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Start test server
+        run: |
+          npm run server:dev &
+          sleep 15
+        env:
+          NODE_ENV: test
+          MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      
+      - name: Run load test
+        run: |
+          mkdir -p reports
+          node scripts/performance/load-testing/index.js \
+            --profile=${{ github.event.inputs.profile || 'baseline' }} \
+            ${{ github.event.inputs.scenario != 'none' && format('--scenario={0}', github.event.inputs.scenario) }} \
+            --target=${{ github.event.inputs.target || 'http://localhost:5000' }} \
+            --duration=${{ github.event.inputs.duration || '60' }} \
+            --users=${{ github.event.inputs.users || '20' }} \
+            --output=json \
+            --report=true
+        env:
+          NODE_ENV: test
+      
+      - name: Upload Load Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: load-test-results
+          path: scripts/performance/load-testing/reports
+          retention-days: 30
+      
+      - name: Generate performance report
+        run: |
+          # Find the most recent report file
+          REPORT_FILE=$(ls -t scripts/performance/load-testing/reports/*.json | head -1)
+          echo "Using report file: $REPORT_FILE"
+          
+          # Extract key metrics and create a markdown summary
+          node -e "
+            const report = require('./$REPORT_FILE');
+            const fs = require('fs');
+            
+            const summary = report.results.summary;
+            const responseTime = report.results.responseTime;
+            
+            const markdown = \`## Load Test Results
+            
+            ### Test Configuration
+            - **Profile:** ${report.metadata.config.scenario || 'default'}
+            - **Target:** ${report.metadata.config.target}
+            - **Concurrent Users:** ${report.metadata.config.users}
+            - **Duration:** ${report.metadata.config.duration} seconds
+            
+            ### Performance Metrics
+            - **Total Requests:** ${summary.totalRequests}
+            - **Successful Requests:** ${summary.successfulRequests}
+            - **Failed Requests:** ${summary.failedRequests}
+            - **Success Rate:** ${summary.successRate}%
+            - **Requests Per Second:** ${summary.requestsPerSecond}
+            
+            ### Response Time (ms)
+            - **Min:** ${responseTime.min}
+            - **Max:** ${responseTime.max}
+            - **Average:** ${responseTime.avg}
+            - **Median:** ${responseTime.median}
+            - **95th Percentile:** ${responseTime.p95}
+            - **99th Percentile:** ${responseTime.p99}
+            \`;
+            
+            fs.writeFileSync('load-test-summary.md', markdown);
+          "
+      
+      - name: Comment on workflow run
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('load-test-summary.md', 'utf8');
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: summary
+            })
+        # Only run this step if triggered from a pull request
+        if: github.event_name == 'pull_request'
+      
+      - name: Check for performance regression
+        run: |
+          # Find the most recent report file
+          REPORT_FILE=$(ls -t scripts/performance/load-testing/reports/*.json | head -1)
+          
+          # Extract metrics and check against thresholds
+          node -e "
+            const report = require('./$REPORT_FILE');
+            
+            const responseTime = report.results.responseTime;
+            const successRate = report.results.summary.successRate;
+            
+            // Define thresholds based on profile
+            const profile = process.env.PROFILE || 'baseline';
+            let maxAvgResponseTime, minSuccessRate;
+            
+            switch(profile) {
+              case 'baseline':
+                maxAvgResponseTime = 200;
+                minSuccessRate = 99;
+                break;
+              case 'production':
+                maxAvgResponseTime = 300;
+                minSuccessRate = 98;
+                break;
+              case 'stress':
+                maxAvgResponseTime = 500;
+                minSuccessRate = 95;
+                break;
+              default:
+                maxAvgResponseTime = 200;
+                minSuccessRate = 99;
+            }
+            
+            // Check against thresholds
+            const avgResponseTime = responseTime.avg;
+            
+            if (avgResponseTime > maxAvgResponseTime) {
+              console.error(\`❌ Performance regression detected: Average response time (\${avgResponseTime}ms) exceeds threshold (\${maxAvgResponseTime}ms)\`);
+              process.exit(1);
+            }
+            
+            if (successRate < minSuccessRate) {
+              console.error(\`❌ Performance regression detected: Success rate (\${successRate}%) below threshold (\${minSuccessRate}%)\`);
+              process.exit(1);
+            }
+            
+            console.log(\`✅ Performance checks passed: Average response time (\${avgResponseTime}ms), Success rate (\${successRate}%)\`);
+          "
+        env:
+          PROFILE: ${{ github.event.inputs.profile || 'baseline' }}
+        # This step will fail the workflow if performance thresholds are exceeded 

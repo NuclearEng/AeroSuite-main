@@ -1,0 +1,5 @@
+Flows: Business logic flow check for Suppliers
+
+Rules: Business rules validation for Suppliers
+
+Edge: Edge case analysis for Suppliers

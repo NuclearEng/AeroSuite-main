@@ -1,0 +1,598 @@
+/**
+ * Performance Monitoring Service
+ * 
+ * Provides methods for tracking and analyzing real user monitoring (RUM) metrics,
+ * implementing performance budgets, and detecting performance regressions.
+ */
+
+import api from './api';
+
+// Performance metric types
+export enum PerformanceMetricType {
+  NAVIGATION = 'navigation',
+  RESOURCE = 'resource',
+  PAINT = 'paint',
+  LAYOUT = 'layout',
+  FIRST_INPUT = 'first_input',
+  LONGTASK = 'longtask',
+  MEMORY = 'memory',
+  CUSTOM = 'custom'
+}
+
+// Performance metric data interface
+export interface PerformanceMetricData {
+  name: string;
+  type: PerformanceMetricType;
+  value: number;
+  timestamp: string;
+  metadata?: Record<string, any>;
+}
+
+// Performance budget interface
+export interface PerformanceBudget {
+  metric: string;
+  threshold: number;
+  condition: 'less-than' | 'greater-than' | 'equals';
+}
+
+// Performance monitoring service interface
+interface PerformanceMonitoringService {
+  trackMetric(metricData: PerformanceMetricData): Promise<void>;
+  trackNavigationTiming(): Promise<void>;
+  trackResourceTiming(): Promise<void>;
+  trackPaintTiming(): Promise<void>;
+  trackLayoutShift(): Promise<void>;
+  trackFirstInput(): Promise<void>;
+  trackLongTasks(): Promise<void>;
+  trackMemoryUsage(): Promise<void>;
+  trackCustomMetric(name: string, value: number, metadata?: Record<string, any>): Promise<void>;
+  getPerformanceMetrics(period: string): Promise<any>;
+  checkPerformanceBudgets(metrics: Record<string, number>): { passed: boolean; violations: any[] };
+  detectRegressions(currentMetrics: Record<string, number>, baselineMetrics: Record<string, number>, threshold: number): any[];
+}
+
+/**
+ * Track a performance metric
+ * @param metricData Performance metric data to track
+ */
+const trackMetric = async (metricData: PerformanceMetricData): Promise<void> => {
+  try {
+    // Send metric to the server
+    await api.post('/monitoring/performance', { metrics: [metricData] });
+    
+    // Log metric in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Tracked performance metric:', metricData);
+    }
+  } catch (_error) {
+    console.error('Error tracking performance metric:', error);
+    
+    // Store metric locally for later retry
+    storeMetricForRetry(metricData);
+  }
+};
+
+/**
+ * Track navigation timing metrics
+ */
+const trackNavigationTiming = async (): Promise<void> => {
+  try {
+    // Check if Performance API is available
+    if (!window.performance || !window.performance.timing) {
+      console.warn('Performance API not supported');
+      return;
+    }
+    
+    // Get navigation timing data
+    const timing = window.performance.timing;
+    
+    // Calculate key metrics
+    const navigationStart = timing.navigationStart;
+    const metrics = {
+      dns: timing.domainLookupEnd - timing.domainLookupStart,
+      tcp: timing.connectEnd - timing.connectStart,
+      request: timing.responseStart - timing.requestStart,
+      response: timing.responseEnd - timing.responseStart,
+      dom: timing.domComplete - timing.domLoading,
+      domInteractive: timing.domInteractive - navigationStart,
+      loadEvent: timing.loadEventEnd - timing.loadEventStart,
+      total: timing.loadEventEnd - navigationStart,
+    };
+    
+    // Track each metric
+    for (const [name, value] of Object.entries(metrics)) {
+      if (value >= 0) { // Ensure valid timing values
+        await trackMetric({
+          name,
+          type: PerformanceMetricType.NAVIGATION,
+          value,
+          timestamp: new Date().toISOString(),
+          metadata: {
+            url: window.location.href,
+            userAgent: navigator.userAgent,
+          },
+        });
+      }
+    }
+  } catch (_error) {
+    console.error('Error tracking navigation timing:', error);
+  }
+};
+
+/**
+ * Track resource timing metrics
+ */
+const trackResourceTiming = async (): Promise<void> => {
+  try {
+    // Check if Performance API is available
+    if (!window.performance || !window.performance.getEntriesByType) {
+      console.warn('Performance API not supported');
+      return;
+    }
+    
+    // Get resource timing entries
+    const resources = window.performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+    
+    // Track metrics for each resource
+    for (const resource of resources) {
+      // Skip tracking API calls to avoid infinite loops
+      if (resource.name.includes('/monitoring/')) {
+        continue;
+      }
+      
+      // Calculate key metrics
+      const metrics = {
+        duration: resource.duration,
+        startTime: resource.startTime,
+        fetchStart: resource.fetchStart,
+        redirectTime: resource.redirectEnd - resource.redirectStart,
+        dnsTime: resource.domainLookupEnd - resource.domainLookupStart,
+        connectTime: resource.connectEnd - resource.connectStart,
+        requestTime: resource.responseStart - resource.requestStart,
+        responseTime: resource.responseEnd - resource.responseStart,
+      };
+      
+      // Track resource timing
+      await trackMetric({
+        name: 'resourceTiming',
+        type: PerformanceMetricType.RESOURCE,
+        value: resource.duration,
+        timestamp: new Date().toISOString(),
+        metadata: {
+          url: resource.name,
+          initiatorType: resource.initiatorType,
+          metrics,
+        },
+      });
+    }
+    
+    // Clear the buffer to prevent it from filling up
+    window.performance.clearResourceTimings();
+  } catch (_error) {
+    console.error('Error tracking resource timing:', error);
+  }
+};
+
+/**
+ * Track paint timing metrics
+ */
+const trackPaintTiming = async (): Promise<void> => {
+  try {
+    // Check if Performance API is available
+    if (!window.performance || !window.performance.getEntriesByType) {
+      console.warn('Performance API not supported');
+      return;
+    }
+    
+    // Get paint timing entries
+    const paintEntries = window.performance.getEntriesByType('paint');
+    
+    // Track metrics for each paint entry
+    for (const entry of paintEntries) {
+      await trackMetric({
+        name: entry.name,
+        type: PerformanceMetricType.PAINT,
+        value: entry.startTime,
+        timestamp: new Date().toISOString(),
+        metadata: {
+          url: window.location.href,
+        },
+      });
+    }
+  } catch (_error) {
+    console.error('Error tracking paint timing:', error);
+  }
+};
+
+/**
+ * Track layout shift metrics
+ */
+const trackLayoutShift = async (): Promise<void> => {
+  try {
+    // Check if PerformanceObserver is available
+    if (!window.PerformanceObserver) {
+      console.warn('PerformanceObserver not supported');
+      return;
+    }
+    
+    let cumulativeLayoutShift = 0;
+    
+    // Create a PerformanceObserver to track layout shifts
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        // Check if it's a layout shift entry
+        if (entry.entryType === 'layout-shift' && !entry.hadRecentInput) {
+          // @ts-ignore - TypeScript doesn't know about layout-shift properties
+          cumulativeLayoutShift += entry.value;
+          
+          // Track individual layout shift
+          trackMetric({
+            name: 'layoutShift',
+            type: PerformanceMetricType.LAYOUT,
+            // @ts-ignore - TypeScript doesn't know about layout-shift properties
+            value: entry.value,
+            timestamp: new Date().toISOString(),
+            metadata: {
+              url: window.location.href,
+              cumulativeLayoutShift,
+            },
+          });
+        }
+      }
+    });
+    
+    // Start observing layout shifts
+    observer.observe({ type: 'layout-shift', buffered: true });
+  } catch (_error) {
+    console.error('Error tracking layout shifts:', error);
+  }
+};
+
+/**
+ * Track first input delay
+ */
+const trackFirstInput = async (): Promise<void> => {
+  try {
+    // Check if PerformanceObserver is available
+    if (!window.PerformanceObserver) {
+      console.warn('PerformanceObserver not supported');
+      return;
+    }
+    
+    // Create a PerformanceObserver to track first input
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        // Track first input delay
+        trackMetric({
+          name: 'firstInputDelay',
+          type: PerformanceMetricType.FIRST_INPUT,
+          // @ts-ignore - TypeScript doesn't know about first-input properties
+          value: entry.processingStart - entry.startTime,
+          timestamp: new Date().toISOString(),
+          metadata: {
+            url: window.location.href,
+            // @ts-ignore - TypeScript doesn't know about first-input properties
+            targetElement: entry.target ? entry.target.tagName : null,
+          },
+        });
+      }
+      
+      // Disconnect after first input
+      observer.disconnect();
+    });
+    
+    // Start observing first input
+    observer.observe({ type: 'first-input', buffered: true });
+  } catch (_error) {
+    console.error('Error tracking first input delay:', error);
+  }
+};
+
+/**
+ * Track long tasks
+ */
+const trackLongTasks = async (): Promise<void> => {
+  try {
+    // Check if PerformanceObserver is available
+    if (!window.PerformanceObserver) {
+      console.warn('PerformanceObserver not supported');
+      return;
+    }
+    
+    // Create a PerformanceObserver to track long tasks
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        // Track long task
+        trackMetric({
+          name: 'longTask',
+          type: PerformanceMetricType.LONGTASK,
+          value: entry.duration,
+          timestamp: new Date().toISOString(),
+          metadata: {
+            url: window.location.href,
+            // @ts-ignore - TypeScript doesn't know about longtask properties
+            attribution: entry.attribution ? entry.attribution[0].name : null,
+          },
+        });
+      }
+    });
+    
+    // Start observing long tasks
+    observer.observe({ type: 'longtask', buffered: true });
+  } catch (_error) {
+    console.error('Error tracking long tasks:', error);
+  }
+};
+
+/**
+ * Track memory usage
+ */
+const trackMemoryUsage = async (): Promise<void> => {
+  try {
+    // Check if memory info is available
+    // @ts-ignore - TypeScript doesn't know about performance.memory
+    if (!window.performance || !window.performance.memory) {
+      console.warn('Memory API not supported');
+      return;
+    }
+    
+    // Get memory usage data
+    // @ts-ignore - TypeScript doesn't know about performance.memory
+    const memory = window.performance.memory;
+    
+    // Track memory usage
+    await trackMetric({
+      name: 'memoryUsage',
+      type: PerformanceMetricType.MEMORY,
+      value: memory.usedJSHeapSize,
+      timestamp: new Date().toISOString(),
+      metadata: {
+        url: window.location.href,
+        totalJSHeapSize: memory.totalJSHeapSize,
+        jsHeapSizeLimit: memory.jsHeapSizeLimit,
+      },
+    });
+  } catch (_error) {
+    console.error('Error tracking memory usage:', error);
+  }
+};
+
+/**
+ * Track a custom performance metric
+ * @param name Metric name
+ * @param value Metric value
+ * @param metadata Additional metadata
+ */
+const trackCustomMetric = async (
+  name: string,
+  value: number,
+  metadata?: Record<string, any>
+): Promise<void> => {
+  await trackMetric({
+    name,
+    type: PerformanceMetricType.CUSTOM,
+    value,
+    timestamp: new Date().toISOString(),
+    metadata: {
+      url: window.location.href,
+      ...metadata,
+    },
+  });
+};
+
+/**
+ * Get performance metrics for the specified time period
+ * @param period Time period (24h, 7d, 30d, 90d, all)
+ * @returns Promise with performance metrics data
+ */
+const getPerformanceMetrics = async (period: string = '7d'): Promise<any> => {
+  try {
+    const response = await api.get(`/monitoring/performance-metrics?period=${period}`);
+    return response.data;
+  } catch (_error) {
+    console.error('Error fetching performance metrics:', error);
+    throw error;
+  }
+};
+
+/**
+ * Check if metrics meet performance budgets
+ * @param metrics Current metrics
+ * @returns Object with pass/fail status and violations
+ */
+const checkPerformanceBudgets = (metrics: Record<string, number>): { passed: boolean; violations: any[] } => {
+  // Define performance budgets
+  const budgets: PerformanceBudget[] = [
+    { metric: 'firstContentfulPaint', threshold: 1000, condition: 'less-than' },
+    { metric: 'largestContentfulPaint', threshold: 2500, condition: 'less-than' },
+    { metric: 'firstInputDelay', threshold: 100, condition: 'less-than' },
+    { metric: 'cumulativeLayoutShift', threshold: 0.1, condition: 'less-than' },
+    { metric: 'total', threshold: 3000, condition: 'less-than' },
+    { metric: 'domInteractive', threshold: 1500, condition: 'less-than' },
+  ];
+  
+  // Check each budget
+  const violations = budgets.filter(budget => {
+    const metricValue = metrics[budget.metric];
+    if (metricValue === undefined) return false;
+    
+    switch (budget.condition) {
+      case 'less-than':
+        return metricValue >= budget.threshold;
+      case 'greater-than':
+        return metricValue <= budget.threshold;
+      case 'equals':
+        return metricValue !== budget.threshold;
+      default:
+        return false;
+    }
+  }).map(budget => ({
+    metric: budget.metric,
+    current: metrics[budget.metric],
+    threshold: budget.threshold,
+    condition: budget.condition,
+  }));
+  
+  return {
+    passed: violations.length === 0,
+    violations,
+  };
+};
+
+/**
+ * Detect performance regressions
+ * @param currentMetrics Current metrics
+ * @param baselineMetrics Baseline metrics to compare against
+ * @param threshold Regression threshold (percentage)
+ * @returns Array of detected regressions
+ */
+const detectRegressions = (
+  currentMetrics: Record<string, number>,
+  baselineMetrics: Record<string, number>,
+  threshold: number = 10
+): any[] => {
+  const regressions = [];
+  
+  // Compare each metric
+  for (const [metric, baselineValue] of Object.entries(baselineMetrics)) {
+    const currentValue = currentMetrics[metric];
+    if (currentValue === undefined) continue;
+    
+    // Calculate percentage change
+    const percentChange = ((currentValue - baselineValue) / baselineValue) * 100;
+    
+    // Check if it's a regression
+    if (percentChange > threshold) {
+      regressions.push({
+        metric,
+        currentValue,
+        baselineValue,
+        percentChange,
+        threshold,
+      });
+    }
+  }
+  
+  return regressions;
+};
+
+/**
+ * Store metric for later retry
+ * @param metricData Metric data to store
+ */
+const storeMetricForRetry = (metricData: PerformanceMetricData): void => {
+  try {
+    // Get existing metrics from local storage
+    const storedMetrics = localStorage.getItem('aerosuite_pending_metrics');
+    const metrics = storedMetrics ? JSON.parse(storedMetrics) : [];
+    
+    // Add new metric
+    metrics.push(metricData);
+    
+    // Limit the number of stored metrics
+    const limitedMetrics = metrics.slice(-100);
+    
+    // Store back to local storage
+    localStorage.setItem('aerosuite_pending_metrics', JSON.stringify(limitedMetrics));
+  } catch (_error) {
+    console.error('Error storing metric for retry:', error);
+  }
+};
+
+/**
+ * Retry sending stored metrics
+ */
+export const retryPendingMetrics = async (): Promise<void> => {
+  try {
+    // Get stored metrics
+    const storedMetrics = localStorage.getItem('aerosuite_pending_metrics');
+    if (!storedMetrics) {
+      return;
+    }
+    
+    const metrics = JSON.parse(storedMetrics);
+    if (metrics.length === 0) {
+      return;
+    }
+    
+    // Clear stored metrics
+    localStorage.removeItem('aerosuite_pending_metrics');
+    
+    // Send metrics in batches
+    const batchSize = 20;
+    for (let i = 0; i < metrics.length; i += batchSize) {
+      const batch = metrics.slice(i, i + batchSize);
+      try {
+        await api.post('/monitoring/performance', { metrics: batch });
+      } catch (_error) {
+        // If sending fails, store the remaining metrics back
+        const remainingMetrics = metrics.slice(i);
+        localStorage.setItem('aerosuite_pending_metrics', JSON.stringify(remainingMetrics));
+        throw error;
+      }
+    }
+  } catch (_error) {
+    console.error('Error retrying pending metrics:', error);
+  }
+};
+
+/**
+ * Initialize performance monitoring
+ */
+export const initPerformanceMonitoring = (): void => {
+  // Track initial metrics
+  trackNavigationTiming();
+  trackPaintTiming();
+  trackLayoutShift();
+  trackFirstInput();
+  trackLongTasks();
+  
+  // Set up periodic tracking of resource timing
+  let resourceTimingInterval: NodeJS.Timeout | null = null;
+  const startResourceTimingTracking = () => {
+    if (resourceTimingInterval) {
+      clearInterval(resourceTimingInterval);
+    }
+    
+    // Track resource timing every 30 seconds
+    resourceTimingInterval = setInterval(() => {
+      trackResourceTiming();
+    }, 30000);
+    
+    // Track initial resource timing
+    trackResourceTiming();
+  };
+  
+  // Start tracking after page load
+  if (document.readyState === 'complete') {
+    startResourceTimingTracking();
+  } else {
+    window.addEventListener('load', startResourceTimingTracking);
+  }
+  
+  // Track memory usage periodically
+  setInterval(() => {
+    trackMemoryUsage();
+  }, 60000);
+  
+  // Retry sending any pending metrics
+  retryPendingMetrics();
+};
+
+// Create the performance monitoring service
+const performanceMonitoringService: PerformanceMonitoringService = {
+  trackMetric,
+  trackNavigationTiming,
+  trackResourceTiming,
+  trackPaintTiming,
+  trackLayoutShift,
+  trackFirstInput,
+  trackLongTasks,
+  trackMemoryUsage,
+  trackCustomMetric,
+  getPerformanceMetrics,
+  checkPerformanceBudgets,
+  detectRegressions,
+};
+
+export default performanceMonitoringService; 

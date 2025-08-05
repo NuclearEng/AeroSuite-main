@@ -1,0 +1,299 @@
+/**
+ * AeroSuite Request Batching Utilities
+ * 
+ * This file contains utilities for batching multiple API requests
+ * into a single network request to reduce overhead and improve performance.
+ */
+
+import { apiCache } from './caching';
+
+/**
+ * Interface for a batch request item
+ */
+export interface BatchRequestItem<T = any> {
+  id: string;
+  endpoint: string;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  body?: any;
+  headers?: Record<string, string>;
+}
+
+/**
+ * Interface for a batch response item
+ */
+export interface BatchResponseItem<T = any> {
+  id: string;
+  status: number;
+  data: T;
+  error?: string;
+}
+
+/**
+ * Configuration options for the request batcher
+ */
+export interface BatcherConfig {
+  maxBatchSize: number;
+  batchDelayMs: number;
+  endpoint: string;
+  headers?: Record<string, string>;
+  useCache?: boolean;
+  cacheTTL?: number;
+}
+
+/**
+ * Default configuration for the request batcher
+ */
+const DEFAULT_CONFIG: BatcherConfig = {
+  maxBatchSize: 10,
+  batchDelayMs: 50,
+  endpoint: '/api/batch',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  useCache: true,
+  cacheTTL: 5 * 60 * 1000 // 5 minutes
+};
+
+/**
+ * A class for batching multiple API requests into a single request
+ */
+export class RequestBatcher {
+  private config: BatcherConfig;
+  private queue: Map<string, BatchRequestItem>;
+  private pendingBatch: Promise<Map<string, BatchResponseItem>> | null;
+  private timeoutId: NodeJS.Timeout | null;
+  private batchCounter: number;
+  private resolvers: Map<string, { resolve: (value: any) => void, reject: (reason: any) => void }>;
+
+  /**
+   * Create a new RequestBatcher instance
+   * @param config Configuration options
+   */
+  constructor(config: Partial<BatcherConfig> = {}) {
+    this.config = { ...DEFAULT_CONFIG, ...config };
+    this.queue = new Map();
+    this.pendingBatch = null;
+    this.timeoutId = null;
+    this.batchCounter = 0;
+    this.resolvers = new Map();
+  }
+
+  /**
+   * Add a request to the batch queue
+   * @param request The request to add
+   * @returns A promise that resolves with the response for this specific request
+   */
+  public add<T = any>(request: Omit<BatchRequestItem, 'id'>): Promise<T> {
+    const id = `req_${Date.now()}_${this.batchCounter++}`;
+    const fullRequest: BatchRequestItem = { ...request, id };
+
+    // Check cache if GET request and caching is enabled
+    if (this.config.useCache && request.method === 'GET') {
+      const cacheKey = `${request.endpoint}:${JSON.stringify(request.body || {})}`;
+      const cachedResponse = apiCache.get(cacheKey);
+      if (cachedResponse) {
+        return Promise.resolve(cachedResponse);
+      }
+    }
+
+    return new Promise<T>((resolve, reject) => {
+      // Store the promise resolvers for later
+      this.resolvers.set(id, { resolve, reject });
+      
+      // Add the request to the queue
+      this.queue.set(id, fullRequest);
+      
+      // If we've reached the max batch size, flush immediately
+      if (this.queue.size >= this.config.maxBatchSize) {
+        this.flush();
+      } else if (!this.timeoutId) {
+        // Otherwise set a timeout to flush the queue
+        this.timeoutId = setTimeout(() => this.flush(), this.config.batchDelayMs);
+      }
+    });
+  }
+
+  /**
+   * Flush the current queue of requests
+   * @returns A promise that resolves when the batch request completes
+   */
+  public async flush(): Promise<void> {
+    if (this.queue.size === 0) {
+      return;
+    }
+
+    // Clear any pending timeout
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+
+    // Get the current queue and reset for next batch
+    const currentQueue = new Map(this.queue);
+    this.queue.clear();
+
+    try {
+      // Execute the batch request
+      const responses = await this.executeBatch(currentQueue);
+      
+      // Resolve all the individual promises
+      for (const [id, response] of responses.entries()) {
+        const resolver = this.resolvers.get(id);
+        if (resolver) {
+          if (response.error) {
+            resolver.reject(new Error(response.error));
+          } else {
+            resolver.resolve(response.data);
+            
+            // Cache successful GET responses if caching is enabled
+            if (this.config.useCache && currentQueue.get(id)?.method === 'GET') {
+              const request = currentQueue.get(id)!;
+              const cacheKey = `${request.endpoint}:${JSON.stringify(request.body || {})}`;
+              apiCache.set(cacheKey, response.data, this.config.cacheTTL);
+            }
+          }
+          this.resolvers.delete(id);
+        }
+      }
+    } catch (error) {
+      // If the entire batch request fails, reject all the individual promises
+      for (const id of currentQueue.keys()) {
+        const resolver = this.resolvers.get(id);
+        if (resolver) {
+          resolver.reject(error);
+          this.resolvers.delete(id);
+        }
+      }
+    }
+  }
+
+  /**
+   * Execute a batch of requests
+   * @param requests Map of request IDs to request objects
+   * @returns Map of request IDs to response objects
+   */
+  private async executeBatch(
+    requests: Map<string, BatchRequestItem>
+  ): Promise<Map<string, BatchResponseItem>> {
+    // Convert the requests map to an array
+    const requestsArray = Array.from(requests.values());
+    
+    // Make the batch request
+    const response = await fetch(this.config.endpoint, {
+      method: 'POST',
+      headers: this.config.headers,
+      body: JSON.stringify({ requests: requestsArray }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Batch request failed: ${response.status} ${response.statusText}`);
+    }
+
+    // Parse the response
+    const responseData = await response.json();
+    
+    // Convert the response array to a map
+    const responsesMap = new Map<string, BatchResponseItem>();
+    for (const item of responseData.responses) {
+      responsesMap.set(item.id, item);
+    }
+
+    return responsesMap;
+  }
+
+  /**
+   * Cancel all pending requests in the queue
+   */
+  public cancelAll(): void {
+    // Clear any pending timeout
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+
+    // Reject all pending promises
+    for (const id of this.queue.keys()) {
+      const resolver = this.resolvers.get(id);
+      if (resolver) {
+        resolver.reject(new Error('Request was cancelled'));
+        this.resolvers.delete(id);
+      }
+    }
+
+    // Clear the queue
+    this.queue.clear();
+  }
+}
+
+/**
+ * Create a request batcher with default configuration
+ */
+export const createBatcher = (config: Partial<BatcherConfig> = {}): RequestBatcher => {
+  return new RequestBatcher(config);
+};
+
+/**
+ * Default instance of RequestBatcher
+ */
+export const defaultBatcher = createBatcher();
+
+/**
+ * Add a request to the default batcher
+ */
+export const batchRequest = <T = any>(request: Omit<BatchRequestItem, 'id'>): Promise<T> => {
+  return defaultBatcher.add<T>(request);
+};
+
+/**
+ * Utility to batch multiple GET requests
+ */
+export const batchGet = <T = any>(endpoint: string, params?: Record<string, any>): Promise<T> => {
+  return batchRequest<T>({
+    endpoint,
+    method: 'GET',
+    body: params
+  });
+};
+
+/**
+ * Utility to batch multiple POST requests
+ */
+export const batchPost = <T = any>(endpoint: string, data?: any): Promise<T> => {
+  return batchRequest<T>({
+    endpoint,
+    method: 'POST',
+    body: data
+  });
+};
+
+/**
+ * Utility to batch multiple PUT requests
+ */
+export const batchPut = <T = any>(endpoint: string, data?: any): Promise<T> => {
+  return batchRequest<T>({
+    endpoint,
+    method: 'PUT',
+    body: data
+  });
+};
+
+/**
+ * Utility to batch multiple DELETE requests
+ */
+export const batchDelete = <T = any>(endpoint: string): Promise<T> => {
+  return batchRequest<T>({
+    endpoint,
+    method: 'DELETE'
+  });
+};
+
+export default {
+  RequestBatcher,
+  createBatcher,
+  defaultBatcher,
+  batchRequest,
+  batchGet,
+  batchPost,
+  batchPut,
+  batchDelete
+}; 

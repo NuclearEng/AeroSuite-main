@@ -1,0 +1,38 @@
+Prioritizing agents due to previous failures: devSecOps, ux
+Best agent: devSecOps
+Best answer:
+Previous findings:
+Vuln: npm error Missing script: "scan-vuln"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_001Z-debug-0.log
+
+RBAC: npm error Missing script: "check-rbac"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_245Z-debug-0.log
+
+Encryption: npm error Missing script: "check-encryption"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_477Z-debug-0.log
+
+CSP: npm error Missing script: "check-csp"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_716Z-debug-0.log
+
+---
+Vuln: Vulnerability scan for Reports
+
+RBAC: RBAC check for Reports
+
+Encryption: Encryption check for Reports
+
+CSP: CSP check for Reports
+
+(Memory updated)

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroSuite - Relationship Org Chart</title>
+    <style>
+        :root {
+            /* Apple-inspired color palette */
+            --blue: #0A84FF;
+            --green: #30D158;
+            --indigo: #5E5CE6;
+            --orange: #FF9F0A;
+            --pink: #FF375F;
+            --purple: #BF5AF2;
+            --red: #FF453A;
+            --teal: #64D2FF;
+            --yellow: #FFD60A;
+            
+            /* Neutral colors */
+            --text-primary: #1D1D1F;
+            --text-secondary: #515154;
+            --text-tertiary: #86868B;
+            --background: #F5F5F7;
+            --card-bg: #FFFFFF;
+            --border-color: #D2D2D7;
+            --separator: rgba(60, 60, 67, 0.1);
+            
+            /* Relationship colors */
+            --primary-relationship: var(--blue);
+            --secondary-relationship: var(--purple);
+            --tertiary-relationship: var(--teal);
+            
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-xxl: 48px;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display'), 
+                 local('SFProDisplay'),
+                 url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display Medium'), 
+                 local('SFProDisplay-Medium'),
+                 url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'SF Pro Display';
+            src: local('SF Pro Display Semibold'), 
+                 local('SFProDisplay-Semibold'),
+                 url('https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: var(--space-md) var(--space-xl);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--separator);
+        }
+        
+        .logo {
+            font-weight: 600;
+            font-size: 24px;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: var(--space-lg);
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        
+        nav a:hover {
+            color: var(--blue);
+        }
+        
+        nav a.active {
+            color: var(--blue);
+            font-weight: 600;
+        }
+        
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 16px;
+            padding-left: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: var(--card-bg);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+        }
+        
+        .filter-select {
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: var(--card-bg);
+            min-width: 150px;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.2);
+        }
+        
+        .export-button {
+            background-color: var(--green);
+            color: white;
+        }
+        
+        .export-button:hover {
+            background-color: #27B648;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(48, 209, 88, 0.4);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: var(--space-xl);
+            color: var(--text-secondary);
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .button {
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            background-color: var(--blue);
+            color: white;
+            box-shadow: 0 2px 4px rgba(10, 132, 255, 0.3);
+        }
+        
+        .button:hover {
+            background-color: #0071E3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(10, 132, 255, 0.4);
+        }
+        
+        .button-secondary {
+            background-color: rgba(10, 132, 255, 0.1);
+            color: var(--blue);
+        }
+        
+        .button-secondary:hover {
+            background-color: rgba(10, 132, 255, 0.15);
+        }
+        
+        /* Org Chart Styles */
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: auto;
+            padding: var(--space-xl) 0;
+        }
+        
+        .chart-container {
+            position: relative;
+            min-width: 800px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .level {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: var(--space-xl);
+            position: relative;
+            width: 100%;
+        }
+        
+        .node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            margin-bottom: var(--space-md);
+        }
+        
+        .node-card {
+            width: 100%;
+            padding: var(--space-md);
+            background-color: var(--blue);
+            color: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-align: center;
+        }
+        
+        .node-card.supplier {
+            background-color: var(--blue);
+        }
+        
+        .node-card.customer {
+            background-color: var(--green);
+            max-width: 220px;
+            margin-left: var(--space-xl);
+            text-align: left;
+        }
+        
+        .node-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .relationship-type {
+            display: inline-block;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.2);
+            margin-left: var(--space-sm);
+        }
+        
+        .connector {
+            position: absolute;
+            left: 20px;
+            height: 24px;
+            width: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+        
+        /* Lines connecting nodes */
+        .lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        
+        footer {
+            background-color: var(--card-bg);
+            padding: var(--space-xl) 0;
+            text-align: center;
+            border-top: 1px solid var(--separator);
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">AeroSuite</div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/demo">Demo</a></li>
+                <li><a href="/apple-design">Design</a></li>
+                <li><a href="/org-chart" class="active">Relationships</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1 class="animate-in">Customer-Supplier Relationships</h1>
+        
+        <div class="controls animate-in delay-1">
+            <button class="button" id="view-customers">View by Customers</button>
+            <button class="button button-secondary" id="view-suppliers">View by Suppliers</button>
+            <button class="button export-button" id="export-data">Export Data</button>
+        </div>
+        
+        <div class="filters animate-in delay-1">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" class="search-input" placeholder="Search relationships...">
+            </div>
+            
+            <select id="relationship-filter" class="filter-select">
+                <option value="all">All Relationships</option>
+                <option value="primary">Primary Only</option>
+                <option value="secondary">Secondary Only</option>
+            </select>
+            
+            <select id="status-filter" class="filter-select">
+                <option value="all">All Statuses</option>
+                <option value="active">Active Only</option>
+                <option value="pending">Pending Only</option>
+                <option value="inactive">Inactive Only</option>
+            </select>
+        </div>
+        
+        <div class="org-chart animate-in delay-2">
+            <div class="chart-container" id="chart-container">
+                <!-- Chart will be rendered here -->
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2025 AeroSuite. Designed with Apple Human Interface Guidelines.</p>
+    </footer>
+    
+    <script>
+        // Sample data (will be fetched from API in production)
+        let customers = [];
+        let suppliers = [];
+        let relationships = [];
+        
+        // Current view mode
+        let viewMode = 'customers';
+        
+        // Filter state
+        let searchTerm = '';
+        let relationshipFilter = 'all';
+        let statusFilter = 'all';
+        
+        // Fetch data from API
+        async function fetchData() {
+            try {
+                // Fetch customers
+                const customersResponse = await fetch('/api/customers');
+                const customersData = await customersResponse.json();
+                customers = customersData.data;
+                
+                // Fetch suppliers
+                const suppliersResponse = await fetch('/api/suppliers');
+                const suppliersData = await suppliersResponse.json();
+                suppliers = suppliersData.data;
+                
+                // Fetch relationships
+                const relationshipsResponse = await fetch('/api/relationships');
+                const relationshipsData = await relationshipsResponse.json();
+                relationships = relationshipsData.data;
+                
+                // Render the chart
+                renderChart();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        
+        // Apply filters to data
+        function applyFilters() {
+            // Filter suppliers
+            let filteredSuppliers = [...suppliers];
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                filteredSuppliers = filteredSuppliers.filter(supplier => 
+                    supplier.name.toLowerCase().includes(searchLower) ||
+                    supplier.location.toLowerCase().includes(searchLower)
+                );
+            }
+            
+            if (statusFilter !== 'all') {
+                filteredSuppliers = filteredSuppliers.filter(supplier => 
+                    supplier.status === statusFilter
+                );
+            }
+            
+            // Filter customers
+            let filteredCustomers = [...customers];
+            if (searchTerm) {
+                const searchLower = searchTerm.toLowerCase();
+                filteredCustomers = filteredCustomers.filter(customer => 
+                    customer.name.toLowerCase().includes(searchLower) ||
+                    customer.location.toLowerCase().includes(searchLower) ||
+                    customer.industry.toLowerCase().includes(searchLower)
+                );
+            }
+            
+            if (statusFilter !== 'all') {
+                filteredCustomers = filteredCustomers.filter(customer => 
+                    customer.status === statusFilter
+                );
+            }
+            
+            // Filter relationships
+            let filteredRelationships = [...relationships];
+            if (relationshipFilter !== 'all') {
+                filteredRelationships = filteredRelationships.filter(rel => 
+                    rel.type === relationshipFilter
+                );
+            }
+            
+            // Apply filters based on view mode
+            if (viewMode === 'customers') {
+                // When viewing by customers, filter suppliers that don't match the search
+                // or don't have a relationship with any filtered customer
+                const customerIds = new Set(filteredCustomers.map(c => c.id));
+                const validSupplierIds = new Set(
+                    filteredRelationships
+                        .filter(rel => customerIds.has(rel.customerId))
+                        .map(rel => rel.supplierId)
+                );
+                
+                filteredSuppliers = filteredSuppliers.filter(supplier => 
+                    validSupplierIds.has(supplier.id)
+                );
+            } else {
+                // When viewing by suppliers, filter customers that don't match the search
+                // or don't have a relationship with any filtered supplier
+                const supplierIds = new Set(filteredSuppliers.map(s => s.id));
+                const validCustomerIds = new Set(
+                    filteredRelationships
+                        .filter(rel => supplierIds.has(rel.supplierId))
+                        .map(rel => rel.customerId)
+                );
+                
+                filteredCustomers = filteredCustomers.filter(customer => 
+                    validCustomerIds.has(customer.id)
+                );
+            }
+            
+            return { filteredSuppliers, filteredCustomers, filteredRelationships };
+        }
+        
+        // Render the organization chart
+        function renderChart() {
+            const container = document.getElementById('chart-container');
+            container.innerHTML = '';
+            
+            const { filteredSuppliers, filteredCustomers, filteredRelationships } = applyFilters();
+            
+            // Check if we have any results
+            if (
+                (viewMode === 'customers' && filteredSuppliers.length === 0) ||
+                (viewMode === 'suppliers' && filteredCustomers.length === 0)
+            ) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <h3>No Results Found</h3>
+                        <p>Try adjusting your search or filters to see more relationships.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            if (viewMode === 'customers') {
+                renderCustomerView(container, filteredSuppliers, filteredCustomers, filteredRelationships);
+            } else {
+                renderSupplierView(container, filteredSuppliers, filteredCustomers, filteredRelationships);
+            }
+        }
+        
+        // Render customer-centric view
+        function renderCustomerView(container, filteredSuppliers, filteredCustomers, filteredRelationships) {
+            // For each supplier
+            filteredSuppliers.forEach(supplier => {
+                // Create supplier node
+                const supplierNode = document.createElement('div');
+                supplierNode.className = 'level';
+                
+                const supplierCard = document.createElement('div');
+                supplierCard.className = 'node';
+                supplierCard.id = 'supplier-' + supplier.id;
+                
+                supplierCard.innerHTML = `
+                    <div class="node-card supplier">
+                        ${supplier.name}
+                    </div>
+                `;
+                
+                supplierNode.appendChild(supplierCard);
+                
+                // Find related customers
+                const relatedCustomers = filteredRelationships.filter(rel => 
+                    rel.supplierId === supplier.id
+                );
+                
+                if (relatedCustomers.length > 0) {
+                    relatedCustomers.forEach(rel => {
+                        const customer = filteredCustomers.find(c => c.id === rel.customerId);
+                        if (customer) {
+                            const customerCard = document.createElement('div');
+                            customerCard.className = 'node';
+                            customerCard.id = 'customer-' + customer.id;
+                            customerCard.setAttribute('data-supplier', supplier.id);
+                            customerCard.setAttribute('data-relationship', rel.type);
+                            
+                            const relationshipLabel = rel.type === 'primary' ? '(primary)' : '(secondary)';
+                            
+                            customerCard.innerHTML = `
+                                <div class="connector">—</div>
+                                <div class="node-card customer">
+                                    ${customer.name}
+                                    <span class="relationship-type">${relationshipLabel}</span>
+                                </div>
+                            `;
+                            
+                            supplierNode.appendChild(customerCard);
+                        }
+                    });
+                }
+                
+                container.appendChild(supplierNode);
+            });
+        }
+        
+        // Render supplier-centric view
+        function renderSupplierView(container, filteredSuppliers, filteredCustomers, filteredRelationships) {
+            // For each customer
+            filteredCustomers.forEach(customer => {
+                // Create customer node
+                const customerNode = document.createElement('div');
+                customerNode.className = 'level';
+                
+                const customerCard = document.createElement('div');
+                customerCard.className = 'node';
+                customerCard.id = 'customer-' + customer.id;
+                
+                customerCard.innerHTML = `
+                    <div class="node-card supplier">
+                        ${customer.name}
+                    </div>
+                `;
+                
+                customerNode.appendChild(customerCard);
+                
+                // Find related suppliers
+                const relatedSuppliers = filteredRelationships.filter(rel => 
+                    rel.customerId === customer.id
+                );
+                
+                if (relatedSuppliers.length > 0) {
+                    relatedSuppliers.forEach(rel => {
+                        const supplier = filteredSuppliers.find(s => s.id === rel.supplierId);
+                        if (supplier) {
+                            const supplierCard = document.createElement('div');
+                            supplierCard.className = 'node';
+                            supplierCard.id = 'supplier-' + supplier.id;
+                            supplierCard.setAttribute('data-customer', customer.id);
+                            supplierCard.setAttribute('data-relationship', rel.type);
+                            
+                            const relationshipLabel = rel.type === 'primary' ? '(primary)' : '(secondary)';
+                            
+                            supplierCard.innerHTML = `
+                                <div class="connector">—</div>
+                                <div class="node-card customer">
+                                    ${supplier.name}
+                                    <span class="relationship-type">${relationshipLabel}</span>
+                                </div>
+                            `;
+                            
+                            customerNode.appendChild(supplierCard);
+                        }
+                    });
+                }
+                
+                container.appendChild(customerNode);
+            });
+        }
+        
+        // Export data to CSV
+        function exportToCSV() {
+            const { filteredSuppliers, filteredCustomers, filteredRelationships } = applyFilters();
+            
+            // Create CSV content
+            let csvContent = 'data:text/csv;charset=utf-8,';
+            
+            // Add headers
+            csvContent += 'Supplier,Customer,Relationship Type,Supplier Status,Customer Status\n';
+            
+            // Add data rows
+            filteredRelationships.forEach(rel => {
+                const supplier = suppliers.find(s => s.id === rel.supplierId);
+                const customer = customers.find(c => c.id === rel.customerId);
+                
+                if (supplier && customer) {
+                    const row = [
+                        `"${supplier.name}"`,
+                        `"${customer.name}"`,
+                        rel.type,
+                        supplier.status,
+                        customer.status
+                    ].join(',');
+                    
+                    csvContent += row + '\n';
+                }
+            });
+            
+            // Create download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'relationship-data.csv');
+            document.body.appendChild(link);
+            
+            // Trigger download
+            link.click();
+            
+            // Clean up
+            document.body.removeChild(link);
+        }
+        
+        // Event listeners for view mode buttons
+        document.getElementById('view-customers').addEventListener('click', function() {
+            this.classList.remove('button-secondary');
+            document.getElementById('view-suppliers').classList.add('button-secondary');
+            viewMode = 'customers';
+            renderChart();
+        });
+        
+        document.getElementById('view-suppliers').addEventListener('click', function() {
+            this.classList.remove('button-secondary');
+            document.getElementById('view-customers').classList.add('button-secondary');
+            viewMode = 'suppliers';
+            renderChart();
+        });
+        
+        // Event listener for export button
+        document.getElementById('export-data').addEventListener('click', exportToCSV);
+        
+        // Event listeners for filters
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            searchTerm = e.target.value;
+            renderChart();
+        });
+        
+        document.getElementById('relationship-filter').addEventListener('change', function(e) {
+            relationshipFilter = e.target.value;
+            renderChart();
+        });
+        
+        document.getElementById('status-filter').addEventListener('change', function(e) {
+            statusFilter = e.target.value;
+            renderChart();
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchData();
+            
+            // Add animation observer
+            const animatedElements = document.querySelectorAll('.animate-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html> 

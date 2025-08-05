@@ -1,0 +1,5 @@
+Flows: Business logic flow check for Reports
+
+Rules: Business rules validation for Reports
+
+Edge: Edge case analysis for Reports

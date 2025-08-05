@@ -1,0 +1,207 @@
+/**
+ * Service Wrapper Utility
+ * 
+ * This utility provides a wrapper for service calls to prevent memory leaks
+ * by providing automatic cleanup of abandoned requests and response caching.
+ */
+
+// Cache to store responses
+interface CacheItem<T> {
+  data: T;
+  timestamp: number;
+  expiry: number; // Expiry time in ms
+}
+
+// Global cache store
+const cache: Record<string, CacheItem<any>> = {};
+
+// Active request tracking
+const activeRequests: Record<string, AbortController> = {};
+
+// Default configuration
+const defaultConfig = {
+  cacheTime: 60000, // 1 minute default cache time
+  retries: 1,
+  retryDelay: 1000,
+  timeout: 30000, // 30 seconds
+};
+
+// Interface for wrapper options
+interface ServiceWrapperOptions {
+  cacheTime?: number;
+  cacheKey?: string;
+  retries?: number;
+  retryDelay?: number;
+  timeout?: number;
+  abortSignal?: AbortSignal;
+}
+
+/**
+ * Wrapper function for service calls
+ * @param serviceCall Function that makes the actual API call
+ * @param options Configuration options
+ * @returns Promise with the result
+ */
+export async function withServiceWrapper<T>(
+  serviceCall: (abortSignal?: AbortSignal) => Promise<T>,
+  options: ServiceWrapperOptions = {}
+): Promise<T> {
+  // Merge options with defaults
+  const config = { ...defaultConfig, ...options };
+  const cacheKey = options.cacheKey;
+  
+  // Check cache if cacheKey is provided
+  if (cacheKey && cache[cacheKey] && cache[cacheKey].timestamp + cache[cacheKey].expiry > Date.now()) {
+    // Return cached data if not expired
+    return cache[cacheKey].data;
+  }
+  
+  // Cancel any existing request with the same key
+  if (cacheKey && activeRequests[cacheKey]) {
+    activeRequests[cacheKey].abort();
+    delete activeRequests[cacheKey];
+  }
+  
+  // Create abort controller for this request
+  const abortController = new AbortController();
+  if (cacheKey) {
+    activeRequests[cacheKey] = abortController;
+  }
+  
+  // Create a combined abort signal if caller provided one
+  let signal = abortController.signal;
+  if (options.abortSignal) {
+    signal = combineSignals(abortController.signal, options.abortSignal);
+  }
+  
+  // Set timeout if configured
+  const timeoutId = config.timeout > 0 
+    ? setTimeout(() => abortController.abort(new Error('Request timeout')), config.timeout)
+    : null;
+  
+  // Retry logic with exponential backoff
+  let lastError: Error | null = null;
+  let attempt = 0;
+  
+  while (attempt <= config.retries) {
+    try {
+      // Execute the service call with abort signal
+      const result = await serviceCall(signal);
+      
+      // Clear timeout if it was set
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      
+      // Store in cache if cacheKey is provided
+      if (cacheKey) {
+        cache[cacheKey] = {
+          data: result,
+          timestamp: Date.now(),
+          expiry: config.cacheTime,
+        };
+        
+        // Remove from active requests
+        delete activeRequests[cacheKey];
+      }
+      
+      return result;
+    } catch (_error) {
+      lastError = error as Error;
+      
+      // Don't retry if aborted or if we've used all retries
+      if (
+        error instanceof DOMException && error.name === 'AbortError' ||
+        attempt >= config.retries
+      ) {
+        break;
+      }
+      
+      // Wait before retrying
+      const delay = config.retryDelay * Math.pow(2, attempt);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      attempt++;
+    }
+  }
+  
+  // Clean up timeout if it was set
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  
+  // Clean up active request tracking
+  if (cacheKey && activeRequests[cacheKey] === abortController) {
+    delete activeRequests[cacheKey];
+  }
+  
+  // Throw the last error
+  throw lastError || new Error('Request failed');
+}
+
+// Utility to combine multiple abort signals
+function combineSignals(...signals: AbortSignal[]): AbortSignal {
+  const controller = new AbortController();
+  
+  const onAbort = () => {
+    controller.abort();
+    
+    // Clean up event listeners
+    signals.forEach(signal => {
+      signal.removeEventListener('abort', onAbort);
+    });
+  };
+  
+  // Add listeners to all input signals
+  signals.forEach(signal => {
+    if (signal.aborted) {
+      // If any signal is already aborted, abort immediately
+      controller.abort();
+      return controller.signal;
+    }
+    
+    signal.addEventListener('abort', onAbort);
+  });
+  
+  return controller.signal;
+}
+
+/**
+ * Utility to clear the cache
+ * @param cacheKey Optional specific key to clear, if not provided clears all cache
+ */
+export function clearServiceCache(cacheKey?: string): void {
+  if (cacheKey) {
+    delete cache[cacheKey];
+  } else {
+    Object.keys(cache).forEach(key => {
+      delete cache[key];
+    });
+  }
+}
+
+/**
+ * Utility to clear all pending requests
+ */
+export function cancelAllRequests(): void {
+  Object.values(activeRequests).forEach(controller => {
+    controller.abort();
+  });
+  
+  // Clear the tracking object
+  Object.keys(activeRequests).forEach(key => {
+    delete activeRequests[key];
+  });
+}
+
+// Automatically cancel all requests when the page unloads
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', () => {
+    cancelAllRequests();
+  });
+}
+
+export default {
+  withServiceWrapper,
+  clearServiceCache,
+  cancelAllRequests
+}; 

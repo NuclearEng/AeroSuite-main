@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: AeroSuite AI API
+  version: 1.0.0
+  description: Defect Detection Pipeline (AI001)
+paths:
+  /api/v1/ai/defect-detection:
+    post:
+      summary: Run defect detection on an uploaded image
+      tags:
+        - AI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  description: Image data (base64, buffer, or file path)
+                options:
+                  type: object
+                  description: Optional pipeline options (e.g., threshold)
+              required:
+                - image
+            examples:
+              Example1:
+                value:
+                  image: data:image/png;base64,iVBORw0KGgoAAAANS...
+                  options:
+                    threshold: 0.5
+      responses:
+        '200':
+          description: Defect detection results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      predictions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            label:
+                              type: string
+                            confidence:
+                              type: number
+        '400':
+          description: Bad request (missing image)
+        '500':
+          description: Internal server error 

@@ -1,0 +1,148 @@
+# API Versioning Strategy
+
+This document outlines the API versioning strategy for the AeroSuite application.
+
+## Overview
+
+API versioning allows us to evolve our API while maintaining backward compatibility for existing clients. This strategy ensures a smooth transition for clients when we introduce breaking changes.
+
+## Version Format
+
+API versions follow a simple format: `v{major}`. For example: `v1`, `v2`, etc.
+
+We increment the major version number only when introducing breaking changes. Breaking changes include:
+
+- Removing or renaming endpoints
+- Removing or renaming fields in responses
+- Changing field types or validation rules
+- Changing authentication requirements
+- Fundamentally altering the behavior of endpoints
+
+## Versioning Mechanisms
+
+We support multiple versioning mechanisms to accommodate different client needs:
+
+1. **URL Path Prefix** (Primary): `/api/v1/users`, `/api/v2/users`
+2. **Custom Header**: `X-API-Version: v1`
+3. **Accept Header**: `Accept: application/json; version=1`
+4. **Query Parameter**: `?api-version=v1`
+
+If no version is specified, the client will receive the default version (currently `v1`).
+
+## Version Lifecycle
+
+Each API version goes through the following lifecycle stages:
+
+1. **Active**: The version is fully supported and recommended for use.
+2. **Deprecated**: The version is still available but will be removed in the future. Clients should migrate to a newer version.
+3. **Sunset**: The version is no longer available. All clients must use a newer version.
+
+When a version is deprecated, we provide the following information to clients:
+- Warning HTTP header (`Warning: 299 - "Deprecated API Version"`)
+- Sunset date header (`X-API-Sunset: YYYY-MM-DDTHH:MM:SSZ`)
+- Migration information in documentation
+
+## Current Versions
+
+| Version | Status    | Release Date | Deprecation Date | Sunset Date  |
+|---------|-----------|--------------|------------------|--------------|
+| v1      | Active    | 2023-01-01   | -                | -            |
+| v2      | Active    | 2023-07-01   | -                | -            |
+| v0      | Deprecated| 2022-06-01   | 2023-01-01       | 2023-12-31   |
+
+## Client Implementation
+
+### Making API Requests
+
+Clients should include the version in their API requests using one of the supported mechanisms:
+
+```javascript
+// URL Path Prefix (recommended)
+const response = await axios.get('/api/v1/users');
+
+// Custom Header
+const response = await axios.get('/api/users', {
+  headers: {
+    'X-API-Version': 'v1'
+  }
+});
+
+// Accept Header
+const response = await axios.get('/api/users', {
+  headers: {
+    'Accept': 'application/json; version=1'
+  }
+});
+
+// Query Parameter
+const response = await axios.get('/api/users?api-version=v1');
+```
+
+### Using the Versioned API Service
+
+We provide a VersionedApiService to simplify working with versioned APIs:
+
+```typescript
+import versionedApi from '../services/versionedApi';
+
+// Use default version
+const users = await versionedApi.get('/users');
+
+// Specify version for a specific request
+const users = await versionedApi.get('/v2/users');
+
+// Change default version for all requests
+versionedApi.setVersion('v2');
+const users = await versionedApi.get('/users'); // Uses v2
+```
+
+## Server Implementation
+
+The server uses the `apiVersionMiddleware` to determine the requested version:
+
+1. Extract version from URL path, custom header, accept header, or query parameter
+2. Validate that the version exists and is active
+3. Add version info and deprecation warnings to response headers
+4. Route the request to the appropriate version-specific handler
+
+## Version Routing
+
+Each version has its own set of route handlers:
+
+```javascript
+// Routes for v1
+router.use('/v1', versionRoute(['v1']), v1Routes);
+
+// Routes for v2
+router.use('/v2', versionRoute(['v2']), v2Routes);
+```
+
+## Migration Guidelines
+
+When releasing a new API version:
+
+1. Document all changes from the previous version
+2. Provide migration guides for clients
+3. Support both old and new versions simultaneously for a transition period
+4. Set a clear deprecation timeline for the old version
+5. Notify clients through appropriate channels
+
+## Version Discovery
+
+Clients can discover available API versions by making a GET request to `/api`:
+
+```javascript
+const response = await axios.get('/api');
+console.log(response.data.supportedVersions);
+```
+
+This returns metadata about all available versions, including their status and lifecycle dates.
+
+## Best Practices
+
+- Use versioning only for breaking changes
+- Make non-breaking changes (additions) without incrementing the version
+- Maintain backward compatibility as much as possible
+- Document all changes clearly
+- Provide migration paths for clients
+- Consider client update cycles when setting deprecation dates 

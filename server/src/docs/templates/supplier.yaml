@@ -1,0 +1,685 @@
+openapi: 3.0.0
+info:
+  title: Supplier Resource API
+  description: API endpoints for managing suppliers
+  version: 1.0.0
+
+paths:
+  /suppliers:
+    get:
+      summary: List all suppliers
+      description: Returns a paginated list of suppliers
+      operationId: listSuppliers
+      tags:
+        - Suppliers
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            default: 20
+        - name: sort
+          in: query
+          description: Sort field(s)
+          schema:
+            type: string
+            example: name,-createdAt
+        - name: filter
+          in: query
+          description: Filter criteria
+          schema:
+            type: object
+            additionalProperties: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Suppliers retrieved successfully
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Supplier'
+                  meta:
+                    type: object
+                    properties:
+                      pagination:
+                        $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+    post:
+      summary: Create a new supplier
+      description: Creates a new supplier
+      operationId: createSupplier
+      tags:
+        - Suppliers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierInput'
+      responses:
+        '201':
+          description: Supplier created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Supplier created successfully
+                  data:
+                    $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+
+  /suppliers/{id}:
+    get:
+      summary: Get a supplier by ID
+      description: Returns a single supplier
+      operationId: getSupplier
+      tags:
+        - Suppliers
+      parameters:
+        - name: id
+          in: path
+          description: Supplier ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Supplier retrieved successfully
+                  data:
+                    $ref: '#/components/schemas/Supplier'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+    put:
+      summary: Update a supplier
+      description: Updates an existing supplier
+      operationId: updateSupplier
+      tags:
+        - Suppliers
+      parameters:
+        - name: id
+          in: path
+          description: Supplier ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierInput'
+      responses:
+        '200':
+          description: Supplier updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Supplier updated successfully
+                  data:
+                    $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+    delete:
+      summary: Delete a supplier
+      description: Deletes an existing supplier
+      operationId: deleteSupplier
+      tags:
+        - Suppliers
+      parameters:
+        - name: id
+          in: path
+          description: Supplier ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Supplier deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Supplier deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+
+  /suppliers/{id}/qualifications:
+    get:
+      summary: Get supplier qualifications
+      description: Returns qualifications for a supplier
+      operationId: getSupplierQualifications
+      tags:
+        - Suppliers
+      parameters:
+        - name: id
+          in: path
+          description: Supplier ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Supplier qualifications retrieved successfully
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Qualification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+
+  /suppliers/{id}/risk-assessment:
+    get:
+      summary: Get supplier risk assessment
+      description: Returns risk assessment for a supplier
+      operationId: getSupplierRiskAssessment
+      tags:
+        - Suppliers
+      parameters:
+        - name: id
+          in: path
+          description: Supplier ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Supplier risk assessment retrieved successfully
+                  data:
+                    $ref: '#/components/schemas/RiskAssessment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+    post:
+      summary: Create supplier risk assessment
+      description: Creates a risk assessment for a supplier
+      operationId: createSupplierRiskAssessment
+      tags:
+        - Suppliers
+      parameters:
+        - name: id
+          in: path
+          description: Supplier ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskAssessmentInput'
+      responses:
+        '201':
+          description: Risk assessment created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Risk assessment created successfully
+                  data:
+                    $ref: '#/components/schemas/RiskAssessment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security:
+        - bearerAuth: []
+        - apiKey: []
+
+components:
+  schemas:
+    Supplier:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        code:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, pending]
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipCode:
+              type: string
+            country:
+              type: string
+        qualifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Qualification'
+        performanceMetrics:
+          $ref: '#/components/schemas/PerformanceMetrics'
+        riskAssessment:
+          $ref: '#/components/schemas/RiskAssessment'
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+
+    SupplierInput:
+      type: object
+      required:
+        - name
+        - code
+        - contactEmail
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, pending]
+          default: pending
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipCode:
+              type: string
+            country:
+              type: string
+
+    Qualification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+        expiryDate:
+          type: string
+          format: date
+        status:
+          type: string
+          enum: [active, expired, pending]
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              url:
+                type: string
+                format: uri
+              contentType:
+                type: string
+              size:
+                type: integer
+              uploadDate:
+                type: string
+                format: date-time
+
+    PerformanceMetrics:
+      type: object
+      properties:
+        qualityScore:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+        deliveryScore:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+        responseTime:
+          type: number
+          format: float
+        overall:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+        lastUpdated:
+          type: string
+          format: date-time
+
+    RiskAssessment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        riskLevel:
+          type: string
+          enum: [low, medium, high, critical]
+        lastAssessment:
+          type: string
+          format: date
+        nextAssessment:
+          type: string
+          format: date
+        factors:
+          type: array
+          items:
+            type: object
+            properties:
+              factor:
+                type: string
+              impact:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 10
+              probability:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 10
+              score:
+                type: number
+                format: float
+        overallScore:
+          type: number
+          format: float
+        notes:
+          type: string
+        assessedBy:
+          type: string
+          format: uuid
+        approved:
+          type: boolean
+
+    RiskAssessmentInput:
+      type: object
+      required:
+        - factors
+      properties:
+        factors:
+          type: array
+          items:
+            type: object
+            required:
+              - factor
+              - impact
+              - probability
+            properties:
+              factor:
+                type: string
+              impact:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 10
+              probability:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 10
+        notes:
+          type: string
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 20
+        totalItems:
+          type: integer
+          example: 100
+        totalPages:
+          type: integer
+          example: 5
+        hasNext:
+          type: boolean
+          example: true
+        hasPrev:
+          type: boolean
+          example: false
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Validation failed
+              error:
+                type: string
+                example: VALIDATION_ERROR
+              details:
+                type: object
+                additionalProperties: true
+              statusCode:
+                type: integer
+                example: 400
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Authentication failed
+              error:
+                type: string
+                example: AUTHENTICATION_ERROR
+              statusCode:
+                type: integer
+                example: 401
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: You do not have permission to perform this action
+              error:
+                type: string
+                example: AUTHORIZATION_ERROR
+              statusCode:
+                type: integer
+                example: 403
+
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Resource not found
+              error:
+                type: string
+                example: RESOURCE_NOT_FOUND
+              statusCode:
+                type: integer
+                example: 404 
