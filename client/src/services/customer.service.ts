@@ -144,7 +144,7 @@ class CustomerService {
    */
   async getCustomers(filters: CustomerFilters = {}): Promise<CustomerListResponse> {
     const response = await api.get<ApiResponseData<CustomerListResponse>>('/api/v1/customers', { params: filters });
-    return response.data;
+    return response;
   }
 
   /**
@@ -152,7 +152,7 @@ class CustomerService {
    */
   async getCustomer(id: string): Promise<Customer> {
     const response = await api.get<ApiResponseData<Customer>>(`/api/v1/customers/${id}`);
-    return response.data;
+    return response;
   }
 
   /**
@@ -160,7 +160,7 @@ class CustomerService {
    */
   async createCustomer(customerData: CreateCustomerData): Promise<Customer> {
     const response = await api.post<ApiResponseData<Customer>>('/api/v1/customers', customerData);
-    return response.data;
+    return response;
   }
 
   /**
@@ -168,7 +168,7 @@ class CustomerService {
    */
   async updateCustomer(id: string, customerData: UpdateCustomerData): Promise<Customer> {
     const response = await api.put<ApiResponseData<Customer>>(`/api/v1/customers/${id}`, customerData);
-    return response.data;
+    return response;
   }
 
   /**
@@ -176,7 +176,7 @@ class CustomerService {
    */
   async deleteCustomer(id: string): Promise<{ success: boolean; message: string }> {
     const response = await api.delete<ApiResponseData<{ success: boolean; message: string }>>(`/api/v1/customers/${id}`);
-    return response.data;
+    return response;
   }
 
   /**
@@ -196,7 +196,7 @@ class CustomerService {
       pending: number;
       byIndustry: { [industry: string]: number };
     }>>('/api/v1/customers/stats');
-    return response.data;
+    return response;
   }
 
   /**
@@ -204,7 +204,7 @@ class CustomerService {
    */
   async getCustomerOrders(customerId: string, params: { page?: number; limit?: number } = {}): Promise<OrderListResponse> {
     const response = await api.get<ApiResponseData<OrderListResponse>>(`/api/v1/customers/${customerId}/orders`, { params });
-    return response.data;
+    return response;
   }
 
   /**
@@ -212,7 +212,7 @@ class CustomerService {
    */
   async getAllOrders(params: { page?: number; limit?: number; status?: string } = {}): Promise<OrderListResponse> {
     const response = await api.get<ApiResponseData<OrderListResponse>>('/api/v1/orders', { params });
-    return response.data;
+    return response;
   }
 
   /**
@@ -220,7 +220,7 @@ class CustomerService {
    */
   async getOrder(id: string): Promise<Order> {
     const response = await api.get<ApiResponseData<Order>>(`/api/v1/orders/${id}`);
-    return response.data;
+    return response;
   }
 
   /**
@@ -228,7 +228,7 @@ class CustomerService {
    */
   async createOrder(orderData: CreateOrderData): Promise<Order> {
     const response = await api.post<ApiResponseData<Order>>('/api/v1/orders', orderData);
-    return response.data;
+    return response;
   }
 
   /**
@@ -236,7 +236,7 @@ class CustomerService {
    */
   async updateOrder(id: string, orderData: UpdateOrderData): Promise<Order> {
     const response = await api.put<ApiResponseData<Order>>(`/api/v1/orders/${id}`, orderData);
-    return response.data;
+    return response;
   }
 
   /**
@@ -244,7 +244,7 @@ class CustomerService {
    */
   async deleteOrder(id: string): Promise<{ success: boolean; message: string }> {
     const response = await api.delete<ApiResponseData<{ success: boolean; message: string }>>(`/api/v1/orders/${id}`);
-    return response.data;
+    return response;
   }
 }
 

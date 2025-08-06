@@ -70,8 +70,8 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
       const response = await AuthService.setupTwoFactor(method);
 
       if (method === 'app') {
-        setQrCode(response.qrCode);
-        setSecret(response.secret);
+        setQrCode(response.qrCode || null);
+        setSecret(response.secret || null);
       }
 
       handleNext();

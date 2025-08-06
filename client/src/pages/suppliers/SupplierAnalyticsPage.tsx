@@ -75,7 +75,7 @@ const SupplierAnalyticsPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await supplierService.getSupplierById(supplierId);
+      const data = await supplierService.getSupplier(supplierId);
       setSupplier(data);
     } catch (err: any) {
       setError(err.message || t('common.error'));

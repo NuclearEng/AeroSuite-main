@@ -1,0 +1,51 @@
+{
+  "timestamp": "2025-08-06T06:38:50.017Z",
+  "passed": [
+    {
+      "name": "Security Tests",
+      "attempts": 1
+    },
+    {
+      "name": "Performance Tests",
+      "attempts": 1
+    }
+  ],
+  "failed": [
+    {
+      "name": "TypeScript Compilation",
+      "attempts": 3,
+      "critical": true,
+      "error": "Command failed: cd client && npm run type-check"
+    },
+    {
+      "name": "JSX Best Practices",
+      "attempts": 3,
+      "critical": false,
+      "error": "Command failed: node scripts/jsx-best-practices-test.js"
+    }
+  ],
+  "skipped": [
+    {
+      "name": "End-to-End Tests",
+      "reason": "Pre-check failed"
+    }
+  ],
+  "fixed": [
+    {
+      "name": "TypeScript Compilation",
+      "attempt": 1
+    },
+    {
+      "name": "TypeScript Compilation",
+      "attempt": 2
+    },
+    {
+      "name": "JSX Best Practices",
+      "attempt": 1
+    },
+    {
+      "name": "JSX Best Practices",
+      "attempt": 2
+    }
+  ]
+}

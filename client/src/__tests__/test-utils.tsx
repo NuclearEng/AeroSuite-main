@@ -6,6 +6,9 @@ import { configureStore, combineReducers, Action } from '@reduxjs/toolkit';
 import theme from '../theme/theme';
 import CssBaseline from '@mui/material/CssBaseline';
 import { SnackbarProvider } from 'notistack';
+
+// Fix for TypeScript compatibility
+const TypedSnackbarProvider = SnackbarProvider as any;
 import { BrowserRouter } from 'react-router-dom';
 
 // Define action type
@@ -51,11 +54,11 @@ ui: ReactElement,
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <SnackbarProvider maxSnack={3}>
+          <TypedSnackbarProvider maxSnack={3}>
             <BrowserRouter>
               {children}
             </BrowserRouter>
-          </SnackbarProvider>
+          </TypedSnackbarProvider>
         </ThemeProvider>
       </Provider>);
 

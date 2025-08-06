@@ -55,7 +55,7 @@ const Profile: React.FC = () => {
         const userData = await userService.getCurrentUser();
         setUser(userData);
       } catch (err: any) {
-        console.error('Error loading user profile:', err);
+        console.error("Error:", _error);
         setError(err.message || 'Failed to load user profile');
       } finally {
         setLoading(false);

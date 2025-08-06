@@ -172,7 +172,7 @@ const RequestBatchingDemo: React.FC = () => {
       setIndividualTime(Math.round(endTime - startTime));
       setIndividualResponses(results);
     } catch (_err) {
-      console.error('Error running individual requests:', err);
+      console.error("Error:", _err)));
     }
   };
   
@@ -234,7 +234,7 @@ const RequestBatchingDemo: React.FC = () => {
           time: 0 // Individual request times aren't available in batched requests
         })) :
         requests.map((request, index) => {
-          let mockData;
+          let mockData: any;
           if (request.type === 'supplier') {
             mockData = await mockApi.getSupplier(request.id);
           } else if (request.type === 'customer') {
@@ -254,7 +254,7 @@ const RequestBatchingDemo: React.FC = () => {
       setBatchedTime(Math.round(endTime - startTime));
       setBatchedResponses(finalResults);
     } catch (_err) {
-      console.error('Error running batched requests:', err);
+      console.error("Error:", _err)));
     }
   };
   

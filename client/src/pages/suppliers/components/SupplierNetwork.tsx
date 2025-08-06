@@ -134,7 +134,7 @@ const SupplierNetwork: React.FC = () => {
       // Generate network data
       generateNetworkData(suppliers, customersData);
     } catch (err: any) {
-      console.error('Error fetching network data:', err);
+      console.error("Error:", err);
       setError(err.message || 'Failed to load network data');
     } finally {
       setLoading(false);

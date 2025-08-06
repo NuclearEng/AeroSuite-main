@@ -40,7 +40,7 @@ interface ChecklistItemCardProps {
   item: ChecklistItem;
   onUpdate: (itemId: string, updates: Partial<ChecklistItem>) => void;
   onDelete: (itemId: string) => void;
-  onAddFinding: (itemId: string, finding: ChecklistItem['findings'][0]) => void;
+  onAddFinding: (itemId: string, finding: NonNullable<ChecklistItem['findings']>[0]) => void;
   onRemoveFinding: (itemId: string, findingIndex: number) => void;
   readOnly?: boolean;
 }
@@ -57,7 +57,7 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
   const [editing, setEditing] = useState(false);
   const [showFindingForm, setShowFindingForm] = useState(false);
   const [editedItem, setEditedItem] = useState<Partial<ChecklistItem>>(item);
-  const [newFinding, setNewFinding] = useState<ChecklistItem['findings'][0]>({
+  const [newFinding, setNewFinding] = useState<NonNullable<ChecklistItem['findings']>[0]>({
     type: 'observation',
     description: '',
     correctiveAction: '',

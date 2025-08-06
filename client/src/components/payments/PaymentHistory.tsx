@@ -57,7 +57,7 @@ const PaymentHistory: React.FC<PaymentHistoryProps> = ({
       setPayments(response.payments);
       setTotalCount(response.pagination.total);
     } catch (_err) {
-      console.error('Error fetching payment history:', err);
+      console.error("Error:", _error);
       setError('Failed to load payment history. Please try again.');
     } finally {
       setLoading(false);

@@ -31,6 +31,9 @@ export interface Supplier {
   }[];
   createdAt?: Date;
   updatedAt?: Date;
+  // Additional properties used in SupplierNetwork visualization
+  tier?: string;
+  customers?: Array<{ _id: string; name: string; industry?: string }>;
 }
 
 export interface SupplierListParams {

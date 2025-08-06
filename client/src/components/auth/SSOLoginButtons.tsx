@@ -61,7 +61,7 @@ const SSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({ onError, redirectUrl 
           setProviders([]);
         }
       } catch (_error) {
-        console.error('Failed to fetch SSO providers:', _error);
+        console.error("Error:", _error);
         setProviders([]);
         if (onError) {
           onError('Failed to load SSO providers');

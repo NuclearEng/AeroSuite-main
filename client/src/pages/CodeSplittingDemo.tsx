@@ -140,7 +140,7 @@ const CodeSplittingDemo: React.FC = () => {
           break;
       }
     } catch (error) {
-      console.error('Failed to load component:', error);
+      console.error("Error:", _error);
     }
   };
 

@@ -36,7 +36,6 @@ import reportService, { ReportTemplate } from '../../services/report.service';
 import ReportTemplateList from './components/ReportTemplateList';
 import ReportTemplateForm from './components/ReportTemplateForm';
 import ReportPreview from './components/ReportPreview';
-// @ts-expect-error: If zod types are missing, run: npm install zod
 import { z } from 'zod';
 
 // Tab panel component
@@ -106,7 +105,7 @@ const ReportBuilder: React.FC = () => {
       const data = await reportService.getReportTemplates();
       setTemplates(data);
     } catch (err: any) {
-      console.error('Error fetching templates:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to load report templates');
     } finally {
       setLoading(false);
@@ -166,7 +165,7 @@ const ReportBuilder: React.FC = () => {
       setCurrentAction('view');
       fetchTemplates();
     } catch (err: any) {
-      console.error('Error saving template:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to save report template');
       setErrorMessage(err.message || 'Failed to save report template');
     } finally {
@@ -187,7 +186,7 @@ const ReportBuilder: React.FC = () => {
       fetchTemplates();
       setTabValue(0);
     } catch (err: any) {
-      console.error('Error deleting template:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to delete report template');
       setErrorMessage(err.message || 'Failed to delete report template');
     } finally {
@@ -253,7 +252,7 @@ const ReportBuilder: React.FC = () => {
       // Refresh templates list
       fetchTemplates();
     } catch (err: any) {
-      console.error('Error duplicating template:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to duplicate report template');
     } finally {
       setLoading(false);

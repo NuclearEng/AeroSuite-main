@@ -135,7 +135,7 @@ const SupplierPerformanceCharts: React.FC<SupplierPerformanceChartsProps> = ({ s
         
         setPerformanceData(data);
       } catch (err: any) {
-        console.error('Error fetching supplier performance data:', err);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load supplier performance data');
       } finally {
         setLoading(false);

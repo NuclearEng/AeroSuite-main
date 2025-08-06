@@ -83,7 +83,7 @@ ErrorComponent: ComponentType<{error: Error | null;onReset: () => void;}> = Defa
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-      console.error('Component error:', error, errorInfo);
+      console.error("Error:", _err)orInfo);
       if (this.props.onError) {
         this.props.onError(error);
       }

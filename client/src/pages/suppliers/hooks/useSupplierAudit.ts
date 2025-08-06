@@ -147,7 +147,7 @@ const useSupplierAudit = () => {
         const response = await supplierService.getSuppliers();
         setSuppliers((response as any).data || response);
       } catch (_err) {
-        console.error('Error fetching suppliers:', error);
+        console.error('Error fetching suppliers:', _err);
         enqueueSnackbar('Failed to load suppliers', { variant: 'error' });
       } finally {
         setLoading(false);
@@ -164,7 +164,7 @@ const useSupplierAudit = () => {
         const response = await axios.get('/api/supplier-audits/templates/default');
         setDefaultTemplates(response.data.data);
       } catch (_err) {
-        console.error('Error fetching checklist templates:', error);
+        console.error('Error fetching checklist templates:', _err);
         enqueueSnackbar('Failed to load checklist templates', { variant: 'error' });
       }
     };
@@ -180,7 +180,7 @@ const useSupplierAudit = () => {
       setAudits(response.data.data);
       return response.data.data;
     } catch (_err) {
-      console.error('Error fetching supplier audits:', error);
+      console.error('Error fetching supplier audits:', _err);
       enqueueSnackbar('Failed to load audits', { variant: 'error' });
       return [];
     } finally {
@@ -227,7 +227,7 @@ const useSupplierAudit = () => {
       enqueueSnackbar('Audit created successfully', { variant: 'success' });
       return newAudit;
     } catch (_err) {
-      console.error('Error creating audit:', error);
+      console.error('Error creating audit:', _err);
       enqueueSnackbar('Failed to create audit', { variant: 'error' });
       return null;
     } finally {
@@ -255,7 +255,7 @@ const useSupplierAudit = () => {
       enqueueSnackbar('Audit updated successfully', { variant: 'success' });
       return updatedAudit;
     } catch (_err) {
-      console.error('Error updating audit:', error);
+      console.error('Error updating audit:', _err);
       enqueueSnackbar('Failed to update audit', { variant: 'error' });
       return null;
     } finally {
@@ -280,7 +280,7 @@ const useSupplierAudit = () => {
       enqueueSnackbar('Audit deleted successfully', { variant: 'success' });
       return true;
     } catch (_err) {
-      console.error('Error deleting audit:', error);
+      console.error('Error deleting audit:', _err);
       enqueueSnackbar('Failed to delete audit', { variant: 'error' });
       return false;
     } finally {
@@ -300,7 +300,7 @@ const useSupplierAudit = () => {
       
       return auditData;
     } catch (_err) {
-      console.error('Error loading audit details:', error);
+      console.error('Error loading audit details:', _err);
       enqueueSnackbar('Failed to load audit details', { variant: 'error' });
       return null;
     } finally {
@@ -332,7 +332,7 @@ const useSupplierAudit = () => {
   }, []);
 
   // Add a finding to a checklist item
-  const addFinding = useCallback((itemId: string, finding: ChecklistItem['findings'][0]) => {
+  const addFinding = useCallback((itemId: string, finding: NonNullable<ChecklistItem['findings']>[0]) => {
     setChecklist(prevChecklist => 
       prevChecklist.map(item => {
         if (item._id === itemId || (item._id === undefined && item.question === itemId)) {

@@ -61,7 +61,7 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
       setFormattedMetrics(metricsService.formatMetricsForVisualization(data));
       setError(null);
     } catch (_err) {
-      console.error('Error fetching metrics:', err);
+      console.error("Error:", _error);
       setError('Failed to load performance metrics. Please try again.');
     } finally {
       setLoading(false);

@@ -158,7 +158,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
             tags: supplier.tags || []
           });
         } catch (_error) {
-          console.error('Error loading supplier:', error);
+          console.error("Error:", error);
         } finally {
           setLoading(false);
         }
@@ -292,7 +292,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
       // Close the modal
       onClose();
     } catch (error: any) {
-      console.error('Error saving supplier:', error);
+      console.error("Error:", error);
       setErrors({
         ...errors,
         submit: error.message || 'Failed to save supplier. Please try again.'

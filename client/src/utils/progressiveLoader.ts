@@ -344,15 +344,20 @@ export const createBatchProcessor = <T, R>(
 };
 
 // Type definition for requestIdleCallback which is not included in the standard TypeScript lib
-declare global {
-  interface Window {
-    requestIdleCallback: (
-      callback: (deadline: {
-        didTimeout: boolean;
-        timeRemaining: () => number;
-      }) => void,
-      options?: { timeout: number }
-    ) => number;
-    cancelIdleCallback: (handle: number) => void;
-  }
-} 
+// This is a no-op if the browser already has the types defined
+interface IdleRequestOptions {
+  timeout: number;
+}
+
+interface IdleDeadline {
+  didTimeout: boolean;
+  timeRemaining: () => number;
+}
+
+type IdleRequestCallback = (deadline: IdleDeadline) => void;
+
+// Only declare these types if they're not already declared in the global namespace
+// This prevents conflicts with other libraries or TypeScript versions that might declare them
+interface RequestIdleCallbackHandle {}
+
+// Use module augmentation instead of global declaration to avoid conflicts 

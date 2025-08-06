@@ -132,7 +132,24 @@ export async function prioritizedImports(
   }>
 ): Promise<Record<string, any>> {
   // Sort imports by priority (highest first)
-  const sortedImports = [...imports].sort((a, b) => a.priority - b.priority);
+  const sortedImports = [...imports].sort((a, b) => {
+    // Convert string priorities to numeric values for comparison
+    const getPriorityValue = (priority: LoadPriority | string): number => {
+      if (typeof priority === 'string') {
+        switch (priority) {
+          case 'critical': return 0;
+          case 'high': return 1;
+          case 'medium': return 2;
+          case 'low': return 3;
+          case 'on-demand': return 4;
+          default: return 999; // Unknown priority
+        }
+      }
+      return priority as unknown as number;
+    };
+    
+    return getPriorityValue(a.priority) - getPriorityValue(b.priority);
+  });
   
   // Group imports by priority
   const importsByPriority: Record<LoadPriority, typeof imports> = {

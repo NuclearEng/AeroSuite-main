@@ -219,7 +219,7 @@ const CustomerDetail: React.FC = () => {
         setInspections(mockInspections);
         setSuppliers(mockSuppliers);
       } catch (err: any) {
-        console.error('Error fetching customer:', err);
+        console.error("Error:", _error);
         setError(err.message || 'Failed to load customer details');
       } finally {
         setLoading(false);
@@ -247,7 +247,7 @@ const CustomerDetail: React.FC = () => {
       await customerService.deleteCustomer(customer._id);
       navigate('/customers');
     } catch (err: any) {
-      console.error('Error deleting customer:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to delete customer');
       setLoading(false);
     }

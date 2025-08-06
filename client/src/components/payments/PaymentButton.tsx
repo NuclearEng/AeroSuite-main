@@ -62,7 +62,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
         throw new Error('Invalid session response');
       }
     } catch (_err) {
-      console.error('Payment initiation failed:', err);
+      console.error("Error:", _error);
       if (onError) {
         onError(err);
       } else {

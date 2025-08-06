@@ -109,7 +109,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
       setEditMode(false);
       setNote('');
     } catch (_error) {
-      console.error('Error updating feedback:', error);
+      console.error("Error:", _error);
     } finally {
       setLoading(false);
     }
@@ -128,7 +128,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         isFeatured: !feedback.isFeatured
       });
     } catch (_error) {
-      console.error('Error updating featured status:', error);
+      console.error("Error:", _error);
     }
   };
 
@@ -139,7 +139,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         isAddressed: !feedback.isAddressed
       });
     } catch (_error) {
-      console.error('Error updating addressed status:', error);
+      console.error("Error:", _error);
     }
   };
 

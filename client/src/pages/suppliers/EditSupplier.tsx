@@ -26,8 +26,7 @@ import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-materia
 import supplierService from '../../services/supplier.service';
 
 // Mock data for the supplier being edited
-const mockSupplier = {
-  id: '1',
+const mockSupplier: FormValues = {
   name: 'Aerospace Parts Inc.',
   code: 'API',
   description: 'Leading provider of precision-engineered components for the aerospace industry with a focus on high-quality materials and advanced manufacturing processes.',
@@ -191,7 +190,7 @@ const EditSupplier: React.FC = () => {
         setFormValues(data);
         setError(null);
       } catch (err: any) {
-        console.error('Error loading supplier:', err);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load supplier data');
       } finally {
         setLoading(false);
@@ -207,17 +206,22 @@ const EditSupplier: React.FC = () => {
 
     if (!name) return;
 
-    // Handle nested fields (using dot notation in name)
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormValues((prev) => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent as keyof typeof prev],
-          [child]: value
-        }
-      }));
-    } else {
+      // Handle nested fields (using dot notation in name)
+  if (name.includes('.')) {
+    const [parent, child] = name.split('.');
+    setFormValues((prev) => {
+      if (parent === 'address') {
+        return {
+          ...prev,
+          address: {
+            ...prev.address,
+            [child]: value
+          }
+        };
+      }
+      return prev;
+    });
+  } else {
       setFormValues((prev) => ({
         ...prev,
         [name]: value
@@ -235,7 +239,7 @@ const EditSupplier: React.FC = () => {
 
   // Handle tag changes
   const handleTagsChange = (newValue: string[]) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: FormValues) => ({
       ...prev,
       supplierTags: newValue
     }));
@@ -243,7 +247,7 @@ const EditSupplier: React.FC = () => {
 
   // Handle certifications changes
   const handleCertificationsChange = (newValue: string[]) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: FormValues) => ({
       ...prev,
       certifications: newValue
     }));
@@ -301,7 +305,7 @@ const EditSupplier: React.FC = () => {
       };
 
       // Call API to update supplier
-      await supplierService.updateSupplier(id, supplierData);
+      await supplierService.updateSupplier(id || '', supplierData);
 
       // Show success message
       setSnackbar({

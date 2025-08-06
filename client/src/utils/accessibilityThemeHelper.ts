@@ -4,7 +4,7 @@
  * Utilities to verify and improve theme color contrast for accessibility compliance.
  */
 
-import { PaletteOptions, SimplePaletteColorOptions, TypeText } from '@mui/material/styles/createPalette';
+import { PaletteOptions, SimplePaletteColorOptions, TypeText, PaletteColor } from '@mui/material/styles/createPalette';
 import { getContrastRatio, checkContrast, getSuggestedColor } from './colorContrastChecker';
 
 /**
@@ -55,12 +55,12 @@ export function auditPaletteContrast(palette: PaletteOptions): ThemeContrastAudi
   
   // Primary and secondary colors
   const themeColors = [
-    { name: 'primary', color: palette.primary?.main || '#000000' },
-    { name: 'secondary', color: palette.secondary?.main || '#000000' },
-    { name: 'error', color: palette.error?.main || '#000000' },
-    { name: 'warning', color: palette.warning?.main || '#000000' },
-    { name: 'info', color: palette.info?.main || '#000000' },
-    { name: 'success', color: palette.success?.main || '#000000' },
+    { name: 'primary', color: (palette.primary as PaletteColor)?.main || '#000000' },
+    { name: 'secondary', color: (palette.secondary as PaletteColor)?.main || '#000000' },
+    { name: 'error', color: (palette.error as PaletteColor)?.main || '#000000' },
+    { name: 'warning', color: (palette.warning as PaletteColor)?.main || '#000000' },
+    { name: 'info', color: (palette.info as PaletteColor)?.main || '#000000' },
+    { name: 'success', color: (palette.success as PaletteColor)?.main || '#000000' },
   ];
   
   // Check text colors against backgrounds
@@ -122,17 +122,17 @@ export function auditPaletteContrast(palette: PaletteOptions): ThemeContrastAudi
 function getContrastTextColor(palette: PaletteOptions, colorName: string): string | undefined {
   switch (colorName) {
     case 'primary':
-      return palette.primary?.contrastText;
+      return (palette.primary as PaletteColor)?.contrastText;
     case 'secondary':
-      return palette.secondary?.contrastText;
+      return (palette.secondary as PaletteColor)?.contrastText;
     case 'error':
-      return palette.error?.contrastText;
+      return (palette.error as PaletteColor)?.contrastText;
     case 'warning':
-      return palette.warning?.contrastText;
+      return (palette.warning as PaletteColor)?.contrastText;
     case 'info':
-      return palette.info?.contrastText;
+      return (palette.info as PaletteColor)?.contrastText;
     case 'success':
-      return palette.success?.contrastText;
+      return (palette.success as PaletteColor)?.contrastText;
     default:
       return undefined;
   }
@@ -192,41 +192,41 @@ export function createAccessiblePalette(palette: PaletteOptions): PaletteOptions
           ...accessiblePalette.text,
           secondary: check.suggestedColor,
         } as Partial<TypeText>;
-      } else if (check.color === palette.primary?.contrastText) {
+      } else if (check.color === (palette.primary as PaletteColor)?.contrastText) {
         accessiblePalette.primary = {
           ...accessiblePalette.primary,
           contrastText: check.suggestedColor,
-          main: palette.primary?.main || '#000000'
+          main: (palette.primary as PaletteColor)?.main || '#000000'
         } as SimplePaletteColorOptions;
-      } else if (check.color === palette.secondary?.contrastText) {
+      } else if (check.color === (palette.secondary as PaletteColor)?.contrastText) {
         accessiblePalette.secondary = {
           ...accessiblePalette.secondary,
           contrastText: check.suggestedColor,
-          main: palette.secondary?.main || '#000000'
+          main: (palette.secondary as PaletteColor)?.main || '#000000'
         } as SimplePaletteColorOptions;
-      } else if (check.color === palette.error?.contrastText) {
+      } else if (check.color === (palette.error as PaletteColor)?.contrastText) {
         accessiblePalette.error = {
           ...accessiblePalette.error,
           contrastText: check.suggestedColor,
-          main: palette.error?.main || '#000000'
+          main: (palette.error as PaletteColor)?.main || '#000000'
         } as SimplePaletteColorOptions;
-      } else if (check.color === palette.warning?.contrastText) {
+      } else if (check.color === (palette.warning as PaletteColor)?.contrastText) {
         accessiblePalette.warning = {
           ...accessiblePalette.warning,
           contrastText: check.suggestedColor,
-          main: palette.warning?.main || '#000000'
+          main: (palette.warning as PaletteColor)?.main || '#000000'
         } as SimplePaletteColorOptions;
-      } else if (check.color === palette.info?.contrastText) {
+      } else if (check.color === (palette.info as PaletteColor)?.contrastText) {
         accessiblePalette.info = {
           ...accessiblePalette.info,
           contrastText: check.suggestedColor,
-          main: palette.info?.main || '#000000'
+          main: (palette.info as PaletteColor)?.main || '#000000'
         } as SimplePaletteColorOptions;
-      } else if (check.color === palette.success?.contrastText) {
+      } else if (check.color === (palette.success as PaletteColor)?.contrastText) {
         accessiblePalette.success = {
           ...accessiblePalette.success,
           contrastText: check.suggestedColor,
-          main: palette.success?.main || '#000000'
+          main: (palette.success as PaletteColor)?.main || '#000000'
         } as SimplePaletteColorOptions;
       }
     }

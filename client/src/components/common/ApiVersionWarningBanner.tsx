@@ -40,17 +40,17 @@ const ApiVersionWarningBanner: React.FC = () => {
     
     try {
       // Get the latest version
-      const versionInfo = await apiService?.checkApiVersion();
-      const latestVersion = versionInfo.defaultVersion;
+      const versionInfo = await (apiService as any)?.checkApiVersion?.();
+      const latestVersion = versionInfo?.defaultVersion;
       
       // Get migration guide
-      const guide = await apiService.getMigrationGuide(apiService.getVersion(), latestVersion);
+      const guide = await (apiService as any)?.getMigrationGuide?.((apiService as any)?.getVersion?.(), latestVersion);
       
       // Open migration guide in new window or display in modal
       console.log('Migration guide:', guide);
       // Implementation for displaying guide would go here
     } catch (_error) {
-      console.error('Failed to load migration guide:', error);
+      console.error("Error:", _error);
     }
   };
   

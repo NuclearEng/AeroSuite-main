@@ -115,7 +115,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
 
         setSuppliers(supplierOptions);
       } catch (err: any) {
-        console.error('Error loading suppliers:', err);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load suppliers');
       }
     };
@@ -158,7 +158,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
 
         setComparisonData(supplierMetrics);
       } catch (err: any) {
-        console.error('Error loading comparison data:', err);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load comparison data');
       } finally {
         setLoading(false);

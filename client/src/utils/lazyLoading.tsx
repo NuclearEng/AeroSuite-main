@@ -123,7 +123,7 @@ export class LazyLoadErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Lazy component failed to load:', error, errorInfo);
+    console.error("Error:", _err)orInfo);
   }
 
   resetErrorBoundary = () => {

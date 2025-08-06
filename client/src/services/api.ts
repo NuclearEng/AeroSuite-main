@@ -631,7 +631,7 @@ const request = async <T>(
     
     // Cache the response if caching is enabled
     if (canUseCache && key) {
-      clientCache.set<T>(key, responseData, ttl);
+      clientCache.set<T>(key, responseData as T, ttl);
     }
     
     // Return response-like object to maintain compatibility with services

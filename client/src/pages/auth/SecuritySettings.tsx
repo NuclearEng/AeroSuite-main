@@ -76,7 +76,7 @@ const SecuritySettings: React.FC = () => {
       const userData = await AuthService.getCurrentUser();
       setUser(userData);
     } catch (_err) {
-      console.error('Failed to refresh user data', err);
+      console.error("Error:", _error);
     }
   };
 

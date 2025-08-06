@@ -67,7 +67,7 @@ const SupplierEdit: React.FC = () => {
         const data = await supplierService.getSupplier(id);
         setSupplier(data);
       } catch (err: any) {
-        console.error('Error loading supplier:', err);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load supplier');
       } finally {
         setLoading(false);
@@ -293,7 +293,7 @@ const SupplierEdit: React.FC = () => {
       }, 1500);
 
     } catch (err: any) {
-      console.error('Error updating supplier:', err);
+      console.error("Error:", err);
 
       // Show error message
       setSnackbar({
@@ -425,8 +425,8 @@ const SupplierEdit: React.FC = () => {
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>);
-
+    </Box>
+  );
 };
 
 export default SupplierEdit;

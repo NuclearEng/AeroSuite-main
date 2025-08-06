@@ -174,7 +174,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({ templateId, filters }) =>
       updateCache(result.reportUrl);
       setProgress(100);
     } catch (err: any) {
-      console.error('Error generating report preview:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to generate report preview');
       setPreviewUrl(null);
     } finally {
@@ -221,7 +221,7 @@ const ReportPreview: React.FC<ReportPreviewProps> = ({ templateId, filters }) =>
       const downloadUrl = reportService.getExcelDownloadUrl(templateId, filters);
       window.open(downloadUrl, '_blank');
     } catch (err: any) {
-      console.error('Error generating Excel report:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to generate Excel report');
     } finally {
       setExcelLoading(false);

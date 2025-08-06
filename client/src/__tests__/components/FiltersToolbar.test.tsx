@@ -45,9 +45,8 @@ describe('FiltersToolbar Component', () => {
 
   test('renders filters correctly', () => {
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
-        onFilterChange={() => {}}
+      <FiltersToolbar filters={mockFilters}
+        onFilterChange={() = as any> {}}
       />
     );
     
@@ -69,10 +68,9 @@ describe('FiltersToolbar Component', () => {
     const handleFilterChange = jest.fn();
     
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
+      <FiltersToolbar filters={mockFilters}
         onFilterChange={handleFilterChange}
-      />
+      / as any>
     );
     
     // Find and change the text filter
@@ -91,10 +89,9 @@ describe('FiltersToolbar Component', () => {
     const handleFilterChange = jest.fn();
     
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
+      <FiltersToolbar filters={mockFilters}
         onFilterChange={handleFilterChange}
-      />
+      / as any>
     );
     
     // Find and open the select dropdown
@@ -117,10 +114,9 @@ describe('FiltersToolbar Component', () => {
     const handleFilterChange = jest.fn();
     
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
+      <FiltersToolbar filters={mockFilters}
         onFilterChange={handleFilterChange}
-      />
+      / as any>
     );
     
     // Find and open the multiselect dropdown
@@ -146,10 +142,9 @@ describe('FiltersToolbar Component', () => {
     const handleFilterChange = jest.fn();
     
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
+      <FiltersToolbar filters={mockFilters}
         onFilterChange={handleFilterChange}
-      />
+      / as any>
     );
     
     // Find and click the boolean filter
@@ -178,11 +173,10 @@ describe('FiltersToolbar Component', () => {
     const handleFilterChange = jest.fn();
     
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
+      <FiltersToolbar filters={mockFilters}
         onFilterChange={handleFilterChange}
         showFilterButton={true}
-      />
+      / as any>
     );
     
     // Set some filters first
@@ -209,10 +203,9 @@ describe('FiltersToolbar Component', () => {
     };
     
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
+      <FiltersToolbar filters={mockFilters}
         initialValues={initialFilters}
-        onFilterChange={() => {}}
+        onFilterChange={() = as any> {}}
       />
     );
     
@@ -235,10 +228,9 @@ describe('FiltersToolbar Component', () => {
     };
     
     renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
+      <FiltersToolbar filters={mockFilters}
         initialValues={initialFilters}
-        onFilterChange={() => {}}
+        onFilterChange={() = as any> {}}
         showFilterCount={true}
       />
     );
@@ -249,9 +241,8 @@ describe('FiltersToolbar Component', () => {
 
   test('renders in compact mode', () => {
     const { container } = renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
-        onFilterChange={() => {}}
+      <FiltersToolbar filters={mockFilters}
+        onFilterChange={() = as any> {}}
         compact={true}
       />
     );
@@ -272,9 +263,8 @@ describe('FiltersToolbar Component', () => {
 
   test('applies custom styles', () => {
     const { container } = renderWithProviders(
-      <FiltersToolbar
-        filters={mockFilters}
-        onFilterChange={() => {}}
+      <FiltersToolbar filters={mockFilters}
+        onFilterChange={() = as any> {}}
         sx={{ backgroundColor: 'rgb(240, 240, 240)', padding: '16px' }}
       />
     );

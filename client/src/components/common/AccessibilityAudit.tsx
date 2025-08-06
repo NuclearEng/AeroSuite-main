@@ -86,7 +86,7 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unknown error occurred');
-      console.error('Accessibility audit error:', err);
+      console.error("Error:", _error);
     } finally {
       setIsRunning(false);
     }

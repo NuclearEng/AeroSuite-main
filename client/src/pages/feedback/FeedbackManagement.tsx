@@ -54,7 +54,6 @@ import {
 '../../services/feedback.service';
 import DataTable from '../../components/common/DataTable';
 import FeedbackDetail from './components/FeedbackDetail';
-// @ts-expect-error: If zod types are missing, run: npm install zod
 import { z } from 'zod';
 
 const FeedbackManagement: React.FC = () => {
@@ -95,7 +94,7 @@ const FeedbackManagement: React.FC = () => {
       setFeedback(response.data);
       setTotalItems(response.pagination.total);
     } catch (_error) {
-      console.error('Error fetching feedback:', error);
+      console.error("Error:", _error);
     } finally {
       setLoading(false);
     }
@@ -106,7 +105,7 @@ const FeedbackManagement: React.FC = () => {
       const stats = await feedbackService.getFeedbackStatistics(filters);
       setStatistics(stats);
     } catch (_error) {
-      console.error('Error fetching statistics:', error);
+      console.error("Error:", _error);
     }
   };
 
@@ -188,7 +187,7 @@ const FeedbackManagement: React.FC = () => {
       }
     } catch (error: any) {
       setErrorMessage(error?.message || 'Error updating feedback');
-      console.error('Error updating feedback:', error);
+      console.error("Error:", _error);
     }
   };
 
@@ -205,7 +204,7 @@ const FeedbackManagement: React.FC = () => {
         }
       } catch (error: any) {
         setErrorMessage(error?.message || 'Error deleting feedback');
-        console.error('Error deleting feedback:', error);
+        console.error("Error:", _error);
       }
     }
   };

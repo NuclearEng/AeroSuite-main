@@ -33,7 +33,6 @@ import LinkOffIcon from '@mui/icons-material/LinkOff';
 import { useCalendar } from '../../hooks/useCalendar';
 import { CalendarEvent, EventType, CalendarSource } from '../../services/CalendarService';
 import SEO from '../../utils/seo';
-// @ts-expect-error: If zod types are missing, run: npm install zod
 import { z } from 'zod';
 import type { SelectChangeEvent } from '@mui/material/Select';
 
@@ -290,7 +289,7 @@ const CalendarPage: React.FC = () => {
     } catch (err: any) {
       // Surface backend validation errors
       setFormErrors({ general: err?.message || 'Error saving event' });
-      console.error('Error saving event:', err);
+      console.error("Error:", _error);
     }
   };
 

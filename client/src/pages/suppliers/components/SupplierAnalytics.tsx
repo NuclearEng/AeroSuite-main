@@ -99,7 +99,7 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
         const data = await response.json();
         setMetrics(data.data);
       } catch (err: any) {
-        console.error('Error loading supplier metrics:', err);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load supplier metrics');
       } finally {
         setLoading(false);

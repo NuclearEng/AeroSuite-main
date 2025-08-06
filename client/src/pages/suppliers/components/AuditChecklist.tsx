@@ -37,7 +37,7 @@ interface AuditChecklistProps {
   onAddItem: (item: ChecklistItem) => void;
   onUpdateItem: (itemId: string, updates: Partial<ChecklistItem>) => void;
   onDeleteItem: (itemId: string) => void;
-  onAddFinding: (itemId: string, finding: ChecklistItem['findings'][0]) => void;
+  onAddFinding: (itemId: string, finding: NonNullable<ChecklistItem['findings']>[0]) => void;
   onRemoveFinding: (itemId: string, findingIndex: number) => void;
   loading?: boolean;
   readOnly?: boolean;

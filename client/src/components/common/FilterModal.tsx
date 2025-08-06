@@ -47,7 +47,7 @@ import {
 // Date formatting will be handled by the date picker component
 
 // Types for filter options
-export type FilterOptionValue = string | number | boolean | Date | null | string[];
+export type FilterOptionValue = string | number | boolean | Date | null | string[] | (Date | null)[] | number[];
 
 export interface FilterOption {
   id: string;
@@ -64,6 +64,12 @@ export interface FilterOption {
 
 export interface FilterValues {
   [key: string]: FilterOptionValue;
+}
+
+interface DateRangeValue extends Array<Date | null> {
+  0: Date | null;
+  1: Date | null;
+  length: 2;
 }
 
 interface FilterModalProps {
@@ -161,8 +167,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
   // Handle date range change
   const handleDateRangeChange = (id: string, index: number, value: Date | null) => {
     setValues((prev) => {
-      const currentRange = prev[id] as (Date | null)[] || [null, null];
-      const newRange = [...currentRange];
+      const currentRange = Array.isArray(prev[id]) ? prev[id] as (Date | null)[] : [null, null];
+      const newRange = [...currentRange] as (Date | null)[];
       newRange[index] = value;
       return {
         ...prev,
@@ -181,10 +187,12 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle range change
   const handleRangeChange = (id: string, value: number | number[]) => {
-    setValues((prev) => ({
-      ...prev,
-      [id]: value
-    }));
+    setValues((prev) => {
+      return {
+        ...prev,
+        [id]: value as FilterOptionValue
+      };
+    });
   };
 
   // Handle boolean toggle
@@ -320,7 +328,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             <Select
               id={id}
               value={value || ''}
-              onChange={(e) => handleSelectChange(id, e.target.value)}
+              onChange={(e) => handleSelectChange(id, e.target.value as string)}
               displayEmpty>
 
               <MenuItem value="">
@@ -396,7 +404,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
 
       case 'dateRange':
-        const dateRange = value as (Date | null)[] || [null, null];
+        const dateRange = Array.isArray(value) ? value as (Date | null)[] : [null, null] as (Date | null)[];
         return (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <FormControl fullWidth margin="normal">

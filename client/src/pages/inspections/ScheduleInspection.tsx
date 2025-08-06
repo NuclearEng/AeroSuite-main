@@ -13,6 +13,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  SelectChangeEvent,
   FormHelperText,
   Alert,
   Snackbar,
@@ -143,7 +144,7 @@ const ScheduleInspection: React.FC = () => {
   }, [supplierIdFromQuery]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}> | SelectChangeEvent<string>) => {
     const { name, value } = e.target;
 
     if (!name) return;

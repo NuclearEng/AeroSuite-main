@@ -184,7 +184,7 @@ const UserSettings: React.FC = () => {
 
       setSuccess('Settings saved successfully');
     } catch (err: any) {
-      console.error('Error saving settings:', err);
+      console.error("Error:", err);
       setError(err.message || 'Failed to save settings');
     } finally {
       setLoading(false);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Card, CardContent, Typography, Grid, Switch, FormControlLabel, Paper, Alert } from '@mui/material';
-import { FormBuilder, FormSection } from '../../../components/common/FormBuilder';
+import FormBuilder, { FormSection } from '../../../components/common/FormBuilder';
 
 const EnhancedSupplierForm: React.FC = () => {
   const [showProgress, setShowProgress] = useState(true);
@@ -95,7 +95,7 @@ const EnhancedSupplierForm: React.FC = () => {
               type: 'pattern',
               value: '^(https?:\\/\\/)?([\\da-z.-]+)\\.([a-z.]{2,6})([\\/\\w.-]*)*\\/?$',
               message: 'Please enter a valid website URL',
-              severity: 'info',
+              severity: 'success',
             }
           ],
           placeholder: 'https://example.com',

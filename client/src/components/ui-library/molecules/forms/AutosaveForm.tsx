@@ -92,7 +92,7 @@ export const AutosaveForm: React.FC<AutosaveFormProps> = ({
       setSubmitSuccess(true);
       setTimeout(() => setSubmitSuccess(false), 3000);
     } catch (_error) {
-      console.error('Form submission error:', error);
+      console.error("Error:", _error);
     } finally {
       setIsSubmitting(false);
     }

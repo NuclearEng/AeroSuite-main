@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
 import {
   Box,
   Typography,
@@ -24,6 +25,7 @@ import {
   Paper,
   Container } from
 '@mui/material';
+import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
 import {
   BarChart as BarChartIcon,
   PieChart as PieChartIcon,
@@ -38,7 +40,9 @@ import {
   BugReport as BugReportIcon,
   AccessTime as AccessTimeIcon } from
 '@mui/icons-material';
+import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
 import { PageHeader } from '../../components/common';
+import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
 import {
   BarChart,
   LineChart,
@@ -50,7 +54,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
+  Legend as RechartsLegend,
   ResponsiveContainer,
   Cell,
   Pie,
@@ -60,6 +64,7 @@ import {
   ZAxis } from
 'recharts';
 import api from '../../services/api';
+import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
 import { format, subMonths } from 'date-fns';
 import InspectionStatsDashboard from '../../components/inspections/InspectionStatsDashboard';
 
@@ -151,7 +156,7 @@ const InspectionAnalytics: React.FC = () => {
       setAnalyticsData(response.data.data);
     } catch (err: any) {
       setError(err.message || 'Failed to load analytics data');
-      console.error('Error fetching analytics data:', err);
+      console.error("Error:", _error);
     } finally {
       setLoading(false);
     }

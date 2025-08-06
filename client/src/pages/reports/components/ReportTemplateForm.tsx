@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import type { ReactElement } from 'react';
 import {
   Box,
   Button,
@@ -27,7 +28,9 @@ import {
   DialogActions,
   FormHelperText,
   CircularProgress,
-  Alert } from
+  Alert,
+  Chip,
+  SelectChangeEvent } from
 '@mui/material';
 import {
   Add as AddIcon,
@@ -38,7 +41,8 @@ import {
 '@mui/icons-material';
 import { ReportTemplate, ReportSection, DataSource } from '../../../services/report.service';
 import reportService from '../../../services/report.service';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DroppableProvided, DraggableProvided } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from '../../../components/dnd/DndComponents';
 
 interface ReportTemplateFormProps {
   template: ReportTemplate | null;
@@ -83,7 +87,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
         const sources = await reportService.getDataSources();
         setDataSources(sources);
       } catch (err) {
-        console.error('Error fetching data sources:', err);
+        console.error("Error:", _error);
       } finally {
         setDataSourcesLoading(false);
       }
@@ -117,7 +121,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
   }, [template]);
 
   // Handle field change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}> | SelectChangeEvent<string>) => {
     const { name, value } = e.target;
     if (!name) return;
 
@@ -331,7 +335,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
         
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="sections">
-            {(provided) =>
+            {(provided: DroppableProvided) =>
             <List
               {...provided.droppableProps}
               ref={provided.innerRef}
@@ -344,7 +348,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
                 index={index}
                 isDragDisabled={isViewOnly}>
 
-                    {(provided) =>
+                    {(provided: DraggableProvided) =>
                 <ListItem
                   ref={provided.innerRef}
                   {...provided.draggableProps}
@@ -471,7 +475,7 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
   }, [section, open]);
 
   // Handle field change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}> | SelectChangeEvent<string>) => {
     const { name, value } = e.target;
     if (!name) return;
 
@@ -549,7 +553,15 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
                 <Select
                   name="type"
                   value={sectionData.type || 'text'}
-                  onChange={handleChange}
+                  onChange={(e: SelectChangeEvent<"text" | "table" | "image" | "chart" | "metrics">) => {
+                    const newEvent = {
+                      target: {
+                        name: e.target.name,
+                        value: e.target.value
+                      }
+                    } as React.ChangeEvent<HTMLInputElement>;
+                    handleChange(newEvent);
+                  }}
                   label="Section Type">
 
                   <MenuItem value="text">Text</MenuItem>
@@ -602,11 +614,11 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
                     name="dataSource.model"
                     value={sectionData.dataSource?.model || ''}
                     onChange={(e) => {
-                      setSectionData((prev) => ({
+                      setSectionData((prev: ReportSection) => ({
                         ...prev,
                         dataSource: {
-                          ...(prev.dataSource || {}),
-                          model: e.target.value as any
+                          model: e.target.value as any,
+                          query: prev.dataSource?.query || { filter: {}, populate: [], sort: {}, limit: 10 }
                         }
                       }));
                     }}
@@ -705,10 +717,10 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
                   label="Chart Title"
                   value={sectionData.chartOptions?.title || ''}
                   onChange={(e) => {
-                    setSectionData((prev) => ({
+                    setSectionData((prev: ReportSection) => ({
                       ...prev,
                       chartOptions: {
-                        ...(prev.chartOptions || {}),
+                        ...(prev.chartOptions || { type: 'bar' }),
                         title: e.target.value
                       }
                     }));

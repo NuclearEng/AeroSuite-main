@@ -16,11 +16,11 @@ interface ChartProps {
 
 // Mock the Chart.js library
 jest.mock('react-chartjs-2', () => ({
-  Line: (props) => <canvas data-testid="line-chart" data-props={JSON.stringify(props)} />,
-  Bar: (props) => <canvas data-testid="bar-chart" data-props={JSON.stringify(props)} />,
-  Pie: (props) => <canvas data-testid="pie-chart" data-props={JSON.stringify(props)} />,
-  Doughnut: (props) => <canvas data-testid="doughnut-chart" data-props={JSON.stringify(props)} />,
-  Radar: (props) => <canvas data-testid="radar-chart" data-props={JSON.stringify(props)} />,
+  Line: (props: any) => <canvas data-testid="line-chart" data-props={JSON.stringify(props)} />,
+  Bar: (props: any) => <canvas data-testid="bar-chart" data-props={JSON.stringify(props)} />,
+  Pie: (props: any) => <canvas data-testid="pie-chart" data-props={JSON.stringify(props)} />,
+  Doughnut: (props: any) => <canvas data-testid="doughnut-chart" data-props={JSON.stringify(props)} />,
+  Radar: (props: any) => <canvas data-testid="radar-chart" data-props={JSON.stringify(props)} />,
 }));
 
 describe('Chart Component', () => {

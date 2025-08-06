@@ -231,7 +231,7 @@ const SupplierList: React.FC = () => {
       setSuppliers(response.suppliers);
       setTotalCount(response.total);
     } catch (err: any) {
-      console.error('Error loading suppliers:', err);
+      console.error("Error:", err);
       setError(err.message || 'Failed to load suppliers');
     } finally {
       setLoading(false);
@@ -320,7 +320,7 @@ const SupplierList: React.FC = () => {
         severity: 'success'
       });
     } catch (err: any) {
-      console.error('Error deleting supplier:', err);
+      console.error("Error:", err);
       setSnackbar({
         open: true,
         message: err.message || 'Failed to delete supplier',

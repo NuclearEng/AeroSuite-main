@@ -83,7 +83,7 @@ const PerformanceMetricsDashboard: React.FC = () => {
 
       setError(null);
     } catch (_err) {
-      console.error('Error fetching performance metrics:', err);
+      console.error("Error:", _error);
       setError('Failed to load performance metrics. Please try again.');
     } finally {
       setLoading(false);

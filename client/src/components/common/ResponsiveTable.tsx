@@ -232,7 +232,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
     }
 
     return (
-      <StyledTableContainer component={Paper} maxHeight={maxHeight}>
+      <StyledTableContainer sx={{ maxHeight }}>
         <StyledTable stickyHeader={stickyHeader} condensed={condensed}>
           <TableHead>
             <TableRow>
@@ -399,7 +399,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
   // Standard table layout for desktop and tablet
   return (
     <Box>
-      <StyledTableContainer component={Paper as any} maxHeight={maxHeight}>
+      <StyledTableContainer sx={{ maxHeight }}>
         <StyledTable
           stickyHeader={stickyHeader}
           size={condensed ? 'small' : 'medium'}

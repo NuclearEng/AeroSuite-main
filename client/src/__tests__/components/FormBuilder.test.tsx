@@ -111,11 +111,10 @@ describe('FormBuilder Component', () => {
 
   test('renders form fields correctly', () => {
     renderWithProviders(
-      <FormBuilder 
-        title="Test Form"
+      <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
       />
     );
     
@@ -140,12 +139,11 @@ describe('FormBuilder Component', () => {
     const handleSubmit = jest.fn();
     
     renderWithProviders(
-      <FormBuilder 
-        title="Test Form"
+      <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
         onSubmit={handleSubmit}
-      />
+      / as any>
     );
     
     // Fill in required fields
@@ -175,11 +173,10 @@ describe('FormBuilder Component', () => {
 
   test('displays validation errors for invalid data', async () => {
     renderWithProviders(
-      <FormBuilder 
-        title="Test Form"
+      <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
       />
     );
     
@@ -211,11 +208,10 @@ describe('FormBuilder Component', () => {
 
   test('handles form reset', () => {
     renderWithProviders(
-      <FormBuilder 
-        title="Test Form"
+      <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
         showReset={true}
       />
     );
@@ -249,11 +245,10 @@ describe('FormBuilder Component', () => {
     };
     
     renderWithProviders(
-      <FormBuilder 
-        title="Prefilled Form"
+      <FormBuilder title="Prefilled Form"
         fields={mockFields}
         defaultValues={prefilledValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
       />
     );
     
@@ -269,11 +264,10 @@ describe('FormBuilder Component', () => {
 
   test('handles custom submit button text', () => {
     renderWithProviders(
-      <FormBuilder 
-        title="Test Form"
+      <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
         submitText="Save Changes"
       />
     );
@@ -283,11 +277,10 @@ describe('FormBuilder Component', () => {
 
   test('handles form in loading state', () => {
     renderWithProviders(
-      <FormBuilder 
-        title="Loading Form"
+      <FormBuilder title="Loading Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
         loading={true}
       />
     );
@@ -300,11 +293,10 @@ describe('FormBuilder Component', () => {
 
   test('handles custom field layouts', () => {
     renderWithProviders(
-      <FormBuilder 
-        title="Custom Layout Form"
+      <FormBuilder title="Custom Layout Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
         layout={{
           name: { xs: 12, md: 6 },
           email: { xs: 12, md: 6 },
@@ -321,11 +313,10 @@ describe('FormBuilder Component', () => {
 
   test('applies custom styles', () => {
     const { container } = renderWithProviders(
-      <FormBuilder 
-        title="Styled Form"
+      <FormBuilder title="Styled Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() => {}}
+        onSubmit={() = as any> {}}
         sx={{ padding: '24px' }}
       />
     );

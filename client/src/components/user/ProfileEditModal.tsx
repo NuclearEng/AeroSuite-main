@@ -107,7 +107,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           });
           setAvatarPreview(userData.avatarUrl);
         } catch (error: any) {
-          console.error('Error loading user data:', error);
+          console.error("Error:", _error);
           setApiError(error.message || 'Failed to load user profile data');
         } finally {
           setLoading(false);
@@ -255,7 +255,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         throw new Error('User ID is required for profile update');
       }
     } catch (error: any) {
-      console.error('Error saving profile:', error);
+      console.error("Error:", _error);
       setApiError(error.message || 'Failed to save profile changes');
     } finally {
       setIsSubmitting(false);

@@ -172,8 +172,8 @@ const trackConversion = async (
  */
 const getUserAnalytics = async (period: string = '7d'): Promise<any> => {
   try {
-    const response = await api.get(`/monitoring/user-analytics?period=${period}`);
-    return response.data;
+    const response = await api.get<any>(`/monitoring/user-analytics?period=${period}`);
+    return response;
   } catch (error) {
     console.error('Error fetching user analytics:', error);
     throw error;
@@ -188,8 +188,8 @@ const getUserAnalytics = async (period: string = '7d'): Promise<any> => {
  */
 const getEventAnalytics = async (eventCategory: EventCategory, period: string = '7d'): Promise<any> => {
   try {
-    const response = await api.get(`/monitoring/event-analytics?category=${eventCategory}&period=${period}`);
-    return response.data;
+    const response = await api.get<any>(`/monitoring/event-analytics?category=${eventCategory}&period=${period}`);
+    return response;
   } catch (error) {
     console.error('Error fetching event analytics:', error);
     throw error;
@@ -204,8 +204,8 @@ const getEventAnalytics = async (eventCategory: EventCategory, period: string = 
  */
 const getFunnelAnalytics = async (funnelId: string, period: string = '7d'): Promise<any> => {
   try {
-    const response = await api.get(`/monitoring/funnel-analytics/${funnelId}?period=${period}`);
-    return response.data;
+    const response = await api.get<any>(`/monitoring/funnel-analytics/${funnelId}?period=${period}`);
+    return response;
   } catch (error) {
     console.error('Error fetching funnel analytics:', error);
     throw error;

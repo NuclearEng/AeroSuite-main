@@ -22,6 +22,7 @@ import {
 '@mui/material';
 import { PageHeader } from '../../components/common';
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
+import supplierService from '../../services/supplier.service';
 
 // Form validation interface
 interface FormErrors {
@@ -36,7 +37,30 @@ interface FormErrors {
 }
 
 // Initial form values
-const initialFormValues = {
+interface FormValues {
+  name: string;
+  code: string;
+  description: string;
+  industry: string;
+  status: 'active' | 'inactive' | 'pending';
+  website: string;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  qualifications: never[];
+  certifications: string[];
+  notes: string;
+  supplierTags: string[];
+}
+
+const initialFormValues: FormValues = {
   name: '',
   code: '',
   description: '',
@@ -130,17 +154,22 @@ const CreateSupplier: React.FC = () => {
 
     if (!name) return;
 
-    // Handle nested fields (using dot notation in name)
-    if (name.includes('.')) {
-      const [parent, child] = name.split('.');
-      setFormValues((prev) => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent as keyof typeof prev],
-          [child]: value
-        }
-      }));
-    } else {
+      // Handle nested fields (using dot notation in name)
+  if (name.includes('.')) {
+    const [parent, child] = name.split('.');
+    setFormValues((prev) => {
+      if (parent === 'address') {
+        return {
+          ...prev,
+          address: {
+            ...prev.address,
+            [child]: value
+          }
+        };
+      }
+      return prev;
+    });
+  } else {
       setFormValues((prev) => ({
         ...prev,
         [name]: value
@@ -158,7 +187,7 @@ const CreateSupplier: React.FC = () => {
 
   // Handle tag changes
   const handleTagsChange = (newValue: string[]) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: FormValues) => ({
       ...prev,
       supplierTags: newValue
     }));
@@ -166,7 +195,7 @@ const CreateSupplier: React.FC = () => {
 
   // Handle certifications changes
   const handleCertificationsChange = (newValue: string[]) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: FormValues) => ({
       ...prev,
       certifications: newValue
     }));

@@ -59,7 +59,7 @@ const InspectionList: React.FC = () => {
       const response = await inspectionService.getInspections();
       setInspections(response.inspections || []);
     } catch (err: any) {
-      console.error('Error loading inspections:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to load inspections');
       setSnackbar({
         open: true,
@@ -139,7 +139,7 @@ const InspectionList: React.FC = () => {
       const event = new CustomEvent('inspection-deleted', { detail: selectedInspection });
       window.dispatchEvent(event);
     } catch (error: any) {
-      console.error('Error deleting inspection:', error);
+      console.error("Error:", _error);
       setSnackbar({
         open: true,
         message: `Failed to delete inspection: ${error.message || 'Unknown error'}`,

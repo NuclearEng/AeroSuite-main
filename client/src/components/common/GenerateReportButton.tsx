@@ -17,7 +17,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import PreviewIcon from '@mui/icons-material/Preview';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { generateInspectionReport } from '../../services/inspection.service';
+import inspectionService from '../../services/inspection.service';
 
 interface GenerateReportButtonProps {
   inspectionId: string;
@@ -93,7 +93,7 @@ const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({
     try {
       if (dialogAction === 'download') {
         // Direct download
-        await generateInspectionReport(inspectionId, {
+        await inspectionService.generateInspectionReport(inspectionId, {
           download: true,
           includePhotos,
           includeSignatures
@@ -104,7 +104,7 @@ const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({
         setSnackbarOpen(true);
       } else {
         // Preview
-        const result = await generateInspectionReport(inspectionId, {
+        const result = await inspectionService.generateInspectionReport(inspectionId, {
           download: false,
           includePhotos,
           includeSignatures
@@ -120,7 +120,7 @@ const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({
       
       setDialogOpen(false);
     } catch (_error) {
-      console.error('Error generating report:', error);
+      console.error("Error:", _error);
       setSnackbarMessage('Error generating report');
       setSnackbarSeverity('error');
       setSnackbarOpen(true);

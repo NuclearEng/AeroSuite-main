@@ -188,10 +188,10 @@ options: CodeSplitOptions = {})
 
         // If module has a webpack chunk name and usePreloadLink is enabled,
         // extract the chunk URL and add a preload link
-        if (usePreloadLink && module.__webpackChunkName) {
+        if (usePreloadLink && 'default' in module && '__webpackChunkName' in module.default) {
           // This is a simplified approach - in a real app you'd need to
           // extract the actual chunk URL from webpack's manifest
-          const chunkUrl = `/static/js/${module.__webpackChunkName}.chunk.js`;
+          const chunkUrl = `/static/js/${(module.default as any).__webpackChunkName}.chunk.js`;
           addPreloadLink(chunkUrl);
         }
 
@@ -311,7 +311,7 @@ importFn: () => Promise<{default: T;}>,
 options: CodeSplitOptions = {})
 : React.FC<React.ComponentProps<T>> {
   const LazyComponent = createLazyComponent(importFn, options);
-  return WithSuspense(LazyComponent, options);
+  return WithSuspense(LazyComponent, options) as React.FC<React.ComponentProps<T>>;
 }
 
 /**
@@ -386,7 +386,7 @@ options: CodeSplitOptions & {rootMargin?: string;} = {})
 
   const [loaded, setLoaded] = useState(false);
   const [Component, setComponent] = useState<React.FC<React.ComponentProps<T>> | null>(null);
-  const { ref, inView } = useInView({ rootMargin, triggerOnce: true });
+  const { ref, inView } = useInView({ rootMargin, triggerOnce: true }) as any;
 
   useEffect(() => {
     if (inView && !loaded) {
@@ -398,7 +398,7 @@ options: CodeSplitOptions & {rootMargin?: string;} = {})
         loadingDelay
       });
 
-      setComponent(() => WrappedComponent);
+      setComponent(WrappedComponent as any);
     }
   }, [inView, loaded, importFn, options, fallback, loadingDelay]);
 

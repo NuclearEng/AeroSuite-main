@@ -133,7 +133,7 @@ export function createLazyUIComponent<P = {}>(
   options: {
     fallback?: React.ReactNode;
     loadingDelay?: number;
-    errorComponent?: React.ComponentType<{ error: Error; retry: () => void }>;
+    errorComponent?: React.ReactNode;
   } = {}
 ): React.FC<P> {
   const importFn = componentImports[componentName];

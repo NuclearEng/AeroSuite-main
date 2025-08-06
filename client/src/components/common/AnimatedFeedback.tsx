@@ -164,7 +164,7 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({
           color: color.main,
           ...(visible ? entryAnimation : exitAnimation),
           ...sx
-        }}
+        } as any}
         {...boxProps}>
 
         {showIcon &&
@@ -191,7 +191,7 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({
         color: color.main,
         ...(visible ? entryAnimation : exitAnimation),
         ...sx
-      }}
+      } as any}
       {...boxProps}>
 
       {showIcon &&

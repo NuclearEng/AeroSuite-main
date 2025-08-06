@@ -292,6 +292,9 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     setUploading(true);
     setError(null);
 
+    // Declare uploadInterval outside try block to ensure it's accessible in catch block
+    let uploadInterval: NodeJS.Timeout | undefined;
+
     try {
       // Update file statuses
       setFiles((prevFiles) =>
@@ -302,7 +305,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       );
 
       // Start upload progress simulation
-      const uploadInterval = setInterval(() => {
+      uploadInterval = setInterval(() => {
         setFiles((prevFiles) => {
           const updatedFiles = prevFiles.map((file) => {
             if (file.status === 'uploading' && file.progress < 99) {

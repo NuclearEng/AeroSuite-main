@@ -227,7 +227,7 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
         ...getClickStyles(),
         ...getStateStyles(),
         ...sx,
-      }}
+      } as any}
       {...buttonProps}
     >
       {isLoading ? (

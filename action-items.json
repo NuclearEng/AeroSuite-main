@@ -1,0 +1,11 @@
+{
+  "generated": "2025-08-06T06:39:34.787Z",
+  "items": [
+    {
+      "priority": "HIGH",
+      "action": "Fix remaining TypeScript errors",
+      "command": "cd client && npm run type-check",
+      "autoFix": "node scripts/typescript-comprehensive-fixer.js"
+    }
+  ]
+}

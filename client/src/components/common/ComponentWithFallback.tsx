@@ -31,7 +31,7 @@ class ComponentWithFallback extends Component<ErrorBoundaryProps, ErrorBoundaryS
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // Log the error to an error reporting service
-    console.error('Component error:', error, errorInfo);
+    console.error("Error:", _err)orInfo);
   }
 
   handleReset = (): void => {

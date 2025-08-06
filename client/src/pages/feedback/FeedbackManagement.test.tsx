@@ -1,12 +1,9 @@
-// @ts-expect-error: If jest-axe types are missing, run: npm install --save-dev jest-axe
 import { axe, toHaveNoViolations } from 'jest-axe';
-// @ts-expect-error: If user-event types are missing, run: npm install --save-dev @testing-library/user-event
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import FeedbackManagement from './FeedbackManagement';
 
-// @ts-expect-error: If toHaveNoViolations is not typed, this is expected for jest-axe
 expect.extend(toHaveNoViolations);
 
 describe('FeedbackManagement', () => {

@@ -141,7 +141,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
             tags: inspection.tags || []
           });
         } catch (_error) {
-          console.error('Error loading inspection:', error);
+          console.error("Error:", _error);
         } finally {
           setLoading(false);
         }
@@ -159,7 +159,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
         const response = await customerService.getCustomers({ limit: 100 });
         setCustomers(response.customers || []);
       } catch (_error) {
-        console.error('Error loading customers:', error);
+        console.error("Error:", _error);
       } finally {
         setLoadingCustomers(false);
       }
@@ -171,7 +171,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
         const response = await supplierService.getSuppliers({ limit: 100 });
         setSuppliers(response.suppliers || []);
       } catch (_error) {
-        console.error('Error loading suppliers:', error);
+        console.error("Error:", _error);
       } finally {
         setLoadingSuppliers(false);
       }
@@ -275,7 +275,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
       onSave(savedInspection);
       onClose();
     } catch (error: any) {
-      console.error('Error saving inspection:', error);
+      console.error("Error:", _error);
     } finally {
       setIsSubmitting(false);
     }

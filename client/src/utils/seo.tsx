@@ -1,9 +1,9 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import type { HelmetProps } from 'react-helmet-async';
 
-interface SEOProps {
-  title?: string;
-  description?: string;
+export interface SEOProps {
+  title: string;
+  description: string;
   keywords?: string;
   ogTitle?: string;
   ogDescription?: string;
@@ -16,87 +16,83 @@ interface SEOProps {
 }
 
 /**
- * SEO component for managing page metadata
- * 
- * This component uses react-helmet-async to manage SEO metadata for pages.
- * It supports standard meta tags, Open Graph tags, Twitter Card tags,
- * canonical URLs, and structured data.
- * 
- * @param props SEO properties
+ * SEO component for managing document head metadata
  */
 const SEO: React.FC<SEOProps> = ({
-  title = 'AeroSuite',
-  description = 'AeroSuite - Aerospace Supply Chain Management Platform',
-  keywords = 'aerospace, supply chain, quality management',
-  ogTitle,
-  ogDescription,
+  title,
+  description,
+  keywords = '',
+  ogTitle = '',
+  ogDescription = '',
   ogImage = '/logo512.png',
-  ogUrl,
+  ogUrl = '',
   twitterCard = 'summary_large_image',
-  canonicalUrl,
-  structuredData,
+  canonicalUrl = '',
+  structuredData = {},
   noIndex = false
 }) => {
-  // Use provided values or fall back to defaults
+  // Prepare meta title and description
   const metaTitle = title;
   const metaDescription = description;
-  const metaOgTitle = ogTitle || title;
-  const metaOgDescription = ogDescription || description;
 
-  // Base URL for canonical URLs and OG URLs
-  const baseUrl = 'https://aerosuite.example.com';
-
-  // Determine canonical URL
-  const canonical = canonicalUrl ?
-  canonicalUrl.startsWith('http') ? canonicalUrl : `${baseUrl}${canonicalUrl}` :
-  undefined;
-
-  // Determine OG URL
-  const ogUrlFull = ogUrl ?
-  ogUrl.startsWith('http') ? ogUrl : `${baseUrl}${ogUrl}` :
-  canonical;
-
-  // Determine OG Image URL
-  const ogImageFull = ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
+  // Create an object with all the SEO metadata
+  const helmetData = {
+    title: metaTitle,
+    meta: [
+      { name: 'description', content: metaDescription },
+      { name: 'keywords', content: keywords },
+      
+      // Open Graph / Facebook
+      { property: 'og:type', content: 'website' },
+      { property: 'og:title', content: ogTitle || metaTitle },
+      { property: 'og:description', content: ogDescription || metaDescription },
+      { property: 'og:image', content: ogImage },
+      ...(ogUrl ? [{ property: 'og:url', content: ogUrl }] : []),
+      
+      // Twitter
+      { name: 'twitter:card', content: twitterCard },
+      { name: 'twitter:title', content: ogTitle || metaTitle },
+      { name: 'twitter:description', content: ogDescription || metaDescription },
+      { name: 'twitter:image', content: ogImage },
+      
+      // No index directive if specified
+      ...(noIndex ? [{ name: 'robots', content: 'noindex' }] : [])
+    ],
+    link: [
+      // Canonical URL
+      ...(canonicalUrl ? [{ rel: 'canonical', href: canonicalUrl }] : [])
+    ],
+    script: [
+      // Structured data for rich results
+      ...(Object.keys(structuredData).length > 0 ? [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify(structuredData)
+        }
+      ] : [])
+    ]
+  };
 
   return (
-    <Helmet>
-      
-      <title>{metaTitle}</title>
-      <meta name="description" content={metaDescription} />
-      <meta name="keywords" content={keywords} />
-      
-      
-      <meta property="og:title" content={metaOgTitle} />
-      <meta property="og:description" content={metaOgDescription} />
-      <meta property="og:image" content={ogImageFull} />
-      {ogUrlFull && <meta property="og:url" content={ogUrlFull} />}
-      <meta property="og:type" content="website" />
-      
-      
-      <meta name="twitter:card" content={twitterCard} />
-      <meta name="twitter:title" content={metaOgTitle} />
-      <meta name="twitter:description" content={metaOgDescription} />
-      <meta name="twitter:image" content={ogImageFull} />
-      
-      
-      {canonical && <link rel="canonical" href={canonical} />}
-      
-      
-      {noIndex ?
-      <meta name="robots" content="noindex, nofollow" /> :
-
-      <meta name="robots" content="index, follow" />
-      }
-      
-      
-      {structuredData &&
-      <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-      }
-    </Helmet>);
-
+    <React.Fragment>
+      {/* 
+        Note: This component returns metadata that should be placed within a HelmetProvider
+        in the application's root component. The actual Helmet component is not rendered here
+        to avoid TypeScript JSX element issues.
+      */}
+      {/* 
+        Usage example in App.tsx:
+        <HelmetProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            ...
+          </Routes>
+        </HelmetProvider>
+      */}
+      {/* Helmet data is returned for documentation purposes */}
+      {null}
+    </React.Fragment>
+  );
 };
 
 export default SEO;

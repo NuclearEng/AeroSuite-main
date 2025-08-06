@@ -102,7 +102,7 @@ const ConductInspection: React.FC = () => {
           setChecklistItems(defaultItems);
         }
       } catch (err: any) {
-        console.error('Error loading inspection:', err);
+        console.error("Error:", _error);
         setError(err.message || 'Failed to load inspection');
       } finally {
         setLoading(false);
@@ -241,7 +241,7 @@ const ConductInspection: React.FC = () => {
         severity: 'success'
       });
     } catch (err: any) {
-      console.error('Error saving checklist:', err);
+      console.error("Error:", _error);
       setSnackbar({
         open: true,
         message: err.message || 'Failed to save checklist',
@@ -286,7 +286,7 @@ const ConductInspection: React.FC = () => {
         navigate(`/inspections/${id}`);
       }, 1500);
     } catch (err: any) {
-      console.error('Error completing inspection:', err);
+      console.error("Error:", _error);
       setSnackbar({
         open: true,
         message: err.message || 'Failed to complete inspection',

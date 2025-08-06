@@ -1,0 +1,978 @@
+{
+  "timestamp": "2025-08-06T06:39:15.925Z",
+  "passed": 1,
+  "failed": 4,
+  "tests": [
+    {
+      "name": "Bundle Size Analysis",
+      "key": "bundleSizeAnalysis",
+      "passed": false,
+      "error": "Bundle analysis failed",
+      "details": "Command failed: cd client && npm run build\nnpm warn config ignoring workspace config at /Users/tannercoker/AeroSuite-main/client/.npmrc\nnpm error Lifecycle script `build` failed with error:\nnpm error code 1\nnpm error path /Users/tannercoker/AeroSuite-main/client\nnpm error workspace aerosuite-client@1.0.0\nnpm error location /Users/tannercoker/AeroSuite-main/client\nnpm error command failed\nnpm error command sh -c react-scripts build\n"
+    },
+    {
+      "name": "Code Splitting Analysis",
+      "key": "codeSplittingCheck",
+      "passed": false,
+      "lazyComponents": 1,
+      "dynamicImports": 94,
+      "files": {
+        "lazy": [
+          {
+            "file": "client/src/pages/BundleOptimizationDemo.tsx",
+            "count": 1
+          }
+        ],
+        "dynamic": [
+          {
+            "file": "client/src/components/ui-library/organisms/LazyDataTable.tsx",
+            "dynamicImports": 2
+          },
+          {
+            "file": "client/src/hooks/useSupplierApi.ts",
+            "dynamicImports": 1
+          },
+          {
+            "file": "client/src/pages/BundleOptimizationDemo.tsx",
+            "dynamicImports": 1
+          },
+          {
+            "file": "client/src/pages/CodeSplittingDemo.tsx",
+            "dynamicImports": 7
+          },
+          {
+            "file": "client/src/pages/ProgressiveLoadingDemo.tsx",
+            "dynamicImports": 2
+          },
+          {
+            "file": "client/src/pages/suppliers/SupplierList.tsx",
+            "dynamicImports": 1
+          },
+          {
+            "file": "client/src/reportWebVitals.js",
+            "dynamicImports": 1
+          },
+          {
+            "file": "client/src/reportWebVitals.ts",
+            "dynamicImports": 1
+          },
+          {
+            "file": "client/src/utils/apiClient.test.ts",
+            "dynamicImports": 1
+          },
+          {
+            "file": "client/src/utils/componentSplitting.tsx",
+            "dynamicImports": 32
+          },
+          {
+            "file": "client/src/utils/routeSplitting.tsx",
+            "dynamicImports": 45
+          }
+        ]
+      }
+    },
+    {
+      "name": "Performance Budget Check",
+      "key": "performanceBudget",
+      "passed": true,
+      "results": {
+        "images": {
+          "files": [
+            {
+              "file": "logo192.png",
+              "sizeKB": 5
+            },
+            {
+              "file": "logo512.png",
+              "sizeKB": 9
+            }
+          ],
+          "totalSize": 14
+        },
+        "scripts": {
+          "files": [
+            {
+              "file": "service-worker.js",
+              "sizeKB": 5
+            }
+          ],
+          "totalSize": 5
+        },
+        "styles": {
+          "files": [],
+          "totalSize": 0
+        }
+      },
+      "budgets": {
+        "images": {
+          "maxSize": 100,
+          "totalSize": 2000
+        },
+        "scripts": {
+          "maxRequests": 10,
+          "totalSize": 500
+        },
+        "styles": {
+          "maxRequests": 5,
+          "totalSize": 100
+        }
+      },
+      "violations": []
+    },
+    {
+      "name": "Memory Leak Detection",
+      "key": "memoryLeakDetection",
+      "passed": false,
+      "potentialLeaks": [
+        {
+          "file": "client/src/components/admin/ErrorAnalyticsDashboard.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/admin/FeatureFlagsManager.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/admin/UserAnalyticsDashboard.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/auth/EnhancedSSOLoginButtons.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/AccessibilityAudit.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/AccessibilityHelpers.js",
+          "issue": "Event listener without cleanup",
+          "count": 6
+        },
+        {
+          "file": "client/src/components/common/AccessibilityHelpers.js",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/AnimatedButton.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 3
+        },
+        {
+          "file": "client/src/components/common/AnimatedFeedback.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/DataTable.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/FormBuilder.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/OfflineIndicator.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/ResourcePrioritization.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/ResourcePrioritization.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 2
+        },
+        {
+          "file": "client/src/components/common/VirtualizedList.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/AIInsightsWidget.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/QualityMetricsWidget.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/QualityMetricsWidget.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/monitoring/PerformanceBudgetsDashboard.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/monitoring/PerformanceRegressionsDashboard.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/notifications/RealtimeNotifications.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/LazyLoadedComponent.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Modal.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Notification.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/ui-library/patterns/RenderProps.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/CachingStrategyDemo.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/CachingStrategyDemo.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 3
+        },
+        {
+          "file": "client/src/pages/Dashboard.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/FormUXDemo.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 3
+        },
+        {
+          "file": "client/src/pages/ProgressiveLoadingDemo.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 3
+        },
+        {
+          "file": "client/src/pages/RequestBatchingDemo.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/ResourcePrioritizationDemo.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 2
+        },
+        {
+          "file": "client/src/pages/customers/CustomerList.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/customers/EditCustomer.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/dashboard/Dashboard.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/dashboard/QualityMetricsDashboard.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/dashboard/QualityMetricsDashboard.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/inspections/ConductInspection.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/inspections/InspectionDetail.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/inspections/InspectionList.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/inspections/ScheduleInspection.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/monitoring/BackupVerification.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/payments/PaymentSuccessPage.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/reports/DataVisualizationDemo.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/reports/components/ReportPreview.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/reports/components/ReportPreview.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/reports/components/ReportPreview.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/suppliers/EditSupplier.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/suppliers/SupplierDetail.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/suppliers/SupplierEdit.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/suppliers/SupplierList.js",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 2
+        },
+        {
+          "file": "client/src/pages/suppliers/components/SupplierComparisonTool.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        },
+        {
+          "file": "client/src/pages/suppliers/hooks/useRiskAssessment.ts",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 3
+        },
+        {
+          "file": "client/src/pages/suppliers/hooks/useSupplierAudit.ts",
+          "issue": "setTimeout without cleanup (in useEffect)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "React Render Performance",
+      "key": "renderPerformance",
+      "passed": false,
+      "issues": [
+        {
+          "file": "client/src/components/admin/ErrorAnalyticsDashboard.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/admin/FeatureFlagsManager.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/admin/UserAnalyticsDashboard.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/admin/UserAnalyticsDashboard.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/auth/EnhancedSSOLoginButtons.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/auth/SSOLoginButtons.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/auth/TwoFactorSetup.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/auth/TwoFactorSetup.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/auth/TwoFactorVerification.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/AccessibilityAudit.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/AccessibilityThemeDemo.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/AnimatedButton.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/AnimatedCard.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ApiVersionWarningBanner.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ColorContrastChecker.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ComponentWithFallback.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ConfirmationDialog.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/DataTable.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/DataTable.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/DataVisualization.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/DeleteConfirmationModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ErrorAlert.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ErrorBoundary.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ErrorBoundary.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/ErrorDialog.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ErrorDialog.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/ErrorHandler.tsx",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
+          "file": "client/src/components/common/ErrorState.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/FeedbackForm.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/FeedbackForm.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/FeedbackWidget.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/FileUploadModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/FilterModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/FiltersToolbar.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/FormBuilder.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/GenerateReportButton.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/KeyboardNavigableDemo.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/KeyboardShortcutsDialog.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/LanguageSelector.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/Modal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/OfflineIndicator.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/OptimizedImage.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/PageHeader.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/PageHeader.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/PerformanceMonitor.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/PerformanceMonitor.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/ProgressiveDataTable.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/ResponsiveForm.tsx",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
+          "file": "client/src/components/common/ResponsiveForm.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ResponsiveLayoutAudit.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ResponsiveTable.tsx",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
+          "file": "client/src/components/common/ResponsiveTable.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/ResponsiveTable.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/ScreenReaderCompatibility.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/SearchModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/common/SearchModal.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/SkeletonLoader.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/common/ThemeSettings.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/components/ComponentRelationshipGraph.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/customers/ActivityFilters.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/customers/ActivityHistoryHeader.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/customers/ActivityTimeline.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/customers/ActivityTimelineItem.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/customers/ActivityTimelineItem.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/dashboard/AddQualityMetricsButton.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/CustomWidgetManager.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/DashboardCustomization.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/DashboardCustomizeButton.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/DashboardCustomizer.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/DashboardSyncStatus.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/DashboardWidget.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/StatCard.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/AIInsightsWidget.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/AIInsightsWidget.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/CalendarWidget.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/NotificationList.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/QualityMetricsWidget.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/dashboard/widgets/WidgetRegistry.ts",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
+          "file": "client/src/components/demo/HeavyComponent3.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/demo/HeavyComponent3.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/demo/TagInput.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/demo/TagInput.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/layout/Layout.js",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/layout/ResponsiveGrid.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/layout/ResponsiveLayout.js",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/layout/ResponsiveLayout.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/monitoring/PerformanceBudgetsDashboard.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/monitoring/PerformanceRegressionsDashboard.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/navigation/Header.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/navigation/NotificationItem.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/navigation/Sidebar.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/navigation/TopBar.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/notifications/NotificationCenter.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/notifications/NotificationModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/notifications/RealtimeNotifications.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/onboarding/OnboardingFlow.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/onboarding/steps/CompletionStep.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/onboarding/steps/CompletionStep.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/onboarding/steps/FeaturesOverviewStep.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/payments/PaymentButton.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/payments/PaymentDetails.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/payments/PaymentHistory.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/suppliers/SupplierImportExport.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/suppliers/SupplierImportExport.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/AccessibleModal.test.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/AccessibleModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Alert.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Breadcrumbs.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/ConfirmDialog.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/DataTable.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/DetailDialog.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Dropdown.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/FileUploader.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/FilterPanel.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/FormStepper.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/LazyLoadedComponent.tsx",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Modal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Notification.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Pagination.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/ProgressiveForm.tsx",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/ProgressiveForm.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/ProgressiveTable.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/RichTextEditor.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/SearchBar.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/SlideOutPanel.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/Tabs.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/molecules/forms/AutosaveForm.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/organisms/ColorContrastAudit.tsx",
+          "issue": "Using array index as React key"
+        },
+        {
+          "file": "client/src/components/ui-library/patterns/Composition.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/patterns/Compound.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/patterns/HOC.tsx",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
+          "file": "client/src/components/ui-library/patterns/HOC.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/ui-library/templates/DashboardLayout.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/user/EditProfileModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/user/ProfileEditModal.tsx",
+          "issue": "Inline function in render method"
+        },
+        {
+          "file": "client/src/components/user/UserProfile.tsx",
+          "issue": "Inline function in render method"
+        }
+      ],
+      "count": 140
+    }
+  ]
+}

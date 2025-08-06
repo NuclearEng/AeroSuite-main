@@ -2,7 +2,7 @@ import React from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { createMemoryHistory, History } from 'history';
-import { QueryParamProvider } from 'use-query-params';
+import { QueryParamProvider } from './CustomQueryParamProvider';
 import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 
 // Auth context mock for protected routes
@@ -127,7 +127,7 @@ ui: React.ReactElement,
   const Wrapper = ({ children }: {children: React.ReactNode;}) =>
   <AuthContext.Provider value={authContextValue}>
       <MemoryRouter initialEntries={initialEntries} initialIndex={initialIndex}>
-        <QueryParamProvider adapter={ReactRouter6Adapter}>
+        <QueryParamProvider>
           <Routes>
             {canAccess ?
           <Route path={path} element={children} /> :
@@ -200,7 +200,7 @@ export const AdvancedRouterWrapper: React.FC<AdvancedRouterOptions & {children: 
   return (
     <AuthContext.Provider value={authContextValue}>
       <MemoryRouter initialEntries={initialEntries} initialIndex={initialIndex}>
-        <QueryParamProvider adapter={ReactRouter6Adapter}>
+        <QueryParamProvider>
           <Routes>
             {canAccess ?
             <Route path={path} element={children} /> :

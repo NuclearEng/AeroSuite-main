@@ -122,6 +122,86 @@ class ReportService {
   private readonly baseUrl = '/reports';
   
   /**
+   * Get available data sources for reports
+   */
+  async getDataSources(): Promise<DataSource[]> {
+    try {
+      // In a real implementation, this would call the API
+      // For now, return mock data
+      return [
+        {
+          model: 'Inspection',
+          label: 'Inspections',
+          fields: [
+            { id: 'title', label: 'Title', type: 'string' },
+            { id: 'status', label: 'Status', type: 'string' },
+            { id: 'inspectionDate', label: 'Inspection Date', type: 'date' },
+            { id: 'location', label: 'Location', type: 'string' },
+            { id: 'inspector', label: 'Inspector', type: 'string' },
+            { id: 'supplier', label: 'Supplier', type: 'string' },
+            { id: 'findings', label: 'Findings Count', type: 'number' }
+          ]
+        },
+        {
+          model: 'Supplier',
+          label: 'Suppliers',
+          fields: [
+            { id: 'name', label: 'Name', type: 'string' },
+            { id: 'code', label: 'Code', type: 'string' },
+            { id: 'status', label: 'Status', type: 'string' },
+            { id: 'industry', label: 'Industry', type: 'string' },
+            { id: 'primaryContactName', label: 'Primary Contact', type: 'string' },
+            { id: 'primaryContactEmail', label: 'Email', type: 'string' },
+            { id: 'phone', label: 'Phone', type: 'string' },
+            { id: 'overallRating', label: 'Overall Rating', type: 'number' }
+          ]
+        },
+        {
+          model: 'Customer',
+          label: 'Customers',
+          fields: [
+            { id: 'name', label: 'Name', type: 'string' },
+            { id: 'industry', label: 'Industry', type: 'string' },
+            { id: 'status', label: 'Status', type: 'string' },
+            { id: 'contactName', label: 'Contact Name', type: 'string' },
+            { id: 'contactEmail', label: 'Contact Email', type: 'string' },
+            { id: 'totalOrders', label: 'Total Orders', type: 'number' },
+            { id: 'totalRevenue', label: 'Total Revenue', type: 'number' }
+          ]
+        },
+        {
+          model: 'Component',
+          label: 'Components',
+          fields: [
+            { id: 'name', label: 'Name', type: 'string' },
+            { id: 'partNumber', label: 'Part Number', type: 'string' },
+            { id: 'category', label: 'Category', type: 'string' },
+            { id: 'supplier', label: 'Supplier', type: 'string' },
+            { id: 'price', label: 'Price', type: 'number' },
+            { id: 'stock', label: 'Stock', type: 'number' },
+            { id: 'defectRate', label: 'Defect Rate', type: 'number' }
+          ]
+        },
+        {
+          model: 'User',
+          label: 'Users',
+          fields: [
+            { id: 'name', label: 'Name', type: 'string' },
+            { id: 'email', label: 'Email', type: 'string' },
+            { id: 'role', label: 'Role', type: 'string' },
+            { id: 'department', label: 'Department', type: 'string' },
+            { id: 'lastLogin', label: 'Last Login', type: 'date' },
+            { id: 'inspectionsCompleted', label: 'Inspections Completed', type: 'number' }
+          ]
+        }
+      ];
+    } catch (error: any) {
+      console.error('Error fetching data sources:', error);
+      throw this.handleError(error, 'Failed to fetch data sources');
+    }
+  }
+  
+  /**
    * Get a cache key for report options
    * @param templateId Template ID
    * @param filters Optional filters
@@ -348,13 +428,13 @@ class ReportService {
   }
 
   async createReportTemplate(template: Partial<ReportTemplate>): Promise<ReportTemplate> {
-    const response = await api.post(`${this.baseUrl}/templates`, template);
-    return response.data;
+    const response = await api.post<ReportTemplate>(`${this.baseUrl}/templates`, template);
+    return response;
   }
 
   async updateReportTemplate(id: string, template: Partial<ReportTemplate>): Promise<ReportTemplate> {
-    const response = await api.put(`${this.baseUrl}/templates/${id}`, template);
-    return response.data;
+    const response = await api.put<ReportTemplate>(`${this.baseUrl}/templates/${id}`, template);
+    return response;
   }
 
   async deleteReportTemplate(id: string): Promise<void> {

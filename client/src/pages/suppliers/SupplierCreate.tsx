@@ -237,7 +237,7 @@ const SupplierCreate: React.FC = () => {
       }, 1500);
 
     } catch (err: any) {
-      console.error('Error creating supplier:', err);
+      console.error("Error:", err);
 
       // Show error message
       setSnackbar({

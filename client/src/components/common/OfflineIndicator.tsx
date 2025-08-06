@@ -99,7 +99,7 @@ const OfflineIndicator: React.FC = () => {
         const size = await persistenceService.getDatabaseSize();
         setDatabaseSize(size);
       } catch (_error) {
-        console.error('Failed to load pending changes:', error);
+        console.error("Error:", _error);
       }
     };
 

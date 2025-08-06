@@ -98,7 +98,7 @@ const NotificationCenter: React.FC = () => {
       try {
         setPreferences(JSON.parse(savedPreferences));
       } catch (_err) {
-        console.error('Error parsing notification preferences:', err);
+        console.error("Error:", _error);
       }
     }
   }, [dispatch]);
@@ -152,7 +152,7 @@ const NotificationCenter: React.FC = () => {
   // Play notification sound
   const playNotificationSound = useCallback(() => {
     const audio = new Audio('/notification-sound.mp3');
-    audio.play().catch((err) => console.error('Error playing notification sound:', err));
+    audio.play().catch((err) => console.error("Error:", _err)));
   }, []);
 
   // Save preferences to local storage

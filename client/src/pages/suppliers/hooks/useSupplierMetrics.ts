@@ -43,7 +43,7 @@ export const useSupplierMetrics = (supplierId: string) => {
         const response = await axios.get<SupplierMetrics>(`/api/v1/suppliers/${supplierId}/metrics`);
         setMetrics(response.data);
       } catch (_err) {
-        console.error('Error fetching supplier metrics:', err);
+        console.error('Error fetching supplier metrics:', _err);
         setError('Failed to load supplier metrics. Please try again later.');
       } finally {
         setLoading(false);

@@ -117,12 +117,14 @@ registerRoute(
     try {
       return await fetch(request.clone());
     } catch (err) {
-      await bgSyncPlugin.fetchDidFail({
-        request: request.clone(),
-        error: err as Error,
-        event: new FetchEvent('fetch', { request: request.clone() }),
-        originalRequest: request.clone()
-      });
+      if (bgSyncPlugin && bgSyncPlugin.fetchDidFail) {
+        await bgSyncPlugin.fetchDidFail({
+          request: request.clone(),
+          error: err as Error,
+          event: new FetchEvent('fetch', { request: request.clone() }),
+          originalRequest: request.clone()
+        });
+      }
       return new Response(null, { status: 503 });
     }
   }

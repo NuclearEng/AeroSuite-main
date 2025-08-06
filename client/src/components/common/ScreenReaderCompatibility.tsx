@@ -35,7 +35,7 @@ import {
   Warning as WarningIcon,
   Info as InfoIcon,
   Help as HelpIcon,
-  AriaHidden as AriaHiddenIcon,
+  VisibilityOff as AriaHiddenIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon
 } from '@mui/icons-material';

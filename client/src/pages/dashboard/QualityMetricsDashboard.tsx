@@ -150,7 +150,7 @@ const QualityMetricsDashboard: React.FC = () => {
         setLoading(false);
       }, 800);
     } catch (err: any) {
-      console.error('Error loading quality metrics:', err);
+      console.error("Error:", _error);
       setError(err.message || 'Failed to load quality metrics');
       setLoading(false);
     }

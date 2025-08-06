@@ -74,7 +74,7 @@ const SettingsPage: React.FC = () => {
 
   const tabs = [
     { label: t('settings.general'), icon: <SettingsIcon />, content: <Box p={2}><Typography>{t('settings.generalSettings')}</Typography></Box> },
-    { label: t('settings.language'), icon: <TranslateIcon />, content: <LanguageSettings onError={handleLanguageError} /> },
+    { label: t('settings.language'), icon: <TranslateIcon />, content: <LanguageSettings /> },
     { label: t('settings.appearance'), icon: <PaletteIcon />, content: <Box p={2}><Typography>{t('settings.appearanceSettings')}</Typography></Box> },
     { label: t('settings.security'), icon: <SecurityIcon />, content: <Box p={2}><Typography>{t('settings.securitySettings')}</Typography></Box> },
     { label: t('settings.notifications'), icon: <NotificationsIcon />, content: <Box p={2}><Typography>{t('settings.notificationSettings')}</Typography></Box> },

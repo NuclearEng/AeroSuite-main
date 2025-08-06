@@ -76,7 +76,7 @@ const RealtimeNotifications: React.FC = () => {
         console.error('Failed to reconnect to notification server after maximum attempts');
       });
     } catch (_error) {
-      console.error('Error connecting to notification server:', error);
+      console.error("Error:", _error);
     }
   }, [isAuthenticated, user, getToken]);
   
@@ -97,7 +97,7 @@ const RealtimeNotifications: React.FC = () => {
   
   // Handle authentication error
   const handleAuthError = useCallback((error: { message: string }) => {
-    console.error('Authentication error:', error.message);
+    console.error("Error:", _err)or.message);
     
     // Show error notification
     enqueueSnackbar(`Notification authentication error: ${error.message}`, {

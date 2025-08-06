@@ -516,7 +516,7 @@ export default function ProgressiveLoadingDemo() {
           
           <ProgressiveTable
             key={resetKey}
-            data={products}
+            data={products.filter(Boolean)}
             columns={tableColumns}
             isLoading={isLoading || productsLoading}
             keyExtractor={(item) => item.id}
@@ -569,7 +569,7 @@ export default function ProgressiveLoadingDemo() {
           </Typography>
           
           <Grid container spacing={3}>
-            {products.map((product) =>
+            {products.filter(Boolean).map((product) =>
             <Grid item key={product.id} xs={12} sm={6} md={4}>
                 <ProgressiveRender
                 skeletonComponent={ProductCardSkeleton}
@@ -645,7 +645,7 @@ export default function ProgressiveLoadingDemo() {
           </Paper>
           
           <Grid container spacing={3}>
-            {products.map((product) =>
+            {products.filter(Boolean).map((product) =>
             <Grid item key={product.id} xs={12}>
                 <Paper sx={{ p: 2 }}>
                   <Grid container spacing={2}>

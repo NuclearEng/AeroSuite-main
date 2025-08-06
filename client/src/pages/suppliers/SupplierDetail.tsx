@@ -135,7 +135,7 @@ const SupplierDetail: React.FC = () => {
         const data = await supplierService.getSupplier(id);
         setSupplier(data);
       } catch (err: any) {
-        console.error('Error loading supplier:', err);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load supplier');
       } finally {
         setLoading(false);
@@ -154,7 +154,7 @@ const SupplierDetail: React.FC = () => {
         const data = await supplierService.getSupplierPerformance(id);
         setPerformanceMetrics(data);
       } catch (err: any) {
-        console.error('Error loading performance metrics:', err);
+        console.error("Error:", err);
         // Don't set error state as this is secondary data
       }
     };
@@ -172,7 +172,7 @@ const SupplierDetail: React.FC = () => {
         const data = await supplierService.getSupplierInspections(id);
         setInspections(data.inspections || []);
       } catch (err: any) {
-        console.error('Error loading inspections:', err);
+        console.error("Error:", err);
         // Don't set error state as this is secondary data
       } finally {
         setInspectionsLoading(false);
@@ -215,7 +215,7 @@ const SupplierDetail: React.FC = () => {
         navigate('/suppliers');
       }, 1500);
     } catch (err: any) {
-      console.error('Error deleting supplier:', err);
+      console.error("Error:", err);
       setSnackbar({
         open: true,
         message: err.message || 'Failed to delete supplier',
