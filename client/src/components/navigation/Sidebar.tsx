@@ -15,8 +15,8 @@ import {
   alpha,
   useTheme,
   styled,
-  Tooltip
-} from '@mui/material';
+  Tooltip } from
+'@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -51,13 +51,13 @@ const AnimatedListItemButton = styled(ListItemButton)(({ theme }) => ({
     bottom: 0,
     background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
     transform: 'translateX(-100%)',
-    transition: 'transform 0.6s ease',
+    transition: 'transform 0.6s ease'
   },
   '&:hover': {
     backgroundColor: alpha(theme.palette.primary.main, 0.08),
     '&::before': {
-      transform: 'translateX(100%)',
-    },
+      transform: 'translateX(100%)'
+    }
   },
   '&.Mui-selected': {
     backgroundColor: alpha(theme.palette.primary.main, 0.12),
@@ -70,12 +70,12 @@ const AnimatedListItemButton = styled(ListItemButton)(({ theme }) => ({
       width: 4,
       height: '70%',
       backgroundColor: theme.palette.primary.main,
-      borderRadius: '0 4px 4px 0',
+      borderRadius: '0 4px 4px 0'
     },
     '&:hover': {
-      backgroundColor: alpha(theme.palette.primary.main, 0.16),
-    },
-  },
+      backgroundColor: alpha(theme.palette.primary.main, 0.16)
+    }
+  }
 }));
 
 // Logo component with animation
@@ -84,11 +84,11 @@ const Logo = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2),
   '& svg': {
-    transition: 'transform 0.3s ease',
+    transition: 'transform 0.3s ease'
   },
   '&:hover svg': {
-    transform: 'rotate(5deg) scale(1.1)',
-  },
+    transform: 'rotate(5deg) scale(1.1)'
+  }
 }));
 
 // Logo icon that pulses on hover
@@ -107,8 +107,8 @@ const LogoIcon = styled('div')(({ theme }) => ({
   transition: 'all 0.3s ease',
   '&:hover': {
     transform: 'scale(1.1)',
-    boxShadow: `0 0 0 4px ${alpha(theme.palette.primary.main, 0.3)}`,
-  },
+    boxShadow: `0 0 0 4px ${alpha(theme.palette.primary.main, 0.3)}`
+  }
 }));
 
 // Menu section header
@@ -120,7 +120,7 @@ const MenuSectionTitle = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(2),
   marginBottom: theme.spacing(1),
   marginLeft: theme.spacing(2),
-  letterSpacing: '0.08em',
+  letterSpacing: '0.08em'
 }));
 
 // Menu item type definition
@@ -141,9 +141,9 @@ interface SidebarProps {
   variant?: 'permanent' | 'persistent' | 'temporary';
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ 
-  open, 
-  onClose, 
+const Sidebar: React.FC<SidebarProps> = ({
+  open,
+  onClose,
   onToggle,
   variant = 'permanent'
 }) => {
@@ -153,142 +153,142 @@ const Sidebar: React.FC<SidebarProps> = ({
   const { mode, toggleTheme } = useThemeContext();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [activeItem, setActiveItem] = useState('');
-  
+
   // User data (assuming we have a user in redux)
   const user = useAppSelector((state: RootState) => state.auth.user);
-  
+
   // Define menu items
   const menuItems: MenuItem[] = [
+  {
+    id: 'dashboard',
+    title: 'Dashboard',
+    path: '/dashboard',
+    icon: <HomeIcon />
+  },
+  {
+    id: 'customers',
+    title: 'Customers',
+    path: '/customers',
+    icon: <PeopleIcon />,
+    children: [
     {
-      id: 'dashboard',
-      title: 'Dashboard',
-      path: '/dashboard',
-      icon: <HomeIcon />
-    },
-    {
-      id: 'customers',
-      title: 'Customers',
+      id: 'customer-list',
+      title: 'Customer List',
       path: '/customers',
-      icon: <PeopleIcon />,
-      children: [
-        {
-          id: 'customer-list',
-          title: 'Customer List',
-          path: '/customers',
-          icon: <PeopleIcon />
-        },
-        {
-          id: 'customer-create',
-          title: 'Add Customer',
-          path: '/customers/create',
-          icon: <PeopleIcon />
-        }
-      ]
+      icon: <PeopleIcon />
     },
     {
-      id: 'suppliers',
-      title: 'Suppliers',
+      id: 'customer-create',
+      title: 'Add Customer',
+      path: '/customers/create',
+      icon: <PeopleIcon />
+    }]
+
+  },
+  {
+    id: 'suppliers',
+    title: 'Suppliers',
+    path: '/suppliers',
+    icon: <BusinessIcon />,
+    children: [
+    {
+      id: 'supplier-list',
+      title: 'Supplier List',
       path: '/suppliers',
-      icon: <BusinessIcon />,
-      children: [
-        {
-          id: 'supplier-list',
-          title: 'Supplier List',
-          path: '/suppliers',
-          icon: <BusinessIcon />
-        },
-        {
-          id: 'supplier-create',
-          title: 'Add Supplier',
-          path: '/suppliers/create',
-          icon: <BusinessIcon />
-        },
-        {
-          id: 'supplier-enhanced-form',
-          title: 'Enhanced Form',
-          path: '/suppliers/enhanced-form',
-          icon: <BusinessIcon />
-        },
-        {
-          id: 'supplier-enhanced-table',
-          title: 'Enhanced Table',
-          path: '/suppliers/enhanced-table',
-          icon: <BusinessIcon />
-        }
-      ]
+      icon: <BusinessIcon />
     },
     {
-      id: 'inspections',
-      title: 'Inspections',
+      id: 'supplier-create',
+      title: 'Add Supplier',
+      path: '/suppliers/create',
+      icon: <BusinessIcon />
+    },
+    {
+      id: 'supplier-enhanced-form',
+      title: 'Enhanced Form',
+      path: '/suppliers/enhanced-form',
+      icon: <BusinessIcon />
+    },
+    {
+      id: 'supplier-enhanced-table',
+      title: 'Enhanced Table',
+      path: '/suppliers/enhanced-table',
+      icon: <BusinessIcon />
+    }]
+
+  },
+  {
+    id: 'inspections',
+    title: 'Inspections',
+    path: '/inspections',
+    icon: <AssignmentIcon />,
+    badge: 5,
+    children: [
+    {
+      id: 'inspection-list',
+      title: 'All Inspections',
       path: '/inspections',
-      icon: <AssignmentIcon />,
-      badge: 5,
-      children: [
-        {
-          id: 'inspection-list',
-          title: 'All Inspections',
-          path: '/inspections',
-          icon: <AssignmentIcon />
-        },
-        {
-          id: 'inspection-schedule',
-          title: 'Schedule Inspection',
-          path: '/inspections/schedule',
-          icon: <AssignmentIcon />
-        }
-      ]
+      icon: <AssignmentIcon />
     },
     {
-      id: 'reports',
-      title: 'Reports',
-      path: '/reports',
-      icon: <BarChartIcon />,
-      children: [
-        {
-          id: 'report-builder',
-          title: 'Report Builder',
-          path: '/reports/builder',
-          icon: <BarChartIcon />
-        },
-        {
-          id: 'data-visualization',
-          title: 'Data Visualization',
-          path: '/reports/visualization',
-          icon: <BarChartIcon />
-        },
-        {
-          id: 'application-metrics',
-          title: 'Application Metrics',
-          path: '/metrics',
-          icon: <BarChartIcon />
-        }
-      ]
+      id: 'inspection-schedule',
+      title: 'Schedule Inspection',
+      path: '/inspections/schedule',
+      icon: <AssignmentIcon />
+    }]
+
+  },
+  {
+    id: 'reports',
+    title: 'Reports',
+    path: '/reports',
+    icon: <BarChartIcon />,
+    children: [
+    {
+      id: 'report-builder',
+      title: 'Report Builder',
+      path: '/reports/builder',
+      icon: <BarChartIcon />
     },
     {
-      id: 'ai-analysis',
-      title: 'AI Analysis',
-      path: '/ai-analysis',
-      icon: <ScienceIcon />
+      id: 'data-visualization',
+      title: 'Data Visualization',
+      path: '/reports/visualization',
+      icon: <BarChartIcon />
     },
     {
-      id: 'settings',
-      title: 'Settings',
-      path: '/settings',
-      icon: <SettingsIcon />
-    },
-    {
-      id: 'performance-metrics',
-      title: 'Performance Metrics',
-      path: '/monitoring/performance',
-      icon: <SpeedIcon />,
-      roles: ['admin', 'developer'],
-    },
-  ];
-  
+      id: 'application-metrics',
+      title: 'Application Metrics',
+      path: '/metrics',
+      icon: <BarChartIcon />
+    }]
+
+  },
+  {
+    id: 'ai-analysis',
+    title: 'AI Analysis',
+    path: '/ai-analysis',
+    icon: <ScienceIcon />
+  },
+  {
+    id: 'settings',
+    title: 'Settings',
+    path: '/settings',
+    icon: <SettingsIcon />
+  },
+  {
+    id: 'performance-metrics',
+    title: 'Performance Metrics',
+    path: '/monitoring/performance',
+    icon: <SpeedIcon />,
+    roles: ['admin', 'developer']
+  }];
+
+
   // Set active item based on current location
   useEffect(() => {
     const currentPath = location.pathname;
-    
+
     // Find the menu item that matches the current path
     const findActiveItem = (items: MenuItem[]): string => {
       for (const item of items) {
@@ -300,7 +300,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           if (childActiveItem) {
             // Expand the parent if a child is active
             if (!expandedItems.includes(item.id)) {
-              setExpandedItems(prev => [...prev, item.id]);
+              setExpandedItems((prev) => [...prev, item.id]);
             }
             return childActiveItem;
           }
@@ -308,20 +308,20 @@ const Sidebar: React.FC<SidebarProps> = ({
       }
       return '';
     };
-    
+
     const activeItemId = findActiveItem(menuItems);
     setActiveItem(activeItemId);
   }, [location.pathname, expandedItems]);
-  
+
   // Toggle menu item expansion
   const handleExpandClick = (itemId: string) => {
-    setExpandedItems(prev => 
-      prev.includes(itemId) 
-        ? prev.filter(id => id !== itemId) 
-        : [...prev, itemId]
+    setExpandedItems((prev) =>
+    prev.includes(itemId) ?
+    prev.filter((id) => id !== itemId) :
+    [...prev, itemId]
     );
   };
-  
+
   // Handle menu item click
   const handleMenuItemClick = (item: MenuItem) => {
     if (item.children) {
@@ -335,115 +335,115 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   // Render menu items recursively
-  const renderMenuItems = (items: MenuItem[], level = 0) => (
-    <>
+  const RenderMenuItems = (items: MenuItem[], level = 0) =>
+  <>
       {items.map((item) => {
-        const isSelected = activeItem === item.id;
-        const isExpanded = expandedItems.includes(item.id);
-        
-        return (
-          <React.Fragment key={item.id}>
+      const isSelected = activeItem === item.id;
+      const isExpanded = expandedItems.includes(item.id);
+
+      return (
+        <React.Fragment key={item.id}>
             <AnimatedListItemButton
-              selected={isSelected}
-              onClick={() => handleMenuItemClick(item)}
+            selected={isSelected}
+            onClick={() => handleMenuItemClick(item)}
+            sx={{
+              pl: level * 2 + 2,
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center'
+            }}>
+
+              <ListItemIcon
               sx={{
-                pl: level * 2 + 2,
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-              }}
-            >
-              <ListItemIcon 
-                sx={{ 
-                  minWidth: 0, 
-                  mr: open ? 2 : 'auto', 
-                  justifyContent: 'center',
-                  color: isSelected ? theme.palette.primary.main : 'inherit'
-                }}
-              >
+                minWidth: 0,
+                mr: open ? 2 : 'auto',
+                justifyContent: 'center',
+                color: isSelected ? theme.palette.primary.main : 'inherit'
+              }}>
+
                 {item.icon}
               </ListItemIcon>
               
-              {open && (
-                <>
-                  <ListItemText 
-                    primary={item.title} 
-                    primaryTypographyProps={{ 
-                      fontWeight: isSelected ? 600 : 400,
-                      variant: 'body2',
-                      noWrap: true
-                    }}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
+              {open &&
+            <>
+                  <ListItemText
+                primary={item.title}
+                primaryTypographyProps={{
+                  fontWeight: isSelected ? 600 : 400,
+                  variant: 'body2',
+                  noWrap: true
+                }}
+                sx={{ opacity: open ? 1 : 0 }} />
+
                   
-                  {item.badge && (
-                    <Box
-                      sx={{
-                        borderRadius: '50%',
-                        backgroundColor: theme.palette.primary.main,
-                        color: 'white',
-                        minWidth: 22,
-                        height: 22,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold',
-                        ml: 1,
-                      }}
-                    >
+                  {item.badge &&
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  backgroundColor: theme.palette.primary.main,
+                  color: 'white',
+                  minWidth: 22,
+                  height: 22,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold',
+                  ml: 1
+                }}>
+
                       {item.badge}
                     </Box>
-                  )}
+              }
                   
-                  {item.children && (
-                    <ExpandMoreIcon 
-                      sx={{ 
-                        transition: 'transform 0.3s ease',
-                        transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'
-                      }} 
-                    />
-                  )}
+                  {item.children &&
+              <ExpandMoreIcon
+                sx={{
+                  transition: 'transform 0.3s ease',
+                  transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)'
+                }} />
+
+              }
                 </>
-              )}
+            }
             </AnimatedListItemButton>
             
-            {item.children && (
-              <Collapse in={open && isExpanded} timeout="auto" unmountOnExit>
+            {item.children &&
+          <Collapse in={open && isExpanded} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  {renderMenuItems(item.children, level + 1)}
+                  {RenderMenuItems(item.children, level + 1)}
                 </List>
               </Collapse>
-            )}
-          </React.Fragment>
-        );
-      })}
-    </>
-  );
-  
+          }
+          </React.Fragment>);
+
+    })}
+    </>;
+
+
   // Drawer content
-  const drawerContent = (
-    <>
-      <Box 
-        sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: open ? 'space-between' : 'center',
-          p: theme.spacing(2),
-          pb: theme.spacing(1)
-        }}
-      >
-        {open ? (
-          <Logo>
+  const drawerContent =
+  <>
+      <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: open ? 'space-between' : 'center',
+        p: theme.spacing(2),
+        pb: theme.spacing(1)
+      }}>
+
+        {open ?
+      <Logo>
             <LogoIcon>A</LogoIcon>
             <Typography variant="h6" fontWeight="bold" noWrap>
               AeroSuite
             </Typography>
-          </Logo>
-        ) : (
-          <Tooltip title="AeroSuite" arrow placement="right">
+          </Logo> :
+
+      <Tooltip title="AeroSuite" arrow placement="right">
             <LogoIcon>A</LogoIcon>
           </Tooltip>
-        )}
+      }
         
         <IconButton onClick={onToggle} sx={{ mx: 0.5 }}>
           {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -456,23 +456,23 @@ const Sidebar: React.FC<SidebarProps> = ({
         <MenuSectionTitle sx={{ opacity: open ? 1 : 0, height: open ? 'auto' : 0 }}>
           Main Menu
         </MenuSectionTitle>
-        {renderMenuItems(menuItems)}
+        {RenderMenuItems(menuItems)}
       </List>
       
       <Box sx={{ flexGrow: 1 }} />
       
       <Divider />
       
-      <Box 
-        sx={{ 
-          p: theme.spacing(2), 
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: open ? 'flex-start' : 'center',
-        }}
-      >
-        {open && user && (
-          <Box sx={{ mb: 2, width: '100%' }}>
+      <Box
+      sx={{
+        p: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: open ? 'flex-start' : 'center'
+      }}>
+
+        {open && user &&
+      <Box sx={{ mb: 2, width: '100%' }}>
             <Typography variant="subtitle2" fontWeight="medium" noWrap>
               {user.firstName} {user.lastName}
             </Typography>
@@ -480,31 +480,31 @@ const Sidebar: React.FC<SidebarProps> = ({
               {user.role}
             </Typography>
           </Box>
-        )}
+      }
         
-        {!open && user && (
-          <Tooltip title={`${user.firstName} ${user.lastName}`} arrow placement="right">
-            <Box 
-              sx={{ 
-                width: 40, 
-                height: 40, 
-                borderRadius: '50%', 
-                bgcolor: theme.palette.primary.main,
-                color: 'white',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontWeight: 'bold',
-                mb: 2
-              }}
-            >
+        {!open && user &&
+      <Tooltip title={`${user.firstName} ${user.lastName}`} arrow placement="right">
+            <Box
+          sx={{
+            width: 40,
+            height: 40,
+            borderRadius: '50%',
+            bgcolor: theme.palette.primary.main,
+            color: 'white',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            mb: 2
+          }}>
+
               {user.firstName?.[0]}{user.lastName?.[0]}
             </Box>
           </Tooltip>
-        )}
+      }
       </Box>
-    </>
-  );
+    </>;
+
 
   return (
     <Drawer
@@ -521,17 +521,17 @@ const Sidebar: React.FC<SidebarProps> = ({
           boxShadow: theme.shadows[3],
           transition: theme.transitions.create(['width'], {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
+            duration: theme.transitions.duration.enteringScreen
           }),
           overflowX: 'hidden',
           backgroundColor: theme.palette.background.paper,
-          backgroundImage: `linear-gradient(to bottom, ${alpha(theme.palette.primary.main, 0.03)}, transparent)`,
-        },
-      }}
-    >
+          backgroundImage: `linear-gradient(to bottom, ${alpha(theme.palette.primary.main, 0.03)}, transparent)`
+        }
+      }}>
+
       {drawerContent}
-    </Drawer>
-  );
+    </Drawer>);
+
 };
 
-export default Sidebar; 
+export default Sidebar;

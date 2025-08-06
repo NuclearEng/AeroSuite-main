@@ -144,7 +144,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
       resetForm();
       if (onSuccess) onSuccess();
     } catch (_err) {
-      console.error('Error submitting feedback:', err);
+      console.error('Error submitting feedback:', _err);
       setError(t('feedback.errors.submissionFailed'));
     } finally {
       setLoading(false);

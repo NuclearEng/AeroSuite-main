@@ -12,11 +12,11 @@ import PerformanceMetricsDashboard from '../../components/dashboard/widgets/Perf
  */
 const MetricsDashboard: React.FC = () => {
   const navigate = useNavigate();
-  
+
   const handleViewFullDashboard = () => {
     navigate('/monitoring/performance');
   };
-  
+
   return (
     <>
       <Helmet>
@@ -25,7 +25,7 @@ const MetricsDashboard: React.FC = () => {
       
       <Container maxWidth="xl">
         <Box sx={{ pt: 2, pb: 4 }}>
-          {/* Breadcrumbs */}
+          
           <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
             <Link color="inherit" href="/dashboard">
               Dashboard
@@ -33,16 +33,16 @@ const MetricsDashboard: React.FC = () => {
             <Typography color="text.primary">Application Metrics</Typography>
           </Breadcrumbs>
           
-          {/* Page Title */}
+          
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h4" component="h1">
               Application Metrics Dashboard
             </Typography>
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               color="primary"
-              onClick={handleViewFullDashboard}
-            >
+              onClick={handleViewFullDashboard}>
+
               View Full Dashboard
             </Button>
           </Box>
@@ -50,14 +50,14 @@ const MetricsDashboard: React.FC = () => {
             Real-time monitoring of system and application performance metrics.
           </Typography>
           
-          {/* Main Content */}
+          
           <Box sx={{ mt: 3 }}>
             <PerformanceMetricsDashboard simplified={true} />
           </Box>
         </Box>
       </Container>
-    </>
-  );
+    </>);
+
 };
 
-export default MetricsDashboard; 
+export default MetricsDashboard;

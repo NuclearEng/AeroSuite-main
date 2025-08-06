@@ -22,8 +22,8 @@ import {
   Divider,
   Tooltip,
   CircularProgress,
-  Alert
-} from '@mui/material';
+  Alert } from
+'@mui/material';
 import {
   CompareArrows as CompareIcon,
   Visibility as ViewIcon,
@@ -31,8 +31,8 @@ import {
   CheckCircle as ActiveIcon,
   Archive as ArchiveIcon,
   Warning as DeprecatedIcon,
-  Add as AddIcon
-} from '@mui/icons-material';
+  Add as AddIcon } from
+'@mui/icons-material';
 import { format } from 'date-fns';
 import useComponentRevisions, { ComponentRevision } from '../../hooks/useComponentRevisions';
 
@@ -58,10 +58,10 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
     changedBy: '',
     status: 'active' as 'active' | 'deprecated' | 'archived'
   });
-  const [compareRevisions, setCompareRevisions] = useState<{ a?: string; b?: string }>({});
+  const [compareRevisions, setCompareRevisions] = useState<{a?: string;b?: string;}>({});
 
   // Status rendering helpers
-  const getStatusChip = (status: string) => {
+  const GetStatusChip = (status: string) => {
     switch (status) {
       case 'active':
         return <Chip icon={<ActiveIcon />} label="Active" color="success" size="small" />;
@@ -77,7 +77,7 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
   // Handle form changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -112,7 +112,7 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
 
   // Handle compare selection
   const handleCompareSelect = (revisionId: string, position: 'a' | 'b') => {
-    setCompareRevisions(prev => ({
+    setCompareRevisions((prev) => ({
       ...prev,
       [position]: revisionId
     }));
@@ -121,23 +121,23 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
   // Get revision by ID
   const getRevisionById = (id?: string): ComponentRevision | undefined => {
     if (!id) return undefined;
-    return revisions.find(rev => rev._id === id);
+    return revisions.find((rev) => rev._id === id);
   };
 
   if (loading && revisions.length === 0) {
     return (
       <Box display="flex" justifyContent="center" p={3}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
     return (
       <Alert severity="error" sx={{ mb: 3 }}>
         {error}
-      </Alert>
-    );
+      </Alert>);
+
   }
 
   return (
@@ -151,18 +151,18 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => setOpenNewDialog(true)}
-          size="small"
-        >
+          size="small">
+
           New Revision
         </Button>
       </Box>
 
-      {revisions.length === 0 ? (
-        <Alert severity="info">
+      {revisions.length === 0 ?
+      <Alert severity="info">
           No revision history available for this component. Create the first revision.
-        </Alert>
-      ) : (
-        <TableContainer component={Paper} variant="outlined">
+        </Alert> :
+
+      <TableContainer component={Paper} variant="outlined">
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -175,13 +175,13 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {revisions.map((revision) => (
-                <TableRow 
-                  key={revision._id}
-                  sx={{ 
-                    bgcolor: revision._id === currentRevision?._id ? 'action.selected' : 'inherit'
-                  }}
-                >
+              {revisions.map((revision) =>
+            <TableRow
+              key={revision._id}
+              sx={{
+                bgcolor: revision._id === currentRevision?._id ? 'action.selected' : 'inherit'
+              }}>
+
                   <TableCell>
                     <Typography variant="body2" fontFamily="monospace">
                       {revision.version}
@@ -196,7 +196,7 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
                       {revision.changes}
                     </Typography>
                   </TableCell>
-                  <TableCell>{getStatusChip(revision.status)}</TableCell>
+                  <TableCell>{GetStatusChip(revision.status)}</TableCell>
                   <TableCell align="right">
                     <Tooltip title="View Details">
                       <IconButton size="small">
@@ -204,73 +204,73 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="Compare">
-                      <IconButton 
-                        size="small"
-                        onClick={() => handleCompareSelect(revision._id, 
-                          !compareRevisions.a ? 'a' : 'b'
-                        )}
-                        color={
-                          compareRevisions.a === revision._id || compareRevisions.b === revision._id
-                            ? 'primary'
-                            : 'default'
-                        }
-                      >
+                      <IconButton
+                    size="small"
+                    onClick={() => handleCompareSelect(revision._id,
+                    !compareRevisions.a ? 'a' : 'b'
+                    )}
+                    color={
+                    compareRevisions.a === revision._id || compareRevisions.b === revision._id ?
+                    'primary' :
+                    'default'
+                    }>
+
                         <CompareIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    {revision._id !== currentRevision?._id && revision.status !== 'active' && (
-                      <Tooltip title="Set as Active">
-                        <IconButton 
-                          size="small" 
-                          onClick={() => handleStatusChange(revision._id, 'active')}
-                          color="success"
-                        >
+                    {revision._id !== currentRevision?._id && revision.status !== 'active' &&
+                <Tooltip title="Set as Active">
+                        <IconButton
+                    size="small"
+                    onClick={() => handleStatusChange(revision._id, 'active')}
+                    color="success">
+
                           <ActiveIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    )}
-                    {revision.status !== 'deprecated' && (
-                      <Tooltip title="Mark as Deprecated">
-                        <IconButton 
-                          size="small"
-                          onClick={() => handleStatusChange(revision._id, 'deprecated')}
-                          color="warning"
-                        >
+                }
+                    {revision.status !== 'deprecated' &&
+                <Tooltip title="Mark as Deprecated">
+                        <IconButton
+                    size="small"
+                    onClick={() => handleStatusChange(revision._id, 'deprecated')}
+                    color="warning">
+
                           <DeprecatedIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    )}
-                    {revision.status !== 'archived' && (
-                      <Tooltip title="Archive">
-                        <IconButton 
-                          size="small"
-                          onClick={() => handleStatusChange(revision._id, 'archived')}
-                        >
+                }
+                    {revision.status !== 'archived' &&
+                <Tooltip title="Archive">
+                        <IconButton
+                    size="small"
+                    onClick={() => handleStatusChange(revision._id, 'archived')}>
+
                           <ArchiveIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    )}
+                }
                   </TableCell>
                 </TableRow>
-              ))}
+            )}
             </TableBody>
           </Table>
         </TableContainer>
-      )}
+      }
 
-      {Object.values(compareRevisions).filter(Boolean).length === 2 && (
-        <Box mt={2} display="flex" justifyContent="center">
-          <Button 
-            variant="outlined"
-            startIcon={<CompareIcon />}
-            onClick={() => setOpenCompareDialog(true)}
-          >
+      {Object.values(compareRevisions).filter(Boolean).length === 2 &&
+      <Box mt={2} display="flex" justifyContent="center">
+          <Button
+          variant="outlined"
+          startIcon={<CompareIcon />}
+          onClick={() => setOpenCompareDialog(true)}>
+
             Compare Revisions
           </Button>
         </Box>
-      )}
+      }
 
-      {/* New Revision Dialog */}
+      
       <Dialog open={openNewDialog} onClose={() => setOpenNewDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Create New Revision</DialogTitle>
         <DialogContent>
@@ -283,8 +283,8 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
                 onChange={handleInputChange}
                 fullWidth
                 required
-                placeholder="e.g. 1.2.0"
-              />
+                placeholder="e.g. 1.2.0" />
+
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
@@ -294,8 +294,8 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
                 onChange={handleInputChange}
                 fullWidth
                 required
-                placeholder="Your name"
-              />
+                placeholder="Your name" />
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -307,8 +307,8 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
                 required
                 multiline
                 rows={4}
-                placeholder="Describe the changes made in this revision"
-              />
+                placeholder="Describe the changes made in this revision" />
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -318,8 +318,8 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
                 value={formData.status}
                 onChange={handleInputChange}
                 fullWidth
-                required
-              >
+                required>
+
                 <MenuItem value="active">Active</MenuItem>
                 <MenuItem value="deprecated">Deprecated</MenuItem>
                 <MenuItem value="archived">Archived</MenuItem>
@@ -329,27 +329,27 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenNewDialog(false)}>Cancel</Button>
-          <Button 
-            onClick={handleCreateRevision} 
+          <Button
+            onClick={handleCreateRevision}
             variant="contained"
-            disabled={!formData.version || !formData.changes || !formData.changedBy}
-          >
+            disabled={!formData.version || !formData.changes || !formData.changedBy}>
+
             Create
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Compare Revisions Dialog */}
-      <Dialog 
-        open={openCompareDialog} 
-        onClose={() => setOpenCompareDialog(false)} 
-        maxWidth="md" 
-        fullWidth
-      >
+      
+      <Dialog
+        open={openCompareDialog}
+        onClose={() => setOpenCompareDialog(false)}
+        maxWidth="md"
+        fullWidth>
+
         <DialogTitle>Compare Revisions</DialogTitle>
         <DialogContent>
-          {compareRevisions.a && compareRevisions.b && (
-            <Grid container spacing={2} sx={{ mt: 1 }}>
+          {compareRevisions.a && compareRevisions.b &&
+          <Grid container spacing={2} sx={{ mt: 1 }}>
               <Grid item xs={6}>
                 <Typography variant="subtitle1" gutterBottom>
                   Version: {getRevisionById(compareRevisions.a)?.version}
@@ -381,15 +381,15 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
                 </Box>
               </Grid>
             </Grid>
-          )}
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setCompareRevisions({})}>Clear Selection</Button>
           <Button onClick={() => setOpenCompareDialog(false)}>Close</Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default RevisionHistory; 
+export default RevisionHistory;

@@ -12,8 +12,8 @@ import {
   Tooltip,
   Legend,
   Title,
-  Filler,
-} from 'chart.js';
+  Filler } from
+'chart.js';
 import { Line, Bar, Pie, Doughnut, PolarArea, Radar, Scatter, Bubble } from 'react-chartjs-2';
 import { animations } from '../../theme/theme';
 
@@ -73,12 +73,12 @@ const Chart: React.FC<ChartProps> = ({
   padding = 16,
   responsive = true,
   aspectRatio = 2,
-  onChartClick,
+  onChartClick
 }) => {
   const theme = useTheme();
   const chartRef = useRef<any>(null);
   const [chartHeight, setChartHeight] = useState<string | number | undefined>(height);
-  
+
   // Calculate the canvas height based on aspectRatio if not explicitly set
   useEffect(() => {
     if (!height && responsive && chartRef.current) {
@@ -88,27 +88,27 @@ const Chart: React.FC<ChartProps> = ({
       }
     }
   }, [height, responsive, aspectRatio]);
-  
+
   // Apply theme colors to chart
   const themedData = {
     ...data,
     datasets: data.datasets?.map((dataset: any) => ({
       ...dataset,
       borderColor: dataset.borderColor || theme.palette.primary.main,
-      backgroundColor: dataset.backgroundColor || 
-        (type === 'line' ? theme.palette.primary.main + '20' : theme.palette.primary.main),
+      backgroundColor: dataset.backgroundColor || (
+      type === 'line' ? theme.palette.primary.main + '20' : theme.palette.primary.main),
       hoverBackgroundColor: dataset.hoverBackgroundColor || theme.palette.primary.dark,
-      borderWidth: dataset.borderWidth || 2,
-    })),
+      borderWidth: dataset.borderWidth || 2
+    }))
   };
-  
+
   // Merge default options with provided options
   const mergedOptions = {
     responsive,
     maintainAspectRatio: false,
     animation: animation ? {
       duration: 1000,
-      easing: 'easeOutQuart',
+      easing: 'easeOutQuart'
     } : false,
     plugins: {
       legend: {
@@ -117,15 +117,15 @@ const Chart: React.FC<ChartProps> = ({
           color: theme.palette.text.primary,
           font: {
             family: theme.typography.fontFamily,
-            size: 12,
+            size: 12
           },
-          padding: 16,
-        },
+          padding: 16
+        }
       },
       tooltip: {
-        backgroundColor: theme.palette.mode === 'dark' 
-          ? theme.palette.grey[800] 
-          : theme.palette.background.paper,
+        backgroundColor: theme.palette.mode === 'dark' ?
+        theme.palette.grey[800] :
+        theme.palette.background.paper,
         titleColor: theme.palette.text.primary,
         bodyColor: theme.palette.text.secondary,
         borderColor: theme.palette.divider,
@@ -134,67 +134,67 @@ const Chart: React.FC<ChartProps> = ({
         cornerRadius: 6,
         boxPadding: 6,
         bodyFont: {
-          family: theme.typography.fontFamily,
+          family: theme.typography.fontFamily
         },
         titleFont: {
           family: theme.typography.fontFamily,
-          weight: 'bold',
-        },
-      },
+          weight: 'bold'
+        }
+      }
     },
     scales: type !== 'pie' && type !== 'doughnut' && type !== 'polarArea' ? {
       x: {
         grid: {
           color: theme.palette.divider,
-          drawBorder: false,
+          drawBorder: false
         },
         ticks: {
           color: theme.palette.text.secondary,
           font: {
-            family: theme.typography.fontFamily,
-          },
-        },
+            family: theme.typography.fontFamily
+          }
+        }
       },
       y: {
         grid: {
           color: theme.palette.divider,
-          drawBorder: false,
+          drawBorder: false
         },
         ticks: {
           color: theme.palette.text.secondary,
           font: {
-            family: theme.typography.fontFamily,
-          },
-        },
-      },
+            family: theme.typography.fontFamily
+          }
+        }
+      }
     } : undefined,
-    ...options,
+    ...options
   };
-  
+
   // Handle chart click events
   const handleChartClick = (event: any) => {
     if (!onChartClick || !chartRef.current) return;
-    
+
     const elements = chartRef.current.getElementsAtEventForMode(
       event,
       'nearest',
       { intersect: true },
       false
     );
-    
+
     if (elements.length > 0) {
       onChartClick(event, elements);
     }
   };
-  
+
   // Get chart component based on type
-  const getChartComponent = () => {
+  const GetChartComponent = () => {
     const chartProps = {
       data: themedData,
       options: mergedOptions,
-      onClick: onChartClick ? handleChartClick : undefined,
+      onClick: onChartClick ? handleChartClick : undefined
     };
-    
+
     switch (type) {
       case 'line':
         return <Line {...chartProps} />;
@@ -216,87 +216,87 @@ const Chart: React.FC<ChartProps> = ({
         return <Line {...chartProps} />;
     }
   };
-  
+
   // Determine if the chart has data
-  const hasData = 
-    data?.datasets && 
-    data.datasets.length > 0 && 
-    data.datasets.some((ds: any) => ds.data && ds.data.length > 0);
-  
+  const hasData =
+  data?.datasets &&
+  data.datasets.length > 0 &&
+  data.datasets.some((ds: any) => ds.data && ds.data.length > 0);
+
   // Check if the chart can be rendered
   const shouldRenderChart = !loading && !error && hasData;
-  
+
   // Determine paper variant and elevation
-  const paperProps = 
-    variant === 'outlined' 
-      ? { variant: 'outlined' as const } 
-      : { elevation: variant === 'elevation' ? elevation : 0 };
-  
+  const paperProps =
+  variant === 'outlined' ?
+  { variant: 'outlined' as const } :
+  { elevation: variant === 'elevation' ? elevation : 0 };
+
   return (
     <Paper
       {...paperProps}
-      sx={{ 
-        width, 
-        height: 'auto', 
+      sx={{
+        width,
+        height: 'auto',
         borderRadius,
         overflow: 'hidden',
-        transition: animations.microInteraction,
-      }}
-    >
-      {/* Chart title and subtitle */}
-      {(title || subtitle) && (
-        <Box sx={{ p: padding, pb: subtitle ? padding / 2 : padding }}>
-          {title && (
-            <Typography variant="h6" component="h3" gutterBottom={!!subtitle}>
+        transition: animations.microInteraction
+      }}>
+
+      
+      {(title || subtitle) &&
+      <Box sx={{ p: padding, pb: subtitle ? padding / 2 : padding }}>
+          {title &&
+        <Typography variant="h6" component="h3" gutterBottom={!!subtitle}>
               {title}
             </Typography>
-          )}
-          {subtitle && (
-            <Typography variant="body2" color="text.secondary">
+        }
+          {subtitle &&
+        <Typography variant="body2" color="text.secondary">
               {subtitle}
             </Typography>
-          )}
+        }
         </Box>
-      )}
+      }
       
-      {/* Chart content */}
-      <Box 
-        sx={{ 
-          p: padding, 
-          pt: (title || subtitle) ? 0 : padding,
+      
+      <Box
+        sx={{
+          p: padding,
+          pt: title || subtitle ? 0 : padding,
           height: chartHeight,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {loading ? (
-          <Box sx={{ textAlign: 'center', py: 4, width: '100%' }}>
+          justifyContent: 'center'
+        }}>
+
+        {loading ?
+        <Box sx={{ textAlign: 'center', py: 4, width: '100%' }}>
             <CircularProgress size={40} thickness={4} />
-          </Box>
-        ) : error ? (
-          <Box sx={{ textAlign: 'center', py: 4, width: '100%' }}>
+          </Box> :
+        error ?
+        <Box sx={{ textAlign: 'center', py: 4, width: '100%' }}>
             <Typography color="error">{error}</Typography>
-          </Box>
-        ) : !hasData ? (
-          <Box sx={{ textAlign: 'center', py: 4, width: '100%' }}>
+          </Box> :
+        !hasData ?
+        <Box sx={{ textAlign: 'center', py: 4, width: '100%' }}>
             <Typography color="text.secondary">{emptyMessage}</Typography>
+          </Box> :
+
+        <Box
+          sx={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+            minHeight: 200
+          }}>
+
+            {GetChartComponent()}
           </Box>
-        ) : (
-          <Box 
-            sx={{ 
-              position: 'relative', 
-              width: '100%', 
-              height: '100%',
-              minHeight: 200,
-            }}
-          >
-            {getChartComponent()}
-          </Box>
-        )}
+        }
       </Box>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default Chart; 
+export default Chart;

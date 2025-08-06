@@ -15,15 +15,15 @@ import {
   DialogTitle,
   Snackbar,
   Alert,
-  CircularProgress
-} from '@mui/material';
+  CircularProgress } from
+'@mui/material';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
   Visibility as VisibilityIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
+  Refresh as RefreshIcon } from
+'@mui/icons-material';
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { InspectionFormModal } from './components';
 import inspectionService, { Inspection } from '../../services/inspection.service';
@@ -33,13 +33,13 @@ const InspectionList: React.FC = () => {
   const [inspections, setInspections] = useState<Inspection[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Modal states
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedInspection, setSelectedInspection] = useState<Inspection | null>(null);
-  
+
   // Snackbar state
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -74,18 +74,18 @@ const InspectionList: React.FC = () => {
   // Load inspections on component mount
   useEffect(() => {
     loadInspections();
-    
+
     // Set up event listeners for inspection updates from other parts of the app
     const handleInspectionUpdate = () => {
       loadInspections();
     };
-    
+
     // In a real app, this would be subscribing to domain events
     window.addEventListener('inspection-updated', handleInspectionUpdate);
     window.addEventListener('inspection-status-changed', handleInspectionUpdate);
     window.addEventListener('customer-updated', handleInspectionUpdate);
     window.addEventListener('supplier-updated', handleInspectionUpdate);
-    
+
     return () => {
       window.removeEventListener('inspection-updated', handleInspectionUpdate);
       window.removeEventListener('inspection-status-changed', handleInspectionUpdate);
@@ -115,7 +115,7 @@ const InspectionList: React.FC = () => {
   const handleViewInspection = (id: string) => {
     navigate(`/inspections/${id}`);
   };
-  
+
   // Handle refresh
   const handleRefresh = () => {
     loadInspections();
@@ -124,7 +124,7 @@ const InspectionList: React.FC = () => {
   // Confirm delete inspection
   const confirmDeleteInspection = async () => {
     if (!selectedInspection) return;
-    
+
     try {
       setLoading(true);
       await inspectionService.deleteInspection(selectedInspection._id);
@@ -134,7 +134,7 @@ const InspectionList: React.FC = () => {
         severity: 'success'
       });
       loadInspections();
-      
+
       // Dispatch domain event
       const event = new CustomEvent('inspection-deleted', { detail: selectedInspection });
       window.dispatchEvent(event);
@@ -160,7 +160,7 @@ const InspectionList: React.FC = () => {
       severity: 'success'
     });
     loadInspections();
-    
+
     // Dispatch domain event
     const event = new CustomEvent('inspection-created', { detail: inspection });
     window.dispatchEvent(event);
@@ -174,7 +174,7 @@ const InspectionList: React.FC = () => {
       severity: 'success'
     });
     loadInspections();
-    
+
     // Dispatch domain event
     const event = new CustomEvent('inspection-updated', { detail: inspection });
     window.dispatchEvent(event);
@@ -202,100 +202,100 @@ const InspectionList: React.FC = () => {
 
   // DataGrid columns
   const columns: GridColDef[] = [
-    {
-      field: 'title',
-      headerName: 'Inspection',
-      flex: 2
-    },
-    {
-      field: 'type',
-      headerName: 'Type',
-      width: 150,
-      valueFormatter: ({ value }) => value.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 130,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          color={
-            params.value === 'completed'
-              ? 'success'
-              : params.value === 'in-progress'
-              ? 'primary'
-              : params.value === 'scheduled'
-              ? 'info'
-              : 'error'
-          }
-          size="small"
-        />
-      )
-    },
-    {
-      field: 'priority',
-      headerName: 'Priority',
-      width: 120,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          color={
-            params.value === 'critical'
-              ? 'error'
-              : params.value === 'high'
-              ? 'warning'
-              : params.value === 'medium'
-              ? 'info'
-              : 'success'
-          }
-          size="small"
-        />
-      )
-    },
-    {
-      field: 'scheduledDate',
-      headerName: 'Scheduled Date',
-      width: 180,
-      valueFormatter: ({ value }) => formatDate(value)
-    },
-    {
-      field: 'customerName',
-      headerName: 'Customer',
-      width: 180
-    },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 150,
-      sortable: false,
-      renderCell: (params) => (
-        <Box>
+  {
+    field: 'title',
+    headerName: 'Inspection',
+    flex: 2
+  },
+  {
+    field: 'type',
+    headerName: 'Type',
+    width: 150,
+    valueFormatter: ({ value }) => value.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())
+  },
+  {
+    field: 'status',
+    headerName: 'Status',
+    width: 130,
+    renderCell: (params) =>
+    <Chip
+      label={params.value}
+      color={
+      params.value === 'completed' ?
+      'success' :
+      params.value === 'in-progress' ?
+      'primary' :
+      params.value === 'scheduled' ?
+      'info' :
+      'error'
+      }
+      size="small" />
+
+
+  },
+  {
+    field: 'priority',
+    headerName: 'Priority',
+    width: 120,
+    renderCell: (params) =>
+    <Chip
+      label={params.value}
+      color={
+      params.value === 'critical' ?
+      'error' :
+      params.value === 'high' ?
+      'warning' :
+      params.value === 'medium' ?
+      'info' :
+      'success'
+      }
+      size="small" />
+
+
+  },
+  {
+    field: 'scheduledDate',
+    headerName: 'Scheduled Date',
+    width: 180,
+    valueFormatter: ({ value }) => formatDate(value)
+  },
+  {
+    field: 'customerName',
+    headerName: 'Customer',
+    width: 180
+  },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    width: 150,
+    sortable: false,
+    renderCell: (params) =>
+    <Box>
           <IconButton
-            size="small"
-            onClick={() => handleViewInspection(params.row._id)}
-            title="View Details"
-          >
+        size="small"
+        onClick={() => handleViewInspection(params.row._id)}
+        title="View Details">
+
             <VisibilityIcon fontSize="small" />
           </IconButton>
           <IconButton
-            size="small"
-            onClick={() => handleEditInspection(params.row)}
-            title="Edit"
-          >
+        size="small"
+        onClick={() => handleEditInspection(params.row)}
+        title="Edit">
+
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton
-            size="small"
-            onClick={() => handleDeleteInspection(params.row)}
-            title="Delete"
-          >
+        size="small"
+        onClick={() => handleDeleteInspection(params.row)}
+        title="Delete">
+
             <DeleteIcon fontSize="small" />
           </IconButton>
         </Box>
-      )
-    }
-  ];
+
+  }];
+
 
   return (
     <Box sx={{ p: 3 }}>
@@ -310,48 +310,48 @@ const InspectionList: React.FC = () => {
             startIcon={<RefreshIcon />}
             onClick={handleRefresh}
             sx={{ mr: 2 }}
-            disabled={loading}
-          >
+            disabled={loading}>
+
             Refresh
           </Button>
           <Button
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            onClick={handleCreateInspection}
-          >
+            onClick={handleCreateInspection}>
+
             Schedule Inspection
           </Button>
         </Box>
       </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
 
       <Card>
         <CardContent>
           <Box sx={{ height: 600, width: '100%', position: 'relative' }}>
-            {loading && (
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                  zIndex: 1
-                }}
-              >
+            {loading &&
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                zIndex: 1
+              }}>
+
                 <CircularProgress />
               </Box>
-            )}
+            }
             <DataGrid
               rows={inspections || []}
               columns={columns}
@@ -372,51 +372,51 @@ const InspectionList: React.FC = () => {
                   showQuickFilter: true,
                   quickFilterProps: { debounceMs: 500 }
                 }
-              }}
-            />
+              }} />
+
           </Box>
         </CardContent>
       </Card>
 
-      {/* Create Inspection Modal */}
+      
       <InspectionFormModal
         open={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
-        onSave={handleInspectionCreated}
-      />
+        onSave={handleInspectionCreated} />
 
-      {/* Edit Inspection Modal */}
-      {selectedInspection && (
-        <InspectionFormModal
-          open={editModalOpen}
-          onClose={() => {
-            setEditModalOpen(false);
-            setSelectedInspection(null);
-          }}
-          onSave={handleInspectionUpdated}
-          isEdit
-          inspectionId={selectedInspection._id}
-          initialData={{
-            title: selectedInspection.title,
-            type: selectedInspection.type,
-            status: selectedInspection.status,
-            priority: selectedInspection.priority,
-            scheduledDate: selectedInspection.scheduledDate ? new Date(selectedInspection.scheduledDate) : null,
-            customerId: selectedInspection.customerId,
-            supplierId: selectedInspection.supplierId,
-            location: selectedInspection.location,
-            description: selectedInspection.description || '',
-            notes: selectedInspection.notes || '',
-            tags: selectedInspection.tags || []
-          }}
-        />
-      )}
 
-      {/* Delete Confirmation Dialog */}
+      
+      {selectedInspection &&
+      <InspectionFormModal
+        open={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setSelectedInspection(null);
+        }}
+        onSave={handleInspectionUpdated}
+        isEdit
+        inspectionId={selectedInspection._id}
+        initialData={{
+          title: selectedInspection.title,
+          type: selectedInspection.type,
+          status: selectedInspection.status,
+          priority: selectedInspection.priority,
+          scheduledDate: selectedInspection.scheduledDate ? new Date(selectedInspection.scheduledDate) : null,
+          customerId: selectedInspection.customerId,
+          supplierId: selectedInspection.supplierId,
+          location: selectedInspection.location,
+          description: selectedInspection.description || '',
+          notes: selectedInspection.notes || '',
+          tags: selectedInspection.tags || []
+        }} />
+
+      }
+
+      
       <Dialog
         open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-      >
+        onClose={() => setDeleteDialogOpen(false)}>
+
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -433,19 +433,19 @@ const InspectionList: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar for notifications */}
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
         <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default InspectionList; 
+export default InspectionList;

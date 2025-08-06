@@ -5,16 +5,16 @@ import {
   Chip,
   Tooltip,
   Box,
-  Link
-} from '@mui/material';
+  Link } from
+'@mui/material';
 import {
   TimelineItem,
   TimelineSeparator,
   TimelineConnector,
   TimelineContent,
   TimelineDot,
-  TimelineOppositeContent
-} from '@mui/lab';
+  TimelineOppositeContent } from
+'@mui/lab';
 import {
   CalendarToday as CalendarIcon,
   Person as PersonIcon,
@@ -30,13 +30,13 @@ import {
   FolderSpecial as FolderIcon,
   Edit as EditIcon,
   Add as AddIcon,
-  Delete as DeleteIcon
-} from '@mui/icons-material';
+  Delete as DeleteIcon } from
+'@mui/icons-material';
 import { formatDistanceToNow, format } from 'date-fns';
 import { CustomerActivity } from '../../hooks/useCustomerActivities';
 
 // Helper function to get activity icon based on type
-export const getActivityIcon = (activityType: string) => {
+export const GetActivityIcon = (activityType: string) => {
   switch (activityType) {
     case 'inspection_scheduled':
       return <CalendarIcon />;
@@ -116,20 +116,20 @@ const ActivityTimelineItem: React.FC<ActivityTimelineItemProps> = ({
 }) => {
   const time = formatActivityTime(activity.createdAt);
   const activityColor = getActivityColor(activity.activityType);
-  
+
   const handleLinkClick = (url: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     if (onNavigate) {
       onNavigate(url);
     }
   };
-  
+
   return (
     <TimelineItem>
-      <TimelineOppositeContent 
+      <TimelineOppositeContent
         sx={{ flex: 0.2, minWidth: 120 }}
-        color="text.secondary"
-      >
+        color="text.secondary">
+
         <Tooltip title={time.formatted}>
           <Typography variant="body2">{time.relative}</Typography>
         </Tooltip>
@@ -137,7 +137,7 @@ const ActivityTimelineItem: React.FC<ActivityTimelineItemProps> = ({
       
       <TimelineSeparator>
         <TimelineDot color={activityColor as any}>
-          {getActivityIcon(activity.activityType)}
+          {GetActivityIcon(activity.activityType)}
         </TimelineDot>
         {!isLast && <TimelineConnector />}
       </TimelineSeparator>
@@ -147,37 +147,37 @@ const ActivityTimelineItem: React.FC<ActivityTimelineItemProps> = ({
           {activity.title}
         </Typography>
         
-        {activity.description && (
-          <Typography variant="body2" color="text.secondary">
+        {activity.description &&
+        <Typography variant="body2" color="text.secondary">
             {activity.description}
           </Typography>
-        )}
+        }
         
         <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-          {activity.user && (
-            <Chip
-              size="small"
-              icon={<PersonIcon />}
-              label={activity.user.name}
-              variant="outlined"
-            />
-          )}
+          {activity.user &&
+          <Chip
+            size="small"
+            icon={<PersonIcon />}
+            label={activity.user.name}
+            variant="outlined" />
+
+          }
           
-          {activity.relatedItems && activity.relatedItems.map((item, index) => (
-            <Chip
-              key={index}
-              size="small"
-              label={item.name}
-              variant="outlined"
-              color="primary"
-              clickable={!!item.link}
-              onClick={item.link ? handleLinkClick(item.link) : undefined}
-            />
-          ))}
+          {activity.relatedItems && activity.relatedItems.map((item, index) =>
+          <Chip
+            key={index}
+            size="small"
+            label={item.name}
+            variant="outlined"
+            color="primary"
+            clickable={!!item.link}
+            onClick={item.link ? handleLinkClick(item.link) : undefined} />
+
+          )}
         </Box>
       </TimelineContent>
-    </TimelineItem>
-  );
+    </TimelineItem>);
+
 };
 
-export default ActivityTimelineItem; 
+export default ActivityTimelineItem;

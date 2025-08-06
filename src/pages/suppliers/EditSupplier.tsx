@@ -20,16 +20,16 @@ const initialFormValues: SupplierFormValues = {
     city: '',
     state: '',
     zipCode: '',
-    country: '',
+    country: ''
   },
   qualifications: [],
   certifications: [],
   notes: '',
-  supplierTags: [],
+  supplierTags: []
 };
 
 export const EditSupplier: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{id: string;}>();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState<SupplierFormValues>(initialFormValues);
 
@@ -48,19 +48,19 @@ export const EditSupplier: React.FC = () => {
   }, [id]);
 
   const handleChange: MUISelectChangeHandler = (
-    event: SelectChangeEvent
-  ) => {
+  event: SelectChangeEvent) =>
+  {
     const { name, value } = event.target;
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
   const handleArrayChange = (name: keyof SupplierFormValues, newValue: string[]) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
-      [name]: newValue,
+      [name]: newValue
     }));
   };
 
@@ -81,18 +81,18 @@ export const EditSupplier: React.FC = () => {
       <Select
         name="industry"
         value={formValues.industry}
-        onChange={handleChange}
-      >
-        {/* Industry options */}
+        onChange={handleChange}>
+
+        
       </Select>
       <Select
         name="status"
         value={formValues.status}
-        onChange={handleChange}
-      >
-        {/* Status options */}
+        onChange={handleChange}>
+
+        
       </Select>
-      {/* Other form fields */}
-    </form>
-  );
+      
+    </form>);
+
 };

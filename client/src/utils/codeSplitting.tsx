@@ -21,14 +21,14 @@ export const DefaultLoading: React.FC<{
 }> = ({ message = 'Loading...', size = 'medium' }) => {
   const getSize = () => {
     switch (size) {
-      case 'small': return { progressSize: 24, height: '100px' };
-      case 'large': return { progressSize: 48, height: '300px' };
-      default: return { progressSize: 36, height: '200px' };
+      case 'small':return { progressSize: 24, height: '100px' };
+      case 'large':return { progressSize: 48, height: '300px' };
+      default:return { progressSize: 36, height: '200px' };
     }
   };
-  
+
   const { progressSize, height } = getSize();
-  
+
   return (
     <Box
       display="flex"
@@ -36,16 +36,16 @@ export const DefaultLoading: React.FC<{
       justifyContent="center"
       alignItems="center"
       minHeight={height}
-      width="100%"
-    >
+      width="100%">
+
       <CircularProgress size={progressSize} />
-      {message && (
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+      {message &&
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
           {message}
         </Typography>
-      )}
-    </Box>
-  );
+      }
+    </Box>);
+
 };
 
 /**
@@ -56,47 +56,47 @@ export interface CodeSplitOptions {
    * Custom loading component to show while the component is loading
    */
   fallback?: React.ReactNode;
-  
+
   /**
    * Prefetch the component when the browser is idle
    */
   prefetch?: boolean;
-  
+
   /**
    * Preload the component as soon as possible
    */
   preload?: boolean;
-  
+
   /**
    * Retry loading the component if it fails to load
    */
   retry?: boolean;
-  
+
   /**
    * Number of retries before giving up
    */
   retryCount?: number;
-  
+
   /**
    * Loading priority
    */
   priority?: LoadPriority;
-  
+
   /**
    * Timeout in ms before showing loading indicator
    */
   loadingDelay?: number;
-  
+
   /**
    * Error component to show if loading fails
    */
   errorComponent?: React.ReactNode;
-  
+
   /**
    * Chunk name for better debugging
    */
   chunkName?: string;
-  
+
   /**
    * Whether to use preload link in document head
    */
@@ -114,16 +114,16 @@ const prefetchedModules = new Set<string>();
  */
 export function addPreloadLink(url: string, as: 'script' | 'style' = 'script'): void {
   if (!url || typeof document === 'undefined') return;
-  
+
   // Check if link already exists
   const existingLink = document.querySelector(`link[href="${url}"]`);
   if (existingLink) return;
-  
+
   const link = document.createElement('link');
   link.rel = 'preload';
   link.as = as;
   link.href = url;
-  
+
   document.head.appendChild(link);
 }
 
@@ -134,17 +134,17 @@ export function addPreloadLink(url: string, as: 'script' | 'style' = 'script'): 
  * @param chunkName Optional chunk name for tracking
  */
 export function prefetchWhenIdle<T>(
-  importFn: () => Promise<T>,
-  chunkName?: string
-): void {
+importFn: () => Promise<T>,
+chunkName?: string)
+: void {
   const key = chunkName || importFn.toString();
-  
+
   // Skip if already prefetched
   if (prefetchedModules.has(key)) return;
-  
+
   // Mark as prefetched
   prefetchedModules.add(key);
-  
+
   if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
     (window as any).requestIdleCallback(() => {
       importFn().catch(() => {
@@ -163,9 +163,9 @@ export function prefetchWhenIdle<T>(
  * @returns Lazy-loaded component
  */
 export function createLazyComponent<T extends ComponentType<any>>(
-  importFn: () => Promise<{ default: T }>,
-  options: CodeSplitOptions = {}
-): React.LazyExoticComponent<T> {
+importFn: () => Promise<{default: T;}>,
+options: CodeSplitOptions = {})
+: React.LazyExoticComponent<T> {
   const {
     prefetch = false,
     preload = false,
@@ -175,17 +175,17 @@ export function createLazyComponent<T extends ComponentType<any>>(
     usePreloadLink = codeSplittingConfig.preloading.usePreloadLinks,
     priority = LoadPriority.MEDIUM
   } = options;
-  
+
   // Enhanced import function with retry logic
-  const importWithRetry = async (): Promise<{ default: T }> => {
+  const importWithRetry = async (): Promise<{default: T;}> => {
     let lastError: Error | null = null;
     let retriesLeft = retry ? retryCount : 0;
-    
+
     // Try loading the module
     while (retriesLeft >= 0) {
       try {
         const module = await importFn();
-        
+
         // If module has a webpack chunk name and usePreloadLink is enabled,
         // extract the chunk URL and add a preload link
         if (usePreloadLink && module.__webpackChunkName) {
@@ -194,29 +194,29 @@ export function createLazyComponent<T extends ComponentType<any>>(
           const chunkUrl = `/static/js/${module.__webpackChunkName}.chunk.js`;
           addPreloadLink(chunkUrl);
         }
-        
+
         return module;
       } catch (_error) {
         lastError = _error as Error;
         retriesLeft--;
-        
+
         if (retriesLeft >= 0) {
           // Wait before retrying (exponential backoff)
-          await new Promise(resolve => 
-            setTimeout(resolve, 1000 * Math.pow(2, retryCount - retriesLeft))
+          await new Promise((resolve) =>
+          setTimeout(resolve, 1000 * Math.pow(2, retryCount - retriesLeft))
           );
         }
       }
     }
-    
+
     // If we get here, all retries failed
     console.error('Failed to load module after multiple retries:', lastError);
     throw lastError;
   };
-  
+
   // Create the lazy component
   const LazyComponent = lazy(importWithRetry);
-  
+
   // Handle prefetching based on priority
   if (priority === LoadPriority.CRITICAL || priority === LoadPriority.HIGH) {
     // Preload immediately for critical and high priority components
@@ -228,7 +228,7 @@ export function createLazyComponent<T extends ComponentType<any>>(
     // Preload immediately
     importFn().catch(() => {});
   }
-  
+
   return LazyComponent;
 }
 
@@ -238,29 +238,29 @@ export function createLazyComponent<T extends ComponentType<any>>(
 export const DefaultErrorComponent: React.FC<{
   error?: Error;
   retry?: () => void;
-}> = ({ error, retry }) => (
-  <Box
-    display="flex"
-    flexDirection="column"
-    justifyContent="center"
-    alignItems="center"
-    minHeight="200px"
-    width="100%"
-    sx={{ p: 2, border: '1px solid #f44336', borderRadius: 1 }}
-  >
+}> = ({ error, retry }) =>
+<Box
+  display="flex"
+  flexDirection="column"
+  justifyContent="center"
+  alignItems="center"
+  minHeight="200px"
+  width="100%"
+  sx={{ p: 2, border: '1px solid #f44336', borderRadius: 1 }}>
+
     <Typography variant="h6" color="error" gutterBottom>
       Failed to load component
     </Typography>
     <Typography variant="body2" color="text.secondary" gutterBottom>
       {error?.message || 'An unexpected error occurred'}
     </Typography>
-    {retry && (
-      <button onClick={retry} style={{ marginTop: 16 }}>
+    {retry &&
+  <button onClick={retry} style={{ marginTop: 16 }}>
         Retry
       </button>
-    )}
-  </Box>
-);
+  }
+  </Box>;
+
 
 /**
  * Wrap a component with Suspense and a loading fallback
@@ -269,33 +269,33 @@ export const DefaultErrorComponent: React.FC<{
  * @param options Configuration options
  * @returns Wrapped component with Suspense
  */
-export function withSuspense<T extends ComponentType<any>>(
-  Component: T,
-  options: CodeSplitOptions = {}
-): React.FC<React.ComponentProps<T>> {
-  const { 
+export function WithSuspense<T extends ComponentType<any>>(
+Component: T,
+options: CodeSplitOptions = {})
+: React.FC<React.ComponentProps<T>> {
+  const {
     fallback = <DefaultLoading />,
     loadingDelay = 200
   } = options;
-  
+
   return (props: React.ComponentProps<T>) => {
     const [showLoading, setShowLoading] = useState(loadingDelay === 0);
-    
+
     useEffect(() => {
       if (loadingDelay > 0) {
         const timer = setTimeout(() => {
           setShowLoading(true);
         }, loadingDelay);
-        
+
         return () => clearTimeout(timer);
       }
     }, [loadingDelay]);
-    
+
     return (
       <Suspense fallback={showLoading ? fallback : null}>
         <Component {...props} />
-      </Suspense>
-    );
+      </Suspense>);
+
   };
 }
 
@@ -307,11 +307,11 @@ export function withSuspense<T extends ComponentType<any>>(
  * @returns Lazy-loaded component wrapped with Suspense
  */
 export function lazyRoute<T extends ComponentType<any>>(
-  importFn: () => Promise<{ default: T }>,
-  options: CodeSplitOptions = {}
-): React.FC<React.ComponentProps<T>> {
+importFn: () => Promise<{default: T;}>,
+options: CodeSplitOptions = {})
+: React.FC<React.ComponentProps<T>> {
   const LazyComponent = createLazyComponent(importFn, options);
-  return withSuspense(LazyComponent, options);
+  return WithSuspense(LazyComponent, options);
 }
 
 /**
@@ -324,13 +324,13 @@ export function useDynamicImport<T>(importFn: () => Promise<T>) {
   const [module, setModule] = React.useState<T | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
-  
+
   const load = React.useCallback(async () => {
     if (module) return module;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await importFn();
       setModule(result);
@@ -343,7 +343,7 @@ export function useDynamicImport<T>(importFn: () => Promise<T>) {
       setLoading(false);
     }
   }, [importFn, module]);
-  
+
   return { module, loading, error, load };
 }
 
@@ -354,13 +354,13 @@ export function useDynamicImport<T>(importFn: () => Promise<T>) {
  * @returns Promise that resolves when all imports are complete
  */
 export async function loadModules<T extends Record<string, () => Promise<any>>>(
-  imports: T
-): Promise<{ [K in keyof T]: Awaited<ReturnType<T[K]>> }> {
+imports: T)
+: Promise<{ [K in keyof T]: Awaited<ReturnType<T[K]>> }> {
   const keys = Object.keys(imports);
-  const importPromises = keys.map(key => imports[key]());
-  
+  const importPromises = keys.map((key) => imports[key]());
+
   const modules = await Promise.all(importPromises);
-  
+
   return keys.reduce((result, key, index) => {
     result[key as keyof T] = modules[index];
     return result;
@@ -375,33 +375,33 @@ export async function loadModules<T extends Record<string, () => Promise<any>>>(
  * @returns [ref, component] - Ref to attach to container and the loaded component
  */
 export function useInViewLazyLoad<T extends ComponentType<any>>(
-  importFn: () => Promise<{ default: T }>,
-  options: CodeSplitOptions & { rootMargin?: string } = {}
-) {
-  const { 
+importFn: () => Promise<{default: T;}>,
+options: CodeSplitOptions & {rootMargin?: string;} = {})
+{
+  const {
     rootMargin = '200px',
     fallback = <DefaultLoading size="small" />,
     loadingDelay = 500
   } = options;
-  
+
   const [loaded, setLoaded] = useState(false);
   const [Component, setComponent] = useState<React.FC<React.ComponentProps<T>> | null>(null);
   const { ref, inView } = useInView({ rootMargin, triggerOnce: true });
-  
+
   useEffect(() => {
     if (inView && !loaded) {
       setLoaded(true);
-      
+
       const LazyComponent = createLazyComponent(importFn, options);
-      const WrappedComponent = withSuspense(LazyComponent, { 
+      const WrappedComponent = WithSuspense(LazyComponent, {
         fallback,
         loadingDelay
       });
-      
+
       setComponent(() => WrappedComponent);
     }
   }, [inView, loaded, importFn, options, fallback, loadingDelay]);
-  
+
   return [ref, Component];
 }
 
@@ -410,18 +410,18 @@ export function useInViewLazyLoad<T extends ComponentType<any>>(
  */
 export function preloadConfiguredRoutes(): void {
   if (!codeSplittingConfig.enabled) return;
-  
+
   const { routes } = codeSplittingConfig;
-  
+
   // Prefetch routes configured in the config
-  routes.prefetch.forEach(route => {
+  routes.prefetch.forEach((route) => {
     // This is just a placeholder - in a real implementation,
     // you would need to map routes to their import functions
     console.log(`Would prefetch route: ${route}`);
   });
-  
+
   // Prefetch custom configured routes
-  routes.custom.forEach(routeConfig => {
+  routes.custom.forEach((routeConfig) => {
     if (routeConfig.prefetch) {
       console.log(`Would prefetch custom route: ${routeConfig.path}`);
     }
@@ -440,7 +440,7 @@ export default {
   DefaultLoading,
   DefaultErrorComponent,
   createLazyComponent,
-  withSuspense,
+  withSuspense: WithSuspense,
   lazyRoute,
   useDynamicImport,
   loadModules,
@@ -448,4 +448,7 @@ export default {
   addPreloadLink,
   prefetchWhenIdle,
   preloadConfiguredRoutes
-}; 
+};
+
+// Alias for backward compatibility
+export { WithSuspense as withSuspense };

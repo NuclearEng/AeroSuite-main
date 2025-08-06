@@ -16,20 +16,20 @@ import {
   FormControlLabel,
   Checkbox,
   Grid,
-  Divider
-} from '@mui/material';
+  Divider } from
+'@mui/material';
 import AccessibilityAudit from '../../components/common/AccessibilityAudit';
 import ColorContrastChecker from '../../components/common/ColorContrastChecker';
 import AccessibilityThemeDemo from '../../components/common/AccessibilityThemeDemo';
 import KeyboardNavigableDemo from '../../components/common/KeyboardNavigableDemo';
 import ScreenReaderCompatibility from '../../components/common/ScreenReaderCompatibility';
-import { 
-  AccessibilityAuditResult, 
+import {
+  AccessibilityAuditResult,
   AccessibilitySeverity,
   getAccessibilityIssuesByType,
   getFocusManagementIssues,
-  getScreenReaderIssues
-} from '../../utils/accessibilityAudit';
+  getScreenReaderIssues } from
+'../../utils/accessibilityAudit';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,21 +46,21 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`accessibility-tabpanel-${index}`}
       aria-labelledby={`accessibility-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ p: 3 }}>
           {children}
         </Box>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }
 
 function a11yProps(index: number) {
   return {
     id: `accessibility-tab-${index}`,
-    'aria-controls': `accessibility-tabpanel-${index}`,
+    'aria-controls': `accessibility-tabpanel-${index}`
   };
 }
 
@@ -74,13 +74,13 @@ const AccessibilityAuditPage: React.FC = () => {
   const [focusIssues, setFocusIssues] = useState<any[] | null>(null);
   const [screenReaderIssues, setScreenReaderIssues] = useState<any[] | null>(null);
   const [selectedSeverities, setSelectedSeverities] = useState<AccessibilitySeverity[]>([
-    AccessibilitySeverity.CRITICAL,
-    AccessibilitySeverity.SERIOUS
-  ]);
+  AccessibilitySeverity.CRITICAL,
+  AccessibilitySeverity.SERIOUS]
+  );
   const [selectedStandards, setSelectedStandards] = useState<string[]>([
-    'wcag2a',
-    'wcag2aa'
-  ]);
+  'wcag2a',
+  'wcag2aa']
+  );
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -88,22 +88,22 @@ const AccessibilityAuditPage: React.FC = () => {
 
   const handleAuditComplete = (results: AccessibilityAuditResult) => {
     setAuditResults(results);
-    
+
     // Get focus management issues
-    getFocusManagementIssues().then(issues => {
+    getFocusManagementIssues().then((issues) => {
       setFocusIssues(issues);
     });
-    
+
     // Get screen reader issues
-    getScreenReaderIssues().then(issues => {
+    getScreenReaderIssues().then((issues) => {
       setScreenReaderIssues(issues);
     });
   };
 
   const handleSeverityChange = (severity: AccessibilitySeverity) => {
-    setSelectedSeverities(prev => {
+    setSelectedSeverities((prev) => {
       if (prev.includes(severity)) {
-        return prev.filter(s => s !== severity);
+        return prev.filter((s) => s !== severity);
       } else {
         return [...prev, severity];
       }
@@ -111,9 +111,9 @@ const AccessibilityAuditPage: React.FC = () => {
   };
 
   const handleStandardChange = (standard: string) => {
-    setSelectedStandards(prev => {
+    setSelectedStandards((prev) => {
       if (prev.includes(standard)) {
-        return prev.filter(s => s !== standard);
+        return prev.filter((s) => s !== standard);
       } else {
         return [...prev, standard];
       }
@@ -151,8 +151,8 @@ const AccessibilityAuditPage: React.FC = () => {
           onChange={handleTabChange}
           aria-label="accessibility audit tabs"
           variant="scrollable"
-          scrollButtons="auto"
-        >
+          scrollButtons="auto">
+
           <Tab label="General Audit" {...a11yProps(0)} />
           <Tab label="Focus Management" {...a11yProps(1)} />
           <Tab label="Screen Reader" {...a11yProps(2)} />
@@ -178,13 +178,13 @@ const AccessibilityAuditPage: React.FC = () => {
               onChange={(e) => setTargetSelector(e.target.value)}
               fullWidth
               margin="normal"
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
             
-            <AccessibilityAudit 
+            <AccessibilityAudit
               targetSelector={targetSelector || undefined}
-              onAuditComplete={handleAuditComplete}
-            />
+              onAuditComplete={handleAuditComplete} />
+
           </Box>
         </TabPanel>
         
@@ -197,24 +197,24 @@ const AccessibilityAuditPage: React.FC = () => {
               This audit focuses on keyboard navigation and focus management issues.
             </Typography>
             
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               onClick={runFocusedAudit}
-              sx={{ mb: 3 }}
-            >
+              sx={{ mb: 3 }}>
+
               Run Focus Management Audit
             </Button>
             
-            {focusIssues && focusIssues.length > 0 ? (
-              <Box>
+            {focusIssues && focusIssues.length > 0 ?
+            <Box>
                 <Typography variant="subtitle1" gutterBottom>
                   Found {focusIssues.length} focus management {focusIssues.length === 1 ? 'issue' : 'issues'}
                 </Typography>
                 
-                {/* Display focus issues */}
+                
                 <Paper variant="outlined" sx={{ p: 2 }}>
-                  {focusIssues.map((issue, index) => (
-                    <Box key={index} sx={{ mb: 2 }}>
+                  {focusIssues.map((issue, index) =>
+                <Box key={index} sx={{ mb: 2 }}>
                       <Typography variant="subtitle2">
                         {issue.id}: {issue.description}
                       </Typography>
@@ -226,14 +226,14 @@ const AccessibilityAuditPage: React.FC = () => {
                       </Typography>
                       <Divider sx={{ my: 1 }} />
                     </Box>
-                  ))}
+                )}
                 </Paper>
-              </Box>
-            ) : focusIssues === null ? (
-              <Typography>Run the audit to see focus management issues</Typography>
-            ) : (
-              <Typography>No focus management issues found!</Typography>
-            )}
+              </Box> :
+            focusIssues === null ?
+            <Typography>Run the audit to see focus management issues</Typography> :
+
+            <Typography>No focus management issues found!</Typography>
+            }
             
             <Divider sx={{ my: 4 }} />
             
@@ -258,24 +258,24 @@ const AccessibilityAuditPage: React.FC = () => {
               This audit checks for issues that affect screen reader compatibility, such as missing ARIA attributes and improper semantic HTML.
             </Typography>
             
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               onClick={runScreenReaderAudit}
-              sx={{ mb: 3 }}
-            >
+              sx={{ mb: 3 }}>
+
               Run Screen Reader Audit
             </Button>
             
-            {screenReaderIssues && screenReaderIssues.length > 0 ? (
-              <Box>
+            {screenReaderIssues && screenReaderIssues.length > 0 ?
+            <Box>
                 <Typography variant="subtitle1" gutterBottom>
                   Found {screenReaderIssues.length} screen reader compatibility {screenReaderIssues.length === 1 ? 'issue' : 'issues'}
                 </Typography>
                 
-                {/* Display screen reader issues */}
+                
                 <Paper variant="outlined" sx={{ p: 2 }}>
-                  {screenReaderIssues.map((issue, index) => (
-                    <Box key={index} sx={{ mb: 2 }}>
+                  {screenReaderIssues.map((issue, index) =>
+                <Box key={index} sx={{ mb: 2 }}>
                       <Typography variant="subtitle2">
                         {issue.id}: {issue.description}
                       </Typography>
@@ -287,14 +287,14 @@ const AccessibilityAuditPage: React.FC = () => {
                       </Typography>
                       <Divider sx={{ my: 1 }} />
                     </Box>
-                  ))}
+                )}
                 </Paper>
-              </Box>
-            ) : screenReaderIssues === null ? (
-              <Typography>Run the audit to see screen reader compatibility issues</Typography>
-            ) : (
-              <Typography>No screen reader compatibility issues found!</Typography>
-            )}
+              </Box> :
+            screenReaderIssues === null ?
+            <Typography>Run the audit to see screen reader compatibility issues</Typography> :
+
+            <Typography>No screen reader compatibility issues found!</Typography>
+            }
             
             <Divider sx={{ my: 4 }} />
             
@@ -348,40 +348,40 @@ const AccessibilityAuditPage: React.FC = () => {
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedSeverities.includes(AccessibilitySeverity.CRITICAL)}
-                        onChange={() => handleSeverityChange(AccessibilitySeverity.CRITICAL)}
-                      />
+                    <Checkbox
+                      checked={selectedSeverities.includes(AccessibilitySeverity.CRITICAL)}
+                      onChange={() => handleSeverityChange(AccessibilitySeverity.CRITICAL)} />
+
                     }
-                    label="Critical"
-                  />
+                    label="Critical" />
+
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedSeverities.includes(AccessibilitySeverity.SERIOUS)}
-                        onChange={() => handleSeverityChange(AccessibilitySeverity.SERIOUS)}
-                      />
+                    <Checkbox
+                      checked={selectedSeverities.includes(AccessibilitySeverity.SERIOUS)}
+                      onChange={() => handleSeverityChange(AccessibilitySeverity.SERIOUS)} />
+
                     }
-                    label="Serious"
-                  />
+                    label="Serious" />
+
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedSeverities.includes(AccessibilitySeverity.MODERATE)}
-                        onChange={() => handleSeverityChange(AccessibilitySeverity.MODERATE)}
-                      />
+                    <Checkbox
+                      checked={selectedSeverities.includes(AccessibilitySeverity.MODERATE)}
+                      onChange={() => handleSeverityChange(AccessibilitySeverity.MODERATE)} />
+
                     }
-                    label="Moderate"
-                  />
+                    label="Moderate" />
+
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedSeverities.includes(AccessibilitySeverity.MINOR)}
-                        onChange={() => handleSeverityChange(AccessibilitySeverity.MINOR)}
-                      />
+                    <Checkbox
+                      checked={selectedSeverities.includes(AccessibilitySeverity.MINOR)}
+                      onChange={() => handleSeverityChange(AccessibilitySeverity.MINOR)} />
+
                     }
-                    label="Minor"
-                  />
+                    label="Minor" />
+
                 </FormGroup>
               </Grid>
               
@@ -392,40 +392,40 @@ const AccessibilityAuditPage: React.FC = () => {
                 <FormGroup>
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedStandards.includes('wcag2a')}
-                        onChange={() => handleStandardChange('wcag2a')}
-                      />
+                    <Checkbox
+                      checked={selectedStandards.includes('wcag2a')}
+                      onChange={() => handleStandardChange('wcag2a')} />
+
                     }
-                    label="WCAG 2.1 A"
-                  />
+                    label="WCAG 2.1 A" />
+
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedStandards.includes('wcag2aa')}
-                        onChange={() => handleStandardChange('wcag2aa')}
-                      />
+                    <Checkbox
+                      checked={selectedStandards.includes('wcag2aa')}
+                      onChange={() => handleStandardChange('wcag2aa')} />
+
                     }
-                    label="WCAG 2.1 AA"
-                  />
+                    label="WCAG 2.1 AA" />
+
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedStandards.includes('wcag2aaa')}
-                        onChange={() => handleStandardChange('wcag2aaa')}
-                      />
+                    <Checkbox
+                      checked={selectedStandards.includes('wcag2aaa')}
+                      onChange={() => handleStandardChange('wcag2aaa')} />
+
                     }
-                    label="WCAG 2.1 AAA"
-                  />
+                    label="WCAG 2.1 AAA" />
+
                   <FormControlLabel
                     control={
-                      <Checkbox 
-                        checked={selectedStandards.includes('section508')}
-                        onChange={() => handleStandardChange('section508')}
-                      />
+                    <Checkbox
+                      checked={selectedStandards.includes('section508')}
+                      onChange={() => handleStandardChange('section508')} />
+
                     }
-                    label="Section 508"
-                  />
+                    label="Section 508" />
+
                 </FormGroup>
               </Grid>
             </Grid>
@@ -446,12 +446,12 @@ const AccessibilityAuditPage: React.FC = () => {
             <Typography variant="body2" paragraph>
               The Web Content Accessibility Guidelines (WCAG) provide a wide range of recommendations for making web content more accessible.
             </Typography>
-            <Button 
-              variant="outlined" 
-              href="https://www.w3.org/WAI/standards-guidelines/wcag/" 
+            <Button
+              variant="outlined"
+              href="https://www.w3.org/WAI/standards-guidelines/wcag/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
+
               View WCAG Guidelines
             </Button>
           </Grid>
@@ -463,12 +463,12 @@ const AccessibilityAuditPage: React.FC = () => {
             <Typography variant="body2" paragraph>
               Learn about various tools available for testing web accessibility, including automated and manual testing methods.
             </Typography>
-            <Button 
-              variant="outlined" 
-              href="https://www.w3.org/WAI/test-evaluate/" 
+            <Button
+              variant="outlined"
+              href="https://www.w3.org/WAI/test-evaluate/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
+
               Explore Testing Tools
             </Button>
           </Grid>
@@ -480,19 +480,19 @@ const AccessibilityAuditPage: React.FC = () => {
             <Typography variant="body2" paragraph>
               Access tutorials and training materials to learn how to implement accessible web design and development practices.
             </Typography>
-            <Button 
-              variant="outlined" 
-              href="https://www.w3.org/WAI/tutorials/" 
+            <Button
+              variant="outlined"
+              href="https://www.w3.org/WAI/tutorials/"
               target="_blank"
-              rel="noopener noreferrer"
-            >
+              rel="noopener noreferrer">
+
               View Tutorials
             </Button>
           </Grid>
         </Grid>
       </Paper>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default AccessibilityAuditPage; 
+export default AccessibilityAuditPage;

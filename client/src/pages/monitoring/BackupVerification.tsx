@@ -25,22 +25,22 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
-} from '@mui/material';
+  MenuItem } from
+'@mui/material';
 import {
   Refresh as RefreshIcon,
   CheckCircle as CheckCircleIcon,
   Error as ErrorIcon,
   Warning as WarningIcon,
   Info as InfoIcon,
-  History as HistoryIcon
-} from '@mui/icons-material';
+  History as HistoryIcon } from
+'@mui/icons-material';
 import { format } from 'date-fns';
 import backupVerificationService, {
   BackupVerificationStats,
   BackupLog,
-  VerificationResults
-} from '../../services/backup-verification.service';
+  VerificationResults } from
+'../../services/backup-verification.service';
 
 /**
  * Component for displaying backup verification status and logs
@@ -65,16 +65,16 @@ const BackupVerification: React.FC = () => {
   const loadData = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // Load stats
       const statsData = await backupVerificationService.getVerificationStatus(timeRange);
       setStats(statsData);
-      
+
       // Load logs
       const logsData = await backupVerificationService.getVerificationLogs(10);
       setLogs(logsData);
-      
+
       // Load failures
       const failuresData = await backupVerificationService.getVerificationFailures(5);
       setFailures(failuresData);
@@ -89,12 +89,12 @@ const BackupVerification: React.FC = () => {
   // Trigger verification
   const handleTriggerVerification = async () => {
     setVerifying(true);
-    
+
     try {
       await backupVerificationService.triggerVerification();
       // Show success message
       setError('Verification process initiated. Results will be available shortly.');
-      
+
       // Reload data after a delay to give the verification process time to complete
       setTimeout(() => {
         loadData();
@@ -114,7 +114,7 @@ const BackupVerification: React.FC = () => {
   };
 
   // Get status icon
-  const getStatusIcon = (status: string) => {
+  const GetStatusIcon = (status: string) => {
     switch (status) {
       case 'healthy':
         return <CheckCircleIcon sx={{ color: 'success.main' }} />;
@@ -129,21 +129,21 @@ const BackupVerification: React.FC = () => {
 
   // Get status chip
   const getStatusChip = (success: boolean) => {
-    return success ? (
-      <Chip
-        icon={<CheckCircleIcon />}
-        label="Success"
-        color="success"
-        size="small"
-      />
-    ) : (
-      <Chip
-        icon={<ErrorIcon />}
-        label="Failed"
-        color="error"
-        size="small"
-      />
-    );
+    return success ?
+    <Chip
+      icon={<CheckCircleIcon />}
+      label="Success"
+      color="success"
+      size="small" /> :
+
+
+    <Chip
+      icon={<ErrorIcon />}
+      label="Failed"
+      color="error"
+      size="small" />;
+
+
   };
 
   // Format date
@@ -173,8 +173,8 @@ const BackupVerification: React.FC = () => {
             <Select
               value={timeRange}
               onChange={(e) => setTimeRange(Number(e.target.value))}
-              label="Time Range"
-            >
+              label="Time Range">
+
               <MenuItem value={7}>Last 7 days</MenuItem>
               <MenuItem value={30}>Last 30 days</MenuItem>
               <MenuItem value={90}>Last 90 days</MenuItem>
@@ -184,33 +184,33 @@ const BackupVerification: React.FC = () => {
             variant="contained"
             startIcon={<RefreshIcon />}
             onClick={loadData}
-            disabled={loading}
-          >
+            disabled={loading}>
+
             Refresh
           </Button>
         </Box>
       </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError(null)}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError(null)}>
           {error}
         </Alert>
-      )}
+      }
 
-      {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+      {loading ?
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
           <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          {/* Status Summary */}
-          {stats && (
-            <Grid container spacing={3} sx={{ mb: 4 }}>
+        </Box> :
+
+      <>
+          
+          {stats &&
+        <Grid container spacing={3} sx={{ mb: 4 }}>
               <Grid item xs={12} md={4}>
                 <Card>
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                      {getStatusIcon(stats.status)}
+                      {GetStatusIcon(stats.status)}
                       <Typography variant="h6" sx={{ ml: 1 }}>
                         System Status: {stats.status.charAt(0).toUpperCase() + stats.status.slice(1)}
                       </Typography>
@@ -220,11 +220,11 @@ const BackupVerification: React.FC = () => {
                       {stats.status === 'warning' && 'Some backup verifications are failing or outdated.'}
                       {stats.status === 'critical' && 'Critical backup verification failures detected!'}
                     </Typography>
-                    {stats.mostRecentVerification && (
-                      <Typography variant="body2" sx={{ mt: 1 }}>
+                    {stats.mostRecentVerification &&
+                <Typography variant="body2" sx={{ mt: 1 }}>
                         Last verified: {formatDate(stats.mostRecentVerification.verificationDate)}
                       </Typography>
-                    )}
+                }
                   </CardContent>
                 </Card>
               </Grid>
@@ -252,13 +252,13 @@ const BackupVerification: React.FC = () => {
                   <CardContent>
                     <Typography variant="h6" sx={{ mb: 2 }}>Actions</Typography>
                     <Button
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      onClick={handleTriggerVerification}
-                      disabled={verifying}
-                      sx={{ mb: 2 }}
-                    >
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={handleTriggerVerification}
+                  disabled={verifying}
+                  sx={{ mb: 2 }}>
+
                       {verifying ? 'Verifying...' : 'Trigger Verification'}
                     </Button>
                     <Typography variant="body2" color="text.secondary">
@@ -269,9 +269,9 @@ const BackupVerification: React.FC = () => {
                 </Card>
               </Grid>
             </Grid>
-          )}
+        }
 
-          {/* Recent Logs */}
+          
           <Typography variant="h5" sx={{ mb: 2 }}>Recent Verification Logs</Typography>
           <TableContainer component={Paper} sx={{ mb: 4 }}>
             <Table size="small">
@@ -285,9 +285,9 @@ const BackupVerification: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {logs.length > 0 ? (
-                  logs.map((log) => (
-                    <TableRow key={log._id}>
+                {logs.length > 0 ?
+              logs.map((log) =>
+              <TableRow key={log._id}>
                       <TableCell>{formatDate(log.verificationDate)}</TableCell>
                       <TableCell>{log.backupLocation}</TableCell>
                       <TableCell>{getStatusChip(log.success)}</TableCell>
@@ -300,21 +300,21 @@ const BackupVerification: React.FC = () => {
                         </Tooltip>
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
+              ) :
+
+              <TableRow>
                     <TableCell colSpan={5} align="center">
                       No verification logs found
                     </TableCell>
                   </TableRow>
-                )}
+              }
               </TableBody>
             </Table>
           </TableContainer>
 
-          {/* Recent Failures */}
-          {failures.length > 0 && (
-            <>
+          
+          {failures.length > 0 &&
+        <>
               <Typography variant="h5" sx={{ mb: 2 }}>Recent Failures</Typography>
               <TableContainer component={Paper} sx={{ mb: 4 }}>
                 <Table size="small">
@@ -327,8 +327,8 @@ const BackupVerification: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {failures.map((failure) => (
-                      <TableRow key={failure._id}>
+                    {failures.map((failure) =>
+                <TableRow key={failure._id}>
                         <TableCell>{formatDate(failure.verificationDate)}</TableCell>
                         <TableCell>{failure.backupLocation}</TableCell>
                         <TableCell>{failure.error || 'Unknown error'}</TableCell>
@@ -340,21 +340,21 @@ const BackupVerification: React.FC = () => {
                           </Tooltip>
                         </TableCell>
                       </TableRow>
-                    ))}
+                )}
                   </TableBody>
                 </Table>
               </TableContainer>
             </>
-          )}
+        }
         </>
-      )}
+      }
 
-      {/* Details Dialog */}
+      
       <Dialog open={detailsOpen} onClose={() => setDetailsOpen(false)} maxWidth="md" fullWidth>
         <DialogTitle>Verification Details</DialogTitle>
         <DialogContent>
-          {selectedLog && (
-            <Box>
+          {selectedLog &&
+          <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                   <Typography variant="subtitle2">Backup Location</Typography>
@@ -372,36 +372,36 @@ const BackupVerification: React.FC = () => {
                   <Typography variant="subtitle2">Duration</Typography>
                   <Typography variant="body2" gutterBottom>{formatDuration(selectedLog.duration)}</Typography>
                 </Grid>
-                {selectedLog.details && (
-                  <Grid item xs={12}>
+                {selectedLog.details &&
+              <Grid item xs={12}>
                     <Typography variant="subtitle2">Details</Typography>
                     <Typography variant="body2" gutterBottom>{selectedLog.details}</Typography>
                   </Grid>
-                )}
-                {selectedLog.error && (
-                  <Grid item xs={12}>
+              }
+                {selectedLog.error &&
+              <Grid item xs={12}>
                     <Typography variant="subtitle2">Error</Typography>
                     <Alert severity="error" sx={{ mt: 1 }}>{selectedLog.error}</Alert>
                   </Grid>
-                )}
-                {selectedLog.metadata && (
-                  <Grid item xs={12}>
+              }
+                {selectedLog.metadata &&
+              <Grid item xs={12}>
                     <Typography variant="subtitle2">Metadata</Typography>
                     <Box sx={{ mt: 1, p: 1, backgroundColor: 'grey.100', borderRadius: 1, overflow: 'auto' }}>
                       <pre>{JSON.stringify(selectedLog.metadata, null, 2)}</pre>
                     </Box>
                   </Grid>
-                )}
+              }
               </Grid>
             </Box>
-          )}
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDetailsOpen(false)}>Close</Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default BackupVerification; 
+export default BackupVerification;

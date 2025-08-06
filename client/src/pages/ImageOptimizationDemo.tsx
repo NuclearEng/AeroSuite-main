@@ -18,50 +18,50 @@ import {
   Chip,
   useTheme,
   alpha,
-  SelectChangeEvent
-} from '@mui/material';
-import { 
-  ImageSize, 
-  ImageFormat, 
-  ImageQuality, 
+  SelectChangeEvent } from
+'@mui/material';
+import {
+  ImageSize,
+  ImageFormat,
+  ImageQuality,
   ImageLoadingStrategy,
   estimateFileSize,
-  isBrowserCompatible
-} from '../utils/imageOptimization';
+  isBrowserCompatible } from
+'../utils/imageOptimization';
 import OptimizedImage from '../components/common/OptimizedImage';
 import { PageHeader } from '../components/common';
 
 // Sample images for demo
 const sampleImages = [
-  {
-    url: 'https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a',
-    alt: 'Airplane parts manufacturing',
-    width: 4000,
-    height: 6000,
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1598521426169-649f4f4a6bf2',
-    alt: 'Jet engine maintenance',
-    width: 3200,
-    height: 4800,
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1526841535633-ef3be0b21fd2',
-    alt: 'Aircraft factory',
-    width: 5600,
-    height: 3733,
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1579356794301-19c2142a3a43',
-    alt: 'Airplane inspection',
-    width: 4300,
-    height: 2868,
-  },
-];
+{
+  url: 'https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a',
+  alt: 'Airplane parts manufacturing',
+  width: 4000,
+  height: 6000
+},
+{
+  url: 'https://images.unsplash.com/photo-1598521426169-649f4f4a6bf2',
+  alt: 'Jet engine maintenance',
+  width: 3200,
+  height: 4800
+},
+{
+  url: 'https://images.unsplash.com/photo-1526841535633-ef3be0b21fd2',
+  alt: 'Aircraft factory',
+  width: 5600,
+  height: 3733
+},
+{
+  url: 'https://images.unsplash.com/photo-1579356794301-19c2142a3a43',
+  alt: 'Airplane inspection',
+  width: 4300,
+  height: 2868
+}];
+
 
 const ImageOptimizationDemo: React.FC = () => {
   const theme = useTheme();
-  
+
   // State for image optimization options
   const [selectedImage, setSelectedImage] = useState(sampleImages[0]);
   const [size, setSize] = useState<ImageSize>(ImageSize.MEDIUM);
@@ -70,7 +70,7 @@ const ImageOptimizationDemo: React.FC = () => {
   const [loading, setLoading] = useState<ImageLoadingStrategy>(ImageLoadingStrategy.LAZY);
   const [blur, setBlur] = useState(true);
   const [comparison, setComparison] = useState(false);
-  
+
   // Calculate estimated file sizes
   const originalSize = estimateFileSize(
     selectedImage.width,
@@ -78,13 +78,13 @@ const ImageOptimizationDemo: React.FC = () => {
     ImageFormat.JPEG,
     100
   );
-  
+
   const optimizedSize = estimateFileSize(
-    size === ImageSize.ORIGINAL ? selectedImage.width : 
+    size === ImageSize.ORIGINAL ? selectedImage.width :
     size === ImageSize.LARGE ? 1200 :
     size === ImageSize.MEDIUM ? 600 :
     size === ImageSize.SMALL ? 300 : 100,
-    size === ImageSize.ORIGINAL ? selectedImage.height : 
+    size === ImageSize.ORIGINAL ? selectedImage.height :
     size === ImageSize.LARGE ? 1200 :
     size === ImageSize.MEDIUM ? 600 :
     size === ImageSize.SMALL ? 300 : 100,
@@ -93,66 +93,66 @@ const ImageOptimizationDemo: React.FC = () => {
     quality === ImageQuality.MEDIUM ? 60 :
     quality === ImageQuality.HIGH ? 80 : 95
   );
-  
-  const savingsPercent = Math.round((1 - (optimizedSize / originalSize)) * 100);
-  
+
+  const savingsPercent = Math.round((1 - optimizedSize / originalSize) * 100);
+
   // Handler functions for form controls
   const handleImageChange = (event: SelectChangeEvent<string>) => {
     const selectedUrl = event.target.value;
-    const image = sampleImages.find(img => img.url === selectedUrl);
+    const image = sampleImages.find((img) => img.url === selectedUrl);
     if (image) {
       setSelectedImage(image);
     }
   };
-  
+
   const handleSizeChange = (event: SelectChangeEvent<string>) => {
     setSize(event.target.value as ImageSize);
   };
-  
+
   const handleFormatChange = (event: SelectChangeEvent<string>) => {
     setFormat(event.target.value as ImageFormat);
   };
-  
+
   const handleQualityChange = (event: SelectChangeEvent<string>) => {
     setQuality(event.target.value as ImageQuality);
   };
-  
+
   const handleLoadingChange = (event: SelectChangeEvent<string>) => {
     setLoading(event.target.value as ImageLoadingStrategy);
   };
-  
+
   const handleBlurChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setBlur(event.target.checked);
   };
-  
+
   const handleComparisonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setComparison(event.target.checked);
   };
-  
+
   // Format file size for display
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-  
+
   // Check format compatibility
   const isFormatSupported = isBrowserCompatible(format);
-  
+
   return (
     <Box>
       <PageHeader
         title="Image Optimization Demo"
         subtitle="Demonstrate automatic image optimization features"
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Demo', href: '/demo' },
-          { label: 'Image Optimization' },
-        ]}
-      />
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Demo', href: '/demo' },
+        { label: 'Image Optimization' }]
+        } />
+
       
       <Grid container spacing={3}>
-        {/* Controls */}
+        
         <Grid item xs={12} md={4}>
           <Card>
             <CardContent>
@@ -167,13 +167,13 @@ const ImageOptimizationDemo: React.FC = () => {
                   labelId="image-select-label"
                   value={selectedImage.url}
                   label="Sample Image"
-                  onChange={handleImageChange}
-                >
-                  {sampleImages.map((image, index) => (
-                    <MenuItem key={index} value={image.url}>
+                  onChange={handleImageChange}>
+
+                  {sampleImages.map((image, index) =>
+                  <MenuItem key={index} value={image.url}>
                       {image.alt}
                     </MenuItem>
-                  ))}
+                  )}
                 </Select>
               </FormControl>
               
@@ -183,8 +183,8 @@ const ImageOptimizationDemo: React.FC = () => {
                   labelId="size-select-label"
                   value={size}
                   label="Size"
-                  onChange={handleSizeChange}
-                >
+                  onChange={handleSizeChange}>
+
                   <MenuItem value={ImageSize.THUMBNAIL}>Thumbnail (100x100)</MenuItem>
                   <MenuItem value={ImageSize.SMALL}>Small (300x300)</MenuItem>
                   <MenuItem value={ImageSize.MEDIUM}>Medium (600x600)</MenuItem>
@@ -199,8 +199,8 @@ const ImageOptimizationDemo: React.FC = () => {
                   labelId="format-select-label"
                   value={format}
                   label="Format"
-                  onChange={handleFormatChange}
-                >
+                  onChange={handleFormatChange}>
+
                   <MenuItem value={ImageFormat.WEBP}>
                     WebP {isBrowserCompatible(ImageFormat.WEBP) ? '✓' : '✗'}
                   </MenuItem>
@@ -218,8 +218,8 @@ const ImageOptimizationDemo: React.FC = () => {
                   labelId="quality-select-label"
                   value={quality}
                   label="Quality"
-                  onChange={handleQualityChange}
-                >
+                  onChange={handleQualityChange}>
+
                   <MenuItem value={ImageQuality.LOW}>Low (30%)</MenuItem>
                   <MenuItem value={ImageQuality.MEDIUM}>Medium (60%)</MenuItem>
                   <MenuItem value={ImageQuality.HIGH}>High (80%)</MenuItem>
@@ -233,8 +233,8 @@ const ImageOptimizationDemo: React.FC = () => {
                   labelId="loading-select-label"
                   value={loading}
                   label="Loading Strategy"
-                  onChange={handleLoadingChange}
-                >
+                  onChange={handleLoadingChange}>
+
                   <MenuItem value={ImageLoadingStrategy.LAZY}>Lazy Loading</MenuItem>
                   <MenuItem value={ImageLoadingStrategy.EAGER}>Eager Loading</MenuItem>
                   <MenuItem value={ImageLoadingStrategy.PROGRESSIVE}>Progressive (Blur-up)</MenuItem>
@@ -244,15 +244,15 @@ const ImageOptimizationDemo: React.FC = () => {
               <Box mt={2}>
                 <FormControlLabel
                   control={<Switch checked={blur} onChange={handleBlurChange} />}
-                  label="Blur-up effect"
-                />
+                  label="Blur-up effect" />
+
               </Box>
               
               <Box mt={1}>
                 <FormControlLabel
                   control={<Switch checked={comparison} onChange={handleComparisonChange} />}
-                  label="Show side-by-side comparison"
-                />
+                  label="Show side-by-side comparison" />
+
               </Box>
               
               <Divider sx={{ my: 2 }} />
@@ -263,13 +263,13 @@ const ImageOptimizationDemo: React.FC = () => {
               
               <Grid container spacing={2} sx={{ mt: 1 }}>
                 <Grid item xs={6}>
-                  <Paper 
-                    sx={{ 
-                      p: 1, 
+                  <Paper
+                    sx={{
+                      p: 1,
                       textAlign: 'center',
                       bgcolor: alpha(theme.palette.error.main, 0.1)
-                    }}
-                  >
+                    }}>
+
                     <Typography variant="body2" color="text.secondary">
                       Original
                     </Typography>
@@ -279,13 +279,13 @@ const ImageOptimizationDemo: React.FC = () => {
                   </Paper>
                 </Grid>
                 <Grid item xs={6}>
-                  <Paper 
-                    sx={{ 
-                      p: 1, 
+                  <Paper
+                    sx={{
+                      p: 1,
                       textAlign: 'center',
                       bgcolor: alpha(theme.palette.success.main, 0.1)
-                    }}
-                  >
+                    }}>
+
                     <Typography variant="body2" color="text.secondary">
                       Optimized
                     </Typography>
@@ -296,28 +296,28 @@ const ImageOptimizationDemo: React.FC = () => {
                 </Grid>
               </Grid>
               
-              {savingsPercent > 0 && (
-                <Box mt={2} textAlign="center">
-                  <Chip 
-                    label={`${savingsPercent}% smaller`} 
-                    color="success" 
-                    variant="outlined"
-                  />
+              {savingsPercent > 0 &&
+              <Box mt={2} textAlign="center">
+                  <Chip
+                  label={`${savingsPercent}% smaller`}
+                  color="success"
+                  variant="outlined" />
+
                 </Box>
-              )}
+              }
               
-              {!isFormatSupported && (
-                <Box mt={2} p={1} bgcolor={alpha(theme.palette.warning.main, 0.1)} borderRadius={1}>
+              {!isFormatSupported &&
+              <Box mt={2} p={1} bgcolor={alpha(theme.palette.warning.main, 0.1)} borderRadius={1}>
                   <Typography variant="body2" color="warning.main">
                     ⚠️ Your browser doesn't support {format}. The image will be served in a fallback format.
                   </Typography>
                 </Box>
-              )}
+              }
             </CardContent>
           </Card>
         </Grid>
         
-        {/* Image Preview */}
+        
         <Grid item xs={12} md={8}>
           <Card>
             <CardContent>
@@ -326,23 +326,23 @@ const ImageOptimizationDemo: React.FC = () => {
               </Typography>
               <Divider sx={{ mb: 2 }} />
               
-              {comparison ? (
-                <Grid container spacing={2}>
+              {comparison ?
+              <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
                     <Typography variant="subtitle2" align="center" gutterBottom>
                       Original
                     </Typography>
-                    <Box 
-                      component="img"
-                      src={selectedImage.url}
-                      alt={selectedImage.alt}
-                      sx={{
-                        width: '100%',
-                        height: 'auto',
-                        borderRadius: 1,
-                        mb: 1
-                      }}
-                    />
+                    <Box
+                    component="img"
+                    src={selectedImage.url}
+                    alt={selectedImage.alt}
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      borderRadius: 1,
+                      mb: 1
+                    }} />
+
                     <Typography variant="body2" color="text.secondary" align="center">
                       {formatFileSize(originalSize)}
                     </Typography>
@@ -352,23 +352,6 @@ const ImageOptimizationDemo: React.FC = () => {
                       Optimized
                     </Typography>
                     <OptimizedImage
-                      src={selectedImage.url}
-                      alt={selectedImage.alt}
-                      size={size}
-                      format={format}
-                      quality={quality}
-                      loading={loading}
-                      blur={blur}
-                      style={{ borderRadius: theme.shape.borderRadius }}
-                    />
-                    <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
-                      {formatFileSize(optimizedSize)}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              ) : (
-                <Box>
-                  <OptimizedImage
                     src={selectedImage.url}
                     alt={selectedImage.alt}
                     size={size}
@@ -376,13 +359,30 @@ const ImageOptimizationDemo: React.FC = () => {
                     quality={quality}
                     loading={loading}
                     blur={blur}
-                    style={{ borderRadius: theme.shape.borderRadius }}
-                  />
+                    style={{ borderRadius: theme.shape.borderRadius }} />
+
+                    <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                      {formatFileSize(optimizedSize)}
+                    </Typography>
+                  </Grid>
+                </Grid> :
+
+              <Box>
+                  <OptimizedImage
+                  src={selectedImage.url}
+                  alt={selectedImage.alt}
+                  size={size}
+                  format={format}
+                  quality={quality}
+                  loading={loading}
+                  blur={blur}
+                  style={{ borderRadius: theme.shape.borderRadius }} />
+
                   <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
                     {selectedImage.alt} - {formatFileSize(optimizedSize)}
                   </Typography>
                 </Box>
-              )}
+              }
               
               <Box mt={3}>
                 <Typography variant="subtitle2" gutterBottom>
@@ -433,8 +433,8 @@ const ImageOptimizationDemo: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default ImageOptimizationDemo; 
+export default ImageOptimizationDemo;

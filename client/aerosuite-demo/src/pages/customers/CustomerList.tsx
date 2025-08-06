@@ -24,8 +24,8 @@ import {
   ListItemText,
   Tooltip,
   Alert,
-  LinearProgress
-} from '@mui/material';
+  LinearProgress } from
+'@mui/material';
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -34,8 +34,8 @@ import {
   Visibility as ViewIcon,
   Business as BusinessIcon,
   MoreVert as MoreVertIcon,
-  Close as CloseIcon
-} from '@mui/icons-material';
+  Close as CloseIcon } from
+'@mui/icons-material';
 import type { Customer } from '../../services/mockDataService';
 import MockDataService from '../../services/mockDataService';
 
@@ -61,7 +61,7 @@ const CustomerList: React.FC = () => {
   const loadCustomers = () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const data = MockDataService.getCustomers();
       setCustomers(data);
@@ -81,19 +81,19 @@ const CustomerList: React.FC = () => {
   // Filter customers based on current filters
   const applyFilters = () => {
     let filtered = [...customers];
-    
+
     // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
-        customer => 
-          customer.name.toLowerCase().includes(query) ||
-          customer.code.toLowerCase().includes(query) ||
-          (customer.industry && customer.industry.toLowerCase().includes(query)) ||
-          (customer.location && customer.location.toLowerCase().includes(query))
+        (customer) =>
+        customer.name.toLowerCase().includes(query) ||
+        customer.code.toLowerCase().includes(query) ||
+        customer.industry && customer.industry.toLowerCase().includes(query) ||
+        customer.location && customer.location.toLowerCase().includes(query)
       );
     }
-    
+
     setFilteredCustomers(filtered);
     setPage(0); // Reset to first page when filters change
   };
@@ -136,7 +136,7 @@ const CustomerList: React.FC = () => {
 
   return (
     <Box>
-      {/* Page header */}
+      
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4" component="h1">
           Customers
@@ -145,29 +145,29 @@ const CustomerList: React.FC = () => {
           variant="contained"
           color="primary"
           startIcon={<AddIcon />}
-          onClick={() => navigate('/customers/new')}
-        >
+          onClick={() => navigate('/customers/new')}>
+
           Add Customer
         </Button>
       </Box>
 
-      {/* Error alert */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+      
+      {error &&
+      <Alert severity="error" sx={{ mb: 2 }}>
           {error}
           <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={() => setError(null)}
-            sx={{ ml: 2 }}
-          >
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={() => setError(null)}
+          sx={{ ml: 2 }}>
+
             <CloseIcon fontSize="small" />
           </IconButton>
         </Alert>
-      )}
+      }
 
-      {/* Search card */}
+      
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box display="flex" gap={2}>
@@ -179,20 +179,20 @@ const CustomerList: React.FC = () => {
               size="small"
               sx={{ flexGrow: 1 }}
               InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
+                startAdornment:
+                <InputAdornment position="start">
                     <SearchIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: searchQuery && (
-                  <InputAdornment position="end">
+                  </InputAdornment>,
+
+                endAdornment: searchQuery &&
+                <InputAdornment position="end">
                     <IconButton size="small" onClick={handleClearSearch}>
                       <CloseIcon fontSize="small" />
                     </IconButton>
                   </InputAdornment>
-                )
-              }}
-            />
+
+              }} />
+
             
             <Tooltip title="Refresh">
               <IconButton onClick={loadCustomers}>
@@ -203,11 +203,11 @@ const CustomerList: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Customers table */}
-      {loading ? (
-        <LinearProgress sx={{ mb: 2 }} />
-      ) : (
-        <>
+      
+      {loading ?
+      <LinearProgress sx={{ mb: 2 }} /> :
+
+      <>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -221,16 +221,16 @@ const CustomerList: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredCustomers.length > 0 ? (
-                  filteredCustomers
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((customer) => (
-                      <TableRow 
-                        key={customer._id} 
-                        hover
-                        onClick={() => handleViewCustomer(customer._id)}
-                        sx={{ cursor: 'pointer' }}
-                      >
+                {filteredCustomers.length > 0 ?
+              filteredCustomers.
+              slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).
+              map((customer) =>
+              <TableRow
+                key={customer._id}
+                hover
+                onClick={() => handleViewCustomer(customer._id)}
+                sx={{ cursor: 'pointer' }}>
+
                         <TableCell>
                           <Chip label={customer.code} size="small" />
                         </TableCell>
@@ -243,66 +243,66 @@ const CustomerList: React.FC = () => {
                         <TableCell>{customer.industry || '-'}</TableCell>
                         <TableCell>{customer.location || '-'}</TableCell>
                         <TableCell>
-                          {customer.contact ? (
-                            <Box>
+                          {customer.contact ?
+                  <Box>
                               <Typography variant="body2">{customer.contact.name}</Typography>
                               <Typography variant="body2" color="text.secondary">{customer.contact.email}</Typography>
-                            </Box>
-                          ) : (
-                            '-'
-                          )}
+                            </Box> :
+
+                  '-'
+                  }
                         </TableCell>
                         <TableCell align="right">
                           <IconButton
-                            size="small"
-                            onClick={(e) => handleMenuClick(e, customer._id)}
-                          >
+                    size="small"
+                    onClick={(e) => handleMenuClick(e, customer._id)}>
+
                             <MoreVertIcon />
                           </IconButton>
                         </TableCell>
                       </TableRow>
-                    ))
-                ) : (
-                  <TableRow>
+              ) :
+
+              <TableRow>
                     <TableCell colSpan={6} align="center">
                       <Box py={3}>
                         <Typography variant="body1" color="textSecondary">
                           No customers found
                         </Typography>
                         <Button
-                          variant="text"
-                          startIcon={<BusinessIcon />}
-                          onClick={loadCustomers}
-                          sx={{ mt: 1 }}
-                        >
+                      variant="text"
+                      startIcon={<BusinessIcon />}
+                      onClick={loadCustomers}
+                      sx={{ mt: 1 }}>
+
                           Refresh
                         </Button>
                       </Box>
                     </TableCell>
                   </TableRow>
-                )}
+              }
               </TableBody>
             </Table>
           </TableContainer>
           
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={filteredCustomers.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </>
-      )}
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={filteredCustomers.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage} />
 
-      {/* Action menu */}
+        </>
+      }
+
+      
       <Menu
         anchorEl={actionMenuAnchor}
         open={Boolean(actionMenuAnchor)}
-        onClose={handleMenuClose}
-      >
+        onClose={handleMenuClose}>
+
         <MenuItem onClick={() => {
           if (selectedCustomer) {
             handleViewCustomer(selectedCustomer);
@@ -330,8 +330,8 @@ const CustomerList: React.FC = () => {
           </ListItemText>
         </MenuItem>
       </Menu>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default CustomerList; 
+export default CustomerList;

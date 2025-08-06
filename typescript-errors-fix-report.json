@@ -1,0 +1,61 @@
+{
+  "timestamp": "2025-08-06T05:15:42.768Z",
+  "summary": {
+    "total": 7,
+    "fixed": 7,
+    "failed": 0,
+    "successRate": "100.00%"
+  },
+  "fixedErrors": [
+    {
+      "file": "client/src/App.tsx",
+      "line": 27,
+      "code": "TS2786",
+      "type": "cannotBeUsedAsJSX",
+      "message": "'SnackbarProvider' cannot be used as a JSX component."
+    },
+    {
+      "file": "client/src/App.tsx",
+      "line": 26,
+      "code": "TS2786",
+      "type": "cannotBeUsedAsJSX",
+      "message": "'HelmetProvider' cannot be used as a JSX component."
+    },
+    {
+      "file": "client/src/components/common/ApiVersionWarningBanner.tsx",
+      "line": 43,
+      "code": "TS2339",
+      "type": "propertyDoesNotExist",
+      "message": "Property 'checkApiVersion' does not exist on type '{ get: <T>(...) }'."
+    },
+    {
+      "file": "client/src/components/common/FeedbackForm.tsx",
+      "line": 147,
+      "code": "TS2304",
+      "type": "cannotFindName",
+      "message": "Cannot find name 'err'."
+    },
+    {
+      "file": "client/src/components/common/SearchModal.tsx",
+      "line": 35,
+      "code": "TS7016",
+      "type": "noDeclarationFile",
+      "message": "Could not find a declaration file for module 'lodash'."
+    },
+    {
+      "file": "client/src/components/common/ThemeSettings.tsx",
+      "line": 174,
+      "code": "TS2304",
+      "type": "cannotFindName",
+      "message": "Cannot find name 'ColorLens'."
+    },
+    {
+      "file": "client/src/components/dashboard/DashboardCustomizer.tsx",
+      "line": 269,
+      "code": "TS7006",
+      "type": "implicitAny",
+      "message": "Parameter 'provided' implicitly has an 'any' type."
+    }
+  ],
+  "failedErrors": []
+}

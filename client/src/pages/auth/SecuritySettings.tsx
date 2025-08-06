@@ -17,8 +17,8 @@ import {
   DialogActions,
   TextField,
   Alert,
-  CircularProgress
-} from '@mui/material';
+  CircularProgress } from
+'@mui/material';
 import {
   Security as SecurityIcon,
   Password as PasswordIcon,
@@ -27,8 +27,8 @@ import {
   Lock as LockIcon,
   PhoneAndroid as PhoneIcon,
   Email as EmailIcon,
-  QrCode as QrCodeIcon
-} from '@mui/icons-material';
+  QrCode as QrCodeIcon } from
+'@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import TwoFactorSetup from '../../components/auth/TwoFactorSetup';
 import AuthService from '../../services/auth.service';
@@ -38,14 +38,14 @@ const SecuritySettings: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Two-factor auth state
   const [showTwoFactorSetup, setShowTwoFactorSetup] = useState(false);
   const [showDisableDialog, setShowDisableDialog] = useState(false);
   const [password, setPassword] = useState('');
   const [disableLoading, setDisableLoading] = useState(false);
   const [disableError, setDisableError] = useState<string | null>(null);
-  
+
   // Backup codes state
   const [showBackupCodesDialog, setShowBackupCodesDialog] = useState(false);
   const [passwordForBackupCodes, setPasswordForBackupCodes] = useState('');
@@ -83,14 +83,14 @@ const SecuritySettings: React.FC = () => {
   const handleDisableTwoFactor = async () => {
     setDisableLoading(true);
     setDisableError(null);
-    
+
     try {
       await AuthService.disableTwoFactor(password);
-      
+
       // Refresh user data
       const userData = await AuthService.getCurrentUser();
       setUser(userData);
-      
+
       // Close dialog
       setShowDisableDialog(false);
       setPassword('');
@@ -104,11 +104,11 @@ const SecuritySettings: React.FC = () => {
   const handleGenerateBackupCodes = async () => {
     setBackupCodesLoading(true);
     setBackupCodesError(null);
-    
+
     try {
       const response = await AuthService.generateBackupCodes(passwordForBackupCodes);
       setBackupCodes(response.backupCodes);
-      
+
       // Clear password field
       setPasswordForBackupCodes('');
     } catch (err: any) {
@@ -122,8 +122,8 @@ const SecuritySettings: React.FC = () => {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
@@ -133,8 +133,8 @@ const SecuritySettings: React.FC = () => {
         <Button variant="outlined" onClick={() => navigate(-1)} sx={{ mt: 2 }}>
           Go Back
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   const twoFactorEnabled = user?.twoFactorAuth?.enabled || false;
@@ -155,103 +155,103 @@ const SecuritySettings: React.FC = () => {
         <Divider sx={{ mb: 2 }} />
         
         <List>
-          {/* Password */}
+          
           <ListItem>
             <ListItemIcon>
               <PasswordIcon />
             </ListItemIcon>
-            <ListItemText 
-              primary="Password" 
-              secondary="Change your account password" 
-            />
+            <ListItemText
+              primary="Password"
+              secondary="Change your account password" />
+
             <ListItemSecondaryAction>
-              <Button 
-                variant="outlined" 
+              <Button
+                variant="outlined"
                 size="small"
-                onClick={() => navigate('/change-password')}
-              >
+                onClick={() => navigate('/change-password')}>
+
                 Change
               </Button>
             </ListItemSecondaryAction>
           </ListItem>
           
-          {/* Two-factor authentication */}
+          
           <ListItem>
             <ListItemIcon>
               {twoFactorEnabled ? <LockIcon color="success" /> : <LockOpenIcon color="warning" />}
             </ListItemIcon>
-            <ListItemText 
-              primary="Two-Factor Authentication" 
+            <ListItemText
+              primary="Two-Factor Authentication"
               secondary={
-                twoFactorEnabled 
-                  ? `Enabled (${twoFactorMethod === 'app' 
-                      ? 'Authenticator App' 
-                      : twoFactorMethod === 'email' 
-                        ? 'Email' 
-                        : 'SMS'})` 
-                  : "Disabled - We recommend enabling this for added security"
-              } 
-            />
+              twoFactorEnabled ?
+              `Enabled (${twoFactorMethod === 'app' ?
+              'Authenticator App' :
+              twoFactorMethod === 'email' ?
+              'Email' :
+              'SMS'})` :
+              "Disabled - We recommend enabling this for added security"
+              } />
+
             <ListItemSecondaryAction>
-              {twoFactorEnabled ? (
-                <Button 
-                  variant="outlined" 
-                  color="error"
-                  size="small"
-                  onClick={() => setShowDisableDialog(true)}
-                >
+              {twoFactorEnabled ?
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
+                onClick={() => setShowDisableDialog(true)}>
+
                   Disable
-                </Button>
-              ) : (
-                <Button 
-                  variant="contained" 
-                  color="primary"
-                  size="small"
-                  onClick={() => setShowTwoFactorSetup(true)}
-                >
+                </Button> :
+
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => setShowTwoFactorSetup(true)}>
+
                   Enable
                 </Button>
-              )}
+              }
             </ListItemSecondaryAction>
           </ListItem>
           
-          {/* Backup Codes */}
-          {twoFactorEnabled && (
-            <ListItem>
+          
+          {twoFactorEnabled &&
+          <ListItem>
               <ListItemIcon>
                 <VpnKeyIcon />
               </ListItemIcon>
-              <ListItemText 
-                primary="Backup Codes" 
-                secondary="Generate new backup codes for account recovery" 
-              />
+              <ListItemText
+              primary="Backup Codes"
+              secondary="Generate new backup codes for account recovery" />
+
               <ListItemSecondaryAction>
-                <Button 
-                  variant="outlined" 
-                  size="small"
-                  onClick={() => setShowBackupCodesDialog(true)}
-                >
+                <Button
+                variant="outlined"
+                size="small"
+                onClick={() => setShowBackupCodesDialog(true)}>
+
                   Generate
                 </Button>
               </ListItemSecondaryAction>
             </ListItem>
-          )}
+          }
           
-          {/* Login History */}
+          
           <ListItem>
             <ListItemIcon>
               <SecurityIcon />
             </ListItemIcon>
-            <ListItemText 
-              primary="Login History" 
-              secondary="View your recent login activity" 
-            />
+            <ListItemText
+              primary="Login History"
+              secondary="View your recent login activity" />
+
             <ListItemSecondaryAction>
-              <Button 
-                variant="outlined" 
+              <Button
+                variant="outlined"
                 size="small"
-                onClick={() => navigate('/login-history')}
-              >
+                onClick={() => navigate('/login-history')}>
+
                 View
               </Button>
             </ListItemSecondaryAction>
@@ -259,28 +259,28 @@ const SecuritySettings: React.FC = () => {
         </List>
       </Paper>
       
-      {/* Two-factor setup dialog */}
-      {showTwoFactorSetup && (
-        <TwoFactorSetup 
-          onComplete={handleTwoFactorSetupComplete} 
-          onCancel={() => setShowTwoFactorSetup(false)} 
-        />
-      )}
       
-      {/* Disable 2FA dialog */}
-      <Dialog 
+      {showTwoFactorSetup &&
+      <TwoFactorSetup
+        onComplete={handleTwoFactorSetupComplete}
+        onCancel={() => setShowTwoFactorSetup(false)} />
+
+      }
+      
+      
+      <Dialog
         open={showDisableDialog}
         onClose={() => setShowDisableDialog(false)}
         maxWidth="xs"
-        fullWidth
-      >
+        fullWidth>
+
         <DialogTitle>Disable Two-Factor Authentication</DialogTitle>
         <DialogContent>
-          {disableError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+          {disableError &&
+          <Alert severity="error" sx={{ mb: 2 }}>
               {disableError}
             </Alert>
-          )}
+          }
           
           <Alert severity="warning" sx={{ mb: 2 }}>
             Disabling two-factor authentication will reduce the security of your account.
@@ -297,33 +297,33 @@ const SecuritySettings: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             margin="normal"
-            disabled={disableLoading}
-          />
+            disabled={disableLoading} />
+
         </DialogContent>
         <DialogActions>
-          <Button 
+          <Button
             onClick={() => {
               setShowDisableDialog(false);
               setPassword('');
               setDisableError(null);
-            }} 
-            disabled={disableLoading}
-          >
+            }}
+            disabled={disableLoading}>
+
             Cancel
           </Button>
-          <Button 
-            onClick={handleDisableTwoFactor} 
-            color="error" 
+          <Button
+            onClick={handleDisableTwoFactor}
+            color="error"
             variant="contained"
-            disabled={disableLoading || !password}
-          >
+            disabled={disableLoading || !password}>
+
             {disableLoading ? <CircularProgress size={24} /> : 'Disable'}
           </Button>
         </DialogActions>
       </Dialog>
       
-      {/* Backup codes dialog */}
-      <Dialog 
+      
+      <Dialog
         open={showBackupCodesDialog}
         onClose={() => {
           if (!backupCodesLoading) {
@@ -334,18 +334,18 @@ const SecuritySettings: React.FC = () => {
           }
         }}
         maxWidth="sm"
-        fullWidth
-      >
+        fullWidth>
+
         <DialogTitle>Backup Codes</DialogTitle>
         <DialogContent>
-          {backupCodesError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+          {backupCodesError &&
+          <Alert severity="error" sx={{ mb: 2 }}>
               {backupCodesError}
             </Alert>
-          )}
+          }
           
-          {backupCodes.length > 0 ? (
-            <>
+          {backupCodes.length > 0 ?
+          <>
               <Alert severity="warning" sx={{ mb: 2 }}>
                 <Typography variant="body2">
                   <strong>Important:</strong> Store these backup codes in a safe place. They allow you to log in if you lose access to your authentication device.
@@ -357,79 +357,79 @@ const SecuritySettings: React.FC = () => {
               </Typography>
               
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                {backupCodes.map((code, index) => (
-                  <Paper 
-                    key={index} 
-                    variant="outlined" 
-                    sx={{ 
-                      p: 1, 
-                      fontFamily: 'monospace',
-                      fontWeight: 'bold',
-                      flex: '1 0 45%',
-                      textAlign: 'center'
-                    }}
-                  >
+                {backupCodes.map((code, index) =>
+              <Paper
+                key={index}
+                variant="outlined"
+                sx={{
+                  p: 1,
+                  fontFamily: 'monospace',
+                  fontWeight: 'bold',
+                  flex: '1 0 45%',
+                  textAlign: 'center'
+                }}>
+
                     {code}
                   </Paper>
-                ))}
+              )}
               </Box>
               
-              <Button 
-                variant="outlined" 
-                fullWidth
-                onClick={() => {
-                  navigator.clipboard.writeText(backupCodes.join('\n'));
-                }}
-                sx={{ mb: 2 }}
-              >
+              <Button
+              variant="outlined"
+              fullWidth
+              onClick={() => {
+                navigator.clipboard.writeText(backupCodes.join('\n'));
+              }}
+              sx={{ mb: 2 }}>
+
                 Copy to Clipboard
               </Button>
-            </>
-          ) : (
-            <>
+            </> :
+
+          <>
               <Typography variant="body2" paragraph>
                 Generating new backup codes will invalidate all existing codes. Please enter your password to confirm this action.
               </Typography>
               
               <TextField
-                label="Password"
-                type="password"
-                fullWidth
-                value={passwordForBackupCodes}
-                onChange={(e) => setPasswordForBackupCodes(e.target.value)}
-                margin="normal"
-                disabled={backupCodesLoading}
-              />
+              label="Password"
+              type="password"
+              fullWidth
+              value={passwordForBackupCodes}
+              onChange={(e) => setPasswordForBackupCodes(e.target.value)}
+              margin="normal"
+              disabled={backupCodesLoading} />
+
             </>
-          )}
+          }
         </DialogContent>
         <DialogActions>
-          <Button 
+          <Button
             onClick={() => {
               setShowBackupCodesDialog(false);
               setPasswordForBackupCodes('');
               setBackupCodesError(null);
               setBackupCodes([]);
-            }} 
-            disabled={backupCodesLoading}
-          >
+            }}
+            disabled={backupCodesLoading}>
+
             {backupCodes.length > 0 ? 'Close' : 'Cancel'}
           </Button>
           
-          {backupCodes.length === 0 && (
-            <Button 
-              onClick={handleGenerateBackupCodes} 
-              color="primary" 
-              variant="contained"
-              disabled={backupCodesLoading || !passwordForBackupCodes}
-            >
+          {backupCodes.length === 0 &&
+          <Button
+            onClick={handleGenerateBackupCodes}
+            color="primary"
+            variant="contained"
+            disabled={backupCodesLoading || !passwordForBackupCodes}>
+
               {backupCodesLoading ? <CircularProgress size={24} /> : 'Generate Codes'}
             </Button>
-          )}
+          }
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default SecuritySettings; 
+export default SecuritySettings;

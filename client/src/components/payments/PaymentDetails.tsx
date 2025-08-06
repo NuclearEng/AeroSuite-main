@@ -14,8 +14,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  TextField
-} from '@mui/material';
+  TextField } from
+'@mui/material';
 import PaymentService, { Payment } from '../../services/PaymentService';
 import { format } from 'date-fns';
 
@@ -60,13 +60,13 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
 
   const handleRefund = async () => {
     if (!payment) return;
-    
+
     setProcessing(true);
     try {
       const updatedPayment = await PaymentService.createRefund(payment._id, refundReason);
       setPayment(updatedPayment);
       setRefundDialogOpen(false);
-      
+
       if (onRefund) {
         onRefund(updatedPayment);
       }
@@ -103,24 +103,24 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
     return (
       <Box display="flex" justifyContent="center" p={4}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
     return (
       <Alert severity="error" sx={{ mb: 2 }}>
         {error}
-      </Alert>
-    );
+      </Alert>);
+
   }
 
   if (!payment) {
     return (
       <Box p={2} textAlign="center">
         <Typography color="textSecondary">Payment not found</Typography>
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
@@ -139,8 +139,8 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
             <Grid item>
               <Chip
                 label={payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
-                color={getStatusColor(payment.status) as any}
-              />
+                color={getStatusColor(payment.status) as any} />
+
             </Grid>
           </Grid>
           <Typography variant="subtitle1" color="textSecondary">
@@ -167,8 +167,8 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
               {formatDate(payment.createdAt)}
             </Typography>
           </Grid>
-          {payment.paymentIntentId && (
-            <Grid item xs={12} sm={6}>
+          {payment.paymentIntentId &&
+          <Grid item xs={12} sm={6}>
               <Typography variant="subtitle2" color="textSecondary">
                 Payment Intent ID
               </Typography>
@@ -176,9 +176,9 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
                 {payment.paymentIntentId}
               </Typography>
             </Grid>
-          )}
-          {payment.chargeId && (
-            <Grid item xs={12} sm={6}>
+          }
+          {payment.chargeId &&
+          <Grid item xs={12} sm={6}>
               <Typography variant="subtitle2" color="textSecondary">
                 Charge ID
               </Typography>
@@ -186,9 +186,9 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
                 {payment.chargeId}
               </Typography>
             </Grid>
-          )}
-          {payment.paymentMethod && (
-            <Grid item xs={12} sm={6}>
+          }
+          {payment.paymentMethod &&
+          <Grid item xs={12} sm={6}>
               <Typography variant="subtitle2" color="textSecondary">
                 Payment Method
               </Typography>
@@ -196,14 +196,14 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
                 {payment.paymentMethod}
               </Typography>
             </Grid>
-          )}
-          {payment.refunded && (
-            <>
+          }
+          {payment.refunded &&
+          <>
               <Grid item xs={12}>
                 <Alert severity="info">This payment has been refunded</Alert>
               </Grid>
-              {payment.refundId && (
-                <Grid item xs={12} sm={6}>
+              {payment.refundId &&
+            <Grid item xs={12} sm={6}>
                   <Typography variant="subtitle2" color="textSecondary">
                     Refund ID
                   </Typography>
@@ -211,36 +211,36 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
                     {payment.refundId}
                   </Typography>
                 </Grid>
-              )}
+            }
             </>
-          )}
-          {payment.failureReason && (
-            <Grid item xs={12}>
+          }
+          {payment.failureReason &&
+          <Grid item xs={12}>
               <Alert severity="error">
                 <Typography variant="subtitle2">Failure Reason</Typography>
                 <Typography variant="body2">{payment.failureReason}</Typography>
               </Alert>
             </Grid>
-          )}
+          }
         </Grid>
 
-        {payment.status === 'completed' && !payment.refunded && (
-          <>
+        {payment.status === 'completed' && !payment.refunded &&
+        <>
             <Divider sx={{ my: 2 }} />
             <Box display="flex" justifyContent="flex-end">
               <Button
-                variant="outlined"
-                color="error"
-                onClick={() => setRefundDialogOpen(true)}
-              >
+              variant="outlined"
+              color="error"
+              onClick={() => setRefundDialogOpen(true)}>
+
                 Issue Refund
               </Button>
             </Box>
           </>
-        )}
+        }
       </Paper>
 
-      {/* Refund Dialog */}
+      
       <Dialog open={refundDialogOpen} onClose={() => setRefundDialogOpen(false)}>
         <DialogTitle>Issue Refund</DialogTitle>
         <DialogContent>
@@ -257,8 +257,8 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
             variant="outlined"
             value={refundReason}
             onChange={(e) => setRefundReason(e.target.value)}
-            disabled={processing}
-          />
+            disabled={processing} />
+
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setRefundDialogOpen(false)} disabled={processing}>
@@ -268,14 +268,14 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
             onClick={handleRefund}
             color="error"
             variant="contained"
-            disabled={processing}
-          >
+            disabled={processing}>
+
             {processing ? <CircularProgress size={24} /> : 'Issue Refund'}
           </Button>
         </DialogActions>
       </Dialog>
-    </>
-  );
+    </>);
+
 };
 
-export default PaymentDetails; 
+export default PaymentDetails;

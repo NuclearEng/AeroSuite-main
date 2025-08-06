@@ -20,12 +20,12 @@ const initialFormValues: SupplierFormValues = {
     city: '',
     state: '',
     zipCode: '',
-    country: '',
+    country: ''
   },
   qualifications: [],
   certifications: [],
   notes: '',
-  supplierTags: [],
+  supplierTags: []
 };
 
 export const CreateSupplier: React.FC = () => {
@@ -33,12 +33,12 @@ export const CreateSupplier: React.FC = () => {
   const [formValues, setFormValues] = useState<SupplierFormValues>(initialFormValues);
 
   const handleChange: MUISelectChangeHandler = (
-    event: SelectChangeEvent
-  ) => {
+  event: SelectChangeEvent) =>
+  {
     const { name, value } = event.target;
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -57,18 +57,18 @@ export const CreateSupplier: React.FC = () => {
       <Select
         name="industry"
         value={formValues.industry}
-        onChange={handleChange}
-      >
-        {/* Industry options */}
+        onChange={handleChange}>
+
+        
       </Select>
       <Select
         name="status"
         value={formValues.status}
-        onChange={handleChange}
-      >
-        {/* Status options */}
+        onChange={handleChange}>
+
+        
       </Select>
-      {/* Other form fields */}
-    </form>
-  );
+      
+    </form>);
+
 };

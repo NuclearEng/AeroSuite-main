@@ -16,8 +16,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions,
-} from '@mui/material';
+  DialogActions } from
+'@mui/material';
 import PhoneIcon from '@mui/icons-material/Phone';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import SendIcon from '@mui/icons-material/Send';
@@ -30,14 +30,14 @@ import axios from 'axios';
 /**
  * Component for verifying a user's phone number via SMS
  */
-const SMSVerification = ({ 
-  user, 
+const SMSVerification = ({
+  user,
   onVerificationComplete,
-  onPreferencesChange 
+  onPreferencesChange
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  
+
   const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '');
   const [verificationCode, setVerificationCode] = useState('');
   const [isEditing, setIsEditing] = useState(!user?.phoneNumber);
@@ -46,7 +46,7 @@ const SMSVerification = ({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showDialog, setShowDialog] = useState(false);
-  
+
   // SMS notification preferences (initialize from user)
   const [preferences, setPreferences] = useState({
     enabled: user?.notificationPreferences?.smsNotifications?.enabled || false,
@@ -111,7 +111,7 @@ const SMSVerification = ({
 
       if (response.data.success && response.data.data.valid) {
         setSuccess('Phone number verified successfully!');
-        
+
         // Update user in parent component
         if (onVerificationComplete) {
           onVerificationComplete({
@@ -119,11 +119,11 @@ const SMSVerification = ({
             isPhoneVerified: true
           });
         }
-        
+
         setIsEditing(false);
         setVerificationSent(false);
         setVerificationCode('');
-        
+
         // If not already enabled, show dialog to enable SMS notifications
         if (!preferences.enabled) {
           setShowDialog(true);
@@ -143,20 +143,20 @@ const SMSVerification = ({
    */
   const handlePreferenceChange = async (event) => {
     const { name, checked } = event.target;
-    
+
     const updatedPreferences = {
       ...preferences,
       [name]: checked
     };
-    
+
     setPreferences(updatedPreferences);
-    
+
     // Save preferences to server
     try {
       await axios.post('/api/notifications/preferences', {
         smsNotifications: updatedPreferences
       });
-      
+
       // Notify parent component
       if (onPreferencesChange) {
         onPreferencesChange({
@@ -165,7 +165,7 @@ const SMSVerification = ({
           }
         });
       }
-      
+
       setSuccess('Preferences updated successfully');
       setTimeout(() => setSuccess(''), 3000);
     } catch (_err) {
@@ -182,14 +182,14 @@ const SMSVerification = ({
       ...preferences,
       enabled: true
     };
-    
+
     setPreferences(updatedPreferences);
-    
+
     try {
       await axios.post('/api/notifications/preferences', {
         smsNotifications: updatedPreferences
       });
-      
+
       // Notify parent component
       if (onPreferencesChange) {
         onPreferencesChange({
@@ -198,7 +198,7 @@ const SMSVerification = ({
           }
         });
       }
-      
+
       setSuccess('SMS notifications enabled');
       setTimeout(() => setSuccess(''), 3000);
     } catch (_err) {
@@ -218,230 +218,230 @@ const SMSVerification = ({
       
       <Divider sx={{ mb: 2 }} />
       
-      {(error || success) && (
-        <Box mb={2}>
-          {error && (
-            <Alert severity="error" onClose={() => setError('')}>
+      {(error || success) &&
+      <Box mb={2}>
+          {error &&
+        <Alert severity="error" onClose={() => setError('')}>
               <AlertTitle>Error</AlertTitle>
               {error}
             </Alert>
-          )}
+        }
           
-          {success && (
-            <Alert severity="success" onClose={() => setSuccess('')}>
+          {success &&
+        <Alert severity="success" onClose={() => setSuccess('')}>
               <AlertTitle>Success</AlertTitle>
               {success}
             </Alert>
-          )}
+        }
         </Box>
-      )}
+      }
       
       <Box mb={3}>
         <Typography variant="subtitle1" gutterBottom>
           Phone Verification
         </Typography>
         
-        {user?.isPhoneVerified && !isEditing ? (
-          <Box display="flex" alignItems="center" mb={2}>
+        {user?.isPhoneVerified && !isEditing ?
+        <Box display="flex" alignItems="center" mb={2}>
             <CheckCircleIcon color="success" sx={{ mr: 1 }} />
             <Typography>
               <strong>Verified:</strong> {user.phoneNumber}
             </Typography>
-            <Button 
-              startIcon={<EditIcon />} 
-              onClick={() => setIsEditing(true)}
-              size="small"
-              sx={{ ml: 2 }}
-            >
+            <Button
+            startIcon={<EditIcon />}
+            onClick={() => setIsEditing(true)}
+            size="small"
+            sx={{ ml: 2 }}>
+
               Change
             </Button>
-          </Box>
-        ) : (
-          <Box>
+          </Box> :
+
+        <Box>
             <TextField
-              fullWidth
-              label="Phone Number"
-              variant="outlined"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="+1234567890"
-              disabled={loading || (verificationSent && !isEditing)}
-              margin="normal"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
+            fullWidth
+            label="Phone Number"
+            variant="outlined"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="+1234567890"
+            disabled={loading || verificationSent && !isEditing}
+            margin="normal"
+            InputProps={{
+              startAdornment:
+              <InputAdornment position="start">
                     <PhoneIcon />
                   </InputAdornment>
-                ),
-              }}
-              helperText="Enter your phone number in international format (E.164)"
-            />
+
+            }}
+            helperText="Enter your phone number in international format (E.164)" />
+
             
-            {verificationSent && (
-              <TextField
-                fullWidth
-                label="Verification Code"
-                variant="outlined"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-                margin="normal"
-                disabled={loading}
-                placeholder="Enter code sent to your phone"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
+            {verificationSent &&
+          <TextField
+            fullWidth
+            label="Verification Code"
+            variant="outlined"
+            value={verificationCode}
+            onChange={(e) => setVerificationCode(e.target.value)}
+            margin="normal"
+            disabled={loading}
+            placeholder="Enter code sent to your phone"
+            InputProps={{
+              startAdornment:
+              <InputAdornment position="start">
                       <VerifiedUserIcon />
                     </InputAdornment>
-                  ),
-                }}
-              />
-            )}
+
+            }} />
+
+          }
             
             <Box mt={2} display="flex" flexDirection={isMobile ? 'column' : 'row'} gap={2}>
-              {!verificationSent ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleStartVerification}
-                  disabled={loading || !phoneNumber}
-                  startIcon={loading ? <CircularProgress size={20} /> : <SendIcon />}
-                  fullWidth={isMobile}
-                >
+              {!verificationSent ?
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleStartVerification}
+              disabled={loading || !phoneNumber}
+              startIcon={loading ? <CircularProgress size={20} /> : <SendIcon />}
+              fullWidth={isMobile}>
+
                   Send Verification Code
-                </Button>
-              ) : (
-                <>
+                </Button> :
+
+            <>
                   <Button
-                    variant="contained"
-                    color="success"
-                    onClick={handleVerifyCode}
-                    disabled={loading || !verificationCode}
-                    startIcon={loading ? <CircularProgress size={20} /> : <VerifiedUserIcon />}
-                    fullWidth={isMobile}
-                  >
+                variant="contained"
+                color="success"
+                onClick={handleVerifyCode}
+                disabled={loading || !verificationCode}
+                startIcon={loading ? <CircularProgress size={20} /> : <VerifiedUserIcon />}
+                fullWidth={isMobile}>
+
                     Verify Code
                   </Button>
                   
                   <Button
-                    variant="outlined"
-                    onClick={() => {
-                      setVerificationSent(false);
-                      setVerificationCode('');
-                    }}
-                    disabled={loading}
-                    fullWidth={isMobile}
-                  >
+                variant="outlined"
+                onClick={() => {
+                  setVerificationSent(false);
+                  setVerificationCode('');
+                }}
+                disabled={loading}
+                fullWidth={isMobile}>
+
                     Cancel
                   </Button>
                 </>
-              )}
+            }
             </Box>
           </Box>
-        )}
+        }
       </Box>
       
-      {user?.isPhoneVerified && (
-        <Box>
+      {user?.isPhoneVerified &&
+      <Box>
           <Typography variant="subtitle1" gutterBottom>
             SMS Notification Preferences
           </Typography>
           
           <FormControlLabel
-            control={
-              <Checkbox
-                checked={preferences.enabled}
-                onChange={handlePreferenceChange}
-                name="enabled"
-                color="primary"
-              />
-            }
-            label="Enable SMS notifications"
-          />
+          control={
+          <Checkbox
+            checked={preferences.enabled}
+            onChange={handlePreferenceChange}
+            name="enabled"
+            color="primary" />
+
+          }
+          label="Enable SMS notifications" />
+
           
-          {preferences.enabled && (
-            <Box pl={4} mt={1}>
+          {preferences.enabled &&
+        <Box pl={4} mt={1}>
               <Typography variant="body2" color="textSecondary" gutterBottom>
                 Select which notifications you want to receive via SMS:
               </Typography>
               
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={preferences.inspectionReminders}
-                    onChange={handlePreferenceChange}
-                    name="inspectionReminders"
-                    color="primary"
-                    disabled={!preferences.enabled}
-                  />
-                }
-                label="Inspection reminders"
-              />
+            control={
+            <Checkbox
+              checked={preferences.inspectionReminders}
+              onChange={handlePreferenceChange}
+              name="inspectionReminders"
+              color="primary"
+              disabled={!preferences.enabled} />
+
+            }
+            label="Inspection reminders" />
+
               
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={preferences.inspectionAssignments}
-                    onChange={handlePreferenceChange}
-                    name="inspectionAssignments"
-                    color="primary"
-                    disabled={!preferences.enabled}
-                  />
-                }
-                label="New inspection assignments"
-              />
+            control={
+            <Checkbox
+              checked={preferences.inspectionAssignments}
+              onChange={handlePreferenceChange}
+              name="inspectionAssignments"
+              color="primary"
+              disabled={!preferences.enabled} />
+
+            }
+            label="New inspection assignments" />
+
               
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={preferences.supplierAlerts}
-                    onChange={handlePreferenceChange}
-                    name="supplierAlerts"
-                    color="primary"
-                    disabled={!preferences.enabled}
-                  />
-                }
-                label="Supplier alerts"
-              />
+            control={
+            <Checkbox
+              checked={preferences.supplierAlerts}
+              onChange={handlePreferenceChange}
+              name="supplierAlerts"
+              color="primary"
+              disabled={!preferences.enabled} />
+
+            }
+            label="Supplier alerts" />
+
               
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={preferences.systemAlerts}
-                    onChange={handlePreferenceChange}
-                    name="systemAlerts"
-                    color="primary"
-                    disabled={!preferences.enabled}
-                  />
-                }
-                label="System alerts"
-              />
+            control={
+            <Checkbox
+              checked={preferences.systemAlerts}
+              onChange={handlePreferenceChange}
+              name="systemAlerts"
+              color="primary"
+              disabled={!preferences.enabled} />
+
+            }
+            label="System alerts" />
+
               
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={preferences.dailyDigest}
-                    onChange={handlePreferenceChange}
-                    name="dailyDigest"
-                    color="primary"
-                    disabled={!preferences.enabled}
-                  />
-                }
-                label="Daily digest"
-              />
+            control={
+            <Checkbox
+              checked={preferences.dailyDigest}
+              onChange={handlePreferenceChange}
+              name="dailyDigest"
+              color="primary"
+              disabled={!preferences.enabled} />
+
+            }
+            label="Daily digest" />
+
               
               <Typography variant="caption" color="textSecondary" display="block" mt={1}>
                 Standard message and data rates may apply. Message frequency varies.
               </Typography>
             </Box>
-          )}
+        }
         </Box>
-      )}
+      }
       
-      {/* Dialog to enable SMS notifications after verification */}
+      
       <Dialog
         open={showDialog}
-        onClose={() => setShowDialog(false)}
-      >
+        onClose={() => setShowDialog(false)}>
+
         <DialogTitle>Enable SMS Notifications?</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -455,8 +455,8 @@ const SMSVerification = ({
           </Button>
         </DialogActions>
       </Dialog>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default SMSVerification; 
+export default SMSVerification;

@@ -16,8 +16,8 @@ import {
   FormControl,
   styled,
   alpha,
-  Paper
-} from '@mui/material';
+  Paper } from
+'@mui/material';
 import {
   Brightness4 as DarkModeIcon,
   Brightness7 as LightModeIcon,
@@ -25,12 +25,13 @@ import {
   Palette as PaletteIcon,
   FormatSize as FontSizeIcon,
   Animation as AnimationIcon,
-  Check as CheckIcon
-} from '@mui/icons-material';
+  Check as CheckIcon } from
+'@mui/icons-material';
 import { useThemeContext } from '../../theme/ThemeProvider';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { setDarkMode, setThemeVariant } from '../../redux/slices/ui.slice';
 import { ThemeVariant } from '../../theme/themeConfig';
+import ColorLens from '@mui/icons-material/ColorLens';
 
 // Styled color circle for theme selection
 const ColorCircle = styled(Box)(({ theme }) => ({
@@ -43,8 +44,8 @@ const ColorCircle = styled(Box)(({ theme }) => ({
   boxShadow: `0 0 0 1px ${alpha(theme.palette.divider, 0.5)}`,
   position: 'relative',
   '&:hover': {
-    transform: 'scale(1.1)',
-  },
+    transform: 'scale(1.1)'
+  }
 }));
 
 // Selected indicator
@@ -64,8 +65,8 @@ const SelectedIndicator = styled(Box)(({ theme }) => ({
     width: 12,
     height: 12,
     borderRadius: '50%',
-    backgroundColor: theme.palette.primary.main,
-  },
+    backgroundColor: theme.palette.primary.main
+  }
 }));
 
 interface ThemeSettingsProps {
@@ -73,17 +74,17 @@ interface ThemeSettingsProps {
   showTitle?: boolean;
 }
 
-const ThemeSettings: React.FC<ThemeSettingsProps> = ({ 
+const ThemeSettings: React.FC<ThemeSettingsProps> = ({
   compact = false,
   showTitle = true
 }) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { mode, variant, toggleTheme, setMode, setVariant } = useThemeContext();
-  
+
   // Get settings from Redux
   const uiSettings = useAppSelector((state) => state.ui);
-  
+
   // Handle theme change
   const handleDarkModeToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isDarkMode = event.target.checked;
@@ -96,40 +97,40 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
     dispatch(setThemeVariant(variant));
     setVariant(variant);
   };
-  
+
   // Font size options
   const fontSizes = [
-    { value: 'small', label: 'Small' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'large', label: 'Large' },
-  ];
-  
+  { value: 'small', label: 'Small' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'large', label: 'Large' }];
+
+
   // Animation options
   const animationOptions = [
-    { value: 'on', label: 'On' },
-    { value: 'reduced', label: 'Reduced' },
-    { value: 'off', label: 'Off' },
-  ];
-  
+  { value: 'on', label: 'On' },
+  { value: 'reduced', label: 'Reduced' },
+  { value: 'off', label: 'Off' }];
+
+
   // Theme color options
   const themeColors = [
-    { value: 'blue', color: '#2563EB', label: 'Blue (Default)' },
-    { value: 'purple', color: '#8B5CF6', label: 'Purple' },
-    { value: 'emerald', color: '#10B981', label: 'Emerald' },
-    { value: 'amber', color: '#F59E0B', label: 'Amber' },
-    { value: 'rose', color: '#F43F5E', label: 'Rose' },
-    { value: 'gray', color: '#4B5563', label: 'Gray' },
-  ];
-  
+  { value: 'blue', color: '#2563EB', label: 'Blue (Default)' },
+  { value: 'purple', color: '#8B5CF6', label: 'Purple' },
+  { value: 'emerald', color: '#10B981', label: 'Emerald' },
+  { value: 'amber', color: '#F59E0B', label: 'Amber' },
+  { value: 'rose', color: '#F43F5E', label: 'Rose' },
+  { value: 'gray', color: '#4B5563', label: 'Gray' }];
+
+
   // Render content based on compact mode
-  const renderContent = () => {
+  const RenderContent = () => {
     return (
       <>
-        {/* Theme Mode Toggle */}
-        <Box 
-          sx={{ 
-            p: 2, 
-            borderRadius: 2, 
+        
+        <Box
+          sx={{
+            p: 2,
+            borderRadius: 2,
             mb: 2,
             bgcolor: mode === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.03)',
             border: `1px solid ${theme.palette.divider}`,
@@ -137,8 +138,8 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
             flexDirection: { xs: 'column', sm: 'row' },
             alignItems: 'center',
             gap: 2
-          }}
-        >
+          }}>
+
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
             <PaletteIcon sx={{ color: theme.palette.primary.main, mr: 1.5 }} />
             <Box>
@@ -150,26 +151,26 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
           </Box>
           <FormControlLabel
             control={
-              <Switch 
-                checked={mode === 'dark'} 
-                onChange={handleDarkModeToggle}
-                color="primary"
-              />
+            <Switch
+              checked={mode === 'dark'}
+              onChange={handleDarkModeToggle}
+              color="primary" />
+
             }
-            label={mode === 'dark' ? 'Dark Mode' : 'Light Mode'}
-          />
+            label={mode === 'dark' ? 'Dark Mode' : 'Light Mode'} />
+
         </Box>
         
-        {/* Theme Colors */}
-        <Box 
-          sx={{ 
-            p: 2, 
-            borderRadius: 2, 
+        
+        <Box
+          sx={{
+            p: 2,
+            borderRadius: 2,
             mb: 2,
             bgcolor: mode === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.03)',
-            border: `1px solid ${theme.palette.divider}`,
-          }}
-        >
+            border: `1px solid ${theme.palette.divider}`
+          }}>
+
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
             <ColorLens sx={{ color: theme.palette.primary.main, mr: 1.5 }} />
             <Box>
@@ -181,44 +182,44 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
           </Box>
           
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
-            {themeColors.map((color) => (
-              <Box key={color.value} sx={{ position: 'relative' }}>
+            {themeColors.map((color) =>
+            <Box key={color.value} sx={{ position: 'relative' }}>
                 <Tooltip title={color.label} arrow>
-                  <ColorCircle 
-                    sx={{ bgcolor: color.color }}
-                    onClick={() => handleVariantChange(color.value as ThemeVariant)}
-                  />
+                  <ColorCircle
+                  sx={{ bgcolor: color.color }}
+                  onClick={() => handleVariantChange(color.value as ThemeVariant)} />
+
                 </Tooltip>
-                {variant === color.value && (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      color: '#fff',
-                      zIndex: 1,
-                    }}
-                  >
+                {variant === color.value &&
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  color: '#fff',
+                  zIndex: 1
+                }}>
+
                     <CheckIcon fontSize="small" />
                   </Box>
-                )}
+              }
               </Box>
-            ))}
+            )}
           </Box>
         </Box>
         
-        {/* Font Size Settings */}
-        {!compact && (
-          <Box 
-            sx={{ 
-              p: 2, 
-              borderRadius: 2, 
-              mb: 2,
-              bgcolor: mode === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.03)',
-              border: `1px solid ${theme.palette.divider}`,
-            }}
-          >
+        
+        {!compact &&
+        <Box
+          sx={{
+            p: 2,
+            borderRadius: 2,
+            mb: 2,
+            bgcolor: mode === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.03)',
+            border: `1px solid ${theme.palette.divider}`
+          }}>
+
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <FontSizeIcon sx={{ color: theme.palette.primary.main, mr: 1.5 }} />
               <Box>
@@ -230,35 +231,35 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
             </Box>
             
             <FormControl component="fieldset">
-              <RadioGroup 
-                row 
-                aria-label="font-size" 
-                name="font-size-group"
-                defaultValue="medium"
-              >
-                {fontSizes.map((size) => (
-                  <FormControlLabel 
-                    key={size.value}
-                    value={size.value} 
-                    control={<Radio />} 
-                    label={size.label} 
-                  />
-                ))}
+              <RadioGroup
+              row
+              aria-label="font-size"
+              name="font-size-group"
+              defaultValue="medium">
+
+                {fontSizes.map((size) =>
+              <FormControlLabel
+                key={size.value}
+                value={size.value}
+                control={<Radio />}
+                label={size.label} />
+
+              )}
               </RadioGroup>
             </FormControl>
           </Box>
-        )}
+        }
         
-        {/* Animation Settings */}
-        {!compact && (
-          <Box 
-            sx={{ 
-              p: 2, 
-              borderRadius: 2,
-              bgcolor: mode === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.03)',
-              border: `1px solid ${theme.palette.divider}`,
-            }}
-          >
+        
+        {!compact &&
+        <Box
+          sx={{
+            p: 2,
+            borderRadius: 2,
+            bgcolor: mode === 'dark' ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.03)',
+            border: `1px solid ${theme.palette.divider}`
+          }}>
+
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <AnimationIcon sx={{ color: theme.palette.primary.main, mr: 1.5 }} />
               <Box>
@@ -270,39 +271,39 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
             </Box>
             
             <FormControl component="fieldset">
-              <RadioGroup 
-                row 
-                aria-label="animations" 
-                name="animations-group"
-                defaultValue="on"
-              >
-                {animationOptions.map((option) => (
-                  <FormControlLabel 
-                    key={option.value}
-                    value={option.value} 
-                    control={<Radio />} 
-                    label={option.label} 
-                  />
-                ))}
+              <RadioGroup
+              row
+              aria-label="animations"
+              name="animations-group"
+              defaultValue="on">
+
+                {animationOptions.map((option) =>
+              <FormControlLabel
+                key={option.value}
+                value={option.value}
+                control={<Radio />}
+                label={option.label} />
+
+              )}
               </RadioGroup>
             </FormControl>
           </Box>
-        )}
-      </>
-    );
+        }
+      </>);
+
   };
-  
+
   return (
     <>
-      {showTitle && (
-        <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
+      {showTitle &&
+      <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
           <ThemeIcon sx={{ mr: 1, color: 'primary.main' }} />
           <Typography variant="h5">Theme Settings</Typography>
         </Box>
-      )}
-      {renderContent()}
-    </>
-  );
+      }
+      {RenderContent()}
+    </>);
+
 };
 
-export default ThemeSettings; 
+export default ThemeSettings;

@@ -25,21 +25,21 @@ import {
   DialogContentText,
   DialogActions,
   LinearProgress,
-  Chip
-} from '@mui/material';
+  Chip } from
+'@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   Save as SaveIcon,
   Add as AddIcon,
   CheckCircle as CheckCircleIcon,
   Cancel as CancelIcon,
-  Warning as WarningIcon
-} from '@mui/icons-material';
+  Warning as WarningIcon } from
+'@mui/icons-material';
 import type { Inspection } from '../../services/mockDataService';
 import MockDataService from '../../services/mockDataService';
 
 const ConductInspection: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{id: string;}>();
   const navigate = useNavigate();
   const [inspection, setInspection] = useState<Inspection | null>(null);
   const [loading, setLoading] = useState(true);
@@ -64,11 +64,11 @@ const ConductInspection: React.FC = () => {
 
     MockDataService.initialize();
     const data = MockDataService.getInspectionById(id);
-    
+
     if (data) {
       setInspection(data);
       setNotes(data.notes || '');
-      
+
       // Set the active step based on the inspection status
       if (data.status === 'in-progress') {
         setActiveStep(1); // Go to conduct step
@@ -76,7 +76,7 @@ const ConductInspection: React.FC = () => {
     } else {
       setError('Inspection not found');
     }
-    
+
     setLoading(false);
   }, [id]);
 
@@ -90,15 +90,15 @@ const ConductInspection: React.FC = () => {
   // Start the inspection
   const handleStartInspection = () => {
     if (!inspection || !id) return;
-    
+
     const updatedInspection = {
       ...inspection,
       status: 'in-progress',
       startDate: new Date().toISOString()
     };
-    
+
     const updated = MockDataService.updateInspection(id, updatedInspection);
-    
+
     if (updated) {
       setInspection(updated);
       setActiveStep(1);
@@ -110,18 +110,18 @@ const ConductInspection: React.FC = () => {
   // Update checklist item result
   const handleChecklistItemChange = (itemId: string, newResult: string) => {
     if (!inspection || !id) return;
-    
-    const updatedItems = inspection.checklistItems.map(item => 
-      item.id === itemId ? { ...item, result: newResult } : item
+
+    const updatedItems = inspection.checklistItems.map((item) =>
+    item.id === itemId ? { ...item, result: newResult } : item
     );
-    
+
     const updatedInspection = {
       ...inspection,
       checklistItems: updatedItems
     };
-    
+
     const updated = MockDataService.updateInspection(id, updatedInspection);
-    
+
     if (updated) {
       setInspection(updated);
     } else {
@@ -137,15 +137,15 @@ const ConductInspection: React.FC = () => {
   // Save progress
   const handleSaveProgress = () => {
     if (!inspection || !id) return;
-    
+
     const updatedInspection = {
       ...inspection,
       notes,
       result
     };
-    
+
     const updated = MockDataService.updateInspection(id, updatedInspection);
-    
+
     if (updated) {
       setInspection(updated);
       setFormDirty(false);
@@ -158,7 +158,7 @@ const ConductInspection: React.FC = () => {
   // Complete the inspection
   const handleCompleteInspection = () => {
     if (!inspection || !id) return;
-    
+
     // Update the inspection status to completed
     const updatedInspection = {
       ...inspection,
@@ -167,9 +167,9 @@ const ConductInspection: React.FC = () => {
       notes,
       result
     };
-    
+
     const updated = MockDataService.updateInspection(id, updatedInspection);
-    
+
     if (updated) {
       // Navigate to the inspection details
       navigate(`/inspections/${id}`);
@@ -193,9 +193,9 @@ const ConductInspection: React.FC = () => {
   };
 
   // Render preparation step
-  const renderPreparationStep = () => {
+  const RenderPreparationStep = () => {
     if (!inspection) return null;
-    
+
     return (
       <Box>
         <Typography variant="h6" gutterBottom>
@@ -254,19 +254,19 @@ const ConductInspection: React.FC = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleStartInspection}
-          >
+            onClick={handleStartInspection}>
+
             Start Inspection
           </Button>
         </Box>
-      </Box>
-    );
+      </Box>);
+
   };
 
   // Render checklist items step
-  const renderChecklistStep = () => {
+  const RenderChecklistStep = () => {
     if (!inspection) return null;
-    
+
     return (
       <Box>
         <Typography variant="h6" gutterBottom>
@@ -274,24 +274,24 @@ const ConductInspection: React.FC = () => {
         </Typography>
         
         <Paper sx={{ p: 3, mb: 3 }}>
-          {inspection.checklistItems.length === 0 ? (
-            <Box py={2}>
+          {inspection.checklistItems.length === 0 ?
+          <Box py={2}>
               <Typography variant="body1" align="center">
                 No checklist items available for this inspection.
               </Typography>
               <Box display="flex" justifyContent="center" mt={2}>
                 <Button
-                  startIcon={<AddIcon />}
-                  variant="outlined"
-                >
+                startIcon={<AddIcon />}
+                variant="outlined">
+
                   Add Checklist Item
                 </Button>
               </Box>
-            </Box>
-          ) : (
-            <List>
-              {inspection.checklistItems.map((item, index) => (
-                <ListItem key={item.id} divider={index < inspection.checklistItems.length - 1}>
+            </Box> :
+
+          <List>
+              {inspection.checklistItems.map((item, index) =>
+            <ListItem key={item.id} divider={index < inspection.checklistItems.length - 1}>
                   <Box width="100%">
                     <Box display="flex" alignItems="center" mb={1}>
                       <Typography variant="subtitle1">
@@ -299,51 +299,51 @@ const ConductInspection: React.FC = () => {
                       </Typography>
                       <Box ml="auto">
                         <Chip
-                          label={item.result.toUpperCase()}
-                          color={
-                            item.result === 'pass' ? 'success' :
-                            item.result === 'fail' ? 'error' :
-                            'default'
-                          }
-                          size="small"
-                        />
+                      label={item.result.toUpperCase()}
+                      color={
+                      item.result === 'pass' ? 'success' :
+                      item.result === 'fail' ? 'error' :
+                      'default'
+                      }
+                      size="small" />
+
                       </Box>
                     </Box>
                     
                     <FormControl component="fieldset" fullWidth>
                       <RadioGroup
-                        row
-                        value={item.result}
-                        onChange={(e) => handleChecklistItemChange(item.id, e.target.value)}
-                      >
+                    row
+                    value={item.result}
+                    onChange={(e) => handleChecklistItemChange(item.id, e.target.value)}>
+
                         <FormControlLabel
-                          value="pass"
-                          control={<Radio color="success" />}
-                          label="Pass"
-                        />
+                      value="pass"
+                      control={<Radio color="success" />}
+                      label="Pass" />
+
                         <FormControlLabel
-                          value="fail"
-                          control={<Radio color="error" />}
-                          label="Fail"
-                        />
+                      value="fail"
+                      control={<Radio color="error" />}
+                      label="Fail" />
+
                         <FormControlLabel
-                          value="pending"
-                          control={<Radio />}
-                          label="Pending"
-                        />
+                      value="pending"
+                      control={<Radio />}
+                      label="Pending" />
+
                       </RadioGroup>
                     </FormControl>
                     
-                    {item.notes && (
-                      <Typography variant="body2" color="text.secondary">
+                    {item.notes &&
+                <Typography variant="body2" color="text.secondary">
                         Notes: {item.notes}
                       </Typography>
-                    )}
+                }
                   </Box>
                 </ListItem>
-              ))}
+            )}
             </List>
-          )}
+          }
         </Paper>
         
         <Paper sx={{ p: 3, mb: 3 }}>
@@ -357,8 +357,8 @@ const ConductInspection: React.FC = () => {
             placeholder="Add notes about the inspection here..."
             value={notes}
             onChange={handleNotesChange}
-            variant="outlined"
-          />
+            variant="outlined" />
+
         </Paper>
         
         <Box display="flex" justifyContent="space-between" mt={3}>
@@ -370,46 +370,46 @@ const ConductInspection: React.FC = () => {
               variant="outlined"
               sx={{ mr: 2 }}
               onClick={handleSaveProgress}
-              disabled={!formDirty}
-            >
+              disabled={!formDirty}>
+
               Save Progress
             </Button>
             <Button
               variant="contained"
               color="primary"
-              onClick={handleNext}
-            >
+              onClick={handleNext}>
+
               Continue
             </Button>
           </Box>
         </Box>
-      </Box>
-    );
+      </Box>);
+
   };
 
   // Render results step
-  const renderResultsStep = () => {
+  const RenderResultsStep = () => {
     if (!inspection) return null;
-    
+
     // Calculate pass/fail statistics
-    const passedItems = inspection.checklistItems.filter(item => item.result === 'pass').length;
-    const failedItems = inspection.checklistItems.filter(item => item.result === 'fail').length;
-    const pendingItems = inspection.checklistItems.filter(item => item.result === 'pending').length;
+    const passedItems = inspection.checklistItems.filter((item) => item.result === 'pass').length;
+    const failedItems = inspection.checklistItems.filter((item) => item.result === 'fail').length;
+    const pendingItems = inspection.checklistItems.filter((item) => item.result === 'pending').length;
     const totalItems = inspection.checklistItems.length;
-    
+
     const getDefaultResult = () => {
       if (pendingItems > 0) return 'pending';
       if (failedItems > 0) return 'fail';
       return 'pass';
     };
-    
+
     // Set the default result if not changed
     useEffect(() => {
       if (result === 'pending') {
         setResult(getDefaultResult());
       }
     }, []);
-    
+
     return (
       <Box>
         <Typography variant="h6" gutterBottom>
@@ -425,20 +425,20 @@ const ConductInspection: React.FC = () => {
             <Chip
               icon={<CheckCircleIcon />}
               label={`Passed: ${passedItems}`}
-              color="success"
-            />
+              color="success" />
+
             <Chip
               icon={<CancelIcon />}
               label={`Failed: ${failedItems}`}
-              color="error"
-            />
-            {pendingItems > 0 && (
-              <Chip
-                icon={<WarningIcon />}
-                label={`Pending: ${pendingItems}`}
-                color="warning"
-              />
-            )}
+              color="error" />
+
+            {pendingItems > 0 &&
+            <Chip
+              icon={<WarningIcon />}
+              label={`Pending: ${pendingItems}`}
+              color="warning" />
+
+            }
           </Box>
           
           <Divider sx={{ my: 2 }} />
@@ -451,23 +451,23 @@ const ConductInspection: React.FC = () => {
             <RadioGroup
               row
               value={result}
-              onChange={(e) => setResult(e.target.value)}
-            >
+              onChange={(e) => setResult(e.target.value)}>
+
               <FormControlLabel
                 value="pass"
                 control={<Radio color="success" />}
-                label="Pass"
-              />
+                label="Pass" />
+
               <FormControlLabel
                 value="fail"
                 control={<Radio color="error" />}
-                label="Fail"
-              />
+                label="Fail" />
+
               <FormControlLabel
                 value="conditional"
                 control={<Radio color="warning" />}
-                label="Conditional Pass"
-              />
+                label="Conditional Pass" />
+
             </RadioGroup>
           </FormControl>
           
@@ -480,8 +480,8 @@ const ConductInspection: React.FC = () => {
             value={notes}
             onChange={handleNotesChange}
             variant="outlined"
-            sx={{ mt: 2 }}
-          />
+            sx={{ mt: 2 }} />
+
         </Paper>
         
         <Box display="flex" justifyContent="space-between" mt={3}>
@@ -493,25 +493,25 @@ const ConductInspection: React.FC = () => {
               variant="outlined"
               sx={{ mr: 2 }}
               onClick={handleSaveProgress}
-              disabled={!formDirty}
-            >
+              disabled={!formDirty}>
+
               Save Progress
             </Button>
             <Button
               variant="contained"
               color="primary"
-              onClick={() => setConfirmDialogOpen(true)}
-            >
+              onClick={() => setConfirmDialogOpen(true)}>
+
               Complete Inspection
             </Button>
           </Box>
         </Box>
         
-        {/* Confirmation dialog */}
+        
         <Dialog
           open={confirmDialogOpen}
-          onClose={() => setConfirmDialogOpen(false)}
-        >
+          onClose={() => setConfirmDialogOpen(false)}>
+
           <DialogTitle>
             Complete Inspection?
           </DialogTitle>
@@ -524,21 +524,21 @@ const ConductInspection: React.FC = () => {
             <Button onClick={() => setConfirmDialogOpen(false)}>
               Cancel
             </Button>
-            <Button 
-              onClick={handleCompleteInspection} 
-              variant="contained" 
-              color="primary"
-            >
+            <Button
+              onClick={handleCompleteInspection}
+              variant="contained"
+              color="primary">
+
               Complete
             </Button>
           </DialogActions>
         </Dialog>
         
-        {/* Save dialog */}
+        
         <Dialog
           open={saveDialogOpen}
-          onClose={() => setSaveDialogOpen(false)}
-        >
+          onClose={() => setSaveDialogOpen(false)}>
+
           <DialogTitle>
             Progress Saved
           </DialogTitle>
@@ -548,28 +548,28 @@ const ConductInspection: React.FC = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button 
-              onClick={() => setSaveDialogOpen(false)} 
-              variant="contained" 
-              color="primary"
-            >
+            <Button
+              onClick={() => setSaveDialogOpen(false)}
+              variant="contained"
+              color="primary">
+
               OK
             </Button>
           </DialogActions>
         </Dialog>
-      </Box>
-    );
+      </Box>);
+
   };
 
   // Render the current step
   const renderStep = () => {
     switch (activeStep) {
       case 0:
-        return renderPreparationStep();
+        return RenderPreparationStep();
       case 1:
-        return renderChecklistStep();
+        return RenderChecklistStep();
       case 2:
-        return renderResultsStep();
+        return RenderResultsStep();
       default:
         return null;
     }
@@ -589,17 +589,17 @@ const ConductInspection: React.FC = () => {
           variant="outlined"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/inspections')}
-          sx={{ mt: 2 }}
-        >
+          sx={{ mt: 2 }}>
+
           Back to Inspections
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
     <Box>
-      {/* Header */}
+      
       <Box display="flex" alignItems="center" mb={3}>
         <IconButton onClick={() => navigate(`/inspections/${id}`)} sx={{ mr: 2 }}>
           <ArrowBackIcon />
@@ -614,19 +614,19 @@ const ConductInspection: React.FC = () => {
         </Box>
       </Box>
       
-      {/* Stepper */}
+      
       <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
-        {steps.map((label) => (
-          <Step key={label}>
+        {steps.map((label) =>
+        <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
-        ))}
+        )}
       </Stepper>
       
-      {/* Step content */}
+      
       {renderStep()}
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default ConductInspection; 
+export default ConductInspection;

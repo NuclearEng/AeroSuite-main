@@ -4,7 +4,7 @@ import { handleError } from './errorHandling';
 interface LazyLoadOptions {
   fallback?: React.ReactNode;
   loadingDelay?: number;
-  errorComponent?: ComponentType<{ error: Error; retry: () => void }>;
+  errorComponent?: ComponentType<{error: Error;retry: () => void;}>;
 }
 
 interface CustomComponentPropsWithRef<T> {
@@ -12,10 +12,10 @@ interface CustomComponentPropsWithRef<T> {
   [key: string]: any;
 }
 
-function withSuspense<T>(
-  Component: FC<CustomComponentPropsWithRef<T>>,
-  options: LazyLoadOptions = {}
-): FC<CustomComponentPropsWithRef<T>> {
+function WithSuspense<T>(
+Component: FC<CustomComponentPropsWithRef<T>>,
+options: LazyLoadOptions = {})
+: FC<CustomComponentPropsWithRef<T>> {
   const { fallback = null, loadingDelay = 0, errorComponent: ErrorComponent } = options;
 
   return function WrappedComponent(props: CustomComponentPropsWithRef<T>) {
@@ -40,14 +40,14 @@ function withSuspense<T>(
         <ErrorBoundary ErrorComponent={ErrorComponent}>
           <Component {...props} />
         </ErrorBoundary>
-      </Suspense>
-    );
+      </Suspense>);
+
   };
 }
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
-  ErrorComponent?: ComponentType<{ error: Error; retry: () => void }>;
+  ErrorComponent?: ComponentType<{error: Error;retry: () => void;}>;
 }
 
 interface ErrorBoundaryState {
@@ -88,15 +88,15 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 }
 
 export function lazyLoad<T>(
-  factory: () => Promise<{ default: FC<CustomComponentPropsWithRef<T>> }>,
-  options: LazyLoadOptions = {}
-): FC<CustomComponentPropsWithRef<T>> {
+factory: () => Promise<{default: FC<CustomComponentPropsWithRef<T>>;}>,
+options: LazyLoadOptions = {})
+: FC<CustomComponentPropsWithRef<T>> {
   const LazyComponent = lazy(() => {
-    return factory().catch(error => {
+    return factory().catch((error) => {
       console.error('Failed to load component:', error);
       throw error;
     });
   });
 
-  return withSuspense(LazyComponent, options);
+  return WithSuspense(LazyComponent, options);
 }

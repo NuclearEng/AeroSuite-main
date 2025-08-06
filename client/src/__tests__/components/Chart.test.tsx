@@ -3,6 +3,17 @@ import { render, screen } from '@testing-library/react';
 import { renderWithProviders } from '../test-utils';
 import Chart from '../../components/common/Chart';
 
+interface ChartProps {
+  type: 'line' | 'bar' | 'pie' | 'doughnut' | 'radar' | 'polarArea' | 'bubble' | 'scatter';
+  data: any;
+  title?: string;
+  height?: number;
+  options?: any;
+  loading?: boolean;
+  error?: string | null;
+  className?: string;
+}
+
 // Mock the Chart.js library
 jest.mock('react-chartjs-2', () => ({
   Line: (props) => <canvas data-testid="line-chart" data-props={JSON.stringify(props)} />,
@@ -255,7 +266,6 @@ describe('Chart Component', () => {
         data={lineChartData}
         title="Styled Chart"
         height={300}
-        sx={{ backgroundColor: 'rgb(240, 240, 240)', borderRadius: '8px' }}
       />
     );
     

@@ -1,40 +1,40 @@
 import React, { useState, ChangeEvent, SyntheticEvent, ReactNode } from 'react';
-import { 
-  Box, 
-  Button, 
-  Card, 
-  CardContent, 
-  CircularProgress, 
-  Container, 
-  Divider, 
-  FormControl, 
-  Grid, 
-  InputLabel, 
-  MenuItem, 
-  Paper, 
-  Select, 
-  Tab, 
-  Tabs, 
-  TextField, 
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Divider,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Tab,
+  Tabs,
+  TextField,
   Typography,
   Tooltip,
   Skeleton,
   IconButton,
   SelectChangeEvent,
-  SxProps
-} from '@mui/material';
-import { 
-  BarChart, 
-  Bar, 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Legend, 
+  SxProps } from
+'@mui/material';
+import {
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
   ResponsiveContainer,
-  Tooltip as RechartsTooltip
-} from 'recharts';
+  Tooltip as RechartsTooltip } from
+'recharts';
 import { useTheme, Theme } from '@mui/material/styles';
 import { useSnackbar, OptionsObject, SnackbarKey } from 'notistack';
 import axios, { AxiosResponse, AxiosError } from 'axios';
@@ -53,8 +53,8 @@ import {
   HistogramBucket,
   AnalysisRequestPayload,
   AnalysisApiResponse,
-  TimeSeriesPoint
-} from '../../types/analysis.types';
+  TimeSeriesPoint } from
+'../../types/analysis.types';
 
 /**
  * AI-assisted Data Analysis Page
@@ -65,7 +65,7 @@ import {
 const AIAnalysisPage: React.FC = () => {
   const theme = useTheme<Theme>();
   const { enqueueSnackbar } = useSnackbar();
-  
+
   // State management
   const [inputMethod, setInputMethod] = useState<'paste' | 'upload'>('paste');
   const [inputData, setInputData] = useState<string>('');
@@ -84,17 +84,17 @@ const AIAnalysisPage: React.FC = () => {
   const [previewData, setPreviewData] = useState<unknown>(null);
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
-  
+
   const DataArraySchema = z.array(z.object({}).passthrough());
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-  
+
   const SAMPLE_DATA = '[{"value":1},{"value":2},{"value":3}]';
-  
+
   // Handle tab change
   const handleTabChange = (_event: SyntheticEvent, newValue: number): void => {
     setActiveTab(newValue);
   };
-  
+
   // Handle input method change
   const handleInputMethodChange = (event: SelectChangeEvent<'paste' | 'upload'>): void => {
     setInputMethod(event.target.value as 'paste' | 'upload');
@@ -102,7 +102,7 @@ const AIAnalysisPage: React.FC = () => {
     setAnalysis(null);
     setInputError('');
   };
-  
+
   // Handle data format change
   const handleDataFormatChange = (event: SelectChangeEvent<'json' | 'csv'>): void => {
     setDataFormat(event.target.value as 'json' | 'csv');
@@ -110,7 +110,7 @@ const AIAnalysisPage: React.FC = () => {
     setInputData('');
     setInputError('');
   };
-  
+
   // Handle options change
   const handleOptionChange = (event: SelectChangeEvent<string>): void => {
     setAnalysisOptions({
@@ -118,7 +118,7 @@ const AIAnalysisPage: React.FC = () => {
       [event.target.name as keyof AnalysisOptions]: event.target.value
     });
   };
-  
+
   // Handle checkbox options
   const handleCheckboxChange = (event: SelectChangeEvent<boolean>): void => {
     setAnalysisOptions({
@@ -126,7 +126,7 @@ const AIAnalysisPage: React.FC = () => {
       [event.target.name as keyof AnalysisOptions]: event.target.value === 'true'
     });
   };
-  
+
   // Handle file upload
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
@@ -145,7 +145,7 @@ const AIAnalysisPage: React.FC = () => {
     };
     reader.readAsText(file);
   };
-  
+
   // Parse input data based on format
   const parseInputData = (): unknown => {
     try {
@@ -153,9 +153,9 @@ const AIAnalysisPage: React.FC = () => {
       if (dataFormat === 'json') {
         parsed = JSON.parse(inputData);
       } else if (dataFormat === 'csv') {
-        const result = Papa.parse<Record<string, unknown>>(inputData, { 
-          header: true, 
-          dynamicTyping: true 
+        const result = Papa.parse<Record<string, unknown>>(inputData, {
+          header: true,
+          dynamicTyping: true
         });
         parsed = result.data;
       }
@@ -164,15 +164,15 @@ const AIAnalysisPage: React.FC = () => {
     } catch (_error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       setInputError(`Error parsing ${dataFormat.toUpperCase()} data: ${errorMessage}`);
-      enqueueSnackbar(`Error parsing ${dataFormat.toUpperCase()} data: ${errorMessage}`, { 
-        variant: 'error' 
+      enqueueSnackbar(`Error parsing ${dataFormat.toUpperCase()} data: ${errorMessage}`, {
+        variant: 'error'
       });
       return null;
     }
   };
-  
+
   const validateInput = (data: unknown): boolean => {
-    if (!data || (typeof data === 'string' && data.trim() === '')) {
+    if (!data || typeof data === 'string' && data.trim() === '') {
       setInputError('Input cannot be empty or whitespace.');
       return false;
     }
@@ -185,41 +185,41 @@ const AIAnalysisPage: React.FC = () => {
       return false;
     }
   };
-  
+
   // Submit data for analysis
   const handleSubmit = async (): Promise<void> => {
     const parsedData = parseInputData();
     if (!parsedData) return;
-    
+
     setLoading(true);
     try {
       const response: AxiosResponse<AnalysisApiResponse> = await axios.post<AnalysisApiResponse>('/api/v1/ai/analysis', {
         data: parsedData,
         options: analysisOptions
       } as AnalysisRequestPayload);
-      
+
       setAnalysis(response.data.analysis);
       enqueueSnackbar('Analysis completed successfully', { variant: 'success' });
     } catch (_error) {
-      const errorMessage = axios.isAxiosError(error) 
-        ? (error as AxiosError<{message: string}>).response?.data?.message || error.message 
-        : 'Unknown error';
-      enqueueSnackbar(`Analysis failed: ${errorMessage}`, { 
-        variant: 'error' 
+      const errorMessage = axios.isAxiosError(error) ?
+      (error as AxiosError<{message: string;}>).response?.data?.message || error.message :
+      'Unknown error';
+      enqueueSnackbar(`Analysis failed: ${errorMessage}`, {
+        variant: 'error'
       });
     } finally {
       setLoading(false);
     }
   };
-  
+
   // Render summary statistics as cards
-  const renderSummaryStats = (): ReactNode => {
+  const RenderSummaryStats = (): ReactNode => {
     if (!analysis || !analysis.summary) return null;
-    
+
     return (
       <Grid container spacing={3} sx={{ mt: 2 }}>
-        {Object.entries(analysis.summary).map(([key, stats]) => (
-          <Grid item xs={12} md={6} lg={4} key={key}>
+        {Object.entries(analysis.summary).map(([key, stats]) =>
+        <Grid item xs={12} md={6} lg={4} key={key}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -228,20 +228,20 @@ const AIAnalysisPage: React.FC = () => {
                 <Typography variant="body2">Min: {stats.min}</Typography>
                 <Typography variant="body2">Max: {stats.max}</Typography>
                 <Typography variant="body2">Mean: {stats.mean}</Typography>
-                {stats.median && (
-                  <Typography variant="body2">Median: {stats.median}</Typography>
-                )}
-                {stats.stdDev && (
-                  <Typography variant="body2">Std Dev: {stats.stdDev}</Typography>
-                )}
+                {stats.median &&
+              <Typography variant="body2">Median: {stats.median}</Typography>
+              }
+                {stats.stdDev &&
+              <Typography variant="body2">Std Dev: {stats.stdDev}</Typography>
+              }
               </CardContent>
             </Card>
           </Grid>
-        ))}
-      </Grid>
-    );
+        )}
+      </Grid>);
+
   };
-  
+
   // Add a utility function to compute histogram if needed
   function computeHistogram(values: number[], bucketCount = 10): HistogramBucket[] {
     if (!Array.isArray(values) || values.length === 0) return [];
@@ -253,7 +253,7 @@ const AIAnalysisPage: React.FC = () => {
       name: `${(min + i * size).toFixed(1)}-${(min + (i + 1) * size).toFixed(1)}`,
       value: 0
     }));
-    values.forEach(v => {
+    values.forEach((v) => {
       if (typeof v !== 'number') return;
       let idx = Math.floor((v - min) / size);
       if (idx === bucketCount) idx--;
@@ -261,9 +261,9 @@ const AIAnalysisPage: React.FC = () => {
     });
     return buckets;
   }
-  
+
   // Render charts based on analysis data
-  const renderCharts = (): ReactNode => {
+  const RenderCharts = (): ReactNode => {
     if (!analysis || !analysis.summary) return null;
     const chartData: ChartData[] = [];
     if (analysis.receivedType === 'array' && analysis.itemCount > 0) {
@@ -285,57 +285,57 @@ const AIAnalysisPage: React.FC = () => {
         });
       }
     }
-    
+
     return (
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
           Data Visualization
         </Typography>
         <Grid container spacing={3}>
-          {chartData.map((chart, index) => (
-            <Grid item xs={12} md={6} key={index}>
+          {chartData.map((chart, index) =>
+          <Grid item xs={12} md={6} key={index}>
               <Paper sx={{ p: 2, height: 300 }}>
                 <Typography variant="subtitle1" gutterBottom>
                   {chart.field}
                 </Typography>
                 <ResponsiveContainer width="100%" height="90%">
-                  {chart.type === 'bar' ? (
-                    <BarChart data={chart.data}>
+                  {chart.type === 'bar' ?
+                <BarChart data={chart.data}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
                       <RechartsTooltip />
                       <Legend />
                       <Bar dataKey="value" fill={theme.palette.primary.main} />
-                    </BarChart>
-                  ) : (
-                    <LineChart data={chart.data}>
+                    </BarChart> :
+
+                <LineChart data={chart.data}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
                       <RechartsTooltip />
                       <Legend />
-                      <Line 
-                        type="monotone" 
-                        dataKey="value" 
-                        stroke={theme.palette.secondary.main} 
-                        activeDot={{ r: 8 }} 
-                      />
+                      <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke={theme.palette.secondary.main}
+                    activeDot={{ r: 8 }} />
+
                     </LineChart>
-                  )}
+                }
                 </ResponsiveContainer>
               </Paper>
             </Grid>
-          ))}
+          )}
         </Grid>
-      </Box>
-    );
+      </Box>);
+
   };
-  
+
   // Render insights and recommendations
-  const renderInsights = (): ReactNode => {
+  const RenderInsights = (): ReactNode => {
     if (!analysis) return null;
-    
+
     return (
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
@@ -346,8 +346,8 @@ const AIAnalysisPage: React.FC = () => {
             {analysis.message}
           </Typography>
           
-          {analysis.suggestedAnalysis && (
-            <>
+          {analysis.suggestedAnalysis &&
+          <>
               <Typography variant="subtitle1" gutterBottom>
                 Suggested Analysis
               </Typography>
@@ -355,48 +355,48 @@ const AIAnalysisPage: React.FC = () => {
                 {analysis.suggestedAnalysis}
               </Typography>
             </>
-          )}
+          }
           
-          {analysis.outliers && analysis.outliers.length > 0 && (
-            <>
+          {analysis.outliers && analysis.outliers.length > 0 &&
+          <>
               <Typography variant="subtitle1" gutterBottom>
                 Outliers Detected
               </Typography>
               <ul>
-                {analysis.outliers.map((outlier, index) => (
-                  <li key={index}>
+                {analysis.outliers.map((outlier, index) =>
+              <li key={index}>
                     <Typography variant="body2">
                       {outlier.field}: {String(outlier.value)} ({outlier.reason})
                       {outlier.score && ` [Z-score: ${outlier.score.toFixed(2)}]`}
                     </Typography>
                   </li>
-                ))}
+              )}
               </ul>
             </>
-          )}
+          }
           
-          {analysis.correlations && analysis.correlations.length > 0 && (
-            <>
+          {analysis.correlations && analysis.correlations.length > 0 &&
+          <>
               <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
                 Correlations Detected
               </Typography>
               <ul>
-                {analysis.correlations.map((corr, index) => (
-                  <li key={index}>
+                {analysis.correlations.map((corr, index) =>
+              <li key={index}>
                     <Typography variant="body2">
                       {corr.field1} ↔ {corr.field2}: {corr.coefficient.toFixed(2)} 
                       ({corr.strength} correlation)
                     </Typography>
                   </li>
-                ))}
+              )}
               </ul>
             </>
-          )}
+          }
         </Paper>
-      </Box>
-    );
+      </Box>);
+
   };
-  
+
   const handleInputChange = (value: string): void => {
     setHistory((h) => [...h, inputData]);
     setFuture([]);
@@ -404,21 +404,21 @@ const AIAnalysisPage: React.FC = () => {
     setShowPreview(true);
     tryAutoDetectFormat(value);
   };
-  
+
   const handleUndo = (): void => {
     if (history.length === 0) return;
     setFuture((f) => [inputData, ...f]);
     setInputData(history[history.length - 1]);
     setHistory((h) => h.slice(0, -1));
   };
-  
+
   const handleRedo = (): void => {
     if (future.length === 0) return;
     setHistory((h) => [...h, inputData]);
     setInputData(future[0]);
     setFuture((f) => f.slice(1));
   };
-  
+
   const handleClearAll = (): void => {
     setInputData('');
     setAnalysis(null);
@@ -429,12 +429,12 @@ const AIAnalysisPage: React.FC = () => {
     setHistory([]);
     setFuture([]);
   };
-  
+
   const handleTrySampleData = (): void => {
     handleInputChange(SAMPLE_DATA);
     setShowPreview(true);
   };
-  
+
   const tryAutoDetectFormat = (value: string): void => {
     if (!value) return;
     if (value.trim().startsWith('[') || value.trim().startsWith('{')) {
@@ -443,16 +443,16 @@ const AIAnalysisPage: React.FC = () => {
       setDataFormat('csv');
     }
   };
-  
+
   const handlePreview = (): void => {
     try {
       let parsed: unknown;
       if (dataFormat === 'json') {
         parsed = JSON.parse(inputData);
       } else if (dataFormat === 'csv') {
-        const result = Papa.parse<Record<string, unknown>>(inputData, { 
-          header: true, 
-          dynamicTyping: true 
+        const result = Papa.parse<Record<string, unknown>>(inputData, {
+          header: true,
+          dynamicTyping: true
         });
         parsed = result.data;
       }
@@ -466,7 +466,7 @@ const AIAnalysisPage: React.FC = () => {
       setShowPreview(false);
     }
   };
-  
+
   const handleDownloadResults = (type: 'json' | 'csv' = 'json'): void => {
     if (!analysis) return;
     let dataStr = '';
@@ -476,7 +476,7 @@ const AIAnalysisPage: React.FC = () => {
     } else {
       // Simple CSV export for summary
       const keys = Object.keys(analysis.summary || {});
-      const rows = keys.map(k => {
+      const rows = keys.map((k) => {
         const s = analysis.summary[k];
         return `${k},${s.min},${s.max},${s.mean},${s.median || ''}`;
       });
@@ -491,7 +491,7 @@ const AIAnalysisPage: React.FC = () => {
     a.click();
     URL.revokeObjectURL(url);
   };
-  
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" gutterBottom>
@@ -502,7 +502,7 @@ const AIAnalysisPage: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {/* Input Section */}
+        
         <Grid item xs={12} md={5}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" gutterBottom>
@@ -536,8 +536,8 @@ const AIAnalysisPage: React.FC = () => {
                 value={inputMethod}
                 label="Input Method"
                 onChange={handleInputMethodChange}
-                aria-label="Input Method"
-              >
+                aria-label="Input Method">
+
                 <MenuItem value="paste">Paste Data</MenuItem>
                 <MenuItem value="upload">Upload File</MenuItem>
               </Select>
@@ -550,71 +550,71 @@ const AIAnalysisPage: React.FC = () => {
                 value={dataFormat}
                 label="Data Format"
                 onChange={handleDataFormatChange}
-                aria-label="Data Format"
-              >
+                aria-label="Data Format">
+
                 <MenuItem value="json">JSON</MenuItem>
                 <MenuItem value="csv">CSV</MenuItem>
               </Select>
             </FormControl>
             
-            {inputMethod === 'paste' ? (
-              <TextField
-                label={`Paste ${dataFormat.toUpperCase()} Data`}
-                aria-label="Paste Data"
-                multiline
-                rows={10}
-                value={inputData}
-                onChange={(e) => setInputData(e.target.value)}
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                placeholder={dataFormat === 'json' ? '[ { "key": "value" } ]' : 'header1,header2\nvalue1,value2'}
-                aria-invalid={!!inputError}
-                aria-describedby="input-error-text"
-                inputProps={{ tabIndex: 0 }}
-                sx={{ '&:focus-within': { outline: '2px solid #1976d2' } }}
-              />
-            ) : (
-              <Button
-                variant="contained"
-                component="label"
-                sx={{ mt: 2, '&:focus': { outline: '2px solid #1976d2' } }}
-                tabIndex={0}
-                aria-label={`Upload ${dataFormat.toUpperCase()} File`}
-              >
+            {inputMethod === 'paste' ?
+            <TextField
+              label={`Paste ${dataFormat.toUpperCase()} Data`}
+              aria-label="Paste Data"
+              multiline
+              rows={10}
+              value={inputData}
+              onChange={(e) => setInputData(e.target.value)}
+              margin="normal"
+              fullWidth
+              variant="outlined"
+              placeholder={dataFormat === 'json' ? '[ { "key": "value" } ]' : 'header1,header2\nvalue1,value2'}
+              aria-invalid={!!inputError}
+              aria-describedby="input-error-text"
+              inputProps={{ tabIndex: 0 }}
+              sx={{ '&:focus-within': { outline: '2px solid #1976d2' } }} /> :
+
+
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ mt: 2, '&:focus': { outline: '2px solid #1976d2' } }}
+              tabIndex={0}
+              aria-label={`Upload ${dataFormat.toUpperCase()} File`}>
+
                 Upload {dataFormat.toUpperCase()} File
                 <input
-                  type="file"
-                  accept={dataFormat === 'json' ? '.json' : '.csv'}
-                  hidden
-                  onChange={handleFileUpload}
-                  tabIndex={-1}
-                />
+                type="file"
+                accept={dataFormat === 'json' ? '.json' : '.csv'}
+                hidden
+                onChange={handleFileUpload}
+                tabIndex={-1} />
+
               </Button>
-            )}
+            }
             
-            {inputError && (
-              <Typography id="input-error-text" color="error" variant="body2" sx={{ mt: 1 }} role="alert">
+            {inputError &&
+            <Typography id="input-error-text" color="error" variant="body2" sx={{ mt: 1 }} role="alert">
                 {inputError}
               </Typography>
-            )}
+            }
             
-            {showPreview && previewData && (
-              <Paper sx={{ p: 2, mt: 2, bgcolor: '#f9f9f9' }}>
+            {showPreview && previewData &&
+            <Paper sx={{ p: 2, mt: 2, bgcolor: '#f9f9f9' }}>
                 <Typography variant="subtitle2">Preview ({Array.isArray(previewData) ? previewData.length : 0} rows)</Typography>
-                {Array.isArray(previewData) && previewData.length > 1000 && (
-                  <Typography color="warning.main" variant="body2">Warning: Large dataset, results may be slow to display.</Typography>
-                )}
+                {Array.isArray(previewData) && previewData.length > 1000 &&
+              <Typography color="warning.main" variant="body2">Warning: Large dataset, results may be slow to display.</Typography>
+              }
                 <pre style={{ maxHeight: 200, overflow: 'auto', fontSize: 12 }}>{typeof previewData === 'object' ? JSON.stringify(previewData, null, 2) : String(previewData)}</pre>
               </Paper>
-            )}
+            }
             
-            {validationErrors.length > 0 && (
-              <Paper sx={{ p: 2, mt: 2, bgcolor: '#fff3e0' }}>
+            {validationErrors.length > 0 &&
+            <Paper sx={{ p: 2, mt: 2, bgcolor: '#fff3e0' }}>
                 <Typography color="error" variant="body2">Validation Errors:</Typography>
                 <ul>{validationErrors.map((err, i) => <li key={i}><Typography color="error" variant="body2">{err}</Typography></li>)}</ul>
               </Paper>
-            )}
+            }
             
             <Divider sx={{ my: 2 }} />
             
@@ -628,8 +628,8 @@ const AIAnalysisPage: React.FC = () => {
                 name="analysisType"
                 value={analysisOptions.analysisType}
                 label="Analysis Type"
-                onChange={handleOptionChange}
-              >
+                onChange={handleOptionChange}>
+
                 <MenuItem value="auto">Auto-detect</MenuItem>
                 <MenuItem value="numeric">Numeric</MenuItem>
                 <MenuItem value="categorical">Categorical</MenuItem>
@@ -645,8 +645,8 @@ const AIAnalysisPage: React.FC = () => {
                     name="includeOutliers"
                     value={analysisOptions.includeOutliers}
                     label="Include Outliers"
-                    onChange={handleCheckboxChange}
-                  >
+                    onChange={handleCheckboxChange}>
+
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
                   </Select>
@@ -659,8 +659,8 @@ const AIAnalysisPage: React.FC = () => {
                     name="detailedStats"
                     value={analysisOptions.detailedStats}
                     label="Detailed Stats"
-                    onChange={handleCheckboxChange}
-                  >
+                    onChange={handleCheckboxChange}>
+
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
                   </Select>
@@ -674,14 +674,14 @@ const AIAnalysisPage: React.FC = () => {
               onClick={handleSubmit}
               disabled={!inputData || loading}
               sx={{ mt: 3 }}
-              fullWidth
-            >
+              fullWidth>
+
               {loading ? <CircularProgress size={24} /> : 'Analyze Data'}
             </Button>
           </Paper>
         </Grid>
         
-        {/* Results Section */}
+        
         <Grid item xs={12} md={7}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" gutterBottom>
@@ -689,22 +689,22 @@ const AIAnalysisPage: React.FC = () => {
               <Tooltip title="Results will appear here after analysis. You can download them as JSON or CSV.">
                 <HelpOutlineIcon fontSize="small" sx={{ ml: 1 }} />
               </Tooltip>
-              {analysis && (
-                <Tooltip title="Download as JSON">
+              {analysis &&
+              <Tooltip title="Download as JSON">
                   <span><IconButton onClick={() => handleDownloadResults('json')}><DownloadIcon /></IconButton></span>
                 </Tooltip>
-              )}
-              {analysis && (
-                <Tooltip title="Download as CSV">
+              }
+              {analysis &&
+              <Tooltip title="Download as CSV">
                   <span><IconButton onClick={() => handleDownloadResults('csv')}><DownloadIcon /></IconButton></span>
                 </Tooltip>
-              )}
+              }
             </Typography>
             
-            {loading ? (
-              <Skeleton variant="rectangular" height={300} sx={{ my: 4 }} />
-            ) : analysis ? (
-              <>
+            {loading ?
+            <Skeleton variant="rectangular" height={300} sx={{ my: 4 }} /> :
+            analysis ?
+            <>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <Tabs value={activeTab} onChange={handleTabChange}>
                     <Tab label="Summary" />
@@ -714,68 +714,68 @@ const AIAnalysisPage: React.FC = () => {
                   </Tabs>
                 </Box>
                 
-                {/* Summary Tab */}
-                {activeTab === 0 && (
-                  <Box sx={{ pt: 2 }}>
+                
+                {activeTab === 0 &&
+              <Box sx={{ pt: 2 }}>
                     <Typography variant="subtitle1">
                       Data Type: <strong>{analysis.receivedType}</strong>
                     </Typography>
-                    {analysis.receivedType === 'array' && (
-                      <Typography variant="subtitle1">
+                    {analysis.receivedType === 'array' &&
+                <Typography variant="subtitle1">
                         Item Count: <strong>{analysis.itemCount}</strong>
                       </Typography>
-                    )}
-                    {renderSummaryStats()}
+                }
+                    {RenderSummaryStats()}
                   </Box>
-                )}
+              }
                 
-                {/* Visualizations Tab */}
-                {activeTab === 1 && (
-                  <Box sx={{ pt: 2 }}>
-                    {renderCharts()}
+                
+                {activeTab === 1 &&
+              <Box sx={{ pt: 2 }}>
+                    {RenderCharts()}
                   </Box>
-                )}
+              }
                 
-                {/* Insights Tab */}
-                {activeTab === 2 && (
-                  <Box sx={{ pt: 2 }}>
-                    {renderInsights()}
+                
+                {activeTab === 2 &&
+              <Box sx={{ pt: 2 }}>
+                    {RenderInsights()}
                   </Box>
-                )}
+              }
                 
-                {/* Raw Data Tab */}
-                {activeTab === 3 && (
-                  <Box sx={{ pt: 2 }}>
+                
+                {activeTab === 3 &&
+              <Box sx={{ pt: 2 }}>
                     <Typography variant="subtitle1" gutterBottom>
                       Raw Analysis Results
                     </Typography>
-                    <Paper 
-                      sx={{ 
-                        p: 2, 
-                        maxHeight: 400, 
-                        overflow: 'auto',
-                        bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#F5F5F5'
-                      }}
-                    >
+                    <Paper
+                  sx={{
+                    p: 2,
+                    maxHeight: 400,
+                    overflow: 'auto',
+                    bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#F5F5F5'
+                  }}>
+
                       <pre style={{ margin: 0 }}>
                         {JSON.stringify(analysis, null, 2)}
                       </pre>
                     </Paper>
                   </Box>
-                )}
-              </>
-            ) : (
-              <Box sx={{ my: 4, textAlign: 'center' }}>
+              }
+              </> :
+
+            <Box sx={{ my: 4, textAlign: 'center' }}>
                 <Typography variant="body1" color="textSecondary">
                   Enter your data and click "Analyze Data" to see results
                 </Typography>
               </Box>
-            )}
+            }
           </Paper>
         </Grid>
       </Grid>
-    </Container>
-  );
+    </Container>);
+
 };
 
 export default AIAnalysisPage;

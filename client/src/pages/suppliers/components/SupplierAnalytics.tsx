@@ -26,8 +26,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
-} from '@mui/material';
+  TableRow } from
+'@mui/material';
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
@@ -41,8 +41,8 @@ import {
   BugReport as BugReportIcon,
   Chat as ChatIcon,
   AttachMoney as MoneyIcon,
-  Compare as CompareIcon
-} from '@mui/icons-material';
+  Compare as CompareIcon } from
+'@mui/icons-material';
 import { Line, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -53,8 +53,8 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend
-} from 'chart.js';
+  Legend } from
+'chart.js';
 import { useSupplierAnalytics } from '../hooks/useSupplierAnalytics';
 import supplierService from '../../../services/supplier.service';
 import SupplierPerformanceCharts from './SupplierPerformanceCharts';
@@ -81,21 +81,21 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
   const [metrics, setMetrics] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     const loadMetrics = async () => {
       if (!supplierId) return;
-      
+
       try {
         setLoading(true);
         setError(null);
-        
+
         // Make a direct API call to the new endpoint
         const response = await fetch(`/api/suppliers/${supplierId}/metrics?period=${period}`);
         if (!response.ok) {
           throw new Error('Failed to load supplier metrics');
         }
-        
+
         const data = await response.json();
         setMetrics(data.data);
       } catch (err: any) {
@@ -105,10 +105,10 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
         setLoading(false);
       }
     };
-    
+
     loadMetrics();
   }, [supplierId, period]);
-  
+
   if (loading) {
     return (
       <Box sx={{ width: '100%' }}>
@@ -116,119 +116,119 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
         <Typography variant="body2" sx={{ mt: 1 }}>
           Loading supplier analytics...
         </Typography>
-      </Box>
-    );
+      </Box>);
+
   }
-  
+
   if (error) {
     return (
       <Box sx={{ width: '100%' }}>
         <Typography color="error" variant="body1">
           Error loading supplier analytics: {error}
         </Typography>
-      </Box>
-    );
+      </Box>);
+
   }
-  
+
   if (!metrics) {
     return (
       <Box sx={{ width: '100%' }}>
         <Typography variant="body1">
           No analytics data available for this supplier.
         </Typography>
-      </Box>
-    );
+      </Box>);
+
   }
-  
+
   const handlePeriodChange = (event: SelectChangeEvent) => {
     setPeriod(event.target.value as '3months' | '6months' | '1year' | '2years');
   };
-  
+
   const handleMetricChange = (event: SelectChangeEvent) => {
     setSelectedMetric(event.target.value);
   };
-  
+
   // Get overall performance score
   const performanceScore = metrics.metrics.overallScore;
-  
+
   // Get risk level
   const riskLevel = metrics.riskAssessment.overallRisk;
-  
+
   // Prepare trend chart data
   const trendData = {
     labels: metrics.trends.map((item: any) => item.month),
     datasets: [
-      {
-        label: 'Pass Rate (%)',
-        data: metrics.trends.map((item: any) => item.passRate.toFixed(1)),
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
-        tension: 0.1
-      }
-    ]
+    {
+      label: 'Pass Rate (%)',
+      data: metrics.trends.map((item: any) => item.passRate.toFixed(1)),
+      borderColor: 'rgb(75, 192, 192)',
+      backgroundColor: 'rgba(75, 192, 192, 0.5)',
+      tension: 0.1
+    }]
+
   };
-  
+
   const trendOptions = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top' as const
       },
       title: {
         display: true,
-        text: 'Quality Trend Over Time',
-      },
+        text: 'Quality Trend Over Time'
+      }
     },
     scales: {
       y: {
         min: 0,
         max: 100,
         ticks: {
-          callback: (value: any) => `${value}%`,
-        },
-      },
-    },
+          callback: (value: any) => `${value}%`
+        }
+      }
+    }
   };
-  
+
   // Prepare comparison chart data
   const comparisonData = {
     labels: ['Quality Score'],
     datasets: [
-      {
-        label: 'This Supplier',
-        data: [metrics.industryComparison.qualityScore],
-        backgroundColor: 'rgba(53, 162, 235, 0.7)',
-      },
-      {
-        label: 'Industry Average',
-        data: [metrics.industryComparison.industryAverage],
-        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-      }
-    ]
+    {
+      label: 'This Supplier',
+      data: [metrics.industryComparison.qualityScore],
+      backgroundColor: 'rgba(53, 162, 235, 0.7)'
+    },
+    {
+      label: 'Industry Average',
+      data: [metrics.industryComparison.industryAverage],
+      backgroundColor: 'rgba(255, 99, 132, 0.7)'
+    }]
+
   };
-  
+
   const comparisonOptions = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top' as const
       },
       title: {
         display: true,
-        text: 'Quality Score Comparison',
-      },
+        text: 'Quality Score Comparison'
+      }
     },
     scales: {
       y: {
         min: 0,
         max: 100,
         ticks: {
-          callback: (value: any) => `${value}%`,
-        },
-      },
-    },
+          callback: (value: any) => `${value}%`
+        }
+      }
+    }
   };
-  
+
   // Get risk level color
   const getRiskLevelColor = (level: string) => {
     switch (level) {
@@ -242,9 +242,9 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
         return 'default';
     }
   };
-  
+
   // Get corresponding icon for each metric
-  const getMetricIcon = (metricName: string) => {
+  const GetMetricIcon = (metricName: string) => {
     switch (metricName.toLowerCase()) {
       case 'quality':
         return <CheckCircleIcon />;
@@ -262,11 +262,11 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
         return <AssessmentIcon />;
     }
   };
-  
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={3}>
-        {/* Controls */}
+        
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h6" component="h2">
@@ -279,8 +279,8 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
                 <Select
                   value={period}
                   label="Period"
-                  onChange={handlePeriodChange}
-                >
+                  onChange={handlePeriodChange}>
+
                   <MenuItem value="3months">Last 3 Months</MenuItem>
                   <MenuItem value="6months">Last 6 Months</MenuItem>
                   <MenuItem value="1year">Last Year</MenuItem>
@@ -291,12 +291,12 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
           </Paper>
         </Grid>
         
-        {/* Enhanced Performance Charts - New Component */}
+        
         <Grid item xs={12}>
           <SupplierPerformanceCharts supplierId={supplierId} />
         </Grid>
         
-        {/* Performance Score */}
+        
         <Grid item xs={12} md={4}>
           <Card>
             <CardContent>
@@ -307,18 +307,18 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
                 <Typography variant="h3" component="div" sx={{ mr: 2 }}>
                   {performanceScore}%
                 </Typography>
-                <Chip 
-                  label={riskLevel.toUpperCase()} 
+                <Chip
+                  label={riskLevel.toUpperCase()}
                   color={getRiskLevelColor(riskLevel) as any}
-                  size="small"
-                />
+                  size="small" />
+
               </Box>
-              <LinearProgress 
-                variant="determinate" 
-                value={performanceScore} 
+              <LinearProgress
+                variant="determinate"
+                value={performanceScore}
                 color={getRiskLevelColor(riskLevel) as any}
-                sx={{ height: 8, borderRadius: 5, mb: 2 }}
-              />
+                sx={{ height: 8, borderRadius: 5, mb: 2 }} />
+
               
               <Divider sx={{ my: 2 }} />
               
@@ -327,23 +327,23 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
               </Typography>
               
               <List dense>
-                {metrics.riskAssessment.factors.map((factor: any, index: number) => (
-                  <ListItem key={index} disablePadding>
+                {metrics.riskAssessment.factors.map((factor: any, index: number) =>
+                <ListItem key={index} disablePadding>
                     <ListItemIcon sx={{ minWidth: 36 }}>
                       <WarningIcon color={getRiskLevelColor(factor.level) as any} fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary={factor.name} 
-                      secondary={`${factor.level} risk, ${factor.impact} impact`}
-                    />
+                    <ListItemText
+                    primary={factor.name}
+                    secondary={`${factor.level} risk, ${factor.impact} impact`} />
+
                   </ListItem>
-                ))}
+                )}
               </List>
             </CardContent>
           </Card>
         </Grid>
         
-        {/* Metrics */}
+        
         <Grid item xs={12} md={8}>
           <Card>
             <CardContent>
@@ -351,32 +351,32 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
                 Performance Metrics
               </Typography>
               <Grid container spacing={2}>
-                {Object.entries(metrics.metrics).map(([key, value]: [string, any]) => (
-                  <Grid item xs={6} sm={4} key={key}>
+                {Object.entries(metrics.metrics).map(([key, value]: [string, any]) =>
+                <Grid item xs={6} sm={4} key={key}>
                     <Box sx={{ textAlign: 'center', p: 1 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
-                        {getMetricIcon(key)}
+                        {GetMetricIcon(key)}
                       </Box>
                       <Typography variant="body2" color="text.secondary">
                         {key.charAt(0).toUpperCase() + key.slice(1)}
                       </Typography>
                       <Typography variant="h6" component="div">
-                        {typeof value === 'number' ? (key === 'overallScore' ? `${value}%` : `${value}`) : value}
+                        {typeof value === 'number' ? key === 'overallScore' ? `${value}%` : `${value}` : value}
                       </Typography>
-                      <LinearProgress 
-                        variant="determinate" 
-                        value={typeof value === 'number' ? Math.min(value, 100) : 0} 
-                        sx={{ height: 4, borderRadius: 5, mt: 1 }}
-                      />
+                      <LinearProgress
+                      variant="determinate"
+                      value={typeof value === 'number' ? Math.min(value, 100) : 0}
+                      sx={{ height: 4, borderRadius: 5, mt: 1 }} />
+
                     </Box>
                   </Grid>
-                ))}
+                )}
               </Grid>
             </CardContent>
           </Card>
         </Grid>
         
-        {/* Quality Trend */}
+        
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
@@ -390,7 +390,7 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
           </Card>
         </Grid>
         
-        {/* Industry Comparison */}
+        
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
@@ -407,7 +407,7 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
           </Card>
         </Grid>
         
-        {/* Recommendations */}
+        
         <Grid item xs={12}>
           <Card>
             <CardContent>
@@ -423,79 +423,79 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
               </Typography>
               
               <List>
-                {riskLevel === 'high' && (
-                  <>
+                {riskLevel === 'high' &&
+                <>
                     <ListItem>
                       <ListItemIcon>
                         <WarningIcon color="error" />
                       </ListItemIcon>
-                      <ListItemText 
-                        primary="Schedule urgent review meeting" 
-                        secondary="Discuss performance issues and establish an improvement plan"
-                      />
+                      <ListItemText
+                      primary="Schedule urgent review meeting"
+                      secondary="Discuss performance issues and establish an improvement plan" />
+
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
                         <AssignmentIcon color="error" />
                       </ListItemIcon>
-                      <ListItemText 
-                        primary="Increase inspection frequency" 
-                        secondary="Monitor quality more closely with additional inspections"
-                      />
+                      <ListItemText
+                      primary="Increase inspection frequency"
+                      secondary="Monitor quality more closely with additional inspections" />
+
                     </ListItem>
                   </>
-                )}
+                }
                 
-                {riskLevel === 'medium' && (
-                  <>
+                {riskLevel === 'medium' &&
+                <>
                     <ListItem>
                       <ListItemIcon>
                         <AssignmentIcon color="warning" />
                       </ListItemIcon>
-                      <ListItemText 
-                        primary="Review key performance areas" 
-                        secondary="Focus on metrics below industry average"
-                      />
+                      <ListItemText
+                      primary="Review key performance areas"
+                      secondary="Focus on metrics below industry average" />
+
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
                         <TimelineIcon color="warning" />
                       </ListItemIcon>
-                      <ListItemText 
-                        primary="Monitor performance trends" 
-                        secondary="Check for improvement in the next quarterly review"
-                      />
+                      <ListItemText
+                      primary="Monitor performance trends"
+                      secondary="Check for improvement in the next quarterly review" />
+
                     </ListItem>
                   </>
-                )}
+                }
                 
-                {riskLevel === 'low' && (
-                  <>
+                {riskLevel === 'low' &&
+                <>
                     <ListItem>
                       <ListItemIcon>
                         <CheckCircleIcon color="success" />
                       </ListItemIcon>
-                      <ListItemText 
-                        primary="Maintain current performance" 
-                        secondary="Continue regular monitoring and feedback"
-                      />
+                      <ListItemText
+                      primary="Maintain current performance"
+                      secondary="Continue regular monitoring and feedback" />
+
                     </ListItem>
                     <ListItem>
                       <ListItemIcon>
                         <TrendingUpIcon color="success" />
                       </ListItemIcon>
-                      <ListItemText 
-                        primary="Consider expanding partnership" 
-                        secondary="This supplier is performing well and may be suitable for additional business"
-                      />
+                      <ListItemText
+                      primary="Consider expanding partnership"
+                      secondary="This supplier is performing well and may be suitable for additional business" />
+
                     </ListItem>
                   </>
-                )}
+                }
               </List>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-    </Box>
-  );
-}; 
+    </Box>);
+
+};

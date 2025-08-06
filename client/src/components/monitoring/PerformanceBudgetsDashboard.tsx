@@ -19,27 +19,27 @@ import {
   Divider,
   IconButton,
   Tooltip,
-  useTheme
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import {
   CheckCircle as CheckCircleIcon,
   Warning as WarningIcon,
   Error as ErrorIcon,
   Info as InfoIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
+  Refresh as RefreshIcon } from
+'@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import performanceMonitoringService, { PerformanceBudget } from '../../services/performanceMonitoring.service';
 
 // Define sample performance budgets
 const sampleBudgets: PerformanceBudget[] = [
-  { metric: 'firstContentfulPaint', threshold: 1000, condition: 'less-than' },
-  { metric: 'largestContentfulPaint', threshold: 2500, condition: 'less-than' },
-  { metric: 'firstInputDelay', threshold: 100, condition: 'less-than' },
-  { metric: 'cumulativeLayoutShift', threshold: 0.1, condition: 'less-than' },
-  { metric: 'total', threshold: 3000, condition: 'less-than' },
-  { metric: 'domInteractive', threshold: 1500, condition: 'less-than' },
-];
+{ metric: 'firstContentfulPaint', threshold: 1000, condition: 'less-than' },
+{ metric: 'largestContentfulPaint', threshold: 2500, condition: 'less-than' },
+{ metric: 'firstInputDelay', threshold: 100, condition: 'less-than' },
+{ metric: 'cumulativeLayoutShift', threshold: 0.1, condition: 'less-than' },
+{ metric: 'total', threshold: 3000, condition: 'less-than' },
+{ metric: 'domInteractive', threshold: 1500, condition: 'less-than' }];
+
 
 // Sample metrics data
 const sampleMetrics = {
@@ -48,7 +48,7 @@ const sampleMetrics = {
   firstInputDelay: 85,
   cumulativeLayoutShift: 0.05,
   total: 2800,
-  domInteractive: 1200,
+  domInteractive: 1200
 };
 
 interface BudgetViolation {
@@ -73,13 +73,13 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
   const theme = useTheme();
   const [violations, setViolations] = useState<BudgetViolation[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   // Check for budget violations
   useEffect(() => {
     const result = performanceMonitoringService.checkPerformanceBudgets(metrics);
     setViolations(result.violations);
   }, [metrics]);
-  
+
   // Handle refresh
   const handleRefresh = () => {
     if (onRefresh) {
@@ -88,32 +88,32 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
       setTimeout(() => setLoading(false), 1000);
     }
   };
-  
+
   // Format metric value based on its name
   const formatMetricValue = (name: string, value: number): string => {
     if (name === 'cumulativeLayoutShift') {
       return value.toFixed(2);
     }
-    
-    if (name.includes('Time') || name.includes('Duration') || 
-        name.includes('Paint') || name.includes('Input') || 
-        name.includes('Interactive') || name.includes('total')) {
+
+    if (name.includes('Time') || name.includes('Duration') ||
+    name.includes('Paint') || name.includes('Input') ||
+    name.includes('Interactive') || name.includes('total')) {
       return `${value.toFixed(0)} ms`;
     }
-    
+
     return value.toFixed(2);
   };
-  
+
   // Get percentage of current value relative to threshold
   const getPercentage = (current: number, threshold: number, condition: string): number => {
     if (condition === 'less-than') {
-      return (current / threshold) * 100;
+      return current / threshold * 100;
     } else if (condition === 'greater-than') {
-      return (threshold / current) * 100;
+      return threshold / current * 100;
     }
     return 0;
   };
-  
+
   // Get color based on percentage
   const getColor = (percentage: number, condition: string): string => {
     if (condition === 'less-than') {
@@ -127,14 +127,14 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
     }
     return theme.palette.info.main;
   };
-  
+
   // Get status chip for a metric
-  const getStatusChip = (metric: string, current: number, threshold: number, condition: string) => {
+  const GetStatusChip = (metric: string, current: number, threshold: number, condition: string) => {
     const percentage = getPercentage(current, threshold, condition);
     let color: 'success' | 'warning' | 'error' | 'default' = 'default';
     let icon = <InfoIcon fontSize="small" />;
     let label = t('performanceBudgets.unknown');
-    
+
     if (condition === 'less-than') {
       if (current < threshold) {
         color = 'success';
@@ -164,17 +164,17 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
         label = t('performanceBudgets.failing');
       }
     }
-    
+
     return (
       <Chip
         size="small"
         color={color}
         icon={icon}
-        label={label}
-      />
-    );
+        label={label} />);
+
+
   };
-  
+
   // Format condition for display
   const formatCondition = (condition: string): string => {
     switch (condition) {
@@ -188,29 +188,29 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
         return condition;
     }
   };
-  
+
   return (
     <Card>
       <CardHeader
         title={t('performanceBudgets.title')}
         action={
-          <Tooltip title={t('common.refresh')}>
+        <Tooltip title={t('common.refresh')}>
             <IconButton onClick={handleRefresh} disabled={loading}>
               <RefreshIcon />
             </IconButton>
           </Tooltip>
-        }
-      />
+        } />
+
       <Divider />
       {loading && <LinearProgress />}
       <CardContent>
-        {violations.length > 0 && (
-          <Alert severity="warning" sx={{ mb: 3 }}>
+        {violations.length > 0 &&
+        <Alert severity="warning" sx={{ mb: 3 }}>
             <Typography variant="subtitle2">
               {t('performanceBudgets.violationsDetected', { count: violations.length })}
             </Typography>
           </Alert>
-        )}
+        }
         
         <TableContainer component={Paper} variant="outlined">
           <Table size="small">
@@ -228,7 +228,7 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
                 const currentValue = metrics[budget.metric] || 0;
                 const percentage = getPercentage(currentValue, budget.threshold, budget.condition);
                 const color = getColor(percentage, budget.condition);
-                
+
                 return (
                   <TableRow key={budget.metric} hover>
                     <TableCell component="th" scope="row">
@@ -244,10 +244,10 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
                       {formatMetricValue(budget.metric, budget.threshold)}
                     </TableCell>
                     <TableCell align="center">
-                      {getStatusChip(budget.metric, currentValue, budget.threshold, budget.condition)}
+                      {GetStatusChip(budget.metric, currentValue, budget.threshold, budget.condition)}
                     </TableCell>
-                  </TableRow>
-                );
+                  </TableRow>);
+
               })}
             </TableBody>
           </Table>
@@ -262,7 +262,7 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
               const currentValue = metrics[budget.metric] || 0;
               const percentage = getPercentage(currentValue, budget.threshold, budget.condition);
               const color = getColor(percentage, budget.condition);
-              
+
               return (
                 <Grid item xs={12} sm={6} md={4} key={budget.metric}>
                   <Box sx={{ mb: 1 }}>
@@ -282,20 +282,20 @@ const PerformanceBudgetsDashboard: React.FC<PerformanceBudgetsDashboardProps> = 
                           backgroundColor: theme.palette.grey[200],
                           '& .MuiLinearProgress-bar': {
                             backgroundColor: color,
-                            borderRadius: 4,
-                          },
-                        }}
-                      />
+                            borderRadius: 4
+                          }
+                        }} />
+
                     </Box>
                   </Box>
-                </Grid>
-              );
+                </Grid>);
+
             })}
           </Grid>
         </Box>
       </CardContent>
-    </Card>
-  );
+    </Card>);
+
 };
 
-export default PerformanceBudgetsDashboard; 
+export default PerformanceBudgetsDashboard;

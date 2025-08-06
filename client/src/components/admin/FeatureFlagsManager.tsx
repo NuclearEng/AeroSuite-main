@@ -37,8 +37,8 @@ import {
   Alert,
   Stack,
   Divider,
-  LinearProgress
-} from '@mui/material';
+  LinearProgress } from
+'@mui/material';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
@@ -53,8 +53,8 @@ import {
   Brightness1 as Brightness1Icon,
   Security as SecurityIcon,
   Group as GroupIcon,
-  Settings as SettingsIcon
-} from '@mui/icons-material';
+  Settings as SettingsIcon } from
+'@mui/icons-material';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import featureFlagsService, { FeatureFlag } from '../../services/featureFlags.service';
 import { setFlags, toggleFlag } from '../../redux/slices/featureFlags.slice';
@@ -71,8 +71,8 @@ interface EditDialogState {
  */
 const FeatureFlagsManager: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { flags, loading, error } = useAppSelector(state => state.featureFlags);
-  
+  const { flags, loading, error } = useAppSelector((state) => state.featureFlags);
+
   // Local state
   const [searchTerm, setSearchTerm] = useState('');
   const [filterEnvironment, setFilterEnvironment] = useState<string>('');
@@ -80,7 +80,7 @@ const FeatureFlagsManager: React.FC = () => {
   const [syncing, setSyncing] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState({ type: 'success', message: '' });
-  
+
   // Edit dialog state
   const [editDialog, setEditDialog] = useState<EditDialogState>({
     open: false,
@@ -88,18 +88,18 @@ const FeatureFlagsManager: React.FC = () => {
     flagData: {},
     isNew: false
   });
-  
+
   // Delete confirmation dialog
-  const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; flagKey: string }>({
+  const [deleteDialog, setDeleteDialog] = useState<{open: boolean;flagKey: string;}>({
     open: false,
     flagKey: ''
   });
-  
+
   // Load feature flags on mount
   useEffect(() => {
     loadFeatureFlags();
   }, []);
-  
+
   // Load feature flags
   const loadFeatureFlags = async () => {
     try {
@@ -108,13 +108,13 @@ const FeatureFlagsManager: React.FC = () => {
       showAlertMessage('error', 'Failed to load feature flags');
     }
   };
-  
+
   // Sync feature flags
   const syncFeatureFlags = async () => {
     try {
       setSyncing(true);
       const success = await featureFlagsService.syncFlags();
-      
+
       if (success) {
         showAlertMessage('success', 'Feature flags synced successfully');
       } else {
@@ -126,12 +126,12 @@ const FeatureFlagsManager: React.FC = () => {
       setSyncing(false);
     }
   };
-  
+
   // Toggle a feature flag
   const handleToggleFlag = async (flagKey: string) => {
     try {
       await featureFlagsService.toggleFlag(flagKey);
-      
+
       // Update is handled by the service which dispatches to Redux
       const flag = flags[flagKey];
       showAlertMessage(
@@ -142,26 +142,26 @@ const FeatureFlagsManager: React.FC = () => {
       showAlertMessage('error', `Failed to toggle feature flag "${flagKey}"`);
     }
   };
-  
+
   // Open edit dialog
   const handleOpenEditDialog = (flagKey: string = '', isNew: boolean = false) => {
     setEditDialog({
       open: true,
       flagKey,
-      flagData: isNew
-        ? {
-            enabled: false,
-            description: '',
-            owner: '',
-            rolloutPercentage: 0,
-            segmentRules: {},
-            environmentsEnabled: ['development']
-          }
-        : { ...flags[flagKey] },
+      flagData: isNew ?
+      {
+        enabled: false,
+        description: '',
+        owner: '',
+        rolloutPercentage: 0,
+        segmentRules: {},
+        environmentsEnabled: ['development']
+      } :
+      { ...flags[flagKey] },
       isNew
     });
   };
-  
+
   // Close edit dialog
   const handleCloseEditDialog = () => {
     setEditDialog({
@@ -171,61 +171,61 @@ const FeatureFlagsManager: React.FC = () => {
       isNew: false
     });
   };
-  
+
   // Save feature flag
   const handleSaveFlag = async () => {
     try {
       const { flagKey, flagData, isNew } = editDialog;
-      
+
       if (isNew && !flagKey) {
         showAlertMessage('error', 'Feature flag key is required');
         return;
       }
-      
+
       await featureFlagsService.updateFlag(flagKey, flagData);
-      
+
       showAlertMessage(
         'success',
         `Feature flag "${flagKey}" ${isNew ? 'created' : 'updated'} successfully`
       );
-      
+
       handleCloseEditDialog();
     } catch (err) {
       showAlertMessage('error', 'Failed to save feature flag');
     }
   };
-  
+
   // Delete feature flag
   const handleDeleteFlag = async () => {
     try {
       const { flagKey } = deleteDialog;
-      
+
       const success = await featureFlagsService.deleteFlag(flagKey);
-      
+
       if (success) {
         showAlertMessage('success', `Feature flag "${flagKey}" deleted successfully`);
       } else {
         showAlertMessage('error', `Failed to delete feature flag "${flagKey}"`);
       }
-      
+
       setDeleteDialog({ open: false, flagKey: '' });
     } catch (err) {
       showAlertMessage('error', 'Failed to delete feature flag');
       setDeleteDialog({ open: false, flagKey: '' });
     }
   };
-  
+
   // Show alert message
   const showAlertMessage = (type: 'success' | 'error' | 'warning' | 'info', message: string) => {
     setAlertMessage({ type, message });
     setShowAlert(true);
-    
+
     // Auto hide after 5 seconds
     setTimeout(() => {
       setShowAlert(false);
     }, 5000);
   };
-  
+
   // Handle input change in edit dialog
   const handleEditInputChange = (field: string, value: any) => {
     setEditDialog({
@@ -236,50 +236,50 @@ const FeatureFlagsManager: React.FC = () => {
       }
     });
   };
-  
+
   // Filter flags based on search term and filters
-  const filteredFlags = Object.entries(flags)
-    .filter(([key, flag]) => {
-      // Filter by search term
-      if (
-        searchTerm &&
-        !key.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        !flag.description?.toLowerCase().includes(searchTerm.toLowerCase())
-      ) {
+  const filteredFlags = Object.entries(flags).
+  filter(([key, flag]) => {
+    // Filter by search term
+    if (
+    searchTerm &&
+    !key.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    !flag.description?.toLowerCase().includes(searchTerm.toLowerCase()))
+    {
+      return false;
+    }
+
+    // Filter by environment
+    if (
+    filterEnvironment &&
+    !flag.environmentsEnabled.includes(filterEnvironment))
+    {
+      return false;
+    }
+
+    // Filter by status
+    if (filterStatus) {
+      if (filterStatus === 'enabled' && !flag.enabled) {
         return false;
       }
-      
-      // Filter by environment
-      if (
-        filterEnvironment &&
-        !flag.environmentsEnabled.includes(filterEnvironment)
-      ) {
+      if (filterStatus === 'disabled' && flag.enabled) {
         return false;
       }
-      
-      // Filter by status
-      if (filterStatus) {
-        if (filterStatus === 'enabled' && !flag.enabled) {
-          return false;
-        }
-        if (filterStatus === 'disabled' && flag.enabled) {
-          return false;
-        }
-        if (
-          filterStatus === 'partial' &&
-          (flag.rolloutPercentage === 0 || flag.rolloutPercentage === 100 || !flag.enabled)
-        ) {
-          return false;
-        }
+      if (
+      filterStatus === 'partial' && (
+      flag.rolloutPercentage === 0 || flag.rolloutPercentage === 100 || !flag.enabled))
+      {
+        return false;
       }
-      
-      return true;
-    })
-    .sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
-  
+    }
+
+    return true;
+  }).
+  sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
+
   return (
     <Box sx={{ p: 3 }}>
-      {/* Header */}
+      
       <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h5" component="h1" sx={{ display: 'flex', alignItems: 'center' }}>
           <FlagIcon sx={{ mr: 1 }} />
@@ -291,8 +291,8 @@ const FeatureFlagsManager: React.FC = () => {
             variant="outlined"
             startIcon={<SyncIcon />}
             onClick={syncFeatureFlags}
-            disabled={syncing}
-          >
+            disabled={syncing}>
+
             {syncing ? 'Syncing...' : 'Sync Flags'}
           </Button>
           
@@ -300,31 +300,31 @@ const FeatureFlagsManager: React.FC = () => {
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            onClick={() => handleOpenEditDialog('', true)}
-          >
+            onClick={() => handleOpenEditDialog('', true)}>
+
             Create Flag
           </Button>
         </Stack>
       </Box>
       
-      {/* Loading indicator */}
+      
       {loading && <LinearProgress sx={{ mb: 3 }} />}
       
-      {/* Error message */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
       
-      {/* Alert message */}
-      {showAlert && (
-        <Alert severity={alertMessage.type as any} sx={{ mb: 3 }}>
+      
+      {showAlert &&
+      <Alert severity={alertMessage.type as any} sx={{ mb: 3 }}>
           {alertMessage.message}
         </Alert>
-      )}
+      }
       
-      {/* Filters */}
+      
       <Paper sx={{ p: 2, mb: 3 }}>
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField
@@ -334,14 +334,14 @@ const FeatureFlagsManager: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
+              startAdornment:
+              <InputAdornment position="start">
                   <SearchIcon />
                 </InputAdornment>
-              )
+
             }}
-            sx={{ flexGrow: 1, minWidth: 200 }}
-          />
+            sx={{ flexGrow: 1, minWidth: 200 }} />
+
           
           <FormControl size="small" sx={{ minWidth: 150 }}>
             <InputLabel id="environment-filter-label">Environment</InputLabel>
@@ -349,8 +349,8 @@ const FeatureFlagsManager: React.FC = () => {
               labelId="environment-filter-label"
               value={filterEnvironment}
               label="Environment"
-              onChange={(e) => setFilterEnvironment(e.target.value)}
-            >
+              onChange={(e) => setFilterEnvironment(e.target.value)}>
+
               <MenuItem value="">All</MenuItem>
               <MenuItem value="development">Development</MenuItem>
               <MenuItem value="staging">Staging</MenuItem>
@@ -364,8 +364,8 @@ const FeatureFlagsManager: React.FC = () => {
               labelId="status-filter-label"
               value={filterStatus}
               label="Status"
-              onChange={(e) => setFilterStatus(e.target.value)}
-            >
+              onChange={(e) => setFilterStatus(e.target.value)}>
+
               <MenuItem value="">All</MenuItem>
               <MenuItem value="enabled">Enabled</MenuItem>
               <MenuItem value="disabled">Disabled</MenuItem>
@@ -375,7 +375,7 @@ const FeatureFlagsManager: React.FC = () => {
         </Box>
       </Paper>
       
-      {/* Feature flags table */}
+      
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
@@ -390,17 +390,17 @@ const FeatureFlagsManager: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredFlags.length === 0 ? (
-              <TableRow>
+            {filteredFlags.length === 0 ?
+            <TableRow>
                 <TableCell colSpan={7} align="center">
                   <Typography sx={{ py: 2 }}>
                     {loading ? 'Loading feature flags...' : 'No feature flags found.'}
                   </Typography>
                 </TableCell>
-              </TableRow>
-            ) : (
-              filteredFlags.map(([key, flag]) => (
-                <TableRow key={key} hover>
+              </TableRow> :
+
+            filteredFlags.map(([key, flag]) =>
+            <TableRow key={key} hover>
                   <TableCell>
                     <Typography variant="body2" sx={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
                       {key}
@@ -408,52 +408,52 @@ const FeatureFlagsManager: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     <Switch
-                      checked={flag.enabled}
-                      onChange={() => handleToggleFlag(key)}
-                      color={
-                        !flag.enabled
-                          ? 'default'
-                          : flag.rolloutPercentage < 100
-                          ? 'warning'
-                          : 'success'
-                      }
-                    />
+                  checked={flag.enabled}
+                  onChange={() => handleToggleFlag(key)}
+                  color={
+                  !flag.enabled ?
+                  'default' :
+                  flag.rolloutPercentage < 100 ?
+                  'warning' :
+                  'success'
+                  } />
+
                   </TableCell>
                   <TableCell>{flag.description}</TableCell>
                   <TableCell>
-                    {flag.enabled ? (
-                      <Chip
-                        label={`${flag.rolloutPercentage}%`}
-                        color={
-                          flag.rolloutPercentage === 0
-                            ? 'default'
-                            : flag.rolloutPercentage < 100
-                            ? 'warning'
-                            : 'success'
-                        }
-                        size="small"
-                      />
-                    ) : (
-                      <Chip label="Disabled" size="small" />
-                    )}
+                    {flag.enabled ?
+                <Chip
+                  label={`${flag.rolloutPercentage}%`}
+                  color={
+                  flag.rolloutPercentage === 0 ?
+                  'default' :
+                  flag.rolloutPercentage < 100 ?
+                  'warning' :
+                  'success'
+                  }
+                  size="small" /> :
+
+
+                <Chip label="Disabled" size="small" />
+                }
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                      {flag.environmentsEnabled.map((env) => (
-                        <Chip
-                          key={env}
-                          label={env}
-                          size="small"
-                          color={
-                            env === 'production'
-                              ? 'error'
-                              : env === 'staging'
-                              ? 'warning'
-                              : 'info'
-                          }
-                          variant="outlined"
-                        />
-                      ))}
+                      {flag.environmentsEnabled.map((env) =>
+                  <Chip
+                    key={env}
+                    label={env}
+                    size="small"
+                    color={
+                    env === 'production' ?
+                    'error' :
+                    env === 'staging' ?
+                    'warning' :
+                    'info'
+                    }
+                    variant="outlined" />
+
+                  )}
                     </Box>
                   </TableCell>
                   <TableCell>{flag.owner}</TableCell>
@@ -461,32 +461,32 @@ const FeatureFlagsManager: React.FC = () => {
                     <Box sx={{ display: 'flex', gap: 1 }}>
                       <Tooltip title="Edit">
                         <IconButton
-                          size="small"
-                          onClick={() => handleOpenEditDialog(key)}
-                        >
+                      size="small"
+                      onClick={() => handleOpenEditDialog(key)}>
+
                           <EditIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
                       
                       <Tooltip title="Delete">
                         <IconButton
-                          size="small"
-                          color="error"
-                          onClick={() => setDeleteDialog({ open: true, flagKey: key })}
-                        >
+                      size="small"
+                      color="error"
+                      onClick={() => setDeleteDialog({ open: true, flagKey: key })}>
+
                           <DeleteIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
                     </Box>
                   </TableCell>
                 </TableRow>
-              ))
-            )}
+            )
+            }
           </TableBody>
         </Table>
       </TableContainer>
       
-      {/* Edit dialog */}
+      
       <Dialog open={editDialog.open} onClose={handleCloseEditDialog} maxWidth="md" fullWidth>
         <DialogTitle>
           {editDialog.isNew ? 'Create Feature Flag' : 'Edit Feature Flag'}
@@ -494,7 +494,7 @@ const FeatureFlagsManager: React.FC = () => {
         
         <DialogContent>
           <Box sx={{ pt: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {/* Flag key */}
+            
             <TextField
               label="Flag Key"
               value={editDialog.flagKey}
@@ -502,39 +502,39 @@ const FeatureFlagsManager: React.FC = () => {
               helperText="Format: namespace.feature (e.g., ui.darkMode)"
               fullWidth
               required
-              disabled={!editDialog.isNew}
-            />
+              disabled={!editDialog.isNew} />
+
             
-            {/* Description */}
+            
             <TextField
               label="Description"
               value={editDialog.flagData.description || ''}
               onChange={(e) => handleEditInputChange('description', e.target.value)}
               helperText="Brief description of the feature flag"
-              fullWidth
-            />
+              fullWidth />
+
             
-            {/* Owner */}
+            
             <TextField
               label="Owner"
               value={editDialog.flagData.owner || ''}
               onChange={(e) => handleEditInputChange('owner', e.target.value)}
               helperText="Team or person responsible for this feature"
-              fullWidth
-            />
+              fullWidth />
+
             
-            {/* Enabled */}
+            
             <FormControlLabel
               control={
-                <Switch
-                  checked={editDialog.flagData.enabled || false}
-                  onChange={(e) => handleEditInputChange('enabled', e.target.checked)}
-                />
+              <Switch
+                checked={editDialog.flagData.enabled || false}
+                onChange={(e) => handleEditInputChange('enabled', e.target.checked)} />
+
               }
-              label="Enabled"
-            />
+              label="Enabled" />
+
             
-            {/* Rollout percentage */}
+            
             <Box>
               <Typography variant="subtitle2" gutterBottom>
                 Rollout Percentage: {editDialog.flagData.rolloutPercentage || 0}%
@@ -547,43 +547,43 @@ const FeatureFlagsManager: React.FC = () => {
                 marks
                 min={0}
                 max={100}
-                valueLabelDisplay="auto"
-              />
+                valueLabelDisplay="auto" />
+
             </Box>
             
-            {/* Environments */}
+            
             <Box>
               <Typography variant="subtitle2" gutterBottom>
                 Enabled Environments
               </Typography>
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                {['development', 'staging', 'production'].map((env) => (
-                  <FormControlLabel
-                    key={env}
-                    control={
-                      <Checkbox
-                        checked={
-                          (editDialog.flagData.environmentsEnabled || []).includes(env)
-                        }
-                        onChange={(e) => {
-                          const environments = editDialog.flagData.environmentsEnabled || [];
-                          if (e.target.checked) {
-                            handleEditInputChange(
-                              'environmentsEnabled',
-                              [...environments, env]
-                            );
-                          } else {
-                            handleEditInputChange(
-                              'environmentsEnabled',
-                              environments.filter((e) => e !== env)
-                            );
-                          }
-                        }}
-                      />
+                {['development', 'staging', 'production'].map((env) =>
+                <FormControlLabel
+                  key={env}
+                  control={
+                  <Checkbox
+                    checked={
+                    (editDialog.flagData.environmentsEnabled || []).includes(env)
                     }
-                    label={env}
-                  />
-                ))}
+                    onChange={(e) => {
+                      const environments = editDialog.flagData.environmentsEnabled || [];
+                      if (e.target.checked) {
+                        handleEditInputChange(
+                          'environmentsEnabled',
+                          [...environments, env]
+                        );
+                      } else {
+                        handleEditInputChange(
+                          'environmentsEnabled',
+                          environments.filter((e) => e !== env)
+                        );
+                      }
+                    }} />
+
+                  }
+                  label={env} />
+
+                )}
               </Box>
             </Box>
           </Box>
@@ -597,7 +597,7 @@ const FeatureFlagsManager: React.FC = () => {
         </DialogActions>
       </Dialog>
       
-      {/* Delete confirmation dialog */}
+      
       <Dialog open={deleteDialog.open} onClose={() => setDeleteDialog({ open: false, flagKey: '' })}>
         <DialogTitle>Delete Feature Flag</DialogTitle>
         <DialogContent>
@@ -615,8 +615,8 @@ const FeatureFlagsManager: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default FeatureFlagsManager; 
+export default FeatureFlagsManager;

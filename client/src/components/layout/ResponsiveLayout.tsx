@@ -10,8 +10,8 @@ const Main = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
+    duration: theme.transitions.duration.leavingScreen
+  })
 }));
 
 const MobileHeader = styled(Box)(({ theme }) => ({
@@ -22,12 +22,12 @@ const MobileHeader = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   position: 'sticky',
   top: 0,
-  zIndex: 1100,
+  zIndex: 1100
 }));
 
 const MobileMenuButton = styled(IconButton)(({ theme }) => ({
   marginRight: theme.spacing(2),
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.primary.contrastText
 }));
 
 const DrawerHeader = styled(Box)(({ theme }) => ({
@@ -36,7 +36,7 @@ const DrawerHeader = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
   padding: theme.spacing(2),
   backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.primary.contrastText
 }));
 
 interface ResponsiveLayoutProps {
@@ -59,7 +59,7 @@ const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
   children,
   title = 'AeroSuite',
   sidebarWidth = 240,
-  fullWidth = false,
+  fullWidth = false
 }) => {
   const theme = useTheme();
   const { isMobile, isTablet } = useResponsive();
@@ -81,20 +81,20 @@ const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
   if (isMobile) {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        {/* Mobile Header */}
+        
         <MobileHeader>
           <MobileMenuButton
             edge="start"
             color="inherit"
             aria-label="menu"
-            onClick={toggleDrawer}
-          >
+            onClick={toggleDrawer}>
+
             <MenuIcon />
           </MobileMenuButton>
           <Box sx={{ flexGrow: 1 }}>{title}</Box>
         </MobileHeader>
 
-        {/* Mobile Drawer */}
+        
         <Drawer
           anchor="left"
           open={drawerOpen}
@@ -104,10 +104,10 @@ const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
             flexShrink: 0,
             '& .MuiDrawer-paper': {
               width: sidebarWidth,
-              boxSizing: 'border-box',
-            },
-          }}
-        >
+              boxSizing: 'border-box'
+            }
+          }}>
+
           <DrawerHeader>
             <Box>{title}</Box>
             <IconButton onClick={toggleDrawer} sx={{ color: 'inherit' }}>
@@ -117,58 +117,58 @@ const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
           {sidebar}
         </Drawer>
 
-        {/* Main Content */}
+        
         <Main component="main" sx={{ flexGrow: 1 }}>
           <Box sx={{ mb: 2 }}>{header}</Box>
           <Container maxWidth={fullWidth ? false : 'lg'} disableGutters={fullWidth}>
             {children}
           </Container>
         </Main>
-      </Box>
-    );
+      </Box>);
+
   }
 
   // Tablet and Desktop layout
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Sidebar */}
+      
       <Box
         component="nav"
         sx={{
           width: { sm: sidebarWidth },
           flexShrink: 0,
-          display: { xs: 'none', sm: 'block' },
-        }}
-      >
+          display: { xs: 'none', sm: 'block' }
+        }}>
+
         <Box
           sx={{
             width: sidebarWidth,
             height: '100vh',
             position: 'fixed',
             overflowY: 'auto',
-            borderRight: `1px solid ${theme.palette.divider}`,
-          }}
-        >
+            borderRight: `1px solid ${theme.palette.divider}`
+          }}>
+
           {sidebar}
         </Box>
       </Box>
 
-      {/* Main Content */}
+      
       <Main
         component="main"
         sx={{
           flexGrow: 1,
           width: { sm: `calc(100% - ${sidebarWidth}px)` },
-          ml: { sm: `${sidebarWidth}px` },
-        }}
-      >
+          ml: { sm: `${sidebarWidth}px` }
+        }}>
+
         <Box sx={{ mb: 3 }}>{header}</Box>
         <Container maxWidth={fullWidth ? false : 'lg'} disableGutters={fullWidth}>
           {children}
         </Container>
       </Main>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default ResponsiveLayout; 
+export default ResponsiveLayout;

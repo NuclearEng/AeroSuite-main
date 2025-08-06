@@ -7,7 +7,7 @@ import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 const mockIntersectionObserver = jest.fn();
 mockIntersectionObserver.mockImplementation((callback) => {
   return {
-    observe: jest.fn((element) => {
+    observe: jest.fn((element: any) => {
       // Simulate the element being visible immediately for testing
       callback([{ isIntersecting: true, target: element }]);
     }),

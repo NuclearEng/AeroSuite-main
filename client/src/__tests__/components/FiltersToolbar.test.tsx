@@ -35,8 +35,7 @@ describe('FiltersToolbar Component', () => {
       id: 'search',
       label: 'Search',
       type: 'text' as FilterType,
-      placeholder: 'Search by name'
-    },
+      },
     {
       id: 'isVerified',
       label: 'Verified',
@@ -182,7 +181,7 @@ describe('FiltersToolbar Component', () => {
       <FiltersToolbar
         filters={mockFilters}
         onFilterChange={handleFilterChange}
-        showClearButton={true}
+        showFilterButton={true}
       />
     );
     

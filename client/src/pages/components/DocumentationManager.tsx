@@ -30,8 +30,8 @@ import {
   CardContent,
   Divider,
   Tooltip,
-  Badge
-} from '@mui/material';
+  Badge } from
+'@mui/material';
 import {
   Description as DocumentIcon,
   PictureAsPdf as PdfIcon,
@@ -47,8 +47,8 @@ import {
   CloudUpload as UploadIcon,
   Download as DownloadIcon,
   Add as AddIcon,
-  Folder as FolderIcon
-} from '@mui/icons-material';
+  Folder as FolderIcon } from
+'@mui/icons-material';
 import useComponentDocumentation, { ComponentDocument } from '../../hooks/useComponentDocumentation';
 
 interface DocumentationManagerProps {
@@ -80,7 +80,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
   });
 
   // Get document icon based on category or file type
-  const getDocumentIcon = (document: ComponentDocument) => {
+  const GetDocumentIcon = (document: ComponentDocument) => {
     switch (document.category) {
       case 'manual':
         return <ManualIcon />;
@@ -109,7 +109,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         [name]: value
       }));
@@ -120,7 +120,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
   const handleSelectChange = (e: SelectChangeEvent) => {
     const { name, value } = e.target;
     if (name) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         [name]: value
       }));
@@ -130,7 +130,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         file: e.target.files![0]
       }));
@@ -147,18 +147,18 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
     data.append('description', formData.description);
     data.append('category', formData.category);
     data.append('version', formData.version);
-    
+
     // Convert tags string to array
     if (formData.tags) {
-      const tagsArray = formData.tags.split(',').map(tag => tag.trim());
-      tagsArray.forEach(tag => data.append('tags[]', tag));
+      const tagsArray = formData.tags.split(',').map((tag) => tag.trim());
+      tagsArray.forEach((tag) => data.append('tags[]', tag));
     }
-    
+
     // Add current user info
     data.append('uploadedBy', 'Current User'); // This should be dynamic
 
     const result = await uploadDocument(componentId, data);
-    
+
     if (result.success) {
       setOpenUploadDialog(false);
       resetForm();
@@ -174,11 +174,11 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
       description: formData.description,
       category: formData.category as ComponentDocument['category'],
       version: formData.version,
-      tags: formData.tags.split(',').map(tag => tag.trim())
+      tags: formData.tags.split(',').map((tag) => tag.trim())
     };
 
     const success = await updateDocument(selectedDocument._id, updates);
-    
+
     if (success) {
       setOpenEditDialog(false);
       setSelectedDocument(null);
@@ -220,24 +220,24 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
   };
 
   // Filter documents by active category
-  const filteredDocuments = activeCategory === 'all' 
-    ? documents 
-    : documents.filter(doc => doc.category === activeCategory);
+  const filteredDocuments = activeCategory === 'all' ?
+  documents :
+  documents.filter((doc) => doc.category === activeCategory);
 
   if (loading && documents.length === 0) {
     return (
       <Box display="flex" justifyContent="center" p={3}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
     return (
       <Alert severity="error" sx={{ mb: 3 }}>
         {error}
-      </Alert>
-    );
+      </Alert>);
+
   }
 
   return (
@@ -251,59 +251,59 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
           variant="contained"
           startIcon={<UploadIcon />}
           onClick={() => setOpenUploadDialog(true)}
-          size="small"
-        >
+          size="small">
+
           Upload Document
         </Button>
       </Box>
 
-      {documents.length === 0 ? (
-        <Alert severity="info">
+      {documents.length === 0 ?
+      <Alert severity="info">
           No documentation available for this component. Upload your first document.
-        </Alert>
-      ) : (
-        <>
+        </Alert> :
+
+      <>
           <Paper sx={{ mb: 3 }}>
             <Tabs
-              value={activeCategory}
-              onChange={handleCategoryChange}
-              variant="scrollable"
-              scrollButtons="auto"
-              aria-label="document categories"
-            >
-              <Tab 
-                label={`All (${documents.length})`} 
-                value="all" 
-                icon={<FolderIcon />} 
-                iconPosition="start"
-              />
-              {Object.entries(categories).map(([category, count]) => (
-                <Tab 
-                  key={category}
-                  label={`${category.charAt(0).toUpperCase() + category.slice(1)} (${count})`}
-                  value={category}
-                  icon={
-                    category === 'manual' ? <ManualIcon /> :
-                    category === 'specification' ? <SpecIcon /> :
-                    category === 'drawing' ? <DrawingIcon /> :
-                    category === 'test_report' ? <TestReportIcon /> :
-                    category === 'certificate' ? <CertificateIcon /> :
-                    <FileIcon />
-                  }
-                  iconPosition="start"
-                />
-              ))}
+            value={activeCategory}
+            onChange={handleCategoryChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="document categories">
+
+              <Tab
+              label={`All (${documents.length})`}
+              value="all"
+              icon={<FolderIcon />}
+              iconPosition="start" />
+
+              {Object.entries(categories).map(([category, count]) =>
+            <Tab
+              key={category}
+              label={`${category.charAt(0).toUpperCase() + category.slice(1)} (${count})`}
+              value={category}
+              icon={
+              category === 'manual' ? <ManualIcon /> :
+              category === 'specification' ? <SpecIcon /> :
+              category === 'drawing' ? <DrawingIcon /> :
+              category === 'test_report' ? <TestReportIcon /> :
+              category === 'certificate' ? <CertificateIcon /> :
+              <FileIcon />
+              }
+              iconPosition="start" />
+
+            )}
             </Tabs>
           </Paper>
 
           <Grid container spacing={2}>
-            {filteredDocuments.map((document) => (
-              <Grid item xs={12} sm={6} md={4} key={document._id}>
+            {filteredDocuments.map((document) =>
+          <Grid item xs={12} sm={6} md={4} key={document._id}>
                 <Card variant="outlined">
                   <CardContent>
                     <Box display="flex" alignItems="center" mb={1}>
                       <Box mr={1}>
-                        {getDocumentIcon(document)}
+                        {GetDocumentIcon(document)}
                       </Box>
                       <Typography variant="subtitle1" noWrap title={document.title}>
                         {document.title}
@@ -311,24 +311,24 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                     </Box>
                     
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                      {document.description.length > 60 
-                        ? document.description.substring(0, 60) + '...' 
-                        : document.description}
+                      {document.description.length > 60 ?
+                  document.description.substring(0, 60) + '...' :
+                  document.description}
                     </Typography>
                     
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                      <Chip 
-                        size="small" 
-                        label={document.category.replace('_', ' ')} 
-                        color={
-                          document.category === 'manual' ? 'primary' :
-                          document.category === 'specification' ? 'secondary' :
-                          document.category === 'drawing' ? 'info' :
-                          document.category === 'test_report' ? 'warning' :
-                          document.category === 'certificate' ? 'success' :
-                          'default'
-                        }
-                      />
+                      <Chip
+                    size="small"
+                    label={document.category.replace('_', ' ')}
+                    color={
+                    document.category === 'manual' ? 'primary' :
+                    document.category === 'specification' ? 'secondary' :
+                    document.category === 'drawing' ? 'info' :
+                    document.category === 'test_report' ? 'warning' :
+                    document.category === 'certificate' ? 'success' :
+                    'default'
+                    } />
+
                       <Typography variant="caption" color="text.secondary">
                         v{document.version}
                       </Typography>
@@ -341,19 +341,19 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                         {new Date(document.uploadDate).toLocaleDateString()}
                       </Typography>
                       <Box>
-                        {document.fileUrl && (
-                          <Tooltip title="Download">
+                        {document.fileUrl &&
+                    <Tooltip title="Download">
                             <Button
-                              size="small"
-                              href={document.fileUrl}
-                              target="_blank"
-                              download
-                              sx={{ minWidth: 'auto', p: 0.5 }}
-                            >
+                        size="small"
+                        href={document.fileUrl}
+                        target="_blank"
+                        download
+                        sx={{ minWidth: 'auto', p: 0.5 }}>
+
                               <DownloadIcon fontSize="small" />
                             </Button>
                           </Tooltip>
-                        )}
+                    }
                         <Tooltip title="Edit">
                           <IconButton size="small" onClick={() => openEditDialogWithDocument(document)}>
                             <EditIcon fontSize="small" />
@@ -369,12 +369,12 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                   </CardContent>
                 </Card>
               </Grid>
-            ))}
+          )}
           </Grid>
         </>
-      )}
+      }
 
-      {/* Upload Document Dialog */}
+      
       <Dialog open={openUploadDialog} onClose={() => setOpenUploadDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Upload Document</DialogTitle>
         <DialogContent>
@@ -386,8 +386,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 value={formData.title}
                 onChange={handleInputChange}
                 fullWidth
-                required
-              />
+                required />
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -397,8 +397,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 onChange={handleInputChange}
                 fullWidth
                 multiline
-                rows={3}
-              />
+                rows={3} />
+
             </Grid>
             <Grid item xs={12} md={6}>
               <FormControl fullWidth required>
@@ -408,8 +408,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                   name="category"
                   value={formData.category}
                   onChange={handleSelectChange}
-                  label="Category"
-                >
+                  label="Category">
+
                   <MenuItem value="manual">Manual</MenuItem>
                   <MenuItem value="specification">Specification</MenuItem>
                   <MenuItem value="drawing">Drawing</MenuItem>
@@ -427,8 +427,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 onChange={handleInputChange}
                 fullWidth
                 required
-                placeholder="e.g. 1.0"
-              />
+                placeholder="e.g. 1.0" />
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -438,39 +438,39 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 onChange={handleInputChange}
                 fullWidth
                 placeholder="Comma-separated tags"
-                helperText="Enter tags separated by commas"
-              />
+                helperText="Enter tags separated by commas" />
+
             </Grid>
             <Grid item xs={12}>
               <Button
                 variant="outlined"
                 component="label"
                 startIcon={<UploadIcon />}
-                fullWidth
-              >
+                fullWidth>
+
                 {formData.file ? formData.file.name : 'Select File'}
                 <input
                   type="file"
                   hidden
-                  onChange={handleFileChange}
-                />
+                  onChange={handleFileChange} />
+
               </Button>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenUploadDialog(false)}>Cancel</Button>
-          <Button 
-            onClick={handleUploadDocument} 
+          <Button
+            onClick={handleUploadDocument}
             variant="contained"
-            disabled={!formData.title || !formData.category || !formData.version || !formData.file}
-          >
+            disabled={!formData.title || !formData.category || !formData.version || !formData.file}>
+
             Upload
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Edit Document Dialog */}
+      
       <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Edit Document</DialogTitle>
         <DialogContent>
@@ -482,8 +482,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 value={formData.title}
                 onChange={handleInputChange}
                 fullWidth
-                required
-              />
+                required />
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -493,8 +493,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 onChange={handleInputChange}
                 fullWidth
                 multiline
-                rows={3}
-              />
+                rows={3} />
+
             </Grid>
             <Grid item xs={12} md={6}>
               <FormControl fullWidth required>
@@ -504,8 +504,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                   name="category"
                   value={formData.category}
                   onChange={handleSelectChange}
-                  label="Category"
-                >
+                  label="Category">
+
                   <MenuItem value="manual">Manual</MenuItem>
                   <MenuItem value="specification">Specification</MenuItem>
                   <MenuItem value="drawing">Drawing</MenuItem>
@@ -522,8 +522,8 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 value={formData.version}
                 onChange={handleInputChange}
                 fullWidth
-                required
-              />
+                required />
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -533,31 +533,31 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
                 onChange={handleInputChange}
                 fullWidth
                 placeholder="Comma-separated tags"
-                helperText="Enter tags separated by commas"
-              />
+                helperText="Enter tags separated by commas" />
+
             </Grid>
-            {selectedDocument?.fileName && (
-              <Grid item xs={12}>
+            {selectedDocument?.fileName &&
+            <Grid item xs={12}>
                 <Typography variant="body2" color="text.secondary">
                   Current File: {selectedDocument.fileName}
                 </Typography>
               </Grid>
-            )}
+            }
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenEditDialog(false)}>Cancel</Button>
-          <Button 
-            onClick={handleEditDocument} 
+          <Button
+            onClick={handleEditDocument}
             variant="contained"
-            disabled={!formData.title || !formData.category || !formData.version}
-          >
+            disabled={!formData.title || !formData.category || !formData.version}>
+
             Save Changes
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default DocumentationManager; 
+export default DocumentationManager;

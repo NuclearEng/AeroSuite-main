@@ -17,8 +17,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Snackbar
-} from '@mui/material';
+  Snackbar } from
+'@mui/material';
 import {
   Edit as EditIcon,
   Person as PersonIcon,
@@ -29,8 +29,8 @@ import {
   Security as SecurityIcon,
   Save as SaveIcon,
   Cancel as CancelIcon,
-  PhotoCamera as PhotoCameraIcon
-} from '@mui/icons-material';
+  PhotoCamera as PhotoCameraIcon } from
+'@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { updateUserProfile } from '../../services/userService';
 
@@ -42,12 +42,12 @@ interface UserProfileProps {
 const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
-  
+
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  
+
   // Form state
   const [formValues, setFormValues] = useState({
     firstName: user?.firstName || '',
@@ -59,7 +59,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
     company: user?.company || 'AeroSuite Inc.',
     profilePicture: user?.profilePicture || ''
   });
-  
+
   // Update form values when user data changes
   useEffect(() => {
     if (user) {
@@ -75,7 +75,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
       });
     }
   }, [user]);
-  
+
   // Handle form changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,7 +84,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
       [name]: value
     });
   };
-  
+
   // Handle edit mode toggle
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
@@ -102,13 +102,13 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
       });
     }
   };
-  
+
   // Handle profile update
   const handleUpdateProfile = async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Call API to update profile
       await updateUserProfile({
         firstName: formValues.firstName,
@@ -117,7 +117,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
         position: formValues.position,
         department: formValues.department
       });
-      
+
       setSuccess('Profile updated successfully');
       setIsEditing(false);
     } catch (err: any) {
@@ -127,28 +127,28 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
       setLoading(false);
     }
   };
-  
+
   // Format department name for display
   const formatDepartment = (department: string) => {
     if (!department) return '';
-    
-    return department
-      .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+
+    return department.
+    split('_').
+    map((word) => word.charAt(0).toUpperCase() + word.slice(1)).
+    join(' ');
   };
-  
+
   // Handle snackbar close
   const handleSnackbarClose = () => {
     setSuccess(null);
     setError(null);
   };
-  
+
   // Handle profile picture upload
   const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
+
     // In a real app, you would upload the file to a server here
     // For now, just create a local URL for preview
     const reader = new FileReader();
@@ -160,185 +160,185 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
     };
     reader.readAsDataURL(file);
   };
-  
+
   if (!user && !userId) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
-  
+
   return (
     <Box>
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
             <Typography variant="h5">Profile Information</Typography>
-            {editable && (
-              <Button
-                variant={isEditing ? "outlined" : "contained"}
-                color={isEditing ? "error" : "primary"}
-                startIcon={isEditing ? <CancelIcon /> : <EditIcon />}
-                onClick={handleEditToggle}
-                disabled={loading}
-              >
+            {editable &&
+            <Button
+              variant={isEditing ? "outlined" : "contained"}
+              color={isEditing ? "error" : "primary"}
+              startIcon={isEditing ? <CancelIcon /> : <EditIcon />}
+              onClick={handleEditToggle}
+              disabled={loading}>
+
                 {isEditing ? 'Cancel' : 'Edit Profile'}
               </Button>
-            )}
+            }
           </Box>
           
           <Grid container spacing={3}>
-            {/* Profile Picture */}
+            
             <Grid item xs={12} md={3} sx={{ textAlign: 'center' }}>
               <Box sx={{ position: 'relative', display: 'inline-block' }}>
                 <Avatar
                   src={formValues.profilePicture}
                   alt={`${formValues.firstName} ${formValues.lastName}`}
-                  sx={{ width: 150, height: 150, mb: 2 }}
-                >
-                  {formValues.firstName && formValues.lastName 
-                    ? `${formValues.firstName[0]}${formValues.lastName[0]}`
-                    : <PersonIcon fontSize="large" />}
+                  sx={{ width: 150, height: 150, mb: 2 }}>
+
+                  {formValues.firstName && formValues.lastName ?
+                  `${formValues.firstName[0]}${formValues.lastName[0]}` :
+                  <PersonIcon fontSize="large" />}
                 </Avatar>
-                {isEditing && (
-                  <Box sx={{ position: 'absolute', bottom: 10, right: 0 }}>
+                {isEditing &&
+                <Box sx={{ position: 'absolute', bottom: 10, right: 0 }}>
                     <input
-                      accept="image/*"
-                      id="profile-picture-upload"
-                      type="file"
-                      hidden
-                      onChange={handleProfilePictureUpload}
-                    />
+                    accept="image/*"
+                    id="profile-picture-upload"
+                    type="file"
+                    hidden
+                    onChange={handleProfilePictureUpload} />
+
                     <label htmlFor="profile-picture-upload">
                       <IconButton
-                        component="span"
-                        color="primary"
-                        sx={{ backgroundColor: 'white' }}
-                      >
+                      component="span"
+                      color="primary"
+                      sx={{ backgroundColor: 'white' }}>
+
                         <PhotoCameraIcon />
                       </IconButton>
                     </label>
                   </Box>
-                )}
+                }
               </Box>
               
-              {!isEditing && (
-                <>
+              {!isEditing &&
+              <>
                   <Typography variant="h6">
                     {formValues.firstName} {formValues.lastName}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" gutterBottom>
                     {formValues.position || 'No position specified'}
                   </Typography>
-                  {formValues.department && (
-                    <Chip
-                      label={formatDepartment(formValues.department)}
-                      color="primary"
-                      size="small"
-                      sx={{ mt: 1 }}
-                    />
-                  )}
+                  {formValues.department &&
+                <Chip
+                  label={formatDepartment(formValues.department)}
+                  color="primary"
+                  size="small"
+                  sx={{ mt: 1 }} />
+
+                }
                 </>
-              )}
+              }
             </Grid>
             
-            {/* Profile Details */}
+            
             <Grid item xs={12} md={9}>
-              {isEditing ? (
-                <Grid container spacing={2}>
+              {isEditing ?
+              <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      fullWidth
-                      label="First Name"
-                      name="firstName"
-                      value={formValues.firstName}
-                      onChange={handleChange}
-                      required
-                    />
+                    fullWidth
+                    label="First Name"
+                    name="firstName"
+                    value={formValues.firstName}
+                    onChange={handleChange}
+                    required />
+
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      fullWidth
-                      label="Last Name"
-                      name="lastName"
-                      value={formValues.lastName}
-                      onChange={handleChange}
-                      required
-                    />
+                    fullWidth
+                    label="Last Name"
+                    name="lastName"
+                    value={formValues.lastName}
+                    onChange={handleChange}
+                    required />
+
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      fullWidth
-                      label="Email"
-                      name="email"
-                      value={formValues.email}
-                      onChange={handleChange}
-                      disabled
-                      helperText="Email cannot be changed"
-                    />
+                    fullWidth
+                    label="Email"
+                    name="email"
+                    value={formValues.email}
+                    onChange={handleChange}
+                    disabled
+                    helperText="Email cannot be changed" />
+
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      fullWidth
-                      label="Phone"
-                      name="phone"
-                      value={formValues.phone}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Phone"
+                    name="phone"
+                    value={formValues.phone}
+                    onChange={handleChange} />
+
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      fullWidth
-                      label="Position"
-                      name="position"
-                      value={formValues.position}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Position"
+                    name="position"
+                    value={formValues.position}
+                    onChange={handleChange} />
+
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      fullWidth
-                      label="Department"
-                      name="department"
-                      value={formValues.department}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Department"
+                    name="department"
+                    value={formValues.department}
+                    onChange={handleChange} />
+
                   </Grid>
                   <Grid item xs={12} md={6}>
                     <TextField
-                      fullWidth
-                      label="Company"
-                      name="company"
-                      value={formValues.company}
-                      onChange={handleChange}
-                      disabled
-                    />
+                    fullWidth
+                    label="Company"
+                    name="company"
+                    value={formValues.company}
+                    onChange={handleChange}
+                    disabled />
+
                   </Grid>
                   <Grid item xs={12}>
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                       <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<SaveIcon />}
-                        onClick={handleUpdateProfile}
-                        disabled={loading}
-                      >
+                      variant="contained"
+                      color="primary"
+                      startIcon={<SaveIcon />}
+                      onClick={handleUpdateProfile}
+                      disabled={loading}>
+
                         {loading ? 'Saving...' : 'Save Changes'}
                       </Button>
                     </Box>
                   </Grid>
-                </Grid>
-              ) : (
-                <List>
+                </Grid> :
+
+              <List>
                   <ListItem>
                     <ListItemIcon>
                       <EmailIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Email"
-                      secondary={formValues.email || 'No email specified'}
-                    />
+                    primary="Email"
+                    secondary={formValues.email || 'No email specified'} />
+
                   </ListItem>
                   <Divider component="li" />
                   <ListItem>
@@ -346,9 +346,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
                       <PhoneIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Phone"
-                      secondary={formValues.phone || 'No phone specified'}
-                    />
+                    primary="Phone"
+                    secondary={formValues.phone || 'No phone specified'} />
+
                   </ListItem>
                   <Divider component="li" />
                   <ListItem>
@@ -356,9 +356,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
                       <WorkIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Position"
-                      secondary={formValues.position || 'No position specified'}
-                    />
+                    primary="Position"
+                    secondary={formValues.position || 'No position specified'} />
+
                   </ListItem>
                   <Divider component="li" />
                   <ListItem>
@@ -366,9 +366,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
                       <BusinessIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Department"
-                      secondary={formValues.department ? formatDepartment(formValues.department) : 'No department specified'}
-                    />
+                    primary="Department"
+                    secondary={formValues.department ? formatDepartment(formValues.department) : 'No department specified'} />
+
                   </ListItem>
                   <Divider component="li" />
                   <ListItem>
@@ -376,18 +376,18 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
                       <BusinessIcon />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Company"
-                      secondary={formValues.company}
-                    />
+                    primary="Company"
+                    secondary={formValues.company} />
+
                   </ListItem>
                 </List>
-              )}
+              }
             </Grid>
           </Grid>
         </CardContent>
       </Card>
       
-      {/* Security Section */}
+      
       <Card>
         <CardContent>
           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -401,8 +401,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
               <Button
                 variant="outlined"
                 color="primary"
-                fullWidth
-              >
+                fullWidth>
+
                 Change Password
               </Button>
             </Grid>
@@ -410,8 +410,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
               <Button
                 variant="outlined"
                 color="primary"
-                fullWidth
-              >
+                fullWidth>
+
                 Two-Factor Authentication
               </Button>
             </Grid>
@@ -419,23 +419,23 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
         </CardContent>
       </Card>
       
-      {/* Success/Error Snackbar */}
+      
       <Snackbar
         open={!!success || !!error}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert 
-          onClose={handleSnackbarClose} 
-          severity={success ? 'success' : 'error'} 
-          sx={{ width: '100%' }}
-        >
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={success ? 'success' : 'error'}
+          sx={{ width: '100%' }}>
+
           {success || error}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default UserProfile; 
+export default UserProfile;

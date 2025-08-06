@@ -17,8 +17,8 @@ import {
   Box,
   CircularProgress,
   Avatar,
-  Alert
-} from '@mui/material';
+  Alert } from
+'@mui/material';
 import { Save as SaveIcon, PhotoCamera as PhotoCameraIcon } from '@mui/icons-material';
 import userService, { User, UpdateUserData } from '../../services/user.service';
 
@@ -62,14 +62,14 @@ const initialFormValues: ProfileFormData = {
 
 // Department options
 const departmentOptions = [
-  { value: 'engineering', label: 'Engineering' },
-  { value: 'quality', label: 'Quality Assurance' },
-  { value: 'operations', label: 'Operations' },
-  { value: 'management', label: 'Management' },
-  { value: 'sales', label: 'Sales' },
-  { value: 'support', label: 'Support' },
-  { value: 'other', label: 'Other' }
-];
+{ value: 'engineering', label: 'Engineering' },
+{ value: 'quality', label: 'Quality Assurance' },
+{ value: 'operations', label: 'Operations' },
+{ value: 'management', label: 'Management' },
+{ value: 'sales', label: 'Sales' },
+{ value: 'support', label: 'Support' },
+{ value: 'other', label: 'Other' }];
+
 
 const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   open,
@@ -121,24 +121,24 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   }, [userId, open, initialData]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
-    
+
     if (!name) return;
-    
-    setFormValues(prev => ({
+
+    setFormValues((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
     }
-    
+
     // Clear API error when any field changes
     if (apiError) {
       setApiError(null);
@@ -166,12 +166,12 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
     // Create preview URL
     const fileUrl = URL.createObjectURL(file);
     setAvatarPreview(fileUrl);
-    
-    setFormValues(prev => ({
+
+    setFormValues((prev) => ({
       ...prev,
       avatar: file
     }));
-    
+
     // Clear API error
     if (apiError) {
       setApiError(null);
@@ -181,22 +181,22 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   // Validate form
   const validateForm = () => {
     const newErrors: FormErrors = {};
-    
+
     // Required fields validation
     if (!formValues.firstName) newErrors.firstName = 'First name is required';
     if (!formValues.lastName) newErrors.lastName = 'Last name is required';
     if (!formValues.email) newErrors.email = 'Email is required';
-    
+
     // Email validation
     if (formValues.email && !/\S+@\S+\.\S+/.test(formValues.email)) {
       newErrors.email = 'Invalid email address';
     }
-    
+
     // Phone validation (optional field)
     if (formValues.phone && !/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im.test(formValues.phone)) {
       newErrors.phone = 'Invalid phone number format';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -204,15 +204,15 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
     setApiError(null);
-    
+
     try {
       // Map form values to user data structure
       const userData: UpdateUserData = {
@@ -223,20 +223,20 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         position: formValues.position,
         department: formValues.department
       };
-      
+
       let savedUser: User;
-      
+
       if (userId) {
         // Update user profile
         savedUser = await userService.updateUserProfile(userId, userData);
-        
+
         // Upload avatar if changed
         if (formValues.avatar) {
           try {
             const formData = new FormData();
             formData.append('avatar', formValues.avatar);
             await userService.uploadAvatar(userId, formData);
-            
+
             // Refresh user data to get updated avatar URL
             savedUser = await userService.getUserProfile(userId);
           } catch (avatarError: any) {
@@ -247,7 +247,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
             return;
           }
         }
-        
+
         onSave(savedUser);
         onClose();
       } else {
@@ -263,69 +263,69 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   };
 
   return (
-    <Dialog 
-      open={open} 
+    <Dialog
+      open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md"
-    >
+      maxWidth="md">
+
       <DialogTitle>
         Edit Profile
       </DialogTitle>
       
       <DialogContent dividers>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+        {loading ?
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
             <CircularProgress />
-          </Box>
-        ) : (
-          <form id="profile-form" onSubmit={handleSubmit}>
-            {apiError && (
-              <Alert severity="error" sx={{ mb: 3 }}>
+          </Box> :
+
+        <form id="profile-form" onSubmit={handleSubmit}>
+            {apiError &&
+          <Alert severity="error" sx={{ mb: 3 }}>
                 {apiError}
               </Alert>
-            )}
+          }
             
             <Grid container spacing={3}>
-              {/* Avatar */}
+              
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                 <Box sx={{ position: 'relative' }}>
-                  <Avatar 
-                    src={avatarPreview} 
-                    sx={{ width: 120, height: 120, mb: 1 }}
-                    alt={`${formValues.firstName} ${formValues.lastName}`}
-                  >
-                    {formValues.firstName && formValues.lastName 
-                      ? `${formValues.firstName[0]}${formValues.lastName[0]}`
-                      : ''}
+                  <Avatar
+                  src={avatarPreview}
+                  sx={{ width: 120, height: 120, mb: 1 }}
+                  alt={`${formValues.firstName} ${formValues.lastName}`}>
+
+                    {formValues.firstName && formValues.lastName ?
+                  `${formValues.firstName[0]}${formValues.lastName[0]}` :
+                  ''}
                   </Avatar>
                   <Button
-                    component="label"
-                    variant="contained"
-                    startIcon={<PhotoCameraIcon />}
-                    sx={{ 
-                      position: 'absolute', 
-                      bottom: 0, 
-                      right: -20,
-                      borderRadius: '50%',
-                      minWidth: 'auto',
-                      width: 40,
-                      height: 40,
-                      p: 0
-                    }}
-                  >
+                  component="label"
+                  variant="contained"
+                  startIcon={<PhotoCameraIcon />}
+                  sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    right: -20,
+                    borderRadius: '50%',
+                    minWidth: 'auto',
+                    width: 40,
+                    height: 40,
+                    p: 0
+                  }}>
+
                     <input
-                      type="file"
-                      hidden
-                      accept="image/jpeg,image/png,image/gif,image/webp"
-                      onChange={handleAvatarChange}
-                    />
+                    type="file"
+                    hidden
+                    accept="image/jpeg,image/png,image/gif,image/webp"
+                    onChange={handleAvatarChange} />
+
                     <PhotoCameraIcon fontSize="small" />
                   </Button>
                 </Box>
               </Grid>
               
-              {/* Personal Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="h6" gutterBottom>
                   Personal Information
@@ -335,57 +335,57 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
               
               <Grid item xs={12} md={6}>
                 <TextField
-                  fullWidth
-                  required
-                  label="First Name"
-                  name="firstName"
-                  value={formValues.firstName}
-                  onChange={handleChange}
-                  error={!!errors.firstName}
-                  helperText={errors.firstName}
-                />
+                fullWidth
+                required
+                label="First Name"
+                name="firstName"
+                value={formValues.firstName}
+                onChange={handleChange}
+                error={!!errors.firstName}
+                helperText={errors.firstName} />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
                 <TextField
-                  fullWidth
-                  required
-                  label="Last Name"
-                  name="lastName"
-                  value={formValues.lastName}
-                  onChange={handleChange}
-                  error={!!errors.lastName}
-                  helperText={errors.lastName}
-                />
+                fullWidth
+                required
+                label="Last Name"
+                name="lastName"
+                value={formValues.lastName}
+                onChange={handleChange}
+                error={!!errors.lastName}
+                helperText={errors.lastName} />
+
               </Grid>
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  required
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                  value={formValues.email}
-                  onChange={handleChange}
-                  error={!!errors.email}
-                  helperText={errors.email}
-                />
+                fullWidth
+                required
+                label="Email Address"
+                name="email"
+                type="email"
+                value={formValues.email}
+                onChange={handleChange}
+                error={!!errors.email}
+                helperText={errors.email} />
+
               </Grid>
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  label="Phone Number"
-                  name="phone"
-                  value={formValues.phone}
-                  onChange={handleChange}
-                  error={!!errors.phone}
-                  helperText={errors.phone || 'Format: +1 (555) 123-4567'}
-                />
+                fullWidth
+                label="Phone Number"
+                name="phone"
+                value={formValues.phone}
+                onChange={handleChange}
+                error={!!errors.phone}
+                helperText={errors.phone || 'Format: +1 (555) 123-4567'} />
+
               </Grid>
               
-              {/* Professional Information */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Professional Information
@@ -395,35 +395,35 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
               
               <Grid item xs={12} md={6}>
                 <TextField
-                  fullWidth
-                  label="Position"
-                  name="position"
-                  value={formValues.position}
-                  onChange={handleChange}
-                  placeholder="Your job title"
-                />
+                fullWidth
+                label="Position"
+                name="position"
+                value={formValues.position}
+                onChange={handleChange}
+                placeholder="Your job title" />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel>Department</InputLabel>
                   <Select
-                    name="department"
-                    value={formValues.department}
-                    label="Department"
-                    onChange={handleChange as any}
-                  >
-                    {departmentOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                  name="department"
+                  value={formValues.department}
+                  label="Department"
+                  onChange={handleChange as any}>
+
+                    {departmentOptions.map((option) =>
+                  <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                 </FormControl>
               </Grid>
             </Grid>
           </form>
-        )}
+        }
       </DialogContent>
       
       <DialogActions>
@@ -436,13 +436,13 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           variant="contained"
           color="primary"
           startIcon={<SaveIcon />}
-          disabled={isSubmitting || loading}
-        >
+          disabled={isSubmitting || loading}>
+
           {isSubmitting ? 'Saving...' : 'Save Changes'}
         </Button>
       </DialogActions>
-    </Dialog>
-  );
+    </Dialog>);
+
 };
 
-export default ProfileEditModal; 
+export default ProfileEditModal;

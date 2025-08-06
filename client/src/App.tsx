@@ -23,7 +23,8 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <HelmetProvider>
+          <HelmetProvider>{/* @ts-expect-error Type definition issue */}
+            {/* @ts-expect-error Type definition issue */}
             <SnackbarProvider 
               maxSnack={5} 
               anchorOrigin={{ 

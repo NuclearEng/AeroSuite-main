@@ -18,8 +18,8 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
-} from '@mui/material';
+  MenuItem } from
+'@mui/material';
 import {
   DarkMode as DarkModeIcon,
   Notifications as NotificationsIcon,
@@ -27,8 +27,8 @@ import {
   Security as SecurityIcon,
   Download as DownloadIcon,
   Delete as DeleteIcon,
-  Save as SaveIcon
-} from '@mui/icons-material';
+  Save as SaveIcon } from
+'@mui/icons-material';
 
 const Settings: React.FC = () => {
   // Settings state
@@ -45,7 +45,7 @@ const Settings: React.FC = () => {
 
   // Handle settings change
   const handleToggle = (setting: string) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
       [setting]: !prev[setting as keyof typeof prev]
     }));
@@ -53,7 +53,7 @@ const Settings: React.FC = () => {
 
   // Handle language change
   const handleLanguageChange = (event: any) => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
       language: event.target.value
     }));
@@ -68,16 +68,16 @@ const Settings: React.FC = () => {
 
   // Languages
   const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'es', name: 'Spanish' },
-    { code: 'fr', name: 'French' },
-    { code: 'de', name: 'German' },
-    { code: 'ja', name: 'Japanese' }
-  ];
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Spanish' },
+  { code: 'fr', name: 'French' },
+  { code: 'de', name: 'German' },
+  { code: 'ja', name: 'Japanese' }];
+
 
   return (
     <Box>
-      {/* Page header */}
+      
       <Box mb={4}>
         <Typography variant="h4" gutterBottom>
           Settings
@@ -87,14 +87,14 @@ const Settings: React.FC = () => {
         </Typography>
       </Box>
 
-      {saved && (
-        <Alert severity="success" sx={{ mb: 3 }}>
+      {saved &&
+      <Alert severity="success" sx={{ mb: 3 }}>
           Settings saved successfully!
         </Alert>
-      )}
+      }
 
       <Grid container spacing={3}>
-        {/* Application Settings */}
+        
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 8' } }}>
           <Paper sx={{ mb: 3 }}>
             <Box p={2}>
@@ -106,50 +106,50 @@ const Settings: React.FC = () => {
                 <ListItemIcon>
                   <DarkModeIcon />
                 </ListItemIcon>
-                <ListItemText 
-                  primary="Dark Mode" 
-                  secondary="Use dark theme throughout the application"
-                />
+                <ListItemText
+                  primary="Dark Mode"
+                  secondary="Use dark theme throughout the application" />
+
                 <Switch
                   edge="end"
                   checked={settings.darkMode}
-                  onChange={() => handleToggle('darkMode')}
-                />
+                  onChange={() => handleToggle('darkMode')} />
+
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem>
                 <ListItemIcon>
                   <NotificationsIcon />
                 </ListItemIcon>
-                <ListItemText 
-                  primary="Notifications" 
-                  secondary="Enable browser notifications"
-                />
+                <ListItemText
+                  primary="Notifications"
+                  secondary="Enable browser notifications" />
+
                 <Switch
                   edge="end"
                   checked={settings.notifications}
-                  onChange={() => handleToggle('notifications')}
-                />
+                  onChange={() => handleToggle('notifications')} />
+
               </ListItem>
               <Divider variant="inset" component="li" />
               <ListItem>
                 <ListItemIcon>
                   <LanguageIcon />
                 </ListItemIcon>
-                <ListItemText 
-                  primary="Language" 
-                  secondary="Select your preferred language"
-                />
+                <ListItemText
+                  primary="Language"
+                  secondary="Select your preferred language" />
+
                 <FormControl sx={{ minWidth: 120 }} size="small">
                   <Select
                     value={settings.language}
-                    onChange={handleLanguageChange}
-                  >
-                    {languages.map(lang => (
-                      <MenuItem key={lang.code} value={lang.code}>
+                    onChange={handleLanguageChange}>
+
+                    {languages.map((lang) =>
+                    <MenuItem key={lang.code} value={lang.code}>
                         {lang.name}
                       </MenuItem>
-                    ))}
+                    )}
                   </Select>
                 </FormControl>
               </ListItem>
@@ -158,15 +158,15 @@ const Settings: React.FC = () => {
                 <ListItemIcon>
                   <SaveIcon />
                 </ListItemIcon>
-                <ListItemText 
-                  primary="Auto Save" 
-                  secondary="Automatically save forms while editing"
-                />
+                <ListItemText
+                  primary="Auto Save"
+                  secondary="Automatically save forms while editing" />
+
                 <Switch
                   edge="end"
                   checked={settings.autoSave}
-                  onChange={() => handleToggle('autoSave')}
-                />
+                  onChange={() => handleToggle('autoSave')} />
+
               </ListItem>
             </List>
             <Box p={2} display="flex" justifyContent="flex-end">
@@ -174,15 +174,15 @@ const Settings: React.FC = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleSave}
-                startIcon={<SaveIcon />}
-              >
+                startIcon={<SaveIcon />}>
+
                 Save Settings
               </Button>
             </Box>
           </Paper>
         </Grid>
 
-        {/* Data Management */}
+        
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
           <Card sx={{ mb: 3 }}>
             <CardHeader title="Data Management" />
@@ -194,38 +194,38 @@ const Settings: React.FC = () => {
                 <Button
                   variant="outlined"
                   startIcon={<DownloadIcon />}
-                  fullWidth
-                >
+                  fullWidth>
+
                   Export All Data
                 </Button>
                 <Button
                   variant="outlined"
                   startIcon={<DownloadIcon />}
-                  fullWidth
-                >
+                  fullWidth>
+
                   Export Inspection Reports
                 </Button>
                 <Button
                   variant="outlined"
                   color="error"
                   startIcon={<DeleteIcon />}
-                  fullWidth
-                >
+                  fullWidth>
+
                   Clear Cache
                 </Button>
                 <Button
                   variant="outlined"
                   color="error"
                   startIcon={<DeleteIcon />}
-                  fullWidth
-                >
+                  fullWidth>
+
                   Reset All Data
                 </Button>
               </Box>
             </CardContent>
           </Card>
 
-          {/* Security */}
+          
           <Card>
             <CardHeader title="Security" />
             <CardContent>
@@ -236,23 +236,23 @@ const Settings: React.FC = () => {
                 variant="outlined"
                 startIcon={<SecurityIcon />}
                 fullWidth
-                sx={{ mb: 1 }}
-              >
+                sx={{ mb: 1 }}>
+
                 Change Password
               </Button>
               <Button
                 variant="outlined"
                 startIcon={<SecurityIcon />}
-                fullWidth
-              >
+                fullWidth>
+
                 Two-Factor Authentication
               </Button>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default Settings; 
+export default Settings;

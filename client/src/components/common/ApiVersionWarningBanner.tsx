@@ -40,7 +40,7 @@ const ApiVersionWarningBanner: React.FC = () => {
     
     try {
       // Get the latest version
-      const versionInfo = await apiService.checkApiVersion();
+      const versionInfo = await apiService?.checkApiVersion();
       const latestVersion = versionInfo.defaultVersion;
       
       // Get migration guide

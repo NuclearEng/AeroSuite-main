@@ -25,8 +25,8 @@ import {
   ListItemAvatar,
   Tab,
   Tabs,
-  useTheme
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import {
   Close as CloseIcon,
   Send as SendIcon,
@@ -38,8 +38,8 @@ import {
   SentimentSatisfied as SentimentSatisfiedIcon,
   SentimentDissatisfied as SentimentDissatisfiedIcon,
   SentimentNeutral as SentimentNeutralIcon,
-  AttachFile as AttachFileIcon
-} from '@mui/icons-material';
+  AttachFile as AttachFileIcon } from
+'@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { Feedback } from '../../../services/feedback.service';
@@ -61,7 +61,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
 }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  
+
   // State
   const [tabValue, setTabValue] = useState<number>(0);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -72,25 +72,25 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
   const [isPublicResponse, setIsPublicResponse] = useState<boolean>(feedback.response?.isPublic || false);
   const [note, setNote] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  
+
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   // Handle save changes
   const handleSaveChanges = async () => {
     setLoading(true);
-    
+
     const updateData: any = {
       status,
       priority
     };
-    
+
     if (assignedTo) {
       updateData.assignedTo = assignedTo;
     }
-    
+
     // Add response if provided
     if (responseContent.trim()) {
       updateData.response = {
@@ -98,12 +98,12 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         isPublic: isPublicResponse
       };
     }
-    
+
     // Add note if provided
     if (note.trim()) {
       updateData.note = note;
     }
-    
+
     try {
       await onUpdate(feedback._id, updateData);
       setEditMode(false);
@@ -114,13 +114,13 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
       setLoading(false);
     }
   };
-  
+
   // Handle delete
   const handleDelete = () => {
     onDelete(feedback._id);
     onClose();
   };
-  
+
   // Handle toggle featured
   const handleToggleFeatured = async () => {
     try {
@@ -131,7 +131,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
       console.error('Error updating featured status:', error);
     }
   };
-  
+
   // Handle toggle addressed
   const handleToggleAddressed = async () => {
     try {
@@ -142,11 +142,11 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
       console.error('Error updating addressed status:', error);
     }
   };
-  
+
   // Get sentiment color
   const getSentimentColor = () => {
     if (!feedback.sentiment) return theme.palette.text.secondary;
-    
+
     switch (feedback.sentiment.label) {
       case 'positive':
         return theme.palette.success.main;
@@ -158,11 +158,11 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         return theme.palette.text.secondary;
     }
   };
-  
+
   // Get sentiment icon
-  const getSentimentIcon = () => {
+  const GetSentimentIcon = () => {
     if (!feedback.sentiment) return <SentimentNeutralIcon />;
-    
+
     switch (feedback.sentiment.label) {
       case 'positive':
         return <SentimentSatisfiedIcon style={{ color: theme.palette.success.main }} />;
@@ -172,9 +172,9 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         return <SentimentNeutralIcon style={{ color: theme.palette.text.secondary }} />;
     }
   };
-  
+
   // Render overview tab
-  const renderOverviewTab = () => {
+  const RenderOverviewTab = () => {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -187,41 +187,41 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
                 label={t(`feedback.types.${feedback.feedbackType}`)}
                 size="small"
                 color={
-                  feedback.feedbackType === 'bug' ? 'error' :
-                  feedback.feedbackType === 'feature' ? 'primary' :
-                  feedback.feedbackType === 'suggestion' ? 'success' :
-                  'default'
-                }
-              />
+                feedback.feedbackType === 'bug' ? 'error' :
+                feedback.feedbackType === 'feature' ? 'primary' :
+                feedback.feedbackType === 'suggestion' ? 'success' :
+                'default'
+                } />
+
               <Chip
                 label={t(`feedback.status.${feedback.status}`)}
                 size="small"
                 color={
-                  feedback.status === 'new' ? 'info' :
-                  feedback.status === 'in_progress' ? 'warning' :
-                  feedback.status === 'resolved' ? 'success' :
-                  feedback.status === 'closed' ? 'default' :
-                  'primary'
-                }
-              />
+                feedback.status === 'new' ? 'info' :
+                feedback.status === 'in_progress' ? 'warning' :
+                feedback.status === 'resolved' ? 'success' :
+                feedback.status === 'closed' ? 'default' :
+                'primary'
+                } />
+
               <Chip
                 label={t(`feedback.priority.${feedback.priority}`)}
                 size="small"
                 color={
-                  feedback.priority === 'critical' ? 'error' :
-                  feedback.priority === 'high' ? 'warning' :
-                  feedback.priority === 'medium' ? 'info' :
-                  'default'
-                }
-              />
-              {feedback.sentiment && (
-                <Chip
-                  icon={getSentimentIcon()}
-                  label={t(`feedback.sentiment.${feedback.sentiment.label}`)}
-                  size="small"
-                  style={{ color: getSentimentColor() }}
-                />
-              )}
+                feedback.priority === 'critical' ? 'error' :
+                feedback.priority === 'high' ? 'warning' :
+                feedback.priority === 'medium' ? 'info' :
+                'default'
+                } />
+
+              {feedback.sentiment &&
+              <Chip
+                icon={GetSentimentIcon()}
+                label={t(`feedback.sentiment.${feedback.sentiment.label}`)}
+                size="small"
+                style={{ color: getSentimentColor() }} />
+
+              }
             </Box>
           </Box>
         </Grid>
@@ -234,8 +234,8 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
           </Paper>
         </Grid>
         
-        {feedback.rating && (
-          <Grid item xs={12}>
+        {feedback.rating &&
+        <Grid item xs={12}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography variant="body2" sx={{ mr: 1 }}>
                 {t('feedback.fields.rating')}:
@@ -243,25 +243,25 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
               <Rating value={feedback.rating} readOnly />
             </Box>
           </Grid>
-        )}
+        }
         
-        {feedback.attachments && feedback.attachments.length > 0 && (
-          <Grid item xs={12}>
+        {feedback.attachments && feedback.attachments.length > 0 &&
+        <Grid item xs={12}>
             <Typography variant="subtitle2" gutterBottom>
               {t('feedback.attachments')}:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {feedback.attachments.map((attachment, index) => (
-                <Chip
-                  key={index}
-                  icon={<AttachFileIcon />}
-                  label={attachment.originalName}
-                  onClick={() => window.open(`/api/feedback/attachments/${attachment.filename}`, '_blank')}
-                />
-              ))}
+              {feedback.attachments.map((attachment, index) =>
+            <Chip
+              key={index}
+              icon={<AttachFileIcon />}
+              label={attachment.originalName}
+              onClick={() => window.open(`/api/feedback/attachments/${attachment.filename}`, '_blank')} />
+
+            )}
             </Box>
           </Grid>
-        )}
+        }
         
         <Grid item xs={12}>
           <Divider sx={{ my: 2 }} />
@@ -277,16 +277,16 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
                 <Typography variant="body2">
                   <strong>{t('feedback.fields.source')}:</strong> {t(`feedback.sources.${feedback.source}`)}
                 </Typography>
-                {feedback.context?.page && (
-                  <Typography variant="body2">
+                {feedback.context?.page &&
+                <Typography variant="body2">
                     <strong>{t('feedback.fields.page')}:</strong> {feedback.context.page}
                   </Typography>
-                )}
-                {feedback.userAgent && (
-                  <Typography variant="body2">
+                }
+                {feedback.userAgent &&
+                <Typography variant="body2">
                     <strong>{t('feedback.fields.device')}:</strong> {feedback.userAgent.device} / {feedback.userAgent.browser} / {feedback.userAgent.os}
                   </Typography>
-                )}
+                }
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -294,60 +294,60 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
                 {t('feedback.submitter')}
               </Typography>
               <Box sx={{ mt: 1 }}>
-                {feedback.user ? (
-                  <>
+                {feedback.user ?
+                <>
                     <Typography variant="body2">
                       <strong>{t('common.name')}:</strong> {feedback.user.firstName} {feedback.user.lastName}
                     </Typography>
                     <Typography variant="body2">
                       <strong>{t('common.email')}:</strong> {feedback.user.email}
                     </Typography>
-                  </>
-                ) : feedback.contactInfo ? (
-                  <>
-                    {feedback.contactInfo.name && (
-                      <Typography variant="body2">
+                  </> :
+                feedback.contactInfo ?
+                <>
+                    {feedback.contactInfo.name &&
+                  <Typography variant="body2">
                         <strong>{t('common.name')}:</strong> {feedback.contactInfo.name}
                       </Typography>
-                    )}
-                    {feedback.contactInfo.email && (
-                      <Typography variant="body2">
+                  }
+                    {feedback.contactInfo.email &&
+                  <Typography variant="body2">
                         <strong>{t('common.email')}:</strong> {feedback.contactInfo.email}
                       </Typography>
-                    )}
-                    {feedback.contactInfo.phone && (
-                      <Typography variant="body2">
+                  }
+                    {feedback.contactInfo.phone &&
+                  <Typography variant="body2">
                         <strong>{t('common.phone')}:</strong> {feedback.contactInfo.phone}
                       </Typography>
-                    )}
+                  }
                     <Typography variant="body2">
                       <strong>{t('feedback.allowContact')}:</strong> {feedback.contactInfo.allowContact ? t('common.yes') : t('common.no')}
                     </Typography>
-                  </>
-                ) : (
-                  <Typography variant="body2" color="text.secondary">
+                  </> :
+
+                <Typography variant="body2" color="text.secondary">
                     {t('feedback.anonymous')}
                   </Typography>
-                )}
-                {feedback.customer && (
-                  <Typography variant="body2">
+                }
+                {feedback.customer &&
+                <Typography variant="body2">
                     <strong>{t('common.customer')}:</strong> {feedback.customer.name}
                   </Typography>
-                )}
+                }
               </Box>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
-  
+
   // Render response tab
-  const renderResponseTab = () => {
+  const RenderResponseTab = () => {
     return (
       <Grid container spacing={3}>
-        {feedback.response ? (
-          <Grid item xs={12}>
+        {feedback.response ?
+        <Grid item xs={12}>
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography variant="subtitle2">
@@ -363,62 +363,62 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
               </Typography>
               <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
                 <Chip
-                  label={feedback.response.isPublic ? t('feedback.response.public') : t('feedback.response.internal')}
-                  size="small"
-                  color={feedback.response.isPublic ? 'primary' : 'default'}
-                />
+                label={feedback.response.isPublic ? t('feedback.response.public') : t('feedback.response.internal')}
+                size="small"
+                color={feedback.response.isPublic ? 'primary' : 'default'} />
+
               </Box>
             </Paper>
-          </Grid>
-        ) : (
-          <Grid item xs={12}>
+          </Grid> :
+
+        <Grid item xs={12}>
             <Typography color="text.secondary" sx={{ fontStyle: 'italic' }}>
               {t('feedback.response.noResponse')}
             </Typography>
           </Grid>
-        )}
+        }
         
-        {editMode && (
-          <Grid item xs={12}>
+        {editMode &&
+        <Grid item xs={12}>
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" gutterBottom>
                 {t('feedback.response.addResponse')}
               </Typography>
               <TextField
-                fullWidth
-                multiline
-                rows={4}
-                label={t('feedback.response.content')}
-                value={responseContent}
-                onChange={(e) => setResponseContent(e.target.value)}
-                sx={{ mb: 2 }}
-              />
+              fullWidth
+              multiline
+              rows={4}
+              label={t('feedback.response.content')}
+              value={responseContent}
+              onChange={(e) => setResponseContent(e.target.value)}
+              sx={{ mb: 2 }} />
+
               <FormControl component="fieldset">
                 <label>
                   <input
-                    type="checkbox"
-                    checked={isPublicResponse}
-                    onChange={(e) => setIsPublicResponse(e.target.checked)}
-                  />
+                  type="checkbox"
+                  checked={isPublicResponse}
+                  onChange={(e) => setIsPublicResponse(e.target.checked)} />
+
                   {t('feedback.response.makePublic')}
                 </label>
               </FormControl>
             </Box>
           </Grid>
-        )}
-      </Grid>
-    );
+        }
+      </Grid>);
+
   };
-  
+
   // Render notes tab
-  const renderNotesTab = () => {
+  const RenderNotesTab = () => {
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <List>
-            {feedback.internalNotes && feedback.internalNotes.length > 0 ? (
-              feedback.internalNotes.map((note, index) => (
-                <React.Fragment key={index}>
+            {feedback.internalNotes && feedback.internalNotes.length > 0 ?
+            feedback.internalNotes.map((note, index) =>
+            <React.Fragment key={index}>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
                       <Avatar>
@@ -427,8 +427,8 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
-                      primary={
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  primary={
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                           <Typography variant="subtitle2">
                             {note.user.firstName} {note.user.lastName}
                           </Typography>
@@ -436,51 +436,51 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
                             {format(new Date(note.createdAt), 'PPpp')}
                           </Typography>
                         </Box>
-                      }
-                      secondary={
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                          sx={{ display: 'inline', whiteSpace: 'pre-wrap' }}
-                        >
+                  }
+                  secondary={
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    color="text.primary"
+                    sx={{ display: 'inline', whiteSpace: 'pre-wrap' }}>
+
                           {note.content}
                         </Typography>
-                      }
-                    />
+                  } />
+
                   </ListItem>
                   {index < feedback.internalNotes.length - 1 && <Divider variant="inset" component="li" />}
                 </React.Fragment>
-              ))
-            ) : (
-              <Typography color="text.secondary" sx={{ fontStyle: 'italic', p: 2 }}>
+            ) :
+
+            <Typography color="text.secondary" sx={{ fontStyle: 'italic', p: 2 }}>
                 {t('feedback.notes.noNotes')}
               </Typography>
-            )}
+            }
           </List>
         </Grid>
         
-        {editMode && (
-          <Grid item xs={12}>
+        {editMode &&
+        <Grid item xs={12}>
             <Box sx={{ mt: 2 }}>
               <Typography variant="subtitle2" gutterBottom>
                 {t('feedback.notes.addNote')}
               </Typography>
               <TextField
-                fullWidth
-                multiline
-                rows={3}
-                label={t('feedback.notes.content')}
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-              />
+              fullWidth
+              multiline
+              rows={3}
+              label={t('feedback.notes.content')}
+              value={note}
+              onChange={(e) => setNote(e.target.value)} />
+
             </Box>
           </Grid>
-        )}
-      </Grid>
-    );
+        }
+      </Grid>);
+
   };
-  
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>
@@ -492,52 +492,52 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
             <IconButton
               color={feedback.isFeatured ? 'warning' : 'default'}
               onClick={handleToggleFeatured}
-              title={feedback.isFeatured ? t('feedback.unfeature') : t('feedback.feature')}
-            >
+              title={feedback.isFeatured ? t('feedback.unfeature') : t('feedback.feature')}>
+
               {feedback.isFeatured ? <StarIcon /> : <StarBorderIcon />}
             </IconButton>
             <IconButton
               color={feedback.isAddressed ? 'success' : 'default'}
               onClick={handleToggleAddressed}
-              title={feedback.isAddressed ? t('feedback.unmarkAddressed') : t('feedback.markAddressed')}
-            >
+              title={feedback.isAddressed ? t('feedback.unmarkAddressed') : t('feedback.markAddressed')}>
+
               <CheckCircleIcon />
             </IconButton>
             <IconButton
               color="primary"
               onClick={() => setEditMode(!editMode)}
-              title={editMode ? t('common.cancel') : t('common.edit')}
-            >
+              title={editMode ? t('common.cancel') : t('common.edit')}>
+
               <EditIcon />
             </IconButton>
             <IconButton
               color="error"
               onClick={handleDelete}
-              title={t('common.delete')}
-            >
+              title={t('common.delete')}>
+
               <DeleteIcon />
             </IconButton>
             <IconButton
               onClick={onClose}
-              title={t('common.close')}
-            >
+              title={t('common.close')}>
+
               <CloseIcon />
             </IconButton>
           </Box>
         </Box>
       </DialogTitle>
       <DialogContent dividers>
-        {editMode && (
-          <Box sx={{ mb: 3, p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
+        {editMode &&
+        <Box sx={{ mb: 3, p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth size="small">
                   <InputLabel>{t('feedback.fields.status')}</InputLabel>
                   <Select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    label={t('feedback.fields.status')}
-                  >
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  label={t('feedback.fields.status')}>
+
                     <MenuItem value="new">{t('feedback.status.new')}</MenuItem>
                     <MenuItem value="reviewed">{t('feedback.status.reviewed')}</MenuItem>
                     <MenuItem value="in_progress">{t('feedback.status.in_progress')}</MenuItem>
@@ -550,10 +550,10 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
                 <FormControl fullWidth size="small">
                   <InputLabel>{t('feedback.fields.priority')}</InputLabel>
                   <Select
-                    value={priority}
-                    onChange={(e) => setPriority(e.target.value)}
-                    label={t('feedback.fields.priority')}
-                  >
+                  value={priority}
+                  onChange={(e) => setPriority(e.target.value)}
+                  label={t('feedback.fields.priority')}>
+
                     <MenuItem value="low">{t('feedback.priority.low')}</MenuItem>
                     <MenuItem value="medium">{t('feedback.priority.medium')}</MenuItem>
                     <MenuItem value="high">{t('feedback.priority.high')}</MenuItem>
@@ -565,12 +565,12 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
                 <FormControl fullWidth size="small">
                   <InputLabel>{t('feedback.fields.assignedTo')}</InputLabel>
                   <Select
-                    value={assignedTo || ''}
-                    onChange={(e) => setAssignedTo(e.target.value)}
-                    label={t('feedback.fields.assignedTo')}
-                  >
+                  value={assignedTo || ''}
+                  onChange={(e) => setAssignedTo(e.target.value)}
+                  label={t('feedback.fields.assignedTo')}>
+
                     <MenuItem value="">{t('common.unassigned')}</MenuItem>
-                    {/* This would be populated with actual users from the API */}
+                    
                     <MenuItem value="user1">John Doe</MenuItem>
                     <MenuItem value="user2">Jane Smith</MenuItem>
                   </Select>
@@ -578,7 +578,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
               </Grid>
             </Grid>
           </Box>
-        )}
+        }
         
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
           <Tabs value={tabValue} onChange={handleTabChange}>
@@ -588,29 +588,29 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
           </Tabs>
         </Box>
         
-        {tabValue === 0 && renderOverviewTab()}
-        {tabValue === 1 && renderResponseTab()}
-        {tabValue === 2 && renderNotesTab()}
+        {tabValue === 0 && RenderOverviewTab()}
+        {tabValue === 1 && RenderResponseTab()}
+        {tabValue === 2 && RenderNotesTab()}
       </DialogContent>
       
-      {editMode && (
-        <DialogActions>
+      {editMode &&
+      <DialogActions>
           <Button onClick={() => setEditMode(false)}>
             {t('common.cancel')}
           </Button>
           <Button
-            onClick={handleSaveChanges}
-            variant="contained"
-            color="primary"
-            disabled={loading}
-            startIcon={<SendIcon />}
-          >
+          onClick={handleSaveChanges}
+          variant="contained"
+          color="primary"
+          disabled={loading}
+          startIcon={<SendIcon />}>
+
             {t('common.save')}
           </Button>
         </DialogActions>
-      )}
-    </Dialog>
-  );
+      }
+    </Dialog>);
+
 };
 
-export default FeedbackDetail; 
+export default FeedbackDetail;

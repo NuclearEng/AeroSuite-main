@@ -1,0 +1,1365 @@
+src/__tests__/components/Chart.test.tsx(8,10): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/__tests__/components/Chart.test.tsx(9,9): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/__tests__/components/Chart.test.tsx(10,9): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/__tests__/components/Chart.test.tsx(11,14): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/__tests__/components/Chart.test.tsx(12,11): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/__tests__/components/Chart.test.tsx(258,9): error TS2322: Type '{ type: "line"; data: { labels: string[]; datasets: { label: string; data: number[]; borderColor: string; tension: number; }[]; }; title: string; height: number; sx: { backgroundColor: string; borderRadius: string; }; }' is not assignable to type 'IntrinsicAttributes & ChartProps'.
+  Property 'sx' does not exist on type 'IntrinsicAttributes & ChartProps'.
+src/__tests__/components/FiltersToolbar.test.tsx(38,7): error TS2322: Type '{ id: string; label: string; type: FilterType; placeholder: string; }' is not assignable to type 'FilterDefinition'.
+  Object literal may only specify known properties, and 'placeholder' does not exist in type 'FilterDefinition'.
+src/__tests__/components/FiltersToolbar.test.tsx(185,9): error TS2322: Type '{ filters: FilterDefinition[]; onFilterChange: Mock<any, any>; showClearButton: boolean; }' is not assignable to type 'IntrinsicAttributes & FiltersToolbarProps'.
+  Property 'showClearButton' does not exist on type 'IntrinsicAttributes & FiltersToolbarProps'. Did you mean 'showFilterButton'?
+src/__tests__/components/FiltersToolbar.test.tsx(215,9): error TS2322: Type '{ filters: FilterDefinition[]; initialValues: { status: string; search: string; isVerified: boolean; }; onFilterChange: () => void; }' is not assignable to type 'IntrinsicAttributes & FiltersToolbarProps'.
+  Property 'initialValues' does not exist on type 'IntrinsicAttributes & FiltersToolbarProps'.
+src/__tests__/components/FiltersToolbar.test.tsx(241,9): error TS2322: Type '{ filters: FilterDefinition[]; initialValues: { status: string; category: string[]; isVerified: boolean; }; onFilterChange: () => void; showFilterCount: boolean; }' is not assignable to type 'IntrinsicAttributes & FiltersToolbarProps'.
+  Property 'initialValues' does not exist on type 'IntrinsicAttributes & FiltersToolbarProps'.
+src/__tests__/components/FiltersToolbar.test.tsx(256,9): error TS2322: Type '{ filters: FilterDefinition[]; onFilterChange: () => void; compact: boolean; }' is not assignable to type 'IntrinsicAttributes & FiltersToolbarProps'.
+  Property 'compact' does not exist on type 'IntrinsicAttributes & FiltersToolbarProps'.
+src/__tests__/components/FiltersToolbar.test.tsx(279,9): error TS2322: Type '{ filters: FilterDefinition[]; onFilterChange: () => void; sx: { backgroundColor: string; padding: string; }; }' is not assignable to type 'IntrinsicAttributes & FiltersToolbarProps'.
+  Property 'sx' does not exist on type 'IntrinsicAttributes & FiltersToolbarProps'.
+src/__tests__/components/FormBuilder.test.tsx(116,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(145,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(180,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(216,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(254,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(274,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(288,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(305,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/components/FormBuilder.test.tsx(326,9): error TS2322: Type '{ title: string; fields: ({ name: string; label: string; type: string; required: boolean; placeholder: string; validation: { required: string; minLength: { value: number; message: string; }; pattern?: undefined; min?: undefined; maxLength?: undefined; }; options?: undefined; } | ... 5 more ... | { ...; })[]; default...' is not assignable to type 'IntrinsicAttributes & FormBuilderProps'.
+  Property 'fields' does not exist on type 'IntrinsicAttributes & FormBuilderProps'.
+src/__tests__/test-utils.tsx(54,12): error TS2786: 'SnackbarProvider' cannot be used as a JSX component.
+  Its instance type 'SnackbarProvider' is not a valid JSX element.
+src/App.tsx(26,12): error TS2786: 'HelmetProvider' cannot be used as a JSX component.
+  Its instance type 'HelmetProvider' is not a valid JSX element.
+    Property 'refs' is missing in type 'HelmetProvider' but required in type 'ElementClass'.
+src/App.tsx(27,14): error TS2786: 'SnackbarProvider' cannot be used as a JSX component.
+  Its instance type 'SnackbarProvider' is not a valid JSX element.
+    Property 'refs' is missing in type 'SnackbarProvider' but required in type 'ElementClass'.
+src/components/auth/TwoFactorSetup.tsx(73,19): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string | null>'.
+  Type 'undefined' is not assignable to type 'SetStateAction<string | null>'.
+src/components/auth/TwoFactorSetup.tsx(74,19): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string | null>'.
+src/components/common/AnimatedButton.tsx(214,5): error TS2769: No overload matches this call.
+  Overload 3 of 3, '(props: DefaultComponentProps<ExtendButtonBaseTypeMap<ButtonTypeMap<{}, "button">>>): Element | null', gave the following error.
+    Type 'string | SystemCssProperties<Theme> | CSSSelectorObjectOrCssVariables<Theme> | readonly (Position | readonly NonNullable<...>[] | null | undefined)[] | { ...; } | ((theme: Theme) => ResponsiveStyleValue<...>) | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 3 of 3, '(props: DefaultComponentProps<ExtendButtonBaseTypeMap<ButtonTypeMap<{}, "button">>>): Element | null', gave the following error.
+    Type 'string | SystemCssProperties<Theme> | CSSSelectorObjectOrCssVariables<Theme> | readonly (readonly string[] | Transition<string & {}> | null | undefined)[] | { ...; } | ((theme: Theme) => ResponsiveStyleValue<...>) | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+src/components/common/AnimatedFeedback.tsx(160,7): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type '(string & {}) | "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset" | "none" | "block" | "inline" | "run-in" | "-ms-flexbox" | "-ms-grid" | "-webkit-flex" | ... 33 more ... | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type '(string & {}) | "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset" | "center" | "normal" | SystemCssProperties<Theme> | ... 12 more ... | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type 'string | SystemCssProperties<Theme> | CSSSelectorObjectOrCssVariables<Theme> | readonly (Color | readonly string[] | null | undefined)[] | { ...; } | ((theme: Theme) => ResponsiveStyleValue<...>) | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+src/components/common/AnimatedFeedback.tsx(183,5): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type '(string & {}) | "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset" | "none" | "block" | "inline" | "run-in" | "-ms-flexbox" | "-ms-grid" | "-webkit-flex" | ... 33 more ... | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type '(string & {}) | "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset" | "center" | "normal" | SystemCssProperties<Theme> | ... 12 more ... | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type 'string | number | SystemCssProperties<Theme> | CSSSelectorObjectOrCssVariables<Theme> | readonly (Padding<string | number> | readonly NonNullable<...>[] | null | undefined)[] | { ...; } | ((theme: Theme) => ResponsiveStyleValue<...>) | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type 'string | number | SystemCssProperties<Theme> | CSSSelectorObjectOrCssVariables<Theme> | readonly (BorderRadius<string | number> | readonly NonNullable<...>[] | null | undefined)[] | { ...; } | ((theme: Theme) => ResponsiveStyleValue<...>) | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type 'string | SystemCssProperties<Theme> | CSSSelectorObjectOrCssVariables<Theme> | readonly (readonly string[] | BackgroundColor | null | undefined)[] | { ...; } | ((theme: Theme) => ResponsiveStyleValue<...>) | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type 'number | (string & {}) | "blue" | "purple" | "gray" | "medium" | "-moz-initial" | "inherit" | "initial" | "revert" | "revert-layer" | "unset" | "thick" | "thin" | "dashed" | "dotted" | ... 189 more ... | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+  Overload 2 of 2, '(props: DefaultComponentProps<BoxTypeMap<{}, "div", Theme>>): Element | null', gave the following error.
+    Type 'string | SystemCssProperties<Theme> | CSSSelectorObjectOrCssVariables<Theme> | readonly (Color | readonly string[] | null | undefined)[] | { ...; } | ((theme: Theme) => ResponsiveStyleValue<...>) | null' is not assignable to type 'SystemStyleObject<Theme> | CssVariableType | ((theme: Theme) => string | number | SystemStyleObject<Theme>)'.
+src/components/common/ApiVersionWarningBanner.tsx(43,44): error TS2339: Property 'checkApiVersion' does not exist on type '{ get: <T>(url: string, config?: AxiosRequestConfig<any> | undefined, cacheOptions?: CacheOptions | undefined) => Promise<T>; post: <T>(url: string, data?: any, config?: AxiosRequestConfig<...> | undefined) => Promise<...>; put: <T>(url: string, data?: any, config?: AxiosRequestConfig<...> | undefined) => Promise<.....'.
+src/components/common/ApiVersionWarningBanner.tsx(47,38): error TS2339: Property 'getMigrationGuide' does not exist on type '{ get: <T>(url: string, config?: AxiosRequestConfig<any> | undefined, cacheOptions?: CacheOptions | undefined) => Promise<T>; post: <T>(url: string, data?: any, config?: AxiosRequestConfig<...> | undefined) => Promise<...>; put: <T>(url: string, data?: any, config?: AxiosRequestConfig<...> | undefined) => Promise<.....'.
+src/components/common/ApiVersionWarningBanner.tsx(47,67): error TS2339: Property 'getVersion' does not exist on type '{ get: <T>(url: string, config?: AxiosRequestConfig<any> | undefined, cacheOptions?: CacheOptions | undefined) => Promise<T>; post: <T>(url: string, data?: any, config?: AxiosRequestConfig<...> | undefined) => Promise<...>; put: <T>(url: string, data?: any, config?: AxiosRequestConfig<...> | undefined) => Promise<.....'.
+src/components/common/ApiVersionWarningBanner.tsx(53,56): error TS2304: Cannot find name 'error'.
+src/components/common/DataVisualization.tsx(319,36): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"bar", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"bar", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"bar", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"bar", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"bar", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+                Type '{ x: number; y: number; r: number; }' is not assignable to type 'number'.
+src/components/common/DataVisualization.tsx(319,53): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"bar"> & ElementChartOptions<"bar"> & PluginChartOptions<"bar"> & DatasetChartOptions<"bar"> & ScaleChartOptions<...> & BarControllerChartOptions> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"bar"> & ElementChartOptions<"bar"> & PluginChartOptions<"bar"> & DatasetChartOptions<"bar"> & ScaleChartOptions<...> & BarControllerChartOptions>'.
+    The types of 'plugins.title.font' are incompatible between these types.
+      Type '{ size: number; weight: string; }' is not assignable to type '((ctx: ScriptableChartContext, options: AnyObject) => Partial<FontSpec> | undefined) | _DeepPartialObject<Partial<FontSpec>> | _DeepPartialObject<...> | undefined'.
+        Type '{ size: number; weight: string; }' is not assignable to type '_DeepPartialObject<ScriptableOptions<Partial<FontSpec>, ScriptableChartContext>>'.
+          Types of property 'weight' are incompatible.
+            Type 'string' is not assignable to type 'number | "bold" | "normal" | "bolder" | "lighter" | ((ctx: ScriptableChartContext, options: AnyObject) => number | "bold" | "normal" | "bolder" | "lighter" | null | undefined) | null | undefined'.
+src/components/common/DataVisualization.tsx(321,37): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"line", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"line", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"line", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"line", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"line", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+src/components/common/DataVisualization.tsx(321,54): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"line"> & ElementChartOptions<"line"> & PluginChartOptions<"line"> & DatasetChartOptions<"line"> & ScaleChartOptions<...> & LineControllerChartOptions> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"line"> & ElementChartOptions<"line"> & PluginChartOptions<"line"> & DatasetChartOptions<"line"> & ScaleChartOptions<...> & LineControllerChartOptions>'.
+    The types of 'plugins.title' are incompatible between these types.
+      Type '{ display: boolean; text: string; font: { size: number; weight: string; }; }' is not assignable to type '_DeepPartialObject<TitleOptions>'.
+src/components/common/DataVisualization.tsx(323,36): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"pie", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"pie", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"pie", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"pie", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"pie", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+src/components/common/DataVisualization.tsx(323,53): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"pie"> & ElementChartOptions<"pie"> & PluginChartOptions<"pie"> & DatasetChartOptions<"pie"> & ScaleChartOptions<...> & DoughnutControllerChartOptions> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"pie"> & ElementChartOptions<"pie"> & PluginChartOptions<"pie"> & DatasetChartOptions<"pie"> & ScaleChartOptions<...> & DoughnutControllerChartOptions>'.
+    The types of 'plugins.title' are incompatible between these types.
+      Type '{ display: boolean; text: string; font: { size: number; weight: string; }; }' is not assignable to type '_DeepPartialObject<TitleOptions>'.
+src/components/common/DataVisualization.tsx(325,41): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"doughnut", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"doughnut", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"doughnut", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"doughnut", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"doughnut", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+src/components/common/DataVisualization.tsx(325,58): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"doughnut"> & ElementChartOptions<"doughnut"> & PluginChartOptions<"doughnut"> & DatasetChartOptions<"doughnut"> & ScaleChartOptions<...> & DoughnutControllerChartOptions> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"doughnut"> & ElementChartOptions<"doughnut"> & PluginChartOptions<"doughnut"> & DatasetChartOptions<"doughnut"> & ScaleChartOptions<...> & DoughnutControllerChartOptions>'.
+    The types of 'plugins.title' are incompatible between these types.
+      Type '{ display: boolean; text: string; font: { size: number; weight: string; }; }' is not assignable to type '_DeepPartialObject<TitleOptions>'.
+src/components/common/DataVisualization.tsx(327,38): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"radar", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"radar", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"radar", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"radar", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"radar", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+src/components/common/DataVisualization.tsx(327,55): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"radar"> & ElementChartOptions<"radar"> & PluginChartOptions<"radar"> & DatasetChartOptions<"radar"> & ScaleChartOptions<...> & LineControllerChartOptions> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"radar"> & ElementChartOptions<"radar"> & PluginChartOptions<"radar"> & DatasetChartOptions<"radar"> & ScaleChartOptions<...> & LineControllerChartOptions>'.
+    The types of 'plugins.title' are incompatible between these types.
+      Type '{ display: boolean; text: string; font: { size: number; weight: string; }; }' is not assignable to type '_DeepPartialObject<TitleOptions>'.
+src/components/common/DataVisualization.tsx(329,42): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"polarArea", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"polarArea", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"polarArea", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"polarArea", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"polarArea", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+src/components/common/DataVisualization.tsx(329,59): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"polarArea"> & ElementChartOptions<"polarArea"> & PluginChartOptions<"polarArea"> & DatasetChartOptions<...> & ScaleChartOptions<...> & PolarAreaControllerChartOptions> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"polarArea"> & ElementChartOptions<"polarArea"> & PluginChartOptions<"polarArea"> & DatasetChartOptions<...> & ScaleChartOptions<...> & PolarAreaControllerChartOptions>'.
+    The types of 'plugins.title' are incompatible between these types.
+      Type '{ display: boolean; text: string; font: { size: number; weight: string; }; }' is not assignable to type '_DeepPartialObject<TitleOptions>'.
+src/components/common/DataVisualization.tsx(331,39): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"bubble", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"bubble", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"bubble", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"bubble", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"bubble", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+src/components/common/DataVisualization.tsx(331,56): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"bubble"> & ElementChartOptions<"bubble"> & PluginChartOptions<"bubble"> & DatasetChartOptions<"bubble"> & ScaleChartOptions<...>> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"bubble"> & ElementChartOptions<"bubble"> & PluginChartOptions<"bubble"> & DatasetChartOptions<"bubble"> & ScaleChartOptions<...>>'.
+    The types of 'plugins.title' are incompatible between these types.
+      Type '{ display: boolean; text: string; font: { size: number; weight: string; }; }' is not assignable to type '_DeepPartialObject<TitleOptions>'.
+src/components/common/DataVisualization.tsx(333,40): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"scatter", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"scatter", number[], string>'.
+    Types of property 'datasets' are incompatible.
+      Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]' is not assignable to type 'ChartDataset<"scatter", number[]>[]'.
+        Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDataset<"scatter", number[]>'.
+          Type '{ label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }' is not assignable to type 'ChartDatasetProperties<"scatter", number[]>'.
+            Types of property 'data' are incompatible.
+              Type '{ x: number; y: number; r: number; }[]' is not assignable to type 'number[]'.
+src/components/common/DataVisualization.tsx(333,57): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"scatter"> & ElementChartOptions<"scatter"> & PluginChartOptions<"scatter"> & DatasetChartOptions<"scatter"> & ScaleChartOptions<...> & LineControllerChartOptions> | undefined'.
+  Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"scatter"> & ElementChartOptions<"scatter"> & PluginChartOptions<"scatter"> & DatasetChartOptions<"scatter"> & ScaleChartOptions<...> & LineControllerChartOptions>'.
+    The types of 'plugins.title' are incompatible between these types.
+      Type '{ display: boolean; text: string; font: { size: number; weight: string; }; }' is not assignable to type '_DeepPartialObject<TitleOptions>'.
+src/components/common/DataVisualization.tsx(335,36): error TS2322: Type '{ labels: string[]; datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string; borderWidth: number; }[]; } | { datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; } | { ...; }' is not assignable to type 'ChartData<"bar", number[], string>'.
+  Type '{ datasets: { label: string; data: { x: number; y: number; r: number; }[]; backgroundColor: string; }[]; labels?: undefined; }' is not assignable to type 'ChartData<"bar", number[], string>'.
+src/components/common/DataVisualization.tsx(335,53): error TS2322: Type '{ responsive: boolean; maintainAspectRatio: boolean; animation: { duration: number; }; plugins: { legend: { display: boolean; position: "top"; }; title: { display: boolean; text: string; font: { size: number; weight: string; }; }; tooltip: { ...; }; }; } | { ...; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<"bar"> & ElementChartOptions<"bar"> & PluginChartOptions<"bar"> & DatasetChartOptions<"bar"> & ScaleChartOptions<...> & BarControllerChartOptions> | undefined'.
+src/components/common/DataVisualization.tsx(394,21): error TS2322: Type 'ReactNode' is not assignable to type 'ReactElement<any, any>'.
+  Type 'undefined' is not assignable to type 'ReactElement<any, any>'.
+src/components/common/FeedbackForm.tsx(147,51): error TS2304: Cannot find name 'err'.
+src/components/common/FileUploadModal.tsx(362,21): error TS2304: Cannot find name 'uploadInterval'.
+src/components/common/FilterModal.tsx(163,15): error TS2345: Argument of type '(prev: FilterValues) => { [x: string]: FilterOptionValue | (Date | null)[]; }' is not assignable to parameter of type 'SetStateAction<FilterValues>'.
+  Type '(prev: FilterValues) => { [x: string]: FilterOptionValue | (Date | null)[]; }' is not assignable to type '(prevState: FilterValues) => FilterValues'.
+    Type '{ [x: string]: FilterOptionValue | (Date | null)[]; }' is not assignable to type 'FilterValues'.
+      'string' index signatures are incompatible.
+        Type 'FilterOptionValue | (Date | null)[]' is not assignable to type 'FilterOptionValue'.
+          Type '(Date | null)[]' is not assignable to type 'FilterOptionValue'.
+            Type '(Date | null)[]' is not assignable to type 'string[]'.
+              Type 'Date | null' is not assignable to type 'string'.
+                Type 'null' is not assignable to type 'string'.
+src/components/common/FilterModal.tsx(164,28): error TS2352: Conversion of type 'string | number | boolean | string[] | Date | null' to type '(Date | null)[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Date' is missing the following properties from type '(Date | null)[]': length, pop, push, concat, and 29 more.
+src/components/common/FilterModal.tsx(184,15): error TS2345: Argument of type '(prev: FilterValues) => { [x: string]: number[] | FilterOptionValue; }' is not assignable to parameter of type 'SetStateAction<FilterValues>'.
+  Type '(prev: FilterValues) => { [x: string]: number[] | FilterOptionValue; }' is not assignable to type '(prevState: FilterValues) => FilterValues'.
+    Type '{ [x: string]: number[] | FilterOptionValue; }' is not assignable to type 'FilterValues'.
+      'string' index signatures are incompatible.
+        Type 'number[] | FilterOptionValue' is not assignable to type 'FilterOptionValue'.
+          Type 'number[]' is not assignable to type 'FilterOptionValue'.
+            Type 'number[]' is not assignable to type 'string[]'.
+              Type 'number' is not assignable to type 'string'.
+src/components/common/FilterModal.tsx(323,53): error TS2345: Argument of type 'string | number | true | string[] | Date' is not assignable to parameter of type 'string | number | string[]'.
+  Type 'boolean' is not assignable to type 'string | number | string[]'.
+src/components/common/FilterModal.tsx(399,28): error TS2352: Conversion of type 'string | number | boolean | string[] | Date | null | undefined' to type '(Date | null)[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Date' is not comparable to type '(Date | null)[]'.
+src/components/common/GenerateReportButton.tsx(20,10): error TS2614: Module '"../../services/inspection.service"' has no exported member 'generateInspectionReport'. Did you mean to use 'import generateInspectionReport from "../../services/inspection.service"' instead?
+src/components/common/GenerateReportButton.tsx(123,49): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/components/common/LoadingButton.tsx(50,50): error TS2322: Type 'ReactNode' is not assignable to type 'ReactI18NextChildren | Iterable<ReactI18NextChildren>'.
+  Type 'bigint' is not assignable to type 'ReactI18NextChildren | Iterable<ReactI18NextChildren>'.
+src/components/common/OfflineIndicator.tsx(102,58): error TS2304: Cannot find name 'error'.
+src/components/common/OptimizedImage.tsx(111,55): error TS2304: Cannot find name 'error'.
+src/components/common/ResponsiveCard.tsx(15,11): error TS2430: Interface 'ResponsiveCardProps' incorrectly extends interface 'CardOwnProps & CommonProps & Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | ... 7 more ... | "raised"> & { ...; }'.
+  Type 'ResponsiveCardProps' is not assignable to type 'Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | "children" | "className" | ... 5 more ... | "raised">'.
+    Types of property 'title' are incompatible.
+      Type 'ReactNode' is not assignable to type 'string | undefined'.
+        Type 'null' is not assignable to type 'string | undefined'.
+src/components/common/ResponsiveTable.tsx(235,29): error TS2322: Type '{ children: Element; component: OverridableComponent<PaperTypeMap<{}, "div">>; maxHeight: string | number | undefined; }' is not assignable to type 'IntrinsicAttributes & TableContainerOwnProps & CommonProps & Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | ... 3 more ... | "sx"> & MUIStyledCommonProps<...> & { ...; }'.
+  Property 'component' does not exist on type 'IntrinsicAttributes & TableContainerOwnProps & CommonProps & Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | ... 3 more ... | "sx"> & MUIStyledCommonProps<...> & { ...; }'.
+src/components/common/ResponsiveTable.tsx(402,29): error TS2322: Type '{ children: Element; component: any; maxHeight: string | number | undefined; }' is not assignable to type 'IntrinsicAttributes & TableContainerOwnProps & CommonProps & Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | ... 3 more ... | "sx"> & MUIStyledCommonProps<...> & { ...; }'.
+  Property 'component' does not exist on type 'IntrinsicAttributes & TableContainerOwnProps & CommonProps & Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | ... 3 more ... | "sx"> & MUIStyledCommonProps<...> & { ...; }'.
+src/components/common/ScreenReaderCompatibility.tsx(38,3): error TS2305: Module '"@mui/icons-material"' has no exported member 'AriaHidden'.
+src/components/common/SearchModal.tsx(35,26): error TS7016: Could not find a declaration file for module 'lodash'. '/Users/tannercoker/AeroSuite-main/node_modules/lodash/lodash.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lodash` if it exists or add a new declaration (.d.ts) file containing `declare module 'lodash';`
+src/components/common/ThemeSettings.tsx(174,14): error TS2304: Cannot find name 'ColorLens'.
+src/components/customers/ActivityTimelineItem.tsx(157,21): error TS2339: Property 'user' does not exist on type 'CustomerActivity'.
+src/components/customers/ActivityTimelineItem.tsx(161,31): error TS2339: Property 'user' does not exist on type 'CustomerActivity'.
+src/components/customers/ActivityTimelineItem.tsx(166,21): error TS2339: Property 'relatedItems' does not exist on type 'CustomerActivity'.
+src/components/customers/ActivityTimelineItem.tsx(166,46): error TS2339: Property 'relatedItems' does not exist on type 'CustomerActivity'.
+src/components/customers/ActivityTimelineItem.tsx(166,64): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/components/customers/ActivityTimelineItem.tsx(166,70): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/dashboard/DashboardCustomizer.tsx(45,55): error TS7016: Could not find a declaration file for module 'react-beautiful-dnd'. '/Users/tannercoker/AeroSuite-main/node_modules/react-beautiful-dnd/dist/react-beautiful-dnd.cjs.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-beautiful-dnd` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-beautiful-dnd';`
+src/components/dashboard/DashboardCustomizer.tsx(269,15): error TS7006: Parameter 'provided' implicitly has an 'any' type.
+src/components/dashboard/DashboardCustomizer.tsx(282,23): error TS7006: Parameter 'provided' implicitly has an 'any' type.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(116,9): error TS2322: Type '"critical"' is not assignable to type 'null'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(117,33): error TS2345: Argument of type '{ timestamp: string; value: number; isAnomaly: boolean; severity: null; }' is not assignable to parameter of type 'never'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(122,9): error TS2322: Type '"high"' is not assignable to type 'null'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(123,29): error TS2345: Argument of type '{ timestamp: string; value: number; isAnomaly: boolean; severity: null; }' is not assignable to parameter of type 'never'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(128,9): error TS2322: Type '"medium"' is not assignable to type 'null'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(129,31): error TS2345: Argument of type '{ timestamp: string; value: number; isAnomaly: boolean; severity: null; }' is not assignable to parameter of type 'never'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(134,9): error TS2322: Type '"low"' is not assignable to type 'null'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(135,28): error TS2345: Argument of type '{ timestamp: string; value: number; isAnomaly: boolean; severity: null; }' is not assignable to parameter of type 'never'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(250,17): error TS2304: Cannot find name 'InfoOutlined'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(318,14): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+    Property 'refs' is missing in type 'XAxis' but required in type 'ElementClass'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(325,14): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+    Property 'refs' is missing in type 'YAxis' but required in type 'ElementClass'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(326,14): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+    Property 'refs' is missing in type 'Tooltip<ValueType, NameType>' but required in type 'ElementClass'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(327,14): error TS2786: 'Line' cannot be used as a JSX component.
+  Its instance type 'Line' is not a valid JSX element.
+    Property 'refs' is missing in type 'Line' but required in type 'ElementClass'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(331,15): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: Props): Line', gave the following error.
+    Type '(props: any) => JSX.Element | null' is not assignable to type 'LineDot | undefined'.
+      Type '(props: any) => JSX.Element | null' is not assignable to type '(props: any) => ReactElement<SVGElement, string | JSXElementConstructor<any>>'.
+        Type 'Element | null' is not assignable to type 'ReactElement<SVGElement, string | JSXElementConstructor<any>>'.
+          Type 'null' is not assignable to type 'ReactElement<SVGElement, string | JSXElementConstructor<any>>'.
+  Overload 2 of 2, '(props: Props, context: any): Line', gave the following error.
+    Type '(props: any) => JSX.Element | null' is not assignable to type 'LineDot | undefined'.
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(437,13): error TS2322: Type '(event: React.ChangeEvent<{    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(451,13): error TS2322: Type '(event: React.ChangeEvent<{    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/components/dashboard/widgets/AnomalyDetectionWidget.tsx(518,21): error TS2322: Type '(event: React.ChangeEvent<{    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'event' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<{ value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<{ value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/components/dashboard/widgets/CalendarWidget.tsx(161,28): error TS7006: Parameter 'eventInfo' implicitly has an 'any' type.
+src/components/dashboard/widgets/CustomWidgetBuilder.tsx(309,17): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<"small" | "medium" | "large">, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<"small" | "medium" | "large">' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: "small" | "medium" | "large"; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/components/dashboard/widgets/CustomWidgetBuilder.tsx(328,17): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/components/dashboard/widgets/CustomWidgetBuilder.tsx(361,17): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(60,18): error TS2345: Argument of type 'Object' is not assignable to parameter of type 'SetStateAction<null>'.
+  The 'Object' type is assignable to very few other types. Did you mean to use the 'any' type instead?
+    Type 'Object' provides no match for the signature '(prevState: null): null'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(61,27): error TS2345: Argument of type 'Object' is not assignable to parameter of type 'SetStateAction<null>'.
+  The 'Object' type is assignable to very few other types. Did you mean to use the 'any' type instead?
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(65,16): error TS2345: Argument of type '"Failed to load performance metrics. Please try again."' is not assignable to parameter of type 'SetStateAction<null>'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(88,26): error TS2345: Argument of type 'Timer' is not assignable to parameter of type 'SetStateAction<null>'.
+  Type 'Timer' provides no match for the signature '(prevState: null): null'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(102,28): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(102,35): error TS7006: Parameter 'newValue' implicitly has an 'any' type.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(129,40): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(131,27): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(140,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(143,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(154,44): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(156,31): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(163,29): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(165,33): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(182,40): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(184,27): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(193,28): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(196,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(196,76): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(207,44): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(209,31): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(216,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(218,33): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(235,28): error TS2339: Property 'requests' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(265,28): error TS2339: Property 'responses' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(304,40): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(306,27): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(315,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(318,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(329,44): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(331,31): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(338,29): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(340,33): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(357,40): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(359,27): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(368,28): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(371,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(371,76): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(382,44): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(384,31): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(391,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(393,33): error TS2339: Property 'memory' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(410,28): error TS2339: Property 'requests' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(440,28): error TS2339: Property 'responses' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(501,19): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(502,42): error TS2339: Property 'requests' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(515,19): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(516,42): error TS2339: Property 'requests' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(617,21): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(638,22): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(655,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(656,38): error TS2339: Property 'system' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(669,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(670,38): error TS2339: Property 'system' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(683,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(684,38): error TS2339: Property 'system' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(707,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(708,38): error TS2339: Property 'requests' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(721,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; horizontal: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(722,38): error TS2339: Property 'requests' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(736,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(737,38): error TS2339: Property 'requests' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(760,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(761,38): error TS2339: Property 'errors' does not exist on type 'never'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(784,15): error TS2322: Type '{ type: string; data: any; height: number; options: { showLegend: boolean; showGrid: boolean; }; }' is not assignable to type 'IntrinsicAttributes & DataVisualizationProps'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & DataVisualizationProps'.
+src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx(785,38): error TS2339: Property 'database' does not exist on type 'never'.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(277,11): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: { component: ElementType<any, keyof IntrinsicElements>; } & TabsOwnProps & CommonProps & Omit<any, "style" | ... 22 more ... | "visibleScrollbar">): Element | null', gave the following error.
+    Property 'component' is missing in type '{ children: Element[]; value: number; onChange: (event: SyntheticEvent<Element, Event>, newValue: number) => void; "aria-label": string; variant: "scrollable"; scrollButtons: "auto"; size: string; }' but required in type '{ component: ElementType<any, keyof IntrinsicElements>; }'.
+  Overload 2 of 2, '(props: DefaultComponentProps<TabsTypeMap<{}, "div">>): Element | null', gave the following error.
+    Type '{ children: Element[]; value: number; onChange: (event: SyntheticEvent<Element, Event>, newValue: number) => void; "aria-label": string; variant: "scrollable"; scrollButtons: "auto"; size: string; }' is not assignable to type 'IntrinsicAttributes & TabsOwnProps & CommonProps & Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | ... 22 more ... | "visibleScrollbar">'.
+      Property 'size' does not exist on type 'IntrinsicAttributes & TabsOwnProps & CommonProps & Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "style" | ... 22 more ... | "visibleScrollbar">'.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(302,22): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(303,22): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(304,22): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(305,22): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+    Property 'refs' is missing in type 'Legend' but required in type 'ElementClass'.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(306,22): error TS2786: 'Line' cannot be used as a JSX component.
+  Its instance type 'Line' is not a valid JSX element.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(323,22): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+    Property 'refs' is missing in type 'Pie' but required in type 'ElementClass'.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(337,22): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/components/dashboard/widgets/QualityMetricsWidget.tsx(338,22): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(149,20): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(150,20): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(151,20): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(152,20): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(153,20): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+    Property 'refs' is missing in type 'Bar' but required in type 'ElementClass'.
+src/components/inspections/InspectionStatsDashboard.tsx(154,20): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(169,20): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(183,20): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(198,20): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+src/components/inspections/InspectionStatsDashboard.tsx(212,20): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/components/monitoring/PerformanceBudgetsDashboard.tsx(32,65): error TS2307: Cannot find module '../../services/performanceMonitoring.service' or its corresponding type declarations.
+src/components/monitoring/PerformanceRegressionsDashboard.tsx(36,42): error TS2307: Cannot find module '../../services/performanceMonitoring.service' or its corresponding type declarations.
+src/components/navigation/Header.tsx(370,20): error TS2339: Property 'avatar' does not exist on type 'User'.
+src/components/navigation/Header.tsx(372,27): error TS2339: Property 'avatar' does not exist on type 'User'.
+src/components/navigation/Header.tsx(373,27): error TS2339: Property 'name' does not exist on type 'User'.
+src/components/navigation/Header.tsx(400,22): error TS2339: Property 'name' does not exist on type 'User'.
+src/components/notifications/NotificationCenter.tsx(93,14): error TS2345: Argument of type 'AsyncThunkAction<any, void, AsyncThunkConfig>' is not assignable to parameter of type 'UnknownAction'.
+src/components/notifications/NotificationCenter.tsx(96,49): error TS2339: Property 'getItem' does not exist on type '{ init: () => Promise<void>; getAll: <T>(storeName: string) => Promise<T[]>; getById: <T>(storeName: string, id: string) => Promise<T | undefined>; put: <T extends { ...; }>(storeName: string, item: T) => Promise<...>; ... 11 more ...; deleteDatabase: () => Promise<...>; }'.
+src/components/notifications/NotificationCenter.tsx(101,66): error TS2552: Cannot find name 'err'. Did you mean '_err'?
+src/components/notifications/NotificationCenter.tsx(161,24): error TS2339: Property 'setItem' does not exist on type '{ init: () => Promise<void>; getAll: <T>(storeName: string) => Promise<T[]>; getById: <T>(storeName: string, id: string) => Promise<T | undefined>; put: <T extends { ...; }>(storeName: string, item: T) => Promise<...>; ... 11 more ...; deleteDatabase: () => Promise<...>; }'.
+src/components/notifications/NotificationCenter.tsx(167,14): error TS2345: Argument of type 'AsyncThunkAction<any, void, AsyncThunkConfig>' is not assignable to parameter of type 'UnknownAction'.
+src/components/notifications/NotificationCenter.tsx(198,16): error TS2345: Argument of type 'AsyncThunkAction<any, string, AsyncThunkConfig>' is not assignable to parameter of type 'UnknownAction'.
+src/components/notifications/NotificationCenter.tsx(216,14): error TS2345: Argument of type 'AsyncThunkAction<any, void, AsyncThunkConfig>' is not assignable to parameter of type 'UnknownAction'.
+src/components/notifications/NotificationCenter.tsx(480,39): error TS2345: Argument of type 'AsyncThunkAction<any, void, AsyncThunkConfig>' is not assignable to parameter of type 'UnknownAction'.
+src/components/notifications/RealtimeNotifications.tsx(79,65): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/components/onboarding/OnboardingFlow.tsx(86,24): error TS2339: Property 'phoneNumber' does not exist on type 'User'.
+src/components/onboarding/OnboardingFlow.tsx(87,21): error TS2339: Property 'jobTitle' does not exist on type 'User'.
+src/components/onboarding/OnboardingFlow.tsx(89,25): error TS2339: Property 'profileImage' does not exist on type 'User'.
+src/components/payments/PaymentButton.tsx(65,51): error TS2304: Cannot find name 'err'.
+src/components/payments/PaymentButton.tsx(67,17): error TS2304: Cannot find name 'err'.
+src/components/payments/PaymentDetails.tsx(48,56): error TS2304: Cannot find name 'err'.
+src/components/payments/PaymentDetails.tsx(74,49): error TS2304: Cannot find name 'err'.
+src/components/payments/PaymentHistory.tsx(60,56): error TS2304: Cannot find name 'err'.
+src/components/suppliers/SupplierImportExport.tsx(211,19): error TS2304: Cannot find name 'err'.
+src/components/ui-library/atoms/index.ts(7,33): error TS2307: Cannot find module './Icon' or its corresponding type declarations.
+src/components/ui-library/atoms/index.ts(8,34): error TS2307: Cannot find module './Badge' or its corresponding type declarations.
+src/components/ui-library/atoms/index.ts(9,36): error TS2307: Cannot find module './Spinner' or its corresponding type declarations.
+src/components/ui-library/atoms/index.ts(10,37): error TS2307: Cannot find module './Checkbox' or its corresponding type declarations.
+src/components/ui-library/atoms/index.ts(11,34): error TS2307: Cannot find module './Radio' or its corresponding type declarations.
+src/components/ui-library/atoms/index.ts(12,35): error TS2307: Cannot find module './Switch' or its corresponding type declarations.
+src/components/ui-library/atoms/index.ts(13,36): error TS2307: Cannot find module './Tooltip' or its corresponding type declarations.
+src/components/ui-library/index.ts(11,1): error TS2308: Module './molecules' has already exported a member named 'DataTable'. Consider explicitly re-exporting to resolve the ambiguity.
+src/components/ui-library/index.ts(11,1): error TS2308: Module './molecules' has already exported a member named 'FileUploader'. Consider explicitly re-exporting to resolve the ambiguity.
+src/components/ui-library/index.ts(11,1): error TS2308: Module './molecules' has already exported a member named 'FilterPanel'. Consider explicitly re-exporting to resolve the ambiguity.
+src/components/ui-library/molecules/charts/LineChart.tsx(18,10): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/components/ui-library/molecules/charts/LineChart.tsx(19,10): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/components/ui-library/molecules/charts/LineChart.tsx(20,10): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/components/ui-library/molecules/charts/LineChart.tsx(21,10): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/components/ui-library/molecules/charts/LineChart.tsx(22,10): error TS2786: 'Line' cannot be used as a JSX component.
+  Its instance type 'Line' is not a valid JSX element.
+src/components/ui-library/molecules/forms/AutosaveForm.tsx(95,47): error TS2304: Cannot find name 'error'.
+src/components/ui-library/molecules/LazyLoadedComponent.tsx(137,5): error TS7022: 'placeholderHeight' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+src/components/ui-library/molecules/LazyLoadedComponent.tsx(138,5): error TS7022: 'fallback' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+src/components/ui-library/molecules/LazyLoadedComponent.tsx(142,5): error TS2448: Block-scoped variable 'placeholderHeight' used before its declaration.
+src/components/ui-library/molecules/LazyLoadedComponent.tsx(143,5): error TS2448: Block-scoped variable 'fallback' used before its declaration.
+src/components/ui-library/molecules/ProgressiveTable.tsx(225,25): error TS2554: Expected 0 arguments, but got 1.
+src/components/ui-library/organisms/Calendar.tsx(32,8): error TS2786: 'FullCalendar' cannot be used as a JSX component.
+  Its instance type 'FullCalendar' is not a valid JSX element.
+    Property 'refs' is missing in type 'FullCalendar' but required in type 'ElementClass'.
+src/components/ui-library/organisms/ColorContrastAudit.tsx(15,10): error TS2614: Module '"../../../utils/colorContrastChecker"' has no exported member 'getContrastCheckResult'. Did you mean to use 'import getContrastCheckResult from "../../../utils/colorContrastChecker"' instead?
+src/components/ui-library/organisms/ColorContrastAudit.tsx(15,34): error TS2614: Module '"../../../utils/colorContrastChecker"' has no exported member 'ContrastLevel'. Did you mean to use 'import ContrastLevel from "../../../utils/colorContrastChecker"' instead?
+src/components/ui-library/organisms/DataGrid.tsx(16,9): error TS2322: Type '{ loading?: boolean | undefined; style?: CSSProperties | undefined; components?: Partial<GridSlotsComponent> | undefined; className?: string | undefined; ... 108 more ...; disableSelectionOnClick: true; }' is not assignable to type 'IntrinsicAttributes & Omit<Partial<DataGridPropsWithDefaultValues> & DataGridPropsWithComplexDefaultValueBeforeProcessing & DataGridPropsWithoutDefaultValue<...>, DataGridForcedPropsKey> & { ...; } & RefAttributes<...>'.
+  Property 'pageSize' does not exist on type 'IntrinsicAttributes & Omit<Partial<DataGridPropsWithDefaultValues> & DataGridPropsWithComplexDefaultValueBeforeProcessing & DataGridPropsWithoutDefaultValue<...>, DataGridForcedPropsKey> & { ...; } & RefAttributes<...>'.
+src/components/ui-library/organisms/index.ts(5,33): error TS2307: Cannot find module './Form' or its corresponding type declarations.
+src/components/ui-library/organisms/index.ts(6,39): error TS2307: Cannot find module './Navigation' or its corresponding type declarations.
+src/components/ui-library/organisms/index.ts(7,35): error TS2307: Cannot find module './Header' or its corresponding type declarations.
+src/components/ui-library/organisms/index.ts(9,36): error TS2307: Cannot find module './Sidebar' or its corresponding type declarations.
+src/components/ui-library/organisms/index.ts(10,34): error TS2307: Cannot find module './Chart' or its corresponding type declarations.
+src/components/ui-library/organisms/index.ts(11,41): error TS2307: Cannot find module './FileUploader' or its corresponding type declarations.
+src/components/ui-library/organisms/index.ts(12,40): error TS2307: Cannot find module './FilterPanel' or its corresponding type declarations.
+src/components/ui-library/organisms/index.ts(13,35): error TS2307: Cannot find module './Wizard' or its corresponding type declarations.
+src/components/ui-library/organisms/KanbanBoard.tsx(5,67): error TS7016: Could not find a declaration file for module 'react-beautiful-dnd'. '/Users/tannercoker/AeroSuite-main/node_modules/react-beautiful-dnd/dist/react-beautiful-dnd.cjs.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-beautiful-dnd` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-beautiful-dnd';`
+src/components/ui-library/organisms/KanbanBoard.tsx(29,15): error TS7006: Parameter 'provided' implicitly has an 'any' type.
+src/components/ui-library/organisms/KanbanBoard.tsx(39,23): error TS7006: Parameter 'provided' implicitly has an 'any' type.
+src/components/ui-library/pages/index.ts(4,38): error TS2307: Cannot find module './LoginPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(5,41): error TS2307: Cannot find module './RegisterPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(6,42): error TS2307: Cannot find module './DashboardPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(7,41): error TS2307: Cannot find module './SettingsPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(8,40): error TS2307: Cannot find module './ProfilePage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(9,41): error TS2307: Cannot find module './NotFoundPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(10,38): error TS2307: Cannot find module './ErrorPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(11,40): error TS2307: Cannot find module './ListingPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(12,39): error TS2307: Cannot find module './DetailPage' or its corresponding type declarations.
+src/components/ui-library/pages/index.ts(13,37): error TS2307: Cannot find module './FormPage' or its corresponding type declarations.
+src/components/ui-library/patterns/HOC.tsx(141,18): error TS2304: Cannot find name 'err'.
+src/components/ui-library/patterns/HOC.tsx(141,41): error TS2304: Cannot find name 'err'.
+src/components/ui-library/patterns/RenderProps.tsx(111,21): error TS2304: Cannot find name 'err'.
+src/components/ui-library/patterns/RenderProps.tsx(111,44): error TS2304: Cannot find name 'err'.
+src/components/ui-library/templates/index.ts(5,39): error TS2307: Cannot find module './AuthLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(6,43): error TS2307: Cannot find module './SettingsLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(7,41): error TS2307: Cannot find module './ReportLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(8,41): error TS2307: Cannot find module './DetailLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(9,39): error TS2307: Cannot find module './ListLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(10,39): error TS2307: Cannot find module './FormLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(11,40): error TS2307: Cannot find module './SplitLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(12,44): error TS2307: Cannot find module './FullWidthLayout' or its corresponding type declarations.
+src/components/ui-library/templates/index.ts(13,40): error TS2307: Cannot find module './PrintLayout' or its corresponding type declarations.
+src/hooks/useBatchRequests.ts(45,21): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(45,44): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(45,67): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(78,21): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(78,44): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(78,67): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(112,21): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(112,44): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(112,67): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(152,21): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(152,44): error TS2304: Cannot find name 'err'.
+src/hooks/useBatchRequests.ts(152,67): error TS2304: Cannot find name 'err'.
+src/hooks/useCachedData.ts(69,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCachedData.ts(69,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCachedData.ts(70,45): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(49,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(49,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(50,55): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(65,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(65,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(66,54): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(86,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(86,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(87,46): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(108,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(108,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(109,46): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(128,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(128,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(129,46): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(143,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(143,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(144,61): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(164,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(164,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(165,62): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(184,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(184,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(185,67): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(207,16): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(207,39): error TS2304: Cannot find name 'err'.
+src/hooks/useCalendar.ts(208,49): error TS2304: Cannot find name 'err'.
+src/hooks/useClientCache.ts(234,21): error TS2304: Cannot find name 'err'.
+src/hooks/useClientCache.ts(234,44): error TS2304: Cannot find name 'err'.
+src/hooks/useClientCache.ts(234,67): error TS2304: Cannot find name 'err'.
+src/hooks/useClientCache.ts(344,21): error TS2304: Cannot find name 'err'.
+src/hooks/useClientCache.ts(344,44): error TS2304: Cannot find name 'err'.
+src/hooks/useClientCache.ts(344,67): error TS2304: Cannot find name 'err'.
+src/hooks/useClientCache.ts(456,61): error TS2304: Cannot find name 'error'.
+src/hooks/useClientCache.ts(476,57): error TS2304: Cannot find name 'error'.
+src/hooks/useDashboardSync.ts(81,62): error TS2304: Cannot find name 'error'.
+src/hooks/useDashboardSync.ts(115,62): error TS2304: Cannot find name 'error'.
+src/hooks/useDashboardSync.ts(146,63): error TS2304: Cannot find name 'error'.
+src/hooks/useErrorHandling.ts(72,24): error TS2304: Cannot find name 'err'.
+src/hooks/useErrorHandling.ts(87,22): error TS2304: Cannot find name 'err'.
+src/hooks/useFeatureFlag.ts(58,64): error TS2304: Cannot find name 'err'.
+src/hooks/useFeatureFlag.ts(59,16): error TS2304: Cannot find name 'err'.
+src/hooks/useFeatureFlag.ts(59,39): error TS2304: Cannot find name 'err'.
+src/hooks/useFormAutosave.ts(2,26): error TS7016: Could not find a declaration file for module 'lodash'. '/Users/tannercoker/AeroSuite-main/node_modules/lodash/lodash.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lodash` if it exists or add a new declaration (.d.ts) file containing `declare module 'lodash';`
+src/hooks/useFormAutosave.ts(55,58): error TS2304: Cannot find name 'error'.
+src/hooks/useFormAutosave.ts(72,48): error TS2304: Cannot find name 'error'.
+src/hooks/useFormAutosave.ts(100,47): error TS2304: Cannot find name 'error'.
+src/hooks/useInspectionChecklist.ts(2,29): error TS2614: Module '"../services/inspection.service"' has no exported member 'ChecklistItem'. Did you mean to use 'import ChecklistItem from "../services/inspection.service"' instead?
+src/hooks/useInspectionChecklist.ts(34,60): error TS2554: Expected 0-1 arguments, but got 2.
+src/hooks/useInspectionChecklist.ts(65,36): error TS2339: Property 'checklistItems' does not exist on type 'Inspection'.
+src/hooks/useInspectionChecklist.ts(66,33): error TS2339: Property 'checklistItems' does not exist on type 'Inspection'.
+src/hooks/useInspectionChecklist.ts(69,16): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(69,39): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(70,49): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(88,57): error TS2339: Property 'batchUpdateChecklist' does not exist on type 'InspectionService'.
+src/hooks/useInspectionChecklist.ts(98,16): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(98,39): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(99,50): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(155,59): error TS2339: Property 'batchUpdateChecklist' does not exist on type 'InspectionService'.
+src/hooks/useInspectionChecklist.ts(164,18): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(164,41): error TS2304: Cannot find name 'err'.
+src/hooks/useInspectionChecklist.ts(165,57): error TS2304: Cannot find name 'err'.
+src/hooks/useMemoryOptimizer.ts(84,62): error TS2304: Cannot find name 'e'.
+src/hooks/usePerformanceMonitoring.ts(5,8): error TS2307: Cannot find module '../services/performanceMonitoring.service' or its corresponding type declarations.
+src/hooks/useSupplierApi.ts(68,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(70,14): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(80,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(81,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(122,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(183,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(183,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(184,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(185,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(206,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(267,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(267,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(268,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(269,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(290,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(316,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(316,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(317,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(318,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(339,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(368,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(368,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(369,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(370,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(381,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(407,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(407,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(408,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(409,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(430,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(451,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(451,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(452,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(453,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(486,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(508,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(508,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(509,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(510,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(553,13): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(570,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(570,40): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(571,24): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(572,30): error TS2304: Cannot find name 'error'.
+src/hooks/useSupplierApi.ts(613,13): error TS2304: Cannot find name 'error'.
+src/hooks/useWebSocket.ts(29,58): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/hooks/useWebSocket.ts(98,58): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/not-used/PerformanceMetricsDashboard.tsx(33,31): error TS2307: Cannot find module '../../common/DataVisualization' or its corresponding type declarations.
+src/not-used/PerformanceMetricsDashboard.tsx(34,28): error TS2307: Cannot find module '../../../services/metricsService' or its corresponding type declarations.
+src/not-used/PerformanceMetricsDashboard.tsx(64,48): error TS2304: Cannot find name 'err'.
+src/not-used/PerformanceMetricsDashboard.tsx(65,16): error TS2345: Argument of type '"Failed to load performance metrics. Please try again."' is not assignable to parameter of type 'SetStateAction<null>'.
+src/not-used/PerformanceMetricsDashboard.tsx(88,26): error TS2345: Argument of type 'Timer' is not assignable to parameter of type 'SetStateAction<null>'.
+src/not-used/PerformanceMetricsDashboard.tsx(102,28): error TS7006: Parameter 'event' implicitly has an 'any' type.
+src/not-used/PerformanceMetricsDashboard.tsx(102,35): error TS7006: Parameter 'newValue' implicitly has an 'any' type.
+src/not-used/PerformanceMetricsDashboard.tsx(129,40): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(131,27): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(140,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(143,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(154,44): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(156,31): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(163,29): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(165,33): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(182,40): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(184,27): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(193,28): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(196,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(196,76): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(207,44): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(209,31): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(216,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(218,33): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(235,28): error TS2339: Property 'requests' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(265,28): error TS2339: Property 'responses' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(304,40): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(306,27): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(315,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(318,28): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(329,44): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(331,31): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(338,29): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(340,33): error TS2339: Property 'cpu' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(357,40): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(359,27): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(368,28): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(371,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(371,76): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(382,44): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(384,31): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(391,29): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(393,33): error TS2339: Property 'memory' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(410,28): error TS2339: Property 'requests' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(440,28): error TS2339: Property 'responses' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(502,42): error TS2339: Property 'requests' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(516,42): error TS2339: Property 'requests' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(617,21): error TS7006: Parameter 'props' implicitly has an 'any' type.
+src/not-used/PerformanceMetricsDashboard.tsx(638,22): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/not-used/PerformanceMetricsDashboard.tsx(656,38): error TS2339: Property 'system' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(670,38): error TS2339: Property 'system' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(684,38): error TS2339: Property 'system' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(708,38): error TS2339: Property 'requests' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(722,38): error TS2339: Property 'requests' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(737,38): error TS2339: Property 'requests' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(761,38): error TS2339: Property 'errors' does not exist on type 'never'.
+src/not-used/PerformanceMetricsDashboard.tsx(785,38): error TS2339: Property 'database' does not exist on type 'never'.
+src/not-used/Profile.tsx(30,34): error TS2307: Cannot find module '../../components/user' or its corresponding type declarations.
+src/not-used/Profile.tsx(31,35): error TS2307: Cannot find module '../../services/user.service' or its corresponding type declarations.
+src/pages/ai-analysis/AIAnalysisPage.test.tsx(11,11): error TS2786: 'SnackbarProvider' cannot be used as a JSX component.
+  Its instance type 'SnackbarProvider' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(165,28): error TS2304: Cannot find name 'error'.
+src/pages/ai-analysis/AIAnalysisPage.tsx(165,53): error TS2304: Cannot find name 'error'.
+src/pages/ai-analysis/AIAnalysisPage.tsx(204,47): error TS2304: Cannot find name 'error'.
+src/pages/ai-analysis/AIAnalysisPage.tsx(205,12): error TS2304: Cannot find name 'error'.
+src/pages/ai-analysis/AIAnalysisPage.tsx(205,79): error TS2304: Cannot find name 'error'.
+src/pages/ai-analysis/AIAnalysisPage.tsx(305,24): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(306,24): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(307,24): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(308,24): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(309,24): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(314,24): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(315,24): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(316,24): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(317,24): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(318,24): error TS2786: 'Line' cannot be used as a JSX component.
+  Its instance type 'Line' is not a valid JSX element.
+src/pages/ai-analysis/AIAnalysisPage.tsx(507,12): error TS2746: This JSX tag's 'children' prop expects a single child of type 'ReactNode', but multiple children were provided.
+src/pages/ai-analysis/AIAnalysisPage.tsx(507,12): error TS2769: No overload matches this call.
+  This JSX tag's 'children' prop expects a single child of type 'ReactNode', but multiple children were provided.
+  This JSX tag's 'children' prop expects a single child of type 'ReactNode', but multiple children were provided.
+src/pages/auth/Register.tsx(101,11): error TS2345: Argument of type '{ firstName: string; lastName: string; email: string; password: string; companyName: string; role: string; phoneNumber: string; }' is not assignable to parameter of type 'RegisterData'.
+  Object literal may only specify known properties, and 'companyName' does not exist in type 'RegisterData'.
+src/pages/auth/Register.tsx(106,22): error TS2339: Property 'success' does not exist on type 'AuthResponse'.
+src/pages/auth/SecuritySettings.tsx(79,52): error TS2304: Cannot find name 'err'.
+src/pages/BundleOptimizationDemo.tsx(25,10): error TS2614: Module '"../utils/bundleOptimization"' has no exported member 'analyzeModuleSizes'. Did you mean to use 'import analyzeModuleSizes from "../utils/bundleOptimization"' instead?
+src/pages/BundleOptimizationDemo.tsx(25,30): error TS2614: Module '"../utils/bundleOptimization"' has no exported member 'bundleOptimizationGuide'. Did you mean to use 'import bundleOptimizationGuide from "../utils/bundleOptimization"' instead?
+src/pages/BundleOptimizationDemo.tsx(158,34): error TS18046: 'info' is of type 'unknown'.
+src/pages/BundleOptimizationDemo.tsx(161,29): error TS18046: 'info' is of type 'unknown'.
+src/pages/BundleOptimizationDemo.tsx(162,29): error TS18046: 'info' is of type 'unknown'.
+src/pages/BundleOptimizationDemo.tsx(168,35): error TS18046: 'info' is of type 'unknown'.
+src/pages/BundleOptimizationDemo.tsx(228,59): error TS7006: Parameter 'tip' implicitly has an 'any' type.
+src/pages/BundleOptimizationDemo.tsx(228,64): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/BundleOptimizationDemo.tsx(338,61): error TS7006: Parameter 'tip' implicitly has an 'any' type.
+src/pages/BundleOptimizationDemo.tsx(338,66): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/BundleOptimizationDemo.tsx(347,68): error TS7006: Parameter 'tip' implicitly has an 'any' type.
+src/pages/BundleOptimizationDemo.tsx(347,73): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/pages/BundleOptimizationDemo.tsx(508,37): error TS2304: Cannot find name 'member'.
+src/pages/CachingStrategyDemo.tsx(36,10): error TS2614: Module '"../hooks/useCachedData"' has no exported member 'useCachedData'. Did you mean to use 'import useCachedData from "../hooks/useCachedData"' instead?
+src/pages/CachingStrategyDemo.tsx(92,9): error TS2451: Cannot redeclare block-scoped variable 'theme'.
+src/pages/CachingStrategyDemo.tsx(106,10): error TS2451: Cannot redeclare block-scoped variable 'theme'.
+src/pages/CachingStrategyDemo.tsx(186,9): error TS2345: Argument of type '{ data: any[]; time: number; cached: boolean; }' is not assignable to parameter of type 'SetStateAction<any[] | null>'.
+  Object literal may only specify known properties, and 'data' does not exist in type 'any[] | ((prevState: any[] | null) => any[] | null)'.
+src/pages/CachingStrategyDemo.tsx(191,40): error TS2304: Cannot find name 'err'.
+src/pages/CachingStrategyDemo.tsx(191,63): error TS2304: Cannot find name 'err'.
+src/pages/CachingStrategyDemo.tsx(191,84): error TS2304: Cannot find name 'err'.
+src/pages/CachingStrategyDemo.tsx(425,41): error TS2339: Property 'cached' does not exist on type 'any[]'.
+src/pages/CachingStrategyDemo.tsx(434,48): error TS2339: Property 'time' does not exist on type 'any[]'.
+src/pages/CachingStrategyDemo.tsx(439,41): error TS2339: Property 'cached' does not exist on type 'any[]'.
+src/pages/CachingStrategyDemo.tsx(440,41): error TS2339: Property 'cached' does not exist on type 'any[]'.
+src/pages/CachingStrategyDemo.tsx(458,31): error TS2339: Property 'data' does not exist on type 'any[]'.
+src/pages/CachingStrategyDemo.tsx(750,30): error TS2367: This comparison appears to be unintentional because the types 'Theme' and 'string' have no overlap.
+src/pages/CachingStrategyDemo.tsx(751,28): error TS2367: This comparison appears to be unintentional because the types 'Theme' and 'string' have no overlap.
+src/pages/calendar/CalendarPage.test.tsx(1,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/calendar/CalendarPage.test.tsx(3,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/calendar/CalendarPage.test.tsx(9,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/calendar/CalendarPage.tsx(36,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/ClientDataCachingDemo.tsx(271,42): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(271,67): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(271,90): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(293,45): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(293,70): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(293,93): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(311,43): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(311,68): error TS2304: Cannot find name 'error'.
+src/pages/ClientDataCachingDemo.tsx(311,91): error TS2304: Cannot find name 'error'.
+src/pages/CodeSplittingDemo.tsx(176,10): error TS2304: Cannot find name 'CardHeader'.
+src/pages/CodeSplittingDemo.tsx(285,17): error TS2322: Type '(() => Promise<typeof import("/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/charts/LineChart")>) | (() => Promise<typeof import("/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DataGrid")>) | (() => Promise<...>)' is not assignable to type '() => Promise<{ default: ComponentType<LineChartProps>; }>'.
+  Type '() => Promise<typeof import("/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DataGrid")>' is not assignable to type '() => Promise<{ default: ComponentType<LineChartProps>; }>'.
+    Type 'Promise<typeof import("/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DataGrid")>' is not assignable to type 'Promise<{ default: ComponentType<LineChartProps>; }>'.
+      Type 'typeof import("/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DataGrid")' is not assignable to type '{ default: ComponentType<LineChartProps>; }'.
+        Types of property 'default' are incompatible.
+          Type 'FC<DataGridProps>' is not assignable to type 'ComponentType<LineChartProps>'.
+            Type 'FunctionComponent<DataGridProps>' is not assignable to type 'FunctionComponent<LineChartProps>'.
+              Types of property 'propTypes' are incompatible.
+                Type 'WeakValidationMap<DataGridProps> | undefined' is not assignable to type 'WeakValidationMap<LineChartProps> | undefined'.
+                  Type 'WeakValidationMap<DataGridProps>' has no properties in common with type 'WeakValidationMap<LineChartProps>'.
+src/pages/CodeSplittingDemo.tsx(286,17): error TS2739: Type '{ data: { name: string; value: number; }[]; }' is missing the following properties from type 'LineChartProps': xKey, lineKey
+src/pages/ComponentsDemo.tsx(163,11): error TS2322: Type '({ id: string; label: string; numeric: boolean; format?: undefined; } | { id: string; label: string; numeric: boolean; format: (value: string) => Element; })[]' is not assignable to type 'HeadCell<{ id: number; name: string; status: string; rating: number; location: string; }>[]'.
+  Type '{ id: string; label: string; numeric: boolean; format?: undefined; } | { id: string; label: string; numeric: boolean; format: (value: string) => Element; }' is not assignable to type 'HeadCell<{ id: number; name: string; status: string; rating: number; location: string; }>'.
+    Type '{ id: string; label: string; numeric: boolean; format?: undefined; }' is not assignable to type 'HeadCell<{ id: number; name: string; status: string; rating: number; location: string; }>'.
+      Types of property 'id' are incompatible.
+        Type 'string' is not assignable to type '"id" | "status" | "name" | "location" | "rating"'.
+src/pages/customers/components/CustomerFormModal.tsx(157,52): error TS2304: Cannot find name 'error'.
+src/pages/customers/CreateCustomer.tsx(104,11): error TS2698: Spread types may only be created from object types.
+src/pages/customers/CreateCustomer.tsx(187,44): error TS2345: Argument of type '{ name: string; code: string; description: string; industry: string; status: string; serviceLevel: string; primaryContactName: string; primaryContactEmail: string; primaryContactPhone: string; ... 5 more ...; customFields: { ...; }; }' is not assignable to parameter of type 'CreateCustomerData'.
+  Types of property 'status' are incompatible.
+    Type 'string' is not assignable to type '"active" | "inactive" | "pending"'.
+src/pages/customers/CreateCustomer.tsx(293,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/customers/CreateCustomer.tsx(315,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/customers/CreateCustomer.tsx(332,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/customers/CreateCustomer.tsx(602,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/customers/CustomerDetail.tsx(417,39): error TS2339: Property 'logo' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(448,80): error TS2339: Property 'contractStartDate' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(448,123): error TS2339: Property 'contractEndDate' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(490,45): error TS2551: Property 'primaryContactPhone' does not exist on type 'Customer'. Did you mean 'primaryContactName'?
+src/pages/customers/CustomerDetail.tsx(507,48): error TS2339: Property 'billingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(507,83): error TS2339: Property 'billingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(508,50): error TS2339: Property 'billingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(508,84): error TS2339: Property 'billingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(508,120): error TS2339: Property 'billingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(515,31): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(526,52): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(526,88): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(527,54): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(527,89): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(527,126): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(538,27): error TS2339: Property 'notes' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(545,33): error TS2339: Property 'notes' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(550,27): error TS2339: Property 'customFields' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(550,64): error TS2339: Property 'customFields' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(557,48): error TS2339: Property 'customFields' does not exist on type 'Customer'.
+src/pages/customers/CustomerDetail.tsx(665,9): error TS2322: Type '{ open: boolean; onClose: () => void; onConfirm: () => Promise<void>; title: string; content: string; confirmText: string; confirmColor: string; }' is not assignable to type 'IntrinsicAttributes & ConfirmationDialogProps'.
+  Property 'content' does not exist on type 'IntrinsicAttributes & ConfirmationDialogProps'.
+src/pages/customers/EditCustomer.tsx(143,35): error TS2339: Property 'contractStartDate' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(143,60): error TS2339: Property 'contractStartDate' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(144,33): error TS2339: Property 'contractEndDate' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(144,56): error TS2339: Property 'contractEndDate' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(147,23): error TS2345: Argument of type '{ contractStartDate: any; contractEndDate: any; _id: string; name: string; code: string; description?: string | undefined; industry: string; status: "active" | "inactive" | "pending"; website?: string | undefined; ... 7 more ...; updatedAt: string; }' is not assignable to parameter of type 'SetStateAction<{ name: string; code: string; description: string; industry: string; status: string; serviceLevel: string; primaryContactName: string; primaryContactEmail: string; primaryContactPhone: string; ... 5 more ...; customFields: { ...; }; }>'.
+  Type '{ contractStartDate: any; contractEndDate: any; _id: string; name: string; code: string; description?: string | undefined; industry: string; status: "active" | "inactive" | "pending"; website?: string | undefined; ... 7 more ...; updatedAt: string; }' is missing the following properties from type '{ name: string; code: string; description: string; industry: string; status: string; serviceLevel: string; primaryContactName: string; primaryContactEmail: string; primaryContactPhone: string; ... 5 more ...; customFields: { ...; }; }': primaryContactPhone, billingAddress, shippingAddress, notes, customFields
+src/pages/customers/EditCustomer.tsx(150,49): error TS2339: Property 'billingAddress' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(150,72): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(151,31): error TS2339: Property 'billingAddress' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(151,71): error TS2339: Property 'shippingAddress' does not exist on type 'Customer'.
+src/pages/customers/EditCustomer.tsx(178,11): error TS2698: Spread types may only be created from object types.
+src/pages/customers/EditCustomer.tsx(273,49): error TS2345: Argument of type '{ name: string; code: string; description: string; industry: string; status: string; serviceLevel: string; primaryContactName: string; primaryContactEmail: string; primaryContactPhone: string; ... 5 more ...; customFields: { ...; }; }' is not assignable to parameter of type 'UpdateCustomerData'.
+  Types of property 'status' are incompatible.
+    Type 'string' is not assignable to type '"active" | "inactive" | "pending" | undefined'.
+src/pages/customers/EditCustomer.tsx(404,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/customers/EditCustomer.tsx(426,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/customers/EditCustomer.tsx(443,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/customers/EditCustomer.tsx(704,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/dashboard/MetricsDashboard.tsx(22,8): error TS2786: 'Helmet' cannot be used as a JSX component.
+  Its instance type 'Helmet' is not a valid JSX element.
+    Property 'refs' is missing in type 'Helmet' but required in type 'ElementClass'.
+src/pages/dashboard/QualityMetricsDashboard.tsx(343,28): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(344,28): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(345,28): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(346,28): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(347,28): error TS2786: 'Line' cannot be used as a JSX component.
+  Its instance type 'Line' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(376,28): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(377,28): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(378,28): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(379,28): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(380,28): error TS2786: 'Line' cannot be used as a JSX component.
+  Its instance type 'Line' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(405,28): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(419,28): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(420,28): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(434,28): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(435,28): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(436,28): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(437,28): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(438,28): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(460,24): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(461,24): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(462,24): error TS2786: 'RechartsTooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(463,24): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/dashboard/QualityMetricsDashboard.tsx(464,24): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/feedback/components/FeedbackDetail.tsx(112,49): error TS2304: Cannot find name 'error'.
+src/pages/feedback/components/FeedbackDetail.tsx(131,56): error TS2304: Cannot find name 'error'.
+src/pages/feedback/components/FeedbackDetail.tsx(142,57): error TS2304: Cannot find name 'error'.
+src/pages/feedback/FeedbackManagement.test.tsx(1,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/feedback/FeedbackManagement.test.tsx(3,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/feedback/FeedbackManagement.test.tsx(9,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/feedback/FeedbackManagement.tsx(57,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/feedback/FeedbackManagement.tsx(98,49): error TS2304: Cannot find name 'error'.
+src/pages/feedback/FeedbackManagement.tsx(109,51): error TS2304: Cannot find name 'error'.
+src/pages/feedback/FeedbackManagement.tsx(550,11): error TS2322: Type '{ headCells: ({ id: string; label: string; format: (row: Feedback) => Element; numeric: boolean; } | { id: string; label: string; format: (row: Feedback) => string; numeric: boolean; } | { ...; })[]; ... 7 more ...; onRowClick: (row: any) => void; }' is not assignable to type 'IntrinsicAttributes & DataTableProps<{ [key: string]: any; }>'.
+  Property 'data' does not exist on type 'IntrinsicAttributes & DataTableProps<{ [key: string]: any; }>'.
+src/pages/inspections/components/InspectionFormModal.tsx(144,54): error TS2304: Cannot find name 'error'.
+src/pages/inspections/components/InspectionFormModal.tsx(162,51): error TS2304: Cannot find name 'error'.
+src/pages/inspections/components/InspectionFormModal.tsx(174,51): error TS2304: Cannot find name 'error'.
+src/pages/inspections/components/InspectionFormModal.tsx(269,82): error TS2345: Argument of type '{ title: string; type: string; status: string; priority: string; scheduledDate: string | undefined; customerId: string; supplierId: string | null; location: string; description: string; notes: string; tags: string[]; }' is not assignable to parameter of type 'Partial<Inspection>'.
+  Types of property 'status' are incompatible.
+    Type 'string' is not assignable to type '"scheduled" | "in-progress" | "completed" | "cancelled" | undefined'.
+src/pages/inspections/components/InspectionFormModal.tsx(272,68): error TS2345: Argument of type '{ title: string; type: string; status: string; priority: string; scheduledDate: string | undefined; customerId: string; supplierId: string | null; location: string; description: string; notes: string; tags: string[]; }' is not assignable to parameter of type 'Omit<Inspection, "_id" | "createdAt" | "updatedAt">'.
+  Types of property 'status' are incompatible.
+    Type 'string' is not assignable to type '"scheduled" | "in-progress" | "completed" | "cancelled"'.
+src/pages/inspections/ConductInspection.tsx(53,41): error TS2614: Module '"../../services/inspection.service"' has no exported member 'ChecklistItem'. Did you mean to use 'import ChecklistItem from "../../services/inspection.service"' instead?
+src/pages/inspections/ConductInspection.tsx(54,10): error TS2614: Module '"../../hooks/useResponsive"' has no exported member 'useResponsive'. Did you mean to use 'import useResponsive from "../../hooks/useResponsive"' instead?
+src/pages/inspections/ConductInspection.tsx(97,18): error TS2339: Property 'checklistItems' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(97,41): error TS2339: Property 'checklistItems' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(98,34): error TS2339: Property 'checklistItems' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(101,62): error TS2339: Property 'inspectionType' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(236,31): error TS2339: Property 'updateChecklist' does not exist on type 'InspectionService'.
+src/pages/inspections/ConductInspection.tsx(271,31): error TS2551: Property 'completeInspection' does not exist on type 'InspectionService'. Did you mean 'createInspection'?
+src/pages/inspections/ConductInspection.tsx(388,52): error TS2339: Property 'id' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(389,73): error TS2339: Property 'inspectionDate' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(393,33): error TS2339: Property 'id' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(453,8): error TS2786: 'SwipeableDrawer' cannot be used as a JSX component.
+  Its element type 'ReactElement<any, any> | Component<any, any, any> | null' is not a valid JSX element.
+    Type 'Component<any, any, any>' is not assignable to type 'Element | ElementClass | null'.
+      Property 'refs' is missing in type 'Component<any, any, any>' but required in type 'ElementClass'.
+src/pages/inspections/ConductInspection.tsx(554,58): error TS2339: Property 'inspectionType' does not exist on type 'Inspection'.
+src/pages/inspections/ConductInspection.tsx(557,67): error TS2339: Property 'inspectionDate' does not exist on type 'Inspection'.
+src/pages/inspections/hooks/useInspectionStats.ts(47,64): error TS2304: Cannot find name 'err'.
+src/pages/inspections/InspectionAnalytics.tsx(151,24): error TS18046: 'response' is of type 'unknown'.
+src/pages/inspections/InspectionAnalytics.tsx(259,11): error TS2322: Type '{ title: string; subtitle: string; icon: Element; }' is not assignable to type 'IntrinsicAttributes & PageHeaderProps'.
+  Property 'icon' does not exist on type 'IntrinsicAttributes & PageHeaderProps'.
+src/pages/inspections/InspectionAnalytics.tsx(570,30): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(584,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(585,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(601,30): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(615,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(616,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(641,30): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(647,30): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(648,30): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(649,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(650,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(651,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(652,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(653,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(654,30): error TS2786: 'Line' cannot be used as a JSX component.
+  Its instance type 'Line' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(684,30): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(685,30): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(686,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(687,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(688,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(712,30): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(713,30): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(714,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(715,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(716,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(717,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(718,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(747,30): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(748,30): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(749,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(750,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(751,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(766,30): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(780,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(781,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(810,30): error TS2786: 'XAxis' cannot be used as a JSX component.
+  Its instance type 'XAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(811,30): error TS2786: 'YAxis' cannot be used as a JSX component.
+  Its instance type 'YAxis' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(812,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(813,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(814,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(815,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(816,30): error TS2786: 'Bar' cannot be used as a JSX component.
+  Its instance type 'Bar' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(831,30): error TS2786: 'Pie' cannot be used as a JSX component.
+  Its instance type 'Pie' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(853,30): error TS2786: 'Tooltip' cannot be used as a JSX component.
+  Its instance type 'Tooltip<ValueType, NameType>' is not a valid JSX element.
+src/pages/inspections/InspectionAnalytics.tsx(854,30): error TS2786: 'Legend' cannot be used as a JSX component.
+  Its instance type 'Legend' is not a valid JSX element.
+src/pages/inspections/ScheduleInspection.tsx(356,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/inspections/ScheduleInspection.tsx(375,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/inspections/ScheduleInspection.tsx(481,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/ModalsAndFormsTester.tsx(151,20): error TS2322: Type 'number' is not assignable to type 'string'.
+src/pages/ModalsAndFormsTester.tsx(151,23): error TS2322: Type 'number' is not assignable to type 'string'.
+src/pages/ModalsAndFormsTester.tsx(434,9): error TS2322: Type '(query: string) => Promise<{ id: string; title: string; description: string; type: string; url: string; icon: string; date: Date; }[]>' is not assignable to type '(query: string, filters?: SearchFilters | undefined) => Promise<SearchResult[]>'.
+  Type 'Promise<{ id: string; title: string; description: string; type: string; url: string; icon: string; date: Date; }[]>' is not assignable to type 'Promise<SearchResult[]>'.
+    Type '{ id: string; title: string; description: string; type: string; url: string; icon: string; date: Date; }[]' is not assignable to type 'SearchResult[]'.
+      Type '{ id: string; title: string; description: string; type: string; url: string; icon: string; date: Date; }' is not assignable to type 'SearchResult'.
+        Types of property 'type' are incompatible.
+          Type 'string' is not assignable to type '"user" | "supplier" | "inspection" | "report" | "customer"'.
+src/pages/ModalsAndFormsTester.tsx(454,9): error TS2322: Type '{ id: string; title: string; message: string; timestamp: Date; read: boolean; type: string; category: string; }[]' is not assignable to type 'NotificationItem[]'.
+  Type '{ id: string; title: string; message: string; timestamp: Date; read: boolean; type: string; category: string; }' is not assignable to type 'NotificationItem'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"warning" | "error" | "info" | "success"'.
+src/pages/monitoring/BackupVerification.tsx(82,64): error TS2304: Cannot find name 'err'.
+src/pages/monitoring/BackupVerification.tsx(103,55): error TS2304: Cannot find name 'err'.
+src/pages/monitoring/PerformanceMetricsDashboard.tsx(19,73): error TS2307: Cannot find module '../../services/performanceMonitoring.service' or its corresponding type declarations.
+src/pages/monitoring/PerformanceMetricsDashboard.tsx(86,60): error TS2304: Cannot find name 'err'.
+src/pages/ProgressiveLoadingDemo.tsx(519,13): error TS2322: Type '(Product | undefined)[]' is not assignable to type 'Product[]'.
+  Type 'Product | undefined' is not assignable to type 'Product'.
+    Type 'undefined' is not assignable to type 'Product'.
+src/pages/ProgressiveLoadingDemo.tsx(573,31): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(576,19): error TS2322: Type 'FC<{ product: Product; }>' is not assignable to type 'ComponentType<{}> | undefined'.
+  Type 'FunctionComponent<{ product: Product; }>' is not assignable to type 'FunctionComponent<{}>'.
+    Types of parameters 'props' and 'props' are incompatible.
+      Type '{}' is not assignable to type '{ product: Product; }'.
+src/pages/ProgressiveLoadingDemo.tsx(577,19): error TS2322: Type 'FC<{ product: Product; }>' is not assignable to type 'ComponentType<{}>'.
+  Type 'FunctionComponent<{ product: Product; }>' is not assignable to type 'FunctionComponent<{}>'.
+    Types of parameters 'props' and 'props' are incompatible.
+      Type '{}' is not assignable to type '{ product: Product; }'.
+src/pages/ProgressiveLoadingDemo.tsx(649,31): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(654,30): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(655,36): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(656,30): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(662,26): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(665,26): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(669,29): error TS18048: 'product' is possibly 'undefined'.
+src/pages/ProgressiveLoadingDemo.tsx(672,38): error TS18048: 'product' is possibly 'undefined'.
+src/pages/reports/components/ReportPreview.tsx(31,26): error TS7016: Could not find a declaration file for module 'lodash'. '/Users/tannercoker/AeroSuite-main/node_modules/lodash/lodash.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lodash` if it exists or add a new declaration (.d.ts) file containing `declare module 'lodash';`
+src/pages/reports/components/ReportTemplateForm.tsx(41,55): error TS7016: Could not find a declaration file for module 'react-beautiful-dnd'. '/Users/tannercoker/AeroSuite-main/node_modules/react-beautiful-dnd/dist/react-beautiful-dnd.cjs.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/react-beautiful-dnd` if it exists or add a new declaration (.d.ts) file containing `declare module 'react-beautiful-dnd';`
+src/pages/reports/components/ReportTemplateForm.tsx(83,45): error TS2339: Property 'getDataSources' does not exist on type 'ReportService'.
+src/pages/reports/components/ReportTemplateForm.tsx(266,17): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<"supplier" | "inspection" | "performance" | "customer" | "general">, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<"supplier" | "inspection" | "performance" | "customer" | "general">' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: "supplier" | "inspection" | "performance" | "customer" | "general"; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/reports/components/ReportTemplateForm.tsx(334,15): error TS7006: Parameter 'provided' implicitly has an 'any' type.
+src/pages/reports/components/ReportTemplateForm.tsx(347,23): error TS7006: Parameter 'provided' implicitly has an 'any' type.
+src/pages/reports/components/ReportTemplateForm.tsx(552,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<"text" | "image" | "table" | "chart" | "metrics">, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<"text" | "image" | "table" | "chart" | "metrics">' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: "text" | "image" | "table" | "chart" | "metrics"; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/reports/components/ReportTemplateForm.tsx(605,40): error TS2345: Argument of type '(prev: ReportSection) => { dataSource: { model: any; query?: { filter?: Record<string, any> | undefined; populate?: string[] | undefined; sort?: Record<string, 1 | -1> | undefined; limit?: number | undefined; } | undefined; }; ... 8 more ...; data?: any[] | undefined; }' is not assignable to parameter of type 'SetStateAction<ReportSection>'.
+  Type '(prev: ReportSection) => { dataSource: { model: any; query?: { filter?: Record<string, any> | undefined; populate?: string[] | undefined; sort?: Record<string, 1 | -1> | undefined; limit?: number | undefined; } | undefined; }; ... 8 more ...; data?: any[] | undefined; }' is not assignable to type '(prevState: ReportSection) => ReportSection'.
+    Call signature return types '{ dataSource: { model: any; query?: { filter?: Record<string, any> | undefined; populate?: string[] | undefined; sort?: Record<string, 1 | -1> | undefined; limit?: number | undefined; } | undefined; }; ... 8 more ...; data?: any[] | undefined; }' and 'ReportSection' are incompatible.
+      The types of 'dataSource.query' are incompatible between these types.
+        Type '{ filter?: Record<string, any> | undefined; populate?: string[] | undefined; sort?: Record<string, 1 | -1> | undefined; limit?: number | undefined; } | undefined' is not assignable to type '{ filter?: Record<string, any> | undefined; populate?: string[] | undefined; sort?: Record<string, 1 | -1> | undefined; limit?: number | undefined; }'.
+          Type 'undefined' is not assignable to type '{ filter?: Record<string, any> | undefined; populate?: string[] | undefined; sort?: Record<string, 1 | -1> | undefined; limit?: number | undefined; }'.
+src/pages/reports/components/ReportTemplateForm.tsx(651,34): error TS2304: Cannot find name 'Chip'.
+src/pages/reports/components/ReportTemplateForm.tsx(708,38): error TS2345: Argument of type '(prev: ReportSection) => { chartOptions: { title: string; type?: "line" | "bar" | "pie" | "doughnut" | "radar" | undefined; xAxis?: string | undefined; yAxis?: string | undefined; }; ... 8 more ...; data?: any[] | undefined; }' is not assignable to parameter of type 'SetStateAction<ReportSection>'.
+  Type '(prev: ReportSection) => { chartOptions: { title: string; type?: "line" | "bar" | "pie" | "doughnut" | "radar" | undefined; xAxis?: string | undefined; yAxis?: string | undefined; }; ... 8 more ...; data?: any[] | undefined; }' is not assignable to type '(prevState: ReportSection) => ReportSection'.
+    Call signature return types '{ chartOptions: { title: string; type?: "line" | "bar" | "pie" | "doughnut" | "radar" | undefined; xAxis?: string | undefined; yAxis?: string | undefined; }; _id?: string | undefined; title: string; ... 6 more ...; data?: any[] | undefined; }' and 'ReportSection' are incompatible.
+      The types of 'chartOptions.type' are incompatible between these types.
+        Type '"line" | "bar" | "pie" | "doughnut" | "radar" | undefined' is not assignable to type '"line" | "bar" | "pie" | "doughnut" | "radar"'.
+          Type 'undefined' is not assignable to type '"line" | "bar" | "pie" | "doughnut" | "radar"'.
+src/pages/reports/ReportBuilder.test.tsx(1,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/reports/ReportBuilder.test.tsx(3,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/reports/ReportBuilder.test.tsx(9,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/reports/ReportBuilder.tsx(39,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/RequestBatchingDemo.tsx(175,59): error TS2304: Cannot find name 'err'.
+src/pages/RequestBatchingDemo.tsx(226,47): error TS2345: Argument of type '{ endpoint: string; method: string; }[]' is not assignable to parameter of type 'Omit<BatchRequestItem<any>, "id">[]'.
+  Type '{ endpoint: string; method: string; }' is not assignable to type 'Omit<BatchRequestItem<any>, "id">'.
+    Types of property 'method' are incompatible.
+      Type 'string' is not assignable to type '"GET" | "DELETE" | "POST" | "PUT" | undefined'.
+src/pages/RequestBatchingDemo.tsx(229,13): error TS2322: Type '{ type: string; id: number; data: any; time: number; }[]' is not assignable to type 'ResponseData[]'.
+  Type '{ type: string; id: number; data: any; time: number; }' is not assignable to type 'ResponseData'.
+    Types of property 'type' are incompatible.
+      Type 'string' is not assignable to type '"supplier" | "customer" | "product"'.
+src/pages/RequestBatchingDemo.tsx(239,24): error TS1308: 'await' expressions are only allowed within async functions and at the top levels of modules.
+src/pages/RequestBatchingDemo.tsx(241,24): error TS1308: 'await' expressions are only allowed within async functions and at the top levels of modules.
+src/pages/RequestBatchingDemo.tsx(243,24): error TS1308: 'await' expressions are only allowed within async functions and at the top levels of modules.
+src/pages/RequestBatchingDemo.tsx(257,56): error TS2304: Cannot find name 'err'.
+src/pages/ResponsiveDesignDemo.tsx(40,10): error TS2724: '"../components/layout/ResponsiveGrid"' has no exported member named 'ResponsiveGrid'. Did you mean 'ResponsiveGridItem'?
+src/pages/Settings.tsx(95,58): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/pages/Settings.tsx(133,55): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/pages/Settings.tsx(162,51): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/pages/Settings.tsx(235,48): error TS2552: Cannot find name 'error'. Did you mean '_error'?
+src/pages/settings/LanguageSettings.test.tsx(1,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/settings/LanguageSettings.test.tsx(3,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/settings/LanguageSettings.test.tsx(9,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/settings/SettingsPage.test.tsx(1,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/settings/SettingsPage.test.tsx(3,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/settings/SettingsPage.test.tsx(9,1): error TS2578: Unused '@ts-expect-error' directive.
+src/pages/settings/SettingsPage.tsx(77,90): error TS2322: Type '{ onError: (err: any) => void; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'onError' does not exist on type 'IntrinsicAttributes'.
+src/pages/suppliers/components/AuditChecklist.tsx(40,69): error TS2339: Property '0' does not exist on type '{ type: "observation" | "minor-nc" | "major-nc" | "critical-nc"; description?: string | undefined; correctiveAction?: string | undefined; dueDate?: Date | undefined; }[] | undefined'.
+src/pages/suppliers/components/AuditChecklist.tsx(366,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/suppliers/components/AuditChecklist.tsx(384,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<"text" | "scale" | "yes-no" | "multiple-choice">, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<"text" | "scale" | "yes-no" | "multiple-choice">' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: "text" | "scale" | "yes-no" | "multiple-choice"; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/suppliers/components/ChecklistItemCard.tsx(43,69): error TS2339: Property '0' does not exist on type '{ type: "observation" | "minor-nc" | "major-nc" | "critical-nc"; description?: string | undefined; correctiveAction?: string | undefined; dueDate?: Date | undefined; }[] | undefined'.
+src/pages/suppliers/components/ChecklistItemCard.tsx(60,74): error TS2339: Property '0' does not exist on type '{ type: "observation" | "minor-nc" | "major-nc" | "critical-nc"; description?: string | undefined; correctiveAction?: string | undefined; dueDate?: Date | undefined; }[] | undefined'.
+src/pages/suppliers/components/ChecklistItemCard.tsx(221,15): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<string>' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: string; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/suppliers/components/ChecklistItemCard.tsx(360,23): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<string>, child: ReactNode) => void'.
+src/pages/suppliers/components/ChecklistItemCard.tsx(392,23): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<"text" | "scale" | "yes-no" | "multiple-choice">, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<"text" | "scale" | "yes-no" | "multiple-choice">' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: "text" | "scale" | "yes-no" | "multiple-choice"; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/suppliers/components/ChecklistItemCard.tsx(466,21): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<any>, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<any>' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: any; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/suppliers/components/EnhancedSupplierForm.tsx(3,10): error TS2614: Module '"../../../components/common/FormBuilder"' has no exported member 'FormBuilder'. Did you mean to use 'import FormBuilder from "../../../components/common/FormBuilder"' instead?
+src/pages/suppliers/components/EnhancedSupplierForm.tsx(98,15): error TS2322: Type '"info"' is not assignable to type '"warning" | "error" | "success" | "none" | "validating" | undefined'.
+src/pages/suppliers/components/SupplierFormModal.tsx(161,52): error TS2304: Cannot find name 'error'.
+src/pages/suppliers/components/SupplierNetwork.tsx(168,29): error TS2339: Property 'tier' does not exist on type 'Supplier'.
+src/pages/suppliers/components/SupplierNetwork.tsx(184,20): error TS2339: Property 'customers' does not exist on type 'Supplier'.
+src/pages/suppliers/components/SupplierNetwork.tsx(184,42): error TS2339: Property 'customers' does not exist on type 'Supplier'.
+src/pages/suppliers/components/SupplierNetwork.tsx(185,18): error TS2339: Property 'customers' does not exist on type 'Supplier'.
+src/pages/suppliers/components/SupplierNetwork.tsx(185,36): error TS7006: Parameter 'customer' implicitly has an 'any' type.
+src/pages/suppliers/components/SupplierNetwork.tsx(211,61): error TS2339: Property 'tier' does not exist on type 'Supplier'.
+src/pages/suppliers/components/SupplierNetwork.tsx(226,61): error TS2339: Property 'tier' does not exist on type 'Supplier'.
+src/pages/suppliers/components/SupplierNetwork.tsx(262,33): error TS2339: Property 'tier' does not exist on type 'Supplier'.
+src/pages/suppliers/CreateSupplier.tsx(139,11): error TS2698: Spread types may only be created from object types.
+src/pages/suppliers/CreateSupplier.tsx(161,19): error TS2345: Argument of type '(prev: { name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: never[]; ...' is not assignable to parameter of type 'SetStateAction<{ name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: n...'.
+  Type '(prev: { name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: never[]; ...' is not assignable to type '(prevState: { name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: neve...'.
+    Call signature return types '{ supplierTags: string[]; name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { ...; }; qualifications: never[]; certifications: never[]; notes: string; }' and '{ name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: never[]; notes: ...' are incompatible.
+      The types of 'supplierTags' are incompatible between these types.
+        Type 'string[]' is not assignable to type 'never[]'.
+          Type 'string' is not assignable to type 'never'.
+src/pages/suppliers/CreateSupplier.tsx(169,19): error TS2345: Argument of type '(prev: { name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: never[]; ...' is not assignable to parameter of type 'SetStateAction<{ name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: n...'.
+  Type '(prev: { name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: never[]; ...' is not assignable to type '(prevState: { name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: neve...'.
+    Call signature return types '{ certifications: string[]; name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { ...; }; qualifications: never[]; notes: string; supplierTags: never[]; }' and '{ name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: never[]; certifications: never[]; notes: ...' are incompatible.
+      The types of 'certifications' are incompatible between these types.
+        Type 'string[]' is not assignable to type 'never[]'.
+src/pages/suppliers/CreateSupplier.tsx(249,13): error TS2304: Cannot find name 'supplierService'.
+src/pages/suppliers/CreateSupplier.tsx(317,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'ChangeEvent<HTMLTextAreaElement | HTMLInputElement>' is not assignable to type 'ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>'.
+      Type 'ChangeEvent<HTMLTextAreaElement | HTMLInputElement>' is not assignable to type 'ChangeEvent<HTMLInputElement>'.
+        Type 'HTMLTextAreaElement | HTMLInputElement' is not assignable to type 'HTMLInputElement'.
+          Type 'HTMLTextAreaElement' is missing the following properties from type 'HTMLInputElement': accept, align, alt, capture, and 27 more.
+src/pages/suppliers/CreateSupplier.tsx(331,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(345,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(394,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(413,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(425,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(437,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(457,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(467,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(477,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(487,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(497,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/CreateSupplier.tsx(579,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(191,23): error TS2345: Argument of type '{ id: string; name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: string[]; certifications: str...' is not assignable to parameter of type 'SetStateAction<FormValues>'.
+  Type '{ id: string; name: string; code: string; description: string; industry: string; status: string; website: string; contactName: string; contactEmail: string; contactPhone: string; address: { street: string; city: string; state: string; zipCode: string; country: string; }; qualifications: string[]; certifications: str...' is not assignable to type 'FormValues'.
+    Types of property 'status' are incompatible.
+      Type 'string' is not assignable to type '"active" | "inactive" | "pending"'.
+src/pages/suppliers/EditSupplier.tsx(216,11): error TS2698: Spread types may only be created from object types.
+src/pages/suppliers/EditSupplier.tsx(304,44): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/pages/suppliers/EditSupplier.tsx(397,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'ChangeEvent<HTMLTextAreaElement | HTMLInputElement>' is not assignable to type 'ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>'.
+src/pages/suppliers/EditSupplier.tsx(410,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(424,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(473,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(492,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(504,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(516,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(536,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(546,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(556,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(566,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(576,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/EditSupplier.tsx(658,19): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent) => void' is not assignable to type 'ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>'.
+src/pages/suppliers/hooks/useRiskAssessment.ts(88,31): error TS2339: Property 'data' does not exist on type 'SupplierListResponse'.
+src/pages/suppliers/hooks/useRiskAssessment.ts(200,50): error TS7006: Parameter 'a' implicitly has an 'any' type.
+src/pages/suppliers/hooks/useRiskAssessment.ts(200,53): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/pages/suppliers/hooks/useSupplierAudit.ts(148,31): error TS2339: Property 'data' does not exist on type 'SupplierListResponse'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(150,52): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(167,62): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(183,56): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(230,46): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(258,46): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(283,46): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(303,53): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/hooks/useSupplierAudit.ts(335,86): error TS2339: Property '0' does not exist on type '{ type: "observation" | "minor-nc" | "major-nc" | "critical-nc"; description?: string | undefined; correctiveAction?: string | undefined; dueDate?: Date | undefined; }[] | undefined'.
+src/pages/suppliers/hooks/useSupplierMetrics.ts(46,59): error TS2304: Cannot find name 'err'.
+src/pages/suppliers/SupplierAnalyticsPage.tsx(78,42): error TS2551: Property 'getSupplierById' does not exist on type 'SupplierService'. Did you mean 'getSupplier'?
+src/pages/suppliers/SupplierAuditChecklist.tsx(242,17): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<"initial" | "surveillance" | "recertification" | "follow-up" | "special">, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<"initial" | "surveillance" | "recertification" | "follow-up" | "special">' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: "initial" | "surveillance" | "recertification" | "follow-up" | "special"; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/pages/suppliers/SupplierAuditChecklist.tsx(292,17): error TS2322: Type '(e: React.ChangeEvent<HTMLInputElement | {    name?: string;    value: unknown;}>) => void' is not assignable to type '(event: SelectChangeEvent<"in-progress" | "completed" | "cancelled" | "delayed" | "planned">, child: ReactNode) => void'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'SelectChangeEvent<"in-progress" | "completed" | "cancelled" | "delayed" | "planned">' is not assignable to type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>'.
+      Type 'Event & { target: { value: "in-progress" | "completed" | "cancelled" | "delayed" | "planned"; name: string; }; }' is missing the following properties from type 'ChangeEvent<HTMLInputElement | { name?: string | undefined; value: unknown; }>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+src/service-worker.ts(120,13): error TS2722: Cannot invoke an object which is possibly 'undefined'.
+src/services/api.ts(634,31): error TS2345: Argument of type 'NonNullable<T> | ApiResponse<T>' is not assignable to parameter of type 'T'.
+  'T' could be instantiated with an arbitrary type which could be unrelated to 'NonNullable<T> | ApiResponse<T>'.
+src/services/customer.service.ts(2,28): error TS2724: '"../types/api"' has no exported member named 'ApiResponseData'. Did you mean 'ApiResponse'?
+src/services/erpService.ts(114,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(125,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(136,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(147,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(158,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(170,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(181,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(193,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(204,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(216,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(227,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(238,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(249,12): error TS18046: 'response' is of type 'unknown'.
+src/services/erpService.ts(260,5): error TS2322: Type 'unknown' is not assignable to type 'SyncResult'.
+src/services/erpService.ts(271,5): error TS2322: Type 'unknown' is not assignable to type 'SyncResult'.
+src/services/feedback.service.ts(169,12): error TS18046: 'response' is of type 'unknown'.
+src/services/feedback.service.ts(177,12): error TS18046: 'response' is of type 'unknown'.
+src/services/feedback.service.ts(185,5): error TS2322: Type 'unknown' is not assignable to type 'FeedbackListResponse'.
+src/services/feedback.service.ts(193,12): error TS18046: 'response' is of type 'unknown'.
+src/services/feedback.service.ts(208,12): error TS18046: 'response' is of type 'unknown'.
+src/services/feedback.service.ts(216,5): error TS2322: Type 'unknown' is not assignable to type 'FeedbackListResponse'.
+src/services/inspection.service.ts(68,5): error TS2322: Type 'unknown' is not assignable to type 'InspectionListResponse'.
+src/services/inspection.service.ts(76,5): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(84,5): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(92,5): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(100,5): error TS2322: Type 'unknown' is not assignable to type '{ success: boolean; message: string; }'.
+src/services/inspection.service.ts(113,5): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(130,5): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(146,5): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(154,5): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(170,5): error TS2322: Type 'unknown' is not assignable to type '{ total: number; scheduled: number; inProgress: number; completed: number; cancelled: number; byType: { [type: string]: number; }; byPriority: { [priority: string]: number; }; }'.
+src/services/inspection.service.ts(234,7): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/inspection.service.ts(252,7): error TS2322: Type 'unknown' is not assignable to type 'Inspection'.
+src/services/report.service.ts(352,12): error TS18046: 'response' is of type 'unknown'.
+src/services/report.service.ts(357,12): error TS18046: 'response' is of type 'unknown'.
+src/services/supplier.service.ts(148,7): error TS2322: Type 'unknown' is not assignable to type 'SupplierListResponse'.
+src/services/supplier.service.ts(161,7): error TS2322: Type 'unknown' is not assignable to type 'Supplier'.
+src/services/supplier.service.ts(174,7): error TS2322: Type 'unknown' is not assignable to type 'Supplier'.
+src/services/supplier.service.ts(187,7): error TS2322: Type 'unknown' is not assignable to type 'Supplier'.
+src/services/supplier.service.ts(220,7): error TS2322: Type 'unknown' is not assignable to type '{ logoUrl: string; }'.
+src/services/supplier.service.ts(236,7): error TS2322: Type 'unknown' is not assignable to type 'SupplierAnalyticsData'.
+src/services/supplier.service.ts(252,7): error TS2322: Type 'unknown' is not assignable to type 'SupplierPerformanceData'.
+src/services/supplier.service.ts(295,7): error TS2322: Type 'unknown' is not assignable to type '{ success: boolean; message: string; }'.
+src/services/supplier.service.ts(309,7): error TS2322: Type 'unknown' is not assignable to type '{ success: boolean; message: string; }'.
+src/services/supplier.service.ts(323,7): error TS2322: Type 'unknown' is not assignable to type 'Supplier'.
+src/services/user.service.ts(38,12): error TS18046: 'response' is of type 'unknown'.
+src/services/user.service.ts(46,12): error TS18046: 'response' is of type 'unknown'.
+src/services/user.service.ts(54,12): error TS18046: 'response' is of type 'unknown'.
+src/services/user.service.ts(66,12): error TS18046: 'response' is of type 'unknown'.
+src/services/user.service.ts(74,12): error TS18046: 'response' is of type 'unknown'.
+src/services/user.service.ts(82,12): error TS18046: 'response' is of type 'unknown'.
+src/services/user.service.ts(93,12): error TS18046: 'response' is of type 'unknown'.
+src/services/userAnalytics.service.ts(176,12): error TS18046: 'response' is of type 'unknown'.
+src/services/userAnalytics.service.ts(192,12): error TS18046: 'response' is of type 'unknown'.
+src/services/userAnalytics.service.ts(208,12): error TS18046: 'response' is of type 'unknown'.
+src/test-utils/advanced-router-wrapper.tsx(130,29): error TS2322: Type '{ children: Element; adapter: { update: (params: Record<string, any>) => void; remove: (paramNames: string[]) => void; parse: () => Record<string, any>; }; }' is not assignable to type 'IntrinsicAttributes & { children: ReactNode; ReactRouterRoute?: any; }'.
+  Property 'adapter' does not exist on type 'IntrinsicAttributes & { children: ReactNode; ReactRouterRoute?: any; }'.
+src/test-utils/advanced-router-wrapper.tsx(203,29): error TS2322: Type '{ children: Element; adapter: { update: (params: Record<string, any>) => void; remove: (paramNames: string[]) => void; parse: () => Record<string, any>; }; }' is not assignable to type 'IntrinsicAttributes & { children: ReactNode; ReactRouterRoute?: any; }'.
+  Property 'adapter' does not exist on type 'IntrinsicAttributes & { children: ReactNode; ReactRouterRoute?: any; }'.
+src/utils/accessibilityThemeHelper.ts(58,48): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(59,52): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(60,44): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(61,48): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(62,42): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(63,48): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(125,31): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(127,33): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(129,29): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(131,31): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(133,28): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(135,31): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(195,51): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(199,34): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(201,53): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(205,36): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(207,49): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(211,32): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(213,51): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(217,34): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(219,48): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(223,31): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(225,51): error TS2339: Property 'contrastText' does not exist on type 'PaletteColorOptions'.
+  Property 'contrastText' does not exist on type 'Partial<Color>'.
+src/utils/accessibilityThemeHelper.ts(229,34): error TS2339: Property 'main' does not exist on type 'PaletteColorOptions'.
+  Property 'main' does not exist on type 'Partial<Color>'.
+src/utils/auth.ts(134,12): error TS18046: 'response' is of type 'unknown'.
+src/utils/bundleOptimization.ts(135,53): error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/utils/bundleOptimization.ts(135,66): error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/utils/codeSplitting.tsx(191,38): error TS2339: Property '__webpackChunkName' does not exist on type '{ default: T; }'.
+src/utils/codeSplitting.tsx(194,49): error TS2339: Property '__webpackChunkName' does not exist on type '{ default: T; }'.
+src/utils/codeSplitting.tsx(314,3): error TS2322: Type 'FC<CustomComponentPropsWithRef<T>>' is not assignable to type 'FC<ComponentProps<T>>'.
+  Types of parameters 'props' and 'props' are incompatible.
+    Type 'ComponentProps<T>' is not assignable to type 'CustomComponentPropsWithRef<T>'.
+      Type 'unknown' is not assignable to type 'CustomComponentPropsWithRef<T>'.
+src/utils/codeSplitting.tsx(389,11): error TS2339: Property 'ref' does not exist on type 'InViewHookResponse'.
+src/utils/codeSplitting.tsx(389,16): error TS2339: Property 'inView' does not exist on type 'InViewHookResponse'.
+src/utils/codeSplitting.tsx(401,20): error TS2345: Argument of type '() => React.FC<React.CustomComponentPropsWithRef<T>>' is not assignable to parameter of type 'SetStateAction<FC<ComponentProps<T>> | null>'.
+  Type '() => React.FC<React.CustomComponentPropsWithRef<T>>' is not assignable to type 'FC<ComponentProps<T>>'.
+    Type 'FunctionComponent<CustomComponentPropsWithRef<T>>' is missing the following properties from type 'ReactElement<any, any>': type, props, key
+src/utils/colorContrastChecker.test.ts(3,3): error TS2614: Module '"./colorContrastChecker"' has no exported member 'calculateLuminance'. Did you mean to use 'import calculateLuminance from "./colorContrastChecker"' instead?
+src/utils/colorContrastChecker.test.ts(4,3): error TS2614: Module '"./colorContrastChecker"' has no exported member 'calculateContrastRatio'. Did you mean to use 'import calculateContrastRatio from "./colorContrastChecker"' instead?
+src/utils/colorContrastChecker.test.ts(5,3): error TS2614: Module '"./colorContrastChecker"' has no exported member 'ContrastLevel'. Did you mean to use 'import ContrastLevel from "./colorContrastChecker"' instead?
+src/utils/colorContrastChecker.test.ts(6,3): error TS2614: Module '"./colorContrastChecker"' has no exported member 'passesContrastCheck'. Did you mean to use 'import passesContrastCheck from "./colorContrastChecker"' instead?
+src/utils/colorContrastChecker.test.ts(7,3): error TS2614: Module '"./colorContrastChecker"' has no exported member 'getContrastCheckResult'. Did you mean to use 'import getContrastCheckResult from "./colorContrastChecker"' instead?
+src/utils/componentSplitting.tsx(154,64): error TS2322: Type 'ComponentType<{ error: Error; retry: () => void; }> | undefined' is not assignable to type 'ReactNode'.
+  Type 'ComponentClass<{ error: Error; retry: () => void; }, any>' is not assignable to type 'ReactNode'.
+src/utils/progressiveLoader.ts(349,5): error TS2717: Subsequent property declarations must have the same type.  Property 'requestIdleCallback' must be of type '(callback: IdleRequestCallback, options?: IdleRequestOptions | undefined) => number', but here has type '(callback: (deadline: { didTimeout: boolean; timeRemaining: () => number; }) => void, options?: { timeout: number; } | undefined) => number'.
+src/utils/seo.tsx(63,6): error TS2786: 'Helmet' cannot be used as a JSX component.
+  Its instance type 'Helmet' is not a valid JSX element.

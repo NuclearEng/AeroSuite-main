@@ -27,8 +27,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
-} from '@mui/material';
+  DialogActions } from
+'@mui/material';
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -45,14 +45,14 @@ import {
   Description as DescriptionIcon,
   LocalShipping as ShippingIcon,
   Assignment as AssignmentIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
-import { 
-  PageHeader, 
-  DataTable, 
+  Refresh as RefreshIcon } from
+'@mui/icons-material';
+import {
+  PageHeader,
+  DataTable,
   StatusBadge,
-  ConfirmationDialog 
-} from '../../components/common';
+  ConfirmationDialog } from
+'../../components/common';
 import { HeadCell } from '../../components/common/DataTable';
 import { formatDate } from '../../utils';
 import CustomerActivityHistory from '../../components/customers/CustomerActivityHistory';
@@ -99,59 +99,59 @@ const mockCustomer = {
 
 // Mock inspections data
 const mockInspections = [
-  {
-    id: 'INS001',
-    inspectionDate: '2023-05-15T09:00:00.000Z',
-    inspectionType: 'Quality Audit',
-    supplierName: 'Supplier A',
-    inspector: 'Jane Doe',
-    status: 'completed',
-    score: 92
-  },
-  {
-    id: 'INS002',
-    inspectionDate: '2023-06-20T10:30:00.000Z',
-    inspectionType: 'Process Audit',
-    supplierName: 'Supplier B',
-    inspector: 'John Smith',
-    status: 'scheduled',
-    score: null
-  },
-  {
-    id: 'INS003',
-    inspectionDate: '2023-04-10T14:00:00.000Z',
-    inspectionType: 'First Article',
-    supplierName: 'Supplier C',
-    inspector: 'Robert Johnson',
-    status: 'completed',
-    score: 85
-  }
-];
+{
+  id: 'INS001',
+  inspectionDate: '2023-05-15T09:00:00.000Z',
+  inspectionType: 'Quality Audit',
+  supplierName: 'Supplier A',
+  inspector: 'Jane Doe',
+  status: 'completed',
+  score: 92
+},
+{
+  id: 'INS002',
+  inspectionDate: '2023-06-20T10:30:00.000Z',
+  inspectionType: 'Process Audit',
+  supplierName: 'Supplier B',
+  inspector: 'John Smith',
+  status: 'scheduled',
+  score: null
+},
+{
+  id: 'INS003',
+  inspectionDate: '2023-04-10T14:00:00.000Z',
+  inspectionType: 'First Article',
+  supplierName: 'Supplier C',
+  inspector: 'Robert Johnson',
+  status: 'completed',
+  score: 85
+}];
+
 
 // Mock suppliers data
 const mockSuppliers = [
-  {
-    id: 'SUP001',
-    name: 'Supplier A',
-    industry: 'Electronics',
-    status: 'active',
-    rating: 4.5
-  },
-  {
-    id: 'SUP002',
-    name: 'Supplier B',
-    industry: 'Mechanical',
-    status: 'active',
-    rating: 4.2
-  },
-  {
-    id: 'SUP003',
-    name: 'Supplier C',
-    industry: 'Plastics',
-    status: 'inactive',
-    rating: 3.8
-  }
-];
+{
+  id: 'SUP001',
+  name: 'Supplier A',
+  industry: 'Electronics',
+  status: 'active',
+  rating: 4.5
+},
+{
+  id: 'SUP002',
+  name: 'Supplier B',
+  industry: 'Mechanical',
+  status: 'active',
+  rating: 4.2
+},
+{
+  id: 'SUP003',
+  name: 'Supplier C',
+  industry: 'Plastics',
+  status: 'inactive',
+  rating: 3.8
+}];
+
 
 // TabPanel component
 interface TabPanelProps {
@@ -169,22 +169,22 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== index}
       id={`customer-tabpanel-${index}`}
       aria-labelledby={`customer-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ py: 3 }}>
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ py: 3 }}>
           {children}
         </Box>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const CustomerDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{id: string;}>();
   const navigate = useNavigate();
   const theme = useTheme();
-  
+
   // State
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [inspections, setInspections] = useState<any[]>([]);
@@ -209,7 +209,7 @@ const CustomerDetail: React.FC = () => {
   // Load customer data - replace with API call
   useEffect(() => {
     if (!id) return;
-    
+
     const fetchCustomer = async () => {
       try {
         setLoading(true);
@@ -225,7 +225,7 @@ const CustomerDetail: React.FC = () => {
         setLoading(false);
       }
     };
-    
+
     fetchCustomer();
   }, [id]);
 
@@ -241,7 +241,7 @@ const CustomerDetail: React.FC = () => {
 
   const handleDeleteConfirm = async () => {
     if (!customer) return;
-    
+
     try {
       setLoading(true);
       await customerService.deleteCustomer(customer._id);
@@ -260,7 +260,7 @@ const CustomerDetail: React.FC = () => {
 
   // Handle snackbar close
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   // Handle customer update
@@ -271,29 +271,29 @@ const CustomerDetail: React.FC = () => {
 
   // DataTable columns for inspections
   const inspectionColumns: HeadCell<any>[] = [
-    { id: 'id', label: 'ID', numeric: false },
-    { id: 'inspectionDate', label: 'Date', numeric: false, format: (value) => formatDate(value) },
-    { id: 'inspectionType', label: 'Type', numeric: false },
-    { id: 'supplierName', label: 'Supplier', numeric: false },
-    { id: 'inspector', label: 'Inspector', numeric: false },
-    { id: 'status', label: 'Status', numeric: false, format: (value) => <StatusBadge status={value} /> },
-    { id: 'score', label: 'Score', numeric: true, format: (value) => value ? `${value}%` : 'N/A' }
-  ];
+  { id: 'id', label: 'ID', numeric: false },
+  { id: 'inspectionDate', label: 'Date', numeric: false, format: (value) => formatDate(value) },
+  { id: 'inspectionType', label: 'Type', numeric: false },
+  { id: 'supplierName', label: 'Supplier', numeric: false },
+  { id: 'inspector', label: 'Inspector', numeric: false },
+  { id: 'status', label: 'Status', numeric: false, format: (value) => <StatusBadge status={value} /> },
+  { id: 'score', label: 'Score', numeric: true, format: (value) => value ? `${value}%` : 'N/A' }];
+
 
   // DataTable columns for suppliers
   const supplierColumns: HeadCell<any>[] = [
-    { id: 'name', label: 'Name', numeric: false },
-    { id: 'industry', label: 'Industry', numeric: false },
-    { id: 'status', label: 'Status', numeric: false, format: (value) => <StatusBadge status={value} /> },
-    { id: 'rating', label: 'Rating', numeric: true, format: (value) => value.toFixed(1) }
-  ];
+  { id: 'name', label: 'Name', numeric: false },
+  { id: 'industry', label: 'Industry', numeric: false },
+  { id: 'status', label: 'Status', numeric: false, format: (value) => <StatusBadge status={value} /> },
+  { id: 'rating', label: 'Rating', numeric: true, format: (value) => value.toFixed(1) }];
+
 
   if (loading) {
     return (
       <Box sx={{ width: '100%' }}>
         <LinearProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
@@ -304,12 +304,12 @@ const CustomerDetail: React.FC = () => {
           variant="outlined"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/customers')}
-          sx={{ mt: 2 }}
-        >
+          sx={{ mt: 2 }}>
+
           Back to Customers
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (!customer) {
@@ -320,12 +320,12 @@ const CustomerDetail: React.FC = () => {
           variant="outlined"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/customers')}
-          sx={{ mt: 2 }}
-        >
+          sx={{ mt: 2 }}>
+
           Back to Customers
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
@@ -334,57 +334,57 @@ const CustomerDetail: React.FC = () => {
         title={customer.name}
         subtitle={`Customer Code: ${customer.code}`}
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Customers', href: '/customers' },
-          { label: customer.name },
-        ]}
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Customers', href: '/customers' },
+        { label: customer.name }]
+        }
         actions={
-          <>
+        <>
             <Button
-              variant="outlined"
-              startIcon={<ArrowBackIcon />}
-              onClick={() => navigate('/customers')}
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/customers')}
+            sx={{ mr: 1 }}>
+
               Back
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<EditIcon />}
-              onClick={handleEditCustomer}
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<EditIcon />}
+            onClick={handleEditCustomer}
+            sx={{ mr: 1 }}>
+
               Edit
             </Button>
             <Button
-              variant="outlined"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={handleDeleteClick}
-            >
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={handleDeleteClick}>
+
               Delete
             </Button>
           </>
-        }
-      />
+        } />
 
-      {/* Status badge */}
+
+      
       <Box sx={{ mb: 3 }}>
-        <StatusBadge 
-          status={customer.status} 
-          size="medium"
-        />
+        <StatusBadge
+          status={customer.status}
+          size="medium" />
+
       </Box>
 
-      {/* Tab navigation */}
+      
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs 
-          value={tabValue} 
+        <Tabs
+          value={tabValue}
           onChange={handleTabChange}
           aria-label="customer tabs"
           variant="scrollable"
-          scrollButtons="auto"
-        >
+          scrollButtons="auto">
+
           <Tab label="Overview" id="customer-tab-0" aria-controls="customer-tabpanel-0" />
           <Tab label="Orders" id="customer-tab-1" aria-controls="customer-tabpanel-1" />
           <Tab label="Inspections" id="customer-tab-2" aria-controls="customer-tabpanel-2" />
@@ -393,22 +393,22 @@ const CustomerDetail: React.FC = () => {
         </Tabs>
       </Box>
 
-      {/* Overview Tab */}
+      
       <TabPanel value={tabValue} index={0}>
         <Grid container spacing={3}>
-          {/* Customer Overview Card */}
+          
           <Grid item xs={12}>
             <Card>
-              <CardHeader 
-                title="Customer Information" 
+              <CardHeader
+                title="Customer Information"
                 action={
-                  <Tooltip title="Edit Customer">
+                <Tooltip title="Edit Customer">
                     <IconButton onClick={handleEditCustomer}>
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
-                }
-              />
+                } />
+
               <CardContent>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6} lg={4}>
@@ -417,17 +417,17 @@ const CustomerDetail: React.FC = () => {
                         src={customer.logo}
                         alt={customer.name}
                         variant="rounded"
-                        sx={{ width: 60, height: 60, mr: 2 }}
-                      >
+                        sx={{ width: 60, height: 60, mr: 2 }}>
+
                         {customer.name.charAt(0)}
                       </Avatar>
                       <Box>
                         <Typography variant="h6">{customer.name}</Typography>
-                        <Chip 
-                          label={customer.code} 
-                          size="small" 
-                          sx={{ mt: 0.5 }}
-                        />
+                        <Chip
+                          label={customer.code}
+                          size="small"
+                          sx={{ mt: 0.5 }} />
+
                       </Box>
                     </Box>
                     
@@ -468,8 +468,8 @@ const CustomerDetail: React.FC = () => {
                         </ListItemIcon>
                         <ListItemText
                           primary={customer.primaryContactName}
-                          primaryTypographyProps={{ variant: 'body2' }}
-                        />
+                          primaryTypographyProps={{ variant: 'body2' }} />
+
                       </ListItem>
                       
                       <ListItem disablePadding sx={{ mb: 1 }}>
@@ -478,8 +478,8 @@ const CustomerDetail: React.FC = () => {
                         </ListItemIcon>
                         <ListItemText
                           primary={customer.primaryContactEmail}
-                          primaryTypographyProps={{ variant: 'body2' }}
-                        />
+                          primaryTypographyProps={{ variant: 'body2' }} />
+
                       </ListItem>
                       
                       <ListItem disablePadding>
@@ -488,8 +488,8 @@ const CustomerDetail: React.FC = () => {
                         </ListItemIcon>
                         <ListItemText
                           primary={customer.primaryContactPhone}
-                          primaryTypographyProps={{ variant: 'body2' }}
-                        />
+                          primaryTypographyProps={{ variant: 'body2' }} />
+
                       </ListItem>
                     </List>
                   </Grid>
@@ -507,13 +507,13 @@ const CustomerDetail: React.FC = () => {
                           primary={`${customer.billingAddress.street}, ${customer.billingAddress.city}`}
                           secondary={`${customer.billingAddress.state}, ${customer.billingAddress.zipCode}, ${customer.billingAddress.country}`}
                           primaryTypographyProps={{ variant: 'body2' }}
-                          secondaryTypographyProps={{ variant: 'body2' }}
-                        />
+                          secondaryTypographyProps={{ variant: 'body2' }} />
+
                       </ListItem>
                     </List>
                     
-                    {customer.shippingAddress && (
-                      <>
+                    {customer.shippingAddress &&
+                    <>
                         <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
                           Shipping Address
                         </Typography>
@@ -523,20 +523,20 @@ const CustomerDetail: React.FC = () => {
                               <LocationIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText
-                              primary={`${customer.shippingAddress.street}, ${customer.shippingAddress.city}`}
-                              secondary={`${customer.shippingAddress.state}, ${customer.shippingAddress.zipCode}, ${customer.shippingAddress.country}`}
-                              primaryTypographyProps={{ variant: 'body2' }}
-                              secondaryTypographyProps={{ variant: 'body2' }}
-                            />
+                            primary={`${customer.shippingAddress.street}, ${customer.shippingAddress.city}`}
+                            secondary={`${customer.shippingAddress.state}, ${customer.shippingAddress.zipCode}, ${customer.shippingAddress.country}`}
+                            primaryTypographyProps={{ variant: 'body2' }}
+                            secondaryTypographyProps={{ variant: 'body2' }} />
+
                           </ListItem>
                         </List>
                       </>
-                    )}
+                    }
                   </Grid>
                 </Grid>
                 
-                {customer.notes && (
-                  <>
+                {customer.notes &&
+                <>
                     <Divider sx={{ my: 2 }} />
                     <Typography variant="subtitle1" gutterBottom>
                       Notes
@@ -545,48 +545,48 @@ const CustomerDetail: React.FC = () => {
                       {customer.notes}
                     </Typography>
                   </>
-                )}
+                }
                 
-                {customer.customFields && Object.keys(customer.customFields).length > 0 && (
-                  <>
+                {customer.customFields && Object.keys(customer.customFields).length > 0 &&
+                <>
                     <Divider sx={{ my: 2 }} />
                     <Typography variant="subtitle1" gutterBottom>
                       Additional Information
                     </Typography>
                     <Grid container spacing={2}>
-                      {Object.entries(customer.customFields).map(([key, value]) => (
-                        <Grid item xs={12} sm={6} md={4} key={key}>
+                      {Object.entries(customer.customFields).map(([key, value]) =>
+                    <Grid item xs={12} sm={6} md={4} key={key}>
                           <Typography variant="body2">
                             <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:</strong> {value as string}
                           </Typography>
                         </Grid>
-                      ))}
+                    )}
                     </Grid>
                   </>
-                )}
+                }
               </CardContent>
             </Card>
           </Grid>
         </Grid>
       </TabPanel>
 
-      {/* Orders Tab */}
+      
       <TabPanel value={tabValue} index={1}>
-        <CustomerOrderList 
-          customerId={customer._id} 
-          showHeader={false} 
-        />
+        <CustomerOrderList
+          customerId={customer._id}
+          showHeader={false} />
+
       </TabPanel>
 
-      {/* Inspections Tab */}
+      
       <TabPanel value={tabValue} index={2}>
         <Box sx={{ mb: 2, display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            onClick={() => navigate('/inspections/schedule?customerId=' + id)}
-          >
+            onClick={() => navigate('/inspections/schedule?customerId=' + id)}>
+
             Schedule Inspection
           </Button>
         </Box>
@@ -600,19 +600,19 @@ const CustomerDetail: React.FC = () => {
           defaultSortBy="inspectionDate"
           defaultOrder="desc"
           onRowClick={(row) => navigate(`/inspections/${row.id}`)}
-          emptyStateMessage="No inspections found for this customer"
-        />
+          emptyStateMessage="No inspections found for this customer" />
+
       </TabPanel>
 
-      {/* Suppliers Tab */}
+      
       <TabPanel value={tabValue} index={3}>
         <Box sx={{ mb: 2, display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            onClick={() => navigate('/suppliers/create?customerId=' + id)}
-          >
+            onClick={() => navigate('/suppliers/create?customerId=' + id)}>
+
             Add Supplier
           </Button>
         </Box>
@@ -625,11 +625,11 @@ const CustomerDetail: React.FC = () => {
           pagination
           defaultSortBy="name"
           onRowClick={(row) => navigate(`/suppliers/${row.id}`)}
-          emptyStateMessage="No suppliers associated with this customer"
-        />
+          emptyStateMessage="No suppliers associated with this customer" />
+
       </TabPanel>
 
-      {/* Documents Tab */}
+      
       <TabPanel value={tabValue} index={4}>
         <Box sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="h6" gutterBottom>
@@ -641,22 +641,22 @@ const CustomerDetail: React.FC = () => {
         </Box>
       </TabPanel>
 
-      {/* Activity History Tab */}
+      
       <TabPanel value={tabValue} index={5}>
         <CustomerActivityHistory customerId={id || ''} />
       </TabPanel>
 
-      {/* Edit Customer Modal */}
+      
       <CustomerFormModal
         open={editModalOpen}
         onClose={() => setEditModalOpen(false)}
         onSave={handleCustomerUpdated}
         initialData={customer}
         isEdit={true}
-        customerId={customer._id}
-      />
+        customerId={customer._id} />
 
-      {/* Delete Confirmation Dialog */}
+
+      
       <ConfirmationDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
@@ -664,27 +664,27 @@ const CustomerDetail: React.FC = () => {
         title="Delete Customer"
         content="Are you sure you want to delete this customer? This action cannot be undone."
         confirmText="Delete"
-        confirmColor="error"
-      />
+        confirmColor="error" />
 
-      {/* Snackbar for notifications */}
+
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default CustomerDetail; 
+export default CustomerDetail;

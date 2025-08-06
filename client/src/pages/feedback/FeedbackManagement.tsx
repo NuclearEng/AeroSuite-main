@@ -25,8 +25,8 @@ import {
   Divider,
   CircularProgress,
   useTheme,
-  Alert
-} from '@mui/material';
+  Alert } from
+'@mui/material';
 import {
   Search as SearchIcon,
   FilterList as FilterIcon,
@@ -42,16 +42,16 @@ import {
   SentimentSatisfied as SentimentSatisfiedIcon,
   SentimentDissatisfied as SentimentDissatisfiedIcon,
   SentimentNeutral as SentimentNeutralIcon,
-  SentimentVeryDissatisfied as SentimentVeryDissatisfiedIcon
-} from '@mui/icons-material';
+  SentimentVeryDissatisfied as SentimentVeryDissatisfiedIcon } from
+'@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
-import { 
-  feedbackService, 
-  Feedback, 
+import {
+  feedbackService,
+  Feedback,
   FeedbackFilterOptions,
-  FeedbackStatistics
-} from '../../services/feedback.service';
+  FeedbackStatistics } from
+'../../services/feedback.service';
 import DataTable from '../../components/common/DataTable';
 import FeedbackDetail from './components/FeedbackDetail';
 // @ts-expect-error: If zod types are missing, run: npm install zod
@@ -60,7 +60,7 @@ import { z } from 'zod';
 const FeedbackManagement: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  
+
   // State
   const [loading, setLoading] = useState<boolean>(true);
   const [feedback, setFeedback] = useState<Feedback[]>([]);
@@ -75,13 +75,13 @@ const FeedbackManagement: React.FC = () => {
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  
+
   // Load feedback data
   useEffect(() => {
     fetchFeedback();
     fetchStatistics();
   }, [page, rowsPerPage, filters]);
-  
+
   const fetchFeedback = async () => {
     try {
       setLoading(true);
@@ -91,7 +91,7 @@ const FeedbackManagement: React.FC = () => {
         sort: '-createdAt',
         ...filters
       });
-      
+
       setFeedback(response.data);
       setTotalItems(response.pagination.total);
     } catch (_error) {
@@ -100,7 +100,7 @@ const FeedbackManagement: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   const fetchStatistics = async () => {
     try {
       const stats = await feedbackService.getFeedbackStatistics(filters);
@@ -109,23 +109,23 @@ const FeedbackManagement: React.FC = () => {
       console.error('Error fetching statistics:', error);
     }
   };
-  
+
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   // Handle page change
   const handlePageChange = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
-  
+
   // Handle rows per page change
   const handleRowsPerPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(e.target.value, 10));
     setPage(0);
   };
-  
+
   // Handle filter change
   const handleFilterChange = (name: string, value: any) => {
     setFilters((prev: FeedbackFilterOptions) => ({
@@ -133,7 +133,7 @@ const FeedbackManagement: React.FC = () => {
       [name]: value
     }));
   };
-  
+
   // Apply filters
   const applyFilters = () => {
     setPage(0);
@@ -141,7 +141,7 @@ const FeedbackManagement: React.FC = () => {
     fetchFeedback();
     fetchStatistics();
   };
-  
+
   // Reset filters
   const resetFilters = () => {
     setFilters({});
@@ -150,27 +150,27 @@ const FeedbackManagement: React.FC = () => {
     fetchFeedback();
     fetchStatistics();
   };
-  
+
   // Handle row click
   const handleRowClick = (row: any) => {
     setSelectedFeedback(row as Feedback);
     setDetailDialogOpen(true);
   };
-  
+
   // Zod schema for feedback update validation
   const feedbackUpdateSchema = z.object({
     status: z.string().min(1, 'Status is required').optional(),
-    comment: z.string().optional(),
+    comment: z.string().optional()
     // Add other fields as needed
   });
-  
+
   // Handle feedback update
   const handleFeedbackUpdate = async (id: string, data: any) => {
     // Zod validation
     const result = feedbackUpdateSchema.safeParse(data);
     if (!result.success) {
       const errors: Record<string, string> = {};
-      result.error.errors.forEach(e => {
+      result.error.errors.forEach((e) => {
         if (e.path[0]) errors[e.path[0] as string] = e.message;
       });
       setFormErrors(errors);
@@ -191,7 +191,7 @@ const FeedbackManagement: React.FC = () => {
       console.error('Error updating feedback:', error);
     }
   };
-  
+
   // Handle feedback deletion
   const handleFeedbackDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this feedback?')) {
@@ -209,11 +209,11 @@ const FeedbackManagement: React.FC = () => {
       }
     }
   };
-  
+
   // Get sentiment icon
-  const getSentimentIcon = (sentiment?: { label: string }) => {
+  const GetSentimentIcon = (sentiment?: {label: string;}) => {
     if (!sentiment) return <SentimentNeutralIcon />;
-    
+
     switch (sentiment.label) {
       case 'positive':
         return <SentimentSatisfiedIcon style={{ color: theme.palette.success.main }} />;
@@ -225,163 +225,163 @@ const FeedbackManagement: React.FC = () => {
         return <SentimentNeutralIcon style={{ color: theme.palette.text.secondary }} />;
     }
   };
-  
+
   // Prepare chart data
   const prepareChartData = () => {
     if (!statistics) return { pieData: [], lineData: [] };
-    
+
     // Prepare pie chart data for feedback types
-    const pieData = statistics.byType.map(item => ({
+    const pieData = statistics.byType.map((item) => ({
       name: item._id || '',
       value: item.count
     }));
-    
+
     // Prepare line chart data for recent trends
-    const lineData = statistics.recentTrend.map(item => ({
+    const lineData = statistics.recentTrend.map((item) => ({
       date: item._id,
       count: item.count,
       avgRating: item.avgRating || 0
     }));
-    
+
     return { pieData, lineData };
   };
-  
+
   const { pieData, lineData } = prepareChartData();
-  
+
   // Table columns
   const columns = [
-    {
-      id: 'sentiment',
-      label: '',
-      format: (row: Feedback) => getSentimentIcon(row.sentiment),
-      numeric: false
-    },
-    {
-      id: 'title',
-      label: 'Title',
-      format: (row: Feedback) => row.title || row.content.substring(0, 30) + '...',
-      numeric: false
-    },
-    {
-      id: 'feedbackType',
-      label: 'Type',
-      format: (row: Feedback) => (
-        <Chip 
-          label={row.feedbackType === 'bug' ? 'Bug' :
-            row.feedbackType === 'feature' ? 'Feature' :
-            row.feedbackType === 'suggestion' ? 'Suggestion' :
-            'Support'} 
-          size="small"
-          color={
-            row.feedbackType === 'bug' ? 'error' :
-            row.feedbackType === 'feature' ? 'primary' :
-            row.feedbackType === 'suggestion' ? 'success' :
-            'default'
-          }
-        />
-      ),
-      numeric: false
-    },
-    {
-      id: 'rating',
-      label: 'Rating',
-      format: (row: Feedback) => row.rating || '-',
-      numeric: false
-    },
-    {
-      id: 'source',
-      label: 'Source',
-      format: (row: Feedback) => row.source === 'app' ? 'App' :
-        row.source === 'website' ? 'Website' :
-        row.source === 'email' ? 'Email' :
-        row.source === 'support' ? 'Support' :
-        row.source === 'survey' ? 'Survey' :
-        'Other',
-      numeric: false
-    },
-    {
-      id: 'status',
-      label: 'Status',
-      format: (row: Feedback) => (
-        <Chip 
-          label={row.status === 'new' ? 'New' :
-            row.status === 'in_progress' ? 'In Progress' :
-            row.status === 'resolved' ? 'Resolved' :
-            row.status === 'closed' ? 'Closed' :
-            'Other'} 
-          size="small"
-          color={
-            row.status === 'new' ? 'info' :
-            row.status === 'in_progress' ? 'warning' :
-            row.status === 'resolved' ? 'success' :
-            row.status === 'closed' ? 'default' :
-            'primary'
-          }
-        />
-      ),
-      numeric: false
-    },
-    {
-      id: 'createdAt',
-      label: 'Created At',
-      format: (row: Feedback) => format(new Date(row.createdAt), 'MMM dd, yyyy'),
-      numeric: false
-    },
-    {
-      id: 'actions',
-      label: 'Actions',
-      format: (row: Feedback) => (
-        <Box>
+  {
+    id: 'sentiment',
+    label: '',
+    format: (row: Feedback) => GetSentimentIcon(row.sentiment),
+    numeric: false
+  },
+  {
+    id: 'title',
+    label: 'Title',
+    format: (row: Feedback) => row.title || row.content.substring(0, 30) + '...',
+    numeric: false
+  },
+  {
+    id: 'feedbackType',
+    label: 'Type',
+    format: (row: Feedback) =>
+    <Chip
+      label={row.feedbackType === 'bug' ? 'Bug' :
+      row.feedbackType === 'feature' ? 'Feature' :
+      row.feedbackType === 'suggestion' ? 'Suggestion' :
+      'Support'}
+      size="small"
+      color={
+      row.feedbackType === 'bug' ? 'error' :
+      row.feedbackType === 'feature' ? 'primary' :
+      row.feedbackType === 'suggestion' ? 'success' :
+      'default'
+      } />,
+
+
+    numeric: false
+  },
+  {
+    id: 'rating',
+    label: 'Rating',
+    format: (row: Feedback) => row.rating || '-',
+    numeric: false
+  },
+  {
+    id: 'source',
+    label: 'Source',
+    format: (row: Feedback) => row.source === 'app' ? 'App' :
+    row.source === 'website' ? 'Website' :
+    row.source === 'email' ? 'Email' :
+    row.source === 'support' ? 'Support' :
+    row.source === 'survey' ? 'Survey' :
+    'Other',
+    numeric: false
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    format: (row: Feedback) =>
+    <Chip
+      label={row.status === 'new' ? 'New' :
+      row.status === 'in_progress' ? 'In Progress' :
+      row.status === 'resolved' ? 'Resolved' :
+      row.status === 'closed' ? 'Closed' :
+      'Other'}
+      size="small"
+      color={
+      row.status === 'new' ? 'info' :
+      row.status === 'in_progress' ? 'warning' :
+      row.status === 'resolved' ? 'success' :
+      row.status === 'closed' ? 'default' :
+      'primary'
+      } />,
+
+
+    numeric: false
+  },
+  {
+    id: 'createdAt',
+    label: 'Created At',
+    format: (row: Feedback) => format(new Date(row.createdAt), 'MMM dd, yyyy'),
+    numeric: false
+  },
+  {
+    id: 'actions',
+    label: 'Actions',
+    format: (row: Feedback) =>
+    <Box>
           <Tooltip title="View">
             <IconButton size="small" onClick={() => handleRowClick(row)}>
               <VisibilityIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Edit">
-            <IconButton 
-              size="small" 
-              onClick={(e) => {
-                e.stopPropagation();
-                handleRowClick(row);
-              }}
-            >
+            <IconButton
+          size="small"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleRowClick(row);
+          }}>
+
               <EditIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete">
-            <IconButton 
-              size="small" 
-              onClick={(e) => {
-                e.stopPropagation();
-                handleFeedbackDelete(row._id);
-              }}
-            >
+            <IconButton
+          size="small"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleFeedbackDelete(row._id);
+          }}>
+
               <DeleteIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-        </Box>
-      ),
-      numeric: false
-    }
-  ];
-  
+        </Box>,
+
+    numeric: false
+  }];
+
+
   // Render dashboard tab
-  const renderDashboardTab = () => {
+  const RenderDashboardTab = () => {
     if (!statistics) {
       return (
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
           <CircularProgress />
-        </Box>
-      );
+        </Box>);
+
     }
-    
+
     const totalCount = statistics.totalCount[0]?.count || 0;
     const avgRating = statistics.averageRating[0]?.avg || 0;
-    
+
     return (
       <Box sx={{ p: 2 }}>
         <Grid container spacing={3}>
-          {/* Summary cards */}
+          
           <Grid item xs={12} md={3}>
             <Card>
               <CardContent>
@@ -413,7 +413,7 @@ const FeedbackManagement: React.FC = () => {
                   New Feedback
                 </Typography>
                 <Typography variant="h3">
-                  {statistics.byStatus.find(s => s._id === 'new')?.count || 0}
+                  {statistics.byStatus.find((s) => s._id === 'new')?.count || 0}
                 </Typography>
               </CardContent>
             </Card>
@@ -425,13 +425,13 @@ const FeedbackManagement: React.FC = () => {
                   Resolved Feedback
                 </Typography>
                 <Typography variant="h3">
-                  {statistics.byStatus.find(s => s._id === 'resolved')?.count || 0}
+                  {statistics.byStatus.find((s) => s._id === 'resolved')?.count || 0}
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
           
-          {/* Charts */}
+          
           <Grid item xs={12} md={6}>
             <Card>
               <CardContent>
@@ -439,7 +439,7 @@ const FeedbackManagement: React.FC = () => {
                   Feedback By Type
                 </Typography>
                 <Box sx={{ height: 300 }}>
-                  {/* PieChart component */}
+                  
                 </Box>
               </CardContent>
             </Card>
@@ -451,13 +451,13 @@ const FeedbackManagement: React.FC = () => {
                   Recent Trends
                 </Typography>
                 <Box sx={{ height: 300 }}>
-                  {/* LineChart component */}
+                  
                 </Box>
               </CardContent>
             </Card>
           </Grid>
           
-          {/* Status breakdown */}
+          
           <Grid item xs={12}>
             <Card>
               <CardContent>
@@ -465,46 +465,46 @@ const FeedbackManagement: React.FC = () => {
                   Status Breakdown
                 </Typography>
                 <Grid container spacing={2}>
-                  {statistics.byStatus.map(status => (
-                    <Grid item xs={6} sm={3} md={2} key={status._id}>
-                      <Paper 
-                        elevation={1} 
-                        sx={{ 
-                          p: 2, 
-                          textAlign: 'center',
-                          borderLeft: '4px solid',
-                          borderColor: 
-                            status._id === 'new' ? 'info.main' :
-                            status._id === 'in_progress' ? 'warning.main' :
-                            status._id === 'resolved' ? 'success.main' :
-                            status._id === 'closed' ? 'text.disabled' :
-                            'primary.main'
-                        }}
-                      >
+                  {statistics.byStatus.map((status) =>
+                  <Grid item xs={6} sm={3} md={2} key={status._id}>
+                      <Paper
+                      elevation={1}
+                      sx={{
+                        p: 2,
+                        textAlign: 'center',
+                        borderLeft: '4px solid',
+                        borderColor:
+                        status._id === 'new' ? 'info.main' :
+                        status._id === 'in_progress' ? 'warning.main' :
+                        status._id === 'resolved' ? 'success.main' :
+                        status._id === 'closed' ? 'text.disabled' :
+                        'primary.main'
+                      }}>
+
                         <Typography variant="body2" color="textSecondary">
                           {status._id === 'new' ? 'New' :
-                            status._id === 'in_progress' ? 'In Progress' :
-                            status._id === 'resolved' ? 'Resolved' :
-                            status._id === 'closed' ? 'Closed' :
-                            'Other'}
+                        status._id === 'in_progress' ? 'In Progress' :
+                        status._id === 'resolved' ? 'Resolved' :
+                        status._id === 'closed' ? 'Closed' :
+                        'Other'}
                         </Typography>
                         <Typography variant="h6">
                           {status.count}
                         </Typography>
                       </Paper>
                     </Grid>
-                  ))}
+                  )}
                 </Grid>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
-      </Box>
-    );
+      </Box>);
+
   };
-  
+
   // Render feedback list tab
-  const renderFeedbackListTab = () => {
+  const RenderFeedbackListTab = () => {
     return (
       <Box sx={{ p: 2 }}>
         <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between' }}>
@@ -515,21 +515,21 @@ const FeedbackManagement: React.FC = () => {
             value={filters.search || ''}
             onChange={(e) => handleFilterChange('search', e.target.value)}
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
+              startAdornment:
+              <InputAdornment position="start">
                   <SearchIcon />
                 </InputAdornment>
-              )
+
             }}
-            sx={{ width: 300 }}
-          />
+            sx={{ width: 300 }} />
+
           <Box>
             <Button
               variant="outlined"
               startIcon={<FilterIcon />}
               onClick={() => setFilterDialogOpen(true)}
-              sx={{ mr: 1 }}
-            >
+              sx={{ mr: 1 }}>
+
               Filters
             </Button>
             <Button
@@ -538,8 +538,8 @@ const FeedbackManagement: React.FC = () => {
               onClick={() => {
                 fetchFeedback();
                 fetchStatistics();
-              }}
-            >
+              }}>
+
               Refresh
             </Button>
           </Box>
@@ -554,22 +554,22 @@ const FeedbackManagement: React.FC = () => {
           rowsPerPage={rowsPerPage}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerPageChange}
-          onRowClick={handleRowClick}
-        />
-      </Box>
-    );
+          onRowClick={handleRowClick} />
+
+      </Box>);
+
   };
-  
+
   // Add zod schema for feedback submission
   const feedbackSubmissionSchema = z.object({
     feedbackType: z.string().min(1, 'Type is required'),
     content: z.string().min(1, 'Content is required'),
     source: z.string().min(1, 'Source is required'),
     title: z.string().optional(),
-    rating: z.number().optional(),
+    rating: z.number().optional()
     // ...other fields as needed
   });
-  
+
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -581,32 +581,32 @@ const FeedbackManagement: React.FC = () => {
           value={tabValue}
           onChange={handleTabChange}
           indicatorColor="primary"
-          textColor="primary"
-        >
+          textColor="primary">
+
           <Tab label="Dashboard" />
           <Tab label="Feedback List" />
         </Tabs>
         
         <Divider />
         
-        {tabValue === 0 && renderDashboardTab()}
-        {tabValue === 1 && renderFeedbackListTab()}
+        {tabValue === 0 && RenderDashboardTab()}
+        {tabValue === 1 && RenderFeedbackListTab()}
       </Paper>
       
-      {/* Filter Dialog */}
+      
       <Dialog
         open={filterDialogOpen}
         onClose={() => setFilterDialogOpen(false)}
         maxWidth="sm"
-        fullWidth
-      >
+        fullWidth>
+
         <DialogTitle>
           Filters
           <IconButton
             aria-label="close"
             onClick={() => setFilterDialogOpen(false)}
-            sx={{ position: 'absolute', right: 8, top: 8 }}
-          >
+            sx={{ position: 'absolute', right: 8, top: 8 }}>
+
             <CloseIcon />
           </IconButton>
         </DialogTitle>
@@ -618,8 +618,8 @@ const FeedbackManagement: React.FC = () => {
                 <Select
                   value={filters.feedbackType || ''}
                   onChange={(e) => handleFilterChange('feedbackType', e.target.value)}
-                  label="Type"
-                >
+                  label="Type">
+
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="general">General</MenuItem>
                   <MenuItem value="feature">Feature</MenuItem>
@@ -635,8 +635,8 @@ const FeedbackManagement: React.FC = () => {
                 <Select
                   value={filters.status || ''}
                   onChange={(e) => handleFilterChange('status', e.target.value)}
-                  label="Status"
-                >
+                  label="Status">
+
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="new">New</MenuItem>
                   <MenuItem value="reviewed">Reviewed</MenuItem>
@@ -652,8 +652,8 @@ const FeedbackManagement: React.FC = () => {
                 <Select
                   value={filters.source || ''}
                   onChange={(e) => handleFilterChange('source', e.target.value)}
-                  label="Source"
-                >
+                  label="Source">
+
                   <MenuItem value="">All</MenuItem>
                   <MenuItem value="app">App</MenuItem>
                   <MenuItem value="website">Website</MenuItem>
@@ -671,8 +671,8 @@ const FeedbackManagement: React.FC = () => {
                 size="small"
                 InputProps={{ inputProps: { min: 1, max: 5 } }}
                 value={filters.minRating || ''}
-                onChange={(e) => handleFilterChange('minRating', e.target.value)}
-              />
+                onChange={(e) => handleFilterChange('minRating', e.target.value)} />
+
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -682,8 +682,8 @@ const FeedbackManagement: React.FC = () => {
                 size="small"
                 InputLabelProps={{ shrink: true }}
                 value={filters.startDate || ''}
-                onChange={(e) => handleFilterChange('startDate', e.target.value)}
-              />
+                onChange={(e) => handleFilterChange('startDate', e.target.value)} />
+
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -693,8 +693,8 @@ const FeedbackManagement: React.FC = () => {
                 size="small"
                 InputLabelProps={{ shrink: true }}
                 value={filters.endDate || ''}
-                onChange={(e) => handleFilterChange('endDate', e.target.value)}
-              />
+                onChange={(e) => handleFilterChange('endDate', e.target.value)} />
+
             </Grid>
           </Grid>
         </DialogContent>
@@ -708,23 +708,23 @@ const FeedbackManagement: React.FC = () => {
         </DialogActions>
       </Dialog>
       
-      {/* Feedback Detail Dialog */}
-      {selectedFeedback && (
-        <FeedbackDetail
-          open={detailDialogOpen}
-          onClose={() => setDetailDialogOpen(false)}
-          feedback={selectedFeedback}
-          onUpdate={handleFeedbackUpdate}
-          onDelete={handleFeedbackDelete}
-        />
-      )}
       
-      {/* In DialogContent, show errors */}
+      {selectedFeedback &&
+      <FeedbackDetail
+        open={detailDialogOpen}
+        onClose={() => setDetailDialogOpen(false)}
+        feedback={selectedFeedback}
+        onUpdate={handleFeedbackUpdate}
+        onDelete={handleFeedbackDelete} />
+
+      }
+      
+      
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-    </Box>
-  );
+    </Box>);
+
 };
 
 export default FeedbackManagement;
 
-// Contract/performance test hooks can be added here for automation frameworks 
+// Contract/performance test hooks can be added here for automation frameworks

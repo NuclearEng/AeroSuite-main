@@ -8,20 +8,20 @@ import {
   Tooltip,
   Divider,
   Fade,
-  CircularProgress
-} from '@mui/material';
+  CircularProgress } from
+'@mui/material';
 import {
   VisibilityOff as HideIcon,
   MoreVert as MoreIcon,
   AspectRatio as SizeIcon,
-  Delete as RemoveIcon
-} from '@mui/icons-material';
+  Delete as RemoveIcon } from
+'@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
   toggleWidgetVisibility,
   updateWidgetSize,
-  DashboardWidgetConfig
-} from '../../redux/slices/dashboard.slice';
+  DashboardWidgetConfig } from
+'../../redux/slices/dashboard.slice';
 
 interface DashboardWidgetProps {
   widgetId: string;
@@ -37,33 +37,33 @@ const DashboardWidget: React.FC<DashboardWidgetProps> = ({
   loading = false
 }) => {
   const dispatch = useAppDispatch();
-  const { isCustomizing, widgets } = useAppSelector(state => state.dashboard);
-  
+  const { isCustomizing, widgets } = useAppSelector((state) => state.dashboard);
+
   // Get widget config from state
   const widget = widgets[widgetId];
-  
+
   if (!widget || !widget.visible) {
     return null;
   }
-  
+
   // Handle hiding widget
   const handleHideWidget = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(toggleWidgetVisibility(widgetId));
   };
-  
+
   // Handle changing widget size
   const handleChangeSize = (e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     // Cycle through sizes: small -> medium -> large -> small
     const sizes: ('small' | 'medium' | 'large')[] = ['small', 'medium', 'large'];
     const currentIndex = sizes.indexOf(widget.size);
     const nextSize = sizes[(currentIndex + 1) % sizes.length];
-    
+
     dispatch(updateWidgetSize({ id: widgetId, size: nextSize }));
   };
-  
+
   // Calculate widget width based on size
   const getWidgetWidth = (size: DashboardWidgetConfig['size']) => {
     switch (size) {
@@ -77,7 +77,7 @@ const DashboardWidget: React.FC<DashboardWidgetProps> = ({
         return { xs: '100%', sm: '100%', md: '50%', lg: '50%' };
     }
   };
-  
+
   return (
     <Fade in={true} timeout={300}>
       <Card
@@ -90,25 +90,25 @@ const DashboardWidget: React.FC<DashboardWidgetProps> = ({
           ...(isCustomizing && {
             boxShadow: '0 0 0 2px #2196f3',
             '&:hover': {
-              boxShadow: '0 0 0 3px #2196f3',
+              boxShadow: '0 0 0 3px #2196f3'
             }
           })
-        }}
-      >
-        {/* Show customization overlay in customization mode */}
-        {isCustomizing && (
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              p: 1,
-              zIndex: 10,
-              display: 'flex',
-              gap: 0.5,
-              bgcolor: 'rgba(33, 150, 243, 0.1)'
-            }}
-          >
+        }}>
+
+        
+        {isCustomizing &&
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            p: 1,
+            zIndex: 10,
+            display: 'flex',
+            gap: 0.5,
+            bgcolor: 'rgba(33, 150, 243, 0.1)'
+          }}>
+
             <Tooltip title="Change size">
               <IconButton size="small" onClick={handleChangeSize}>
                 <SizeIcon fontSize="small" />
@@ -120,20 +120,20 @@ const DashboardWidget: React.FC<DashboardWidgetProps> = ({
               </IconButton>
             </Tooltip>
           </Box>
-        )}
+        }
         
         <CardHeader
           title={title}
           titleTypographyProps={{ variant: 'subtitle1', fontWeight: 600 }}
           action={
-            !isCustomizing && (
-              <IconButton size="small">
+          !isCustomizing &&
+          <IconButton size="small">
                 <MoreIcon fontSize="small" />
               </IconButton>
-            )
+
           }
-          sx={{ pb: 1 }}
-        />
+          sx={{ pb: 1 }} />
+
         <Divider />
         
         <CardContent
@@ -142,27 +142,27 @@ const DashboardWidget: React.FC<DashboardWidgetProps> = ({
             position: 'relative',
             overflow: 'auto',
             p: widget.size === 'small' ? 1 : 2
-          }}
-        >
-          {loading ? (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100%',
-                minHeight: 150
-              }}
-            >
+          }}>
+
+          {loading ?
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+              minHeight: 150
+            }}>
+
               <CircularProgress size={28} />
-            </Box>
-          ) : (
-            children
-          )}
+            </Box> :
+
+          children
+          }
         </CardContent>
       </Card>
-    </Fade>
-  );
+    </Fade>);
+
 };
 
-export default DashboardWidget; 
+export default DashboardWidget;

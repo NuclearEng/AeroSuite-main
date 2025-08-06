@@ -16,8 +16,8 @@ import {
   FormHelperText,
   Alert,
   Snackbar,
-  Autocomplete
-} from '@mui/material';
+  Autocomplete } from
+'@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -27,21 +27,21 @@ import { addDays } from 'date-fns';
 
 // Mock data for suppliers
 const mockSuppliers = [
-  { id: '1', name: 'Aerospace Parts Inc.', status: 'active' },
-  { id: '2', name: 'Global Aviation Technologies', status: 'active' },
-  { id: '3', name: 'Precision Manufacturing Ltd', status: 'inactive' },
-  { id: '4', name: 'Advanced Electronics Corp', status: 'active' },
-  { id: '5', name: 'Titanium Solutions', status: 'pending' }
-];
+{ id: '1', name: 'Aerospace Parts Inc.', status: 'active' },
+{ id: '2', name: 'Global Aviation Technologies', status: 'active' },
+{ id: '3', name: 'Precision Manufacturing Ltd', status: 'inactive' },
+{ id: '4', name: 'Advanced Electronics Corp', status: 'active' },
+{ id: '5', name: 'Titanium Solutions', status: 'pending' }];
+
 
 // Mock data for inspectors
 const mockInspectors = [
-  { id: '1', name: 'Jane Doe', title: 'Senior Quality Inspector' },
-  { id: '2', name: 'John Smith', title: 'Quality Engineer' },
-  { id: '3', name: 'Michael Brown', title: 'Senior Quality Assurance Specialist' },
-  { id: '4', name: 'Lisa Anderson', title: 'Quality Control Inspector' },
-  { id: '5', name: 'Robert Johnson', title: 'Lead Auditor' }
-];
+{ id: '1', name: 'Jane Doe', title: 'Senior Quality Inspector' },
+{ id: '2', name: 'John Smith', title: 'Quality Engineer' },
+{ id: '3', name: 'Michael Brown', title: 'Senior Quality Assurance Specialist' },
+{ id: '4', name: 'Lisa Anderson', title: 'Quality Control Inspector' },
+{ id: '5', name: 'Robert Johnson', title: 'Lead Auditor' }];
+
 
 // Form validation interface
 interface FormErrors {
@@ -73,38 +73,38 @@ const initialFormValues = {
 
 // Inspection type options
 const inspectionTypes = [
-  { value: 'Quality Audit', label: 'Quality Audit' },
-  { value: 'Process Audit', label: 'Process Audit' },
-  { value: 'First Article', label: 'First Article' },
-  { value: 'Follow-up', label: 'Follow-up' },
-  { value: 'Compliance Audit', label: 'Compliance Audit' }
-];
+{ value: 'Quality Audit', label: 'Quality Audit' },
+{ value: 'Process Audit', label: 'Process Audit' },
+{ value: 'First Article', label: 'First Article' },
+{ value: 'Follow-up', label: 'Follow-up' },
+{ value: 'Compliance Audit', label: 'Compliance Audit' }];
+
 
 // Priority options
 const priorityOptions = [
-  { value: 'high', label: 'High' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'low', label: 'Low' }
-];
+{ value: 'high', label: 'High' },
+{ value: 'medium', label: 'Medium' },
+{ value: 'low', label: 'Low' }];
+
 
 // Checklist template options
 const checklistTemplates = [
-  { id: '1', name: 'General Quality Audit Checklist', itemCount: 25 },
-  { id: '2', name: 'First Article Inspection Checklist', itemCount: 18 },
-  { id: '3', name: 'ISO 9001 Compliance Audit', itemCount: 30 },
-  { id: '4', name: 'Process Audit - Assembly', itemCount: 22 },
-  { id: '5', name: 'Process Audit - Machining', itemCount: 20 }
-];
+{ id: '1', name: 'General Quality Audit Checklist', itemCount: 25 },
+{ id: '2', name: 'First Article Inspection Checklist', itemCount: 18 },
+{ id: '3', name: 'ISO 9001 Compliance Audit', itemCount: 30 },
+{ id: '4', name: 'Process Audit - Assembly', itemCount: 22 },
+{ id: '5', name: 'Process Audit - Machining', itemCount: 20 }];
+
 
 const ScheduleInspection: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Extract any query parameters from the URL
   const searchParams = new URLSearchParams(location.search);
   const supplierIdFromQuery = searchParams.get('supplierId');
   const customerIdFromQuery = searchParams.get('customerId');
-  
+
   // Form state
   const [formValues, setFormValues] = useState(initialFormValues);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -125,15 +125,15 @@ const ScheduleInspection: React.FC = () => {
   useEffect(() => {
     // Load suppliers - replace with API call
     setSuppliers(mockSuppliers);
-    
+
     // Load inspectors - replace with API call
     setInspectors(mockInspectors);
-    
+
     // If supplier ID is provided in the URL, select that supplier
     if (supplierIdFromQuery) {
-      const supplier = mockSuppliers.find(s => s.id === supplierIdFromQuery);
+      const supplier = mockSuppliers.find((s) => s.id === supplierIdFromQuery);
       if (supplier) {
-        setFormValues(prev => ({
+        setFormValues((prev) => ({
           ...prev,
           supplierId: supplier.id,
           supplierName: supplier.name
@@ -143,19 +143,19 @@ const ScheduleInspection: React.FC = () => {
   }, [supplierIdFromQuery]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
-    
+
     if (!name) return;
-    
-    setFormValues(prev => ({
+
+    setFormValues((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -164,14 +164,14 @@ const ScheduleInspection: React.FC = () => {
 
   // Handle date change
   const handleDateChange = (newDate: Date | null) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       inspectionDate: newDate || new Date()
     }));
-    
+
     // Clear error when field is updated
     if (errors.inspectionDate) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         inspectionDate: undefined
       }));
@@ -180,15 +180,15 @@ const ScheduleInspection: React.FC = () => {
 
   // Handle supplier selection
   const handleSupplierChange = (value: any) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       supplierId: value ? value.id : '',
       supplierName: value ? value.name : ''
     }));
-    
+
     // Clear error when field is updated
     if (errors.supplierId) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         supplierId: undefined
       }));
@@ -197,15 +197,15 @@ const ScheduleInspection: React.FC = () => {
 
   // Handle inspector selection
   const handleInspectorChange = (value: any) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       inspectorId: value ? value.id : '',
       inspectorName: value ? value.name : ''
     }));
-    
+
     // Clear error when field is updated
     if (errors.inspectorId) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         inspectorId: undefined
       }));
@@ -216,11 +216,11 @@ const ScheduleInspection: React.FC = () => {
   const generateTitle = () => {
     const inspectionType = formValues.inspectionType;
     const supplierName = formValues.supplierName;
-    
+
     if (!inspectionType || !supplierName) return;
-    
+
     const title = `${inspectionType} - ${supplierName}`;
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       title
     }));
@@ -236,7 +236,7 @@ const ScheduleInspection: React.FC = () => {
   // Validate form
   const validateForm = () => {
     const newErrors: FormErrors = {};
-    
+
     // Required fields validation
     if (!formValues.title) newErrors.title = 'Title is required';
     if (!formValues.inspectionType) newErrors.inspectionType = 'Inspection type is required';
@@ -244,12 +244,12 @@ const ScheduleInspection: React.FC = () => {
     if (!formValues.inspectorId) newErrors.inspectorId = 'Inspector is required';
     if (!formValues.inspectionDate) newErrors.inspectionDate = 'Inspection date is required';
     if (!formValues.location) newErrors.location = 'Location is required';
-    
+
     // Date validation
     if (formValues.inspectionDate && formValues.inspectionDate < new Date()) {
       newErrors.inspectionDate = 'Inspection date cannot be in the past';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -257,7 +257,7 @@ const ScheduleInspection: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!validateForm()) {
       setSnackbar({
@@ -267,20 +267,20 @@ const ScheduleInspection: React.FC = () => {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Call API to schedule inspection (replace with actual API call)
       // await inspectionService.scheduleInspection(formValues);
-      
+
       // Show success message
       setSnackbar({
         open: true,
         message: 'Inspection scheduled successfully',
         severity: 'success'
       });
-      
+
       // Redirect to inspections list after a brief delay to show the success message
       setTimeout(() => {
         navigate('/inspections');
@@ -297,7 +297,7 @@ const ScheduleInspection: React.FC = () => {
 
   // Handle snackbar close
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   return (
@@ -306,26 +306,26 @@ const ScheduleInspection: React.FC = () => {
         title="Schedule Inspection"
         subtitle="Create a new supplier inspection"
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Inspections', href: '/inspections' },
-          { label: 'Schedule Inspection' },
-        ]}
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Inspections', href: '/inspections' },
+        { label: 'Schedule Inspection' }]
+        }
         actions={
-          <Button
-            variant="outlined"
-            startIcon={<ArrowBackIcon />}
-            onClick={() => navigate('/inspections')}
-          >
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/inspections')}>
+
             Cancel
           </Button>
-        }
-      />
+        } />
+
 
       <Card>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              {/* Basic Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="h6" gutterBottom>
                   Basic Information
@@ -342,8 +342,8 @@ const ScheduleInspection: React.FC = () => {
                   value={formValues.title}
                   onChange={handleChange}
                   error={!!errors.title}
-                  helperText={errors.title}
-                />
+                  helperText={errors.title} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -353,13 +353,13 @@ const ScheduleInspection: React.FC = () => {
                     name="inspectionType"
                     value={formValues.inspectionType}
                     label="Inspection Type"
-                    onChange={handleChange}
-                  >
-                    {inspectionTypes.map(type => (
-                      <MenuItem key={type.value} value={type.value}>
+                    onChange={handleChange}>
+
+                    {inspectionTypes.map((type) =>
+                    <MenuItem key={type.value} value={type.value}>
                         {type.label}
                       </MenuItem>
-                    ))}
+                    )}
                   </Select>
                   {errors.inspectionType && <FormHelperText>{errors.inspectionType}</FormHelperText>}
                 </FormControl>
@@ -372,13 +372,13 @@ const ScheduleInspection: React.FC = () => {
                     name="priority"
                     value={formValues.priority}
                     label="Priority"
-                    onChange={handleChange}
-                  >
-                    {priorityOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                    onChange={handleChange}>
+
+                    {priorityOptions.map((option) =>
+                    <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                    )}
                   </Select>
                   {errors.priority && <FormHelperText>{errors.priority}</FormHelperText>}
                 </FormControl>
@@ -397,45 +397,45 @@ const ScheduleInspection: React.FC = () => {
                         error: !!errors.inspectionDate,
                         helperText: errors.inspectionDate
                       }
-                    }}
-                  />
+                    }} />
+
                 </LocalizationProvider>
               </Grid>
               
               <Grid item xs={12} md={6}>
                 <Autocomplete
-                  options={suppliers.filter(s => s.status === 'active')}
+                  options={suppliers.filter((s) => s.status === 'active')}
                   getOptionLabel={(option) => option.name}
-                  value={formValues.supplierId ? suppliers.find(s => s.id === formValues.supplierId) || null : null}
+                  value={formValues.supplierId ? suppliers.find((s) => s.id === formValues.supplierId) || null : null}
                   onChange={(_, value) => handleSupplierChange(value)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Supplier"
-                      required
-                      error={!!errors.supplierId}
-                      helperText={errors.supplierId}
-                    />
-                  )}
-                />
+                  renderInput={(params) =>
+                  <TextField
+                    {...params}
+                    label="Supplier"
+                    required
+                    error={!!errors.supplierId}
+                    helperText={errors.supplierId} />
+
+                  } />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
                 <Autocomplete
                   options={inspectors}
                   getOptionLabel={(option) => `${option.name} (${option.title})`}
-                  value={formValues.inspectorId ? inspectors.find(i => i.id === formValues.inspectorId) || null : null}
+                  value={formValues.inspectorId ? inspectors.find((i) => i.id === formValues.inspectorId) || null : null}
                   onChange={(_, value) => handleInspectorChange(value)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Inspector"
-                      required
-                      error={!!errors.inspectorId}
-                      helperText={errors.inspectorId}
-                    />
-                  )}
-                />
+                  renderInput={(params) =>
+                  <TextField
+                    {...params}
+                    label="Inspector"
+                    required
+                    error={!!errors.inspectorId}
+                    helperText={errors.inspectorId} />
+
+                  } />
+
               </Grid>
               
               <Grid item xs={12}>
@@ -447,8 +447,8 @@ const ScheduleInspection: React.FC = () => {
                   value={formValues.location}
                   onChange={handleChange}
                   error={!!errors.location}
-                  helperText={errors.location || 'Physical location where the inspection will take place'}
-                />
+                  helperText={errors.location || 'Physical location where the inspection will take place'} />
+
               </Grid>
               
               <Grid item xs={12}>
@@ -459,11 +459,11 @@ const ScheduleInspection: React.FC = () => {
                   label="Description"
                   name="description"
                   value={formValues.description}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
-              {/* Checklist Template */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Checklist Template
@@ -478,14 +478,14 @@ const ScheduleInspection: React.FC = () => {
                     name="checklistTemplateId"
                     value={formValues.checklistTemplateId}
                     label="Checklist Template"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="">No Template (Create from scratch)</MenuItem>
-                    {checklistTemplates.map(template => (
-                      <MenuItem key={template.id} value={template.id}>
+                    {checklistTemplates.map((template) =>
+                    <MenuItem key={template.id} value={template.id}>
                         {template.name} ({template.itemCount} items)
                       </MenuItem>
-                    ))}
+                    )}
                   </Select>
                   <FormHelperText>
                     Select a template to pre-populate checklist items or create from scratch
@@ -493,7 +493,7 @@ const ScheduleInspection: React.FC = () => {
                 </FormControl>
               </Grid>
               
-              {/* Additional Notes */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Additional Notes
@@ -510,25 +510,25 @@ const ScheduleInspection: React.FC = () => {
                   name="notes"
                   value={formValues.notes}
                   onChange={handleChange}
-                  placeholder="Enter any additional notes or instructions for the inspector"
-                />
+                  placeholder="Enter any additional notes or instructions for the inspector" />
+
               </Grid>
               
-              {/* Submit Button */}
+              
               <Grid item xs={12} sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
                 <Button
                   variant="outlined"
                   sx={{ mr: 2 }}
-                  onClick={() => navigate('/inspections')}
-                >
+                  onClick={() => navigate('/inspections')}>
+
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   variant="contained"
                   startIcon={<CalendarIcon />}
-                  disabled={isSubmitting}
-                >
+                  disabled={isSubmitting}>
+
                   {isSubmitting ? 'Scheduling...' : 'Schedule Inspection'}
                 </Button>
               </Grid>
@@ -537,24 +537,24 @@ const ScheduleInspection: React.FC = () => {
         </CardContent>
       </Card>
       
-      {/* Snackbar for notifications */}
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default ScheduleInspection; 
+export default ScheduleInspection;

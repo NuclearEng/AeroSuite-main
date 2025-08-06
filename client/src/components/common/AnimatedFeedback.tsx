@@ -14,52 +14,52 @@ export interface AnimatedFeedbackProps extends BoxProps {
    * @default 'success'
    */
   type?: FeedbackType;
-  
+
   /**
    * Message to display
    */
   message?: string;
-  
+
   /**
    * Whether to show the feedback
    * @default true
    */
   show?: boolean;
-  
+
   /**
    * Duration in milliseconds before the feedback disappears
    * @default 3000 (0 means it won't disappear)
    */
   duration?: number;
-  
+
   /**
    * Callback when the feedback disappears
    */
   onComplete?: () => void;
-  
+
   /**
    * Whether to use a minimal design
    * @default false
    */
   minimal?: boolean;
-  
+
   /**
    * Whether to show an icon
    * @default true
    */
   showIcon?: boolean;
-  
+
   /**
    * Animation type to use
    * @default 'slideInRight'
    */
   animationType?: keyof typeof animationPresets;
-  
+
   /**
    * Custom icon to use
    */
   icon?: React.ReactNode;
-  
+
   /**
    * Children to render inside the feedback
    */
@@ -85,22 +85,22 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({
 }) => {
   const theme = useTheme();
   const [visible, setVisible] = useState(show);
-  
+
   // Handle visibility changes
   useEffect(() => {
     setVisible(show);
-    
+
     // Auto-hide after duration
     if (show && duration > 0) {
       const timer = setTimeout(() => {
         setVisible(false);
         onComplete?.();
       }, duration);
-      
+
       return () => clearTimeout(timer);
     }
   }, [show, duration, onComplete]);
-  
+
   // Get color based on type
   const getColor = () => {
     switch (type) {
@@ -116,11 +116,11 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({
         return theme.palette.success;
     }
   };
-  
+
   // Get icon based on type
-  const getIcon = () => {
+  const GetIcon = () => {
     if (icon) return icon;
-    
+
     switch (type) {
       case 'success':
         return <CheckCircleIcon />;
@@ -134,26 +134,26 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({
         return <CheckCircleIcon />;
     }
   };
-  
+
   // Get animation styles
   const animationPreset = animationPresets[animationType];
   const entryAnimation = animationPreset ? animationPreset({
     duration: 300,
     respectReducedMotion: true
   }) : {};
-  
+
   const exitAnimation = animationPresets.fadeOut ? animationPresets.fadeOut({
     duration: 200,
     respectReducedMotion: true
   }) : {};
-  
+
   // If not visible, don't render
   if (!visible && !show) {
     return null;
   }
-  
+
   const color = getColor();
-  
+
   // Minimal version
   if (minimal) {
     return (
@@ -165,19 +165,19 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({
           ...(visible ? entryAnimation : exitAnimation),
           ...sx
         }}
-        {...boxProps}
-      >
-        {showIcon && (
-          <Box sx={{ mr: 1, display: 'flex', alignItems: 'center' }}>
-            {getIcon()}
+        {...boxProps}>
+
+        {showIcon &&
+        <Box sx={{ mr: 1, display: 'flex', alignItems: 'center' }}>
+            {GetIcon()}
           </Box>
-        )}
+        }
         {message && <Typography variant="body2">{message}</Typography>}
         {children}
-      </Box>
-    );
+      </Box>);
+
   }
-  
+
   // Full version
   return (
     <Box
@@ -192,19 +192,19 @@ const AnimatedFeedback: React.FC<AnimatedFeedbackProps> = ({
         ...(visible ? entryAnimation : exitAnimation),
         ...sx
       }}
-      {...boxProps}
-    >
-      {showIcon && (
-        <Box sx={{ mr: 1.5, display: 'flex', alignItems: 'center' }}>
-          {getIcon()}
+      {...boxProps}>
+
+      {showIcon &&
+      <Box sx={{ mr: 1.5, display: 'flex', alignItems: 'center' }}>
+          {GetIcon()}
         </Box>
-      )}
+      }
       <Box sx={{ flex: 1 }}>
         {message && <Typography variant="body2">{message}</Typography>}
         {children}
       </Box>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default AnimatedFeedback; 
+export default AnimatedFeedback;

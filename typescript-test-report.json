@@ -1,19 +1,19 @@
 {
-  "timestamp": "2025-08-06T05:01:36.711Z",
+  "timestamp": "2025-08-06T05:15:42.771Z",
   "source": "stdin",
   "summary": {
     "totalErrors": 8,
     "autoFixable": 7,
-    "fixed": 0,
+    "fixed": 7,
     "remaining": 8
   },
   "errorTypes": {
     "cannotBeUsedAsJSX": 2,
-    "argumentNotAssignable": 1,
     "cannotFindName": 2,
     "noDeclarationFile": 1,
-    "implicitAny": 1,
-    "typeIsNotFunction": 1
+    "propertyDoesNotExist": 1,
+    "typeIsNotFunction": 1,
+    "implicitAny": 1
   },
   "filesAffected": 7,
   "topIssues": [
@@ -26,15 +26,15 @@
       "count": 2
     },
     {
-      "type": "argumentNotAssignable",
-      "count": 1
-    },
-    {
       "type": "noDeclarationFile",
       "count": 1
     },
     {
-      "type": "implicitAny",
+      "type": "propertyDoesNotExist",
+      "count": 1
+    },
+    {
+      "type": "typeIsNotFunction",
       "count": 1
     }
   ]

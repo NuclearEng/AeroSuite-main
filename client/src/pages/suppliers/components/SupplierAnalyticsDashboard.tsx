@@ -29,8 +29,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip
-} from '@mui/material';
+  Tooltip } from
+'@mui/material';
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
@@ -44,8 +44,8 @@ import {
   Print as PrintIcon,
   FileDownload as FileDownloadIcon,
   Refresh as RefreshIcon,
-  Info as InfoIcon
-} from '@mui/icons-material';
+  Info as InfoIcon } from
+'@mui/icons-material';
 import { useSupplierAnalytics } from '../hooks/useSupplierAnalytics';
 import SupplierPerformanceCharts from './SupplierPerformanceCharts';
 import SupplierComparisonTool from './SupplierComparisonTool';
@@ -67,21 +67,21 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`analytics-tabpanel-${index}`}
       aria-labelledby={`analytics-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ p: 3 }}>
           {children}
         </Box>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }
 
 function a11yProps(index: number) {
   return {
     id: `analytics-tab-${index}`,
-    'aria-controls': `analytics-tabpanel-${index}`,
+    'aria-controls': `analytics-tabpanel-${index}`
   };
 }
 
@@ -95,7 +95,7 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
   const [tabValue, setTabValue] = useState(0);
   const [period, setPeriod] = useState<'3months' | '6months' | '1year' | '2years'>('6months');
   const [comparisonMode, setComparisonMode] = useState(false);
-  
+
   // Use the supplier analytics hook
   const {
     analyticsData,
@@ -109,53 +109,53 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
     supplierId,
     period
   });
-  
+
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   // Handle period change
   const handlePeriodChange = (event: SelectChangeEvent) => {
     setPeriod(event.target.value as '3months' | '6months' | '1year' | '2years');
   };
-  
+
   // Toggle comparison mode
   const toggleComparisonMode = () => {
     setComparisonMode(!comparisonMode);
   };
-  
+
   // Handle refresh
   const handleRefresh = () => {
     loadAnalyticsData();
   };
-  
+
   // Handle export
   const handleExport = () => {
     // Implementation for exporting analytics data
     alert('Export functionality will be implemented');
   };
-  
+
   // Handle print
   const handlePrint = () => {
     window.print();
   };
-  
+
   // Calculate performance score
   const performanceScore = useMemo(() => {
     return calculatePerformanceScore();
   }, [calculatePerformanceScore]);
-  
+
   // Get risk level
   const riskLevel = useMemo(() => {
     return getRiskLevel();
   }, [getRiskLevel]);
-  
+
   // Get recommended actions
   const recommendedActions = useMemo(() => {
     return getRecommendedActions();
   }, [getRecommendedActions]);
-  
+
   // Get risk level color
   const getRiskLevelColor = (level: string) => {
     switch (level) {
@@ -169,16 +169,16 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
         return 'default';
     }
   };
-  
+
   // Get trend direction
   const getTrendDirection = (trend: number) => {
     if (trend > 0) return 'up';
     if (trend < 0) return 'down';
     return 'stable';
   };
-  
+
   // Get trend icon
-  const getTrendIcon = (direction: string) => {
+  const GetTrendIcon = (direction: string) => {
     switch (direction) {
       case 'up':
         return <TrendingUpIcon color="success" />;
@@ -188,20 +188,20 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
         return null;
     }
   };
-  
+
   // Render key performance indicators
-  const renderKPIs = () => {
+  const RenderKPIs = () => {
     if (!analyticsData?.metrics) {
       return (
         <Alert severity="info">
           <AlertTitle>{t('common.noData')}</AlertTitle>
           {t('suppliers.analytics.noPerformanceData')}
-        </Alert>
-      );
+        </Alert>);
+
     }
-    
+
     const { metrics } = analyticsData;
-    
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} md={3}>
@@ -218,11 +218,11 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                     size={60}
                     thickness={5}
                     color={
-                      performanceScore >= 80 ? 'success' :
-                      performanceScore >= 60 ? 'primary' :
-                      performanceScore >= 40 ? 'warning' : 'error'
-                    }
-                  />
+                    performanceScore >= 80 ? 'success' :
+                    performanceScore >= 60 ? 'primary' :
+                    performanceScore >= 40 ? 'warning' : 'error'
+                    } />
+
                   <Box
                     sx={{
                       top: 0,
@@ -232,9 +232,9 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                       position: 'absolute',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
+                      justifyContent: 'center'
+                    }}>
+
                     <Typography variant="caption" component="div" color="text.secondary">
                       {`${Math.round(performanceScore)}%`}
                     </Typography>
@@ -243,20 +243,20 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                 <Box>
                   <Typography variant="h5">
                     {performanceScore >= 80 ? t('suppliers.analytics.excellent') :
-                     performanceScore >= 60 ? t('suppliers.analytics.good') :
-                     performanceScore >= 40 ? t('suppliers.analytics.average') : t('suppliers.analytics.poor')}
+                    performanceScore >= 60 ? t('suppliers.analytics.good') :
+                    performanceScore >= 40 ? t('suppliers.analytics.average') : t('suppliers.analytics.poor')}
                   </Typography>
-                  {metrics.trend && (
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      {getTrendIcon(getTrendDirection(metrics.trend))}
+                  {metrics.trend &&
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      {GetTrendIcon(getTrendDirection(metrics.trend))}
                       <Typography variant="body2" color={
-                        metrics.trend > 0 ? 'success.main' :
-                        metrics.trend < 0 ? 'error.main' : 'text.secondary'
-                      }>
+                    metrics.trend > 0 ? 'success.main' :
+                    metrics.trend < 0 ? 'error.main' : 'text.secondary'
+                    }>
                         {metrics.trend > 0 ? '+' : ''}{metrics.trend.toFixed(1)}% {t('suppliers.analytics.vsPrevious')}
                       </Typography>
                     </Box>
-                  )}
+                  }
                 </Box>
               </Box>
             </CardContent>
@@ -280,19 +280,19 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                   variant="determinate"
                   value={metrics.quality}
                   color={metrics.quality >= 80 ? 'success' : 'warning'}
-                  sx={{ mt: 1, mb: 1, height: 8, borderRadius: 4 }}
-                />
-                {metrics.qualityTrend && (
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {getTrendIcon(getTrendDirection(metrics.qualityTrend))}
+                  sx={{ mt: 1, mb: 1, height: 8, borderRadius: 4 }} />
+
+                {metrics.qualityTrend &&
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {GetTrendIcon(getTrendDirection(metrics.qualityTrend))}
                     <Typography variant="body2" color={
-                      metrics.qualityTrend > 0 ? 'success.main' :
-                      metrics.qualityTrend < 0 ? 'error.main' : 'text.secondary'
-                    }>
+                  metrics.qualityTrend > 0 ? 'success.main' :
+                  metrics.qualityTrend < 0 ? 'error.main' : 'text.secondary'
+                  }>
                       {metrics.qualityTrend > 0 ? '+' : ''}{metrics.qualityTrend.toFixed(1)}%
                     </Typography>
                   </Box>
-                )}
+                }
               </Box>
             </CardContent>
           </Card>
@@ -315,19 +315,19 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                   variant="determinate"
                   value={metrics.delivery}
                   color={metrics.delivery >= 80 ? 'success' : 'warning'}
-                  sx={{ mt: 1, mb: 1, height: 8, borderRadius: 4 }}
-                />
-                {metrics.deliveryTrend && (
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {getTrendIcon(getTrendDirection(metrics.deliveryTrend))}
+                  sx={{ mt: 1, mb: 1, height: 8, borderRadius: 4 }} />
+
+                {metrics.deliveryTrend &&
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {GetTrendIcon(getTrendDirection(metrics.deliveryTrend))}
                     <Typography variant="body2" color={
-                      metrics.deliveryTrend > 0 ? 'success.main' :
-                      metrics.deliveryTrend < 0 ? 'error.main' : 'text.secondary'
-                    }>
+                  metrics.deliveryTrend > 0 ? 'success.main' :
+                  metrics.deliveryTrend < 0 ? 'error.main' : 'text.secondary'
+                  }>
                       {metrics.deliveryTrend > 0 ? '+' : ''}{metrics.deliveryTrend.toFixed(1)}%
                     </Typography>
                   </Box>
-                )}
+                }
               </Box>
             </CardContent>
           </Card>
@@ -341,13 +341,13 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  {riskLevel === 'high' ? (
-                    <WarningIcon color="error" sx={{ mr: 1 }} />
-                  ) : riskLevel === 'medium' ? (
-                    <WarningIcon color="warning" sx={{ mr: 1 }} />
-                  ) : (
-                    <CheckCircleIcon color="success" sx={{ mr: 1 }} />
-                  )}
+                  {riskLevel === 'high' ?
+                  <WarningIcon color="error" sx={{ mr: 1 }} /> :
+                  riskLevel === 'medium' ?
+                  <WarningIcon color="warning" sx={{ mr: 1 }} /> :
+
+                  <CheckCircleIcon color="success" sx={{ mr: 1 }} />
+                  }
                   <Typography variant="h5" sx={{ textTransform: 'capitalize' }}>
                     {t(`suppliers.analytics.risk.${riskLevel}`)}
                   </Typography>
@@ -357,61 +357,61 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                     label={t(`suppliers.analytics.risk.${riskLevel}`)}
                     color={getRiskLevelColor(riskLevel) as any}
                     size="small"
-                    sx={{ mr: 1, textTransform: 'capitalize' }}
-                  />
-                  {analyticsData.riskAssessment?.factors?.length > 0 && (
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                    sx={{ mr: 1, textTransform: 'capitalize' }} />
+
+                  {analyticsData.riskAssessment?.factors?.length > 0 &&
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                       {t('suppliers.analytics.riskFactorsIdentified', { count: analyticsData.riskAssessment.factors.length })}
                     </Typography>
-                  )}
+                  }
                 </Box>
               </Box>
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
-  
+
   // Render recommended actions
-  const renderRecommendedActions = () => {
+  const RenderRecommendedActions = () => {
     if (!recommendedActions || recommendedActions.length === 0) {
       return null;
     }
-    
+
     return (
       <Card sx={{ mt: 3 }}>
         <CardHeader title="Recommended Actions" />
         <Divider />
         <CardContent>
           <Grid container spacing={2}>
-            {recommendedActions.map((action, index) => (
-              <Grid item xs={12} md={6} key={index}>
+            {recommendedActions.map((action, index) =>
+            <Grid item xs={12} md={6} key={index}>
                 <Paper
-                  elevation={0}
-                  sx={{
-                    p: 2,
-                    bgcolor: 'background.default',
-                    border: '1px solid',
-                    borderColor: 'divider'
-                  }}
-                >
+                elevation={0}
+                sx={{
+                  p: 2,
+                  bgcolor: 'background.default',
+                  border: '1px solid',
+                  borderColor: 'divider'
+                }}>
+
                   <Typography variant="body1">{action}</Typography>
                 </Paper>
               </Grid>
-            ))}
+            )}
           </Grid>
         </CardContent>
-      </Card>
-    );
+      </Card>);
+
   };
-  
+
   // Render risk factors
-  const renderRiskFactors = () => {
+  const RenderRiskFactors = () => {
     if (!analyticsData?.riskAssessment?.factors || analyticsData.riskAssessment.factors.length === 0) {
       return null;
     }
-    
+
     return (
       <Card sx={{ mt: 3 }}>
         <CardHeader title="Risk Factors" />
@@ -427,35 +427,35 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {analyticsData.riskAssessment.factors.map((factor: { name: string; level: string; impact: string; description: string }, index: number) => (
-                <TableRow key={index}>
+              {analyticsData.riskAssessment.factors.map((factor: {name: string;level: string;impact: string;description: string;}, index: number) =>
+              <TableRow key={index}>
                   <TableCell>{factor.name}</TableCell>
                   <TableCell>
                     <Chip
-                      label={factor.level}
-                      color={getRiskLevelColor(factor.level) as any}
-                      size="small"
-                      sx={{ textTransform: 'capitalize' }}
-                    />
+                    label={factor.level}
+                    color={getRiskLevelColor(factor.level) as any}
+                    size="small"
+                    sx={{ textTransform: 'capitalize' }} />
+
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={factor.impact}
-                      color={getRiskLevelColor(factor.impact) as any}
-                      size="small"
-                      sx={{ textTransform: 'capitalize' }}
-                    />
+                    label={factor.impact}
+                    color={getRiskLevelColor(factor.impact) as any}
+                    size="small"
+                    sx={{ textTransform: 'capitalize' }} />
+
                   </TableCell>
                   <TableCell>{factor.description}</TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-      </Card>
-    );
+      </Card>);
+
   };
-  
+
   // Main render
   return (
     <ErrorHandler context={t('suppliers.analytics.dashboard')}>
@@ -477,8 +477,8 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                 id="period-select"
                 value={period}
                 onChange={handlePeriodChange}
-                label={t('common.period')}
-              >
+                label={t('common.period')}>
+
                 <MenuItem value="3months">{t('suppliers.analytics.period.3months')}</MenuItem>
                 <MenuItem value="6months">{t('suppliers.analytics.period.6months')}</MenuItem>
                 <MenuItem value="1year">{t('suppliers.analytics.period.1year')}</MenuItem>
@@ -503,36 +503,36 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
           </Box>
         </Box>
         
-        {loading ? (
-          <Box sx={{ width: '100%', p: 3 }}>
+        {loading ?
+        <Box sx={{ width: '100%', p: 3 }}>
             <LinearProgress />
             <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
               {t('suppliers.analytics.loading')}
             </Typography>
-          </Box>
-        ) : error ? (
-          <Box sx={{ p: 3 }}>
+          </Box> :
+        error ?
+        <Box sx={{ p: 3 }}>
             <Alert severity="error">
               <AlertTitle>{t('common.error')}</AlertTitle>
               {error}
             </Alert>
-          </Box>
-        ) : (
-          <>
+          </Box> :
+
+        <>
             <Box sx={{ p: 3 }}>
-              {renderKPIs()}
-              {renderRecommendedActions()}
-              {renderRiskFactors()}
+              {RenderKPIs()}
+              {RenderRecommendedActions()}
+              {RenderRiskFactors()}
             </Box>
             
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                aria-label={t('suppliers.analytics.tabs.label')}
-                variant="scrollable"
-                scrollButtons="auto"
-              >
+              value={tabValue}
+              onChange={handleTabChange}
+              aria-label={t('suppliers.analytics.tabs.label')}
+              variant="scrollable"
+              scrollButtons="auto">
+
                 <Tab label={t('suppliers.analytics.tabs.performanceTrends')} icon={<TimelineIcon />} iconPosition="start" {...a11yProps(0)} />
                 <Tab label={t('suppliers.analytics.tabs.detailedMetrics')} icon={<AssessmentIcon />} iconPosition="start" {...a11yProps(1)} />
                 <Tab label={t('suppliers.analytics.tabs.supplierComparison')} icon={<CompareArrowsIcon />} iconPosition="start" {...a11yProps(2)} />
@@ -547,8 +547,8 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
               <Typography variant="h6" gutterBottom>
                 {t('suppliers.analytics.detailedMetrics')}
               </Typography>
-              {analyticsData ? (
-                <Grid container spacing={3}>
+              {analyticsData ?
+            <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
                     <Card>
                       <CardHeader title={t('suppliers.analytics.qualityMetrics')} />
@@ -664,23 +664,23 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
                       </CardContent>
                     </Card>
                   </Grid>
-                </Grid>
-              ) : (
-                <Alert severity="info">
+                </Grid> :
+
+            <Alert severity="info">
                   <AlertTitle>{t('common.noData')}</AlertTitle>
                   {t('suppliers.analytics.noDetailedMetrics')}
                 </Alert>
-              )}
+            }
             </TabPanel>
             
             <TabPanel value={tabValue} index={2}>
               <SupplierComparisonTool currentSupplierId={supplierId} />
             </TabPanel>
           </>
-        )}
+        }
       </Paper>
-    </ErrorHandler>
-  );
+    </ErrorHandler>);
+
 };
 
-export default SupplierAnalyticsDashboard; 
+export default SupplierAnalyticsDashboard;

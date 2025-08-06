@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Snackbar, 
-  Alert, 
-  AlertTitle, 
-  Badge, 
-  IconButton, 
-  Drawer, 
-  List, 
-  ListItem, 
-  ListItemText, 
-  Typography, 
+import {
+  Box,
+  Snackbar,
+  Alert,
+  AlertTitle,
+  Badge,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
   Divider,
   Button,
   styled,
-  useTheme
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import WifiOffIcon from '@mui/icons-material/WifiOff';
 import CloudOffIcon from '@mui/icons-material/CloudOff';
 import CloudSyncIcon from '@mui/icons-material/CloudSync';
@@ -30,15 +30,15 @@ const OfflineIcon = styled(WifiOffIcon)(({ theme }) => ({
   animation: 'pulse 2s infinite',
   '@keyframes pulse': {
     '0%': {
-      opacity: 0.7,
+      opacity: 0.7
     },
     '50%': {
-      opacity: 1,
+      opacity: 1
     },
     '100%': {
-      opacity: 0.7,
-    },
-  },
+      opacity: 0.7
+    }
+  }
 }));
 
 const DrawerHeader = styled(Box)(({ theme }) => ({
@@ -47,19 +47,19 @@ const DrawerHeader = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
   padding: theme.spacing(2),
   backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.primary.contrastText
 }));
 
 const DrawerContent = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
-  width: 300,
+  width: 300
 }));
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     backgroundColor: theme.palette.warning.main,
-    color: theme.palette.warning.contrastText,
-  },
+    color: theme.palette.warning.contrastText
+  }
 }));
 
 const StatusCard = styled(Box)(({ theme }) => ({
@@ -67,7 +67,7 @@ const StatusCard = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.warning.light,
-  color: theme.palette.warning.contrastText,
+  color: theme.palette.warning.contrastText
 }));
 
 /**
@@ -94,7 +94,7 @@ const OfflineIndicator: React.FC = () => {
       try {
         const requests = await persistenceService.getPendingRequests();
         setPendingChanges(requests.length);
-        
+
         // Get database size
         const size = await persistenceService.getDatabaseSize();
         setDatabaseSize(size);
@@ -104,7 +104,7 @@ const OfflineIndicator: React.FC = () => {
     };
 
     loadPendingChanges();
-    
+
     // Set up an interval to check for pending changes
     const interval = setInterval(loadPendingChanges, 30000);
     return () => clearInterval(interval);
@@ -136,41 +136,41 @@ const OfflineIndicator: React.FC = () => {
 
   return (
     <>
-      {/* Offline indicator icon */}
+      
       <IconButton
         color="inherit"
         onClick={toggleDrawer}
-        sx={{ position: 'fixed', bottom: 16, right: 16, bgcolor: 'background.paper', boxShadow: 2, zIndex: 1000 }}
-      >
+        sx={{ position: 'fixed', bottom: 16, right: 16, bgcolor: 'background.paper', boxShadow: 2, zIndex: 1000 }}>
+
         <StyledBadge badgeContent={pendingChanges} max={99}>
           {isOffline ? <OfflineIcon /> : <CloudSyncIcon color="warning" />}
         </StyledBadge>
       </IconButton>
 
-      {/* Offline notification snackbar */}
+      
       <Snackbar
         open={showSnackbar}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      >
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+
         <Alert
           severity="warning"
           onClose={handleSnackbarClose}
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           <AlertTitle>You are offline</AlertTitle>
           The app will continue to work, but some features may be limited.
           Changes will be synced when you're back online.
         </Alert>
       </Snackbar>
 
-      {/* Offline status drawer */}
+      
       <Drawer
         anchor="right"
         open={drawerOpen}
-        onClose={toggleDrawer}
-      >
+        onClose={toggleDrawer}>
+
         <DrawerHeader>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {isOffline ? <CloudOffIcon sx={{ mr: 1 }} /> : <CloudSyncIcon sx={{ mr: 1 }} />}
@@ -189,16 +189,16 @@ const OfflineIndicator: React.FC = () => {
               {isOffline ? 'You are currently offline' : 'You are online'}
             </Typography>
             <Typography variant="body2">
-              {isOffline
-                ? 'Limited functionality is available. Changes will be synced when you reconnect.'
-                : pendingChanges > 0
-                  ? 'Changes will be synced in the background.'
-                  : 'All changes are synced.'}
+              {isOffline ?
+              'Limited functionality is available. Changes will be synced when you reconnect.' :
+              pendingChanges > 0 ?
+              'Changes will be synced in the background.' :
+              'All changes are synced.'}
             </Typography>
           </StatusCard>
 
-          {pendingChanges > 0 && (
-            <>
+          {pendingChanges > 0 &&
+          <>
               <Typography variant="subtitle1" gutterBottom>
                 Pending Changes
               </Typography>
@@ -208,7 +208,7 @@ const OfflineIndicator: React.FC = () => {
 
               <Divider sx={{ my: 2 }} />
             </>
-          )}
+          }
 
           <Typography variant="subtitle2" gutterBottom>
             Offline Storage
@@ -226,15 +226,15 @@ const OfflineIndicator: React.FC = () => {
               onClick={() => {
                 // Force sync would go here
                 toggleDrawer();
-              }}
-            >
+              }}>
+
               Force Sync Now
             </Button>
           </Box>
         </DrawerContent>
       </Drawer>
-    </>
-  );
+    </>);
+
 };
 
-export default OfflineIndicator; 
+export default OfflineIndicator;

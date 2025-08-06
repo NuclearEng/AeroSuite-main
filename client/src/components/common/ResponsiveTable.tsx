@@ -18,8 +18,8 @@ import {
   Skeleton,
   Pagination,
   TableSortLabel,
-  TablePaginationProps
-} from '@mui/material';
+  TablePaginationProps } from
+'@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useResponsive from '../../hooks/useResponsive';
@@ -63,7 +63,7 @@ export interface ResponsiveTableProps<T = any> {
     onPageChange: (page: number) => void;
   };
   sortable?: boolean;
-  initialSort?: { field: string; direction: 'asc' | 'desc' };
+  initialSort?: {field: string;direction: 'asc' | 'desc';};
   onSort?: (field: string, direction: 'asc' | 'desc') => void;
   customRowProps?: (row: T, index: number) => React.ComponentProps<typeof TableRow>;
   zebra?: boolean;
@@ -72,7 +72,7 @@ export interface ResponsiveTableProps<T = any> {
 }
 
 // Styled components
-const StyledTableContainer = styled(TableContainer)<{ maxHeight?: string | number }>(
+const StyledTableContainer = styled(TableContainer)<{maxHeight?: string | number;}>(
   ({ theme, maxHeight }) => ({
     maxHeight: maxHeight || 'none',
     borderRadius: theme.shape.borderRadius,
@@ -80,7 +80,7 @@ const StyledTableContainer = styled(TableContainer)<{ maxHeight?: string | numbe
   })
 );
 
-const StyledTable = styled(Table)<{ condensed?: boolean }>(({ theme, condensed }) => ({
+const StyledTable = styled(Table)<{condensed?: boolean;}>(({ theme, condensed }) => ({
   '& .MuiTableCell-root': {
     padding: condensed ? theme.spacing(1, 2) : theme.spacing(1.5, 2)
   }
@@ -161,7 +161,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
   const theme = useTheme();
   const { isMobile, isTablet } = useResponsive();
   const [expandedRows, setExpandedRows] = useState<Record<string | number, boolean>>(initialExpandedRows);
-  const [sort, setSort] = useState<{ field: string; direction: 'asc' | 'desc' } | undefined>(initialSort);
+  const [sort, setSort] = useState<{field: string;direction: 'asc' | 'desc';} | undefined>(initialSort);
 
   // Reset expanded rows when data changes
   useEffect(() => {
@@ -180,7 +180,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
 
   // Handle row expansion toggle
   const handleExpandRow = (key: string | number) => {
-    setExpandedRows(prev => ({
+    setExpandedRows((prev) => ({
       ...prev,
       [key]: !prev[key]
     }));
@@ -188,23 +188,23 @@ function ResponsiveTable<T extends Record<string, any> = any>({
 
   // Handle sort change
   const handleSort = (field: string) => {
-    const newDirection = 
-      sort?.field === field
-        ? sort.direction === 'asc' ? 'desc' : 'asc'
-        : 'asc';
-    
+    const newDirection =
+    sort?.field === field ?
+    sort.direction === 'asc' ? 'desc' : 'asc' :
+    'asc';
+
     const newSort = { field, direction: newDirection as 'asc' | 'desc' };
     setSort(newSort);
-    
+
     if (onSort) {
       onSort(field, newDirection as 'asc' | 'desc');
     }
   };
 
   // Filter columns based on screen size
-  const visibleColumns = columns.filter(column => 
-    !(isMobile && column.hideMobile) && 
-    !(isTablet && column.hideTablet)
+  const visibleColumns = columns.filter((column) =>
+  !(isMobile && column.hideMobile) &&
+  !(isTablet && column.hideTablet)
   );
 
   // Render loading skeleton
@@ -212,23 +212,23 @@ function ResponsiveTable<T extends Record<string, any> = any>({
     if (isMobile && cardMode) {
       return (
         <Box>
-          {Array.from(new Array(loadingRows)).map((_, index) => (
-            <MobileCard key={index}>
+          {Array.from(new Array(loadingRows)).map((_, index) =>
+          <MobileCard key={index}>
               <MobileCardHeader>
                 <Skeleton variant="text" width="60%" height={24} />
               </MobileCardHeader>
               <MobileCardBody>
-                {Array.from(new Array(3)).map((_, i) => (
-                  <MobileRow key={i}>
+                {Array.from(new Array(3)).map((_, i) =>
+              <MobileRow key={i}>
                     <Skeleton variant="text" width={100} />
                     <Skeleton variant="text" width={120} />
                   </MobileRow>
-                ))}
+              )}
               </MobileCardBody>
             </MobileCard>
-          ))}
-        </Box>
-      );
+          )}
+        </Box>);
+
     }
 
     return (
@@ -237,62 +237,62 @@ function ResponsiveTable<T extends Record<string, any> = any>({
           <TableHead>
             <TableRow>
               {expandable && <TableCell style={{ width: 40 }} />}
-              {visibleColumns.map(column => (
-                <TableCell
-                  key={column.id}
-                  align={column.align || 'left'}
-                  style={{
-                    width: column.width,
-                    minWidth: column.minWidth,
-                    maxWidth: column.maxWidth
-                  }}
-                  {...column.headerCellProps}
-                >
+              {visibleColumns.map((column) =>
+              <TableCell
+                key={column.id}
+                align={column.align || 'left'}
+                style={{
+                  width: column.width,
+                  minWidth: column.minWidth,
+                  maxWidth: column.maxWidth
+                }}
+                {...column.headerCellProps}>
+
                   {column.label}
                 </TableCell>
-              ))}
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
-            {Array.from(new Array(loadingRows)).map((_, index) => (
-              <TableRow key={index}>
-                {expandable && (
-                  <TableCell>
+            {Array.from(new Array(loadingRows)).map((_, index) =>
+            <TableRow key={index}>
+                {expandable &&
+              <TableCell>
                     <Skeleton variant="circular" width={24} height={24} />
                   </TableCell>
-                )}
-                {visibleColumns.map(column => (
-                  <TableCell key={column.id} align={column.align || 'left'}>
+              }
+                {visibleColumns.map((column) =>
+              <TableCell key={column.id} align={column.align || 'left'}>
                     <Skeleton variant="text" />
                   </TableCell>
-                ))}
+              )}
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </StyledTable>
-      </StyledTableContainer>
-    );
+      </StyledTableContainer>);
+
   }
 
   // Render empty state
   if (data.length === 0) {
     return (
-      <Box sx={{ 
-        textAlign: 'center', 
-        py: 4, 
+      <Box sx={{
+        textAlign: 'center',
+        py: 4,
         bgcolor: 'background.paper',
         borderRadius: 1,
         boxShadow: 1
       }}>
-        {typeof emptyMessage === 'string' ? (
-          <Typography variant="body1" color="text.secondary">
+        {typeof emptyMessage === 'string' ?
+        <Typography variant="body1" color="text.secondary">
             {emptyMessage}
-          </Typography>
-        ) : (
-          emptyMessage
-        )}
-      </Box>
-    );
+          </Typography> :
+
+        emptyMessage
+        }
+      </Box>);
+
   }
 
   // Mobile card-based layout
@@ -304,67 +304,67 @@ function ResponsiveTable<T extends Record<string, any> = any>({
           const isExpanded = !!expandedRows[rowKey];
 
           // Prepare onClick handler if provided
-          const handleRowClick = onRowClick 
-            ? () => onRowClick(row, rowIndex)
-            : undefined;
+          const handleRowClick = onRowClick ?
+          () => onRowClick(row, rowIndex) :
+          undefined;
 
           return (
-            <MobileCard 
-              key={rowKey} 
+            <MobileCard
+              key={rowKey}
               onClick={handleRowClick}
-              sx={{ 
+              sx={{
                 cursor: handleRowClick ? 'pointer' : 'default',
                 mb: 2
-              }}
-            >
-              {/* Show primary column as card header */}
-              {columns[0] && (
-                <MobileCardHeader>
+              }}>
+
+              
+              {columns[0] &&
+              <MobileCardHeader>
                   <Typography variant="subtitle1" component="div">
-                    {columns[0].accessor
-                      ? columns[0].accessor(row, rowIndex)
-                      : String(row[columns[0].id])}
+                    {columns[0].accessor ?
+                  columns[0].accessor(row, rowIndex) :
+                  String(row[columns[0].id])}
                   </Typography>
                 </MobileCardHeader>
-              )}
+              }
 
               <MobileCardBody>
-                {/* Show remaining columns as label-value pairs */}
-                {visibleColumns.slice(1).map(column => (
-                  <MobileRow key={column.id}>
+                
+                {visibleColumns.slice(1).map((column) =>
+                <MobileRow key={column.id}>
                     <MobileLabel variant="body2">
                       {column.label}
                     </MobileLabel>
                     <MobileValue variant="body2">
-                      {column.accessor
-                        ? column.accessor(row, rowIndex)
-                        : column.format
-                          ? column.format(row[column.id], row, rowIndex)
-                          : String(row[column.id] ?? '')}
+                      {column.accessor ?
+                    column.accessor(row, rowIndex) :
+                    column.format ?
+                    column.format(row[column.id], row, rowIndex) :
+                    String(row[column.id] ?? '')}
                     </MobileValue>
                   </MobileRow>
-                ))}
+                )}
 
-                {/* Expandable content */}
-                {expandable && renderExpandedRow && (
-                  <>
-                    <Box 
-                      sx={{ 
-                        display: 'flex', 
-                        justifyContent: 'center', 
-                        mt: 1, 
-                        borderTop: 1, 
-                        borderColor: 'divider',
-                        pt: 1
-                      }}
-                    >
-                      <IconButton 
-                        size="small" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleExpandRow(rowKey);
-                        }}
-                      >
+                
+                {expandable && renderExpandedRow &&
+                <>
+                    <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      mt: 1,
+                      borderTop: 1,
+                      borderColor: 'divider',
+                      pt: 1
+                    }}>
+
+                      <IconButton
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleExpandRow(rowKey);
+                      }}>
+
                         {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                       </IconButton>
                     </Box>
@@ -374,135 +374,135 @@ function ResponsiveTable<T extends Record<string, any> = any>({
                       </Box>
                     </Collapse>
                   </>
-                )}
+                }
               </MobileCardBody>
-            </MobileCard>
-          );
+            </MobileCard>);
+
         })}
 
-        {/* Pagination */}
-        {pagination && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+        
+        {pagination &&
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
             <Pagination
-              count={pagination.totalPages}
-              page={pagination.page}
-              onChange={(_, page) => pagination.onPageChange(page)}
-              color="primary"
-              size="small"
-            />
+            count={pagination.totalPages}
+            page={pagination.page}
+            onChange={(_, page) => pagination.onPageChange(page)}
+            color="primary"
+            size="small" />
+
           </Box>
-        )}
-      </Box>
-    );
+        }
+      </Box>);
+
   }
 
   // Standard table layout for desktop and tablet
   return (
     <Box>
       <StyledTableContainer component={Paper as any} maxHeight={maxHeight}>
-        <StyledTable 
-          stickyHeader={stickyHeader} 
+        <StyledTable
+          stickyHeader={stickyHeader}
           size={condensed ? 'small' : 'medium'}
-          condensed={condensed}
-        >
-          {(!isMobile || !hideHeaderOnMobile) && (
-            <TableHead>
+          condensed={condensed}>
+
+          {(!isMobile || !hideHeaderOnMobile) &&
+          <TableHead>
               <TableRow>
                 {expandable && <TableCell style={{ width: 40 }} />}
-                {visibleColumns.map(column => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align || 'left'}
-                    style={{
-                      width: column.width,
-                      minWidth: column.minWidth,
-                      maxWidth: column.maxWidth
-                    }}
-                    sortDirection={sort?.field === column.id ? sort.direction : false}
-                    {...column.headerCellProps}
-                  >
-                    {sortable && column.sortable !== false ? (
-                      <TableSortLabel
-                        active={sort?.field === column.id}
-                        direction={sort?.field === column.id ? sort.direction : 'asc'}
-                        onClick={() => handleSort(column.id)}
-                      >
+                {visibleColumns.map((column) =>
+              <TableCell
+                key={column.id}
+                align={column.align || 'left'}
+                style={{
+                  width: column.width,
+                  minWidth: column.minWidth,
+                  maxWidth: column.maxWidth
+                }}
+                sortDirection={sort?.field === column.id ? sort.direction : false}
+                {...column.headerCellProps}>
+
+                    {sortable && column.sortable !== false ?
+                <TableSortLabel
+                  active={sort?.field === column.id}
+                  direction={sort?.field === column.id ? sort.direction : 'asc'}
+                  onClick={() => handleSort(column.id)}>
+
                         {column.label}
-                      </TableSortLabel>
-                    ) : (
-                      column.label
-                    )}
+                      </TableSortLabel> :
+
+                column.label
+                }
                   </TableCell>
-                ))}
+              )}
               </TableRow>
             </TableHead>
-          )}
+          }
           <TableBody>
             {data.map((row, rowIndex) => {
               const rowKey = keyExtractor(row, rowIndex);
               const isExpanded = !!expandedRows[rowKey];
-              
+
               // Custom row props
               const rowProps = customRowProps ? customRowProps(row, rowIndex) : {};
-              
+
               // Background color for zebra striping
-              const backgroundColor = zebra && rowIndex % 2 === 1 
-                ? alpha(theme.palette.background.default, 0.6) 
-                : undefined;
-              
+              const backgroundColor = zebra && rowIndex % 2 === 1 ?
+              alpha(theme.palette.background.default, 0.6) :
+              undefined;
+
               return (
                 <React.Fragment key={rowKey}>
                   <TableRow
                     hover={hover}
                     onClick={onRowClick ? () => onRowClick(row, rowIndex) : undefined}
-                    sx={{ 
+                    sx={{
                       cursor: onRowClick ? 'pointer' : 'inherit',
                       backgroundColor,
                       '&.MuiTableRow-hover:hover': {
-                        backgroundColor: hover 
-                          ? alpha(theme.palette.primary.main, 0.08) 
-                          : undefined
+                        backgroundColor: hover ?
+                        alpha(theme.palette.primary.main, 0.08) :
+                        undefined
                       },
                       ...rowProps?.sx
                     }}
-                    {...rowProps}
-                  >
-                    {expandable && (
-                      <TableCell>
+                    {...rowProps}>
+
+                    {expandable &&
+                    <TableCell>
                         <IconButton
-                          aria-label="expand row"
-                          size="small"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleExpandRow(rowKey);
-                          }}
-                        >
+                        aria-label="expand row"
+                        size="small"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleExpandRow(rowKey);
+                        }}>
+
                           {isExpanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
                       </TableCell>
-                    )}
+                    }
                     
-                    {visibleColumns.map(column => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align || 'left'}
-                        {...column.cellProps}
-                      >
-                        {column.accessor
-                          ? column.accessor(row, rowIndex)
-                          : column.format
-                            ? column.format(row[column.id], row, rowIndex)
-                            : String(row[column.id] ?? '')}
+                    {visibleColumns.map((column) =>
+                    <TableCell
+                      key={column.id}
+                      align={column.align || 'left'}
+                      {...column.cellProps}>
+
+                        {column.accessor ?
+                      column.accessor(row, rowIndex) :
+                      column.format ?
+                      column.format(row[column.id], row, rowIndex) :
+                      String(row[column.id] ?? '')}
                       </TableCell>
-                    ))}
+                    )}
                   </TableRow>
                   
-                  {expandable && renderExpandedRow && (
-                    <TableRow>
+                  {expandable && renderExpandedRow &&
+                  <TableRow>
                       <TableCell
-                        style={{ paddingBottom: 0, paddingTop: 0 }}
-                        colSpan={visibleColumns.length + 1}
-                      >
+                      style={{ paddingBottom: 0, paddingTop: 0 }}
+                      colSpan={visibleColumns.length + 1}>
+
                         <Collapse in={isExpanded} timeout="auto" unmountOnExit>
                           <Box sx={{ py: 2 }}>
                             {renderExpandedRow(row, rowIndex)}
@@ -510,28 +510,28 @@ function ResponsiveTable<T extends Record<string, any> = any>({
                         </Collapse>
                       </TableCell>
                     </TableRow>
-                  )}
-                </React.Fragment>
-              );
+                  }
+                </React.Fragment>);
+
             })}
           </TableBody>
         </StyledTable>
       </StyledTableContainer>
       
-      {/* Pagination */}
-      {pagination && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+      
+      {pagination &&
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
           <Pagination
-            count={pagination.totalPages}
-            page={pagination.page}
-            onChange={(_, page) => pagination.onPageChange(page)}
-            color="primary"
-            size={isMobile ? 'small' : 'medium'}
-          />
+          count={pagination.totalPages}
+          page={pagination.page}
+          onChange={(_, page) => pagination.onPageChange(page)}
+          color="primary"
+          size={isMobile ? 'small' : 'medium'} />
+
         </Box>
-      )}
-    </Box>
-  );
+      }
+    </Box>);
+
 }
 
-export default ResponsiveTable; 
+export default ResponsiveTable;

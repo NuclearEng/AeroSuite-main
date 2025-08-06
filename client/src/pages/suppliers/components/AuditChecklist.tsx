@@ -21,14 +21,14 @@ import {
   Tab,
   Tabs,
   Alert,
-  CircularProgress
-} from '@mui/material';
+  CircularProgress } from
+'@mui/material';
 import {
   Add as AddIcon,
   FilterList as FilterListIcon,
   Search as SearchIcon,
-  InfoOutlined as InfoIcon
-} from '@mui/icons-material';
+  InfoOutlined as InfoIcon } from
+'@mui/icons-material';
 import ChecklistItemCard from './ChecklistItemCard';
 import { ChecklistItem, CATEGORY_INFO } from '../hooks/useSupplierAudit';
 
@@ -67,17 +67,17 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
   // Group checklist items by category
   const groupedItems = React.useMemo(() => {
     // Filter based on search and active tab
-    const filteredItems = checklist.filter(item => {
-      const matchesSearch = 
-        searchTerm === '' || 
-        item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()));
-      
+    const filteredItems = checklist.filter((item) => {
+      const matchesSearch =
+      searchTerm === '' ||
+      item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase());
+
       const matchesCategory = activeTab === 'all' || item.category === activeTab;
-      
+
       return matchesSearch && matchesCategory;
     });
-    
+
     // Group by category
     return filteredItems.reduce((groups, item) => {
       const category = item.category;
@@ -92,13 +92,13 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
   // Calculate stats
   const stats = React.useMemo(() => {
     const totalItems = checklist.length;
-    const completedItems = checklist.filter(item => item.score !== undefined).length;
+    const completedItems = checklist.filter((item) => item.score !== undefined).length;
     const findings = checklist.reduce((count, item) => count + (item.findings?.length || 0), 0);
-    
+
     return {
       totalItems,
       completedItems,
-      completionRate: totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0,
+      completionRate: totalItems > 0 ? Math.round(completedItems / totalItems * 100) : 0,
       findings
     };
   }, [checklist]);
@@ -115,7 +115,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
     setShowAddDialog(false);
   };
 
-  const handleNewItemChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleNewItemChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
     if (name) {
       setNewItem({
@@ -138,90 +138,90 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
   };
 
   // Render category tabs
-  const renderCategoryTabs = () => {
+  const RenderCategoryTabs = () => {
     return (
       <Tabs
         value={activeTab}
         onChange={handleTabChange}
         variant="scrollable"
         scrollButtons="auto"
-        sx={{ mb: 3 }}
-      >
+        sx={{ mb: 3 }}>
+
         <Tab label="All Categories" value="all" />
-        {Object.entries(CATEGORY_INFO).map(([key, info]) => (
-          <Tab
-            key={key}
-            label={info.label}
-            value={key}
-            sx={{
-              color: activeTab === key ? info.color : 'inherit',
-              '&.Mui-selected': {
-                color: info.color
-              }
-            }}
-          />
-        ))}
-      </Tabs>
-    );
+        {Object.entries(CATEGORY_INFO).map(([key, info]) =>
+        <Tab
+          key={key}
+          label={info.label}
+          value={key}
+          sx={{
+            color: activeTab === key ? info.color : 'inherit',
+            '&.Mui-selected': {
+              color: info.color
+            }
+          }} />
+
+        )}
+      </Tabs>);
+
   };
 
   // Render checklist content
-  const renderChecklist = () => {
+  const RenderChecklist = () => {
     if (loading) {
       return (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
           <CircularProgress />
-        </Box>
-      );
+        </Box>);
+
     }
 
     if (checklist.length === 0) {
       return (
         <Alert severity="info" sx={{ my: 2 }}>
           No checklist items available. {!readOnly && 'Add some items to get started.'}
-        </Alert>
-      );
+        </Alert>);
+
     }
 
     const categoryKeys = Object.keys(groupedItems);
-    
+
     if (categoryKeys.length === 0) {
       return (
         <Alert severity="info" sx={{ my: 2 }}>
           No items match the current filters.
-        </Alert>
-      );
+        </Alert>);
+
     }
 
     return (
       <>
-        {categoryKeys.map(category => {
+        {categoryKeys.map((category) => {
           const items = groupedItems[category];
           const categoryInfo = CATEGORY_INFO[category as keyof typeof CATEGORY_INFO] || {
             label: category,
             color: '#757575',
             icon: 'help'
           };
-          
+
           return (
             <Box key={category} sx={{ mb: 4 }}>
-              <Box sx={{ 
-                display: 'flex', 
-                alignItems: 'center', 
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
                 p: 1.5,
-                mb: 2, 
-                bgcolor: `${categoryInfo.color}10`, 
+                mb: 2,
+                bgcolor: `${categoryInfo.color}10`,
                 borderRadius: 1
               }}>
-                <Box 
-                  sx={{ 
-                    width: 16, 
-                    height: 16, 
-                    borderRadius: '50%', 
+                <Box
+                  sx={{
+                    width: 16,
+                    height: 16,
+                    borderRadius: '50%',
                     bgcolor: categoryInfo.color,
                     mr: 2
-                  }} 
-                />
+                  }} />
+
                 <Typography variant="h6" sx={{ color: categoryInfo.color }}>
                   {categoryInfo.label}
                 </Typography>
@@ -230,22 +230,22 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 </Typography>
               </Box>
               
-              {items.map(item => (
-                <ChecklistItemCard
-                  key={item._id || item.question}
-                  item={item}
-                  onUpdate={onUpdateItem}
-                  onDelete={onDeleteItem}
-                  onAddFinding={onAddFinding}
-                  onRemoveFinding={onRemoveFinding}
-                  readOnly={readOnly}
-                />
-              ))}
-            </Box>
-          );
+              {items.map((item) =>
+              <ChecklistItemCard
+                key={item._id || item.question}
+                item={item}
+                onUpdate={onUpdateItem}
+                onDelete={onDeleteItem}
+                onAddFinding={onAddFinding}
+                onRemoveFinding={onRemoveFinding}
+                readOnly={readOnly} />
+
+              )}
+            </Box>);
+
         })}
-      </>
-    );
+      </>);
+
   };
 
   return (
@@ -255,19 +255,19 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
           Audit Checklist
         </Typography>
         
-        {!readOnly && (
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddIcon />}
-            onClick={handleAddDialogOpen}
-          >
+        {!readOnly &&
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleAddDialogOpen}>
+
             Add Item
           </Button>
-        )}
+        }
       </Box>
 
-      {/* Summary statistics */}
+      
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={6} md={3}>
           <Card variant="outlined">
@@ -319,7 +319,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
         </Grid>
       </Grid>
 
-      {/* Search and filters */}
+      
       <Box sx={{ mb: 3, display: 'flex', alignItems: 'center' }}>
         <TextField
           placeholder="Search checklist items..."
@@ -331,17 +331,17 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
           InputProps={{
             startAdornment: <SearchIcon color="action" sx={{ mr: 1 }} />
           }}
-          sx={{ mr: 2 }}
-        />
+          sx={{ mr: 2 }} />
+
       </Box>
 
-      {/* Category tabs */}
-      {renderCategoryTabs()}
+      
+      {RenderCategoryTabs()}
 
-      {/* Checklist content */}
-      {renderChecklist()}
+      
+      {RenderChecklist()}
 
-      {/* Add item dialog */}
+      
       <Dialog open={showAddDialog} onClose={handleAddDialogClose} maxWidth="sm" fullWidth>
         <DialogTitle>Add Checklist Item</DialogTitle>
         <DialogContent>
@@ -353,8 +353,8 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 fullWidth
                 value={newItem.question}
                 onChange={handleNewItemChange}
-                required
-              />
+                required />
+
             </Grid>
             
             <Grid item xs={12} sm={6}>
@@ -364,13 +364,13 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                   name="category"
                   value={newItem.category}
                   onChange={handleNewItemChange}
-                  label="Category"
-                >
-                  {Object.entries(CATEGORY_INFO).map(([key, value]) => (
-                    <MenuItem key={key} value={key}>
+                  label="Category">
+
+                  {Object.entries(CATEGORY_INFO).map(([key, value]) =>
+                  <MenuItem key={key} value={key}>
                       {value.label}
                     </MenuItem>
-                  ))}
+                  )}
                 </Select>
               </FormControl>
             </Grid>
@@ -382,8 +382,8 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                   name="responseType"
                   value={newItem.responseType}
                   onChange={handleNewItemChange}
-                  label="Response Type"
-                >
+                  label="Response Type">
+
                   <MenuItem value="yes-no">Yes/No</MenuItem>
                   <MenuItem value="scale">Scale (1-5)</MenuItem>
                   <MenuItem value="text">Text</MenuItem>
@@ -400,8 +400,8 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 multiline
                 rows={2}
                 value={newItem.description}
-                onChange={handleNewItemChange}
-              />
+                onChange={handleNewItemChange} />
+
             </Grid>
             
             <Grid item xs={12} sm={6}>
@@ -412,43 +412,43 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 fullWidth
                 inputProps={{ min: 0, max: 1, step: 0.1 }}
                 value={newItem.weight}
-                onChange={handleNewItemChange}
-              />
+                onChange={handleNewItemChange} />
+
             </Grid>
             
-            {newItem.responseType === 'multiple-choice' && (
-              <Grid item xs={12}>
+            {newItem.responseType === 'multiple-choice' &&
+            <Grid item xs={12}>
                 <TextField
-                  name="options"
-                  label="Options (comma separated)"
-                  fullWidth
-                  value={newItem.options ? newItem.options.join(', ') : ''}
-                  onChange={(e) => setNewItem({
-                    ...newItem,
-                    options: e.target.value.split(',').map(opt => opt.trim())
-                  })}
-                  helperText="Enter options separated by commas"
-                />
+                name="options"
+                label="Options (comma separated)"
+                fullWidth
+                value={newItem.options ? newItem.options.join(', ') : ''}
+                onChange={(e) => setNewItem({
+                  ...newItem,
+                  options: e.target.value.split(',').map((opt) => opt.trim())
+                })}
+                helperText="Enter options separated by commas" />
+
               </Grid>
-            )}
+            }
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAddDialogClose} color="inherit">
             Cancel
           </Button>
-          <Button 
-            onClick={handleAddItem} 
-            color="primary" 
+          <Button
+            onClick={handleAddItem}
+            color="primary"
             variant="contained"
-            disabled={!newItem.question}
-          >
+            disabled={!newItem.question}>
+
             Add Item
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default AuditChecklist; 
+export default AuditChecklist;

@@ -130,8 +130,8 @@ export const completeLogin = (_loginResponse: any): void => {
  */
 export const getUserSessions = async (): Promise<any[]> => {
   try {
-    const response = await api.get('/v2/auth/sessions');
-    return response.data.sessions || [];
+    const response = await api.get<{ sessions?: any[] }>('/v2/auth/sessions');
+    return response.sessions || [];
   } catch (_error) {
     console.error('Error fetching user sessions:', _error);
     return [];

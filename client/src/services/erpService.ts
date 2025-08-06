@@ -111,7 +111,7 @@ const erpService = {
    */
   getVendors: async (params: Record<string, any> = {}) => {
     const response = await api.get('/erp/vendors', { params });
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -122,7 +122,7 @@ const erpService = {
    */
   getInventory: async (params: Record<string, any> = {}) => {
     const response = await api.get('/erp/inventory', { params });
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -133,7 +133,7 @@ const erpService = {
    */
   getPurchaseOrders: async (params: Record<string, any> = {}) => {
     const response = await api.get('/erp/purchase-orders', { params });
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -144,7 +144,7 @@ const erpService = {
    */
   getQualityInspections: async (params: Record<string, any> = {}) => {
     const response = await api.get('/erp/quality-inspections', { params });
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -155,7 +155,7 @@ const erpService = {
    */
   createVendor: async (vendor: Partial<ERPVendor>) => {
     const response = await api.post('/erp/vendors', vendor);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -167,7 +167,7 @@ const erpService = {
    */
   updateVendor: async (id: string | number, vendor: Partial<ERPVendor>) => {
     const response = await api.put(`/erp/vendors/${id}`, vendor);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -178,7 +178,7 @@ const erpService = {
    */
   createPurchaseOrder: async (purchaseOrder: Partial<ERPPurchaseOrder>) => {
     const response = await api.post('/erp/purchase-orders', purchaseOrder);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -190,7 +190,7 @@ const erpService = {
    */
   updatePurchaseOrder: async (id: string | number, purchaseOrder: Partial<ERPPurchaseOrder>) => {
     const response = await api.put(`/erp/purchase-orders/${id}`, purchaseOrder);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -201,7 +201,7 @@ const erpService = {
    */
   createQualityInspection: async (inspection: Partial<ERPQualityInspection>) => {
     const response = await api.post('/erp/quality-inspections', inspection);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -213,7 +213,7 @@ const erpService = {
    */
   updateQualityInspection: async (id: string | number, inspection: Partial<ERPQualityInspection>) => {
     const response = await api.put(`/erp/quality-inspections/${id}`, inspection);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -224,7 +224,7 @@ const erpService = {
    */
   syncSuppliersToERP: async (options: SyncOptions = {}): Promise<SyncResult> => {
     const response = await api.post('/erp/sync/suppliers/to-erp', options);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -235,7 +235,7 @@ const erpService = {
    */
   syncInspectionsToERP: async (options: SyncOptions = {}): Promise<SyncResult> => {
     const response = await api.post('/erp/sync/inspections/to-erp', options);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -246,7 +246,7 @@ const erpService = {
    */
   syncVendorsFromERP: async (options: SyncOptions = {}): Promise<SyncResult> => {
     const response = await api.post('/erp/sync/vendors/from-erp', options);
-    return response.data;
+    return (response as any).data;
   },
   
   /**
@@ -257,7 +257,7 @@ const erpService = {
    */
   syncInventoryFromERP: async (options: SyncOptions = {}): Promise<SyncResult> => {
     const response = await api.post('/erp/sync/inventory/from-erp', options);
-    return response;
+    return response as any;
   },
   
   /**
@@ -268,7 +268,7 @@ const erpService = {
    */
   syncPurchaseOrdersFromERP: async (options: SyncOptions = {}): Promise<SyncResult> => {
     const response = await api.post('/erp/sync/purchase-orders/from-erp', options);
-    return response;
+    return response as any;
   }
 };
 

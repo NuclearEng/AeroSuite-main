@@ -19,8 +19,8 @@ import {
   Grid,
   Card,
   CardActionArea,
-  CardContent
-} from '@mui/material';
+  CardContent } from
+'@mui/material';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
@@ -34,15 +34,15 @@ import {
   Share as ShareIcon,
   CheckCircle as CheckCircleIcon,
   DesignServices as DesignServicesIcon,
-  TableChart as TableChartIcon
-} from '@mui/icons-material';
-import { 
-  DataTable, 
-  FiltersToolbar, 
-  PageHeader, 
+  TableChart as TableChartIcon } from
+'@mui/icons-material';
+import {
+  DataTable,
+  FiltersToolbar,
+  PageHeader,
   StatusBadge,
-  ConfirmationDialog
-} from '../../components/common';
+  ConfirmationDialog } from
+'../../components/common';
 import { HeadCell } from '../../components/common/DataTable';
 import supplierService, { Supplier, SupplierListParams } from '../../services/supplier.service';
 import { formatDate } from '../../utils';
@@ -54,7 +54,7 @@ const SupplierList: React.FC = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  
+
   // State variables
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(false);
@@ -84,61 +84,61 @@ const SupplierList: React.FC = () => {
 
   // Filter definitions for FiltersToolbar
   const filterDefinitions = [
-    {
-      id: 'status',
-      label: 'Status',
-      type: 'select' as const,
-      options: [
-        { value: 'active', label: 'Active' },
-        { value: 'inactive', label: 'Inactive' },
-        { value: 'pending', label: 'Pending' },
-      ],
-      showClearButton: true,
-    },
-    {
-      id: 'industry',
-      label: 'Industry',
-      type: 'multiSelect' as const,
-      options: [
-        { value: 'Aerospace', label: 'Aerospace' },
-        { value: 'Aviation', label: 'Aviation' },
-        { value: 'Manufacturing', label: 'Manufacturing' },
-        { value: 'Electronics', label: 'Electronics' },
-        { value: 'Materials', label: 'Materials' },
-      ],
-    },
-    {
-      id: 'minRating',
-      label: 'Minimum Rating',
-      type: 'select' as const,
-      options: [
-        { value: '1', label: '1+ Star' },
-        { value: '2', label: '2+ Stars' },
-        { value: '3', label: '3+ Stars' },
-        { value: '4', label: '4+ Stars' },
-        { value: '4.5', label: '4.5+ Stars' },
-      ],
-      showClearButton: true,
-    },
-  ];
+  {
+    id: 'status',
+    label: 'Status',
+    type: 'select' as const,
+    options: [
+    { value: 'active', label: 'Active' },
+    { value: 'inactive', label: 'Inactive' },
+    { value: 'pending', label: 'Pending' }],
+
+    showClearButton: true
+  },
+  {
+    id: 'industry',
+    label: 'Industry',
+    type: 'multiSelect' as const,
+    options: [
+    { value: 'Aerospace', label: 'Aerospace' },
+    { value: 'Aviation', label: 'Aviation' },
+    { value: 'Manufacturing', label: 'Manufacturing' },
+    { value: 'Electronics', label: 'Electronics' },
+    { value: 'Materials', label: 'Materials' }]
+
+  },
+  {
+    id: 'minRating',
+    label: 'Minimum Rating',
+    type: 'select' as const,
+    options: [
+    { value: '1', label: '1+ Star' },
+    { value: '2', label: '2+ Stars' },
+    { value: '3', label: '3+ Stars' },
+    { value: '4', label: '4+ Stars' },
+    { value: '4.5', label: '4.5+ Stars' }],
+
+    showClearButton: true
+  }];
+
 
   // Column definitions for DataTable
   const columns: HeadCell<Supplier>[] = [
-    { 
-      id: 'name' as keyof Supplier, 
-      label: 'Supplier', 
-      numeric: false,
-      format: (value: any, row?: Supplier) => {
-        if (!row) return value;
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {row.logo ? (
-              <Avatar src={row.logo} alt={value} sx={{ mr: 2 }} />
-            ) : (
-              <Avatar sx={{ mr: 2, bgcolor: theme.palette.primary.main }}>
+  {
+    id: 'name' as keyof Supplier,
+    label: 'Supplier',
+    numeric: false,
+    format: (value: any, row?: Supplier) => {
+      if (!row) return value;
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {row.logo ?
+          <Avatar src={row.logo} alt={value} sx={{ mr: 2 }} /> :
+
+          <Avatar sx={{ mr: 2, bgcolor: theme.palette.primary.main }}>
                 {value.charAt(0)}
               </Avatar>
-            )}
+          }
             <Box>
               <Typography variant="body1" fontWeight={500}>
                 {value}
@@ -147,87 +147,87 @@ const SupplierList: React.FC = () => {
                 {row.code}
               </Typography>
             </Box>
-          </Box>
-        );
-      }
-    },
-    { 
-      id: 'industry' as keyof Supplier, 
-      label: 'Industry', 
-      numeric: false 
-    },
-    { 
-      id: 'primaryContactName' as keyof Supplier, 
-      label: 'Primary Contact', 
-      numeric: false,
-      format: (value: any, row?: Supplier) => {
-        if (!row) return value;
-        return (
-          <Box>
+          </Box>);
+
+    }
+  },
+  {
+    id: 'industry' as keyof Supplier,
+    label: 'Industry',
+    numeric: false
+  },
+  {
+    id: 'primaryContactName' as keyof Supplier,
+    label: 'Primary Contact',
+    numeric: false,
+    format: (value: any, row?: Supplier) => {
+      if (!row) return value;
+      return (
+        <Box>
             <Typography variant="body2">{value}</Typography>
             <Typography variant="caption" color="text.secondary">
               {row.primaryContactEmail}
             </Typography>
-          </Box>
-        );
+          </Box>);
+
+    }
+  },
+  {
+    id: 'overallRating' as keyof Supplier,
+    label: 'Rating',
+    numeric: true,
+    format: (value: any) => {
+      if (!value) {
+        return <Typography variant="body2" color="text.secondary">N/A</Typography>;
       }
-    },
-    { 
-      id: 'overallRating' as keyof Supplier, 
-      label: 'Rating', 
-      numeric: true,
-      format: (value: any) => {
-        if (!value) {
-          return <Typography variant="body2" color="text.secondary">N/A</Typography>;
-        }
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Rating value={value} precision={0.1} readOnly size="small" />
             <Typography variant="body2" sx={{ ml: 1 }}>
               {value.toFixed(1)}
             </Typography>
-          </Box>
-        );
-      }
-    },
-    { 
-      id: 'status' as keyof Supplier, 
-      label: 'Status', 
-      numeric: false,
-      format: (value: any) => {
-        return <StatusBadge status={value as any} />;
-      }
-    },
-  ];
+          </Box>);
+
+    }
+  },
+  {
+    id: 'status' as keyof Supplier,
+    label: 'Status',
+    numeric: false,
+    format: (value: any) => {
+      return <StatusBadge status={value as any} />;
+    }
+  }];
+
 
   // Load suppliers with filtering, pagination, etc.
   const loadSuppliers = async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Build params from filters
       const params: SupplierListParams = {
         page: page + 1, // API uses 1-based indexing
         limit: rowsPerPage,
-        search: searchTerm,
+        search: searchTerm
       };
-      
+
       // Add active filters to params
-      activeFilters.forEach(filter => {
+      activeFilters.forEach((filter) => {
         if (filter.id === 'status') {
           params.status = filter.value;
         } else if (filter.id === 'industry') {
-          params.industry = Array.isArray(filter.value) 
-            ? filter.value.join(',') 
-            : filter.value;
+          params.industry = Array.isArray(filter.value) ?
+          filter.value.join(',') :
+          filter.value;
         } else if (filter.id === 'minRating') {
           params.minRating = Number(filter.value);
         }
       });
-      
+
       const response = await supplierService.getSuppliers(params);
-      
+
       setSuppliers(response.suppliers);
       setTotalCount(response.total);
     } catch (err: any) {
@@ -286,7 +286,7 @@ const SupplierList: React.FC = () => {
   const handleSupplierSaved = (supplier: Supplier) => {
     // Refresh the supplier list
     loadSuppliers();
-    
+
     // Show success message
     setSnackbar({
       open: true,
@@ -303,16 +303,16 @@ const SupplierList: React.FC = () => {
 
   const handleDeleteConfirm = async () => {
     if (!supplierToDelete) return;
-    
+
     try {
       setLoading(true);
       await supplierService.deleteSupplier(supplierToDelete);
-      
+
       // Remove from state
-      setSuppliers(prevSuppliers => 
-        prevSuppliers.filter(s => s._id !== supplierToDelete)
+      setSuppliers((prevSuppliers) =>
+      prevSuppliers.filter((s) => s._id !== supplierToDelete)
       );
-      
+
       // Show success message
       setSnackbar({
         open: true,
@@ -334,7 +334,7 @@ const SupplierList: React.FC = () => {
   };
 
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -359,7 +359,7 @@ const SupplierList: React.FC = () => {
         }
         // Validate required columns
         const columns = Object.keys(result.data[0] || {});
-        const missing = REQUIRED_COLUMNS.filter(col => !columns.includes(col));
+        const missing = REQUIRED_COLUMNS.filter((col) => !columns.includes(col));
         if (missing.length > 0) {
           setImportError(`Missing required columns: ${missing.join(', ')}`);
           return;
@@ -383,67 +383,67 @@ const SupplierList: React.FC = () => {
         title="Suppliers"
         subtitle="Manage your suppliers and vendor relationships"
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Suppliers' },
-        ]}
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Suppliers' }]
+        }
         actions={
-          <Box>
+        <Box>
             <Button
-              variant="outlined"
-              startIcon={<AssessmentIcon />}
-              component={RouterLink}
-              to="/suppliers/risk-assessment"
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<AssessmentIcon />}
+            component={RouterLink}
+            to="/suppliers/risk-assessment"
+            sx={{ mr: 1 }}>
+
               Risk Assessment
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<BarChartIcon />}
-              component={RouterLink}
-              to="/suppliers/analytics"
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<BarChartIcon />}
+            component={RouterLink}
+            to="/suppliers/analytics"
+            sx={{ mr: 1 }}>
+
               Analytics
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<CheckCircleIcon />}
-              component={RouterLink}
-              to="/suppliers/audit-checklist"
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<CheckCircleIcon />}
+            component={RouterLink}
+            to="/suppliers/audit-checklist"
+            sx={{ mr: 1 }}>
+
               Audit Checklist
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<DesignServicesIcon />}
-              component={RouterLink}
-              to="/suppliers/enhanced-form"
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<DesignServicesIcon />}
+            component={RouterLink}
+            to="/suppliers/enhanced-form"
+            sx={{ mr: 1 }}>
+
               Enhanced Form
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<TableChartIcon />}
-              component={RouterLink}
-              to="/suppliers/enhanced-table"
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<TableChartIcon />}
+            component={RouterLink}
+            to="/suppliers/enhanced-table"
+            sx={{ mr: 1 }}>
+
               Enhanced Table
             </Button>
             <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AddIcon />}
-              onClick={handleCreateSupplier}
-            >
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleCreateSupplier}>
+
               {isMobile ? 'Add' : 'Add Supplier'}
             </Button>
           </Box>
-        }
-      />
+        } />
+
 
       <FiltersToolbar
         filters={filterDefinitions}
@@ -456,16 +456,16 @@ const SupplierList: React.FC = () => {
         showActiveFilters
         showFilterButton
         collapsible
-        defaultCollapsed
-      />
+        defaultCollapsed />
+
 
       <Box sx={{ mb: 2 }}>
         <Button
           variant="outlined"
           startIcon={<ImportIcon />}
           component="label"
-          sx={{ mr: 2 }}
-        >
+          sx={{ mr: 2 }}>
+
           Import Suppliers
           <input type="file" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden onChange={handleFileImport} />
         </Button>
@@ -482,24 +482,24 @@ const SupplierList: React.FC = () => {
         error={error || undefined}
         refetch={loadSuppliers}
         actions={[
-          {
-            label: 'Edit',
-            onClick: (selectedRows) => handleEditSupplier(selectedRows[0]),
-            icon: <EditIcon />,
-            color: 'primary',
-          },
-          {
-            label: 'Delete',
-            onClick: (selectedRows) => handleDeleteClick(selectedRows[0]),
-            icon: <DeleteIcon />,
-            color: 'error',
-          },
-        ]}
+        {
+          label: 'Edit',
+          onClick: (selectedRows) => handleEditSupplier(selectedRows[0]),
+          icon: <EditIcon />,
+          color: 'primary'
+        },
+        {
+          label: 'Delete',
+          onClick: (selectedRows) => handleDeleteClick(selectedRows[0]),
+          icon: <DeleteIcon />,
+          color: 'error'
+        }]
+        }
         emptyStateMessage="No suppliers found. Add your first supplier to get started."
-        rowsPerPageOptions={[10, 25, 50, 100]}
-      />
+        rowsPerPageOptions={[10, 25, 50, 100]} />
 
-      {/* Delete Confirmation Dialog */}
+
+      
       <ConfirmationDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
@@ -508,25 +508,25 @@ const SupplierList: React.FC = () => {
         message="Are you sure you want to delete this supplier? This action cannot be undone."
         confirmButtonText="Delete"
         type="delete"
-        loading={loading}
-      />
+        loading={loading} />
 
-      {/* Snackbar for notifications */}
-      <Snackbar 
-        open={snackbar.open} 
-        autoHideDuration={6000} 
-        onClose={handleCloseSnackbar}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+
+      
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
-          variant="filled"
-        >
+          variant="filled">
+
           {snackbar.message}
         </Alert>
       </Snackbar>
 
-      {/* Analytics Cards */}
+      
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} md={4}>
           <Card variant="outlined">
@@ -577,25 +577,25 @@ const SupplierList: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Create Supplier Modal */}
+      
       <SupplierFormModal
         open={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
-        onSave={handleSupplierSaved}
-      />
+        onSave={handleSupplierSaved} />
+
       
-      {/* Edit Supplier Modal */}
+      
       <SupplierFormModal
         open={editModalOpen}
         onClose={() => setEditModalOpen(false)}
         onSave={handleSupplierSaved}
         isEdit
-        supplierId={currentSupplier?._id}
-      />
+        supplierId={currentSupplier?._id} />
+
 
       <SupplierImportExport />
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default SupplierList; 
+export default SupplierList;

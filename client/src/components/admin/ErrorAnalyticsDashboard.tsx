@@ -26,8 +26,8 @@ import {
   Tooltip,
   CircularProgress,
   Alert,
-  AlertTitle
-} from '@mui/material';
+  AlertTitle } from
+'@mui/material';
 import {
   Refresh as RefreshIcon,
   FilterList as FilterListIcon,
@@ -35,8 +35,8 @@ import {
   BugReport as BugIcon,
   Warning as WarningIcon,
   Error as ErrorIcon,
-  Info as InfoIcon
-} from '@mui/icons-material';
+  Info as InfoIcon } from
+'@mui/icons-material';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -50,8 +50,8 @@ import {
   Legend,
   PieController,
   LineController,
-  BarController
-} from 'chart.js';
+  BarController } from
+'chart.js';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 import { formatLocalizedDate, formatLocalizedDateTime } from '../../utils/formatters';
 
@@ -155,67 +155,67 @@ const mockErrorAnalyticsData: ErrorAnalyticsData = {
     data: [12, 19, 15, 25, 22, 30, 33]
   },
   recentErrors: [
-    {
-      id: '1',
-      message: 'Cannot read property \'data\' of undefined',
-      url: '/suppliers',
-      timestamp: '2023-07-15T10:23:45Z',
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-      errorType: 'TypeError',
-      errorSource: 'React Component',
-      browser: 'Chrome',
-      os: 'Windows',
-      device: 'Desktop'
-    },
-    {
-      id: '2',
-      message: 'Network request failed',
-      url: '/customers',
-      timestamp: '2023-07-15T09:45:12Z',
-      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15',
-      errorType: 'NetworkError',
-      errorSource: 'API Call',
-      browser: 'Safari',
-      os: 'macOS',
-      device: 'Desktop'
-    },
-    {
-      id: '3',
-      message: 'Expected identifier',
-      url: '/inspections',
-      timestamp: '2023-07-14T16:30:22Z',
-      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1',
-      errorType: 'SyntaxError',
-      errorSource: 'External Library',
-      browser: 'Safari',
-      os: 'iOS',
-      device: 'Mobile'
-    },
-    {
-      id: '4',
-      message: 'x is not defined',
-      url: '/dashboard',
-      timestamp: '2023-07-14T14:15:30Z',
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
-      errorType: 'ReferenceError',
-      errorSource: 'Event Handler',
-      browser: 'Firefox',
-      os: 'Windows',
-      device: 'Desktop'
-    },
-    {
-      id: '5',
-      message: 'Failed to fetch',
-      url: '/reports',
-      timestamp: '2023-07-14T11:05:18Z',
-      userAgent: 'Mozilla/5.0 (Linux; Android 11; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
-      errorType: 'NetworkError',
-      errorSource: 'API Call',
-      browser: 'Chrome',
-      os: 'Android',
-      device: 'Mobile'
-    }
-  ]
+  {
+    id: '1',
+    message: 'Cannot read property \'data\' of undefined',
+    url: '/suppliers',
+    timestamp: '2023-07-15T10:23:45Z',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    errorType: 'TypeError',
+    errorSource: 'React Component',
+    browser: 'Chrome',
+    os: 'Windows',
+    device: 'Desktop'
+  },
+  {
+    id: '2',
+    message: 'Network request failed',
+    url: '/customers',
+    timestamp: '2023-07-15T09:45:12Z',
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15',
+    errorType: 'NetworkError',
+    errorSource: 'API Call',
+    browser: 'Safari',
+    os: 'macOS',
+    device: 'Desktop'
+  },
+  {
+    id: '3',
+    message: 'Expected identifier',
+    url: '/inspections',
+    timestamp: '2023-07-14T16:30:22Z',
+    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1',
+    errorType: 'SyntaxError',
+    errorSource: 'External Library',
+    browser: 'Safari',
+    os: 'iOS',
+    device: 'Mobile'
+  },
+  {
+    id: '4',
+    message: 'x is not defined',
+    url: '/dashboard',
+    timestamp: '2023-07-14T14:15:30Z',
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
+    errorType: 'ReferenceError',
+    errorSource: 'Event Handler',
+    browser: 'Firefox',
+    os: 'Windows',
+    device: 'Desktop'
+  },
+  {
+    id: '5',
+    message: 'Failed to fetch',
+    url: '/reports',
+    timestamp: '2023-07-14T11:05:18Z',
+    userAgent: 'Mozilla/5.0 (Linux; Android 11; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
+    errorType: 'NetworkError',
+    errorSource: 'API Call',
+    browser: 'Chrome',
+    os: 'Android',
+    device: 'Mobile'
+  }]
+
 };
 
 // Error severity mapping
@@ -233,7 +233,7 @@ const getSeverityColor = (errorType: string): 'error' | 'warning' | 'info' | 'de
 };
 
 // Error icon mapping
-const getErrorIcon = (errorType: string) => {
+const GetErrorIcon = (errorType: string) => {
   switch (errorType) {
     case 'TypeError':
     case 'ReferenceError':
@@ -256,23 +256,23 @@ const ErrorAnalyticsDashboard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [analyticsData, setAnalyticsData] = useState<ErrorAnalyticsData | null>(null);
   const [timePeriod, setTimePeriod] = useState<TimePeriod>('7d');
-  
+
   // Load error analytics data
   useEffect(() => {
     loadErrorAnalytics();
   }, [timePeriod]);
-  
+
   // Function to load error analytics
   const loadErrorAnalytics = async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // In a real application, this would be an API call
       // const response = await fetch(`/api/monitoring/error-analytics?period=${timePeriod}`);
       // const data = await response.json();
       // setAnalyticsData(data);
-      
+
       // Using mock data for development
       setTimeout(() => {
         setAnalyticsData(mockErrorAnalyticsData);
@@ -283,109 +283,109 @@ const ErrorAnalyticsDashboard: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Handle time period change
   const handlePeriodChange = (event: SelectChangeEvent) => {
     setTimePeriod(event.target.value as TimePeriod);
   };
-  
+
   // Handle refresh
   const handleRefresh = () => {
     loadErrorAnalytics();
   };
-  
+
   // Handle export
   const handleExport = () => {
     // Implementation for exporting error analytics data
     alert(t('errorAnalytics.exportNotImplemented'));
   };
-  
+
   // Prepare chart data for errors by type
   const errorsByTypeChartData = {
     labels: analyticsData ? Object.keys(analyticsData.errorsByType) : [],
     datasets: [
-      {
-        label: t('errorAnalytics.errorCount'),
-        data: analyticsData ? Object.values(analyticsData.errorsByType) : [],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(255, 159, 64, 0.6)',
-          'rgba(255, 205, 86, 0.6)',
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(54, 162, 235, 0.6)'
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)'
-        ],
-        borderWidth: 1
-      }
-    ]
+    {
+      label: t('errorAnalytics.errorCount'),
+      data: analyticsData ? Object.values(analyticsData.errorsByType) : [],
+      backgroundColor: [
+      'rgba(255, 99, 132, 0.6)',
+      'rgba(255, 159, 64, 0.6)',
+      'rgba(255, 205, 86, 0.6)',
+      'rgba(75, 192, 192, 0.6)',
+      'rgba(54, 162, 235, 0.6)'],
+
+      borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)'],
+
+      borderWidth: 1
+    }]
+
   };
-  
+
   // Prepare chart data for errors by source
   const errorsBySourceChartData = {
     labels: analyticsData ? Object.keys(analyticsData.errorsBySource) : [],
     datasets: [
-      {
-        label: t('errorAnalytics.errorCount'),
-        data: analyticsData ? Object.values(analyticsData.errorsBySource) : [],
-        backgroundColor: [
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(255, 205, 86, 0.6)',
-          'rgba(255, 159, 64, 0.6)',
-          'rgba(255, 99, 132, 0.6)'
-        ],
-        borderColor: [
-          'rgb(54, 162, 235)',
-          'rgb(75, 192, 192)',
-          'rgb(255, 205, 86)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 99, 132)'
-        ],
-        borderWidth: 1
-      }
-    ]
+    {
+      label: t('errorAnalytics.errorCount'),
+      data: analyticsData ? Object.values(analyticsData.errorsBySource) : [],
+      backgroundColor: [
+      'rgba(54, 162, 235, 0.6)',
+      'rgba(75, 192, 192, 0.6)',
+      'rgba(255, 205, 86, 0.6)',
+      'rgba(255, 159, 64, 0.6)',
+      'rgba(255, 99, 132, 0.6)'],
+
+      borderColor: [
+      'rgb(54, 162, 235)',
+      'rgb(75, 192, 192)',
+      'rgb(255, 205, 86)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 99, 132)'],
+
+      borderWidth: 1
+    }]
+
   };
-  
+
   // Prepare chart data for errors trend
   const errorsTrendChartData = {
     labels: analyticsData?.errorsTrend.labels || [],
     datasets: [
-      {
-        label: t('errorAnalytics.errorCount'),
-        data: analyticsData?.errorsTrend.data || [],
-        fill: false,
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }
-    ]
+    {
+      label: t('errorAnalytics.errorCount'),
+      data: analyticsData?.errorsTrend.data || [],
+      fill: false,
+      backgroundColor: 'rgba(75, 192, 192, 0.6)',
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1
+    }]
+
   };
-  
+
   // Render loading state
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
-  
+
   // Render error state
   if (error) {
     return (
       <Alert severity="error">
         <AlertTitle>{t('common.error')}</AlertTitle>
         {error}
-      </Alert>
-    );
+      </Alert>);
+
   }
-  
+
   return (
     <Box sx={{ mb: 4 }}>
       <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -401,8 +401,8 @@ const ErrorAnalyticsDashboard: React.FC = () => {
               id="time-period-select"
               value={timePeriod}
               label={t('errorAnalytics.period')}
-              onChange={handlePeriodChange}
-            >
+              onChange={handlePeriodChange}>
+
               <MenuItem value="24h">{t('errorAnalytics.last24Hours')}</MenuItem>
               <MenuItem value="7d">{t('errorAnalytics.last7Days')}</MenuItem>
               <MenuItem value="30d">{t('errorAnalytics.last30Days')}</MenuItem>
@@ -425,9 +425,9 @@ const ErrorAnalyticsDashboard: React.FC = () => {
         </Box>
       </Box>
       
-      {analyticsData && (
-        <>
-          {/* Summary Cards */}
+      {analyticsData &&
+      <>
+          
           <Grid container spacing={3} sx={{ mb: 3 }}>
             <Grid item xs={12} sm={6} md={3}>
               <Card>
@@ -449,7 +449,7 @@ const ErrorAnalyticsDashboard: React.FC = () => {
                     {t('errorAnalytics.topErrorType')}
                   </Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                    {getErrorIcon(Object.keys(analyticsData.errorsByType)[0])}
+                    {GetErrorIcon(Object.keys(analyticsData.errorsByType)[0])}
                     <Typography variant="h6" component="div" sx={{ ml: 1 }}>
                       {Object.keys(analyticsData.errorsByType)[0]}
                     </Typography>
@@ -485,7 +485,7 @@ const ErrorAnalyticsDashboard: React.FC = () => {
             </Grid>
           </Grid>
           
-          {/* Charts */}
+          
           <Grid container spacing={3} sx={{ mb: 3 }}>
             <Grid item xs={12} md={8}>
               <Card>
@@ -517,17 +517,17 @@ const ErrorAnalyticsDashboard: React.FC = () => {
                 <Divider />
                 <CardContent>
                   <Box sx={{ height: 300 }}>
-                    <Bar 
-                      data={errorsBySourceChartData} 
-                      options={{ 
-                        maintainAspectRatio: false,
-                        scales: {
-                          y: {
-                            beginAtZero: true
-                          }
+                    <Bar
+                    data={errorsBySourceChartData}
+                    options={{
+                      maintainAspectRatio: false,
+                      scales: {
+                        y: {
+                          beginAtZero: true
                         }
-                      }} 
-                    />
+                      }
+                    }} />
+
                   </Box>
                 </CardContent>
               </Card>
@@ -539,46 +539,46 @@ const ErrorAnalyticsDashboard: React.FC = () => {
                 <Divider />
                 <CardContent>
                   <Box sx={{ height: 300 }}>
-                    <Bar 
-                      data={{
-                        labels: Object.keys(analyticsData.errorsByBrowser),
-                        datasets: [{
-                          label: t('errorAnalytics.errorCount'),
-                          data: Object.values(analyticsData.errorsByBrowser),
-                          backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                          borderColor: 'rgb(54, 162, 235)',
-                          borderWidth: 1
-                        }]
-                      }} 
-                      options={{ 
-                        maintainAspectRatio: false,
-                        scales: {
-                          y: {
-                            beginAtZero: true
-                          }
+                    <Bar
+                    data={{
+                      labels: Object.keys(analyticsData.errorsByBrowser),
+                      datasets: [{
+                        label: t('errorAnalytics.errorCount'),
+                        data: Object.values(analyticsData.errorsByBrowser),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        borderWidth: 1
+                      }]
+                    }}
+                    options={{
+                      maintainAspectRatio: false,
+                      scales: {
+                        y: {
+                          beginAtZero: true
                         }
-                      }} 
-                    />
+                      }
+                    }} />
+
                   </Box>
                 </CardContent>
               </Card>
             </Grid>
           </Grid>
           
-          {/* Recent Errors Table */}
+          
           <Card>
-            <CardHeader 
-              title={t('errorAnalytics.recentErrors')} 
-              action={
-                <Button
-                  variant="outlined"
-                  size="small"
-                  startIcon={<FilterListIcon />}
-                >
+            <CardHeader
+            title={t('errorAnalytics.recentErrors')}
+            action={
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<FilterListIcon />}>
+
                   {t('common.filter')}
                 </Button>
-              }
-            />
+            } />
+
             <Divider />
             <TableContainer>
               <Table>
@@ -593,15 +593,15 @@ const ErrorAnalyticsDashboard: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {analyticsData.recentErrors.map((error) => (
-                    <TableRow key={error.id} hover>
+                  {analyticsData.recentErrors.map((error) =>
+                <TableRow key={error.id} hover>
                       <TableCell>
                         <Chip
-                          icon={getErrorIcon(error.errorType || 'Other')}
-                          label={error.errorType || 'Unknown'}
-                          color={getSeverityColor(error.errorType || 'Other')}
-                          size="small"
-                        />
+                      icon={GetErrorIcon(error.errorType || 'Other')}
+                      label={error.errorType || 'Unknown'}
+                      color={getSeverityColor(error.errorType || 'Other')}
+                      size="small" />
+
                       </TableCell>
                       <TableCell>
                         <Tooltip title={error.message}>
@@ -621,15 +621,15 @@ const ErrorAnalyticsDashboard: React.FC = () => {
                       <TableCell>{`${error.browser} / ${error.os}`}</TableCell>
                       <TableCell>{formatLocalizedDateTime(error.timestamp)}</TableCell>
                     </TableRow>
-                  ))}
+                )}
                 </TableBody>
               </Table>
             </TableContainer>
           </Card>
         </>
-      )}
-    </Box>
-  );
+      }
+    </Box>);
+
 };
 
-export default ErrorAnalyticsDashboard; 
+export default ErrorAnalyticsDashboard;

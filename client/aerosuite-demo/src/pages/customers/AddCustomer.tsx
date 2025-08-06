@@ -14,13 +14,13 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  FormHelperText
-} from '@mui/material';
+  FormHelperText } from
+'@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   Save as SaveIcon,
-  LocationOn as LocationIcon
-} from '@mui/icons-material';
+  LocationOn as LocationIcon } from
+'@mui/icons-material';
 import MockDataService from '../../services/mockDataService';
 import type { Customer } from '../../services/mockDataService';
 
@@ -55,21 +55,21 @@ const AddCustomer: React.FC = () => {
     contactEmail: '',
     contactPhone: ''
   });
-  
+
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -78,7 +78,7 @@ const AddCustomer: React.FC = () => {
 
   const handleSelectChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -86,19 +86,19 @@ const AddCustomer: React.FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Customer name is required';
     }
-    
+
     if (!formData.code.trim()) {
       newErrors.code = 'Customer code is required';
     }
-    
+
     if (formData.contactEmail && !/^\S+@\S+\.\S+$/.test(formData.contactEmail)) {
       newErrors.contactEmail = 'Invalid email address';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -110,8 +110,8 @@ const AddCustomer: React.FC = () => {
       // Generate random-ish coordinates for demonstration
       const lat = (Math.random() * 10 + 30).toFixed(6); // Random latitude around 30-40
       const lng = (Math.random() * 10 - 100).toFixed(6); // Random longitude around -90 to -100
-      
-      setFormData(prev => ({
+
+      setFormData((prev) => ({
         ...prev,
         latitude: lat,
         longitude: lng
@@ -124,11 +124,11 @@ const AddCustomer: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     try {
       // Create customer object
       const newCustomer: Partial<Customer> = {
@@ -147,13 +147,13 @@ const AddCustomer: React.FC = () => {
           lng: parseFloat(formData.longitude)
         } : undefined
       };
-      
+
       // Add the customer to mock data service
       MockDataService.addCustomer(newCustomer as Customer);
-      
+
       // Show success message
       setSubmitSuccess(true);
-      
+
       // Redirect after a short delay
       setTimeout(() => {
         navigate('/customers');
@@ -175,21 +175,21 @@ const AddCustomer: React.FC = () => {
         </Typography>
       </Box>
 
-      {submitSuccess && (
-        <Alert severity="success" sx={{ mb: 3 }}>
+      {submitSuccess &&
+      <Alert severity="success" sx={{ mb: 3 }}>
           Customer added successfully!
         </Alert>
-      )}
+      }
 
-      {submitError && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {submitError &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {submitError}
         </Alert>
-      )}
+      }
 
       <Paper component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
         <Grid container spacing={3}>
-          {/* Basic Information */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom>
               Basic Information
@@ -207,8 +207,8 @@ const AddCustomer: React.FC = () => {
               helperText={errors.name}
               fullWidth
               required
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
             
             <TextField
               name="code"
@@ -219,8 +219,8 @@ const AddCustomer: React.FC = () => {
               helperText={errors.code}
               fullWidth
               required
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
             
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel id="industry-label">Industry</InputLabel>
@@ -229,8 +229,8 @@ const AddCustomer: React.FC = () => {
                 name="industry"
                 value={formData.industry}
                 onChange={handleSelectChange}
-                label="Industry"
-              >
+                label="Industry">
+
                 <MenuItem value="Aerospace">Aerospace</MenuItem>
                 <MenuItem value="Aviation">Aviation</MenuItem>
                 <MenuItem value="Defense">Defense</MenuItem>
@@ -249,14 +249,14 @@ const AddCustomer: React.FC = () => {
                 value={formData.location}
                 onChange={handleInputChange}
                 fullWidth
-                sx={{ mr: 1 }}
-              />
-              <Button 
-                variant="outlined" 
+                sx={{ mr: 1 }} />
+
+              <Button
+                variant="outlined"
                 startIcon={<LocationIcon />}
                 onClick={handleGetCoordinates}
-                sx={{ minWidth: '160px', height: '56px' }}
-              >
+                sx={{ minWidth: '160px', height: '56px' }}>
+
                 Get Coordinates
               </Button>
             </Box>
@@ -267,19 +267,19 @@ const AddCustomer: React.FC = () => {
                 label="Latitude"
                 value={formData.latitude}
                 onChange={handleInputChange}
-                fullWidth
-              />
+                fullWidth />
+
               <TextField
                 name="longitude"
                 label="Longitude"
                 value={formData.longitude}
                 onChange={handleInputChange}
-                fullWidth
-              />
+                fullWidth />
+
             </Box>
           </Grid>
           
-          {/* Contact Information */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
               Contact Information
@@ -294,8 +294,8 @@ const AddCustomer: React.FC = () => {
               value={formData.contactName}
               onChange={handleInputChange}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
@@ -307,8 +307,8 @@ const AddCustomer: React.FC = () => {
               error={!!errors.contactEmail}
               helperText={errors.contactEmail}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
@@ -318,32 +318,32 @@ const AddCustomer: React.FC = () => {
               value={formData.contactPhone}
               onChange={handleInputChange}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
-          {/* Submit Buttons */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
               <Button
                 variant="outlined"
-                onClick={() => navigate('/customers')}
-              >
+                onClick={() => navigate('/customers')}>
+
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 startIcon={<SaveIcon />}
-                type="submit"
-              >
+                type="submit">
+
                 Add Customer
               </Button>
             </Box>
           </Grid>
         </Grid>
       </Paper>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default AddCustomer; 
+export default AddCustomer;

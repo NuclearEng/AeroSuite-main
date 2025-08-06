@@ -24,10 +24,10 @@ const defaultAuthContext: AuthContextType = {
     id: '1',
     name: 'Test User',
     email: 'test@example.com',
-    roles: ['user'],
+    roles: ['user']
   },
   login: () => {},
-  logout: () => {},
+  logout: () => {}
 };
 
 export const AuthContext = React.createContext<AuthContextType>(defaultAuthContext);
@@ -41,7 +41,7 @@ interface ProtectedRouteProps {
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   isAuthenticated,
   authenticationPath,
-  outlet,
+  outlet
 }) => {
   if (isAuthenticated) {
     return outlet;
@@ -67,35 +67,35 @@ interface ExtendedRenderResult extends RenderResult {
   history: History;
   getNavigationHistory: () => string[];
   getQueryParams: () => Record<string, string | number | boolean | null>;
-  getAuthStatus: () => { isAuthenticated: boolean; roles: string[]; hasRequiredRole: boolean };
+  getAuthStatus: () => {isAuthenticated: boolean;roles: string[];hasRequiredRole: boolean;};
 }
 
 export const renderWithAdvancedRouter = (
-  ui: React.ReactElement,
-  {
-    path = '/',
-    route = '/',
-    initialEntries = ['/'],
-    initialIndex = 0,
-    isAuthenticated = true,
-    authenticationPath = '/login',
-    roles = ['user'],
-    requiredRole = '',
-    queryParams = {},
-    history = createMemoryHistory({ initialEntries, initialIndex }),
-    ...renderOptions
-  }: AdvancedRouterOptions & Omit<RenderOptions, 'wrapper'> = {}
-): ExtendedRenderResult => {
+ui: React.ReactElement,
+{
+  path = '/',
+  route = '/',
+  initialEntries = ['/'],
+  initialIndex = 0,
+  isAuthenticated = true,
+  authenticationPath = '/login',
+  roles = ['user'],
+  requiredRole = '',
+  queryParams = {},
+  history = createMemoryHistory({ initialEntries, initialIndex }),
+  ...renderOptions
+}: AdvancedRouterOptions & Omit<RenderOptions, 'wrapper'> = {})
+: ExtendedRenderResult => {
   // Create custom auth context
   const authContextValue: AuthContextType = {
     ...defaultAuthContext,
     isAuthenticated,
-    user: isAuthenticated 
-      ? { 
-          ...defaultAuthContext.user!, 
-          roles 
-        } 
-      : null,
+    user: isAuthenticated ?
+    {
+      ...defaultAuthContext.user!,
+      roles
+    } :
+    null
   };
 
   // Add query parameters to route if provided
@@ -124,32 +124,32 @@ export const renderWithAdvancedRouter = (
   const hasRequiredRole = roles.includes(requiredRole);
   const canAccess = isAuthenticated && (!shouldProtect || hasRequiredRole);
 
-  const wrapper = ({ children }: { children: React.ReactNode }) => (
-    <AuthContext.Provider value={authContextValue}>
+  const Wrapper = ({ children }: {children: React.ReactNode;}) =>
+  <AuthContext.Provider value={authContextValue}>
       <MemoryRouter initialEntries={initialEntries} initialIndex={initialIndex}>
         <QueryParamProvider adapter={ReactRouter6Adapter}>
           <Routes>
-            {canAccess ? (
-              <Route path={path} element={children} />
-            ) : (
-              <Route 
-                path={path} 
-                element={<ProtectedRoute 
-                  isAuthenticated={isAuthenticated && hasRequiredRole} 
-                  authenticationPath={authenticationPath}
-                  outlet={children as React.ReactElement}
-                />} 
-              />
-            )}
+            {canAccess ?
+          <Route path={path} element={children} /> :
+
+          <Route
+            path={path}
+            element={<ProtectedRoute
+              isAuthenticated={isAuthenticated && hasRequiredRole}
+              authenticationPath={authenticationPath}
+              outlet={children as React.ReactElement} />
+            } />
+
+          }
             <Route path={authenticationPath} element={<div data-testid="login-page">Login Page</div>} />
             <Route path="*" element={<div data-testid="not-found">Not Found</div>} />
           </Routes>
         </QueryParamProvider>
       </MemoryRouter>
-    </AuthContext.Provider>
-  );
+    </AuthContext.Provider>;
 
-  const result = render(ui, { wrapper, ...renderOptions });
+
+  const result = render(ui, { wrapper: Wrapper, ...renderOptions });
 
   return {
     ...result,
@@ -157,7 +157,7 @@ export const renderWithAdvancedRouter = (
     // Helper functions
     getNavigationHistory: () => navigationHistory,
     getQueryParams: () => queryParams,
-    getAuthStatus: () => ({ isAuthenticated, roles, hasRequiredRole }),
+    getAuthStatus: () => ({ isAuthenticated, roles, hasRequiredRole })
   } as ExtendedRenderResult;
 };
 
@@ -165,7 +165,7 @@ export const renderWithAdvancedRouter = (
 export const useAuthContext = () => React.useContext(AuthContext);
 
 // Export a combined wrapper with both router and auth
-export const AdvancedRouterWrapper: React.FC<AdvancedRouterOptions & { children: React.ReactNode }> = ({
+export const AdvancedRouterWrapper: React.FC<AdvancedRouterOptions & {children: React.ReactNode;}> = ({
   children,
   ...options
 }) => {
@@ -177,19 +177,19 @@ export const AdvancedRouterWrapper: React.FC<AdvancedRouterOptions & { children:
     isAuthenticated = true,
     authenticationPath = '/login',
     roles = ['user'],
-    requiredRole = '',
+    requiredRole = ''
   } = options;
 
   // Create custom auth context
   const authContextValue: AuthContextType = {
     ...defaultAuthContext,
     isAuthenticated,
-    user: isAuthenticated 
-      ? { 
-          ...defaultAuthContext.user!, 
-          roles 
-        } 
-      : null,
+    user: isAuthenticated ?
+    {
+      ...defaultAuthContext.user!,
+      roles
+    } :
+    null
   };
 
   // Determine if component should be protected
@@ -202,23 +202,23 @@ export const AdvancedRouterWrapper: React.FC<AdvancedRouterOptions & { children:
       <MemoryRouter initialEntries={initialEntries} initialIndex={initialIndex}>
         <QueryParamProvider adapter={ReactRouter6Adapter}>
           <Routes>
-            {canAccess ? (
-              <Route path={path} element={children} />
-            ) : (
-              <Route 
-                path={path} 
-                element={<ProtectedRoute 
-                  isAuthenticated={isAuthenticated && hasRequiredRole} 
-                  authenticationPath={authenticationPath}
-                  outlet={children as React.ReactElement}
-                />} 
-              />
-            )}
+            {canAccess ?
+            <Route path={path} element={children} /> :
+
+            <Route
+              path={path}
+              element={<ProtectedRoute
+                isAuthenticated={isAuthenticated && hasRequiredRole}
+                authenticationPath={authenticationPath}
+                outlet={children as React.ReactElement} />
+              } />
+
+            }
             <Route path={authenticationPath} element={<div data-testid="login-page">Login Page</div>} />
             <Route path="*" element={<div data-testid="not-found">Not Found</div>} />
           </Routes>
         </QueryParamProvider>
       </MemoryRouter>
-    </AuthContext.Provider>
-  );
-}; 
+    </AuthContext.Provider>);
+
+};

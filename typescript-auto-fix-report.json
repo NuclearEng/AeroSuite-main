@@ -1,0 +1,2399 @@
+{
+  "timestamp": "2025-08-06T06:26:35.380Z",
+  "results": {
+    "filesChecked": 597,
+    "filesFixed": 0,
+    "errors": [
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/App.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/components/InspectionList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/components/Sidebar.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/components/SupplierMap.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/main.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/Dashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/NotFound.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/Profile.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/Settings.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/ai-analysis/performance-dashboard/PerformanceDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/ai-analysis/performance-dashboard/index.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/customers/AddCustomer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/customers/CustomerDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/customers/CustomerList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/ConductInspection.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/Dashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/InspectionConductor.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/InspectionDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/InspectionList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/InspectionSchedule.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/ScheduleInspection.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/inspections/index.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/AddSupplier.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/SupplierAnalytics.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/SupplierDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/SupplierList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/SupplierNetwork.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/SupplierRiskAssessment.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/components/AssessmentCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/components/RiskFactorCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/components/RiskFactorsList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/components/SaveConfirmationDialog.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/components/SupplierSelector.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/constants.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/hooks/useRiskAssessment.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/suppliers/types.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/services/mockDataService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/vite-env.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/vite.config.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/global.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/App.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/App.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/SimpleApp.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/Chart.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/DataTable.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/ErrorBoundary.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/FiltersToolbar.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/FormBuilder.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/LoadingButton.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/Modal.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/PageHeader.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/components/StatusBadge.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/hooks/usePagination.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__tests__/test-utils.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/admin/ErrorAnalyticsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/admin/FeatureFlagsManager.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/admin/UserAnalyticsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/auth/EnhancedSSOLoginButtons.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/auth/SSOLoginButtons.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/auth/TwoFactorSetup.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/auth/TwoFactorVerification.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/AccessibilityAudit.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/AccessibilityThemeDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/AnimatedButton.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/AnimatedCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/AnimatedFeedback.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ApiVersionWarningBanner.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/Chart.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ColorContrastChecker.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ComponentWithFallback.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ConfirmationDialog.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/CustomMenuItem.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/DataTable.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/DataVisualization.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/DeleteConfirmationModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/EmptyState.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ErrorAlert.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ErrorBoundary.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ErrorDialog.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ErrorHandler.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ErrorState.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/FeatureFlagWrapper.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/FeedbackForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/FeedbackWidget.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/FileUploadModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/FilterModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/FiltersToolbar.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/FormBuilder.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/GenerateReportButton.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/KeyboardNavigableDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/KeyboardShortcutsDialog.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/LanguageSelector.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/LineChart.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/LoadingButton.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/LoadingIndicator.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/LoadingState.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/LocalizationDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/Modal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/OfflineIndicator.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/OptimizedImage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/PageHeader.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/PaginationFooter.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/PerformanceMonitor.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ProgressiveDataTable.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ResourcePrioritization.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ResponsiveCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ResponsiveForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ResponsiveLayoutAudit.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ResponsiveTable.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ScreenReaderCompatibility.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/SearchModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/SkeletonLoader.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/StatusBadge.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/StatusChip.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/ThemeSettings.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/TouchTargetWrapper.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/VirtualizedList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/components/ComponentRelationshipGraph.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/customers/ActivityFilters.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/customers/ActivityHistoryHeader.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/customers/ActivityTimeline.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/customers/ActivityTimelineItem.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/customers/CustomerActivityHistory.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/customers/CustomerCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/AddQualityMetricsButton.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/CustomWidgetManager.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/DashboardCustomization.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/DashboardCustomizeButton.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/DashboardCustomizer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/DashboardLayout.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/DashboardSyncStatus.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/DashboardWidget.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/StatCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/AIInsightsWidget.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/ActivityFeed.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/CalendarWidget.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/CalendarWidget.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/InspectionsSummary.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/NotificationList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/PerformanceMetricsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/QualityMetricsWidget.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/RecentItems.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/StatCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/UpcomingInspections.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/dashboard/widgets/WidgetRegistry.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/demo/FormHeader.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/demo/HeavyComponent1.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/demo/HeavyComponent2.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/demo/HeavyComponent3.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/demo/TagInput.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/inspections/InspectionCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/inspections/InspectionForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/inspections/InspectionStatsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/layout/Footer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/layout/Grid.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/layout/ResponsiveGrid.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/layout/ResponsiveLayout.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/monitoring/PerformanceBudgetsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/monitoring/PerformanceRegressionsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/navigation/Header.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/navigation/MonitoringNavigation.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/navigation/NotificationItem.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/navigation/Sidebar.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/navigation/TopBar.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/notifications/NotificationCenter.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/notifications/NotificationModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/notifications/RealtimeNotifications.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/onboarding/OnboardingFlow.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/onboarding/steps/CompletionStep.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/onboarding/steps/FeaturesOverviewStep.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/onboarding/steps/PreferencesStep.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/onboarding/steps/ProfileSetupStep.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/onboarding/steps/WelcomeStep.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/payments/PaymentButton.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/payments/PaymentDetails.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/payments/PaymentHistory.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/suppliers/SupplierCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/suppliers/SupplierImportExport.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/suppliers/SupplierMetricsCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/suppliers/SupplierRiskIndicator.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/atoms/Button.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/atoms/Button.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/atoms/Input.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/atoms/Input.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/atoms/Typography.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/atoms/Typography.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/atoms/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/AccessibleModal.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/AccessibleModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Alert.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Breadcrumbs.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Card.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/ConfirmDialog.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/DataTable.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/DetailDialog.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Dropdown.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/FileUploader.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/FilterPanel.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/FormField.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/FormStepper.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/LazyLoadedComponent.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/LazyLoadedImage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/LocationPicker.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Modal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Notification.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Pagination.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/ProgressiveForm.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/ProgressiveForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/ProgressiveTable.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/RichTextEditor.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/SearchBar.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/SkeletonScreen.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/SlideOutPanel.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/Tabs.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/VideoPlayer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/charts/BarChart.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/charts/LineChart.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/charts/PieChart.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/charts/ScatterChart.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/charts/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/forms/AutosaveForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/molecules/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/Calendar.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/ColorContrastAudit.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DataGrid.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DataTable.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DocumentViewer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/DynamicForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/Footer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/FormBuilder.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/KanbanBoard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/LazyDataTable.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/LazyDataTable.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/MapView.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/organisms/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/pages/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/patterns/Composition.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/patterns/Compound.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/patterns/HOC.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/patterns/Provider.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/patterns/RenderProps.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/patterns/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/templates/DashboardLayout.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/ui-library/templates/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/user/EditProfileModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/user/ProfileEditModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/user/UserProfile.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/user/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/config.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useAnalytics.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useAnimation.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useAuth.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useBatchRequests.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useCachedData.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useCalendar.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useCalendar.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useClientCache.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useComponentDocumentation.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useComponentRelationships.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useComponentRevisions.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useCustomerActivities.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useDashboardSync.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useErrorHandling.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useFeatureFlag.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useFocusTrap.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useFocusTrap.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useFormAutosave.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useInspectionChecklist.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useKeyboardNavigation.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useLazyRoute.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useLoadingState.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useMemoryOptimizer.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useOfflineMode.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/usePagination.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/usePerformanceMonitor.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/usePerformanceMonitoring.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useResourcePrioritization.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useResponsive.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useRouteSplitting.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useSupplierApi.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useTranslation.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useWebSocket.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/i18n/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/index.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/layouts/MainLayout.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/PerformanceMetricsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/Profile.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/BundleOptimizationDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/CachingStrategyDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ClientDataCachingDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/CodeSplittingDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ComponentsDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/Dashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/FormUXDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/Help.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ImageOptimizationDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/LoadingStatesDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/MicroInteractionsDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ModalsAndFormsTester.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/NotFound.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/Profile.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ProgressiveLoadingDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/RequestBatchingDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ResourcePrioritizationDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ResponsiveDesignDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/Settings.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ai-analysis/AIAnalysisPage.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ai-analysis/AIAnalysisPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/ForgotPassword.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/Login.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/Login.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/Register.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/ResendVerification.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/ResetPassword.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/SecuritySettings.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/VerifyEmail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/calendar/CalendarPage.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/calendar/CalendarPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/components/ComponentDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/components/ComponentList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/components/ComponentRelationshipVisualization.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/components/CreateComponent.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/components/DocumentationManager.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/components/EditComponent.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/components/RevisionHistory.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/CreateCustomer.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/CreateCustomer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/CustomerDetail.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/CustomerDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/CustomerList.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/CustomerList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/EditCustomer.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/EditCustomer.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/components/CustomerFormModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/components/CustomerOrderList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/components/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/jest.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/dashboard/Dashboard.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/dashboard/Dashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/dashboard/MetricsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/dashboard/QualityMetricsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/dashboard/jest.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/feedback/FeedbackManagement.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/feedback/FeedbackManagement.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/feedback/components/FeedbackDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/ConductInspection.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/ConductInspection.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/InspectionAnalytics.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/InspectionAnalytics.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/InspectionDetail.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/InspectionDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/InspectionList.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/InspectionList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/ScheduleInspection.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/ScheduleInspection.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/components/InspectionFormModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/components/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/hooks/useInspectionStats.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/inspections/jest.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/monitoring/BackupVerification.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/monitoring/ErrorAnalyticsPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/monitoring/PerformanceMetricsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/monitoring/UserAnalyticsPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/monitoring/index.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/onboarding/OnboardingPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/payments/PaymentCancelPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/payments/PaymentDetailPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/payments/PaymentPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/payments/PaymentSuccessPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/reports/DataVisualizationDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/reports/ReportBuilder.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/reports/ReportBuilder.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/reports/components/ReportPreview.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/reports/components/ReportTemplateForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/reports/components/ReportTemplateList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/reports/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/settings/AccessibilityAudit.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/settings/AccessibilityAuditPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/settings/LanguageSettings.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/settings/LanguageSettings.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/settings/SettingsPage.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/settings/SettingsPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/CreateSupplier.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/CreateSupplier.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/EditSupplier.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/EditSupplier.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierAnalyticsPage.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierAuditChecklist.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierAuditChecklist.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierCreate.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierCreate.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierDetail.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierDetail.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierEdit.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierEdit.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierList.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierNetwork.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierNetwork.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierQualityManagement.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierQualityManagement.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierRiskAssessment.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierRiskAssessment.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/Suppliers.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/AssessmentCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/AuditChecklist.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/ChecklistItemCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/EnhancedDataTableDemo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/EnhancedSupplierForm.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/QualityManagement.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/RiskFactorCard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/RiskFactorsList.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SaveConfirmationDialog.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierAnalytics.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierAnalyticsDashboard.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierComparisonTool.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierFormModal.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierNetwork.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierPerformanceCharts.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierQualification.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/SupplierSelector.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/components/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/hooks/useQualityManagement.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/hooks/useRiskAssessment.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/hooks/useSupplierAnalytics.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/hooks/useSupplierAudit.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/hooks/useSupplierMetrics.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/hooks/useSupplierQualification.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/hooks/useSuppliers.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/jest.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/user/UserProfile.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/user/UserSettings.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/react-app-env.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/app.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/auth.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/dashboard.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/featureFlags.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/inspection.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/notifications.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/supplier.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/ui.slice.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/slices/ui.slice.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/redux/store.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/reportWebVitals.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/routes.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/service-worker.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/serviceWorker.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/CalendarService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/PaymentService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/api.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/auth.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/backup-verification.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/cacheService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/cachedApiService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/customer.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/dashboardPreferences.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/erpService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/errorAnalytics.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/featureFlags.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/feedback.service.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/feedback.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/inspection.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/mockDataService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/persistenceService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/privacy.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/report.service.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/report.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/supplier.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/user.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/userAnalytics.service.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/userService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/versionedApi.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/websocketService.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/setupTests.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/test-utils/advanced-router-example.test.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/test-utils/advanced-router-wrapper.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/test-utils/combined-wrapper.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/test-utils/router-wrapper.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/test-utils/test-setup.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/test-utils/theme-wrapper.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/theme/ThemeProvider.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/theme/theme.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/theme/themeConfig.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/analysis.types.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/api.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/api.types.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/common.types.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/component.types.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/forms.types.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/react-intersection-observer.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/use-query-params-adapters.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/types/use-query-params.d.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/accessibility.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/accessibilityAudit.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/accessibilityThemeHelper.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/animationUtils.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/apiClient.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/apiClient.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/auth.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/bundleOptimization.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/caching.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/clientDataCache.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/codeSplitting.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/codeSplittingConfig.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/colorContrastChecker.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/colorContrastChecker.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/componentSplitting.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/config.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/errorHandling.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/errorTracker.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/exportUtils.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/focusManagement.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/formErrorHandling.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/formatters.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/formatters.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/imageOptimization.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/index.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/initialLoadOptimization.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/keyboardNavigation.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/keyboardShortcuts.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/lazyLoading.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/lazyLoading.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/lazyRoute.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/pkce.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/progressiveLoader.test.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/progressiveLoader.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/progressiveLoading.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/requestBatching.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/resourcePrioritization.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/routeSplitting.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/seo.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/serviceWorkerUtils.tsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/serviceWrapper.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/touchTargetUtils.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/withOfflineSync.ts",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/.eslintrc.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/__mocks__/@fullcalendar/core/index.cjs.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/__mocks__/@fullcalendar/react.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/__mocks__/@testing-library/react-hooks.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/__mocks__/fileMock.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/__mocks__/react-i18next.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/eslint.config.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/aerosuite-demo/src/pages/ai-analysis/retraining-dashboard/RetrainingDashboard.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/build/service-worker.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/config-overrides.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/jest.config.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/memory-monitor-simple.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/memory-monitor.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/public/service-worker.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/scripts/apply-router-test-fixes.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/scripts/batch-fix-router-tests.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/App.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/__mocks__/axios.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/common/AccessibilityHelpers.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/layout/Layout.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/components/layout/ResponsiveLayout.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useOfflineMode.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/hooks/useResponsive.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/AIAnalysisPage.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/AIAnalysisPage.test.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/DocumentManager.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/ProfilePage.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/ProfilePage.test.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/SMSVerification.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/not-used/SupplierDetailPage.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/AccessibilityTesting.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/Dashboard.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/NotFound.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/ai-analysis/AIAnalysisPage.jsx",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/auth/Login.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/customers/CustomerList.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierDetails.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/pages/suppliers/SupplierList.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/reportWebVitals.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/serviceWorkerRegistration.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/api.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/services/metricsService.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/test-utils/update-router-tests.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/theme.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/a11yTesting.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/progressiveLoading.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/serviceWorkerUtils.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/src/utils/webpackOptimizations.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/ssr/enhanced-server.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/ssr/server.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/ssr/sitemap-generator.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/webpack-optimize.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/webpack.chunk-optimization.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      },
+      {
+        "file": "/Users/tannercoker/AeroSuite-main/client/webpack.config.js",
+        "error": "Cannot read properties of undefined (reading '1')"
+      }
+    ]
+  },
+  "testsUpdated": true,
+  "ciConfigured": true
+}

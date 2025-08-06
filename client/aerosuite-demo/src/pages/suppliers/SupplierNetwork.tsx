@@ -7,8 +7,8 @@ import {
   Card,
   CardContent,
   Divider,
-  Chip
-} from '@mui/material';
+  Chip } from
+'@mui/material';
 import SupplierMap from '../../components/SupplierMap';
 
 const tierDescriptions = {
@@ -41,12 +41,12 @@ const SupplierNetwork: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {/* Map Section */}
+        
         <Grid sx={{ gridColumn: 'span 12' }}>
           <SupplierMap height={550} />
         </Grid>
         
-        {/* Tier Information */}
+        
         <Grid sx={{ gridColumn: 'span 12', mt: 2 }}>
           <Typography variant="h5" gutterBottom>
             Understanding Supplier Tiers
@@ -57,20 +57,20 @@ const SupplierNetwork: React.FC = () => {
           </Typography>
           
           <Grid container spacing={3}>
-            {Object.entries(tierDescriptions).map(([tier, info]) => (
-              <Grid key={tier} sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
+            {Object.entries(tierDescriptions).map(([tier, info]) =>
+            <Grid key={tier} sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
                 <Card variant="outlined" sx={{ height: '100%' }}>
                   <CardContent>
                     <Box display="flex" alignItems="center" mb={1}>
                       <Box
-                        sx={{
-                          width: 16,
-                          height: 16,
-                          borderRadius: '50%',
-                          backgroundColor: info.color,
-                          mr: 1
-                        }}
-                      />
+                      sx={{
+                        width: 16,
+                        height: 16,
+                        borderRadius: '50%',
+                        backgroundColor: info.color,
+                        mr: 1
+                      }} />
+
                       <Typography variant="h6">{info.title}</Typography>
                     </Box>
                     <Divider sx={{ mb: 2 }} />
@@ -80,11 +80,11 @@ const SupplierNetwork: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
-            ))}
+            )}
           </Grid>
         </Grid>
         
-        {/* Supply Chain Risk Management */}
+        
         <Grid sx={{ gridColumn: 'span 12', mt: 2 }}>
           <Paper sx={{ p: 3 }}>
             <Typography variant="h5" gutterBottom>
@@ -109,8 +109,8 @@ const SupplierNetwork: React.FC = () => {
           </Paper>
         </Grid>
       </Grid>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default SupplierNetwork; 
+export default SupplierNetwork;

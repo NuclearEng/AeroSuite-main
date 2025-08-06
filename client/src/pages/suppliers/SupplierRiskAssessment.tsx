@@ -21,8 +21,8 @@ import {
   Tab,
   Tabs,
   List,
-  ListItem,
-} from '@mui/material';
+  ListItem } from
+'@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Link } from 'react-router-dom';
 import {
@@ -30,8 +30,8 @@ import {
   Refresh as RefreshIcon,
   AssessmentOutlined as AssessmentIcon,
   History as HistoryIcon,
-  DateRange as DateRangeIcon
-} from '@mui/icons-material';
+  DateRange as DateRangeIcon } from
+'@mui/icons-material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
@@ -45,7 +45,7 @@ import SaveConfirmationDialog from './components/SaveConfirmationDialog';
 
 const SupplierRiskAssessment: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState(0);
-  
+
   const {
     loading,
     suppliers,
@@ -85,8 +85,8 @@ const SupplierRiskAssessment: React.FC = () => {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
@@ -96,20 +96,20 @@ const SupplierRiskAssessment: React.FC = () => {
           title="Supplier Risk Assessment"
           subtitle="Evaluate and track risk factors for your suppliers"
           breadcrumbs={[
-            { label: 'Home', href: '/' },
-            { label: 'Suppliers', href: '/suppliers' },
-            { label: 'Risk Assessment' }
-          ]}
-        />
+          { label: 'Home', href: '/' },
+          { label: 'Suppliers', href: '/suppliers' },
+          { label: 'Risk Assessment' }]
+          } />
 
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
+
+        {error &&
+        <Alert severity="error" sx={{ mb: 3 }}>
             {error}
           </Alert>
-        )}
+        }
 
         <Grid container spacing={3}>
-          {/* Left Column - Assessment Form */}
+          
           <Grid item xs={12} md={8}>
             <Paper sx={{ p: 3, mb: 3 }}>
               <Grid container spacing={3}>
@@ -118,8 +118,8 @@ const SupplierRiskAssessment: React.FC = () => {
                     suppliers={suppliers}
                     selectedSupplier={selectedSupplier}
                     onSupplierChange={handleSupplierChange}
-                    disabled={loading}
-                  />
+                    disabled={loading} />
+
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -129,8 +129,8 @@ const SupplierRiskAssessment: React.FC = () => {
                     value={assessor}
                     onChange={(e) => setAssessor(e.target.value)}
                     required
-                    disabled={loading}
-                  />
+                    disabled={loading} />
+
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -143,8 +143,8 @@ const SupplierRiskAssessment: React.FC = () => {
                         fullWidth: true,
                         variant: 'outlined'
                       }
-                    }}
-                  />
+                    }} />
+
                 </Grid>
               </Grid>
             </Paper>
@@ -153,34 +153,34 @@ const SupplierRiskAssessment: React.FC = () => {
               value={activeTab}
               onChange={handleTabChange}
               sx={{ mb: 2 }}
-              variant="fullWidth"
-            >
-              <Tab 
-                label="Risk Factors" 
-                icon={<AssessmentIcon />} 
-                iconPosition="start"
-              />
-              <Tab 
-                label="Notes & Mitigation" 
-                icon={<HistoryIcon />} 
-                iconPosition="start"
-              />
+              variant="fullWidth">
+
+              <Tab
+                label="Risk Factors"
+                icon={<AssessmentIcon />}
+                iconPosition="start" />
+
+              <Tab
+                label="Notes & Mitigation"
+                icon={<HistoryIcon />}
+                iconPosition="start" />
+
             </Tabs>
 
-            {activeTab === 0 && (
-              <Paper sx={{ p: 3 }}>
+            {activeTab === 0 &&
+            <Paper sx={{ p: 3 }}>
                 <RiskFactorsList
-                  riskFactors={riskFactors}
-                  categoryInfo={CATEGORY_INFO}
-                  onFactorScoreChange={handleFactorScoreChange}
-                  onFactorWeightChange={handleFactorWeightChange}
-                  disabled={loading || !selectedSupplier}
-                />
-              </Paper>
-            )}
+                riskFactors={riskFactors}
+                categoryInfo={CATEGORY_INFO}
+                onFactorScoreChange={handleFactorScoreChange}
+                onFactorWeightChange={handleFactorWeightChange}
+                disabled={loading || !selectedSupplier} />
 
-            {activeTab === 1 && (
-              <Paper sx={{ p: 3 }}>
+              </Paper>
+            }
+
+            {activeTab === 1 &&
+            <Paper sx={{ p: 3 }}>
                 <Typography variant="h5" gutterBottom>
                   Assessment Notes & Mitigation Plan
                 </Typography>
@@ -188,32 +188,32 @@ const SupplierRiskAssessment: React.FC = () => {
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
                     <TextField
-                      fullWidth
-                      label="Assessment Notes"
-                      multiline
-                      rows={4}
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      disabled={loading || !selectedSupplier}
-                      placeholder="Enter any notes about this risk assessment..."
-                    />
+                    fullWidth
+                    label="Assessment Notes"
+                    multiline
+                    rows={4}
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    disabled={loading || !selectedSupplier}
+                    placeholder="Enter any notes about this risk assessment..." />
+
                   </Grid>
                   
                   <Grid item xs={12}>
                     <TextField
-                      fullWidth
-                      label="Mitigation Plan"
-                      multiline
-                      rows={6}
-                      value={mitigationPlan}
-                      onChange={(e) => setMitigationPlan(e.target.value)}
-                      disabled={loading || !selectedSupplier}
-                      placeholder="Describe actions to mitigate identified risks..."
-                    />
+                    fullWidth
+                    label="Mitigation Plan"
+                    multiline
+                    rows={6}
+                    value={mitigationPlan}
+                    onChange={(e) => setMitigationPlan(e.target.value)}
+                    disabled={loading || !selectedSupplier}
+                    placeholder="Describe actions to mitigate identified risks..." />
+
                   </Grid>
                 </Grid>
               </Paper>
-            )}
+            }
 
             <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
               <Button
@@ -222,98 +222,98 @@ const SupplierRiskAssessment: React.FC = () => {
                 onClick={resetAssessment}
                 sx={{ mr: 2 }}
                 disabled={loading || !selectedSupplier}
-                startIcon={<RefreshIcon />}
-              >
+                startIcon={<RefreshIcon />}>
+
                 Reset
               </Button>
               <Button
                 variant="contained"
                 color="primary"
                 onClick={handleSaveClick}
-                disabled={loading || !selectedSupplier || riskFactors.some(f => f.score === 0) || !assessor}
-                startIcon={<SaveIcon />}
-              >
+                disabled={loading || !selectedSupplier || riskFactors.some((f) => f.score === 0) || !assessor}
+                startIcon={<SaveIcon />}>
+
                 {activeAssessment ? 'Update Assessment' : 'Save Assessment'}
               </Button>
             </Box>
           </Grid>
 
-          {/* Right Column - Assessment Summary & History */}
+          
           <Grid item xs={12} md={4}>
-            {/* Current Assessment Summary */}
-            {(selectedSupplier && overallScore > 0) && (
-              <Card sx={{ mb: 3 }}>
-                <CardHeader 
-                  title="Current Assessment" 
-                  subheader={selectedSupplier ? selectedSupplier.name : ''} 
-                />
+            
+            {selectedSupplier && overallScore > 0 &&
+            <Card sx={{ mb: 3 }}>
+                <CardHeader
+                title="Current Assessment"
+                subheader={selectedSupplier ? selectedSupplier.name : ''} />
+
                 <CardContent>
                   <AssessmentCard
-                    assessment={{
-                      _id: activeAssessment?._id,
-                      supplierId: selectedSupplier._id,
-                      assessmentDate: new Date(),
-                      assessedBy: assessor,
-                      factors: riskFactors,
-                      overallScore,
-                      riskLevel,
-                      notes,
-                      mitigationPlan,
-                      nextReviewDate: nextReviewDate || undefined,
-                      status: 'draft'
-                    }}
-                    isActive={true}
-                  />
+                  assessment={{
+                    _id: activeAssessment?._id,
+                    supplierId: selectedSupplier._id,
+                    assessmentDate: new Date(),
+                    assessedBy: assessor,
+                    factors: riskFactors,
+                    overallScore,
+                    riskLevel,
+                    notes,
+                    mitigationPlan,
+                    nextReviewDate: nextReviewDate || undefined,
+                    status: 'draft'
+                  }}
+                  isActive={true} />
+
                 </CardContent>
               </Card>
-            )}
+            }
 
-            {/* Assessment History */}
+            
             <Card>
-              <CardHeader 
-                title="Assessment History" 
+              <CardHeader
+                title="Assessment History"
                 subheader={
-                  selectedSupplier 
-                    ? `${savedAssessments.length} assessment${savedAssessments.length !== 1 ? 's' : ''} for ${selectedSupplier.name}`
-                    : 'Select a supplier to view history'
-                } 
-              />
+                selectedSupplier ?
+                `${savedAssessments.length} assessment${savedAssessments.length !== 1 ? 's' : ''} for ${selectedSupplier.name}` :
+                'Select a supplier to view history'
+                } />
+
               <CardContent>
-                {savedAssessments.length > 0 ? (
-                  savedAssessments.map((assessment) => (
-                    <AssessmentCard
-                      key={assessment._id}
-                      assessment={assessment}
-                      onViewDetails={() => handleViewAssessment(assessment)}
-                      isActive={activeAssessment?._id === assessment._id}
-                    />
-                  ))
-                ) : selectedSupplier ? (
-                  <Typography color="text.secondary" sx={{ py: 2, textAlign: 'center' }}>
+                {savedAssessments.length > 0 ?
+                savedAssessments.map((assessment) =>
+                <AssessmentCard
+                  key={assessment._id}
+                  assessment={assessment}
+                  onViewDetails={() => handleViewAssessment(assessment)}
+                  isActive={activeAssessment?._id === assessment._id} />
+
+                ) :
+                selectedSupplier ?
+                <Typography color="text.secondary" sx={{ py: 2, textAlign: 'center' }}>
                     No risk assessments found for this supplier
-                  </Typography>
-                ) : (
-                  <Typography color="text.secondary" sx={{ py: 2, textAlign: 'center' }}>
+                  </Typography> :
+
+                <Typography color="text.secondary" sx={{ py: 2, textAlign: 'center' }}>
                     Select a supplier to view assessment history
                   </Typography>
-                )}
+                }
               </CardContent>
             </Card>
           </Grid>
         </Grid>
 
-        {/* Save Confirmation Dialog */}
+        
         <SaveConfirmationDialog
           open={showSaveDialog}
           onClose={() => setShowSaveDialog(false)}
           onConfirm={handleSaveConfirm}
           overallScore={overallScore}
           riskLevel={riskLevel}
-          isUpdate={!!activeAssessment}
-        />
+          isUpdate={!!activeAssessment} />
+
       </Container>
-    </LocalizationProvider>
-  );
+    </LocalizationProvider>);
+
 };
 
-export default SupplierRiskAssessment; 
+export default SupplierRiskAssessment;

@@ -10,16 +10,16 @@ import {
   Typography,
   Box,
   Divider,
-  useTheme,
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import {
   Close as CloseIcon,
   Warning as WarningIcon,
   Info as InfoIcon,
   Error as ErrorIcon,
   CheckCircle as SuccessIcon,
-  Help as HelpIcon,
-} from '@mui/icons-material';
+  Help as HelpIcon } from
+'@mui/icons-material';
 import { LoadingButton } from './index';
 import { animations } from '../../theme/theme';
 
@@ -70,7 +70,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   hideCloseButton = false,
   confirmButtonProps = {},
   cancelButtonProps = {},
-  DialogProps = {},
+  DialogProps = {}
 }) => {
   const theme = useTheme();
 
@@ -82,42 +82,42 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           icon: <InfoIcon fontSize="large" color="info" />,
           title: title || 'Information',
           confirmText: confirmButtonText || 'OK',
-          confirmColor: confirmButtonColor || 'info',
+          confirmColor: confirmButtonColor || 'info'
         };
       case 'warning':
         return {
           icon: <WarningIcon fontSize="large" color="warning" />,
           title: title || 'Warning',
           confirmText: confirmButtonText || 'OK',
-          confirmColor: confirmButtonColor || 'warning',
+          confirmColor: confirmButtonColor || 'warning'
         };
       case 'error':
         return {
           icon: <ErrorIcon fontSize="large" color="error" />,
           title: title || 'Error',
           confirmText: confirmButtonText || 'OK',
-          confirmColor: confirmButtonColor || 'error',
+          confirmColor: confirmButtonColor || 'error'
         };
       case 'success':
         return {
           icon: <SuccessIcon fontSize="large" color="success" />,
           title: title || 'Success',
           confirmText: confirmButtonText || 'OK',
-          confirmColor: confirmButtonColor || 'success',
+          confirmColor: confirmButtonColor || 'success'
         };
       case 'delete':
         return {
           icon: <ErrorIcon fontSize="large" color="error" />,
           title: title || 'Confirm Deletion',
           confirmText: confirmButtonText || 'Delete',
-          confirmColor: confirmButtonColor || 'error',
+          confirmColor: confirmButtonColor || 'error'
         };
       case 'custom':
         return {
           icon: icon,
           title: title,
           confirmText: confirmButtonText || 'Confirm',
-          confirmColor: confirmButtonColor || 'primary',
+          confirmColor: confirmButtonColor || 'primary'
         };
       case 'confirm':
       default:
@@ -125,7 +125,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           icon: icon || <HelpIcon fontSize="large" color="primary" />,
           title: title || 'Confirm Action',
           confirmText: confirmButtonText || 'Confirm',
-          confirmColor: confirmButtonColor || 'primary',
+          confirmColor: confirmButtonColor || 'primary'
         };
     }
   };
@@ -152,78 +152,78 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
       TransitionProps={{
         timeout: {
           enter: 300,
-          exit: 200,
-        },
+          exit: 200
+        }
       }}
       PaperProps={{
         elevation: 5,
         sx: {
           borderRadius: 2,
-          overflow: 'hidden',
-        },
+          overflow: 'hidden'
+        }
       }}
-      {...DialogProps}
-    >
-      {/* Dialog Title */}
+      {...DialogProps}>
+
+      
       <DialogTitle
         sx={{
           p: 2,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          bgcolor: type !== 'custom' ? `${confirmColor}.light` + '10' : undefined,
-        }}
-      >
+          bgcolor: type !== 'custom' ? `${confirmColor}.light` + '10' : undefined
+        }}>
+
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           {typeIcon}
           <Typography variant="h6" component="span">
             {typeTitle}
           </Typography>
         </Box>
-        {!hideCloseButton && (
-          <IconButton
-            edge="end"
-            color="inherit"
-            onClick={onClose}
-            aria-label="close"
-            sx={{
-              transition: animations.microInteraction,
-              '&:hover': {
-                transform: 'rotate(90deg)',
-              },
-            }}
-          >
+        {!hideCloseButton &&
+        <IconButton
+          edge="end"
+          color="inherit"
+          onClick={onClose}
+          aria-label="close"
+          sx={{
+            transition: animations.microInteraction,
+            '&:hover': {
+              transform: 'rotate(90deg)'
+            }
+          }}>
+
             <CloseIcon />
           </IconButton>
-        )}
+        }
       </DialogTitle>
 
       <Divider />
 
-      {/* Dialog Content */}
+      
       <DialogContent sx={{ p: 3 }}>
-        {message && (
-          <DialogContentText
-            sx={{
-              color: 'text.primary',
-              mb: children ? 2 : 0,
-            }}
-          >
+        {message &&
+        <DialogContentText
+          sx={{
+            color: 'text.primary',
+            mb: children ? 2 : 0
+          }}>
+
             {message}
           </DialogContentText>
-        )}
+        }
         {children}
       </DialogContent>
 
-      {/* Dialog Actions */}
+      
       <DialogActions sx={{ p: 2, pt: 0 }}>
         <Button
           variant="outlined"
           onClick={onClose}
           color={cancelButtonColor}
           disabled={loading}
-          {...cancelButtonProps}
-        >
+          {...cancelButtonProps}>
+
           {cancelButtonText}
         </Button>
         <LoadingButton
@@ -232,13 +232,13 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           color={confirmColor}
           loading={loading}
           autoFocus
-          {...confirmButtonProps}
-        >
+          {...confirmButtonProps}>
+
           {confirmText}
         </LoadingButton>
       </DialogActions>
-    </Dialog>
-  );
+    </Dialog>);
+
 };
 
-export default ConfirmationDialog; 
+export default ConfirmationDialog;

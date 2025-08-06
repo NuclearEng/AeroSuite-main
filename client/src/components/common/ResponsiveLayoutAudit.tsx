@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Box, 
-  Paper, 
-  Typography, 
-  IconButton, 
-  Chip, 
-  Tooltip, 
+import {
+  Box,
+  Paper,
+  Typography,
+  IconButton,
+  Chip,
+  Tooltip,
   Grid,
   Switch,
-  FormControlLabel
-} from '@mui/material';
+  FormControlLabel } from
+'@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -25,19 +25,19 @@ interface ResponsiveLayoutAuditProps {
    * @default true
    */
   initiallyVisible?: boolean;
-  
+
   /**
    * Position of the audit tool
    * @default 'bottom-right'
    */
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-  
+
   /**
    * Whether to show the grid overlay
    * @default false
    */
   showGridOverlay?: boolean;
-  
+
   /**
    * Whether to highlight touch targets
    * @default false
@@ -58,19 +58,19 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
   const [isExpanded, setIsExpanded] = useState(true);
   const [showGridOverlay, setShowGridOverlay] = useState(initialShowGrid);
   const [highlightTouchTargets, setHighlightTouchTargets] = useState(initialHighlightTouchTargets);
-  
-  const { 
-    width, 
-    height, 
-    isMobile, 
-    isTablet, 
-    isDesktop, 
-    orientation, 
-    getCurrentBreakpoint 
+
+  const {
+    width,
+    height,
+    isMobile,
+    isTablet,
+    isDesktop,
+    orientation,
+    getCurrentBreakpoint
   } = useResponsive();
-  
+
   const currentBreakpoint = getCurrentBreakpoint();
-  
+
   // Position styles
   const positionStyles = {
     'top-left': { top: 16, left: 16 },
@@ -78,9 +78,9 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
     'bottom-left': { bottom: 16, left: 16 },
     'bottom-right': { bottom: 16, right: 16 }
   };
-  
+
   // Get device icon based on current breakpoint
-  const getDeviceIcon = () => {
+  const GetDeviceIcon = () => {
     switch (currentBreakpoint) {
       case 'xs':
         return <PhoneAndroidIcon />;
@@ -96,28 +96,28 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
         return <LaptopIcon />;
     }
   };
-  
+
   // Get color based on device type
   const getBreakpointColor = () => {
     if (isMobile) return 'error';
     if (isTablet) return 'warning';
     return 'success';
   };
-  
+
   // Toggle visibility of the audit tool
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
   };
-  
+
   // Toggle expanded state
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
   };
-  
+
   // Create grid overlay
   useEffect(() => {
     const existingOverlay = document.getElementById('responsive-grid-overlay');
-    
+
     if (showGridOverlay) {
       if (!existingOverlay) {
         const overlay = document.createElement('div');
@@ -129,7 +129,7 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
         overlay.style.bottom = '0';
         overlay.style.pointerEvents = 'none';
         overlay.style.zIndex = '9999';
-        
+
         // Create grid columns
         const container = document.createElement('div');
         container.style.display = 'flex';
@@ -137,7 +137,7 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
         container.style.maxWidth = '1200px';
         container.style.margin = '0 auto';
         container.style.padding = '0 16px';
-        
+
         // Create 12 columns
         for (let i = 0; i < 12; i++) {
           const column = document.createElement('div');
@@ -146,14 +146,14 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
           column.style.border = '1px solid rgba(76, 175, 80, 0.2)';
           container.appendChild(column);
         }
-        
+
         overlay.appendChild(container);
         document.body.appendChild(overlay);
       }
     } else if (existingOverlay) {
       existingOverlay.remove();
     }
-    
+
     return () => {
       const overlay = document.getElementById('responsive-grid-overlay');
       if (overlay) {
@@ -161,21 +161,21 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
       }
     };
   }, [showGridOverlay]);
-  
+
   // Highlight touch targets
   useEffect(() => {
     const existingHighlights = document.querySelectorAll('.touch-target-highlight');
-    
+
     if (highlightTouchTargets) {
       // Remove existing highlights
-      existingHighlights.forEach(el => el.remove());
-      
+      existingHighlights.forEach((el) => el.remove());
+
       // Find all interactive elements
       const interactiveElements = document.querySelectorAll('button, a, [role="button"], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-      
-      interactiveElements.forEach(el => {
+
+      interactiveElements.forEach((el) => {
         const rect = el.getBoundingClientRect();
-        
+
         // Create highlight element
         const highlight = document.createElement('div');
         highlight.className = 'touch-target-highlight';
@@ -188,7 +188,7 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
         highlight.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
         highlight.style.zIndex = '9998';
         highlight.style.pointerEvents = 'none';
-        
+
         // Add minimum size indicator if smaller than recommended
         if (rect.width < 48 || rect.height < 48) {
           const indicator = document.createElement('div');
@@ -202,20 +202,20 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
           indicator.textContent = 'Small';
           highlight.appendChild(indicator);
         }
-        
+
         document.body.appendChild(highlight);
       });
     } else {
       // Remove highlights
-      existingHighlights.forEach(el => el.remove());
+      existingHighlights.forEach((el) => el.remove());
     }
-    
+
     return () => {
       const highlights = document.querySelectorAll('.touch-target-highlight');
-      highlights.forEach(el => el.remove());
+      highlights.forEach((el) => el.remove());
     };
   }, [highlightTouchTargets]);
-  
+
   // Floating button when collapsed
   if (!isVisible) {
     return (
@@ -229,14 +229,14 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
             zIndex: 9999,
             backgroundColor: 'background.paper',
             boxShadow: 2
-          }}
-        >
+          }}>
+
           <VisibilityIcon />
         </IconButton>
-      </Tooltip>
-    );
+      </Tooltip>);
+
   }
-  
+
   // Collapsed view
   if (!isExpanded) {
     return (
@@ -248,21 +248,21 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
           display: 'flex',
           alignItems: 'center',
           gap: 1
-        }}
-      >
+        }}>
+
         <Chip
-          icon={getDeviceIcon()}
+          icon={GetDeviceIcon()}
           label={`${width}×${height}`}
           color={getBreakpointColor()}
-          onClick={toggleExpanded}
-        />
+          onClick={toggleExpanded} />
+
         <IconButton size="small" onClick={toggleVisibility}>
           <VisibilityOffIcon fontSize="small" />
         </IconButton>
-      </Box>
-    );
+      </Box>);
+
   }
-  
+
   // Full view
   return (
     <Paper
@@ -274,8 +274,8 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
         p: 2,
         width: { xs: 'calc(100% - 32px)', sm: 'auto' },
         maxWidth: { xs: 'calc(100% - 32px)', sm: '360px' }
-      }}
-    >
+      }}>
+
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
         <Typography variant="subtitle1" fontWeight="bold">
           Responsive Layout Audit
@@ -302,8 +302,8 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
             <Chip
               label={currentBreakpoint.toUpperCase()}
               color={getBreakpointColor()}
-              size="small"
-            />
+              size="small" />
+
           </Typography>
         </Grid>
         <Grid item xs={6}>
@@ -322,28 +322,28 @@ const ResponsiveLayoutAudit: React.FC<ResponsiveLayoutAuditProps> = ({
       <Box sx={{ mt: 2 }}>
         <FormControlLabel
           control={
-            <Switch
-              checked={showGridOverlay}
-              onChange={(e) => setShowGridOverlay(e.target.checked)}
-              size="small"
-            />
+          <Switch
+            checked={showGridOverlay}
+            onChange={(e) => setShowGridOverlay(e.target.checked)}
+            size="small" />
+
           }
-          label={<Typography variant="body2">Show Grid Overlay</Typography>}
-        />
+          label={<Typography variant="body2">Show Grid Overlay</Typography>} />
+
         
         <FormControlLabel
           control={
-            <Switch
-              checked={highlightTouchTargets}
-              onChange={(e) => setHighlightTouchTargets(e.target.checked)}
-              size="small"
-            />
+          <Switch
+            checked={highlightTouchTargets}
+            onChange={(e) => setHighlightTouchTargets(e.target.checked)}
+            size="small" />
+
           }
-          label={<Typography variant="body2">Highlight Touch Targets</Typography>}
-        />
+          label={<Typography variant="body2">Highlight Touch Targets</Typography>} />
+
       </Box>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default ResponsiveLayoutAudit; 
+export default ResponsiveLayoutAudit;

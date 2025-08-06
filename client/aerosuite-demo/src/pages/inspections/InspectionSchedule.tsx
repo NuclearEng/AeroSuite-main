@@ -17,16 +17,16 @@ import {
   Divider,
   Alert,
   Snackbar,
-  Chip
-} from '@mui/material';
+  Chip } from
+'@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import {
   ArrowBack as ArrowBackIcon,
   Save as SaveIcon,
   Add as AddIcon,
-  CalendarToday as CalendarIcon
-} from '@mui/icons-material';
+  CalendarToday as CalendarIcon } from
+'@mui/icons-material';
 import MockDataService from '../../services/mockDataService';
 import type { Customer, Supplier, Inspection, ChecklistItem } from '../../services/mockDataService';
 
@@ -56,31 +56,31 @@ interface FormErrors {
 }
 
 const defaultChecklist: ChecklistItem[] = [
-  {
-    id: '1',
-    description: 'Material certification review',
-    required: true,
-    completed: false,
-    result: 'pending',
-    notes: ''
-  },
-  {
-    id: '2',
-    description: 'Dimensional inspection',
-    required: true,
-    completed: false,
-    result: 'pending',
-    notes: ''
-  },
-  {
-    id: '3',
-    description: 'Visual inspection',
-    required: true,
-    completed: false,
-    result: 'pending',
-    notes: ''
-  }
-];
+{
+  id: '1',
+  description: 'Material certification review',
+  required: true,
+  completed: false,
+  result: 'pending',
+  notes: ''
+},
+{
+  id: '2',
+  description: 'Dimensional inspection',
+  required: true,
+  completed: false,
+  result: 'pending',
+  notes: ''
+},
+{
+  id: '3',
+  description: 'Visual inspection',
+  required: true,
+  completed: false,
+  result: 'pending',
+  notes: ''
+}];
+
 
 const InspectionSchedule: React.FC = () => {
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ const InspectionSchedule: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  
+
   const [formData, setFormData] = useState<FormData>({
     title: '',
     description: '',
@@ -104,30 +104,30 @@ const InspectionSchedule: React.FC = () => {
     quantity: '',
     checklistItems: [...defaultChecklist]
   });
-  
+
   const [errors, setErrors] = useState<FormErrors>({});
 
   useEffect(() => {
     // Initialize mock data service
     MockDataService.initialize();
-    
+
     // Load customers and suppliers
     setCustomers(MockDataService.getCustomers());
     setSuppliers(MockDataService.getSuppliers());
-    
+
     setLoading(false);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -136,14 +136,14 @@ const InspectionSchedule: React.FC = () => {
 
   const handleSelectChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -151,13 +151,13 @@ const InspectionSchedule: React.FC = () => {
   };
 
   const handleDateChange = (date: Date | null) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       scheduledDate: date
     }));
-    
+
     if (errors.scheduledDate) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         scheduledDate: undefined
       }));
@@ -173,68 +173,68 @@ const InspectionSchedule: React.FC = () => {
       result: 'pending',
       notes: ''
     };
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
       checklistItems: [...prev.checklistItems, newItem]
     }));
   };
 
   const updateChecklistItem = (id: string, field: keyof ChecklistItem, value: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      checklistItems: prev.checklistItems.map(item => 
-        item.id === id ? { ...item, [field]: value } : item
+      checklistItems: prev.checklistItems.map((item) =>
+      item.id === id ? { ...item, [field]: value } : item
       )
     }));
   };
 
   const removeChecklistItem = (id: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      checklistItems: prev.checklistItems.filter(item => item.id !== id)
+      checklistItems: prev.checklistItems.filter((item) => item.id !== id)
     }));
   };
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    
+
     if (!formData.title.trim()) {
       newErrors.title = 'Title is required';
     }
-    
+
     if (!formData.customerId) {
       newErrors.customerId = 'Customer is required';
     }
-    
+
     if (!formData.supplierId) {
       newErrors.supplierId = 'Supplier is required';
     }
-    
+
     if (!formData.scheduledDate) {
       newErrors.scheduledDate = 'Scheduled date is required';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     try {
       // Get selected customer and supplier
-      const selectedCustomer = customers.find(c => c._id === formData.customerId);
-      const selectedSupplier = suppliers.find(s => s._id === formData.supplierId);
-      
+      const selectedCustomer = customers.find((c) => c._id === formData.customerId);
+      const selectedSupplier = suppliers.find((s) => s._id === formData.supplierId);
+
       if (!selectedCustomer || !selectedSupplier) {
         throw new Error('Customer or supplier not found');
       }
-      
+
       // Create inspection object
       const newInspection: Partial<Inspection> = {
         _id: `insp_${Date.now()}`,
@@ -262,16 +262,16 @@ const InspectionSchedule: React.FC = () => {
         partNumber: formData.partNumber,
         revision: formData.revision,
         quantity: formData.quantity ? parseInt(formData.quantity) : undefined,
-        checklistItems: formData.checklistItems.filter(item => item.description.trim() !== ''),
+        checklistItems: formData.checklistItems.filter((item) => item.description.trim() !== ''),
         defects: []
       };
-      
+
       // Add the inspection to mock data service
       MockDataService.addInspection(newInspection as Inspection);
-      
+
       // Show success message
       setSubmitSuccess(true);
-      
+
       // Redirect after a short delay
       setTimeout(() => {
         navigate('/inspections');
@@ -283,7 +283,7 @@ const InspectionSchedule: React.FC = () => {
   };
 
   const getCustomerOptions = () => {
-    return customers.map(customer => ({
+    return customers.map((customer) => ({
       id: customer._id,
       label: customer.name,
       code: customer.code
@@ -291,7 +291,7 @@ const InspectionSchedule: React.FC = () => {
   };
 
   const getSupplierOptions = () => {
-    return suppliers.map(supplier => ({
+    return suppliers.map((supplier) => ({
       id: supplier._id,
       label: supplier.name,
       code: supplier.code
@@ -311,7 +311,7 @@ const InspectionSchedule: React.FC = () => {
 
       <Paper component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
         <Grid container spacing={3}>
-          {/* Basic Information */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom>
               Basic Information
@@ -329,8 +329,8 @@ const InspectionSchedule: React.FC = () => {
               helperText={errors.title}
               fullWidth
               required
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
             
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel id="inspection-type-label">Inspection Type</InputLabel>
@@ -339,8 +339,8 @@ const InspectionSchedule: React.FC = () => {
                 name="inspectionType"
                 value={formData.inspectionType}
                 onChange={handleSelectChange}
-                label="Inspection Type"
-              >
+                label="Inspection Type">
+
                 <MenuItem value="incoming">Incoming Inspection</MenuItem>
                 <MenuItem value="in-process">In-Process Inspection</MenuItem>
                 <MenuItem value="final">Final Inspection</MenuItem>
@@ -356,8 +356,8 @@ const InspectionSchedule: React.FC = () => {
                 name="priority"
                 value={formData.priority}
                 onChange={handleSelectChange}
-                label="Priority"
-              >
+                label="Priority">
+
                 <MenuItem value="low">Low</MenuItem>
                 <MenuItem value="medium">Medium</MenuItem>
                 <MenuItem value="high">High</MenuItem>
@@ -374,11 +374,11 @@ const InspectionSchedule: React.FC = () => {
               multiline
               rows={6}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
-          {/* Customer and Supplier */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
               Customer & Supplier
@@ -399,37 +399,37 @@ const InspectionSchedule: React.FC = () => {
                         <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
                           {option.label}
                         </Typography>
-                        <Chip 
-                          label={option.code} 
-                          size="small" 
-                          sx={{ ml: 1 }} 
-                        />
+                        <Chip
+                          label={option.code}
+                          size="small"
+                          sx={{ ml: 1 }} />
+
                       </Box>
-                    </li>
-                  );
+                    </li>);
+
                 }}
                 onChange={(_, value) => {
-                  setFormData(prev => ({
+                  setFormData((prev) => ({
                     ...prev,
                     customerId: value ? value.id : ''
                   }));
                   if (errors.customerId) {
-                    setErrors(prev => ({ ...prev, customerId: undefined }));
+                    setErrors((prev) => ({ ...prev, customerId: undefined }));
                   }
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Customer"
-                    error={!!errors.customerId}
-                    helperText={errors.customerId}
-                    required
-                  />
-                )}
+                renderInput={(params) =>
+                <TextField
+                  {...params}
+                  label="Customer"
+                  error={!!errors.customerId}
+                  helperText={errors.customerId}
+                  required />
+
+                }
                 ListboxProps={{
                   style: { maxHeight: '200px' }
-                }}
-              />
+                }} />
+
             </FormControl>
           </Grid>
           
@@ -446,41 +446,41 @@ const InspectionSchedule: React.FC = () => {
                         <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
                           {option.label}
                         </Typography>
-                        <Chip 
-                          label={option.code} 
-                          size="small" 
-                          sx={{ ml: 1 }} 
-                        />
+                        <Chip
+                          label={option.code}
+                          size="small"
+                          sx={{ ml: 1 }} />
+
                       </Box>
-                    </li>
-                  );
+                    </li>);
+
                 }}
                 onChange={(_, value) => {
-                  setFormData(prev => ({
+                  setFormData((prev) => ({
                     ...prev,
                     supplierId: value ? value.id : ''
                   }));
                   if (errors.supplierId) {
-                    setErrors(prev => ({ ...prev, supplierId: undefined }));
+                    setErrors((prev) => ({ ...prev, supplierId: undefined }));
                   }
                 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Supplier"
-                    error={!!errors.supplierId}
-                    helperText={errors.supplierId}
-                    required
-                  />
-                )}
+                renderInput={(params) =>
+                <TextField
+                  {...params}
+                  label="Supplier"
+                  error={!!errors.supplierId}
+                  helperText={errors.supplierId}
+                  required />
+
+                }
                 ListboxProps={{
                   style: { maxHeight: '200px' }
-                }}
-              />
+                }} />
+
             </FormControl>
           </Grid>
           
-          {/* Scheduling and Part Information */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
               Scheduling & Part Information
@@ -502,8 +502,8 @@ const InspectionSchedule: React.FC = () => {
                     helperText: errors.scheduledDate,
                     sx: { mb: 2 }
                   }
-                }}
-              />
+                }} />
+
             </LocalizationProvider>
             
             <TextField
@@ -512,8 +512,8 @@ const InspectionSchedule: React.FC = () => {
               value={formData.purchaseOrderNumber}
               onChange={handleInputChange}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
@@ -523,8 +523,8 @@ const InspectionSchedule: React.FC = () => {
               value={formData.partNumber}
               onChange={handleInputChange}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
             
             <Box display="flex" gap={2}>
               <TextField
@@ -533,8 +533,8 @@ const InspectionSchedule: React.FC = () => {
                 value={formData.revision}
                 onChange={handleInputChange}
                 fullWidth
-                sx={{ mb: 2 }}
-              />
+                sx={{ mb: 2 }} />
+
               
               <TextField
                 name="quantity"
@@ -543,76 +543,76 @@ const InspectionSchedule: React.FC = () => {
                 value={formData.quantity}
                 onChange={handleInputChange}
                 fullWidth
-                sx={{ mb: 2 }}
-              />
+                sx={{ mb: 2 }} />
+
             </Box>
           </Grid>
           
-          {/* Checklist Items */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2} mt={2}>
               <Typography variant="h6">
                 Checklist Items
               </Typography>
-              <Button 
+              <Button
                 startIcon={<AddIcon />}
                 onClick={addChecklistItem}
-                variant="outlined"
-              >
+                variant="outlined">
+
                 Add Item
               </Button>
             </Box>
             <Divider sx={{ mb: 3 }} />
             
-            {formData.checklistItems.map((item, index) => (
-              <Box key={item.id} mb={2} p={2} border={1} borderColor="divider" borderRadius={1}>
+            {formData.checklistItems.map((item, index) =>
+            <Box key={item.id} mb={2} p={2} border={1} borderColor="divider" borderRadius={1}>
                 <Box display="flex" justifyContent="space-between" mb={1}>
                   <Typography variant="subtitle1">
                     Item #{index + 1}
                   </Typography>
                   <Button
-                    color="error"
-                    size="small"
-                    onClick={() => removeChecklistItem(item.id)}
-                  >
+                  color="error"
+                  size="small"
+                  onClick={() => removeChecklistItem(item.id)}>
+
                     Remove
                   </Button>
                 </Box>
                 
                 <TextField
-                  label="Description"
-                  value={item.description}
-                  onChange={(e) => updateChecklistItem(item.id, 'description', e.target.value)}
-                  fullWidth
-                  sx={{ mb: 2 }}
-                />
+                label="Description"
+                value={item.description}
+                onChange={(e) => updateChecklistItem(item.id, 'description', e.target.value)}
+                fullWidth
+                sx={{ mb: 2 }} />
+
                 
                 <TextField
-                  label="Notes"
-                  value={item.notes || ''}
-                  onChange={(e) => updateChecklistItem(item.id, 'notes', e.target.value)}
-                  fullWidth
-                  multiline
-                  rows={2}
-                />
+                label="Notes"
+                value={item.notes || ''}
+                onChange={(e) => updateChecklistItem(item.id, 'notes', e.target.value)}
+                fullWidth
+                multiline
+                rows={2} />
+
               </Box>
-            ))}
+            )}
           </Grid>
           
-          {/* Submit Buttons */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
               <Button
                 variant="outlined"
-                onClick={() => navigate('/inspections')}
-              >
+                onClick={() => navigate('/inspections')}>
+
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 startIcon={<CalendarIcon />}
-                type="submit"
-              >
+                type="submit">
+
                 Schedule Inspection
               </Button>
             </Box>
@@ -620,28 +620,28 @@ const InspectionSchedule: React.FC = () => {
         </Grid>
       </Paper>
       
-      {/* Success/Error Notifications */}
-      <Snackbar 
-        open={submitSuccess} 
-        autoHideDuration={3000} 
-        onClose={() => setSubmitSuccess(false)}
-      >
+      
+      <Snackbar
+        open={submitSuccess}
+        autoHideDuration={3000}
+        onClose={() => setSubmitSuccess(false)}>
+
         <Alert severity="success">
           Inspection scheduled successfully!
         </Alert>
       </Snackbar>
       
-      <Snackbar 
-        open={!!submitError} 
-        autoHideDuration={3000} 
-        onClose={() => setSubmitError(null)}
-      >
+      <Snackbar
+        open={!!submitError}
+        autoHideDuration={3000}
+        onClose={() => setSubmitError(null)}>
+
         <Alert severity="error">
           {submitError}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default InspectionSchedule; 
+export default InspectionSchedule;

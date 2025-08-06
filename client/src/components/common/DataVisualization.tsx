@@ -17,8 +17,8 @@ import {
   CircularProgress,
   Alert,
   useTheme,
-  alpha
-} from '@mui/material';
+  alpha } from
+'@mui/material';
 import {
   BarChart as BarChartIcon,
   ShowChart as LineChartIcon,
@@ -30,8 +30,8 @@ import {
   ZoomIn as ZoomInIcon,
   Settings as SettingsIcon,
   Refresh as RefreshIcon,
-  Info as InfoIcon
-} from '@mui/icons-material';
+  Info as InfoIcon } from
+'@mui/icons-material';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -44,8 +44,8 @@ import {
   Title,
   Tooltip as ChartTooltip,
   Legend,
-  Filler
-} from 'chart.js';
+  Filler } from
+'chart.js';
 import { Line, Bar, Pie, Doughnut, PolarArea, Radar, Bubble, Scatter } from 'react-chartjs-2';
 import { saveAs } from 'file-saver';
 
@@ -125,40 +125,40 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
 }) => {
   const theme = useTheme();
   const chartRef = useRef<any>(null);
-  
+
   // State
   const [chartType, setChartType] = useState<ChartType>(defaultChartType);
   const [animationDuration, setAnimationDuration] = useState<number>(1000);
   const [showLegend, setShowLegend] = useState<boolean>(true);
   const [stacked, setStacked] = useState<boolean>(false);
-  
+
   // Prepare chart data based on props
   const chartData = useMemo(() => {
     // For pie/doughnut charts, we need a different data structure
     if (chartType === 'pie' || chartType === 'doughnut' || chartType === 'polar') {
       // For these charts, we can only display one series
       const activeSeries = series[0] || { data: [] };
-      
+
       return {
-        labels: activeSeries.data.map(point => point.label || point.x.toString()),
+        labels: activeSeries.data.map((point) => point.label || point.x.toString()),
         datasets: [
-          {
-            label: activeSeries.label,
-            data: activeSeries.data.map(point => point.y),
-            backgroundColor: activeSeries.data.map(point => point.color || getRandomColor()),
-            borderColor: theme.palette.background.paper,
-            borderWidth: 1
-          }
-        ]
+        {
+          label: activeSeries.label,
+          data: activeSeries.data.map((point) => point.y),
+          backgroundColor: activeSeries.data.map((point) => point.color || getRandomColor()),
+          borderColor: theme.palette.background.paper,
+          borderWidth: 1
+        }]
+
       };
-    } 
-    
+    }
+
     // For bubble and scatter charts
     if (chartType === 'bubble' || chartType === 'scatter') {
       return {
-        datasets: series.map(s => ({
+        datasets: series.map((s) => ({
           label: s.label,
-          data: s.data.map(point => ({
+          data: s.data.map((point) => ({
             x: typeof point.x === 'string' ? parseFloat(point.x) || 0 : point.x,
             y: point.y,
             r: point.z || 5 // Bubble size
@@ -167,31 +167,31 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
         }))
       };
     }
-    
+
     // For other charts (bar, line, radar)
     const labels = Array.from(
-      new Set(series.flatMap(s => s.data.map(d => d.x.toString())))
+      new Set(series.flatMap((s) => s.data.map((d) => d.x.toString())))
     ).sort();
-    
+
     return {
       labels,
-      datasets: series.map(s => {
+      datasets: series.map((s) => {
         // Create a map for quick lookup of y values by x
-        const dataMap = new Map(s.data.map(d => [d.x.toString(), d]));
-        
+        const dataMap = new Map(s.data.map((d) => [d.x.toString(), d]));
+
         return {
           label: s.label,
-          data: labels.map(label => dataMap.get(label)?.y || 0),
+          data: labels.map((label) => dataMap.get(label)?.y || 0),
           backgroundColor: s.backgroundColor || s.color || getRandomColor(0.7),
           borderColor: s.borderColor || s.color || getRandomColor(),
           borderWidth: 1,
           tension: s.tension || 0.4,
-          fill: s.fill !== undefined ? s.fill : chartType === 'line',
+          fill: s.fill !== undefined ? s.fill : chartType === 'line'
         };
       })
     };
   }, [series, chartType, theme]);
-  
+
   // Prepare chart options based on chart type
   const chartOptions = useMemo(() => {
     const baseOptions = {
@@ -203,7 +203,7 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
       plugins: {
         legend: {
           display: showLegend,
-          position: 'top' as const,
+          position: 'top' as const
         },
         title: {
           display: !!title,
@@ -218,12 +218,12 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
         }
       }
     };
-    
+
     // For pie, doughnut, radar and polar charts, we don't need scales
     if (['pie', 'doughnut', 'radar', 'polar'].includes(chartType)) {
       return baseOptions;
     }
-    
+
     // For other charts, add scales
     return {
       ...baseOptions,
@@ -244,46 +244,46 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
       }
     };
   }, [chartType, title, xAxisLabel, yAxisLabel, animationDuration, showLegend, stacked]);
-  
+
   // Handle chart type change
   const handleChartTypeChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newChartType: ChartType | null
-  ) => {
+  event: React.MouseEvent<HTMLElement>,
+  newChartType: ChartType | null) =>
+  {
     if (newChartType !== null) {
       setChartType(newChartType);
     }
   };
-  
+
   // Handle animation duration change
   const handleAnimationDurationChange = (event: Event, newValue: number | number[]) => {
     setAnimationDuration(newValue as number);
   };
-  
+
   // Handle legend toggle
   const handleLegendToggle = () => {
-    setShowLegend(prev => !prev);
+    setShowLegend((prev) => !prev);
   };
-  
+
   // Handle stacked toggle
   const handleStackedToggle = () => {
-    setStacked(prev => !prev);
+    setStacked((prev) => !prev);
   };
-  
+
   // Handle export as image
   const handleExportImage = () => {
     if (!chartRef.current) return;
-    
+
     const canvas = chartRef.current.canvas;
     if (!canvas) return;
-    
+
     canvas.toBlob((blob: Blob | null) => {
       if (blob) {
         saveAs(blob, `${title || 'chart'}.png`);
       }
     });
   };
-  
+
   // Generate a random color with opacity
   function getRandomColor(opacity = 1) {
     const r = Math.floor(Math.random() * 255);
@@ -291,29 +291,29 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
     const b = Math.floor(Math.random() * 255);
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
   }
-  
+
   // Render the appropriate chart based on chartType
-  const renderChart = () => {
+  const RenderChart = () => {
     if (loading) {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
           <CircularProgress size={40} />
-        </Box>
-      );
+        </Box>);
+
     }
-    
+
     if (error) {
       return <Alert severity="error">{error}</Alert>;
     }
-    
-    if (!series.length || !series.some(s => s.data.length > 0)) {
+
+    if (!series.length || !series.some((s) => s.data.length > 0)) {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
           <Typography color="text.secondary">No data available for visualization</Typography>
-        </Box>
-      );
+        </Box>);
+
     }
-    
+
     switch (chartType) {
       case 'bar':
         return <Bar ref={chartRef} data={chartData} options={chartOptions} />;
@@ -335,7 +335,7 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
         return <Bar ref={chartRef} data={chartData} options={chartOptions} />;
     }
   };
-  
+
   return (
     <Paper sx={{ p: 2, height: height, display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
@@ -345,20 +345,20 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
               {title}
             </Typography>
             
-            {description && (
-              <Tooltip title={description}>
+            {description &&
+            <Tooltip title={description}>
                 <IconButton size="small">
                   <InfoIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
-            )}
+            }
           </Stack>
           
-          {description && (
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+          {description &&
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
               {description.length > 70 ? `${description.substring(0, 70)}...` : description}
             </Typography>
-          )}
+          }
         </Box>
         
         <Stack direction="row" spacing={1}>
@@ -368,13 +368,13 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
             </IconButton>
           </Tooltip>
           
-          {onRefresh && (
-            <Tooltip title="Refresh data">
+          {onRefresh &&
+          <Tooltip title="Refresh data">
               <IconButton onClick={onRefresh} disabled={loading}>
                 <RefreshIcon />
               </IconButton>
             </Tooltip>
-          )}
+          }
         </Stack>
       </Box>
       
@@ -386,27 +386,27 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
               exclusive
               onChange={handleChartTypeChange}
               aria-label="chart type"
-              size="small"
-            >
-              {availableChartTypes.map((type) => (
-                <ToggleButton key={type} value={type} aria-label={type}>
+              size="small">
+
+              {availableChartTypes.map((type) =>
+              <ToggleButton key={type} value={type} aria-label={type}>
                   <Tooltip title={`${type.charAt(0).toUpperCase() + type.slice(1)} chart`}>
                     {chartTypeIcons[type]}
                   </Tooltip>
                 </ToggleButton>
-              ))}
+              )}
             </ToggleButtonGroup>
           </Grid>
           
-          {(chartType === 'bar' || chartType === 'line') && (
-            <Grid item>
+          {(chartType === 'bar' || chartType === 'line') &&
+          <Grid item>
               <Tooltip title={stacked ? "Unstacked" : "Stacked"}>
                 <IconButton size="small" onClick={handleStackedToggle} color={stacked ? "primary" : "default"}>
                   <BarChartIcon />
                 </IconButton>
               </Tooltip>
             </Grid>
-          )}
+          }
           
           <Grid item>
             <Tooltip title={showLegend ? "Hide legend" : "Show legend"}>
@@ -419,10 +419,10 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
       </Box>
       
       <Box sx={{ flexGrow: 1, position: 'relative' }}>
-        {renderChart()}
+        {RenderChart()}
       </Box>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default DataVisualization; 
+export default DataVisualization;

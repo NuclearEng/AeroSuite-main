@@ -25,8 +25,8 @@ import {
   Grid,
   CircularProgress,
   Tooltip,
-  Stack
-} from '@mui/material';
+  Stack } from
+'@mui/material';
 import {
   CloudUpload as UploadIcon,
   GetApp as DownloadIcon,
@@ -40,8 +40,8 @@ import {
   InsertDriveFile as TextIcon,
   Archive as ArchiveIcon,
   Code as CodeIcon,
-  HourglassEmpty as PendingIcon
-} from '@mui/icons-material';
+  HourglassEmpty as PendingIcon } from
+'@mui/icons-material';
 import axios from 'axios';
 import { format } from 'date-fns';
 
@@ -50,9 +50,9 @@ import { format } from 'date-fns';
  * 
  * A reusable component for managing documents that can be attached to different entity types
  */
-const DocumentManager = ({ 
-  entityType,  // Type of entity (supplier, customer, inspection, etc.)
-  entityId,    // ID of the entity
+const DocumentManager = ({
+  entityType, // Type of entity (supplier, customer, inspection, etc.)
+  entityId, // ID of the entity
   readOnly = false, // Whether the component is in read-only mode
   title = 'Documents',
   onDocumentsChange = null // Callback for when documents are added/removed
@@ -74,25 +74,25 @@ const DocumentManager = ({
 
   // Document categories
   const categories = [
-    { value: 'report', label: 'Report' },
-    { value: 'inspection', label: 'Inspection' },
-    { value: 'certificate', label: 'Certificate' },
-    { value: 'manual', label: 'Manual' },
-    { value: 'specification', label: 'Specification' },
-    { value: 'contract', label: 'Contract' },
-    { value: 'invoice', label: 'Invoice' },
-    { value: 'image', label: 'Image' },
-    { value: 'drawing', label: 'Drawing' },
-    { value: 'other', label: 'Other' }
-  ];
+  { value: 'report', label: 'Report' },
+  { value: 'inspection', label: 'Inspection' },
+  { value: 'certificate', label: 'Certificate' },
+  { value: 'manual', label: 'Manual' },
+  { value: 'specification', label: 'Specification' },
+  { value: 'contract', label: 'Contract' },
+  { value: 'invoice', label: 'Invoice' },
+  { value: 'image', label: 'Image' },
+  { value: 'drawing', label: 'Drawing' },
+  { value: 'other', label: 'Other' }];
+
 
   // Load documents
   const loadDocuments = useCallback(async () => {
     if (!entityType || !entityId) return;
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await axios.get(`/api/documents/entity/${entityType}/${entityId}`);
       setDocuments(response.data.data || []);
@@ -133,14 +133,14 @@ const DocumentManager = ({
   // Handle document upload
   const handleUpload = async () => {
     if (!selectedFile) return;
-    
+
     const uploadData = new FormData();
     uploadData.append('document', selectedFile);
     uploadData.append('title', formData.title);
     uploadData.append('description', formData.description);
     uploadData.append('category', formData.category);
     uploadData.append('tags', formData.tags);
-    
+
     try {
       setLoading(true);
       const response = await axios.post(
@@ -152,15 +152,15 @@ const DocumentManager = ({
           }
         }
       );
-      
+
       // Add new document to the list
       setDocuments([...documents, response.data.data]);
-      
+
       // Notify parent of change if callback provided
       if (onDocumentsChange) {
         onDocumentsChange([...documents, response.data.data]);
       }
-      
+
       // Reset form
       setUploadDialogOpen(false);
       setSelectedFile(null);
@@ -203,25 +203,25 @@ const DocumentManager = ({
   // Handle document update
   const handleUpdate = async () => {
     if (!selectedDocument) return;
-    
+
     try {
       setLoading(true);
       const response = await axios.put(
         `/api/documents/${selectedDocument.documentId}`,
         formData
       );
-      
+
       // Update document in the list
-      const updatedDocuments = documents.map(doc => 
-        doc.documentId === selectedDocument.documentId ? response.data.data : doc
+      const updatedDocuments = documents.map((doc) =>
+      doc.documentId === selectedDocument.documentId ? response.data.data : doc
       );
       setDocuments(updatedDocuments);
-      
+
       // Notify parent of change if callback provided
       if (onDocumentsChange) {
         onDocumentsChange(updatedDocuments);
       }
-      
+
       // Reset form
       setEditDialogOpen(false);
       setSelectedDocument(null);
@@ -242,20 +242,20 @@ const DocumentManager = ({
   // Handle document deletion
   const handleDelete = async () => {
     if (!selectedDocument) return;
-    
+
     try {
       setLoading(true);
       await axios.delete(`/api/documents/${selectedDocument.documentId}`);
-      
+
       // Remove document from the list
-      const updatedDocuments = documents.filter(doc => doc.documentId !== selectedDocument.documentId);
+      const updatedDocuments = documents.filter((doc) => doc.documentId !== selectedDocument.documentId);
       setDocuments(updatedDocuments);
-      
+
       // Notify parent of change if callback provided
       if (onDocumentsChange) {
         onDocumentsChange(updatedDocuments);
       }
-      
+
       // Reset
       setConfirmDeleteOpen(false);
       setSelectedDocument(null);
@@ -268,7 +268,7 @@ const DocumentManager = ({
   };
 
   // Get appropriate icon for document type
-  const getDocumentIcon = (document) => {
+  const GetDocumentIcon = (document) => {
     switch (document.type) {
       case 'image':
         return <ImageIcon />;
@@ -305,34 +305,34 @@ const DocumentManager = ({
           {title}
         </Typography>
         
-        {!readOnly && (
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<UploadIcon />}
-            onClick={() => setUploadDialogOpen(true)}
-          >
+        {!readOnly &&
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<UploadIcon />}
+          onClick={() => setUploadDialogOpen(true)}>
+
             Upload Document
           </Button>
-        )}
+        }
       </Box>
       
-      {error && (
-        <Box mb={2}>
+      {error &&
+      <Box mb={2}>
           <Typography color="error">{error}</Typography>
         </Box>
-      )}
+      }
       
-      {loading && documents.length === 0 ? (
-        <Box display="flex" justifyContent="center" p={4}>
+      {loading && documents.length === 0 ?
+      <Box display="flex" justifyContent="center" p={4}>
           <CircularProgress />
-        </Box>
-      ) : documents.length === 0 ? (
-        <Box textAlign="center" p={4} bgcolor="background.paper">
+        </Box> :
+      documents.length === 0 ?
+      <Box textAlign="center" p={4} bgcolor="background.paper">
           <Typography color="textSecondary">No documents available</Typography>
-        </Box>
-      ) : (
-        <TableContainer>
+        </Box> :
+
+      <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
@@ -344,40 +344,40 @@ const DocumentManager = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {documents.map((document) => (
-                <TableRow key={document.documentId}>
+              {documents.map((document) =>
+            <TableRow key={document.documentId}>
                   <TableCell>
                     <Box display="flex" alignItems="center">
-                      {getDocumentIcon(document)}
+                      {GetDocumentIcon(document)}
                       <Box ml={2}>
                         <Typography variant="body1">
                           {document.title || document.originalFilename}
                         </Typography>
-                        {document.description && (
-                          <Typography variant="body2" color="textSecondary">
+                        {document.description &&
+                    <Typography variant="body2" color="textSecondary">
                             {document.description}
                           </Typography>
-                        )}
-                        {document.tags && document.tags.length > 0 && (
-                          <Box mt={1}>
-                            {document.tags.map((tag, index) => (
-                              <Chip 
-                                key={index} 
-                                label={tag} 
-                                size="small" 
-                                sx={{ mr: 0.5, mb: 0.5 }} 
-                              />
-                            ))}
+                    }
+                        {document.tags && document.tags.length > 0 &&
+                    <Box mt={1}>
+                            {document.tags.map((tag, index) =>
+                      <Chip
+                        key={index}
+                        label={tag}
+                        size="small"
+                        sx={{ mr: 0.5, mb: 0.5 }} />
+
+                      )}
                           </Box>
-                        )}
+                    }
                       </Box>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Chip 
-                      label={document.category.charAt(0).toUpperCase() + document.category.slice(1)} 
-                      size="small" 
-                    />
+                    <Chip
+                  label={document.category.charAt(0).toUpperCase() + document.category.slice(1)}
+                  size="small" />
+
                   </TableCell>
                   <TableCell>{formatFileSize(document.size)}</TableCell>
                   <TableCell>
@@ -385,20 +385,20 @@ const DocumentManager = ({
                   </TableCell>
                   <TableCell align="right">
                     <Stack direction="row" spacing={1} justifyContent="flex-end">
-                      {document.thumbnail?.hasThumbnail && (
-                        <Tooltip title="Preview">
+                      {document.thumbnail?.hasThumbnail &&
+                  <Tooltip title="Preview">
                           <IconButton size="small" onClick={() => window.open(`/api/documents/preview/${document.documentId}`, '_blank')}>
                             <ViewIcon fontSize="small" />
                           </IconButton>
                         </Tooltip>
-                      )}
+                  }
                       <Tooltip title="Download">
                         <IconButton size="small" onClick={() => handleDownload(document)}>
                           <DownloadIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                      {!readOnly && (
-                        <>
+                      {!readOnly &&
+                  <>
                           <Tooltip title="Edit">
                             <IconButton size="small" onClick={() => handleEditClick(document)}>
                               <EditIcon fontSize="small" />
@@ -410,17 +410,17 @@ const DocumentManager = ({
                             </IconButton>
                           </Tooltip>
                         </>
-                      )}
+                  }
                     </Stack>
                   </TableCell>
                 </TableRow>
-              ))}
+            )}
             </TableBody>
           </Table>
         </TableContainer>
-      )}
+      }
       
-      {/* Upload Dialog */}
+      
       <Dialog open={uploadDialogOpen} onClose={() => setUploadDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Upload Document</DialogTitle>
         <DialogContent>
@@ -433,24 +433,24 @@ const DocumentManager = ({
               variant="outlined"
               component="label"
               startIcon={<UploadIcon />}
-              fullWidth
-            >
+              fullWidth>
+
               Select File
               <input
                 type="file"
                 hidden
-                onChange={handleFileSelect}
-              />
+                onChange={handleFileSelect} />
+
             </Button>
             
-            {selectedFile && (
-              <Box mt={1} display="flex" alignItems="center">
+            {selectedFile &&
+            <Box mt={1} display="flex" alignItems="center">
                 <FileIcon sx={{ mr: 1 }} />
                 <Typography variant="body2">
                   {selectedFile.name} ({formatFileSize(selectedFile.size)})
                 </Typography>
               </Box>
-            )}
+            }
           </Box>
           
           <Grid container spacing={2}>
@@ -461,8 +461,8 @@ const DocumentManager = ({
                 value={formData.title}
                 onChange={handleInputChange}
                 fullWidth
-                required
-              />
+                required />
+
             </Grid>
             
             <Grid item xs={12}>
@@ -473,8 +473,8 @@ const DocumentManager = ({
                 onChange={handleInputChange}
                 fullWidth
                 multiline
-                rows={2}
-              />
+                rows={2} />
+
             </Grid>
             
             <Grid item xs={12} sm={6}>
@@ -484,13 +484,13 @@ const DocumentManager = ({
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  label="Category"
-                >
-                  {categories.map((category) => (
-                    <MenuItem key={category.value} value={category.value}>
+                  label="Category">
+
+                  {categories.map((category) =>
+                  <MenuItem key={category.value} value={category.value}>
                       {category.label}
                     </MenuItem>
-                  ))}
+                  )}
                 </Select>
               </FormControl>
             </Grid>
@@ -501,26 +501,26 @@ const DocumentManager = ({
                 label="Tags (comma separated)"
                 value={formData.tags}
                 onChange={handleInputChange}
-                fullWidth
-              />
+                fullWidth />
+
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setUploadDialogOpen(false)}>Cancel</Button>
-          <Button 
-            variant="contained" 
-            color="primary" 
+          <Button
+            variant="contained"
+            color="primary"
             onClick={handleUpload}
             disabled={!selectedFile || !formData.title || loading}
-            startIcon={loading ? <CircularProgress size={20} /> : null}
-          >
+            startIcon={loading ? <CircularProgress size={20} /> : null}>
+
             Upload
           </Button>
         </DialogActions>
       </Dialog>
       
-      {/* Edit Dialog */}
+      
       <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Edit Document</DialogTitle>
         <DialogContent>
@@ -532,8 +532,8 @@ const DocumentManager = ({
                 value={formData.title}
                 onChange={handleInputChange}
                 fullWidth
-                required
-              />
+                required />
+
             </Grid>
             
             <Grid item xs={12}>
@@ -544,8 +544,8 @@ const DocumentManager = ({
                 onChange={handleInputChange}
                 fullWidth
                 multiline
-                rows={2}
-              />
+                rows={2} />
+
             </Grid>
             
             <Grid item xs={12} sm={6}>
@@ -555,13 +555,13 @@ const DocumentManager = ({
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  label="Category"
-                >
-                  {categories.map((category) => (
-                    <MenuItem key={category.value} value={category.value}>
+                  label="Category">
+
+                  {categories.map((category) =>
+                  <MenuItem key={category.value} value={category.value}>
                       {category.label}
                     </MenuItem>
-                  ))}
+                  )}
                 </Select>
               </FormControl>
             </Grid>
@@ -572,55 +572,55 @@ const DocumentManager = ({
                 label="Tags (comma separated)"
                 value={formData.tags}
                 onChange={handleInputChange}
-                fullWidth
-              />
+                fullWidth />
+
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
-          <Button 
-            variant="contained" 
-            color="primary" 
+          <Button
+            variant="contained"
+            color="primary"
             onClick={handleUpdate}
             disabled={!formData.title || loading}
-            startIcon={loading ? <CircularProgress size={20} /> : null}
-          >
+            startIcon={loading ? <CircularProgress size={20} /> : null}>
+
             Save Changes
           </Button>
         </DialogActions>
       </Dialog>
       
-      {/* Delete Confirmation Dialog */}
+      
       <Dialog open={confirmDeleteOpen} onClose={() => setConfirmDeleteOpen(false)}>
         <DialogTitle>Delete Document</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Are you sure you want to delete this document?
-            {selectedDocument && (
-              <>
+            {selectedDocument &&
+            <>
                 <br />
                 <br />
                 <strong>{selectedDocument.title || selectedDocument.originalFilename}</strong>
               </>
-            )}
+            }
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmDeleteOpen(false)}>Cancel</Button>
-          <Button 
-            variant="contained" 
-            color="error" 
+          <Button
+            variant="contained"
+            color="error"
             onClick={handleDelete}
             disabled={loading}
-            startIcon={loading ? <CircularProgress size={20} /> : null}
-          >
+            startIcon={loading ? <CircularProgress size={20} /> : null}>
+
             Delete
           </Button>
         </DialogActions>
       </Dialog>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default DocumentManager; 
+export default DocumentManager;

@@ -19,8 +19,8 @@ import {
   useTheme,
   alpha,
   Tabs,
-  Tab
-} from '@mui/material';
+  Tab } from
+'@mui/material';
 import { PageHeader } from '../components/common';
 import { analyzeModuleSizes, bundleOptimizationGuide } from '../utils/bundleOptimization';
 
@@ -39,44 +39,44 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== index}
       id={`bundle-optimization-tabpanel-${index}`}
       aria-labelledby={`bundle-optimization-tab-${index}`}
-      {...other}
-    >
+      {...other}>
+
       {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
-    </div>
-  );
+    </div>);
+
 };
 
 const BundleOptimizationDemo: React.FC = () => {
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
-  
+
   // Analyze common libraries
   const commonLibraries = [
-    'lodash',
-    'moment',
-    '@mui/material',
-    '@mui/icons-material',
-    'chart.js',
-    'react-redux'
-  ];
-  
+  'lodash',
+  'moment',
+  '@mui/material',
+  '@mui/icons-material',
+  'chart.js',
+  'react-redux'];
+
+
   const moduleAnalysis = analyzeModuleSizes(commonLibraries);
-  
+
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   return (
     <Box>
       <PageHeader
         title="Bundle Optimization Demo"
         subtitle="Techniques for reducing bundle size and improving load performance"
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Demo', href: '/demo' },
-          { label: 'Bundle Optimization' },
-        ]}
-      />
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Demo', href: '/demo' },
+        { label: 'Bundle Optimization' }]
+        } />
+
       
       <Paper sx={{ p: 2, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
@@ -123,7 +123,7 @@ const BundleOptimizationDemo: React.FC = () => {
         </Tabs>
       </Box>
       
-      {/* Dependency Analysis */}
+      
       <TabPanel value={tabValue} index={0}>
         <Card>
           <CardContent>
@@ -148,26 +148,26 @@ const BundleOptimizationDemo: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Object.entries(moduleAnalysis).map(([moduleName, info]) => (
-                    <TableRow key={moduleName} hover>
+                  {Object.entries(moduleAnalysis).map(([moduleName, info]) =>
+                  <TableRow key={moduleName} hover>
                       <TableCell>
                         <Typography variant="subtitle2">{moduleName}</Typography>
                       </TableCell>
                       <TableCell>
                         <Chip
-                          label={info.size}
-                          size="small"
-                          color={
-                            info.size.includes('100') ? 'error' :
-                            info.size.includes('70') ? 'warning' :
-                            'primary'
-                          }
-                          sx={{ minWidth: 100 }}
-                        />
+                        label={info.size}
+                        size="small"
+                        color={
+                        info.size.includes('100') ? 'error' :
+                        info.size.includes('70') ? 'warning' :
+                        'primary'
+                        }
+                        sx={{ minWidth: 100 }} />
+
                       </TableCell>
                       <TableCell>{info.recommendation}</TableCell>
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -178,8 +178,8 @@ const BundleOptimizationDemo: React.FC = () => {
                 bgcolor: alpha(theme.palette.primary.main, 0.05),
                 border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
                 borderRadius: 1
-              }}
-            >
+              }}>
+
               <Typography variant="subtitle2" gutterBottom>
                 How to Analyze Your Bundle
               </Typography>
@@ -194,8 +194,8 @@ const BundleOptimizationDemo: React.FC = () => {
                   bgcolor: alpha(theme.palette.common.black, 0.05),
                   borderRadius: 1,
                   overflow: 'auto'
-                }}
-              >
+                }}>
+
                 {`# Using source-map-explorer
 npm install --save-dev source-map-explorer
 npm run build
@@ -209,7 +209,7 @@ ANALYZE=true npm run build`}
         </Card>
       </TabPanel>
       
-      {/* Optimization Techniques */}
+      
       <TabPanel value={tabValue} index={1}>
         <Card>
           <CardContent>
@@ -225,11 +225,11 @@ ANALYZE=true npm run build`}
                     Import Optimization
                   </Typography>
                   <Box component="ul" sx={{ pl: 2 }}>
-                    {bundleOptimizationGuide.imports.map((tip, index) => (
-                      <Box component="li" key={index} sx={{ mb: 1 }}>
+                    {bundleOptimizationGuide.imports.map((tip, index) =>
+                    <Box component="li" key={index} sx={{ mb: 1 }}>
                         <Typography variant="body2">{tip}</Typography>
                       </Box>
-                    ))}
+                    )}
                   </Box>
                   
                   <Box
@@ -238,8 +238,8 @@ ANALYZE=true npm run build`}
                       p: 2,
                       bgcolor: alpha(theme.palette.primary.main, 0.05),
                       borderRadius: 1
-                    }}
-                  >
+                    }}>
+
                     <Typography variant="subtitle2" gutterBottom>
                       Before Optimization:
                     </Typography>
@@ -300,8 +300,8 @@ import { format, parseISO } from 'date-fns';`}
                       p: 2,
                       bgcolor: alpha(theme.palette.secondary.main, 0.05),
                       borderRadius: 1
-                    }}
-                  >
+                    }}>
+
                     <Typography variant="subtitle2" gutterBottom>
                       Code Splitting Example:
                     </Typography>
@@ -335,20 +335,20 @@ function MyComponent() {
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <Box component="ul" sx={{ pl: 2 }}>
-                        {bundleOptimizationGuide.tools.map((tip, index) => (
-                          <Box component="li" key={index} sx={{ mb: 1 }}>
+                        {bundleOptimizationGuide.tools.map((tip, index) =>
+                        <Box component="li" key={index} sx={{ mb: 1 }}>
                             <Typography variant="body2">{tip}</Typography>
                           </Box>
-                        ))}
+                        )}
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Box component="ul" sx={{ pl: 2 }}>
-                        {bundleOptimizationGuide.dependencies.map((tip, index) => (
-                          <Box component="li" key={index} sx={{ mb: 1 }}>
+                        {bundleOptimizationGuide.dependencies.map((tip, index) =>
+                        <Box component="li" key={index} sx={{ mb: 1 }}>
                             <Typography variant="body2">{tip}</Typography>
                           </Box>
-                        ))}
+                        )}
                       </Box>
                     </Grid>
                   </Grid>
@@ -359,7 +359,7 @@ function MyComponent() {
         </Card>
       </TabPanel>
       
-      {/* Implementation */}
+      
       <TabPanel value={tabValue} index={2}>
         <Card>
           <CardContent>
@@ -379,8 +379,8 @@ function MyComponent() {
                     p: 2,
                     bgcolor: alpha(theme.palette.success.main, 0.05),
                     height: '100%'
-                  }}
-                >
+                  }}>
+
                   <Typography variant="subtitle1" gutterBottom color="success.main">
                     What We've Implemented
                   </Typography>
@@ -420,8 +420,8 @@ function MyComponent() {
                     p: 2,
                     bgcolor: alpha(theme.palette.info.main, 0.05),
                     height: '100%'
-                  }}
-                >
+                  }}>
+
                   <Typography variant="subtitle1" gutterBottom color="info.main">
                     Results
                   </Typography>
@@ -497,8 +497,8 @@ function MyComponent() {
                       bgcolor: alpha(theme.palette.common.black, 0.05),
                       borderRadius: 1,
                       overflow: 'auto'
-                    }}
-                  >
+                    }}>
+
                     {`// config-overrides.js - Webpack configuration
 module.exports = override(
   addBabelPlugin([
@@ -539,8 +539,8 @@ module.exports = override(
           </CardContent>
         </Card>
       </TabPanel>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default BundleOptimizationDemo; 
+export default BundleOptimizationDemo;

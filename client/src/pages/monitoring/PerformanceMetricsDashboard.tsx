@@ -11,8 +11,8 @@ import {
   Link,
   CircularProgress,
   Alert,
-  Button
-} from '@mui/material';
+  Button } from
+'@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { NavigateNext as NavigateNextIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -38,25 +38,25 @@ function TabPanel(props: TabPanelProps) {
       id={`metrics-tabpanel-${index}`}
       aria-labelledby={`metrics-tab-${index}`}
       {...other}
-      style={{ width: '100%' }}
-    >
+      style={{ width: '100%' }}>
+
       {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
-    </div>
-  );
+    </div>);
+
 }
 
 // Helper function for tab accessibility
 function a11yProps(index: number) {
   return {
     id: `metrics-tab-${index}`,
-    'aria-controls': `metrics-tabpanel-${index}`,
+    'aria-controls': `metrics-tabpanel-${index}`
   };
 }
 
 // Main component
 const PerformanceMetricsDashboard: React.FC = () => {
   const { t } = useTranslation();
-  
+
   // State
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -67,7 +67,7 @@ const PerformanceMetricsDashboard: React.FC = () => {
     dates: [],
     metrics: {}
   });
-  
+
   // Fetch performance metrics
   const fetchPerformanceMetrics = async () => {
     setLoading(true);
@@ -75,12 +75,12 @@ const PerformanceMetricsDashboard: React.FC = () => {
       // In a real implementation, we would fetch from the API
       // For now, we'll use mock data
       const response = await performanceMonitoringService.getPerformanceMetrics('7d');
-      
+
       // Process the metrics
       setMetrics(response.currentMetrics || {});
       setBaselineMetrics(response.baselineMetrics || {});
       setHistoricalData(response.historicalData || { dates: [], metrics: {} });
-      
+
       setError(null);
     } catch (_err) {
       console.error('Error fetching performance metrics:', err);
@@ -89,21 +89,21 @@ const PerformanceMetricsDashboard: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Initialize performance monitoring
   useEffect(() => {
     // Initialize performance monitoring
     initPerformanceMonitoring();
-    
+
     // Fetch initial metrics
     fetchPerformanceMetrics();
   }, []);
-  
+
   // Handle tab change
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
-  
+
   // Render loading state
   if (loading && !metrics.firstContentfulPaint) {
     return (
@@ -111,10 +111,10 @@ const PerformanceMetricsDashboard: React.FC = () => {
         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
           <CircularProgress />
         </Box>
-      </Container>
-    );
+      </Container>);
+
   }
-  
+
   return (
     <Container maxWidth="xl">
       <Box sx={{ mt: 3, mb: 4 }}>
@@ -124,8 +124,8 @@ const PerformanceMetricsDashboard: React.FC = () => {
           </Typography>
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
+            aria-label="breadcrumb">
+
             <Link component={RouterLink} color="inherit" to="/">
               {t('navigation.dashboard')}
             </Link>
@@ -136,19 +136,19 @@ const PerformanceMetricsDashboard: React.FC = () => {
           </Breadcrumbs>
         </Box>
         
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
+        {error &&
+        <Alert severity="error" sx={{ mb: 3 }}>
             {error}
             <Button
-              color="inherit"
-              size="small"
-              onClick={fetchPerformanceMetrics}
-              sx={{ ml: 2 }}
-            >
+            color="inherit"
+            size="small"
+            onClick={fetchPerformanceMetrics}
+            sx={{ ml: 2 }}>
+
               {t('common.retry')}
             </Button>
           </Alert>
-        )}
+        }
         
         <Paper sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -157,8 +157,8 @@ const PerformanceMetricsDashboard: React.FC = () => {
               onChange={handleTabChange}
               aria-label="performance metrics tabs"
               variant="scrollable"
-              scrollButtons="auto"
-            >
+              scrollButtons="auto">
+
               <Tab label={t('performanceMetrics.tabs.overview')} {...a11yProps(0)} />
               <Tab label={t('performanceMetrics.tabs.budgets')} {...a11yProps(1)} />
               <Tab label={t('performanceMetrics.tabs.regressions')} {...a11yProps(2)} />
@@ -167,45 +167,45 @@ const PerformanceMetricsDashboard: React.FC = () => {
             </Tabs>
           </Box>
           
-          {/* Overview Tab */}
+          
           <TabPanel value={tabIndex} index={0}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <PerformanceBudgetsDashboard 
+                <PerformanceBudgetsDashboard
                   metrics={metrics}
-                  onRefresh={fetchPerformanceMetrics}
-                />
+                  onRefresh={fetchPerformanceMetrics} />
+
               </Grid>
               <Grid item xs={12} md={6}>
-                <PerformanceRegressionsDashboard 
+                <PerformanceRegressionsDashboard
                   currentMetrics={metrics}
                   baselineMetrics={baselineMetrics}
                   historicalData={historicalData}
-                  onRefresh={fetchPerformanceMetrics}
-                />
+                  onRefresh={fetchPerformanceMetrics} />
+
               </Grid>
             </Grid>
           </TabPanel>
           
-          {/* Budgets Tab */}
+          
           <TabPanel value={tabIndex} index={1}>
-            <PerformanceBudgetsDashboard 
+            <PerformanceBudgetsDashboard
               metrics={metrics}
-              onRefresh={fetchPerformanceMetrics}
-            />
+              onRefresh={fetchPerformanceMetrics} />
+
           </TabPanel>
           
-          {/* Regressions Tab */}
+          
           <TabPanel value={tabIndex} index={2}>
-            <PerformanceRegressionsDashboard 
+            <PerformanceRegressionsDashboard
               currentMetrics={metrics}
               baselineMetrics={baselineMetrics}
               historicalData={historicalData}
-              onRefresh={fetchPerformanceMetrics}
-            />
+              onRefresh={fetchPerformanceMetrics} />
+
           </TabPanel>
           
-          {/* Resources Tab */}
+          
           <TabPanel value={tabIndex} index={3}>
             <Typography variant="h6" gutterBottom>
               {t('performanceMetrics.resourceMetrics')}
@@ -213,10 +213,10 @@ const PerformanceMetricsDashboard: React.FC = () => {
             <Typography>
               {t('performanceMetrics.resourceMetricsDescription')}
             </Typography>
-            {/* Resource metrics would go here */}
+            
           </TabPanel>
           
-          {/* User Experience Tab */}
+          
           <TabPanel value={tabIndex} index={4}>
             <Typography variant="h6" gutterBottom>
               {t('performanceMetrics.userExperienceMetrics')}
@@ -224,12 +224,12 @@ const PerformanceMetricsDashboard: React.FC = () => {
             <Typography>
               {t('performanceMetrics.userExperienceMetricsDescription')}
             </Typography>
-            {/* User experience metrics would go here */}
+            
           </TabPanel>
         </Paper>
       </Box>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default PerformanceMetricsDashboard; 
+export default PerformanceMetricsDashboard;

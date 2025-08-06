@@ -31,8 +31,8 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
-} from '@mui/material';
+  TableRow } from
+'@mui/material';
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -57,15 +57,15 @@ import {
   Inventory as InventoryIcon,
   Notes as NotesIcon,
   Analytics as AnalyticsIcon,
-  VerifiedUser as QualityIcon
-} from '@mui/icons-material';
-import { 
-  PageHeader, 
-  Chart, 
-  DataTable, 
-  StatusBadge, 
-  ConfirmationDialog 
-} from '../../components/common';
+  VerifiedUser as QualityIcon } from
+'@mui/icons-material';
+import {
+  PageHeader,
+  Chart,
+  DataTable,
+  StatusBadge,
+  ConfirmationDialog } from
+'../../components/common';
 import { StatusType } from '../../components/common/StatusBadge';
 import supplierService, { Supplier } from '../../services/supplier.service';
 import { format } from 'date-fns';
@@ -90,17 +90,17 @@ function TabPanel(props: TabPanelProps) {
       id={`supplier-tabpanel-${index}`}
       aria-labelledby={`supplier-tab-${index}`}
       {...other}
-      style={{ paddingTop: '16px' }}
-    >
-      {value === index && (
-        <Box>{children}</Box>
-      )}
-    </div>
-  );
+      style={{ paddingTop: '16px' }}>
+
+      {value === index &&
+      <Box>{children}</Box>
+      }
+    </div>);
+
 }
 
 const SupplierDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{id: string;}>();
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -127,11 +127,11 @@ const SupplierDetail: React.FC = () => {
   useEffect(() => {
     const loadSupplier = async () => {
       if (!id) return;
-      
+
       try {
         setLoading(true);
         setError(null);
-        
+
         const data = await supplierService.getSupplier(id);
         setSupplier(data);
       } catch (err: any) {
@@ -141,7 +141,7 @@ const SupplierDetail: React.FC = () => {
         setLoading(false);
       }
     };
-    
+
     loadSupplier();
   }, [id]);
 
@@ -149,7 +149,7 @@ const SupplierDetail: React.FC = () => {
   useEffect(() => {
     const loadPerformanceMetrics = async () => {
       if (!id || tabValue !== 1) return;
-      
+
       try {
         const data = await supplierService.getSupplierPerformance(id);
         setPerformanceMetrics(data);
@@ -158,7 +158,7 @@ const SupplierDetail: React.FC = () => {
         // Don't set error state as this is secondary data
       }
     };
-    
+
     loadPerformanceMetrics();
   }, [id, tabValue]);
 
@@ -166,7 +166,7 @@ const SupplierDetail: React.FC = () => {
   useEffect(() => {
     const loadInspections = async () => {
       if (!id || tabValue !== 2) return;
-      
+
       try {
         setInspectionsLoading(true);
         const data = await supplierService.getSupplierInspections(id);
@@ -178,13 +178,13 @@ const SupplierDetail: React.FC = () => {
         setInspectionsLoading(false);
       }
     };
-    
+
     loadInspections();
   }, [id, tabValue]);
 
   // Handle tab change
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
-    if (newValue === 4) { // Analytics tab
+    if (newValue === 4) {// Analytics tab
       navigate(`/suppliers/${id}/analytics`);
       return;
     }
@@ -198,18 +198,18 @@ const SupplierDetail: React.FC = () => {
 
   const handleDeleteConfirm = async () => {
     if (!id) return;
-    
+
     try {
       setLoading(true);
       await supplierService.deleteSupplier(id);
-      
+
       // Show success message
       setSnackbar({
         open: true,
         message: 'Supplier deleted successfully',
         severity: 'success'
       });
-      
+
       // Navigate back to supplier list after a short delay
       setTimeout(() => {
         navigate('/suppliers');
@@ -232,21 +232,21 @@ const SupplierDetail: React.FC = () => {
 
   // Handle close snackbar
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   // Format address
   const formatAddress = (address?: Supplier['address']) => {
     if (!address) return 'No address provided';
-    
+
     const parts = [
-      address.street,
-      address.city,
-      address.state,
-      address.zipCode,
-      address.country
-    ].filter(Boolean);
-    
+    address.street,
+    address.city,
+    address.state,
+    address.zipCode,
+    address.country].
+    filter(Boolean);
+
     return parts.join(', ');
   };
 
@@ -258,11 +258,11 @@ const SupplierDetail: React.FC = () => {
           title="Loading..."
           subtitle="Please wait"
           breadcrumbs={[
-            { label: 'Dashboard', href: '/dashboard' },
-            { label: 'Suppliers', href: '/suppliers' },
-            { label: 'Loading...' },
-          ]}
-        />
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Suppliers', href: '/suppliers' },
+          { label: 'Loading...' }]
+          } />
+
         <MuiGrid container spacing={3}>
           <MuiGrid item xs={12} md={4}>
             <Skeleton variant="rectangular" height={300} />
@@ -271,8 +271,8 @@ const SupplierDetail: React.FC = () => {
             <Skeleton variant="rectangular" height={300} />
           </MuiGrid>
         </MuiGrid>
-      </Box>
-    );
+      </Box>);
+
   }
 
   // Error state
@@ -283,11 +283,11 @@ const SupplierDetail: React.FC = () => {
           title="Error"
           subtitle="Failed to load supplier"
           breadcrumbs={[
-            { label: 'Dashboard', href: '/dashboard' },
-            { label: 'Suppliers', href: '/suppliers' },
-            { label: 'Error' },
-          ]}
-        />
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Suppliers', href: '/suppliers' },
+          { label: 'Error' }]
+          } />
+
         <Alert severity="error" sx={{ mt: 2 }}>
           {error}
         </Alert>
@@ -295,31 +295,31 @@ const SupplierDetail: React.FC = () => {
           variant="contained"
           onClick={() => navigate('/suppliers')}
           sx={{ mt: 2 }}
-          startIcon={<ArrowBackIcon />}
-        >
+          startIcon={<ArrowBackIcon />}>
+
           Back to Suppliers
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   // Performance metrics chart data
   const performanceChartData = performanceMetrics ? {
     labels: performanceMetrics.monthlyData?.map((item: any) => item.month) || [],
     datasets: [
-      {
-        label: 'On-Time Delivery',
-        data: performanceMetrics.monthlyData?.map((item: any) => item.onTimeDelivery) || [],
-        borderColor: theme.palette.primary.main,
-        backgroundColor: theme.palette.primary.main + '20',
-      },
-      {
-        label: 'Quality Rating',
-        data: performanceMetrics.monthlyData?.map((item: any) => item.qualityRating) || [],
-        borderColor: theme.palette.secondary.main,
-        backgroundColor: theme.palette.secondary.main + '20',
-      }
-    ],
+    {
+      label: 'On-Time Delivery',
+      data: performanceMetrics.monthlyData?.map((item: any) => item.onTimeDelivery) || [],
+      borderColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.primary.main + '20'
+    },
+    {
+      label: 'Quality Rating',
+      data: performanceMetrics.monthlyData?.map((item: any) => item.qualityRating) || [],
+      borderColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.secondary.main + '20'
+    }]
+
   } : {
     labels: [],
     datasets: []
@@ -327,75 +327,75 @@ const SupplierDetail: React.FC = () => {
 
   // Inspection columns
   const inspectionColumns = [
-    { id: 'inspectionId', label: 'ID', numeric: false },
-    { id: 'inspectionDate', label: 'Date', numeric: false, 
-      format: (value: string) => format(new Date(value), 'MMM dd, yyyy') },
-    { id: 'inspectionType', label: 'Type', numeric: false },
-    { id: 'inspector', label: 'Inspector', numeric: false },
-    { id: 'status', label: 'Status', numeric: false, 
-      format: (value: string) => <StatusBadge status={value as any} /> },
-    { id: 'score', label: 'Score', numeric: true },
-  ];
+  { id: 'inspectionId', label: 'ID', numeric: false },
+  { id: 'inspectionDate', label: 'Date', numeric: false,
+    format: (value: string) => format(new Date(value), 'MMM dd, yyyy') },
+  { id: 'inspectionType', label: 'Type', numeric: false },
+  { id: 'inspector', label: 'Inspector', numeric: false },
+  { id: 'status', label: 'Status', numeric: false,
+    format: (value: string) => <StatusBadge status={value as any} /> },
+  { id: 'score', label: 'Score', numeric: true }];
+
 
   return (
     <Box sx={{ pb: 4 }}>
-      {/* Header */}
-      <PageHeader 
-        title={supplier?.name || 'Supplier Details'} 
+      
+      <PageHeader
+        title={supplier?.name || 'Supplier Details'}
         subtitle={supplier?.code || ''}
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Suppliers', href: '/suppliers' },
-          { label: supplier?.name || 'Supplier Details' },
-        ]}
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Suppliers', href: '/suppliers' },
+        { label: supplier?.name || 'Supplier Details' }]
+        }
         onBack={() => navigate('/suppliers')}
         actions={
-          <>
+        <>
             <Button
-              variant="outlined"
-              startIcon={<AnalyticsIcon />}
-              onClick={() => navigate(`/suppliers/${id}/analytics`)}
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<AnalyticsIcon />}
+            onClick={() => navigate(`/suppliers/${id}/analytics`)}
+            sx={{ mr: 1 }}>
+
               Analytics
             </Button>
             <Button
-              variant="outlined"
-              startIcon={<EditIcon />}
-              onClick={handleEditSupplier}
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<EditIcon />}
+            onClick={handleEditSupplier}
+            sx={{ mr: 1 }}>
+
               Edit
             </Button>
             <Button
-              variant="outlined"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={handleDeleteClick}
-            >
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={handleDeleteClick}>
+
               Delete
             </Button>
           </>
-        }
-      />
+        } />
 
-      {/* Status Chip */}
+
+      
       <Box sx={{ mb: 3 }}>
-        <StatusBadge 
+        <StatusBadge
           status={(supplier?.status || 'inactive') as StatusType}
-          size="medium"
-        />
+          size="medium" />
+
       </Box>
 
-      {/* Tabs */}
+      
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs 
-          value={tabValue} 
-          onChange={handleChangeTab} 
+        <Tabs
+          value={tabValue}
+          onChange={handleChangeTab}
           aria-label="supplier tabs"
           variant="scrollable"
-          scrollButtons="auto"
-        >
+          scrollButtons="auto">
+
           <Tab label="Overview" icon={<BusinessIcon />} iconPosition="start" />
           <Tab label="Performance" icon={<AssessmentIcon />} iconPosition="start" />
           <Tab label="Inspections" icon={<FactCheckIcon />} iconPosition="start" />
@@ -405,40 +405,40 @@ const SupplierDetail: React.FC = () => {
         </Tabs>
       </Box>
 
-      {/* Tab Content */}
+      
       <TabPanel value={tabValue} index={0}>
         <MuiGrid container spacing={3}>
-          {/* Supplier Profile Card */}
+          
           <MuiGrid item xs={12} md={4}>
             <Card>
               <CardContent sx={{ textAlign: 'center', pt: 4 }}>
-                {supplier?.logo ? (
-                  <Avatar 
-                    src={supplier.logo} 
-                    alt={supplier.name}
-                    sx={{ 
-                      width: 120, 
-                      height: 120, 
-                      margin: '0 auto', 
-                      mb: 2, 
-                      border: '1px solid',
-                      borderColor: 'divider'
-                    }}
-                  />
-                ) : (
-                  <Avatar
-                    sx={{ 
-                      width: 120, 
-                      height: 120, 
-                      margin: '0 auto', 
-                      mb: 2,
-                      bgcolor: theme.palette.primary.main,
-                      fontSize: '3rem'
-                    }}
-                  >
+                {supplier?.logo ?
+                <Avatar
+                  src={supplier.logo}
+                  alt={supplier.name}
+                  sx={{
+                    width: 120,
+                    height: 120,
+                    margin: '0 auto',
+                    mb: 2,
+                    border: '1px solid',
+                    borderColor: 'divider'
+                  }} /> :
+
+
+                <Avatar
+                  sx={{
+                    width: 120,
+                    height: 120,
+                    margin: '0 auto',
+                    mb: 2,
+                    bgcolor: theme.palette.primary.main,
+                    fontSize: '3rem'
+                  }}>
+
                     {supplier?.name?.charAt(0)}
                   </Avatar>
-                )}
+                }
                 <Typography variant="h5" gutterBottom>
                   {supplier?.name}
                 </Typography>
@@ -448,180 +448,180 @@ const SupplierDetail: React.FC = () => {
                 <Box sx={{ mb: 2 }}>
                   <StatusBadge status={supplier?.status as any} />
                 </Box>
-                {supplier?.industry && (
-                  <Chip 
-                    label={supplier.industry} 
-                    sx={{ mt: 1 }}
-                    icon={<BuildingIcon />}
-                  />
-                )}
-                {supplier?.overallRating !== undefined && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
-                    <Rating 
-                      value={supplier.overallRating} 
-                      precision={0.1} 
-                      readOnly 
-                    />
+                {supplier?.industry &&
+                <Chip
+                  label={supplier.industry}
+                  sx={{ mt: 1 }}
+                  icon={<BuildingIcon />} />
+
+                }
+                {supplier?.overallRating !== undefined &&
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
+                    <Rating
+                    value={supplier.overallRating}
+                    precision={0.1}
+                    readOnly />
+
                     <Typography variant="body2" sx={{ ml: 1 }}>
                       {supplier.overallRating.toFixed(1)}
                     </Typography>
                   </Box>
-                )}
+                }
               </CardContent>
               <Divider />
               <List dense>
-                {supplier?.primaryContactName && (
-                  <ListItem>
+                {supplier?.primaryContactName &&
+                <ListItem>
                     <ListItemIcon>
                       <Avatar sx={{ width: 24, height: 24, bgcolor: theme.palette.primary.main }}>
                         {supplier.primaryContactName.charAt(0)}
                       </Avatar>
                     </ListItemIcon>
-                    <ListItemText 
-                      primary={supplier.primaryContactName}
-                      secondary="Primary Contact"
-                    />
+                    <ListItemText
+                    primary={supplier.primaryContactName}
+                    secondary="Primary Contact" />
+
                   </ListItem>
-                )}
-                {supplier?.primaryContactEmail && (
-                  <ListItem>
+                }
+                {supplier?.primaryContactEmail &&
+                <ListItem>
                     <ListItemIcon>
                       <EmailIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary={supplier.primaryContactEmail}
-                      secondary="Email"
-                    />
+                    <ListItemText
+                    primary={supplier.primaryContactEmail}
+                    secondary="Email" />
+
                   </ListItem>
-                )}
-                {supplier?.phone && (
-                  <ListItem>
+                }
+                {supplier?.phone &&
+                <ListItem>
                     <ListItemIcon>
                       <PhoneIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary={supplier.phone}
-                      secondary="Phone"
-                    />
+                    <ListItemText
+                    primary={supplier.phone}
+                    secondary="Phone" />
+
                   </ListItem>
-                )}
-                {supplier?.address && (
-                  <ListItem>
+                }
+                {supplier?.address &&
+                <ListItem>
                     <ListItemIcon>
                       <LocationIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary={formatAddress(supplier.address)}
-                      secondary="Address"
-                    />
+                    <ListItemText
+                    primary={formatAddress(supplier.address)}
+                    secondary="Address" />
+
                   </ListItem>
-                )}
-                {supplier?.website && (
-                  <ListItem>
+                }
+                {supplier?.website &&
+                <ListItem>
                     <ListItemIcon>
                       <WebsiteIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary={
-                        <a 
-                          href={supplier.website.startsWith('http') ? supplier.website : `https://${supplier.website}`} 
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: theme.palette.primary.main, textDecoration: 'none' }}
-                        >
+                    <ListItemText
+                    primary={
+                    <a
+                      href={supplier.website.startsWith('http') ? supplier.website : `https://${supplier.website}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: theme.palette.primary.main, textDecoration: 'none' }}>
+
                           {supplier.website}
                         </a>
-                      }
-                      secondary="Website"
-                    />
+                    }
+                    secondary="Website" />
+
                   </ListItem>
-                )}
+                }
               </List>
             </Card>
           </MuiGrid>
           
-          {/* Supplier Details */}
+          
           <MuiGrid item xs={12} md={8}>
-            {/* Description */}
+            
             <Card sx={{ mb: 3 }}>
-              <CardHeader 
-                title="Description"
-              />
+              <CardHeader
+                title="Description" />
+
               <CardContent>
-                {supplier?.description ? (
-                  <Typography variant="body1">
+                {supplier?.description ?
+                <Typography variant="body1">
                     {supplier.description}
-                  </Typography>
-                ) : (
-                  <Typography variant="body2" color="text.secondary" fontStyle="italic">
+                  </Typography> :
+
+                <Typography variant="body2" color="text.secondary" fontStyle="italic">
                     No description provided
                   </Typography>
-                )}
+                }
               </CardContent>
             </Card>
             
-            {/* Tags */}
+            
             <Card sx={{ mb: 3 }}>
-              <CardHeader 
-                title="Tags"
-              />
+              <CardHeader
+                title="Tags" />
+
               <CardContent>
-                {supplier?.tags && supplier.tags.length > 0 ? (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                    {supplier.tags.map(tag => (
-                      <Chip 
-                        key={tag} 
-                        label={tag} 
-                        variant="outlined"
-                        size="small"
-                      />
-                    ))}
-                  </Box>
-                ) : (
-                  <Typography variant="body2" color="text.secondary" fontStyle="italic">
+                {supplier?.tags && supplier.tags.length > 0 ?
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {supplier.tags.map((tag) =>
+                  <Chip
+                    key={tag}
+                    label={tag}
+                    variant="outlined"
+                    size="small" />
+
+                  )}
+                  </Box> :
+
+                <Typography variant="body2" color="text.secondary" fontStyle="italic">
                     No tags assigned
                   </Typography>
-                )}
+                }
               </CardContent>
             </Card>
             
-            {/* Certifications */}
+            
             <Card>
-              <CardHeader 
+              <CardHeader
                 title="Certifications"
                 action={
-                  <Button 
-                    size="small" 
-                    startIcon={<AddIcon />}
-                    onClick={() => navigate(`/suppliers/${id}/certifications/add`)}
-                  >
+                <Button
+                  size="small"
+                  startIcon={<AddIcon />}
+                  onClick={() => navigate(`/suppliers/${id}/certifications/add`)}>
+
                     Add
                   </Button>
-                }
-              />
+                } />
+
               <CardContent>
-                {supplier?.certifications && supplier.certifications.length > 0 ? (
-                  <List>
-                    {supplier.certifications.map((cert, index) => (
-                      <ListItem key={index} divider={index < supplier.certifications!.length - 1}>
+                {supplier?.certifications && supplier.certifications.length > 0 ?
+                <List>
+                    {supplier.certifications.map((cert, index) =>
+                  <ListItem key={index} divider={index < supplier.certifications!.length - 1}>
                         <ListItemIcon>
                           <LinkIcon />
                         </ListItemIcon>
                         <ListItemText
-                          primary={cert.name}
-                          secondary={`Issued: ${format(new Date(cert.issuedDate), 'MMM dd, yyyy')}${
-                            cert.expiryDate ? ` • Expires: ${format(new Date(cert.expiryDate), 'MMM dd, yyyy')}` : ''
-                          }`}
-                        />
+                      primary={cert.name}
+                      secondary={`Issued: ${format(new Date(cert.issuedDate), 'MMM dd, yyyy')}${
+                      cert.expiryDate ? ` • Expires: ${format(new Date(cert.expiryDate), 'MMM dd, yyyy')}` : ''}`
+                      } />
+
                         <StatusBadge status={cert.status as StatusType} />
                       </ListItem>
-                    ))}
-                  </List>
-                ) : (
-                  <Typography variant="body2" color="text.secondary" fontStyle="italic">
+                  )}
+                  </List> :
+
+                <Typography variant="body2" color="text.secondary" fontStyle="italic">
                     No certifications added
                   </Typography>
-                )}
+                }
               </CardContent>
             </Card>
           </MuiGrid>
@@ -630,13 +630,13 @@ const SupplierDetail: React.FC = () => {
 
       <TabPanel value={tabValue} index={1}>
         <MuiGrid container spacing={3}>
-          {/* Performance Metrics Summary */}
+          
           <MuiGrid item xs={12}>
             <Card>
               <CardHeader title="Performance Metrics" />
               <CardContent>
-                {performanceMetrics ? (
-                  <MuiGrid container spacing={3}>
+                {performanceMetrics ?
+                <MuiGrid container spacing={3}>
                     <MuiGrid item xs={12} md={4}>
                       <Card variant="outlined" sx={{ height: '100%' }}>
                         <CardContent sx={{ textAlign: 'center' }}>
@@ -646,12 +646,12 @@ const SupplierDetail: React.FC = () => {
                           <Typography variant="h3" color="primary">
                             {performanceMetrics.overallRating?.toFixed(1) || 'N/A'}
                           </Typography>
-                          <Rating 
-                            value={performanceMetrics.overallRating || 0} 
-                            precision={0.1} 
-                            readOnly 
-                            sx={{ mt: 1 }}
-                          />
+                          <Rating
+                          value={performanceMetrics.overallRating || 0}
+                          precision={0.1}
+                          readOnly
+                          sx={{ mt: 1 }} />
+
                         </CardContent>
                       </Card>
                     </MuiGrid>
@@ -665,11 +665,11 @@ const SupplierDetail: React.FC = () => {
                             {performanceMetrics.onTimeDelivery ? `${(performanceMetrics.onTimeDelivery * 100).toFixed(1)}%` : 'N/A'}
                           </Typography>
                           <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
-                            <CircularProgress 
-                              variant="determinate" 
-                              value={performanceMetrics.onTimeDelivery ? performanceMetrics.onTimeDelivery * 100 : 0} 
-                              size={40}
-                            />
+                            <CircularProgress
+                            variant="determinate"
+                            value={performanceMetrics.onTimeDelivery ? performanceMetrics.onTimeDelivery * 100 : 0}
+                            size={40} />
+
                           </Box>
                         </CardContent>
                       </Card>
@@ -684,27 +684,27 @@ const SupplierDetail: React.FC = () => {
                             {performanceMetrics.qualityScore ? `${performanceMetrics.qualityScore.toFixed(1)}` : 'N/A'}
                           </Typography>
                           <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
-                            <CircularProgress 
-                              variant="determinate" 
-                              value={performanceMetrics.qualityScore ? (performanceMetrics.qualityScore / 5) * 100 : 0} 
-                              size={40}
-                              color="secondary"
-                            />
+                            <CircularProgress
+                            variant="determinate"
+                            value={performanceMetrics.qualityScore ? performanceMetrics.qualityScore / 5 * 100 : 0}
+                            size={40}
+                            color="secondary" />
+
                           </Box>
                         </CardContent>
                       </Card>
                     </MuiGrid>
-                  </MuiGrid>
-                ) : (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                  </MuiGrid> :
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
                     <CircularProgress />
                   </Box>
-                )}
+                }
               </CardContent>
             </Card>
           </MuiGrid>
           
-          {/* Performance Chart */}
+          
           <MuiGrid item xs={12}>
             <Chart
               type="line"
@@ -726,8 +726,8 @@ const SupplierDetail: React.FC = () => {
                     }
                   }
                 }
-              }}
-            />
+              }} />
+
           </MuiGrid>
         </MuiGrid>
       </TabPanel>
@@ -738,8 +738,8 @@ const SupplierDetail: React.FC = () => {
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            onClick={() => navigate(`/inspections/schedule?supplierId=${id}`)}
-          >
+            onClick={() => navigate(`/inspections/schedule?supplierId=${id}`)}>
+
             Schedule Inspection
           </Button>
         </Box>
@@ -752,32 +752,32 @@ const SupplierDetail: React.FC = () => {
           defaultSortBy="inspectionDate"
           defaultOrder="desc"
           onRowClick={(inspection) => navigate(`/inspections/${inspection.id}`)}
-          emptyStateMessage="No inspections found for this supplier"
-        />
+          emptyStateMessage="No inspections found for this supplier" />
+
       </TabPanel>
 
       <TabPanel value={tabValue} index={3}>
-        {/* Qualification Tracking */}
+        
         {id && <SupplierQualification supplierId={id} />}
       </TabPanel>
 
       <TabPanel value={tabValue} index={4}>
-        {/* Analytics Tab Content - New */}
-        {supplier && (
-          <SupplierAnalytics supplierId={supplier._id} />
-        )}
+        
+        {supplier &&
+        <SupplierAnalytics supplierId={supplier._id} />
+        }
       </TabPanel>
 
       <TabPanel value={tabValue} index={5}>
         <Box sx={{ py: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button 
-            variant="contained" 
-            color="primary" 
+          <Button
+            variant="contained"
+            color="primary"
             size="large"
             startIcon={<QualityIcon />}
             onClick={() => navigate(`/suppliers/${id}/quality`)}
-            sx={{ mb: 2 }}
-          >
+            sx={{ mb: 2 }}>
+
             View Quality Management System
           </Button>
           <Typography variant="body2" color="text.secondary" align="center">
@@ -786,7 +786,7 @@ const SupplierDetail: React.FC = () => {
         </Box>
       </TabPanel>
 
-      {/* Delete Confirmation Dialog */}
+      
       <ConfirmationDialog
         open={deleteDialogOpen}
         title="Delete Supplier"
@@ -794,28 +794,28 @@ const SupplierDetail: React.FC = () => {
         onConfirm={handleDeleteConfirm}
         onClose={() => setDeleteDialogOpen(false)}
         confirmButtonText="Delete"
-        confirmButtonProps={{ color: "error" }}
-      />
+        confirmButtonProps={{ color: "error" }} />
 
-      {/* Snackbar for messages */}
+
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+
         <Alert onClose={handleCloseSnackbar} severity={snackbar.severity}>
           {snackbar.message}
         </Alert>
       </Snackbar>
 
-      {tabValue === 4 && (
-        <Box mt={3}>
+      {tabValue === 4 &&
+      <Box mt={3}>
           <SupplierMetricsCard supplierId={id || ''} />
         </Box>
-      )}
-    </Box>
-  );
+      }
+    </Box>);
+
 };
 
-export default SupplierDetail; 
+export default SupplierDetail;

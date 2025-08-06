@@ -50,7 +50,20 @@ run_with_timeout() {
     shift
     local command="$@"
     
-    timeout $timeout bash -c "$command" 2>&1
+    # Check for timeout command availability
+    if command -v timeout >/dev/null 2>&1; then
+        timeout_cmd="timeout"
+    elif command -v gtimeout >/dev/null 2>&1; then
+        # macOS with GNU coreutils installed via Homebrew
+        timeout_cmd="gtimeout"
+    else
+        # No timeout command available, run without timeout
+        print_warning "No timeout command found, running without timeout limit"
+        bash -c "$command" 2>&1
+        return $?
+    fi
+    
+    $timeout_cmd $timeout bash -c "$command" 2>&1
     local exit_code=$?
     
     if [ $exit_code -eq 124 ]; then
@@ -143,13 +156,47 @@ run_typescript_tests() {
     fi
 }
 
+# Function to run JSX tests
+run_jsx_tests() {
+    print_section "⚛️ JSX Best Practices Testing"
+    
+    print_status "Running JSX best practices check..."
+    if npm run test:jsx:best-practices > jsx-best-practices.log 2>&1; then
+        print_success "JSX best practices check completed"
+        
+        # Extract metrics
+        local jsx_issues=$(grep -o "Total issues: [0-9]*" jsx-best-practices.log | tail -1 | cut -d' ' -f3)
+        local jsx_good=$(grep -o "Good practices: [0-9]*" jsx-best-practices.log | tail -1 | cut -d' ' -f3)
+        
+        [ -n "$jsx_good" ] && print_status "  Found $jsx_good good JSX practices"
+        [ -n "$jsx_issues" ] && [ "$jsx_issues" -gt 0 ] && print_warning "  Found $jsx_issues JSX issues"
+    else
+        print_warning "JSX best practices check encountered issues (see jsx-best-practices.log)"
+    fi
+    
+    # Auto-fix JSX issues if enabled
+    if [ "$AUTO_FIX" = true ] && [ -n "$jsx_issues" ] && [ "$jsx_issues" -gt 0 ]; then
+        print_status "Attempting to auto-fix JSX issues..."
+        if npm run jsx:auto-fix > jsx-auto-fix.log 2>&1; then
+            print_success "JSX auto-fix completed"
+            
+            # Show fixed count
+            local fixed_count=$(grep -o "Files fixed: [0-9]*" jsx-auto-fix.log | tail -1 | cut -d' ' -f3)
+            [ -n "$fixed_count" ] && print_status "  Fixed $fixed_count files"
+        else
+            print_warning "JSX auto-fix encountered issues (see jsx-auto-fix.log)"
+        fi
+    fi
+}
+
 # Function to run security tests
 run_security_tests() {
     print_section "🔒 Security Testing"
     
     print_status "Running security tests..."
-    if run_with_timeout 300 "npm run security-test" > security-test.log 2>&1; then
-        print_success "Security tests passed"
+    if node "$ROOT_DIR/scripts/security-test-enhanced.js" > security-test.log 2>&1; then
+        print_success "Security tests completed"
+        cp security-test-report.json "$ROOT_DIR/security-test-report.json" 2>/dev/null || true
     else
         print_warning "Security tests found issues (see security-test.log)"
     fi
@@ -167,12 +214,16 @@ run_performance_tests() {
     print_section "⚡ Performance Testing"
     
     print_status "Running performance tests..."
-    if run_with_timeout 300 "npm run perf" > performance-test.log 2>&1; then
+    if node "$ROOT_DIR/scripts/performance-test-enhanced.js" > performance-test.log 2>&1; then
         print_success "Performance tests completed"
+        cp performance-test-report.json "$ROOT_DIR/performance-test-report.json" 2>/dev/null || true
         
-        # Extract key metrics
-        local api_avg=$(grep -o "Average response time: [0-9.]*ms" performance-test.log | tail -1 | cut -d' ' -f4)
-        [ -n "$api_avg" ] && print_status "  API avg response: $api_avg"
+        # Extract key metrics from the report
+        if [ -f "performance-test-report.json" ]; then
+            local passed=$(grep -o '"passed": [0-9]*' performance-test-report.json | head -1 | cut -d' ' -f2)
+            local failed=$(grep -o '"failed": [0-9]*' performance-test-report.json | head -1 | cut -d' ' -f2)
+            print_status "  Tests passed: $passed, failed: $failed"
+        fi
     else
         print_warning "Performance tests encountered issues (see performance-test.log)"
     fi
@@ -204,6 +255,7 @@ run_all_tests() {
     
     # Run tests in order of importance
     run_typescript_tests || failed_tests+=("TypeScript")
+    run_jsx_tests || failed_tests+=("JSX")
     run_security_tests || failed_tests+=("Security")
     run_performance_tests || failed_tests+=("Performance")
     run_e2e_tests || failed_tests+=("E2E")

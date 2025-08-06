@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, Card, CardContent, Switch, FormControlLabel, Divider, Button, useTheme, Snackbar, Alert, CircularProgress } from '@mui/material';
 import { PageHeader } from '../components/common';
 import ThemeSettings from '../components/common/ThemeSettings';
-import { 
-  Notifications as NotificationsIcon, 
-  Security as SecurityIcon, 
-  VisibilityOff as VisibilityOffIcon, 
-  ColorLens as ThemeIcon
-} from '@mui/icons-material';
+import {
+  Notifications as NotificationsIcon,
+  Security as SecurityIcon,
+  VisibilityOff as VisibilityOffIcon,
+  ColorLens as ThemeIcon } from
+'@mui/icons-material';
 import { useThemeContext } from '../theme/ThemeProvider';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import privacyService, { ConsentSettings } from '../services/privacy.service';
@@ -21,7 +21,7 @@ import TextField from '@mui/material/TextField';
 const Settings: React.FC = () => {
   const theme = useTheme();
   const { mode } = useThemeContext();
-  
+
   // Local state for settings
   const [notification, setNotification] = useState<{
     open: boolean;
@@ -30,9 +30,9 @@ const Settings: React.FC = () => {
   }>({
     open: false,
     message: '',
-    severity: 'success',
+    severity: 'success'
   });
-  
+
   // Notification preferences state
   const [notificationPreferences, setNotificationPreferences] = useState({
     inspection: true,
@@ -41,19 +41,19 @@ const Settings: React.FC = () => {
     browserPush: false,
     weeklySummary: true
   });
-  
+
   // Appearance preferences state
   const [appearancePreferences, setAppearancePreferences] = useState({
     showAnimations: true,
     compactView: true
   });
-  
+
   // Security preferences state
   const [securityPreferences, setSecurityPreferences] = useState({
     twoFactor: true,
     loginNotifications: true
   });
-  
+
   const [consentSettings, setConsentSettings] = useState<ConsentSettings>({
     marketing: { value: false },
     analytics: { value: false },
@@ -65,24 +65,24 @@ const Settings: React.FC = () => {
       marketing: false
     }
   });
-  
+
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const [isExporting, setIsExporting] = useState(false);
   const [exportError, setExportError] = useState<string | null>(null);
-  
+
   // Handle notification close
   const handleCloseNotification = () => {
     setNotification({ ...notification, open: false });
   };
-  
+
   // Show notification when theme changes
   useEffect(() => {
     // This is just to demonstrate theme change notifications
     // In a real app, we'd check for changes against previous state
     document.documentElement.setAttribute('data-theme', mode);
   }, [mode]);
-  
+
   useEffect(() => {
     // Load user consent settings
     const loadConsentSettings = async () => {
@@ -95,14 +95,14 @@ const Settings: React.FC = () => {
         console.error('Error loading consent settings:', error);
       }
     };
-    
+
     loadConsentSettings();
   }, []);
-  
+
   const handleConsentChange = (category: keyof ConsentSettings, value: boolean) => {
     if (category === 'cookiePreferences') return; // Handle separately
-    
-    setConsentSettings(prev => ({
+
+    setConsentSettings((prev) => ({
       ...prev,
       [category]: {
         ...(prev[category] || {}),
@@ -110,9 +110,9 @@ const Settings: React.FC = () => {
       }
     }));
   };
-  
+
   const handleCookiePreferenceChange = (type: string, value: boolean) => {
-    setConsentSettings(prev => ({
+    setConsentSettings((prev) => ({
       ...prev,
       cookiePreferences: {
         ...(prev.cookiePreferences || {}),
@@ -120,7 +120,7 @@ const Settings: React.FC = () => {
       }
     }));
   };
-  
+
   const saveConsentSettings = async () => {
     try {
       await privacyService.updateConsent(consentSettings);
@@ -138,21 +138,21 @@ const Settings: React.FC = () => {
       });
     }
   };
-  
+
   const exportUserData = async () => {
     setIsExporting(true);
     setExportError(null);
-    
+
     try {
       const { downloadLink } = await privacyService.exportUserData(false);
-      
+
       if (downloadLink) {
         // Create an invisible link and click it to trigger the download
         const link = document.createElement('a');
         link.href = downloadLink;
         link.click();
       }
-      
+
       setNotification({
         open: true,
         message: 'Data export initiated. Download will start shortly.',
@@ -165,10 +165,10 @@ const Settings: React.FC = () => {
       setIsExporting(false);
     }
   };
-  
+
   // Handle notification preference changes
   const handleNotificationChange = (key: keyof typeof notificationPreferences) => {
-    setNotificationPreferences(prev => ({
+    setNotificationPreferences((prev) => ({
       ...prev,
       [key]: !prev[key]
     }));
@@ -179,10 +179,10 @@ const Settings: React.FC = () => {
       severity: 'success'
     });
   };
-  
+
   // Handle appearance preference changes
   const handleAppearanceChange = (key: keyof typeof appearancePreferences) => {
-    setAppearancePreferences(prev => ({
+    setAppearancePreferences((prev) => ({
       ...prev,
       [key]: !prev[key]
     }));
@@ -193,10 +193,10 @@ const Settings: React.FC = () => {
       severity: 'success'
     });
   };
-  
+
   // Handle security preference changes
   const handleSecurityChange = (key: keyof typeof securityPreferences) => {
-    setSecurityPreferences(prev => ({
+    setSecurityPreferences((prev) => ({
       ...prev,
       [key]: !prev[key]
     }));
@@ -207,13 +207,13 @@ const Settings: React.FC = () => {
       severity: 'success'
     });
   };
-  
+
   // Handle change password
   const handleChangePassword = () => {
     // Navigate to change password page
     window.location.href = '/auth/change-password';
   };
-  
+
   const handleDeleteAccount = async () => {
     if (deleteConfirmation !== 'DELETE') {
       setNotification({
@@ -223,10 +223,10 @@ const Settings: React.FC = () => {
       });
       return;
     }
-    
+
     try {
       await privacyService.deleteAccount();
-      
+
       // Log user out after account deletion
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -243,17 +243,17 @@ const Settings: React.FC = () => {
       setDeleteConfirmation('');
     }
   };
-  
+
   return (
     <Box>
       <PageHeader
         title="Settings"
         subtitle="Configure application preferences"
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Settings' },
-        ]}
-      />
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Settings' }]
+        } />
+
       
       <Card sx={{ mb: 3 }}>
         <CardContent>
@@ -265,62 +265,62 @@ const Settings: React.FC = () => {
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={notificationPreferences.inspection}
-                onChange={() => handleNotificationChange('inspection')}
-              />
+            <Switch
+              checked={notificationPreferences.inspection}
+              onChange={() => handleNotificationChange('inspection')} />
+
             }
             label="Email notifications for new inspections"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={notificationPreferences.emailInspection}
-                onChange={() => handleNotificationChange('emailInspection')}
-              />
+            <Switch
+              checked={notificationPreferences.emailInspection}
+              onChange={() => handleNotificationChange('emailInspection')} />
+
             }
             label="Email notifications for inspection updates"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={notificationPreferences.emailFindings}
-                onChange={() => handleNotificationChange('emailFindings')}
-              />
+            <Switch
+              checked={notificationPreferences.emailFindings}
+              onChange={() => handleNotificationChange('emailFindings')} />
+
             }
             label="Email notifications for new findings"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={notificationPreferences.browserPush}
-                onChange={() => handleNotificationChange('browserPush')}
-              />
+            <Switch
+              checked={notificationPreferences.browserPush}
+              onChange={() => handleNotificationChange('browserPush')} />
+
             }
             label="Browser push notifications"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={notificationPreferences.weeklySummary}
-                onChange={() => handleNotificationChange('weeklySummary')}
-              />
+            <Switch
+              checked={notificationPreferences.weeklySummary}
+              onChange={() => handleNotificationChange('weeklySummary')} />
+
             }
             label="Weekly inspection summary"
-            sx={{ width: '100%' }}
-          />
+            sx={{ width: '100%' }} />
+
         </CardContent>
       </Card>
       
-      {/* Use the ThemeSettings component */}
+      
       <Box sx={{ mb: 3 }}>
         <Card>
           <CardContent>
@@ -336,25 +336,25 @@ const Settings: React.FC = () => {
           <CardContent>
             <FormControlLabel
               control={
-                <Switch 
-                  checked={appearancePreferences.showAnimations}
-                  onChange={() => handleAppearanceChange('showAnimations')}
-                />
+              <Switch
+                checked={appearancePreferences.showAnimations}
+                onChange={() => handleAppearanceChange('showAnimations')} />
+
               }
               label="Show animations"
-              sx={{ width: '100%', mb: 1 }}
-            />
+              sx={{ width: '100%', mb: 1 }} />
+
             
             <FormControlLabel
               control={
-                <Switch 
-                  checked={appearancePreferences.compactView}
-                  onChange={() => handleAppearanceChange('compactView')}
-                />
+              <Switch
+                checked={appearancePreferences.compactView}
+                onChange={() => handleAppearanceChange('compactView')} />
+
               }
               label="Compact view"
-              sx={{ width: '100%' }}
-            />
+              sx={{ width: '100%' }} />
+
           </CardContent>
         </Card>
       </Box>
@@ -369,25 +369,25 @@ const Settings: React.FC = () => {
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={securityPreferences.twoFactor}
-                onChange={() => handleSecurityChange('twoFactor')}
-              />
+            <Switch
+              checked={securityPreferences.twoFactor}
+              onChange={() => handleSecurityChange('twoFactor')} />
+
             }
             label="Two-factor authentication"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={securityPreferences.loginNotifications}
-                onChange={() => handleSecurityChange('loginNotifications')}
-              />
+            <Switch
+              checked={securityPreferences.loginNotifications}
+              onChange={() => handleSecurityChange('loginNotifications')} />
+
             }
             label="Login notifications"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <Box mt={2}>
             <Button variant="outlined" color="primary" onClick={handleChangePassword}>
@@ -411,36 +411,36 @@ const Settings: React.FC = () => {
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={consentSettings.marketing?.value || false}
-                onChange={(e) => handleConsentChange('marketing', e.target.checked)}
-              />
+            <Switch
+              checked={consentSettings.marketing?.value || false}
+              onChange={(e) => handleConsentChange('marketing', e.target.checked)} />
+
             }
             label="Marketing communications"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={consentSettings.analytics?.value || false}
-                onChange={(e) => handleConsentChange('analytics', e.target.checked)}
-              />
+            <Switch
+              checked={consentSettings.analytics?.value || false}
+              onChange={(e) => handleConsentChange('analytics', e.target.checked)} />
+
             }
             label="Analytics and usage data collection"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={consentSettings.thirdPartySharing?.value || false}
-                onChange={(e) => handleConsentChange('thirdPartySharing', e.target.checked)}
-              />
+            <Switch
+              checked={consentSettings.thirdPartySharing?.value || false}
+              onChange={(e) => handleConsentChange('thirdPartySharing', e.target.checked)} />
+
             }
             label="Allow data sharing with third parties"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
             Cookie Preferences
@@ -448,54 +448,54 @@ const Settings: React.FC = () => {
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={consentSettings.cookiePreferences?.necessary !== false}
-                disabled={true}
-              />
+            <Switch
+              checked={consentSettings.cookiePreferences?.necessary !== false}
+              disabled={true} />
+
             }
             label="Necessary cookies (required)"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={consentSettings.cookiePreferences?.preferences || false}
-                onChange={(e) => handleCookiePreferenceChange('preferences', e.target.checked)}
-              />
+            <Switch
+              checked={consentSettings.cookiePreferences?.preferences || false}
+              onChange={(e) => handleCookiePreferenceChange('preferences', e.target.checked)} />
+
             }
             label="Preference cookies"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={consentSettings.cookiePreferences?.analytics || false}
-                onChange={(e) => handleCookiePreferenceChange('analytics', e.target.checked)}
-              />
+            <Switch
+              checked={consentSettings.cookiePreferences?.analytics || false}
+              onChange={(e) => handleCookiePreferenceChange('analytics', e.target.checked)} />
+
             }
             label="Analytics cookies"
-            sx={{ width: '100%', mb: 1 }}
-          />
+            sx={{ width: '100%', mb: 1 }} />
+
           
           <FormControlLabel
             control={
-              <Switch 
-                checked={consentSettings.cookiePreferences?.marketing || false}
-                onChange={(e) => handleCookiePreferenceChange('marketing', e.target.checked)}
-              />
+            <Switch
+              checked={consentSettings.cookiePreferences?.marketing || false}
+              onChange={(e) => handleCookiePreferenceChange('marketing', e.target.checked)} />
+
             }
             label="Marketing cookies"
-            sx={{ width: '100%', mb: 3 }}
-          />
+            sx={{ width: '100%', mb: 3 }} />
+
           
-          <Button 
-            variant="contained" 
-            color="primary" 
+          <Button
+            variant="contained"
+            color="primary"
             onClick={saveConsentSettings}
-            sx={{ mb: 3 }}
-          >
+            sx={{ mb: 3 }}>
+
             Save Privacy Settings
           </Button>
           
@@ -506,55 +506,55 @@ const Settings: React.FC = () => {
           </Typography>
           
           <Box mt={2} display="flex" justifyContent="space-between" flexWrap="wrap" gap={1}>
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               color="primary"
               onClick={exportUserData}
               disabled={isExporting}
-              startIcon={isExporting ? <CircularProgress size={20} /> : undefined}
-            >
+              startIcon={isExporting ? <CircularProgress size={20} /> : undefined}>
+
               {isExporting ? 'Exporting...' : 'Export My Data'}
             </Button>
             
-            <Button 
-              variant="outlined" 
+            <Button
+              variant="outlined"
               color="error"
-              onClick={() => setDeleteDialogOpen(true)}
-            >
+              onClick={() => setDeleteDialogOpen(true)}>
+
               Delete Account
             </Button>
           </Box>
           
-          {exportError && (
-            <Alert severity="error" sx={{ mt: 2 }}>
+          {exportError &&
+          <Alert severity="error" sx={{ mt: 2 }}>
               {exportError}
             </Alert>
-          )}
+          }
         </CardContent>
       </Card>
       
-      {/* Notification for theme changes */}
+      
       <Snackbar
         open={notification.open}
         autoHideDuration={3000}
         onClose={handleCloseNotification}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+
         <Alert
           onClose={handleCloseNotification}
           severity={notification.severity}
           variant="filled"
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           {notification.message}
         </Alert>
       </Snackbar>
       
-      {/* Account Deletion Dialog */}
+      
       <Dialog
         open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-      >
+        onClose={() => setDeleteDialogOpen(false)}>
+
         <DialogTitle>Delete Account</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -569,8 +569,8 @@ const Settings: React.FC = () => {
             fullWidth
             value={deleteConfirmation}
             onChange={(e) => setDeleteConfirmation(e.target.value)}
-            variant="outlined"
-          />
+            variant="outlined" />
+
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
@@ -579,8 +579,8 @@ const Settings: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default Settings; 
+export default Settings;

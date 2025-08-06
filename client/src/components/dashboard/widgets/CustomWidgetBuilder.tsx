@@ -15,16 +15,16 @@ import {
   Stepper,
   Step,
   StepLabel,
-  IconButton,
-} from '@mui/material';
-import { 
-  Add as AddIcon, 
+  IconButton } from
+'@mui/material';
+import {
+  Add as AddIcon,
   ArrowBack as ArrowBackIcon,
   Delete as DeleteIcon,
   Save as SaveIcon,
   Check as CheckIcon,
-  Preview as PreviewIcon,
-} from '@mui/icons-material';
+  Preview as PreviewIcon } from
+'@mui/icons-material';
 import { useAppDispatch } from '../../../redux/store';
 import { WidgetMeta, registerCustomWidget } from './WidgetRegistry';
 import DashboardWidget from '../DashboardWidget';
@@ -33,23 +33,23 @@ import { addWidget } from '../../../redux/slices/dashboard.slice';
 
 // Define available data sources
 const dataSources = [
-  { id: 'inspections', name: 'Inspections Data' },
-  { id: 'suppliers', name: 'Suppliers Data' },
-  { id: 'customers', name: 'Customers Data' },
-  { id: 'quality', name: 'Quality Metrics' },
-  { id: 'custom', name: 'Custom API Endpoint' },
-];
+{ id: 'inspections', name: 'Inspections Data' },
+{ id: 'suppliers', name: 'Suppliers Data' },
+{ id: 'customers', name: 'Customers Data' },
+{ id: 'quality', name: 'Quality Metrics' },
+{ id: 'custom', name: 'Custom API Endpoint' }];
+
 
 // Define visualization types
 const visualizationTypes = [
-  { id: 'table', name: 'Table' },
-  { id: 'chart-bar', name: 'Bar Chart' },
-  { id: 'chart-line', name: 'Line Chart' },
-  { id: 'chart-pie', name: 'Pie Chart' },
-  { id: 'stat-card', name: 'Stat Card' },
-  { id: 'list', name: 'List View' },
-  { id: 'custom', name: 'Custom View' },
-];
+{ id: 'table', name: 'Table' },
+{ id: 'chart-bar', name: 'Bar Chart' },
+{ id: 'chart-line', name: 'Line Chart' },
+{ id: 'chart-pie', name: 'Pie Chart' },
+{ id: 'stat-card', name: 'Stat Card' },
+{ id: 'list', name: 'List View' },
+{ id: 'custom', name: 'Custom View' }];
+
 
 // Widget builder steps
 const steps = ['Basic Info', 'Data Source', 'Visualization', 'Preview & Save'];
@@ -62,7 +62,7 @@ interface CustomWidgetBuilderProps {
 const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSave }) => {
   const dispatch = useAppDispatch();
   const [activeStep, setActiveStep] = useState(0);
-  const [widgetConfig, setWidgetConfig] = useState<Partial<WidgetMeta> & { dataSource?: string, visualization?: string, apiEndpoint?: string }>({
+  const [widgetConfig, setWidgetConfig] = useState<Partial<WidgetMeta> & {dataSource?: string;visualization?: string;apiEndpoint?: string;}>({
     id: `custom-${uuidv4().slice(0, 8)}`,
     title: '',
     description: '',
@@ -71,14 +71,14 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
     dataSource: '',
     visualization: '',
     apiEndpoint: '',
-    props: {},
+    props: {}
   });
 
   // For widget preview
   const [previewMode, setPreviewMode] = useState(false);
   const [previewData, setPreviewData] = useState<any>({
     labels: ['Category 1', 'Category 2', 'Category 3'],
-    values: [45, 32, 18],
+    values: [45, 32, 18]
   });
 
   // Form validation
@@ -87,7 +87,7 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
   // Validate current step
   const validateStep = () => {
     const newErrors: Record<string, string> = {};
-    
+
     if (activeStep === 0) {
       if (!widgetConfig.title?.trim()) {
         newErrors.title = 'Title is required';
@@ -107,64 +107,64 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
         newErrors.visualization = 'Visualization type is required';
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   // Handle input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
     if (name) {
-      setWidgetConfig(prev => ({ ...prev, [name]: value }));
+      setWidgetConfig((prev) => ({ ...prev, [name]: value }));
     }
   };
 
   // Handle next step
   const handleNext = () => {
     if (validateStep()) {
-      setActiveStep(prev => prev + 1);
+      setActiveStep((prev) => prev + 1);
     }
   };
 
   // Handle back step
   const handleBack = () => {
-    setActiveStep(prev => prev - 1);
+    setActiveStep((prev) => prev - 1);
   };
 
   // Generate mock preview component based on visualization type
   const PreviewComponent = () => {
-    const renderVisualization = () => {
+    const RenderVisualization = () => {
       switch (widgetConfig.visualization) {
         case 'chart-bar':
           return (
             <Box sx={{ height: 150, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around' }}>
-              {previewData.labels.map((label: string, i: number) => (
-                <Box 
-                  key={i} 
-                  sx={{ 
-                    width: 30, 
-                    height: `${previewData.values[i]}%`, 
-                    bgcolor: 'primary.main',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}
-                >
+              {previewData.labels.map((label: string, i: number) =>
+              <Box
+                key={i}
+                sx={{
+                  width: 30,
+                  height: `${previewData.values[i]}%`,
+                  bgcolor: 'primary.main',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center'
+                }}>
+
                   <Typography variant="caption" sx={{ color: 'white' }}>
                     {previewData.values[i]}
                   </Typography>
                 </Box>
-              ))}
-            </Box>
-          );
+              )}
+            </Box>);
+
         case 'chart-pie':
           return (
             <Box sx={{ height: 150, display: 'flex', justifyContent: 'center' }}>
               <Box sx={{ width: 150, height: 150, borderRadius: '50%', background: 'conic-gradient(#1976d2 70%, #dc004e 70%, #dc004e 85%, #ffc107 85%)' }} />
-            </Box>
-          );
+            </Box>);
+
         case 'stat-card':
           return (
             <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -180,8 +180,8 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
                 <Typography variant="h5">49%</Typography>
                 <Typography variant="body2">Completion Rate</Typography>
               </Box>
-            </Box>
-          );
+            </Box>);
+
         case 'table':
           return (
             <Box sx={{ height: 150, overflow: 'auto' }}>
@@ -193,48 +193,48 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
                   </tr>
                 </thead>
                 <tbody>
-                  {previewData.labels.map((label: string, i: number) => (
-                    <tr key={i}>
+                  {previewData.labels.map((label: string, i: number) =>
+                  <tr key={i}>
                       <td style={{ padding: 8, borderBottom: '1px solid #eee' }}>{label}</td>
                       <td style={{ padding: 8, textAlign: 'right', borderBottom: '1px solid #eee' }}>{previewData.values[i]}</td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
-            </Box>
-          );
+            </Box>);
+
         case 'list':
           return (
             <Box sx={{ height: 150, overflow: 'auto' }}>
-              {previewData.labels.map((label: string, i: number) => (
-                <Box key={i} sx={{ p: 1, borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between' }}>
+              {previewData.labels.map((label: string, i: number) =>
+              <Box key={i} sx={{ p: 1, borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between' }}>
                   <Typography variant="body2">{label}</Typography>
                   <Typography variant="body2" fontWeight="bold">{previewData.values[i]}</Typography>
                 </Box>
-              ))}
-            </Box>
-          );
+              )}
+            </Box>);
+
         default:
           return (
             <Box sx={{ height: 150, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Typography variant="body2">Select a visualization type to preview</Typography>
-            </Box>
-          );
+            </Box>);
+
       }
     };
 
     return (
       <Box>
-        {renderVisualization()}
-      </Box>
-    );
+        {RenderVisualization()}
+      </Box>);
+
   };
 
   // Save the custom widget
   const handleSave = () => {
     // Create widget component based on visualization type
     const WidgetComponent = () => <PreviewComponent />;
-    
+
     // Register the custom widget
     const newWidget: WidgetMeta = {
       id: widgetConfig.id!,
@@ -247,26 +247,26 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
         dataSource: widgetConfig.dataSource,
         visualization: widgetConfig.visualization,
         apiEndpoint: widgetConfig.apiEndpoint,
-        ...widgetConfig.props,
+        ...widgetConfig.props
       },
-      isCustom: true,
+      isCustom: true
     };
-    
+
     registerCustomWidget(newWidget);
-    
+
     // Add widget to dashboard
     dispatch(addWidget({
       id: newWidget.id,
       visible: true,
       position: 999, // Will be sorted by the dashboard
-      size: newWidget.defaultSize,
+      size: newWidget.defaultSize
     }));
-    
+
     // Notify parent component
     if (onSave) {
       onSave(newWidget.id);
     }
-    
+
     // Close the builder
     if (onClose) {
       onClose();
@@ -274,7 +274,7 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
   };
 
   // Render form step content
-  const getStepContent = (step: number) => {
+  const GetStepContent = (step: number) => {
     switch (step) {
       case 0:
         return (
@@ -287,8 +287,8 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
               value={widgetConfig.title}
               onChange={handleChange}
               error={!!errors.title}
-              helperText={errors.title}
-            />
+              helperText={errors.title} />
+
             <TextField
               fullWidth
               margin="normal"
@@ -299,24 +299,24 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
               multiline
               rows={2}
               error={!!errors.description}
-              helperText={errors.description}
-            />
+              helperText={errors.description} />
+
             <FormControl fullWidth margin="normal">
               <InputLabel>Size</InputLabel>
               <Select
                 name="defaultSize"
                 value={widgetConfig.defaultSize}
                 onChange={handleChange}
-                label="Size"
-              >
+                label="Size">
+
                 <MenuItem value="small">Small</MenuItem>
                 <MenuItem value="medium">Medium</MenuItem>
                 <MenuItem value="large">Large</MenuItem>
               </Select>
               <FormHelperText>Choose the default size for your widget</FormHelperText>
             </FormControl>
-          </Box>
-        );
+          </Box>);
+
       case 1:
         return (
           <Box>
@@ -326,30 +326,30 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
                 name="dataSource"
                 value={widgetConfig.dataSource}
                 onChange={handleChange}
-                label="Data Source"
-              >
-                {dataSources.map(source => (
-                  <MenuItem key={source.id} value={source.id}>{source.name}</MenuItem>
-                ))}
+                label="Data Source">
+
+                {dataSources.map((source) =>
+                <MenuItem key={source.id} value={source.id}>{source.name}</MenuItem>
+                )}
               </Select>
               {errors.dataSource && <FormHelperText>{errors.dataSource}</FormHelperText>}
             </FormControl>
             
-            {widgetConfig.dataSource === 'custom' && (
-              <TextField
-                fullWidth
-                margin="normal"
-                label="API Endpoint"
-                name="apiEndpoint"
-                value={widgetConfig.apiEndpoint}
-                onChange={handleChange}
-                placeholder="/api/v1/custom-data"
-                error={!!errors.apiEndpoint}
-                helperText={errors.apiEndpoint || 'Enter the API endpoint for custom data'}
-              />
-            )}
-          </Box>
-        );
+            {widgetConfig.dataSource === 'custom' &&
+            <TextField
+              fullWidth
+              margin="normal"
+              label="API Endpoint"
+              name="apiEndpoint"
+              value={widgetConfig.apiEndpoint}
+              onChange={handleChange}
+              placeholder="/api/v1/custom-data"
+              error={!!errors.apiEndpoint}
+              helperText={errors.apiEndpoint || 'Enter the API endpoint for custom data'} />
+
+            }
+          </Box>);
+
       case 2:
         return (
           <Box>
@@ -359,11 +359,11 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
                 name="visualization"
                 value={widgetConfig.visualization}
                 onChange={handleChange}
-                label="Visualization Type"
-              >
-                {visualizationTypes.map(type => (
-                  <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
-                ))}
+                label="Visualization Type">
+
+                {visualizationTypes.map((type) =>
+                <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
+                )}
               </Select>
               {errors.visualization && <FormHelperText>{errors.visualization}</FormHelperText>}
             </FormControl>
@@ -372,8 +372,8 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
               <Typography variant="subtitle2" gutterBottom>Preview</Typography>
               <PreviewComponent />
             </Box>
-          </Box>
-        );
+          </Box>);
+
       case 3:
         return (
           <Box>
@@ -401,16 +401,16 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="body2" color="textSecondary">Data Source</Typography>
-                  <Typography variant="body1">{dataSources.find(s => s.id === widgetConfig.dataSource)?.name}</Typography>
+                  <Typography variant="body1">{dataSources.find((s) => s.id === widgetConfig.dataSource)?.name}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography variant="body2" color="textSecondary">Visualization</Typography>
-                  <Typography variant="body1">{visualizationTypes.find(v => v.id === widgetConfig.visualization)?.name}</Typography>
+                  <Typography variant="body1">{visualizationTypes.find((v) => v.id === widgetConfig.visualization)?.name}</Typography>
                 </Grid>
               </Grid>
             </Paper>
-          </Box>
-        );
+          </Box>);
+
       default:
         return <Typography>Unknown step</Typography>;
     }
@@ -426,15 +426,15 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
       </Box>
 
       <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
-        {steps.map((label) => (
-          <Step key={label}>
+        {steps.map((label) =>
+        <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
-        ))}
+        )}
       </Stepper>
 
       <Box sx={{ mt: 2, mb: 3 }}>
-        {getStepContent(activeStep)}
+        {GetStepContent(activeStep)}
       </Box>
 
       <Divider sx={{ mb: 2 }} />
@@ -443,34 +443,34 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={activeStep === 0 ? onClose : handleBack}
-          sx={{ mr: 1 }}
-        >
+          sx={{ mr: 1 }}>
+
           {activeStep === 0 ? 'Cancel' : 'Back'}
         </Button>
         <Box>
-          {activeStep === steps.length - 1 ? (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSave}
-              startIcon={<SaveIcon />}
-            >
+          {activeStep === steps.length - 1 ?
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSave}
+            startIcon={<SaveIcon />}>
+
               Save Widget
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNext}
-              endIcon={<CheckIcon />}
-            >
+            </Button> :
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            endIcon={<CheckIcon />}>
+
               Next
             </Button>
-          )}
+          }
         </Box>
       </Box>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default CustomWidgetBuilder; 
+export default CustomWidgetBuilder;

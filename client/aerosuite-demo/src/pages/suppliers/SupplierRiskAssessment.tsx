@@ -9,12 +9,12 @@ import {
   Button,
   Alert,
   CircularProgress,
-  Chip
-} from '@mui/material';
-import { 
+  Chip } from
+'@mui/material';
+import {
   Save as SaveIcon,
-  Delete as DeleteIcon
-} from '@mui/icons-material';
+  Delete as DeleteIcon } from
+'@mui/icons-material';
 
 // Import custom components and hooks
 import useRiskAssessment from './hooks/useRiskAssessment';
@@ -25,7 +25,7 @@ import AssessmentCard from './components/AssessmentCard';
 import SaveConfirmationDialog from './components/SaveConfirmationDialog';
 
 const SupplierRiskAssessment: React.FC = () => {
-  const { 
+  const {
     loading,
     suppliers,
     selectedSupplier,
@@ -57,8 +57,8 @@ const SupplierRiskAssessment: React.FC = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height={400}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
@@ -71,49 +71,49 @@ const SupplierRiskAssessment: React.FC = () => {
         Evaluate supplier risks across multiple factors to identify potential vulnerabilities in your supply chain.
       </Typography>
       
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
-      )}
+      }
       
-      {success && (
-        <Alert severity="success" sx={{ mb: 2 }}>
+      {success &&
+      <Alert severity="success" sx={{ mb: 2 }}>
           {success}
         </Alert>
-      )}
+      }
       
       <Paper sx={{ p: 3, mb: 3 }}>
         <Grid container spacing={3}>
-          {/* Supplier Selector */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
-            <SupplierSelector 
+            <SupplierSelector
               suppliers={suppliers}
               selectedSupplier={selectedSupplier}
-              onSupplierChange={handleSupplierChange}
-            />
+              onSupplierChange={handleSupplierChange} />
+
           </Grid>
           
-          {/* Assessor Name */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <TextField
               label="Assessor Name"
               value={assessor}
               onChange={(e) => setAssessor(e.target.value)}
               fullWidth
-              required
-            />
+              required />
+
           </Grid>
           
-          {/* Risk Factors List */}
-          <RiskFactorsList 
+          
+          <RiskFactorsList
             riskFactors={riskFactors}
             categoryInfo={CATEGORY_INFO}
             onFactorScoreChange={handleFactorScoreChange}
-            onFactorWeightChange={handleFactorWeightChange}
-          />
+            onFactorWeightChange={handleFactorWeightChange} />
+
           
-          {/* Notes and Mitigation Plan */}
+          
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
             <TextField
               label="Assessment Notes"
@@ -121,8 +121,8 @@ const SupplierRiskAssessment: React.FC = () => {
               onChange={(e) => setNotes(e.target.value)}
               multiline
               rows={4}
-              fullWidth
-            />
+              fullWidth />
+
           </Grid>
           
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
@@ -132,11 +132,11 @@ const SupplierRiskAssessment: React.FC = () => {
               onChange={(e) => setMitigationPlan(e.target.value)}
               multiline
               rows={4}
-              fullWidth
-            />
+              fullWidth />
+
           </Grid>
           
-          {/* Overall Score and Actions */}
+          
           <Grid sx={{ gridColumn: 'span 12', mt: 2 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box>
@@ -148,37 +148,37 @@ const SupplierRiskAssessment: React.FC = () => {
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                   <Typography variant="body1">Risk Level:</Typography>
-                  <Chip 
-                    label={riskLevel.toUpperCase()} 
-                    color={riskLevel === 'low' ? 'success' : 
-                           riskLevel === 'medium' ? 'warning' : 'error'}
-                    sx={{ ml: 1 }}
-                  />
+                  <Chip
+                    label={riskLevel.toUpperCase()}
+                    color={riskLevel === 'low' ? 'success' :
+                    riskLevel === 'medium' ? 'warning' : 'error'}
+                    sx={{ ml: 1 }} />
+
                 </Box>
               </Box>
               
               <Box sx={{ display: 'flex', gap: 2 }}>
-                {activeAssessment && (
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    startIcon={<DeleteIcon />}
-                    onClick={handleDeleteAssessment}
-                  >
+                {activeAssessment &&
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={handleDeleteAssessment}>
+
                     Delete Assessment
                   </Button>
-                )}
+                }
                 
                 <Button
                   variant="contained"
                   startIcon={<SaveIcon />}
                   onClick={handleSaveClick}
                   disabled={
-                    !selectedSupplier || 
-                    riskFactors.some(factor => factor.score === 0) ||
-                    !assessor.trim()
-                  }
-                >
+                  !selectedSupplier ||
+                  riskFactors.some((factor) => factor.score === 0) ||
+                  !assessor.trim()
+                  }>
+
                   Save Assessment
                 </Button>
               </Box>
@@ -187,34 +187,34 @@ const SupplierRiskAssessment: React.FC = () => {
         </Grid>
       </Paper>
       
-      {/* Saved Assessments */}
+      
       <Paper sx={{ p: 3 }}>
         <Typography variant="h5" gutterBottom>
           Recent Risk Assessments
         </Typography>
         
         <Grid container spacing={2}>
-          {savedAssessments.length === 0 ? (
-            <Grid sx={{ gridColumn: 'span 12' }}>
+          {savedAssessments.length === 0 ?
+          <Grid sx={{ gridColumn: 'span 12' }}>
               <Alert severity="info">
                 No risk assessments have been saved yet.
               </Alert>
-            </Grid>
-          ) : (
-            savedAssessments.map((assessment) => (
-              <Grid key={assessment.id} sx={{ gridColumn: { xs: 'span 12', md: 'span 6', lg: 'span 4' } }}>
+            </Grid> :
+
+          savedAssessments.map((assessment) =>
+          <Grid key={assessment.id} sx={{ gridColumn: { xs: 'span 12', md: 'span 6', lg: 'span 4' } }}>
                 <AssessmentCard
-                  assessment={assessment}
-                  suppliers={suppliers}
-                  onViewDetails={handleViewDetails}
-                />
+              assessment={assessment}
+              suppliers={suppliers}
+              onViewDetails={handleViewDetails} />
+
               </Grid>
-            ))
-          )}
+          )
+          }
         </Grid>
       </Paper>
       
-      {/* Save Confirmation Dialog */}
+      
       <SaveConfirmationDialog
         open={showSaveDialog}
         onClose={() => setShowSaveDialog(false)}
@@ -222,10 +222,10 @@ const SupplierRiskAssessment: React.FC = () => {
         supplier={selectedSupplier}
         riskLevel={riskLevel}
         overallScore={overallScore}
-        activeAssessment={activeAssessment}
-      />
-    </Box>
-  );
+        activeAssessment={activeAssessment} />
+
+    </Box>);
+
 };
 
-export default SupplierRiskAssessment; 
+export default SupplierRiskAssessment;

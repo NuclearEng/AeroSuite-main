@@ -15,8 +15,8 @@ import {
   Select,
   FormHelperText,
   Alert,
-  Snackbar
-} from '@mui/material';
+  Snackbar } from
+'@mui/material';
 import { PageHeader } from '../../components/common';
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
 import customerService from '../../services/customer.service';
@@ -73,7 +73,7 @@ const initialFormValues = {
 
 const CreateCustomer: React.FC = () => {
   const navigate = useNavigate();
-  
+
   // Form state
   const [formValues, setFormValues] = useState(initialFormValues);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -90,15 +90,15 @@ const CreateCustomer: React.FC = () => {
   });
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
-    
+
     if (!name) return;
-    
+
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         [parent]: {
           ...prev[parent as keyof typeof prev],
@@ -106,15 +106,15 @@ const CreateCustomer: React.FC = () => {
         }
       }));
     } else {
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         [name]: value
       }));
     }
-    
+
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -124,7 +124,7 @@ const CreateCustomer: React.FC = () => {
   // Copy billing address to shipping address
   const handleCopyAddress = () => {
     if (sameAsShipping) {
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         shippingAddress: { ...prev.billingAddress }
       }));
@@ -134,29 +134,29 @@ const CreateCustomer: React.FC = () => {
   // Validate form
   const validateForm = () => {
     const newErrors: FormErrors = {};
-    
+
     // Required fields validation
     if (!formValues.name) newErrors.name = 'Name is required';
     if (!formValues.code) newErrors.code = 'Customer code is required';
     if (!formValues.industry) newErrors.industry = 'Industry is required';
     if (!formValues.status) newErrors.status = 'Status is required';
     if (!formValues.serviceLevel) newErrors.serviceLevel = 'Service level is required';
-    
+
     // Email validation
     if (formValues.primaryContactEmail && !/\S+@\S+\.\S+/.test(formValues.primaryContactEmail)) {
       newErrors.primaryContactEmail = 'Invalid email address';
     }
-    
+
     // Date validation
     if (formValues.contractStartDate && formValues.contractEndDate) {
       const startDate = new Date(formValues.contractStartDate);
       const endDate = new Date(formValues.contractEndDate);
-      
+
       if (endDate < startDate) {
         newErrors.contractEndDate = 'End date cannot be before start date';
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -164,12 +164,12 @@ const CreateCustomer: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Copy billing address to shipping if same address is checked
     if (sameAsShipping) {
       handleCopyAddress();
     }
-    
+
     // Validate form
     if (!validateForm()) {
       setSnackbar({
@@ -179,20 +179,20 @@ const CreateCustomer: React.FC = () => {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Call API to create customer
       await customerService.createCustomer(formValues);
-      
+
       // Show success message
       setSnackbar({
         open: true,
         message: 'Customer created successfully',
         severity: 'success'
       });
-      
+
       // Redirect to customer list after a brief delay to show the success message
       setTimeout(() => {
         navigate('/customers');
@@ -209,7 +209,7 @@ const CreateCustomer: React.FC = () => {
 
   // Handle snackbar close
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   return (
@@ -218,26 +218,26 @@ const CreateCustomer: React.FC = () => {
         title="Create Customer"
         subtitle="Add a new customer to your portfolio"
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Customers', href: '/customers' },
-          { label: 'Create Customer' },
-        ]}
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Customers', href: '/customers' },
+        { label: 'Create Customer' }]
+        }
         actions={
-          <Button
-            variant="outlined"
-            startIcon={<ArrowBackIcon />}
-            onClick={() => navigate('/customers')}
-          >
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/customers')}>
+
             Cancel
           </Button>
-        }
-      />
+        } />
+
 
       <Card>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              {/* Basic Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="h6" gutterBottom>
                   Basic Information
@@ -254,8 +254,8 @@ const CreateCustomer: React.FC = () => {
                   value={formValues.name}
                   onChange={handleChange}
                   error={!!errors.name}
-                  helperText={errors.name}
-                />
+                  helperText={errors.name} />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
@@ -267,8 +267,8 @@ const CreateCustomer: React.FC = () => {
                   value={formValues.code}
                   onChange={handleChange}
                   error={!!errors.code}
-                  helperText={errors.code || 'Unique identifier for this customer'}
-                />
+                  helperText={errors.code || 'Unique identifier for this customer'} />
+
               </Grid>
               
               <Grid item xs={12}>
@@ -279,8 +279,8 @@ const CreateCustomer: React.FC = () => {
                   label="Description"
                   name="description"
                   value={formValues.description}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -290,8 +290,8 @@ const CreateCustomer: React.FC = () => {
                     name="industry"
                     value={formValues.industry}
                     label="Industry"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="Aerospace">Aerospace</MenuItem>
                     <MenuItem value="Automotive">Automotive</MenuItem>
                     <MenuItem value="Defense">Defense</MenuItem>
@@ -312,8 +312,8 @@ const CreateCustomer: React.FC = () => {
                     name="status"
                     value={formValues.status}
                     label="Status"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="active">Active</MenuItem>
                     <MenuItem value="inactive">Inactive</MenuItem>
                     <MenuItem value="pending">Pending</MenuItem>
@@ -329,8 +329,8 @@ const CreateCustomer: React.FC = () => {
                     name="serviceLevel"
                     value={formValues.serviceLevel}
                     label="Service Level"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="standard">Standard</MenuItem>
                     <MenuItem value="premium">Premium</MenuItem>
                     <MenuItem value="enterprise">Enterprise</MenuItem>
@@ -339,7 +339,7 @@ const CreateCustomer: React.FC = () => {
                 </FormControl>
               </Grid>
               
-              {/* Contract Information */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Contract Information
@@ -357,8 +357,8 @@ const CreateCustomer: React.FC = () => {
                   onChange={handleChange}
                   InputLabelProps={{ shrink: true }}
                   error={!!errors.contractStartDate}
-                  helperText={errors.contractStartDate}
-                />
+                  helperText={errors.contractStartDate} />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
@@ -371,11 +371,11 @@ const CreateCustomer: React.FC = () => {
                   onChange={handleChange}
                   InputLabelProps={{ shrink: true }}
                   error={!!errors.contractEndDate}
-                  helperText={errors.contractEndDate}
-                />
+                  helperText={errors.contractEndDate} />
+
               </Grid>
               
-              {/* Primary Contact */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Primary Contact
@@ -391,8 +391,8 @@ const CreateCustomer: React.FC = () => {
                   value={formValues.primaryContactName}
                   onChange={handleChange}
                   error={!!errors.primaryContactName}
-                  helperText={errors.primaryContactName}
-                />
+                  helperText={errors.primaryContactName} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -403,8 +403,8 @@ const CreateCustomer: React.FC = () => {
                   value={formValues.primaryContactEmail}
                   onChange={handleChange}
                   error={!!errors.primaryContactEmail}
-                  helperText={errors.primaryContactEmail}
-                />
+                  helperText={errors.primaryContactEmail} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -415,11 +415,11 @@ const CreateCustomer: React.FC = () => {
                   value={formValues.primaryContactPhone}
                   onChange={handleChange}
                   error={!!errors.primaryContactPhone}
-                  helperText={errors.primaryContactPhone}
-                />
+                  helperText={errors.primaryContactPhone} />
+
               </Grid>
               
-              {/* Billing Address */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Billing Address
@@ -433,8 +433,8 @@ const CreateCustomer: React.FC = () => {
                   label="Street Address"
                   name="billingAddress.street"
                   value={formValues.billingAddress.street}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -443,8 +443,8 @@ const CreateCustomer: React.FC = () => {
                   label="City"
                   name="billingAddress.city"
                   value={formValues.billingAddress.city}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -453,8 +453,8 @@ const CreateCustomer: React.FC = () => {
                   label="State/Province"
                   name="billingAddress.state"
                   value={formValues.billingAddress.state}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -463,8 +463,8 @@ const CreateCustomer: React.FC = () => {
                   label="Postal Code"
                   name="billingAddress.zipCode"
                   value={formValues.billingAddress.zipCode}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -473,11 +473,11 @@ const CreateCustomer: React.FC = () => {
                   label="Country"
                   name="billingAddress.country"
                   value={formValues.billingAddress.country}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
-              {/* Shipping Address */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Typography variant="h6" gutterBottom>
@@ -490,69 +490,69 @@ const CreateCustomer: React.FC = () => {
                       if (!sameAsShipping) {
                         handleCopyAddress();
                       }
-                    }}
-                  >
+                    }}>
+
                     {sameAsShipping ? 'Different from billing' : 'Same as billing'}
                   </Button>
                 </Box>
                 <Divider sx={{ mb: 2 }} />
               </Grid>
               
-              {!sameAsShipping && (
-                <>
+              {!sameAsShipping &&
+              <>
                   <Grid item xs={12}>
                     <TextField
-                      fullWidth
-                      label="Street Address"
-                      name="shippingAddress.street"
-                      value={formValues.shippingAddress.street}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Street Address"
+                    name="shippingAddress.street"
+                    value={formValues.shippingAddress.street}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="City"
-                      name="shippingAddress.city"
-                      value={formValues.shippingAddress.city}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="City"
+                    name="shippingAddress.city"
+                    value={formValues.shippingAddress.city}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="State/Province"
-                      name="shippingAddress.state"
-                      value={formValues.shippingAddress.state}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="State/Province"
+                    name="shippingAddress.state"
+                    value={formValues.shippingAddress.state}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="Postal Code"
-                      name="shippingAddress.zipCode"
-                      value={formValues.shippingAddress.zipCode}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Postal Code"
+                    name="shippingAddress.zipCode"
+                    value={formValues.shippingAddress.zipCode}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="Country"
-                      name="shippingAddress.country"
-                      value={formValues.shippingAddress.country}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Country"
+                    name="shippingAddress.country"
+                    value={formValues.shippingAddress.country}
+                    onChange={handleChange} />
+
                   </Grid>
                 </>
-              )}
+              }
               
-              {/* Additional Information */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Additional Information
@@ -568,8 +568,8 @@ const CreateCustomer: React.FC = () => {
                   label="Notes"
                   name="notes"
                   value={formValues.notes}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -578,8 +578,8 @@ const CreateCustomer: React.FC = () => {
                   label="Customer Category"
                   name="customFields.customerCategory"
                   value={formValues.customFields.customerCategory}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -588,8 +588,8 @@ const CreateCustomer: React.FC = () => {
                   label="Account Manager"
                   name="customFields.accountManager"
                   value={formValues.customFields.accountManager}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -599,8 +599,8 @@ const CreateCustomer: React.FC = () => {
                     name="customFields.priorityLevel"
                     value={formValues.customFields.priorityLevel}
                     label="Priority Level"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="">None</MenuItem>
                     <MenuItem value="Low">Low</MenuItem>
                     <MenuItem value="Medium">Medium</MenuItem>
@@ -610,21 +610,21 @@ const CreateCustomer: React.FC = () => {
                 </FormControl>
               </Grid>
               
-              {/* Submit Button */}
+              
               <Grid item xs={12} sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
                 <Button
                   variant="outlined"
                   sx={{ mr: 2 }}
-                  onClick={() => navigate('/customers')}
-                >
+                  onClick={() => navigate('/customers')}>
+
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   variant="contained"
                   startIcon={<SaveIcon />}
-                  disabled={isSubmitting}
-                >
+                  disabled={isSubmitting}>
+
                   {isSubmitting ? 'Creating...' : 'Create Customer'}
                 </Button>
               </Grid>
@@ -633,24 +633,24 @@ const CreateCustomer: React.FC = () => {
         </CardContent>
       </Card>
       
-      {/* Snackbar for notifications */}
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default CreateCustomer; 
+export default CreateCustomer;

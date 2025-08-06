@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
-  Box, 
-  Stepper, 
-  Step, 
-  StepLabel, 
-  Button, 
-  Typography, 
+import {
+  Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
   Paper,
   Container,
   useTheme,
   CircularProgress,
-  Alert
-} from '@mui/material';
+  Alert } from
+'@mui/material';
 import { ArrowBack as ArrowBackIcon, ArrowForward as ArrowForwardIcon, Check as CheckIcon } from '@mui/icons-material';
 import { z } from 'zod';
 
@@ -39,12 +39,12 @@ interface UserPreferences {
 
 // Define step labels
 const steps = [
-  'Welcome',
-  'Profile Setup',
-  'Preferences',
-  'Features Overview',
-  'Completion'
-];
+'Welcome',
+'Profile Setup',
+'Preferences',
+'Features Overview',
+'Completion'];
+
 
 const profileSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -74,10 +74,10 @@ const OnboardingFlow: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   // Get user and loading state from redux store
   const { user, loading } = useSelector((state: RootState) => state.auth);
-  
+
   // State management
   const [activeStep, setActiveStep] = useState(0);
   const [profileData, setProfileData] = useState({
@@ -88,7 +88,7 @@ const OnboardingFlow: React.FC = () => {
     department: user?.department || '',
     profileImage: user?.profileImage || null
   });
-  
+
   const [preferences, setPreferences] = useState<UserPreferences>({
     theme: user?.preferences?.theme || 'light',
     notifications: user?.preferences?.notifications !== false,
@@ -114,7 +114,7 @@ const OnboardingFlow: React.FC = () => {
       const result = profileSchema.safeParse(profileData);
       if (!result.success) {
         const errors: Record<string, string> = {};
-        result.error.errors.forEach(e => {
+        result.error.errors.forEach((e) => {
           if (e.path[0]) errors[e.path[0] as string] = e.message;
         });
         setFormErrors(errors);
@@ -153,42 +153,42 @@ const OnboardingFlow: React.FC = () => {
         return;
       }
     }
-    
+
     // Move to next step
-    setActiveStep(prevStep => prevStep + 1);
+    setActiveStep((prevStep) => prevStep + 1);
   };
 
   // Handle back step
   const handleBack = () => {
-    setActiveStep(prevStep => prevStep - 1);
+    setActiveStep((prevStep) => prevStep - 1);
   };
 
   // Handle skip (only available on non-required steps)
   const handleSkip = () => {
-    if (activeStep === 2) { // Preferences step is skippable
-      setActiveStep(prevStep => prevStep + 1);
+    if (activeStep === 2) {// Preferences step is skippable
+      setActiveStep((prevStep) => prevStep + 1);
     }
   };
 
   // Render current step content
-  const renderStepContent = () => {
+  const RenderStepContent = () => {
     switch (activeStep) {
       case 0:
         return <WelcomeStep user={user} />;
       case 1:
         return (
-          <ProfileSetupStep 
-            profileData={profileData} 
-            setProfileData={setProfileData} 
-          />
-        );
+          <ProfileSetupStep
+            profileData={profileData}
+            setProfileData={setProfileData} />);
+
+
       case 2:
         return (
-          <PreferencesStep 
-            preferences={preferences as any} 
-            setPreferences={setPreferences as any} 
-          />
-        );
+          <PreferencesStep
+            preferences={preferences as any}
+            setPreferences={setPreferences as any} />);
+
+
       case 3:
         return <FeaturesOverviewStep />;
       case 4:
@@ -214,30 +214,30 @@ const OnboardingFlow: React.FC = () => {
 
   return (
     <Container maxWidth="md">
-      <Paper 
-        elevation={3} 
-        sx={{ 
-          p: 4, 
-          mt: 4, 
-          mb: 4, 
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          mt: 4,
+          mb: 4,
           borderRadius: 2,
           backgroundColor: theme.palette.background.paper
-        }}
-      >
+        }}>
+
         <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 4 }}>
           Welcome to AeroSuite
         </Typography>
         
         <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-          {steps.map((label, index) => (
-            <Step key={label}>
+          {steps.map((label, index) =>
+          <Step key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>
-          ))}
+          )}
         </Stepper>
         
         <Box sx={{ mt: 2, mb: 4, minHeight: '300px' }}>
-          {renderStepContent()}
+          {RenderStepContent()}
         </Box>
         
         <Box sx={{ display: 'flex', justifyContent: 'space-between', pt: 2 }}>
@@ -245,21 +245,21 @@ const OnboardingFlow: React.FC = () => {
             color="inherit"
             disabled={activeStep === 0}
             onClick={handleBack}
-            startIcon={<ArrowBackIcon />}
-          >
+            startIcon={<ArrowBackIcon />}>
+
             Back
           </Button>
           
           <Box>
-            {isStepSkippable(activeStep) && (
-              <Button 
-                color="inherit" 
-                onClick={handleSkip} 
-                sx={{ mr: 1 }}
-              >
+            {isStepSkippable(activeStep) &&
+            <Button
+              color="inherit"
+              onClick={handleSkip}
+              sx={{ mr: 1 }}>
+
                 Skip
               </Button>
-            )}
+            }
             
             {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
             
@@ -269,15 +269,15 @@ const OnboardingFlow: React.FC = () => {
               endIcon={activeStep === steps.length - 1 ? <CheckIcon /> : <ArrowForwardIcon />}
               onClick={handleNext}
               disabled={isNextDisabled() || loading}
-              sx={{ minWidth: 120 }}
-            >
+              sx={{ minWidth: 120 }}>
+
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>
         </Box>
       </Paper>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default OnboardingFlow; 
+export default OnboardingFlow;

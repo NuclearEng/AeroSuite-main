@@ -14,10 +14,10 @@ export const SupplierAuditChecklist: React.FC = () => {
   });
 
   const handleAuditInfoChange: MUISelectChangeHandler<AuditInfo['type'] | AuditInfo['status']> = (
-    event: SelectChangeEvent<AuditInfo['type'] | AuditInfo['status']>
-  ) => {
+  event: SelectChangeEvent<AuditInfo['type'] | AuditInfo['status']>) =>
+  {
     const { name, value } = event.target;
-    setAuditInfo(prev => ({
+    setAuditInfo((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -28,17 +28,17 @@ export const SupplierAuditChecklist: React.FC = () => {
       <Select
         name="type"
         value={auditInfo.type}
-        onChange={handleAuditInfoChange}
-      >
-        {/* Options */}
+        onChange={handleAuditInfoChange}>
+
+        
       </Select>
       <Select
         name="status"
         value={auditInfo.status}
-        onChange={handleAuditInfoChange}
-      >
-        {/* Options */}
+        onChange={handleAuditInfoChange}>
+
+        
       </Select>
-    </div>
-  );
+    </div>);
+
 };

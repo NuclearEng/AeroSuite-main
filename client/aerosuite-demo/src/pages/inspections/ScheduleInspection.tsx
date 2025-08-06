@@ -14,8 +14,8 @@ import {
   FormHelperText,
   Divider,
   IconButton,
-  Alert
-} from '@mui/material';
+  Alert } from
+'@mui/material';
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
 import type { Customer, Supplier } from '../../services/mockDataService';
 import MockDataService from '../../services/mockDataService';
@@ -56,7 +56,7 @@ const ScheduleInspection: React.FC = () => {
   }, []);
 
   // Handle form input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -109,14 +109,14 @@ const ScheduleInspection: React.FC = () => {
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     // Get customer and supplier objects
-    const customerObj = customers.find(c => c._id === formData.customer);
-    const supplierObj = suppliers.find(s => s._id === formData.supplier);
+    const customerObj = customers.find((c) => c._id === formData.customer);
+    const supplierObj = suppliers.find((s) => s._id === formData.supplier);
 
     if (!customerObj || !supplierObj) {
       setError('Invalid customer or supplier selected');
@@ -151,7 +151,7 @@ const ScheduleInspection: React.FC = () => {
     try {
       const createdInspection = MockDataService.createInspection(newInspection);
       setSuccess(true);
-      
+
       // Navigate to the new inspection after a brief delay
       setTimeout(() => {
         navigate(`/inspections/${createdInspection._id}`);
@@ -163,7 +163,7 @@ const ScheduleInspection: React.FC = () => {
 
   return (
     <Box>
-      {/* Header */}
+      
       <Box display="flex" alignItems="center" mb={3}>
         <IconButton onClick={() => navigate('/inspections')} sx={{ mr: 2 }}>
           <ArrowBackIcon />
@@ -173,22 +173,22 @@ const ScheduleInspection: React.FC = () => {
         </Typography>
       </Box>
 
-      {success && (
-        <Alert severity="success" sx={{ mb: 3 }}>
+      {success &&
+      <Alert severity="success" sx={{ mb: 3 }}>
           Inspection scheduled successfully!
         </Alert>
-      )}
+      }
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
 
       <Paper sx={{ p: 3 }}>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
-            {/* Basic Information */}
+            
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Basic Information
@@ -204,8 +204,8 @@ const ScheduleInspection: React.FC = () => {
                 onChange={handleChange}
                 error={!!formErrors.title}
                 helperText={formErrors.title}
-                required
-              />
+                required />
+
             </Grid>
 
             <Grid item xs={12}>
@@ -216,8 +216,8 @@ const ScheduleInspection: React.FC = () => {
                 value={formData.description}
                 onChange={handleChange}
                 multiline
-                rows={3}
-              />
+                rows={3} />
+
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -228,13 +228,13 @@ const ScheduleInspection: React.FC = () => {
                   name="customer"
                   value={formData.customer}
                   onChange={handleChange}
-                  label="Customer"
-                >
-                  {customers.map(customer => (
-                    <MenuItem key={customer._id} value={customer._id}>
+                  label="Customer">
+
+                  {customers.map((customer) =>
+                  <MenuItem key={customer._id} value={customer._id}>
                       {customer.name}
                     </MenuItem>
-                  ))}
+                  )}
                 </Select>
                 {formErrors.customer && <FormHelperText>{formErrors.customer}</FormHelperText>}
               </FormControl>
@@ -248,13 +248,13 @@ const ScheduleInspection: React.FC = () => {
                   name="supplier"
                   value={formData.supplier}
                   onChange={handleChange}
-                  label="Supplier"
-                >
-                  {suppliers.map(supplier => (
-                    <MenuItem key={supplier._id} value={supplier._id}>
+                  label="Supplier">
+
+                  {suppliers.map((supplier) =>
+                  <MenuItem key={supplier._id} value={supplier._id}>
                       {supplier.name}
                     </MenuItem>
-                  ))}
+                  )}
                 </Select>
                 {formErrors.supplier && <FormHelperText>{formErrors.supplier}</FormHelperText>}
               </FormControl>
@@ -275,8 +275,8 @@ const ScheduleInspection: React.FC = () => {
                   name="inspectionType"
                   value={formData.inspectionType}
                   onChange={handleChange}
-                  label="Inspection Type"
-                >
+                  label="Inspection Type">
+
                   <MenuItem value="source">Source Inspection</MenuItem>
                   <MenuItem value="incoming">Incoming Inspection</MenuItem>
                   <MenuItem value="in-process">In-Process Inspection</MenuItem>
@@ -297,8 +297,8 @@ const ScheduleInspection: React.FC = () => {
                 InputLabelProps={{ shrink: true }}
                 error={!!formErrors.scheduledDate}
                 helperText={formErrors.scheduledDate}
-                required
-              />
+                required />
+
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -309,8 +309,8 @@ const ScheduleInspection: React.FC = () => {
                   name="priority"
                   value={formData.priority}
                   onChange={handleChange}
-                  label="Priority"
-                >
+                  label="Priority">
+
                   <MenuItem value="low">Low</MenuItem>
                   <MenuItem value="medium">Medium</MenuItem>
                   <MenuItem value="high">High</MenuItem>
@@ -323,16 +323,16 @@ const ScheduleInspection: React.FC = () => {
                 <Button
                   variant="outlined"
                   onClick={() => navigate('/inspections')}
-                  sx={{ mr: 2 }}
-                >
+                  sx={{ mr: 2 }}>
+
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
-                  startIcon={<SaveIcon />}
-                >
+                  startIcon={<SaveIcon />}>
+
                   Schedule Inspection
                 </Button>
               </Box>
@@ -340,8 +340,8 @@ const ScheduleInspection: React.FC = () => {
           </Grid>
         </form>
       </Paper>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default ScheduleInspection; 
+export default ScheduleInspection;

@@ -13,12 +13,12 @@ import {
   Alert,
   AlertTitle,
   CircularProgress,
-  Container
-} from '@mui/material';
+  Container } from
+'@mui/material';
 import {
   NavigateNext as NavigateNextIcon,
-  ArrowBack as ArrowBackIcon
-} from '@mui/icons-material';
+  ArrowBack as ArrowBackIcon } from
+'@mui/icons-material';
 import SupplierAnalyticsDashboard from './components/SupplierAnalyticsDashboard';
 import supplierService from '../../services/supplier.service';
 import ErrorHandler from '../../components/common/ErrorHandler';
@@ -38,27 +38,27 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`analytics-tabpanel-${index}`}
       aria-labelledby={`analytics-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ p: 3 }}>
           {children}
         </Box>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }
 
 function a11yProps(index: number) {
   return {
     id: `analytics-tab-${index}`,
-    'aria-controls': `analytics-tabpanel-${index}`,
+    'aria-controls': `analytics-tabpanel-${index}`
   };
 }
 
 const SupplierAnalyticsPage: React.FC = () => {
   const { t } = useTranslation();
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{id: string;}>();
   const navigate = useNavigate();
   const [tabValue, setTabValue] = useState(0);
   const [supplier, setSupplier] = useState<any>(null);
@@ -92,13 +92,13 @@ const SupplierAnalyticsPage: React.FC = () => {
     navigate(id ? `/suppliers/${id}` : '/suppliers');
   };
 
-  const renderContent = () => {
+  const RenderContent = () => {
     if (loading) {
       return (
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
           <CircularProgress />
-        </Box>
-      );
+        </Box>);
+
     }
 
     if (error) {
@@ -106,8 +106,8 @@ const SupplierAnalyticsPage: React.FC = () => {
         <Alert severity="error">
           <AlertTitle>{t('common.error')}</AlertTitle>
           {error}
-        </Alert>
-      );
+        </Alert>);
+
     }
 
     if (!supplier && id) {
@@ -115,8 +115,8 @@ const SupplierAnalyticsPage: React.FC = () => {
         <Alert severity="warning">
           <AlertTitle>{t('common.warning')}</AlertTitle>
           {t('suppliers.notFound')}
-        </Alert>
-      );
+        </Alert>);
+
     }
 
     return (
@@ -128,8 +128,8 @@ const SupplierAnalyticsPage: React.FC = () => {
               onChange={handleTabChange}
               aria-label={t('suppliers.analytics.tabs.label')}
               variant="scrollable"
-              scrollButtons="auto"
-            >
+              scrollButtons="auto">
+
               <Tab label={t('suppliers.analytics.tabs.performance')} {...a11yProps(0)} />
               <Tab label={t('suppliers.analytics.tabs.comparison')} {...a11yProps(1)} />
             </Tabs>
@@ -138,14 +138,14 @@ const SupplierAnalyticsPage: React.FC = () => {
             <SupplierAnalyticsDashboard supplierId={id || ''} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            {/* Supplier comparison content */}
+            
             <Typography variant="h6" gutterBottom>
               {t('suppliers.analytics.tabs.comparison')}
             </Typography>
           </TabPanel>
         </Paper>
-      </>
-    );
+      </>);
+
   };
 
   return (
@@ -156,39 +156,39 @@ const SupplierAnalyticsPage: React.FC = () => {
             <Button
               startIcon={<ArrowBackIcon />}
               onClick={handleBack}
-              sx={{ mr: 2 }}
-            >
+              sx={{ mr: 2 }}>
+
               {t('common.back')}
             </Button>
             <Box>
               <Typography variant="h4" component="h1" gutterBottom>
-                {id ? 
-                  t('suppliers.analytics.supplierAnalytics', { name: supplier?.name || '' }) : 
-                  t('suppliers.analytics.allSuppliersAnalytics')
+                {id ?
+                t('suppliers.analytics.supplierAnalytics', { name: supplier?.name || '' }) :
+                t('suppliers.analytics.allSuppliersAnalytics')
                 }
               </Typography>
               <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                <Link color="inherit" href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
+                <Link color="inherit" href="/" onClick={(e) => {e.preventDefault();navigate('/');}}>
                   {t('navigation.dashboard')}
                 </Link>
-                <Link color="inherit" href="/suppliers" onClick={(e) => { e.preventDefault(); navigate('/suppliers'); }}>
+                <Link color="inherit" href="/suppliers" onClick={(e) => {e.preventDefault();navigate('/suppliers');}}>
                   {t('navigation.suppliers')}
                 </Link>
-                {id && (
-                  <Link color="inherit" href={`/suppliers/${id}`} onClick={(e) => { e.preventDefault(); navigate(`/suppliers/${id}`); }}>
+                {id &&
+                <Link color="inherit" href={`/suppliers/${id}`} onClick={(e) => {e.preventDefault();navigate(`/suppliers/${id}`);}}>
                     {supplier?.name || id}
                   </Link>
-                )}
+                }
                 <Typography color="text.primary">{t('suppliers.analytics.analytics')}</Typography>
               </Breadcrumbs>
             </Box>
           </Box>
           
-          {renderContent()}
+          {RenderContent()}
         </Box>
       </ErrorHandler>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default SupplierAnalyticsPage; 
+export default SupplierAnalyticsPage;

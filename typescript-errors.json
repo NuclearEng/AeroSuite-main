@@ -3,26 +3,26 @@
     "total": 8,
     "byType": {
       "cannotBeUsedAsJSX": 2,
-      "argumentNotAssignable": 1,
       "cannotFindName": 2,
       "noDeclarationFile": 1,
-      "implicitAny": 1,
-      "typeIsNotFunction": 1
+      "propertyDoesNotExist": 1,
+      "typeIsNotFunction": 1,
+      "implicitAny": 1
     },
     "byFile": {
-      "src/App.tsx": 2,
-      "src/components/auth/TwoFactorSetup.tsx": 1,
-      "src/components/common/ThemeSettings.tsx": 1,
-      "src/components/common/FeedbackForm.tsx": 1,
-      "src/components/common/SearchModal.tsx": 1,
-      "src/components/dashboard/DashboardCustomizer.tsx": 1,
-      "src/utils/auth.ts": 1
+      "client/src/App.tsx": 2,
+      "client/src/components/common/ThemeSettings.tsx": 1,
+      "client/src/components/common/FeedbackForm.tsx": 1,
+      "client/src/components/common/SearchModal.tsx": 1,
+      "client/src/components/common/ApiVersionWarningBanner.tsx": 1,
+      "client/src/utils/auth.ts": 1,
+      "client/src/components/dashboard/DashboardCustomizer.tsx": 1
     },
     "autoFixable": 7
   },
   "errors": [
     {
-      "file": "src/App.tsx",
+      "file": "client/src/App.tsx",
       "line": 26,
       "column": 12,
       "code": "TS2786",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "file": "src/App.tsx",
+      "file": "client/src/App.tsx",
       "line": 27,
       "column": 14,
       "code": "TS2786",
@@ -62,27 +62,28 @@
       }
     },
     {
-      "file": "src/components/auth/TwoFactorSetup.tsx",
-      "line": 73,
-      "column": 19,
-      "code": "TS2345",
-      "message": "Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string | null>'.",
-      "type": "argumentNotAssignable",
+      "file": "client/src/components/common/ApiVersionWarningBanner.tsx",
+      "line": 43,
+      "column": 44,
+      "code": "TS2339",
+      "message": "Property 'checkApiVersion' does not exist on type '{ get: <T>(...) }'.",
+      "type": "propertyDoesNotExist",
       "context": [
-        "    71 |       ",
-        "    72 |       if (method === 'app') {",
-        "    74 |         setSecret(response.secret);",
-        "    75 |       }",
-        "    76 |       "
+        "    41 |     try {",
+        "    42 |       // Get the latest version",
+        "    44 |       const latestVersion = versionInfo.defaultVersion;",
+        "    45 |       "
       ],
       "suggestedFix": {
-        "type": "typeIncompatibility",
-        "description": "Fix type mismatch or add type assertion",
+        "type": "missingProperty",
+        "property": "checkApiVersion",
+        "onType": "{ get: <T>(...) }",
+        "description": "Add property 'checkApiVersion' to type or interface",
         "autoFixable": true
       }
     },
     {
-      "file": "src/components/common/FeedbackForm.tsx",
+      "file": "client/src/components/common/FeedbackForm.tsx",
       "line": 147,
       "column": 51,
       "code": "TS2304",
@@ -103,28 +104,27 @@
       }
     },
     {
-      "file": "src/components/common/SearchModal.tsx",
+      "file": "client/src/components/common/SearchModal.tsx",
       "line": 35,
       "column": 26,
       "code": "TS7016",
-      "message": "Could not find a declaration file for module 'lodash'. '/Users/tannercoker/AeroSuite-main/node_modules/lodash/lodash.js' implicitly has an 'any' type.",
+      "message": "Could not find a declaration file for module 'lodash'.",
       "type": "noDeclarationFile",
       "context": [
         "    33 |   FilterList as FilterIcon,",
         "    34 | } from '@mui/icons-material';",
         "    36 |",
-        "    37 | interface SearchResult {",
-        "    38 |   id: string;"
+        "    37 | interface SearchResult {"
       ],
       "suggestedFix": {
         "type": "missingTypes",
-        "module": "lodash'. '/Users/tannercoker/AeroSuite-main/node_modules/lodash/lodash.js' implicitly has an 'any",
-        "description": "Install @types/lodash'. '/Users/tannercoker/AeroSuite-main/node_modules/lodash/lodash.js' implicitly has an 'any or create declaration file",
+        "module": "lodash",
+        "description": "Install @types/lodash or create declaration file",
         "autoFixable": true
       }
     },
     {
-      "file": "src/components/common/ThemeSettings.tsx",
+      "file": "client/src/components/common/ThemeSettings.tsx",
       "line": 174,
       "column": 14,
       "code": "TS2304",
@@ -134,8 +134,7 @@
         "    172 |         >",
         "    173 |           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>",
         "    175 |             <Box>",
-        "    176 |               <Typography variant=\"subtitle1\" fontWeight=\"medium\">Theme Colors</Typography>",
-        "    177 |               <Typography variant=\"body2\" color=\"text.secondary\">"
+        "    176 |               <Typography variant=\"subtitle1\" fontWeight=\"medium\">Theme Colors</Typography>"
       ],
       "suggestedFix": {
         "type": "undefinedVariable",
@@ -145,7 +144,7 @@
       }
     },
     {
-      "file": "src/components/dashboard/DashboardCustomizer.tsx",
+      "file": "client/src/components/dashboard/DashboardCustomizer.tsx",
       "line": 269,
       "column": 15,
       "code": "TS7006",
@@ -166,7 +165,7 @@
       }
     },
     {
-      "file": "src/utils/auth.ts",
+      "file": "client/src/utils/auth.ts",
       "line": 134,
       "column": 12,
       "code": "TS18046",
@@ -176,8 +175,7 @@
         "    132 |   try {",
         "    133 |     const response = await api.get('/v2/auth/sessions');",
         "    135 |   } catch (_error) {",
-        "    136 |     console.error('Error fetching user sessions:', _error);",
-        "    137 |     return [];"
+        "    136 |     console.error('Error fetching user sessions:', _error);"
       ],
       "suggestedFix": {
         "type": "manual",

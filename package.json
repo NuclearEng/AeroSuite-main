@@ -43,6 +43,9 @@
     "test:typescript:complete": "node scripts/typescript-complete-test.js",
     "test:typescript:complete:fix": "node scripts/typescript-complete-test.js --fix",
     "test:typescript:best-practices": "node scripts/typescript-best-practices.js",
+    "test:jsx:best-practices": "node scripts/jsx-best-practices.js",
+    "jsx:auto-fix": "node scripts/jsx-auto-fix.js",
+    "test:jsx": "jest scripts/tests/jsx-best-practices.test.js",
     "typescript:parse-errors": "node scripts/typescript-error-parser.js",
     "typescript:feed-errors": "node scripts/typescript-error-feeder.js",
     "typescript:feed-build": "node scripts/typescript-error-feeder.js --build",
@@ -217,7 +220,11 @@
     "react-chartjs-2": "^5.2.0"
   },
   "devDependencies": {
+    "@babel/generator": "7.28.0",
+    "@babel/parser": "7.28.0",
     "@babel/plugin-transform-runtime": "^7.27.4",
+    "@babel/traverse": "7.28.0",
+    "@babel/types": "7.28.2",
     "@eslint/js": "9.29.0",
     "@faker-js/faker": "^9.8.0",
     "@fullcalendar/core": "6.1.17",

@@ -17,8 +17,8 @@ import {
   Box,
   CircularProgress,
   Autocomplete,
-  Chip
-} from '@mui/material';
+  Chip } from
+'@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -29,28 +29,28 @@ import supplierService from '../../../services/supplier.service';
 
 // Type options
 const inspectionTypeOptions = [
-  { value: 'quality', label: 'Quality Inspection' },
-  { value: 'safety', label: 'Safety Inspection' },
-  { value: 'regulatory', label: 'Regulatory Compliance' },
-  { value: 'process', label: 'Process Audit' },
-  { value: 'incoming', label: 'Incoming Material' }
-];
+{ value: 'quality', label: 'Quality Inspection' },
+{ value: 'safety', label: 'Safety Inspection' },
+{ value: 'regulatory', label: 'Regulatory Compliance' },
+{ value: 'process', label: 'Process Audit' },
+{ value: 'incoming', label: 'Incoming Material' }];
+
 
 // Status options
 const statusOptions = [
-  { value: 'scheduled', label: 'Scheduled' },
-  { value: 'in-progress', label: 'In Progress' },
-  { value: 'completed', label: 'Completed' },
-  { value: 'cancelled', label: 'Cancelled' }
-];
+{ value: 'scheduled', label: 'Scheduled' },
+{ value: 'in-progress', label: 'In Progress' },
+{ value: 'completed', label: 'Completed' },
+{ value: 'cancelled', label: 'Cancelled' }];
+
 
 // Priority options
 const priorityOptions = [
-  { value: 'low', label: 'Low' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'high', label: 'High' },
-  { value: 'critical', label: 'Critical' }
-];
+{ value: 'low', label: 'Low' },
+{ value: 'medium', label: 'Medium' },
+{ value: 'high', label: 'High' },
+{ value: 'critical', label: 'Critical' }];
+
 
 interface FormErrors {
   title?: string;
@@ -184,19 +184,19 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
   }, [open]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
-    
+
     if (!name) return;
-    
-    setFormValues(prev => ({
+
+    setFormValues((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -205,7 +205,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
 
   // Handle date change
   const handleDateChange = (date: Date | null) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       scheduledDate: date
     }));
@@ -213,7 +213,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
 
   // Handle tag changes
   const handleTagsChange = (newValue: string[]) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       tags: newValue
     }));
@@ -222,7 +222,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
   // Validate form
   const validateForm = () => {
     const newErrors: FormErrors = {};
-    
+
     // Required fields validation
     if (!formValues.title) newErrors.title = 'Title is required';
     if (!formValues.type) newErrors.type = 'Type is required';
@@ -230,7 +230,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
     if (!formValues.scheduledDate) newErrors.scheduledDate = 'Scheduled date is required';
     if (!formValues.customerId) newErrors.customerId = 'Customer is required';
     if (!formValues.location) newErrors.location = 'Location is required';
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -238,14 +238,14 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Map form values to inspection data structure
       const inspectionData = {
@@ -261,9 +261,9 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
         notes: formValues.notes,
         tags: formValues.tags
       };
-      
+
       let savedInspection: Inspection;
-      
+
       if (isEdit && inspectionId) {
         // Update existing inspection
         savedInspection = await inspectionService.updateInspection(inspectionId, inspectionData);
@@ -271,7 +271,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
         // Create new inspection
         savedInspection = await inspectionService.createInspection(inspectionData);
       }
-      
+
       onSave(savedInspection);
       onClose();
     } catch (error: any) {
@@ -282,25 +282,25 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
   };
 
   return (
-    <Dialog 
-      open={open} 
+    <Dialog
+      open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md"
-    >
+      maxWidth="md">
+
       <DialogTitle>
         {isEdit ? 'Edit Inspection' : 'Schedule New Inspection'}
       </DialogTitle>
       
       <DialogContent dividers>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+        {loading ?
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
             <CircularProgress />
-          </Box>
-        ) : (
-          <form id="inspection-form" onSubmit={handleSubmit}>
+          </Box> :
+
+        <form id="inspection-form" onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              {/* Basic Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="h6" gutterBottom>
                   Basic Information
@@ -310,31 +310,31 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  required
-                  label="Inspection Title"
-                  name="title"
-                  value={formValues.title}
-                  onChange={handleChange}
-                  error={!!errors.title}
-                  helperText={errors.title}
-                />
+                fullWidth
+                required
+                label="Inspection Title"
+                name="title"
+                value={formValues.title}
+                onChange={handleChange}
+                error={!!errors.title}
+                helperText={errors.title} />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth required error={!!errors.type}>
                   <InputLabel>Inspection Type</InputLabel>
                   <Select
-                    name="type"
-                    value={formValues.type}
-                    label="Inspection Type"
-                    onChange={handleChange as any}
-                  >
-                    {inspectionTypeOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                  name="type"
+                  value={formValues.type}
+                  label="Inspection Type"
+                  onChange={handleChange as any}>
+
+                    {inspectionTypeOptions.map((option) =>
+                  <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                   {errors.type && <FormHelperText>{errors.type}</FormHelperText>}
                 </FormControl>
@@ -344,16 +344,16 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                 <FormControl fullWidth required error={!!errors.status}>
                   <InputLabel>Status</InputLabel>
                   <Select
-                    name="status"
-                    value={formValues.status}
-                    label="Status"
-                    onChange={handleChange as any}
-                  >
-                    {statusOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                  name="status"
+                  value={formValues.status}
+                  label="Status"
+                  onChange={handleChange as any}>
+
+                    {statusOptions.map((option) =>
+                  <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                   {errors.status && <FormHelperText>{errors.status}</FormHelperText>}
                 </FormControl>
@@ -363,16 +363,16 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                 <FormControl fullWidth>
                   <InputLabel>Priority</InputLabel>
                   <Select
-                    name="priority"
-                    value={formValues.priority}
-                    label="Priority"
-                    onChange={handleChange as any}
-                  >
-                    {priorityOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                  name="priority"
+                  value={formValues.priority}
+                  label="Priority"
+                  onChange={handleChange as any}>
+
+                    {priorityOptions.map((option) =>
+                  <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                 </FormControl>
               </Grid>
@@ -380,18 +380,18 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
               <Grid item xs={12} md={6}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DateTimePicker
-                    label="Scheduled Date & Time"
-                    value={formValues.scheduledDate}
-                    onChange={handleDateChange}
-                    slotProps={{
-                      textField: {
-                        fullWidth: true,
-                        required: true,
-                        error: !!errors.scheduledDate,
-                        helperText: errors.scheduledDate
-                      }
-                    }}
-                  />
+                  label="Scheduled Date & Time"
+                  value={formValues.scheduledDate}
+                  onChange={handleDateChange}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      required: true,
+                      error: !!errors.scheduledDate,
+                      helperText: errors.scheduledDate
+                    }
+                  }} />
+
                 </LocalizationProvider>
               </Grid>
               
@@ -399,17 +399,17 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                 <FormControl fullWidth required error={!!errors.customerId}>
                   <InputLabel>Customer</InputLabel>
                   <Select
-                    name="customerId"
-                    value={formValues.customerId}
-                    label="Customer"
-                    onChange={handleChange as any}
-                    disabled={loadingCustomers}
-                  >
-                    {customers.map(customer => (
-                      <MenuItem key={customer._id} value={customer._id}>
+                  name="customerId"
+                  value={formValues.customerId}
+                  label="Customer"
+                  onChange={handleChange as any}
+                  disabled={loadingCustomers}>
+
+                    {customers.map((customer) =>
+                  <MenuItem key={customer._id} value={customer._id}>
                         {customer.name}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                   {errors.customerId && <FormHelperText>{errors.customerId}</FormHelperText>}
                 </FormControl>
@@ -419,90 +419,90 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                 <FormControl fullWidth>
                   <InputLabel>Supplier (Optional)</InputLabel>
                   <Select
-                    name="supplierId"
-                    value={formValues.supplierId || ''}
-                    label="Supplier (Optional)"
-                    onChange={handleChange as any}
-                    disabled={loadingSuppliers}
-                  >
+                  name="supplierId"
+                  value={formValues.supplierId || ''}
+                  label="Supplier (Optional)"
+                  onChange={handleChange as any}
+                  disabled={loadingSuppliers}>
+
                     <MenuItem value="">None</MenuItem>
-                    {suppliers.map(supplier => (
-                      <MenuItem key={supplier._id} value={supplier._id}>
+                    {suppliers.map((supplier) =>
+                  <MenuItem key={supplier._id} value={supplier._id}>
                         {supplier.name}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                 </FormControl>
               </Grid>
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  required
-                  label="Location"
-                  name="location"
-                  value={formValues.location}
-                  onChange={handleChange}
-                  error={!!errors.location}
-                  helperText={errors.location}
-                />
+                fullWidth
+                required
+                label="Location"
+                name="location"
+                value={formValues.location}
+                onChange={handleChange}
+                error={!!errors.location}
+                helperText={errors.location} />
+
               </Grid>
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  multiline
-                  rows={3}
-                  label="Description"
-                  name="description"
-                  value={formValues.description}
-                  onChange={handleChange}
-                  placeholder="Detailed description of the inspection"
-                />
+                fullWidth
+                multiline
+                rows={3}
+                label="Description"
+                name="description"
+                value={formValues.description}
+                onChange={handleChange}
+                placeholder="Detailed description of the inspection" />
+
               </Grid>
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  multiline
-                  rows={2}
-                  label="Notes"
-                  name="notes"
-                  value={formValues.notes}
-                  onChange={handleChange}
-                  placeholder="Additional notes or instructions"
-                />
+                fullWidth
+                multiline
+                rows={2}
+                label="Notes"
+                name="notes"
+                value={formValues.notes}
+                onChange={handleChange}
+                placeholder="Additional notes or instructions" />
+
               </Grid>
               
               <Grid item xs={12}>
                 <Autocomplete
-                  multiple
-                  freeSolo
-                  options={[]}
-                  value={formValues.tags}
-                  onChange={(_, newValue) => handleTagsChange(newValue)}
-                  renderTags={(value, getTagProps) =>
-                    value.map((option, index) => (
-                      <Chip 
-                        label={option} 
-                        {...getTagProps({ index })} 
-                        key={option}
-                      />
-                    ))
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Tags"
-                      placeholder="Add tags"
-                      helperText="Add relevant tags to categorize this inspection"
-                    />
-                  )}
-                />
+                multiple
+                freeSolo
+                options={[]}
+                value={formValues.tags}
+                onChange={(_, newValue) => handleTagsChange(newValue)}
+                renderTags={(value, getTagProps) =>
+                value.map((option, index) =>
+                <Chip
+                  label={option}
+                  {...getTagProps({ index })}
+                  key={option} />
+
+                )
+                }
+                renderInput={(params) =>
+                <TextField
+                  {...params}
+                  label="Tags"
+                  placeholder="Add tags"
+                  helperText="Add relevant tags to categorize this inspection" />
+
+                } />
+
               </Grid>
             </Grid>
           </form>
-        )}
+        }
       </DialogContent>
       
       <DialogActions>
@@ -515,13 +515,13 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
           variant="contained"
           color="primary"
           startIcon={<SaveIcon />}
-          disabled={isSubmitting || loading}
-        >
+          disabled={isSubmitting || loading}>
+
           {isSubmitting ? 'Saving...' : isEdit ? 'Update Inspection' : 'Schedule Inspection'}
         </Button>
       </DialogActions>
-    </Dialog>
-  );
+    </Dialog>);
+
 };
 
-export default InspectionFormModal; 
+export default InspectionFormModal;

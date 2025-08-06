@@ -22,9 +22,9 @@ import {
   Tabs,
   Tab,
   Paper,
-  Container
-} from '@mui/material';
-import { 
+  Container } from
+'@mui/material';
+import {
   BarChart as BarChartIcon,
   PieChart as PieChartIcon,
   Timeline as TimelineIcon,
@@ -36,29 +36,29 @@ import {
   Business as BusinessIcon,
   Assessment as AssessmentIcon,
   BugReport as BugReportIcon,
-  AccessTime as AccessTimeIcon
-} from '@mui/icons-material';
+  AccessTime as AccessTimeIcon } from
+'@mui/icons-material';
 import { PageHeader } from '../../components/common';
-import { 
-  BarChart, 
-  LineChart, 
-  PieChart, 
-  ComposedChart, 
-  Bar, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
+import {
+  BarChart,
+  LineChart,
+  PieChart,
+  ComposedChart,
+  Bar,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
   ResponsiveContainer,
   Cell,
   Pie,
   Area,
   ScatterChart,
   Scatter,
-  ZAxis
-} from 'recharts';
+  ZAxis } from
+'recharts';
 import api from '../../services/api';
 import { format, subMonths } from 'date-fns';
 import InspectionStatsDashboard from '../../components/inspections/InspectionStatsDashboard';
@@ -79,15 +79,15 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== index}
       id={`analytics-tabpanel-${index}`}
       aria-labelledby={`analytics-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ pt: 3 }}>
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ pt: 3 }}>
           {children}
         </Box>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const InspectionAnalytics: React.FC = () => {
@@ -123,30 +123,30 @@ const InspectionAnalytics: React.FC = () => {
       scheduledVsActual: {}
     }
   });
-  
+
   // Fetch analytics data
   useEffect(() => {
     fetchAnalyticsData();
   }, []);
-  
+
   const fetchAnalyticsData = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       // Build query parameters
       const params = new URLSearchParams();
       params.append('startDate', dateRange.startDate);
       params.append('endDate', dateRange.endDate);
-      
+
       if (filters.customerId) {
         params.append('customerId', filters.customerId);
       }
-      
+
       if (filters.supplierId) {
         params.append('supplierId', filters.supplierId);
       }
-      
+
       const response = await api.get(`/inspections/analytics?${params.toString()}`);
       setAnalyticsData(response.data.data);
     } catch (err: any) {
@@ -156,30 +156,30 @@ const InspectionAnalytics: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   // Handle filter menu
   const handleFilterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setFilterAnchorEl(event.currentTarget);
   };
-  
+
   const handleFilterClose = () => {
     setFilterAnchorEl(null);
   };
-  
+
   // Handle export menu
   const handleExportClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setExportAnchorEl(event.currentTarget);
   };
-  
+
   const handleExportClose = () => {
     setExportAnchorEl(null);
   };
-  
+
   // Handle date range change
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDateRange({
@@ -187,7 +187,7 @@ const InspectionAnalytics: React.FC = () => {
       [event.target.name]: event.target.value
     });
   };
-  
+
   // Handle filter change
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilters({
@@ -195,13 +195,13 @@ const InspectionAnalytics: React.FC = () => {
       [event.target.name]: event.target.value
     });
   };
-  
+
   // Apply filters and refresh data
   const handleApplyFilters = () => {
     fetchAnalyticsData();
     handleFilterClose();
   };
-  
+
   // Get status colors
   const getStatusColor = (status: string) => {
     const statusColors: Record<string, string> = {
@@ -210,10 +210,10 @@ const InspectionAnalytics: React.FC = () => {
       completed: theme.palette.success.main,
       cancelled: theme.palette.error.main
     };
-    
+
     return statusColors[status] || theme.palette.grey[500];
   };
-  
+
   // Get result colors
   const getResultColor = (result: string) => {
     const resultColors: Record<string, string> = {
@@ -221,24 +221,24 @@ const InspectionAnalytics: React.FC = () => {
       fail: theme.palette.error.main,
       conditional: theme.palette.warning.main
     };
-    
+
     return resultColors[result] || theme.palette.grey[500];
   };
-  
+
   // Generate status chart data
   const statusChartData = Object.entries(analyticsData.summary.statusCounts || {}).map(([status, count]) => ({
     name: status.charAt(0).toUpperCase() + status.slice(1),
     value: count as number,
     color: getStatusColor(status)
   }));
-  
+
   // Generate result chart data
   const resultChartData = Object.entries(analyticsData.summary.resultCounts || {}).map(([result, count]) => ({
     name: result.charAt(0).toUpperCase() + result.slice(1),
     value: count as number,
     color: getResultColor(result)
   }));
-  
+
   return (
     <Container maxWidth="xl">
       <Box mb={4}>
@@ -256,31 +256,31 @@ const InspectionAnalytics: React.FC = () => {
         <PageHeader
           title="Inspection Analytics"
           subtitle="Comprehensive analytics and insights for inspection data"
-          icon={<AssessmentIcon fontSize="large" />}
-        />
+          icon={<AssessmentIcon fontSize="large" />} />
+
         
-        {/* Actions toolbar */}
-        <Box 
-          sx={{ 
+        
+        <Box
+          sx={{
             display: 'flex',
             justifyContent: 'space-between',
             mb: 3,
             flexWrap: 'wrap',
             gap: 2
-          }}
-        >
-          <Box 
-            sx={{ 
+          }}>
+
+          <Box
+            sx={{
               display: 'flex',
               gap: 2,
               flexWrap: 'wrap'
-            }}
-          >
+            }}>
+
             <Button
               variant="outlined"
               startIcon={<FilterIcon />}
-              onClick={handleFilterClick}
-            >
+              onClick={handleFilterClick}>
+
               Filter
             </Button>
             <Menu
@@ -289,16 +289,16 @@ const InspectionAnalytics: React.FC = () => {
               onClose={handleFilterClose}
               anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'left',
+                horizontal: 'left'
               }}
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'left',
+                horizontal: 'left'
               }}
               PaperProps={{
                 sx: { width: 300, p: 2 }
-              }}
-            >
+              }}>
+
               <Typography variant="subtitle1" sx={{ mb: 2 }}>
                 Filter Options
               </Typography>
@@ -311,8 +311,8 @@ const InspectionAnalytics: React.FC = () => {
                   value={dateRange.startDate}
                   onChange={handleDateChange}
                   InputLabelProps={{ shrink: true }}
-                  fullWidth
-                />
+                  fullWidth />
+
               </FormControl>
               
               <FormControl fullWidth sx={{ mb: 2 }}>
@@ -323,8 +323,8 @@ const InspectionAnalytics: React.FC = () => {
                   value={dateRange.endDate}
                   onChange={handleDateChange}
                   InputLabelProps={{ shrink: true }}
-                  fullWidth
-                />
+                  fullWidth />
+
               </FormControl>
               
               <FormControl fullWidth sx={{ mb: 2 }}>
@@ -333,8 +333,8 @@ const InspectionAnalytics: React.FC = () => {
                   name="customerId"
                   value={filters.customerId}
                   onChange={handleFilterChange}
-                  fullWidth
-                />
+                  fullWidth />
+
               </FormControl>
               
               <FormControl fullWidth sx={{ mb: 2 }}>
@@ -343,15 +343,15 @@ const InspectionAnalytics: React.FC = () => {
                   name="supplierId"
                   value={filters.supplierId}
                   onChange={handleFilterChange}
-                  fullWidth
-                />
+                  fullWidth />
+
               </FormControl>
               
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                 <Button
                   variant="contained"
-                  onClick={handleApplyFilters}
-                >
+                  onClick={handleApplyFilters}>
+
                   Apply Filters
                 </Button>
               </Box>
@@ -360,8 +360,8 @@ const InspectionAnalytics: React.FC = () => {
             <Button
               variant="outlined"
               startIcon={<RefreshIcon />}
-              onClick={fetchAnalyticsData}
-            >
+              onClick={fetchAnalyticsData}>
+
               Refresh
             </Button>
           </Box>
@@ -369,8 +369,8 @@ const InspectionAnalytics: React.FC = () => {
           <Button
             variant="outlined"
             startIcon={<DownloadIcon />}
-            onClick={handleExportClick}
-          >
+            onClick={handleExportClick}>
+
             Export
           </Button>
           <Menu
@@ -379,13 +379,13 @@ const InspectionAnalytics: React.FC = () => {
             onClose={handleExportClose}
             anchorOrigin={{
               vertical: 'bottom',
-              horizontal: 'right',
+              horizontal: 'right'
             }}
             transformOrigin={{
               vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
+              horizontal: 'right'
+            }}>
+
             <MenuItem onClick={handleExportClose}>
               <ListItemIcon>
                 <DownloadIcon fontSize="small" />
@@ -401,53 +401,53 @@ const InspectionAnalytics: React.FC = () => {
           </Menu>
         </Box>
         
-        {/* Loading state */}
-        {loading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+        
+        {loading &&
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
             <CircularProgress />
           </Box>
-        )}
+        }
         
-        {/* Error state */}
-        {!loading && error && (
-          <Paper 
-            sx={{ 
-              p: 3, 
-              bgcolor: alpha(theme.palette.error.main, 0.1),
-              color: theme.palette.error.main,
-              mb: 3
-            }}
-          >
+        
+        {!loading && error &&
+        <Paper
+          sx={{
+            p: 3,
+            bgcolor: alpha(theme.palette.error.main, 0.1),
+            color: theme.palette.error.main,
+            mb: 3
+          }}>
+
             <Typography>
               Error loading analytics data: {error}
             </Typography>
-            <Button 
-              variant="outlined" 
-              color="error" 
-              sx={{ mt: 2 }}
-              onClick={fetchAnalyticsData}
-            >
+            <Button
+            variant="outlined"
+            color="error"
+            sx={{ mt: 2 }}
+            onClick={fetchAnalyticsData}>
+
               Retry
             </Button>
           </Paper>
-        )}
+        }
         
-        {/* Analytics content */}
-        {!loading && !error && (
-          <>
-            {/* Key metrics section */}
+        
+        {!loading && !error &&
+        <>
+            
             <Grid container spacing={3} sx={{ mb: 4 }}>
-              {/* Total inspections */}
+              
               <Grid item xs={12} sm={6} md={3}>
                 <Card sx={{ height: '100%' }}>
                   <CardContent sx={{ textAlign: 'center' }}>
-                    <AssessmentIcon 
-                      sx={{ 
-                        fontSize: 48, 
-                        color: theme.palette.primary.main,
-                        mb: 1
-                      }} 
-                    />
+                    <AssessmentIcon
+                    sx={{
+                      fontSize: 48,
+                      color: theme.palette.primary.main,
+                      mb: 1
+                    }} />
+
                     <Typography variant="h4" fontWeight={600}>
                       {analyticsData.summary.total || 0}
                     </Typography>
@@ -458,22 +458,22 @@ const InspectionAnalytics: React.FC = () => {
                 </Card>
               </Grid>
               
-              {/* Pass rate */}
+              
               <Grid item xs={12} sm={6} md={3}>
                 <Card sx={{ height: '100%' }}>
                   <CardContent sx={{ textAlign: 'center' }}>
-                    <BarChartIcon 
-                      sx={{ 
-                        fontSize: 48, 
-                        color: theme.palette.success.main,
-                        mb: 1
-                      }} 
-                    />
+                    <BarChartIcon
+                    sx={{
+                      fontSize: 48,
+                      color: theme.palette.success.main,
+                      mb: 1
+                    }} />
+
                     <Typography variant="h4" fontWeight={600}>
-                      {analyticsData.summary.resultCounts && analyticsData.summary.total ? 
-                        ((analyticsData.summary.resultCounts.pass || 0) / analyticsData.summary.total * 100).toFixed(1) + '%' : 
-                        '0%'
-                      }
+                      {analyticsData.summary.resultCounts && analyticsData.summary.total ?
+                    ((analyticsData.summary.resultCounts.pass || 0) / analyticsData.summary.total * 100).toFixed(1) + '%' :
+                    '0%'
+                    }
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
                       Pass Rate
@@ -482,17 +482,17 @@ const InspectionAnalytics: React.FC = () => {
                 </Card>
               </Grid>
               
-              {/* On-time rate */}
+              
               <Grid item xs={12} sm={6} md={3}>
                 <Card sx={{ height: '100%' }}>
                   <CardContent sx={{ textAlign: 'center' }}>
-                    <AccessTimeIcon 
-                      sx={{ 
-                        fontSize: 48, 
-                        color: theme.palette.info.main,
-                        mb: 1
-                      }} 
-                    />
+                    <AccessTimeIcon
+                    sx={{
+                      fontSize: 48,
+                      color: theme.palette.info.main,
+                      mb: 1
+                    }} />
+
                     <Typography variant="h4" fontWeight={600}>
                       {analyticsData.timeline.scheduledVsActual?.onTimePercentage?.toFixed(1) || 0}%
                     </Typography>
@@ -503,17 +503,17 @@ const InspectionAnalytics: React.FC = () => {
                 </Card>
               </Grid>
               
-              {/* Defect rate */}
+              
               <Grid item xs={12} sm={6} md={3}>
                 <Card sx={{ height: '100%' }}>
                   <CardContent sx={{ textAlign: 'center' }}>
-                    <BugReportIcon 
-                      sx={{ 
-                        fontSize: 48, 
-                        color: theme.palette.warning.main,
-                        mb: 1
-                      }} 
-                    />
+                    <BugReportIcon
+                    sx={{
+                      fontSize: 48,
+                      color: theme.palette.warning.main,
+                      mb: 1
+                    }} />
+
                     <Typography variant="h4" fontWeight={600}>
                       {analyticsData.defects.totalDefects || 0}
                     </Typography>
@@ -525,41 +525,41 @@ const InspectionAnalytics: React.FC = () => {
               </Grid>
             </Grid>
             
-            {/* Analytics tabs */}
+            
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs 
-                value={tabValue} 
-                onChange={handleTabChange} 
-                aria-label="analytics tabs"
-                centered
-              >
-                <Tab 
-                  label="Overview" 
-                  icon={<AssessmentIcon />} 
-                  iconPosition="start" 
-                />
-                <Tab 
-                  label="Supplier Performance" 
-                  icon={<BusinessIcon />} 
-                  iconPosition="start" 
-                />
-                <Tab 
-                  label="Defect Analysis" 
-                  icon={<BugReportIcon />} 
-                  iconPosition="start" 
-                />
-                <Tab 
-                  label="Time Analysis" 
-                  icon={<AccessTimeIcon />} 
-                  iconPosition="start" 
-                />
+              <Tabs
+              value={tabValue}
+              onChange={handleTabChange}
+              aria-label="analytics tabs"
+              centered>
+
+                <Tab
+                label="Overview"
+                icon={<AssessmentIcon />}
+                iconPosition="start" />
+
+                <Tab
+                label="Supplier Performance"
+                icon={<BusinessIcon />}
+                iconPosition="start" />
+
+                <Tab
+                label="Defect Analysis"
+                icon={<BugReportIcon />}
+                iconPosition="start" />
+
+                <Tab
+                label="Time Analysis"
+                icon={<AccessTimeIcon />}
+                iconPosition="start" />
+
               </Tabs>
             </Box>
             
-            {/* Overview tab */}
+            
             <TabPanel value={tabValue} index={0}>
               <Grid container spacing={3}>
-                {/* Status distribution */}
+                
                 <Grid item xs={12} md={6}>
                   <Card>
                     <CardHeader title="Inspection Status Distribution" />
@@ -568,18 +568,18 @@ const InspectionAnalytics: React.FC = () => {
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
-                              data={statusChartData}
-                              cx="50%"
-                              cy="50%"
-                              labelLine={false}
-                              outerRadius={80}
-                              fill="#8884d8"
-                              dataKey="value"
-                              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                            >
-                              {statusChartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} />
-                              ))}
+                            data={statusChartData}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
+
+                              {statusChartData.map((entry, index) =>
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                            )}
                             </Pie>
                             <Tooltip />
                             <Legend />
@@ -590,7 +590,7 @@ const InspectionAnalytics: React.FC = () => {
                   </Card>
                 </Grid>
                 
-                {/* Result distribution */}
+                
                 <Grid item xs={12} md={6}>
                   <Card>
                     <CardHeader title="Inspection Result Distribution" />
@@ -599,18 +599,18 @@ const InspectionAnalytics: React.FC = () => {
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
-                              data={resultChartData}
-                              cx="50%"
-                              cy="50%"
-                              labelLine={false}
-                              outerRadius={80}
-                              fill="#8884d8"
-                              dataKey="value"
-                              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                            >
-                              {resultChartData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} />
-                              ))}
+                            data={resultChartData}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
+
+                              {resultChartData.map((entry, index) =>
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                            )}
                             </Pie>
                             <Tooltip />
                             <Legend />
@@ -621,7 +621,7 @@ const InspectionAnalytics: React.FC = () => {
                   </Card>
                 </Grid>
                 
-                {/* Monthly trend */}
+                
                 <Grid item xs={12}>
                   <Card>
                     <CardHeader title="Monthly Inspection Trends" />
@@ -629,21 +629,21 @@ const InspectionAnalytics: React.FC = () => {
                       <Box sx={{ height: 400 }}>
                         <ResponsiveContainer width="100%" height="100%">
                           <ComposedChart
-                            data={analyticsData.trends}
-                            margin={{
-                              top: 20,
-                              right: 20,
-                              bottom: 20,
-                              left: 20,
-                            }}
-                          >
+                          data={analyticsData.trends}
+                          margin={{
+                            top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20
+                          }}>
+
                             <CartesianGrid stroke="#f5f5f5" />
-                            <XAxis 
-                              dataKey="month" 
-                              scale="band"
-                              tick={{ fontSize: 12 }}
-                              tickFormatter={(value, index) => `${value} ${analyticsData.trends[index]?.year}`}
-                            />
+                            <XAxis
+                            dataKey="month"
+                            scale="band"
+                            tick={{ fontSize: 12 }}
+                            tickFormatter={(value, index) => `${value} ${analyticsData.trends[index]?.year}`} />
+
                             <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
                             <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
                             <Tooltip />
@@ -661,7 +661,7 @@ const InspectionAnalytics: React.FC = () => {
               </Grid>
             </TabPanel>
             
-            {/* Supplier Performance tab */}
+            
             <TabPanel value={tabValue} index={1}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
@@ -671,15 +671,15 @@ const InspectionAnalytics: React.FC = () => {
                       <Box sx={{ height: 400 }}>
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart
-                            data={analyticsData.supplierPerformance.slice(0, 10)} // Top 10 suppliers
-                            margin={{
-                              top: 20,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                            layout="vertical"
-                          >
+                          data={analyticsData.supplierPerformance.slice(0, 10)} // Top 10 suppliers
+                          margin={{
+                            top: 20,
+                            right: 30,
+                            left: 20,
+                            bottom: 5
+                          }}
+                          layout="vertical">
+
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis type="number" />
                             <YAxis dataKey="supplierName" type="category" scale="band" width={150} />
@@ -700,14 +700,14 @@ const InspectionAnalytics: React.FC = () => {
                       <Box sx={{ height: 400 }}>
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart
-                            data={analyticsData.supplierPerformance.slice(0, 10)} // Top 10 suppliers
-                            margin={{
-                              top: 20,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                          >
+                          data={analyticsData.supplierPerformance.slice(0, 10)} // Top 10 suppliers
+                          margin={{
+                            top: 20,
+                            right: 30,
+                            left: 20,
+                            bottom: 5
+                          }}>
+
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="supplierName" scale="band" />
                             <YAxis />
@@ -725,7 +725,7 @@ const InspectionAnalytics: React.FC = () => {
               </Grid>
             </TabPanel>
             
-            {/* Defect Analysis tab */}
+            
             <TabPanel value={tabValue} index={2}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
@@ -735,14 +735,14 @@ const InspectionAnalytics: React.FC = () => {
                       <Box sx={{ height: 300 }}>
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart
-                            data={analyticsData.defects.byType}
-                            margin={{
-                              top: 20,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                          >
+                          data={analyticsData.defects.byType}
+                          margin={{
+                            top: 20,
+                            right: 30,
+                            left: 20,
+                            bottom: 5
+                          }}>
+
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="defectType" />
                             <YAxis />
@@ -764,15 +764,15 @@ const InspectionAnalytics: React.FC = () => {
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
-                              data={analyticsData.defects.bySeverity}
-                              cx="50%"
-                              cy="50%"
-                              labelLine={false}
-                              outerRadius={80}
-                              fill="#8884d8"
-                              dataKey="count"
-                              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                            >
+                            data={analyticsData.defects.bySeverity}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="count"
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
+
                               <Cell key="cell-critical" fill={theme.palette.error.dark} />
                               <Cell key="cell-major" fill={theme.palette.error.main} />
                               <Cell key="cell-minor" fill={theme.palette.error.light} />
@@ -788,7 +788,7 @@ const InspectionAnalytics: React.FC = () => {
               </Grid>
             </TabPanel>
             
-            {/* Time Analysis tab */}
+            
             <TabPanel value={tabValue} index={3}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
@@ -798,14 +798,14 @@ const InspectionAnalytics: React.FC = () => {
                       <Box sx={{ height: 400 }}>
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart
-                            data={analyticsData.timeline.durations}
-                            margin={{
-                              top: 20,
-                              right: 30,
-                              left: 20,
-                              bottom: 5,
-                            }}
-                          >
+                          data={analyticsData.timeline.durations}
+                          margin={{
+                            top: 20,
+                            right: 30,
+                            left: 20,
+                            bottom: 5
+                          }}>
+
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="inspectionType" />
                             <YAxis label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
@@ -829,24 +829,24 @@ const InspectionAnalytics: React.FC = () => {
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
-                              data={[
-                                { 
-                                  name: 'On-Time', 
-                                  value: analyticsData.timeline.scheduledVsActual?.onTimePercentage || 0 
-                                },
-                                { 
-                                  name: 'Delayed', 
-                                  value: analyticsData.timeline.scheduledVsActual?.delayedPercentage || 0 
-                                }
-                              ]}
-                              cx="50%"
-                              cy="50%"
-                              labelLine={false}
-                              outerRadius={80}
-                              fill="#8884d8"
-                              dataKey="value"
-                              label={({ name, value }) => `${name}: ${value.toFixed(1)}%`}
-                            >
+                            data={[
+                            {
+                              name: 'On-Time',
+                              value: analyticsData.timeline.scheduledVsActual?.onTimePercentage || 0
+                            },
+                            {
+                              name: 'Delayed',
+                              value: analyticsData.timeline.scheduledVsActual?.delayedPercentage || 0
+                            }]
+                            }
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                            label={({ name, value }) => `${name}: ${value.toFixed(1)}%`}>
+
                               <Cell key="cell-ontime" fill={theme.palette.success.main} />
                               <Cell key="cell-delayed" fill={theme.palette.warning.main} />
                             </Pie>
@@ -863,16 +863,16 @@ const InspectionAnalytics: React.FC = () => {
                   <Card>
                     <CardHeader title="Average Delay" />
                     <CardContent sx={{ textAlign: 'center' }}>
-                      <AccessTimeIcon 
-                        sx={{ 
-                          fontSize: 64, 
-                          color: 
-                            analyticsData.timeline.scheduledVsActual?.avgDifference > 0 ? 
-                              theme.palette.warning.main : 
-                              theme.palette.success.main,
-                          mb: 2
-                        }} 
-                      />
+                      <AccessTimeIcon
+                      sx={{
+                        fontSize: 64,
+                        color:
+                        analyticsData.timeline.scheduledVsActual?.avgDifference > 0 ?
+                        theme.palette.warning.main :
+                        theme.palette.success.main,
+                        mb: 2
+                      }} />
+
                       <Typography variant="h4" fontWeight={600}>
                         {Math.abs(analyticsData.timeline.scheduledVsActual?.avgDifference || 0).toFixed(1)} days
                       </Typography>
@@ -885,10 +885,10 @@ const InspectionAnalytics: React.FC = () => {
               </Grid>
             </TabPanel>
           </>
-        )}
+        }
       </Box>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default InspectionAnalytics; 
+export default InspectionAnalytics;

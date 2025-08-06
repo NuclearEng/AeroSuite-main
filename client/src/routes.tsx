@@ -11,36 +11,36 @@ import Settings from './pages/Settings';
 import ModalsAndFormsTester from './pages/ModalsAndFormsTester';
 
 // Create a simple login page component for now
-const Login = () => (
-  <div style={{ padding: '2rem', textAlign: 'center' }}>
+const Login = () =>
+<div style={{ padding: '2rem', textAlign: 'center' }}>
     <h1>Login</h1>
     <p>Login functionality coming soon...</p>
-      </div>
-);
+      </div>;
+
 
 // Create a simple dashboard component
-const Dashboard = () => (
-  <div style={{ padding: '2rem' }}>
+const Dashboard = () =>
+<div style={{ padding: '2rem' }}>
     <h1>Dashboard</h1>
     <p>Welcome to AeroSuite!</p>
-    </div>
-  );
+    </div>;
+
 
 // Create a simple not found component
-const NotFound = () => (
-  <div style={{ padding: '2rem', textAlign: 'center' }}>
+const NotFound = () =>
+<div style={{ padding: '2rem', textAlign: 'center' }}>
     <h1>404 - Page Not Found</h1>
     <p>The page you're looking for doesn't exist.</p>
-  </div>
-);
+  </div>;
+
 
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
-      {/* Auth Routes */}
+      
       <Route path="/auth/login" element={<Login />} />
 
-      {/* Main App Routes */}
+      
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
@@ -49,11 +49,11 @@ const AppRoutes: React.FC = () => {
         <Route path="help" element={<Help />} />
         <Route path="modals-and-forms" element={<ModalsAndFormsTester />} />
         
-        {/* Catch all */}
+        
         <Route path="*" element={<NotFound />} />
       </Route>
-    </Routes>
-  );
+    </Routes>);
+
 };
 
-export default AppRoutes; 
+export default AppRoutes;

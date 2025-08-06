@@ -17,8 +17,8 @@ import {
   Avatar,
   Chip,
   IconButton,
-  CardActionArea
-} from '@mui/material';
+  CardActionArea } from
+'@mui/material';
 import {
   Assignment as AssignmentIcon,
   Business as BusinessIcon,
@@ -31,26 +31,26 @@ import {
   Add as AddIcon,
   Map as MapIcon,
   Assessment as AnalyticsIcon,
-  Security as RiskIcon
-} from '@mui/icons-material';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  Legend, 
+  Security as RiskIcon } from
+'@mui/icons-material';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell
-} from 'recharts';
+  Cell } from
+'recharts';
 import type { Inspection } from '../services/mockDataService';
 import MockDataService from '../services/mockDataService';
 
 // Status chip component
-const StatusChip = ({ status }: { status: string }) => {
+const StatusChip = ({ status }: {status: string;}) => {
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'scheduled':
@@ -71,9 +71,9 @@ const StatusChip = ({ status }: { status: string }) => {
     <Chip
       label={config.label}
       color={config.color as 'info' | 'warning' | 'success' | 'error' | 'default'}
-      size="small"
-    />
-  );
+      size="small" />);
+
+
 };
 
 // Format date for display
@@ -108,37 +108,37 @@ const Dashboard: React.FC = () => {
   // Calculate statistics
   useEffect(() => {
     if (inspections.length > 0) {
-      const completed = inspections.filter(i => i.status === 'completed');
+      const completed = inspections.filter((i) => i.status === 'completed');
       stats.totalInspections = inspections.length;
-      stats.scheduledInspections = inspections.filter(i => i.status === 'scheduled').length;
-      stats.inProgressInspections = inspections.filter(i => i.status === 'in-progress').length;
+      stats.scheduledInspections = inspections.filter((i) => i.status === 'scheduled').length;
+      stats.inProgressInspections = inspections.filter((i) => i.status === 'in-progress').length;
       stats.completedInspections = completed.length;
-      stats.passRate = completed.length > 0 
-        ? Math.round((completed.filter(i => i.result === 'pass').length / completed.length) * 100) 
-        : 0;
+      stats.passRate = completed.length > 0 ?
+      Math.round(completed.filter((i) => i.result === 'pass').length / completed.length * 100) :
+      0;
     }
   }, [inspections]);
 
   // Data for inspection status chart
   const statusData = [
-    { name: 'Scheduled', value: stats.scheduledInspections, color: '#1976d2' },
-    { name: 'In Progress', value: stats.inProgressInspections, color: '#ff9800' },
-    { name: 'Completed', value: stats.completedInspections, color: '#4caf50' }
-  ];
+  { name: 'Scheduled', value: stats.scheduledInspections, color: '#1976d2' },
+  { name: 'In Progress', value: stats.inProgressInspections, color: '#ff9800' },
+  { name: 'Completed', value: stats.completedInspections, color: '#4caf50' }];
+
 
   // Data for monthly inspections chart
   const monthlyData = [
-    { name: 'Jan', scheduled: 4, completed: 3 },
-    { name: 'Feb', scheduled: 5, completed: 5 },
-    { name: 'Mar', scheduled: 6, completed: 4 },
-    { name: 'Apr', scheduled: 8, completed: 7 },
-    { name: 'May', scheduled: 10, completed: 9 },
-    { name: 'Jun', scheduled: 3, completed: 1 }
-  ];
+  { name: 'Jan', scheduled: 4, completed: 3 },
+  { name: 'Feb', scheduled: 5, completed: 5 },
+  { name: 'Mar', scheduled: 6, completed: 4 },
+  { name: 'Apr', scheduled: 8, completed: 7 },
+  { name: 'May', scheduled: 10, completed: 9 },
+  { name: 'Jun', scheduled: 3, completed: 1 }];
+
 
   return (
     <Box>
-      {/* Page header */}
+      
       <Box mb={4}>
         <Typography variant="h4" gutterBottom>
           Dashboard
@@ -148,7 +148,7 @@ const Dashboard: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* Stat cards */}
+      
       <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid sx={{ gridColumn: { xs: 'span 12', sm: 'span 6', md: 'span 3' } }}>
           <Card>
@@ -228,7 +228,7 @@ const Dashboard: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Quick Actions */}
+      
       <Box mb={4}>
         <Typography variant="h6" gutterBottom>
           Supply Chain Management
@@ -296,9 +296,9 @@ const Dashboard: React.FC = () => {
         </Grid>
       </Box>
 
-      {/* Charts and tables */}
+      
       <Grid container spacing={3}>
-        {/* Monthly inspections chart */}
+        
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 8' } }}>
           <Paper sx={{ p: 2, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
@@ -308,8 +308,8 @@ const Dashboard: React.FC = () => {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={monthlyData}
-                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                >
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
@@ -323,7 +323,7 @@ const Dashboard: React.FC = () => {
           </Paper>
         </Grid>
 
-        {/* Inspection status pie chart */}
+        
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
           <Paper sx={{ p: 2, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
@@ -340,111 +340,111 @@ const Dashboard: React.FC = () => {
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {statusData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
+
+                    {statusData.map((entry, index) =>
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    )}
                   </Pie>
                   <Tooltip formatter={(value) => [value, 'Inspections']} />
                 </PieChart>
               </ResponsiveContainer>
               <Box display="flex" justifyContent="center" gap={2}>
-                {statusData.map((entry) => (
-                  <Box key={entry.name} display="flex" alignItems="center">
+                {statusData.map((entry) =>
+                <Box key={entry.name} display="flex" alignItems="center">
                     <Box
-                      sx={{
-                        width: 12,
-                        height: 12,
-                        bgcolor: entry.color,
-                        mr: 1,
-                        borderRadius: '50%'
-                      }}
-                    />
+                    sx={{
+                      width: 12,
+                      height: 12,
+                      bgcolor: entry.color,
+                      mr: 1,
+                      borderRadius: '50%'
+                    }} />
+
                     <Typography variant="body2">{entry.name}</Typography>
                   </Box>
-                ))}
+                )}
               </Box>
             </Box>
           </Paper>
         </Grid>
 
-        {/* Recent inspections */}
+        
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
           <Card>
             <CardHeader
               title="Recent Inspections"
               action={
-                <Button
-                  size="small"
-                  endIcon={<ArrowForwardIcon />}
-                  onClick={() => navigate('/inspections')}
-                >
+              <Button
+                size="small"
+                endIcon={<ArrowForwardIcon />}
+                onClick={() => navigate('/inspections')}>
+
                   View All
                 </Button>
-              }
-            />
+              } />
+
             <Divider />
             <List sx={{ p: 0 }}>
-              {inspections.slice(0, 5).map((inspection) => (
-                <React.Fragment key={inspection._id}>
+              {inspections.slice(0, 5).map((inspection) =>
+              <React.Fragment key={inspection._id}>
                   <ListItem
-                    sx={{ cursor: 'pointer' }}
-                    onClick={() => navigate(`/inspections/${inspection._id}`)}
-                  >
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => navigate(`/inspections/${inspection._id}`)}>
+
                     <ListItemAvatar>
                       <Avatar>
-                        {inspection.status === 'completed' ? 
-                          inspection.result === 'pass' ? <CheckCircleIcon /> : <ErrorIcon /> 
-                          : <WarningIcon />}
+                        {inspection.status === 'completed' ?
+                      inspection.result === 'pass' ? <CheckCircleIcon /> : <ErrorIcon /> :
+                      <WarningIcon />}
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
-                      primary={inspection.title}
-                      secondary={
-                        <>
+                    primary={inspection.title}
+                    secondary={
+                    <>
                           <Typography component="span" variant="body2" color="textPrimary">
                             {inspection.customer.name}
                           </Typography>
                           {` — ${formatDate(inspection.scheduledDate)}`}
                         </>
-                      }
-                    />
+                    } />
+
                     <Box ml={2}>
                       <StatusChip status={inspection.status} />
                     </Box>
                     <IconButton edge="end" size="small" onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/inspections/${inspection._id}`);
-                    }}>
+                    e.stopPropagation();
+                    navigate(`/inspections/${inspection._id}`);
+                  }}>
                       <ArrowForwardIcon />
                     </IconButton>
                   </ListItem>
                   <Divider variant="inset" component="li" />
                 </React.Fragment>
-              ))}
-              {inspections.length === 0 && (
-                <ListItem>
-                  <ListItemText
-                    primary="No recent inspections"
-                    secondary="Schedule a new inspection to get started"
-                  />
-                </ListItem>
               )}
+              {inspections.length === 0 &&
+              <ListItem>
+                  <ListItemText
+                  primary="No recent inspections"
+                  secondary="Schedule a new inspection to get started" />
+
+                </ListItem>
+              }
             </List>
             <Box p={2} display="flex" justifyContent="center">
               <Button
                 variant="contained"
                 startIcon={<AddIcon />}
-                onClick={() => navigate('/inspections/schedule')}
-              >
+                onClick={() => navigate('/inspections/schedule')}>
+
                 Schedule Inspection
               </Button>
             </Box>
           </Card>
         </Grid>
 
-        {/* Pass/Fail Rate */}
+        
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 6' } }}>
           <Card>
             <CardContent>
@@ -461,8 +461,8 @@ const Dashboard: React.FC = () => {
                       height: 150,
                       borderRadius: '50%',
                       background: `conic-gradient(#4caf50 ${stats.passRate}%, #f44336 0)`
-                    }}
-                  />
+                    }} />
+
                   <Box
                     sx={{
                       position: 'absolute',
@@ -472,9 +472,9 @@ const Dashboard: React.FC = () => {
                       bottom: 0,
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
+                      justifyContent: 'center'
+                    }}>
+
                     <Box
                       sx={{
                         width: 120,
@@ -483,9 +483,9 @@ const Dashboard: React.FC = () => {
                         bgcolor: 'background.paper',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
+                        justifyContent: 'center'
+                      }}>
+
                       <Typography variant="h4" component="div">
                         {stats.passRate}%
                       </Typography>
@@ -506,8 +506,8 @@ const Dashboard: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default Dashboard; 
+export default Dashboard;

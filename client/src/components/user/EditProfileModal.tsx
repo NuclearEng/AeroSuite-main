@@ -16,8 +16,8 @@ import {
   InputAdornment,
   useTheme,
   Alert,
-  Snackbar,
-} from '@mui/material';
+  Snackbar } from
+'@mui/material';
 import {
   Close as CloseIcon,
   PhotoCamera as PhotoCameraIcon,
@@ -28,8 +28,8 @@ import {
   BusinessCenter as BusinessCenterIcon,
   LocationOn as LocationIcon,
   Save as SaveIcon,
-  Loop as SyncIcon,
-} from '@mui/icons-material';
+  Loop as SyncIcon } from
+'@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -58,27 +58,27 @@ interface EditProfileModalProps {
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
-  firstName: Yup.string()
-    .required('First name is required')
-    .min(2, 'First name must be at least 2 characters')
-    .max(50, 'First name must be less than 50 characters'),
-  lastName: Yup.string()
-    .required('Last name is required')
-    .min(2, 'Last name must be at least 2 characters')
-    .max(50, 'Last name must be less than 50 characters'),
-  email: Yup.string()
-    .email('Invalid email address')
-    .required('Email is required'),
-  phoneNumber: Yup.string()
-    .matches(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, 'Invalid phone number format')
-    .required('Phone number is required'),
-  position: Yup.string()
-    .required('Job position is required'),
+  firstName: Yup.string().
+  required('First name is required').
+  min(2, 'First name must be at least 2 characters').
+  max(50, 'First name must be less than 50 characters'),
+  lastName: Yup.string().
+  required('Last name is required').
+  min(2, 'Last name must be at least 2 characters').
+  max(50, 'Last name must be less than 50 characters'),
+  email: Yup.string().
+  email('Invalid email address').
+  required('Email is required'),
+  phoneNumber: Yup.string().
+  matches(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, 'Invalid phone number format').
+  required('Phone number is required'),
+  position: Yup.string().
+  required('Job position is required'),
   department: Yup.string(),
   company: Yup.string(),
   location: Yup.string(),
-  bio: Yup.string()
-    .max(500, 'Bio must be less than 500 characters'),
+  bio: Yup.string().
+  max(500, 'Bio must be less than 500 characters')
 });
 
 const EditProfileModal: React.FC<EditProfileModalProps> = ({
@@ -86,7 +86,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   onClose,
   profile,
   onSave,
-  disableEmail = false,
+  disableEmail = false
 }) => {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
@@ -94,7 +94,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   const [success, setSuccess] = useState(false);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | undefined>(profile.avatar);
-  
+
   // Initialize form with Formik
   const formik = useFormik({
     initialValues: {
@@ -106,7 +106,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
       department: profile.department || '',
       company: profile.company || '',
       location: profile.location || '',
-      bio: profile.bio || '',
+      bio: profile.bio || ''
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -117,7 +117,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         const updatedProfile: UserProfile = {
           ...profile,
           ...values,
-          avatar: avatarPreview || profile.avatar,
+          avatar: avatarPreview || profile.avatar
         };
 
         // Upload avatar if changed (in a real app would do this before updating profile)
@@ -126,7 +126,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         // Save profile
         await onSave(updatedProfile);
         setSuccess(true);
-        
+
         // Close modal after short delay
         setTimeout(() => {
           handleClose();
@@ -136,28 +136,28 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
       } finally {
         setLoading(false);
       }
-    },
+    }
   });
 
   // Handle avatar file selection
   const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      
+
       // Check file size (limit to 2MB)
       if (file.size > 2 * 1024 * 1024) {
         setError('Avatar image must be less than 2MB');
         return;
       }
-      
+
       // Check file type
       if (!file.type.match('image.*')) {
         setError('Please select an image file');
         return;
       }
-      
+
       setAvatarFile(file);
-      
+
       // Create preview URL
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -197,57 +197,57 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
   return (
     <>
-      <Dialog 
-        open={open} 
+      <Dialog
+        open={open}
         onClose={handleClose}
         maxWidth="md"
         fullWidth
-        PaperProps={{ 
+        PaperProps={{
           elevation: 3,
           sx: { borderRadius: 2 }
-        }}
-      >
+        }}>
+
         <DialogTitle>
           <Box display="flex" alignItems="center" justifyContent="space-between">
             <Typography variant="h6">Edit Profile</Typography>
-            <IconButton 
-              edge="end" 
-              color="inherit" 
+            <IconButton
+              edge="end"
+              color="inherit"
               onClick={handleClose}
               aria-label="close"
-              disabled={loading}
-            >
+              disabled={loading}>
+
               <CloseIcon />
             </IconButton>
           </Box>
         </DialogTitle>
 
         <DialogContent dividers>
-          {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+          {error &&
+          <Alert severity="error" sx={{ mb: 2 }}>
               {error}
             </Alert>
-          )}
+          }
 
           <form id="edit-profile-form" onSubmit={formik.handleSubmit}>
             <Grid container spacing={3}>
-              {/* Avatar section */}
+              
               <Grid item xs={12} display="flex" justifyContent="center">
-                <Box 
-                  sx={{ 
+                <Box
+                  sx={{
                     position: 'relative',
                     mb: 2
-                  }}
-                >
+                  }}>
+
                   <Avatar
                     src={avatarPreview}
                     alt={`${formik.values.firstName} ${formik.values.lastName}`}
-                    sx={{ 
-                      width: 100, 
+                    sx={{
+                      width: 100,
                       height: 100,
                       border: `4px solid ${theme.palette.primary.main}`
-                    }}
-                  />
+                    }} />
+
                   <label htmlFor="avatar-upload">
                     <input
                       accept="image/*"
@@ -255,8 +255,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                       type="file"
                       style={{ display: 'none' }}
                       onChange={handleAvatarChange}
-                      disabled={loading}
-                    />
+                      disabled={loading} />
+
                     <IconButton
                       aria-label="change profile picture"
                       component="span"
@@ -267,18 +267,18 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                         backgroundColor: theme.palette.background.paper,
                         boxShadow: theme.shadows[2],
                         '&:hover': {
-                          backgroundColor: theme.palette.action.hover,
-                        },
+                          backgroundColor: theme.palette.action.hover
+                        }
                       }}
-                      disabled={loading}
-                    >
+                      disabled={loading}>
+
                       <PhotoCameraIcon />
                     </IconButton>
                   </label>
                 </Box>
               </Grid>
 
-              {/* Basic Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="subtitle1" gutterBottom>
                   Basic Information
@@ -298,14 +298,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   error={formik.touched.firstName && Boolean(formik.errors.firstName)}
                   helperText={formik.touched.firstName && formik.errors.firstName}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <PersonIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -320,14 +320,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   error={formik.touched.lastName && Boolean(formik.errors.lastName)}
                   helperText={formik.touched.lastName && formik.errors.lastName}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <PersonIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -341,18 +341,18 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   onBlur={formik.handleBlur}
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={
-                    (formik.touched.email && formik.errors.email) || 
-                    (disableEmail ? "Email cannot be changed directly" : "")
+                  formik.touched.email && formik.errors.email || (
+                  disableEmail ? "Email cannot be changed directly" : "")
                   }
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <EmailIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading || disableEmail}
-                />
+                  disabled={loading || disableEmail} />
+
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -367,17 +367,17 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   error={formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)}
                   helperText={formik.touched.phoneNumber && formik.errors.phoneNumber}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <PhoneIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
 
-              {/* Work Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
                   Work Information
@@ -397,14 +397,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   error={formik.touched.position && Boolean(formik.errors.position)}
                   helperText={formik.touched.position && formik.errors.position}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <WorkIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -419,14 +419,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   error={formik.touched.department && Boolean(formik.errors.department)}
                   helperText={formik.touched.department && formik.errors.department}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <BusinessCenterIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -441,14 +441,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   error={formik.touched.company && Boolean(formik.errors.company)}
                   helperText={formik.touched.company && formik.errors.company}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <BusinessCenterIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -463,14 +463,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   error={formik.touched.location && Boolean(formik.errors.location)}
                   helperText={formik.touched.location && formik.errors.location}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
+                    startAdornment:
+                    <InputAdornment position="start">
                         <LocationIcon />
                       </InputAdornment>
-                    ),
+
                   }}
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
 
               <Grid item xs={12}>
@@ -486,11 +486,11 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
                   onBlur={formik.handleBlur}
                   error={formik.touched.bio && Boolean(formik.errors.bio)}
                   helperText={
-                    (formik.touched.bio && formik.errors.bio) || 
-                    `${formik.values.bio.length}/500 characters`
+                  formik.touched.bio && formik.errors.bio ||
+                  `${formik.values.bio.length}/500 characters`
                   }
-                  disabled={loading}
-                />
+                  disabled={loading} />
+
               </Grid>
             </Grid>
           </form>
@@ -500,8 +500,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
           <Button
             onClick={handleClose}
             variant="outlined"
-            disabled={loading}
-          >
+            disabled={loading}>
+
             Cancel
           </Button>
           <Button
@@ -510,8 +510,8 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             variant="contained"
             color="primary"
             disabled={!formik.dirty || !formik.isValid || loading}
-            startIcon={loading ? <CircularProgress size={20} /> : <SaveIcon />}
-          >
+            startIcon={loading ? <CircularProgress size={20} /> : <SaveIcon />}>
+
             {loading ? 'Saving...' : 'Save Changes'}
           </Button>
         </DialogActions>
@@ -521,18 +521,18 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
         open={success}
         autoHideDuration={3000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert 
-          onClose={handleSnackbarClose} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+
+        <Alert
+          onClose={handleSnackbarClose}
           severity="success"
-          variant="filled"
-        >
+          variant="filled">
+
           Profile updated successfully!
         </Alert>
       </Snackbar>
-    </>
-  );
+    </>);
+
 };
 
 export default EditProfileModal;

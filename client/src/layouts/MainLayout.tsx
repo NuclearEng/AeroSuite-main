@@ -26,48 +26,48 @@ const MainLayout: React.FC = () => {
   const isMobileOrTablet = useMediaQuery(theme.breakpoints.down('md'));
   const { isAuthenticated } = useAuth();
   const { user } = useSelector((state: RootState) => state.auth);
-  
+
   // Performance monitoring
   const performance = usePerformanceMonitor('MainLayout', true);
-  
+
   // Drawer state
   const [isDrawerOpen, setIsDrawerOpen] = useState(!isMobileOrTablet);
-  
+
   // Keyboard shortcuts dialog state
   const [shortcutsDialogOpen, setShortcutsDialogOpen] = useState(false);
-  
+
   // Update drawer state when screen size changes
   useEffect(() => {
     setIsDrawerOpen(!isMobileOrTablet);
   }, [isMobileOrTablet]);
-  
+
   // Toggle drawer
   const handleDrawerToggle = () => {
     const startTime = performance.startInteractionTimer();
     setIsDrawerOpen((prev) => !prev);
     performance.measureInteraction('toggle-drawer', startTime);
   };
-  
+
   // Close drawer (for mobile)
   const handleDrawerClose = () => {
     if (isMobileOrTablet) {
       setIsDrawerOpen(false);
     }
   };
-  
+
   // Setup keyboard shortcuts
   const customShortcuts: ShortcutMap = {
     'show-shortcuts': {
       key: '?',
       description: 'Show keyboard shortcuts',
       action: () => setShortcutsDialogOpen(true),
-      scope: 'global',
-    } as KeyboardShortcut,
+      scope: 'global'
+    } as KeyboardShortcut
   };
-  
+
   // Initialize keyboard shortcuts
   useKeyboardShortcuts(customShortcuts);
-  
+
   // Handle escape key events
   useEffect(() => {
     const handleEscapeEvent = () => {
@@ -75,19 +75,19 @@ const MainLayout: React.FC = () => {
         setShortcutsDialogOpen(false);
       }
     };
-    
+
     document.addEventListener('app:escape', handleEscapeEvent);
-    
+
     return () => {
       document.removeEventListener('app:escape', handleEscapeEvent);
     };
   }, [shortcutsDialogOpen]);
-  
+
   // Mark component as loaded
   useEffect(() => {
     performance.markLoad();
   }, []);
-  
+
   // Get customer ID if the user is a customer
   const customerId = user?.role === 'customer' ? (user as any).customerId : undefined;
 
@@ -95,22 +95,22 @@ const MainLayout: React.FC = () => {
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <CssBaseline />
       
-      {/* Header with navigation landmark */}
+      
       <header>
         <Header onMenuClick={handleDrawerToggle} isDrawerOpen={isDrawerOpen} />
       </header>
       
-      {/* Sidebar with navigation landmark */}
+      
       <Box component="nav" aria-label="Main navigation">
-        <Sidebar 
-          open={isDrawerOpen} 
+        <Sidebar
+          open={isDrawerOpen}
           onClose={handleDrawerClose}
           onToggle={handleDrawerToggle}
-          variant={isMobileOrTablet ? 'temporary' : 'permanent'}
-        />
+          variant={isMobileOrTablet ? 'temporary' : 'permanent'} />
+
       </Box>
       
-      {/* Main content area */}
+      
       <Box
         component="main"
         sx={{
@@ -123,46 +123,46 @@ const MainLayout: React.FC = () => {
         id="main-content"
         tabIndex={-1}
         role="main"
-        aria-label="Main content"
-      >
-        {/* Skip link target */}
+        aria-label="Main content">
+
+        
         <Box id="skip-target" tabIndex={-1} sx={{ position: 'absolute', top: 0 }} />
         
-        {/* Main content container */}
+        
         <Container maxWidth="xl" sx={{ mt: 4 }}>
           <TopBar />
           <Outlet />
         </Container>
       </Box>
       
-      {/* Footer with contentinfo landmark */}
+      
       <Box component="footer" role="contentinfo">
         <Footer />
       </Box>
       
-      {/* Accessibility skip link */}
+      
       <SkipToContent />
       
-      {/* Screen reader announcements */}
+      
       <Announcer message="" politeness="polite" />
       
-      {/* Real-time notifications */}
+      
       {isAuthenticated && <RealtimeNotifications />}
       
-      {/* Keyboard shortcuts dialog */}
-      <KeyboardShortcutsDialog 
-        open={shortcutsDialogOpen} 
-        onClose={() => setShortcutsDialogOpen(false)} 
-      />
       
-      {/* Performance Monitor - only in development */}
-      {process.env.NODE_ENV !== 'production' && (
-        <PerformanceMonitor position="bottom-right" defaultOpen={false} />
-      )}
+      <KeyboardShortcutsDialog
+        open={shortcutsDialogOpen}
+        onClose={() => setShortcutsDialogOpen(false)} />
+
+      
+      
+      {process.env.NODE_ENV !== 'production' &&
+      <PerformanceMonitor position="bottom-right" defaultOpen={false} />
+      }
       
       <NotificationCenter />
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default MainLayout; 
+export default MainLayout;

@@ -31,8 +31,8 @@ import {
   TableRow,
   LinearProgress,
   Alert,
-  Stack
-} from '@mui/material';
+  Stack } from
+'@mui/material';
 import {
   Assessment as AssessmentIcon,
   Warning as WarningIcon,
@@ -42,8 +42,8 @@ import {
   Add as AddIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
+  Refresh as RefreshIcon } from
+'@mui/icons-material';
 import { format } from 'date-fns';
 import useQualityManagement from '../hooks/useQualityManagement';
 import LoadingIndicator from '../../../components/common/LoadingIndicator';
@@ -66,15 +66,15 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== index}
       id={`qms-tabpanel-${index}`}
       aria-labelledby={`qms-tab-${index}`}
-      {...other}
-    >
+      {...other}>
+
       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
+    </div>);
+
 };
 
 const QualityManagement: React.FC = () => {
-  const { supplierId } = useParams<{ supplierId: string }>();
+  const { supplierId } = useParams<{supplierId: string;}>();
   const {
     qmsData,
     complianceSummary,
@@ -219,7 +219,7 @@ const QualityManagement: React.FC = () => {
     }
   };
 
-  const renderCertificationStatus = () => {
+  const RenderCertificationStatus = () => {
     if (!qmsData) return null;
 
     const { qmsType, qmsCertification } = qmsData;
@@ -236,62 +236,62 @@ const QualityManagement: React.FC = () => {
         <CardContent>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
             <Typography variant="h6">QMS Certification</Typography>
-            <Chip 
-              label={qmsCertification.status} 
-              color={statusColors[qmsCertification.status] as any} 
-              size="small" 
-            />
+            <Chip
+              label={qmsCertification.status}
+              color={statusColors[qmsCertification.status] as any}
+              size="small" />
+
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <Typography variant="subtitle2" color="textSecondary">QMS Type</Typography>
               <Typography variant="body1">{qmsType}</Typography>
             </Grid>
-            {qmsCertification.certificationNumber && (
-              <Grid item xs={12} md={6}>
+            {qmsCertification.certificationNumber &&
+            <Grid item xs={12} md={6}>
                 <Typography variant="subtitle2" color="textSecondary">Certificate Number</Typography>
                 <Typography variant="body1">{qmsCertification.certificationNumber}</Typography>
               </Grid>
-            )}
-            {qmsCertification.issuer && (
-              <Grid item xs={12} md={6}>
+            }
+            {qmsCertification.issuer &&
+            <Grid item xs={12} md={6}>
                 <Typography variant="subtitle2" color="textSecondary">Issuer</Typography>
                 <Typography variant="body1">{qmsCertification.issuer}</Typography>
               </Grid>
-            )}
-            {qmsCertification.issueDate && (
-              <Grid item xs={12} md={6}>
+            }
+            {qmsCertification.issueDate &&
+            <Grid item xs={12} md={6}>
                 <Typography variant="subtitle2" color="textSecondary">Issue Date</Typography>
                 <Typography variant="body1">
                   {format(new Date(qmsCertification.issueDate), 'MMM dd, yyyy')}
                 </Typography>
               </Grid>
-            )}
-            {qmsCertification.expiryDate && (
-              <Grid item xs={12} md={6}>
+            }
+            {qmsCertification.expiryDate &&
+            <Grid item xs={12} md={6}>
                 <Typography variant="subtitle2" color="textSecondary">Expiry Date</Typography>
                 <Typography variant="body1">
                   {format(new Date(qmsCertification.expiryDate), 'MMM dd, yyyy')}
                 </Typography>
               </Grid>
-            )}
+            }
           </Grid>
-          {qmsCertification.documentUrl && (
-            <Button 
-              variant="text" 
-              href={qmsCertification.documentUrl} 
-              target="_blank" 
-              sx={{ mt: 2 }}
-            >
+          {qmsCertification.documentUrl &&
+          <Button
+            variant="text"
+            href={qmsCertification.documentUrl}
+            target="_blank"
+            sx={{ mt: 2 }}>
+
               View Certificate
             </Button>
-          )}
+          }
         </CardContent>
-      </Card>
-    );
+      </Card>);
+
   };
 
-  const renderComplianceSummary = () => {
+  const RenderComplianceSummary = () => {
     if (!complianceSummary) return null;
 
     const statusColors = {
@@ -307,11 +307,11 @@ const QualityManagement: React.FC = () => {
         <CardContent>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
             <Typography variant="h6">Compliance Summary</Typography>
-            <Chip 
-              label={complianceSummary.complianceStatus} 
+            <Chip
+              label={complianceSummary.complianceStatus}
               color={statusColors[complianceSummary.complianceStatus as keyof typeof statusColors] as any}
-              size="small" 
-            />
+              size="small" />
+
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
@@ -321,50 +321,50 @@ const QualityManagement: React.FC = () => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="textSecondary">Open Non-Conformances</Typography>
               <Typography variant="h6">{complianceSummary.openNonConformances.count}</Typography>
-              {complianceSummary.openNonConformances.count > 0 && (
-                <Typography variant="caption" color="text.secondary">
+              {complianceSummary.openNonConformances.count > 0 &&
+              <Typography variant="caption" color="text.secondary">
                   Critical: {complianceSummary.openNonConformances.critical}, 
                   Major: {complianceSummary.openNonConformances.major}, 
                   Minor: {complianceSummary.openNonConformances.minor}
                 </Typography>
-              )}
+              }
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="textSecondary">Active Improvement Plans</Typography>
               <Typography variant="h6">{complianceSummary.activeImprovementPlans}</Typography>
             </Grid>
-            {complianceSummary.lastReviewDate && (
-              <Grid item xs={12} md={4}>
+            {complianceSummary.lastReviewDate &&
+            <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" color="textSecondary">Last Review</Typography>
                 <Typography variant="body1">
                   {format(new Date(complianceSummary.lastReviewDate), 'MMM dd, yyyy')}
                 </Typography>
               </Grid>
-            )}
-            {complianceSummary.nextReviewDate && (
-              <Grid item xs={12} md={4}>
+            }
+            {complianceSummary.nextReviewDate &&
+            <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" color="textSecondary">Next Review</Typography>
                 <Typography variant="body1">
                   {format(new Date(complianceSummary.nextReviewDate), 'MMM dd, yyyy')}
                 </Typography>
               </Grid>
-            )}
+            }
           </Grid>
-          <Button 
-            startIcon={<RefreshIcon />} 
-            variant="outlined" 
-            size="small" 
+          <Button
+            startIcon={<RefreshIcon />}
+            variant="outlined"
+            size="small"
             onClick={handleSyncAudits}
-            sx={{ mt: 2 }}
-          >
+            sx={{ mt: 2 }}>
+
             Sync with Audits
           </Button>
         </CardContent>
-      </Card>
-    );
+      </Card>);
+
   };
 
-  const renderQualityMetrics = () => {
+  const RenderQualityMetrics = () => {
     if (!qmsData || !qmsData.qualityMetrics) return null;
 
     const metrics = qmsData.qualityMetrics;
@@ -380,19 +380,19 @@ const QualityManagement: React.FC = () => {
       <>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6">Quality Metrics</Typography>
-          <Button 
-            startIcon={<RefreshIcon />} 
-            variant="outlined" 
-            size="small" 
-            onClick={handleRefreshData}
-          >
+          <Button
+            startIcon={<RefreshIcon />}
+            variant="outlined"
+            size="small"
+            onClick={handleRefreshData}>
+
             Refresh
           </Button>
         </Box>
         
         <Grid container spacing={3}>
-          {Object.entries(metrics).map(([key, metric]) => (
-            <Grid item xs={12} md={6} lg={4} key={key}>
+          {Object.entries(metrics).map(([key, metric]) =>
+          <Grid item xs={12} md={6} lg={4} key={key}>
               <Card variant="outlined">
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
@@ -415,36 +415,36 @@ const QualityManagement: React.FC = () => {
                     </Typography>
                   </Box>
                   
-                  {metric.history && metric.history.length > 0 && (
-                    <Box height={100} mt={2}>
-                      <LineChart 
-                        data={metric.history.map(h => ({
-                          x: new Date(h.date),
-                          y: h.value
-                        }))}
-                        color={metric.current <= metric.target ? '#4caf50' : '#f44336'}
-                      />
+                  {metric.history && metric.history.length > 0 &&
+                <Box height={100} mt={2}>
+                      <LineChart
+                    data={metric.history.map((h) => ({
+                      x: new Date(h.date),
+                      y: h.value
+                    }))}
+                    color={metric.current <= metric.target ? '#4caf50' : '#f44336'} />
+
                     </Box>
-                  )}
+                }
                   
                   <Button
-                    size="small"
-                    startIcon={<EditIcon />}
-                    onClick={() => handleOpenMetricDialog(key, metric.current)}
-                    sx={{ mt: 2 }}
-                  >
+                  size="small"
+                  startIcon={<EditIcon />}
+                  onClick={() => handleOpenMetricDialog(key, metric.current)}
+                  sx={{ mt: 2 }}>
+
                     Update
                   </Button>
                 </CardContent>
               </Card>
             </Grid>
-          ))}
+          )}
         </Grid>
-      </>
-    );
+      </>);
+
   };
 
-  const renderNonConformances = () => {
+  const RenderNonConformances = () => {
     if (!qmsData || !qmsData.nonConformances) return null;
 
     const { nonConformances } = qmsData;
@@ -465,20 +465,20 @@ const QualityManagement: React.FC = () => {
       <>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6">Non-Conformances</Typography>
-          <Button 
-            startIcon={<AddIcon />} 
-            variant="contained" 
-            size="small" 
-            onClick={handleOpenNcDialog}
-          >
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            size="small"
+            onClick={handleOpenNcDialog}>
+
             Add New
           </Button>
         </Box>
         
-        {nonConformances.length === 0 ? (
-          <Alert severity="info">No non-conformances recorded</Alert>
-        ) : (
-          <TableContainer component={Paper} variant="outlined">
+        {nonConformances.length === 0 ?
+        <Alert severity="info">No non-conformances recorded</Alert> :
+
+        <TableContainer component={Paper} variant="outlined">
             <Table>
               <TableHead>
                 <TableRow>
@@ -492,24 +492,24 @@ const QualityManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nonConformances.map((nc) => (
-                  <TableRow key={nc.ncNumber}>
+                {nonConformances.map((nc) =>
+              <TableRow key={nc.ncNumber}>
                     <TableCell>{nc.ncNumber}</TableCell>
                     <TableCell>{nc.description}</TableCell>
                     <TableCell>
-                      <Chip 
-                        label={nc.severity} 
-                        color={severityColors[nc.severity as keyof typeof severityColors] as any}
-                        size="small" 
-                      />
+                      <Chip
+                    label={nc.severity}
+                    color={severityColors[nc.severity as keyof typeof severityColors] as any}
+                    size="small" />
+
                     </TableCell>
                     <TableCell>{nc.category}</TableCell>
                     <TableCell>
-                      <Chip 
-                        label={nc.status} 
-                        color={statusColors[nc.status as keyof typeof statusColors] as any}
-                        size="small" 
-                      />
+                      <Chip
+                    label={nc.status}
+                    color={statusColors[nc.status as keyof typeof statusColors] as any}
+                    size="small" />
+
                     </TableCell>
                     <TableCell>
                       {format(new Date(nc.reportedDate), 'MMM dd, yyyy')}
@@ -520,16 +520,16 @@ const QualityManagement: React.FC = () => {
                       </IconButton>
                     </TableCell>
                   </TableRow>
-                ))}
+              )}
               </TableBody>
             </Table>
           </TableContainer>
-        )}
-      </>
-    );
+        }
+      </>);
+
   };
 
-  const renderQualityDocuments = () => {
+  const RenderQualityDocuments = () => {
     if (!qmsData || !qmsData.qualityDocuments) return null;
 
     const { qualityDocuments } = qmsData;
@@ -548,33 +548,33 @@ const QualityManagement: React.FC = () => {
       <>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6">Quality Documents</Typography>
-          <Button 
-            startIcon={<AddIcon />} 
-            variant="contained" 
-            size="small" 
-            onClick={handleOpenDocDialog}
-          >
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            size="small"
+            onClick={handleOpenDocDialog}>
+
             Add Document
           </Button>
         </Box>
         
-        {qualityDocuments.length === 0 ? (
-          <Alert severity="info">No quality documents uploaded</Alert>
-        ) : (
-          <List>
-            {qualityDocuments.map((doc) => (
-              <ListItem
-                key={doc._id}
-                secondaryAction={
-                  <IconButton edge="end" onClick={() => handleDeleteDocument(doc._id)}>
+        {qualityDocuments.length === 0 ?
+        <Alert severity="info">No quality documents uploaded</Alert> :
+
+        <List>
+            {qualityDocuments.map((doc) =>
+          <ListItem
+            key={doc._id}
+            secondaryAction={
+            <IconButton edge="end" onClick={() => handleDeleteDocument(doc._id)}>
                     <DeleteIcon />
                   </IconButton>
-                }
-              >
+            }>
+
                 <ListItemText
-                  primary={doc.name}
-                  secondary={
-                    <>
+              primary={doc.name}
+              secondary={
+              <>
                       <Typography component="span" variant="body2" color="text.primary">
                         {doc.type} {doc.version ? `- v${doc.version}` : ''}
                       </Typography>
@@ -583,22 +583,22 @@ const QualityManagement: React.FC = () => {
                       {`Uploaded: ${format(new Date(doc.uploadDate), 'MMM dd, yyyy')}`}
                       {doc.expiryDate && ` • Expires: ${format(new Date(doc.expiryDate), 'MMM dd, yyyy')}`}
                     </>
-                  }
-                />
-                {doc.url && (
-                  <Button variant="text" href={doc.url} target="_blank" sx={{ ml: 2 }}>
+              } />
+
+                {doc.url &&
+            <Button variant="text" href={doc.url} target="_blank" sx={{ ml: 2 }}>
                     View
                   </Button>
-                )}
+            }
               </ListItem>
-            ))}
+          )}
           </List>
-        )}
-      </>
-    );
+        }
+      </>);
+
   };
 
-  const renderAuditHistory = () => {
+  const RenderAuditHistory = () => {
     if (!qmsData || !qmsData.auditHistory) return null;
 
     const { auditHistory } = qmsData;
@@ -607,20 +607,20 @@ const QualityManagement: React.FC = () => {
       <>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography variant="h6">Audit History</Typography>
-          <Button 
-            startIcon={<RefreshIcon />} 
-            variant="outlined" 
-            size="small" 
-            onClick={handleSyncAudits}
-          >
+          <Button
+            startIcon={<RefreshIcon />}
+            variant="outlined"
+            size="small"
+            onClick={handleSyncAudits}>
+
             Sync Audits
           </Button>
         </Box>
         
-        {auditHistory.length === 0 ? (
-          <Alert severity="info">No audit history available</Alert>
-        ) : (
-          <TableContainer component={Paper} variant="outlined">
+        {auditHistory.length === 0 ?
+        <Alert severity="info">No audit history available</Alert> :
+
+        <TableContainer component={Paper} variant="outlined">
             <Table>
               <TableHead>
                 <TableRow>
@@ -631,8 +631,8 @@ const QualityManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {auditHistory.map((audit) => (
-                  <TableRow key={audit.auditId}>
+                {auditHistory.map((audit) =>
+              <TableRow key={audit.auditId}>
                     <TableCell>
                       {format(new Date(audit.auditDate), 'MMM dd, yyyy')}
                     </TableCell>
@@ -640,13 +640,13 @@ const QualityManagement: React.FC = () => {
                     <TableCell>{audit.result}</TableCell>
                     <TableCell>{audit.score}</TableCell>
                   </TableRow>
-                ))}
+              )}
               </TableBody>
             </Table>
           </TableContainer>
-        )}
-      </>
-    );
+        }
+      </>);
+
   };
 
   if (loading && !qmsData) {
@@ -665,67 +665,67 @@ const QualityManagement: React.FC = () => {
             <Typography variant="h5" component="h2" gutterBottom>
               Quality Management System
             </Typography>
-            <Button 
-              startIcon={<RefreshIcon />} 
-              variant="outlined" 
-              onClick={handleRefreshData}
-            >
+            <Button
+              startIcon={<RefreshIcon />}
+              variant="outlined"
+              onClick={handleRefreshData}>
+
               Refresh Data
             </Button>
           </Box>
 
-          {renderCertificationStatus()}
-          {renderComplianceSummary()}
+          {RenderCertificationStatus()}
+          {RenderComplianceSummary()}
 
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={tabValue} onChange={handleTabChange} aria-label="quality management tabs">
-              <Tab 
-                icon={<AssessmentIcon />} 
-                iconPosition="start" 
-                label="Metrics" 
-                id="qms-tab-0" 
-                aria-controls="qms-tabpanel-0" 
-              />
-              <Tab 
-                icon={<WarningIcon />} 
-                iconPosition="start" 
-                label="Non-Conformances" 
-                id="qms-tab-1" 
-                aria-controls="qms-tabpanel-1" 
-              />
-              <Tab 
-                icon={<DescriptionIcon />} 
-                iconPosition="start" 
-                label="Documents" 
-                id="qms-tab-2" 
-                aria-controls="qms-tabpanel-2" 
-              />
-              <Tab 
-                icon={<TimelineIcon />} 
-                iconPosition="start" 
-                label="Audit History" 
-                id="qms-tab-3" 
-                aria-controls="qms-tabpanel-3" 
-              />
+              <Tab
+                icon={<AssessmentIcon />}
+                iconPosition="start"
+                label="Metrics"
+                id="qms-tab-0"
+                aria-controls="qms-tabpanel-0" />
+
+              <Tab
+                icon={<WarningIcon />}
+                iconPosition="start"
+                label="Non-Conformances"
+                id="qms-tab-1"
+                aria-controls="qms-tabpanel-1" />
+
+              <Tab
+                icon={<DescriptionIcon />}
+                iconPosition="start"
+                label="Documents"
+                id="qms-tab-2"
+                aria-controls="qms-tabpanel-2" />
+
+              <Tab
+                icon={<TimelineIcon />}
+                iconPosition="start"
+                label="Audit History"
+                id="qms-tab-3"
+                aria-controls="qms-tabpanel-3" />
+
             </Tabs>
           </Box>
 
           <TabPanel value={tabValue} index={0}>
-            {renderQualityMetrics()}
+            {RenderQualityMetrics()}
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            {renderNonConformances()}
+            {RenderNonConformances()}
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
-            {renderQualityDocuments()}
+            {RenderQualityDocuments()}
           </TabPanel>
           <TabPanel value={tabValue} index={3}>
-            {renderAuditHistory()}
+            {RenderAuditHistory()}
           </TabPanel>
         </Box>
       </Paper>
 
-      {/* Update Metric Dialog */}
+      
       <Dialog open={openMetricDialog} onClose={handleCloseMetricDialog}>
         <DialogTitle>Update Metric</DialogTitle>
         <DialogContent>
@@ -736,8 +736,8 @@ const QualityManagement: React.FC = () => {
             type="number"
             fullWidth
             value={metricValue}
-            onChange={(e) => setMetricValue(Number(e.target.value))}
-          />
+            onChange={(e) => setMetricValue(Number(e.target.value))} />
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseMetricDialog}>Cancel</Button>
@@ -745,7 +745,7 @@ const QualityManagement: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Add Non-Conformance Dialog */}
+      
       <Dialog open={openNcDialog} onClose={handleCloseNcDialog} maxWidth="sm" fullWidth>
         <DialogTitle>Add Non-Conformance</DialogTitle>
         <DialogContent>
@@ -758,8 +758,8 @@ const QualityManagement: React.FC = () => {
             fullWidth
             value={ncFormData.description}
             onChange={handleNcFormChange}
-            sx={{ mb: 2 }}
-          />
+            sx={{ mb: 2 }} />
+
           <TextField
             select
             margin="dense"
@@ -768,8 +768,8 @@ const QualityManagement: React.FC = () => {
             fullWidth
             value={ncFormData.severity}
             onChange={handleNcFormChange}
-            sx={{ mb: 2 }}
-          >
+            sx={{ mb: 2 }}>
+
             <MenuItem value="critical">Critical</MenuItem>
             <MenuItem value="major">Major</MenuItem>
             <MenuItem value="minor">Minor</MenuItem>
@@ -783,8 +783,8 @@ const QualityManagement: React.FC = () => {
             fullWidth
             value={ncFormData.category}
             onChange={handleNcFormChange}
-            sx={{ mb: 2 }}
-          >
+            sx={{ mb: 2 }}>
+
             <MenuItem value="product">Product</MenuItem>
             <MenuItem value="process">Process</MenuItem>
             <MenuItem value="system">System</MenuItem>
@@ -798,22 +798,22 @@ const QualityManagement: React.FC = () => {
             type="text"
             fullWidth
             value={ncFormData.reportedBy}
-            onChange={handleNcFormChange}
-          />
+            onChange={handleNcFormChange} />
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseNcDialog}>Cancel</Button>
-          <Button 
-            onClick={handleAddNonConformance} 
+          <Button
+            onClick={handleAddNonConformance}
             variant="contained"
-            disabled={!ncFormData.description}
-          >
+            disabled={!ncFormData.description}>
+
             Add
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Add Document Dialog */}
+      
       <Dialog open={openDocDialog} onClose={handleCloseDocDialog} maxWidth="sm" fullWidth>
         <DialogTitle>Add Quality Document</DialogTitle>
         <DialogContent>
@@ -826,8 +826,8 @@ const QualityManagement: React.FC = () => {
             fullWidth
             value={docFormData.name}
             onChange={handleDocFormChange}
-            sx={{ mb: 2 }}
-          />
+            sx={{ mb: 2 }} />
+
           <TextField
             margin="dense"
             name="description"
@@ -836,8 +836,8 @@ const QualityManagement: React.FC = () => {
             fullWidth
             value={docFormData.description}
             onChange={handleDocFormChange}
-            sx={{ mb: 2 }}
-          />
+            sx={{ mb: 2 }} />
+
           <TextField
             select
             margin="dense"
@@ -846,8 +846,8 @@ const QualityManagement: React.FC = () => {
             fullWidth
             value={docFormData.type}
             onChange={handleDocFormChange}
-            sx={{ mb: 2 }}
-          >
+            sx={{ mb: 2 }}>
+
             <MenuItem value="manual">Manual</MenuItem>
             <MenuItem value="procedure">Procedure</MenuItem>
             <MenuItem value="work-instruction">Work Instruction</MenuItem>
@@ -865,8 +865,8 @@ const QualityManagement: React.FC = () => {
             fullWidth
             value={docFormData.url}
             onChange={handleDocFormChange}
-            sx={{ mb: 2 }}
-          />
+            sx={{ mb: 2 }} />
+
           <TextField
             margin="dense"
             name="version"
@@ -874,22 +874,22 @@ const QualityManagement: React.FC = () => {
             type="text"
             fullWidth
             value={docFormData.version}
-            onChange={handleDocFormChange}
-          />
+            onChange={handleDocFormChange} />
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDocDialog}>Cancel</Button>
-          <Button 
-            onClick={handleAddDocument} 
+          <Button
+            onClick={handleAddDocument}
             variant="contained"
-            disabled={!docFormData.name}
-          >
+            disabled={!docFormData.name}>
+
             Add
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default QualityManagement; 
+export default QualityManagement;

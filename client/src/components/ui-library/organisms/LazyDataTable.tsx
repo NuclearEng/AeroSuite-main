@@ -1,45 +1,45 @@
 import React, { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { Box, Paper, Typography, CircularProgress, Skeleton } from '@mui/material';
-import { 
-  GridColDef, 
-  GridRowsProp,
-} from '@mui/x-data-grid';
+import {
+  GridColDef,
+  GridRowsProp } from
+'@mui/x-data-grid';
 
 // Lazy load the DataGrid component which is heavy
-const LazyDataGrid = lazy(() => 
-  import('@mui/x-data-grid').then(module => ({
-    default: module.DataGrid
-  }))
+const LazyDataGrid = lazy(() =>
+import('@mui/x-data-grid').then((module) => ({
+  default: module.DataGrid
+}))
 );
 
 // Lazy load the toolbar components
-const LazyToolbar = lazy(() => 
-  import('@mui/x-data-grid').then(module => {
-    const { 
-      GridToolbarContainer,
-      GridToolbarFilterButton,
-      GridToolbarExport,
-      GridToolbarDensitySelector 
-    } = module;
-    
-    return {
-      default: ({ 
-        disableColumnFilter,
-        disableDensitySelector,
-        disableExport
-      }: {
-        disableColumnFilter?: boolean;
-        disableDensitySelector?: boolean;
-        disableExport?: boolean;
-      }) => (
-        <GridToolbarContainer>
+const LazyToolbar = lazy(() =>
+import('@mui/x-data-grid').then((module) => {
+  const {
+    GridToolbarContainer,
+    GridToolbarFilterButton,
+    GridToolbarExport,
+    GridToolbarDensitySelector
+  } = module;
+
+  return {
+    default: ({
+      disableColumnFilter,
+      disableDensitySelector,
+      disableExport
+
+
+
+
+    }: {disableColumnFilter?: boolean;disableDensitySelector?: boolean;disableExport?: boolean;}) =>
+    <GridToolbarContainer>
           {!disableColumnFilter && <GridToolbarFilterButton />}
           {!disableDensitySelector && <GridToolbarDensitySelector />}
           {!disableExport && <GridToolbarExport />}
         </GridToolbarContainer>
-      )
-    };
-  })
+
+  };
+})
 );
 
 interface LazyDataTableProps {
@@ -123,76 +123,76 @@ const LazyDataTable: React.FC<LazyDataTableProps> = ({
   };
 
   // Render a skeleton placeholder while the component is loading
-  const renderSkeleton = () => (
-    <Box sx={{ width: '100%' }}>
+  const RenderSkeleton = () =>
+  <Box sx={{ width: '100%' }}>
       <Skeleton variant="rectangular" height={56} animation="wave" />
-      {Array.from({ length: Math.min(5, pageSize) }).map((_, i) => (
-        <Skeleton key={i} variant="rectangular" height={52} animation="wave" sx={{ mt: 0.5 }} />
-      ))}
-    </Box>
-  );
+      {Array.from({ length: Math.min(5, pageSize) }).map((_, i) =>
+    <Skeleton key={i} variant="rectangular" height={52} animation="wave" sx={{ mt: 0.5 }} />
+    )}
+    </Box>;
+
 
   return (
     <Paper elevation={1} sx={{ p: 2 }} ref={containerRef}>
-      {title && (
-        <Box mb={2}>
+      {title &&
+      <Box mb={2}>
           <Typography variant="h6">{title}</Typography>
         </Box>
-      )}
+      }
       <Box sx={{ height: autoHeight ? 'auto' : height, width: '100%' }}>
-        {!isVisible ? (
-          // Show skeleton while not in viewport
-          renderSkeleton()
-        ) : (
-          <Suspense 
-            fallback={
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
+        {!isVisible ?
+        // Show skeleton while not in viewport
+        RenderSkeleton() :
+
+        <Suspense
+          fallback={
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
                 <CircularProgress />
               </Box>
-            }
-          >
+          }>
+
             <LazyDataGrid
-              rows={rows}
-              columns={columns}
-              loading={loading}
-              initialState={{
-                pagination: {
-                  paginationModel: { pageSize, page: 0 },
-                },
-              }}
-              pageSizeOptions={[5, 10, 25, 50, 100]}
-              disableRowSelectionOnClick={disableSelectionOnClick}
-              disableColumnMenu={disableColumnMenu}
-              autoHeight={autoHeight}
-              slots={{
-                toolbar: () => (
-                  <Suspense fallback={<Box sx={{ height: 40 }} />}>
+            rows={rows}
+            columns={columns}
+            loading={loading}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize, page: 0 }
+              }
+            }}
+            pageSizeOptions={[5, 10, 25, 50, 100]}
+            disableRowSelectionOnClick={disableSelectionOnClick}
+            disableColumnMenu={disableColumnMenu}
+            autoHeight={autoHeight}
+            slots={{
+              toolbar: () =>
+              <Suspense fallback={<Box sx={{ height: 40 }} />}>
                     <LazyToolbar
-                      disableColumnFilter={disableColumnFilter}
-                      disableDensitySelector={disableDensitySelector}
-                      disableExport={disableExport}
-                    />
+                  disableColumnFilter={disableColumnFilter}
+                  disableDensitySelector={disableDensitySelector}
+                  disableExport={disableExport} />
+
                   </Suspense>
-                ),
-              }}
-              onRowClick={onRowClick}
-              componentsProps={{
-                basePopper: {
-                  sx: {
-                    // Ensure popper elements (like filters) have proper z-index
-                    zIndex: 1300
-                  }
+
+            }}
+            onRowClick={onRowClick}
+            componentsProps={{
+              basePopper: {
+                sx: {
+                  // Ensure popper elements (like filters) have proper z-index
+                  zIndex: 1300
                 }
-              }}
-              onStateChange={() => {
-                if (!isLoaded) handleComponentLoaded();
-              }}
-            />
+              }
+            }}
+            onStateChange={() => {
+              if (!isLoaded) handleComponentLoaded();
+            }} />
+
           </Suspense>
-        )}
+        }
       </Box>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default LazyDataTable; 
+export default LazyDataTable;

@@ -25,7 +25,7 @@ const PieChart: React.FC<PieChartProps> = ({
   width = 300,
   height = 300,
   colors = ['#1976d2', '#ff9800', '#4caf50', '#f44336', '#9c27b0', '#00bcd4'],
-  label = '',
+  label = ''
 }) => {
   if (!data || data.length === 0) return <div>No data</div>;
 
@@ -39,27 +39,27 @@ const PieChart: React.FC<PieChartProps> = ({
   const describeArc = (startAngle: number, endAngle: number) => {
     const start = {
       x: cx + r * Math.cos((startAngle - 90) * (Math.PI / 180)),
-      y: cy + r * Math.sin((startAngle - 90) * (Math.PI / 180)),
+      y: cy + r * Math.sin((startAngle - 90) * (Math.PI / 180))
     };
     const end = {
       x: cx + r * Math.cos((endAngle - 90) * (Math.PI / 180)),
-      y: cy + r * Math.sin((endAngle - 90) * (Math.PI / 180)),
+      y: cy + r * Math.sin((endAngle - 90) * (Math.PI / 180))
     };
     const largeArcFlag = endAngle - startAngle > 180 ? 1 : 0;
     return [
-      `M ${cx} ${cy}`,
-      `L ${start.x} ${start.y}`,
-      `A ${r} ${r} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`,
-      'Z',
-    ].join(' ');
+    `M ${cx} ${cy}`,
+    `L ${start.x} ${start.y}`,
+    `A ${r} ${r} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`,
+    'Z'].
+    join(' ');
   };
 
   return (
     <svg width={width} height={height} aria-label={label || 'Pie chart'} role="img">
       {data.map((d, i) => {
         const value = Number(d[valueKey]);
-        const startAngle = (cumulative / total) * 360;
-        const endAngle = ((cumulative + value) / total) * 360;
+        const startAngle = cumulative / total * 360;
+        const endAngle = (cumulative + value) / total * 360;
         const path = describeArc(startAngle, endAngle);
         cumulative += value;
         return (
@@ -67,17 +67,17 @@ const PieChart: React.FC<PieChartProps> = ({
             key={i}
             d={path}
             fill={colors[i % colors.length]}
-            aria-label={`${d[nameKey]}: ${d[valueKey]}`}
-          />
-        );
+            aria-label={`${d[nameKey]}: ${d[valueKey]}`} />);
+
+
       })}
-      {/* Labels */}
+      
       {data.map((d, i) => {
         const value = Number(d[valueKey]);
-        const angle = ((cumulative - value / 2) / total) * 360;
+        const angle = (cumulative - value / 2) / total * 360;
         const rad = (angle - 90) * (Math.PI / 180);
-        const x = cx + (r / 1.5) * Math.cos(rad);
-        const y = cy + (r / 1.5) * Math.sin(rad);
+        const x = cx + r / 1.5 * Math.cos(rad);
+        const y = cy + r / 1.5 * Math.sin(rad);
         return (
           <text
             key={i}
@@ -86,19 +86,19 @@ const PieChart: React.FC<PieChartProps> = ({
             textAnchor="middle"
             fontSize={12}
             fill="#fff"
-            style={{ pointerEvents: 'none' }}
-          >
+            style={{ pointerEvents: 'none' }}>
+
             {d[nameKey]}
-          </text>
-        );
+          </text>);
+
       })}
-      {label && (
-        <text x={cx} y={cy} textAnchor="middle" fontSize={16} fill="#444">
+      {label &&
+      <text x={cx} y={cy} textAnchor="middle" fontSize={16} fill="#444">
           {label}
         </text>
-      )}
-    </svg>
-  );
+      }
+    </svg>);
+
 };
 
-export default PieChart; 
+export default PieChart;

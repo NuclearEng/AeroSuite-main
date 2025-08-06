@@ -1,0 +1,59 @@
+{
+  "timestamp": "2025-08-06T06:32:49.460Z",
+  "passed": 3,
+  "failed": 2,
+  "tests": [
+    {
+      "name": "Dependency Vulnerability Audit",
+      "key": "dependencyAudit",
+      "passed": false,
+      "error": "Dependency audit failed",
+      "details": "Command failed: cd client && npm audit --json > ../npm-audit-client.json\nnpm warn config ignoring workspace config at /Users/tannercoker/AeroSuite-main/client/.npmrc\n"
+    },
+    {
+      "name": "Secret/API Key Scanning",
+      "key": "secretScanning",
+      "passed": false,
+      "findings": [
+        {
+          "file": "client/src/pages/auth/Login.js",
+          "matches": 2,
+          "pattern": "password\\s*[:=]\\s*[\"'][^\"']+[\"']"
+        },
+        {
+          "file": "server/src/__tests__/integration/auth.test.js",
+          "matches": 13,
+          "pattern": "password\\s*[:=]\\s*[\"'][^\"']+[\"']"
+        },
+        {
+          "file": "server/src/__tests__/integration/setup.js",
+          "matches": 2,
+          "pattern": "password\\s*[:=]\\s*[\"'][^\"']+[\"']"
+        },
+        {
+          "file": "server/src/scripts/mongo-init.js",
+          "matches": 1,
+          "pattern": "password\\s*[:=]\\s*[\"'][^\"']+[\"']"
+        }
+      ]
+    },
+    {
+      "name": "Configuration Security Audit",
+      "key": "configurationAudit",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "name": "SQL Injection Vulnerability Check",
+      "key": "sqlInjectionCheck",
+      "passed": true,
+      "findings": []
+    },
+    {
+      "name": "Authentication Security Check",
+      "key": "authenticationCheck",
+      "passed": true,
+      "issues": []
+    }
+  ]
+}

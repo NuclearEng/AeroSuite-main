@@ -16,8 +16,8 @@ import {
   FormHelperText,
   Alert,
   Snackbar,
-  LinearProgress
-} from '@mui/material';
+  LinearProgress } from
+'@mui/material';
 import { PageHeader } from '../../components/common';
 import { ArrowBack as ArrowBackIcon, Save as SaveIcon } from '@mui/icons-material';
 import customerService from '../../services/customer.service';
@@ -109,8 +109,8 @@ const initialFormValues = {
 
 const EditCustomer: React.FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-  
+  const { id } = useParams<{id: string;}>();
+
   // Form state
   const [formValues, setFormValues] = useState(initialFormValues);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -132,25 +132,25 @@ const EditCustomer: React.FC = () => {
   useEffect(() => {
     const loadCustomer = async () => {
       setLoading(true);
-      
+
       try {
         // Fetch customer data
         const data = await customerService.getCustomer(id!);
-        
+
         // Format dates to work with date inputs
         const formattedData = {
           ...data,
           contractStartDate: data.contractStartDate ? data.contractStartDate.split('T')[0] : '',
-          contractEndDate: data.contractEndDate ? data.contractEndDate.split('T')[0] : '',
+          contractEndDate: data.contractEndDate ? data.contractEndDate.split('T')[0] : ''
         };
-        
+
         setFormValues(formattedData);
-        
+
         // Check if shipping address is different from billing
-        const shippingDiffersFromBilling = data.billingAddress && data.shippingAddress && 
-          JSON.stringify(data.billingAddress) !== JSON.stringify(data.shippingAddress);
+        const shippingDiffersFromBilling = data.billingAddress && data.shippingAddress &&
+        JSON.stringify(data.billingAddress) !== JSON.stringify(data.shippingAddress);
         setAddressesAreDifferent(shippingDiffersFromBilling);
-        
+
         setError(null);
       } catch (err: any) {
         console.error('Error loading customer:', err);
@@ -159,20 +159,20 @@ const EditCustomer: React.FC = () => {
         setLoading(false);
       }
     };
-    
+
     loadCustomer();
   }, [id]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
-    
+
     if (!name) return;
-    
+
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         [parent]: {
           ...prev[parent as keyof typeof prev],
@@ -180,15 +180,15 @@ const EditCustomer: React.FC = () => {
         }
       }));
     } else {
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         [name]: value
       }));
     }
-    
+
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -198,7 +198,7 @@ const EditCustomer: React.FC = () => {
   // Copy billing address to shipping address
   const handleCopyAddress = () => {
     if (!addressesAreDifferent) {
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         shippingAddress: { ...prev.billingAddress }
       }));
@@ -209,40 +209,40 @@ const EditCustomer: React.FC = () => {
   const handleToggleAddress = () => {
     setAddressesAreDifferent(!addressesAreDifferent);
     if (!addressesAreDifferent) {
+
+
       // When setting to different addresses, we don't need to do anything
       // The shipping address will remain as is
-    } else {
-      // When setting to same address, copy billing to shipping
-      handleCopyAddress();
-    }
+    } else {// When setting to same address, copy billing to shipping
+      handleCopyAddress();}
   };
 
   // Validate form
   const validateForm = () => {
     const newErrors: FormErrors = {};
-    
+
     // Required fields validation
     if (!formValues.name) newErrors.name = 'Name is required';
     if (!formValues.code) newErrors.code = 'Customer code is required';
     if (!formValues.industry) newErrors.industry = 'Industry is required';
     if (!formValues.status) newErrors.status = 'Status is required';
     if (!formValues.serviceLevel) newErrors.serviceLevel = 'Service level is required';
-    
+
     // Email validation
     if (formValues.primaryContactEmail && !/\S+@\S+\.\S+/.test(formValues.primaryContactEmail)) {
       newErrors.primaryContactEmail = 'Invalid email address';
     }
-    
+
     // Date validation
     if (formValues.contractStartDate && formValues.contractEndDate) {
       const startDate = new Date(formValues.contractStartDate);
       const endDate = new Date(formValues.contractEndDate);
-      
+
       if (endDate < startDate) {
         newErrors.contractEndDate = 'End date cannot be before start date';
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -250,12 +250,12 @@ const EditCustomer: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Copy billing address to shipping if same address is checked
     if (!addressesAreDifferent) {
       handleCopyAddress();
     }
-    
+
     // Validate form
     if (!validateForm()) {
       setSnackbar({
@@ -265,20 +265,20 @@ const EditCustomer: React.FC = () => {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Call API to update customer
       await customerService.updateCustomer(id!, formValues);
-      
+
       // Show success message
       setSnackbar({
         open: true,
         message: 'Customer updated successfully',
         severity: 'success'
       });
-      
+
       // Redirect to customer details after a brief delay to show the success message
       setTimeout(() => {
         navigate(`/customers/${id}`);
@@ -295,15 +295,15 @@ const EditCustomer: React.FC = () => {
 
   // Handle snackbar close
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   if (loading) {
     return (
       <Box sx={{ width: '100%' }}>
         <LinearProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
@@ -314,12 +314,12 @@ const EditCustomer: React.FC = () => {
           variant="outlined"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/customers')}
-          sx={{ mt: 2 }}
-        >
+          sx={{ mt: 2 }}>
+
           Back to Customers
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
@@ -328,27 +328,27 @@ const EditCustomer: React.FC = () => {
         title="Edit Customer"
         subtitle={`Editing ${formValues.name} (${formValues.code})`}
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Customers', href: '/customers' },
-          { label: formValues.name, href: `/customers/${id}` },
-          { label: 'Edit' },
-        ]}
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Customers', href: '/customers' },
+        { label: formValues.name, href: `/customers/${id}` },
+        { label: 'Edit' }]
+        }
         actions={
-          <Button
-            variant="outlined"
-            startIcon={<ArrowBackIcon />}
-            onClick={() => navigate(`/customers/${id}`)}
-          >
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate(`/customers/${id}`)}>
+
             Cancel
           </Button>
-        }
-      />
+        } />
+
 
       <Card>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              {/* Basic Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="h6" gutterBottom>
                   Basic Information
@@ -365,8 +365,8 @@ const EditCustomer: React.FC = () => {
                   value={formValues.name}
                   onChange={handleChange}
                   error={!!errors.name}
-                  helperText={errors.name}
-                />
+                  helperText={errors.name} />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
@@ -378,8 +378,8 @@ const EditCustomer: React.FC = () => {
                   value={formValues.code}
                   onChange={handleChange}
                   error={!!errors.code}
-                  helperText={errors.code || 'Unique identifier for this customer'}
-                />
+                  helperText={errors.code || 'Unique identifier for this customer'} />
+
               </Grid>
               
               <Grid item xs={12}>
@@ -390,8 +390,8 @@ const EditCustomer: React.FC = () => {
                   label="Description"
                   name="description"
                   value={formValues.description}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -401,8 +401,8 @@ const EditCustomer: React.FC = () => {
                     name="industry"
                     value={formValues.industry}
                     label="Industry"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="Aerospace">Aerospace</MenuItem>
                     <MenuItem value="Automotive">Automotive</MenuItem>
                     <MenuItem value="Defense">Defense</MenuItem>
@@ -423,8 +423,8 @@ const EditCustomer: React.FC = () => {
                     name="status"
                     value={formValues.status}
                     label="Status"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="active">Active</MenuItem>
                     <MenuItem value="inactive">Inactive</MenuItem>
                     <MenuItem value="pending">Pending</MenuItem>
@@ -440,8 +440,8 @@ const EditCustomer: React.FC = () => {
                     name="serviceLevel"
                     value={formValues.serviceLevel}
                     label="Service Level"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="standard">Standard</MenuItem>
                     <MenuItem value="premium">Premium</MenuItem>
                     <MenuItem value="enterprise">Enterprise</MenuItem>
@@ -450,7 +450,7 @@ const EditCustomer: React.FC = () => {
                 </FormControl>
               </Grid>
               
-              {/* Contract Information */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Contract Information
@@ -468,8 +468,8 @@ const EditCustomer: React.FC = () => {
                   onChange={handleChange}
                   InputLabelProps={{ shrink: true }}
                   error={!!errors.contractStartDate}
-                  helperText={errors.contractStartDate}
-                />
+                  helperText={errors.contractStartDate} />
+
               </Grid>
               
               <Grid item xs={12} md={6}>
@@ -482,11 +482,11 @@ const EditCustomer: React.FC = () => {
                   onChange={handleChange}
                   InputLabelProps={{ shrink: true }}
                   error={!!errors.contractEndDate}
-                  helperText={errors.contractEndDate}
-                />
+                  helperText={errors.contractEndDate} />
+
               </Grid>
               
-              {/* Primary Contact */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Primary Contact
@@ -500,8 +500,8 @@ const EditCustomer: React.FC = () => {
                   label="Contact Name"
                   name="primaryContactName"
                   value={formValues.primaryContactName}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -512,8 +512,8 @@ const EditCustomer: React.FC = () => {
                   value={formValues.primaryContactEmail}
                   onChange={handleChange}
                   error={!!errors.primaryContactEmail}
-                  helperText={errors.primaryContactEmail}
-                />
+                  helperText={errors.primaryContactEmail} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -522,11 +522,11 @@ const EditCustomer: React.FC = () => {
                   label="Contact Phone"
                   name="primaryContactPhone"
                   value={formValues.primaryContactPhone}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
-              {/* Billing Address */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Billing Address
@@ -540,8 +540,8 @@ const EditCustomer: React.FC = () => {
                   label="Street Address"
                   name="billingAddress.street"
                   value={formValues.billingAddress.street}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -550,8 +550,8 @@ const EditCustomer: React.FC = () => {
                   label="City"
                   name="billingAddress.city"
                   value={formValues.billingAddress.city}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -560,8 +560,8 @@ const EditCustomer: React.FC = () => {
                   label="State/Province"
                   name="billingAddress.state"
                   value={formValues.billingAddress.state}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -570,8 +570,8 @@ const EditCustomer: React.FC = () => {
                   label="Postal Code"
                   name="billingAddress.zipCode"
                   value={formValues.billingAddress.zipCode}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={6} lg={3}>
@@ -580,11 +580,11 @@ const EditCustomer: React.FC = () => {
                   label="Country"
                   name="billingAddress.country"
                   value={formValues.billingAddress.country}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
-              {/* Shipping Address */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Typography variant="h6" gutterBottom>
@@ -592,69 +592,69 @@ const EditCustomer: React.FC = () => {
                   </Typography>
                   <Button
                     variant="text"
-                    onClick={handleToggleAddress}
-                  >
+                    onClick={handleToggleAddress}>
+
                     {addressesAreDifferent ? 'Same as billing' : 'Different from billing'}
                   </Button>
                 </Box>
                 <Divider sx={{ mb: 2 }} />
               </Grid>
               
-              {addressesAreDifferent && (
-                <>
+              {addressesAreDifferent &&
+              <>
                   <Grid item xs={12}>
                     <TextField
-                      fullWidth
-                      label="Street Address"
-                      name="shippingAddress.street"
-                      value={formValues.shippingAddress.street}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Street Address"
+                    name="shippingAddress.street"
+                    value={formValues.shippingAddress.street}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="City"
-                      name="shippingAddress.city"
-                      value={formValues.shippingAddress.city}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="City"
+                    name="shippingAddress.city"
+                    value={formValues.shippingAddress.city}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="State/Province"
-                      name="shippingAddress.state"
-                      value={formValues.shippingAddress.state}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="State/Province"
+                    name="shippingAddress.state"
+                    value={formValues.shippingAddress.state}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="Postal Code"
-                      name="shippingAddress.zipCode"
-                      value={formValues.shippingAddress.zipCode}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Postal Code"
+                    name="shippingAddress.zipCode"
+                    value={formValues.shippingAddress.zipCode}
+                    onChange={handleChange} />
+
                   </Grid>
                   
                   <Grid item xs={12} md={6} lg={3}>
                     <TextField
-                      fullWidth
-                      label="Country"
-                      name="shippingAddress.country"
-                      value={formValues.shippingAddress.country}
-                      onChange={handleChange}
-                    />
+                    fullWidth
+                    label="Country"
+                    name="shippingAddress.country"
+                    value={formValues.shippingAddress.country}
+                    onChange={handleChange} />
+
                   </Grid>
                 </>
-              )}
+              }
               
-              {/* Additional Information */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Additional Information
@@ -670,8 +670,8 @@ const EditCustomer: React.FC = () => {
                   label="Notes"
                   name="notes"
                   value={formValues.notes}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -680,8 +680,8 @@ const EditCustomer: React.FC = () => {
                   label="Customer Category"
                   name="customFields.customerCategory"
                   value={formValues.customFields.customerCategory}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -690,8 +690,8 @@ const EditCustomer: React.FC = () => {
                   label="Account Manager"
                   name="customFields.accountManager"
                   value={formValues.customFields.accountManager}
-                  onChange={handleChange}
-                />
+                  onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
@@ -701,8 +701,8 @@ const EditCustomer: React.FC = () => {
                     name="customFields.priorityLevel"
                     value={formValues.customFields.priorityLevel || ''}
                     label="Priority Level"
-                    onChange={handleChange}
-                  >
+                    onChange={handleChange}>
+
                     <MenuItem value="">None</MenuItem>
                     <MenuItem value="Low">Low</MenuItem>
                     <MenuItem value="Medium">Medium</MenuItem>
@@ -712,21 +712,21 @@ const EditCustomer: React.FC = () => {
                 </FormControl>
               </Grid>
               
-              {/* Submit Button */}
+              
               <Grid item xs={12} sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
                 <Button
                   variant="outlined"
                   sx={{ mr: 2 }}
-                  onClick={() => navigate(`/customers/${id}`)}
-                >
+                  onClick={() => navigate(`/customers/${id}`)}>
+
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   variant="contained"
                   startIcon={<SaveIcon />}
-                  disabled={isSubmitting}
-                >
+                  disabled={isSubmitting}>
+
                   {isSubmitting ? 'Saving...' : 'Save Changes'}
                 </Button>
               </Grid>
@@ -735,24 +735,24 @@ const EditCustomer: React.FC = () => {
         </CardContent>
       </Card>
       
-      {/* Snackbar for notifications */}
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default EditCustomer; 
+export default EditCustomer;

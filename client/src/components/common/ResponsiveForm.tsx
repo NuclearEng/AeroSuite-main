@@ -19,8 +19,8 @@ import {
   Divider,
   CircularProgress,
   styled,
-  useTheme,
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import useResponsive from '../../hooks/useResponsive';
 import { ResponsiveGridItem } from '../layout/ResponsiveGrid';
 
@@ -52,14 +52,14 @@ export interface TextFieldConfig extends FormFieldBase {
 
 export interface SelectFieldConfig extends FormFieldBase {
   type: 'select';
-  options: Array<{ value: string | number; label: string }>;
+  options: Array<{value: string | number;label: string;}>;
   multiple?: boolean;
   native?: boolean;
 }
 
 export interface RadioFieldConfig extends FormFieldBase {
   type: 'radio';
-  options: Array<{ value: string | number; label: string }>;
+  options: Array<{value: string | number;label: string;}>;
   row?: boolean;
 }
 
@@ -85,13 +85,13 @@ export interface SectionConfig {
   defaultCollapsed?: boolean;
 }
 
-export type FormFieldConfig = 
-  | TextFieldConfig 
-  | SelectFieldConfig 
-  | RadioFieldConfig 
-  | CheckboxFieldConfig
-  | DividerFieldConfig
-  | SectionConfig;
+export type FormFieldConfig =
+TextFieldConfig |
+SelectFieldConfig |
+RadioFieldConfig |
+CheckboxFieldConfig |
+DividerFieldConfig |
+SectionConfig;
 
 // Form props
 export interface ResponsiveFormProps {
@@ -119,21 +119,21 @@ export interface ResponsiveFormProps {
 const FormContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(2),
-  },
+    padding: theme.spacing(2)
+  }
 }));
 
 const FormTitle = styled(Typography)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(2)
 }));
 
 const FormDescription = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(3),
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.secondary
 }));
 
 const FormDivider = styled(Divider)(({ theme }) => ({
-  margin: theme.spacing(3, 0),
+  margin: theme.spacing(3, 0)
 }));
 
 const FormActions = styled(Box)(({ theme }) => ({
@@ -144,19 +144,19 @@ const FormActions = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column-reverse',
     '& > button': {
-      width: '100%',
-    },
-  },
+      width: '100%'
+    }
+  }
 }));
 
 const SectionTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 500,
-  marginBottom: theme.spacing(1),
+  marginBottom: theme.spacing(1)
 }));
 
 const SectionDescription = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(2),
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.secondary
 }));
 
 /**
@@ -181,7 +181,7 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
   gridSpacing = 2,
   disabled = false,
   dense = false,
-  submitFullWidth = false,
+  submitFullWidth = false
 }) => {
   const theme = useTheme();
   const { isMobile } = useResponsive();
@@ -209,16 +209,16 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
   };
 
   // Get field error state
-  const getFieldError = (id: string): { error: boolean; helperText: string | undefined } => {
+  const getFieldError = (id: string): {error: boolean;helperText: string | undefined;} => {
     const hasError = !!(touched[id] && errors[id]);
     return {
       error: hasError,
-      helperText: hasError ? errors[id] : undefined,
+      helperText: hasError ? errors[id] : undefined
     };
   };
 
   // Render a specific form field based on its type
-  const renderField = (field: FormFieldConfig) => {
+  const RenderField = (field: FormFieldConfig) => {
     // Don't render hidden fields
     if ('hidden' in field && field.hidden) {
       return null;
@@ -229,15 +229,15 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
       return (
         <Grid item xs={12} key={field.id}>
           <Box sx={{ my: field.margin !== undefined ? field.margin : 2 }}>
-            {field.label ? (
-              <Typography variant="subtitle1" color="textSecondary" gutterBottom>
+            {field.label ?
+            <Typography variant="subtitle1" color="textSecondary" gutterBottom>
                 {field.label}
-              </Typography>
-            ) : null}
+              </Typography> :
+            null}
             <FormDivider />
           </Box>
-        </Grid>
-      );
+        </Grid>);
+
     }
 
     // Handle sections
@@ -246,12 +246,12 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
         <Grid item xs={12} key={field.id}>
           <Box sx={{ mb: 2 }}>
             <SectionTitle variant="h6">{field.title}</SectionTitle>
-            {field.description && (
-              <SectionDescription variant="body2">{field.description}</SectionDescription>
-            )}
+            {field.description &&
+            <SectionDescription variant="body2">{field.description}</SectionDescription>
+            }
           </Box>
-        </Grid>
-      );
+        </Grid>);
+
     }
 
     // Default column sizes if not specified
@@ -277,14 +277,14 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
       case 'time':
         const { error, helperText } = getFieldError(field.id);
         return (
-          <ResponsiveGridItem 
-            key={field.id} 
-            xs={xs} 
-            sm={sm} 
-            md={md} 
-            lg={lg} 
-            xl={xl}
-          >
+          <ResponsiveGridItem
+            key={field.id}
+            xs={xs}
+            sm={sm}
+            md={md}
+            lg={lg}
+            xl={xl}>
+
             <TextField
               id={field.id}
               name={field.id}
@@ -305,30 +305,30 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
               autoFocus={field.autoFocus}
               autoComplete={field.autoComplete}
               size={dense ? 'small' : 'medium'}
-              margin={dense ? 'dense' : 'normal'}
-            />
-          </ResponsiveGridItem>
-        );
+              margin={dense ? 'dense' : 'normal'} />
+
+          </ResponsiveGridItem>);
+
 
       case 'select':
         const selectError = getFieldError(field.id);
         return (
-          <ResponsiveGridItem 
-            key={field.id} 
-            xs={xs} 
-            sm={sm} 
-            md={md} 
-            lg={lg} 
-            xl={xl}
-          >
+          <ResponsiveGridItem
+            key={field.id}
+            xs={xs}
+            sm={sm}
+            md={md}
+            lg={lg}
+            xl={xl}>
+
             <FormControl
               fullWidth={field.fullWidth !== false}
               error={selectError.error}
               disabled={isDisabled}
               required={field.required}
               size={dense ? 'small' : 'medium'}
-              margin={dense ? 'dense' : 'normal'}
-            >
+              margin={dense ? 'dense' : 'normal'}>
+
               <InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
               <Select
                 labelId={`${field.id}-label`}
@@ -339,112 +339,112 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
                 onBlur={() => handleBlur(field.id)}
                 multiple={field.multiple}
                 native={field.native}
-                label={field.label}
-              >
-                {field.options.map((option) => (
-                  field.native ? (
-                    <option key={option.value} value={option.value}>
+                label={field.label}>
+
+                {field.options.map((option) =>
+                field.native ?
+                <option key={option.value} value={option.value}>
                       {option.label}
-                    </option>
-                  ) : (
-                    <MenuItem key={option.value} value={option.value}>
+                    </option> :
+
+                <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
-                  )
-                ))}
+
+                )}
               </Select>
-              {(selectError.error || field.helperText) && (
-                <FormHelperText>
+              {(selectError.error || field.helperText) &&
+              <FormHelperText>
                   {selectError.error ? selectError.helperText : field.helperText}
                 </FormHelperText>
-              )}
+              }
             </FormControl>
-          </ResponsiveGridItem>
-        );
+          </ResponsiveGridItem>);
+
 
       case 'radio':
         const radioError = getFieldError(field.id);
         return (
-          <ResponsiveGridItem 
-            key={field.id} 
-            xs={xs} 
-            sm={sm} 
-            md={md} 
-            lg={lg} 
-            xl={xl}
-          >
+          <ResponsiveGridItem
+            key={field.id}
+            xs={xs}
+            sm={sm}
+            md={md}
+            lg={lg}
+            xl={xl}>
+
             <FormControl
               component="fieldset"
               error={radioError.error}
               disabled={isDisabled}
               required={field.required}
               margin={dense ? 'dense' : 'normal'}
-              fullWidth
-            >
+              fullWidth>
+
               <FormLabel component="legend">{field.label}</FormLabel>
               <RadioGroup
                 aria-label={field.label}
                 name={field.id}
                 value={values[field.id] || ''}
                 onChange={(e) => handleChange(field.id, e.target.value)}
-                row={field.row}
-              >
-                {field.options.map((option) => (
-                  <FormControlLabel
-                    key={option.value}
-                    value={option.value}
-                    control={<Radio size={dense ? 'small' : 'medium'} />}
-                    label={option.label}
-                  />
-                ))}
+                row={field.row}>
+
+                {field.options.map((option) =>
+                <FormControlLabel
+                  key={option.value}
+                  value={option.value}
+                  control={<Radio size={dense ? 'small' : 'medium'} />}
+                  label={option.label} />
+
+                )}
               </RadioGroup>
-              {(radioError.error || field.helperText) && (
-                <FormHelperText>
+              {(radioError.error || field.helperText) &&
+              <FormHelperText>
                   {radioError.error ? radioError.helperText : field.helperText}
                 </FormHelperText>
-              )}
+              }
             </FormControl>
-          </ResponsiveGridItem>
-        );
+          </ResponsiveGridItem>);
+
 
       case 'checkbox':
         const checkboxError = getFieldError(field.id);
         return (
-          <ResponsiveGridItem 
-            key={field.id} 
-            xs={xs} 
-            sm={sm} 
-            md={md} 
-            lg={lg} 
-            xl={xl}
-          >
+          <ResponsiveGridItem
+            key={field.id}
+            xs={xs}
+            sm={sm}
+            md={md}
+            lg={lg}
+            xl={xl}>
+
             <FormControl
               error={checkboxError.error}
               disabled={isDisabled}
               required={field.required}
               margin={dense ? 'dense' : 'normal'}
-              fullWidth
-            >
+              fullWidth>
+
               <FormControlLabel
                 control={
-                  <Checkbox
-                    name={field.id}
-                    checked={!!values[field.id]}
-                    onChange={(e) => handleChange(field.id, e.target.checked)}
-                    onBlur={() => handleBlur(field.id)}
-                    size={dense ? 'small' : 'medium'}
-                  />
+                <Checkbox
+                  name={field.id}
+                  checked={!!values[field.id]}
+                  onChange={(e) => handleChange(field.id, e.target.checked)}
+                  onBlur={() => handleBlur(field.id)}
+                  size={dense ? 'small' : 'medium'} />
+
                 }
-                label={field.checkboxLabel || field.label}
-              />
-              {(checkboxError.error || field.helperText) && (
-                <FormHelperText>
+                label={field.checkboxLabel || field.label} />
+
+              {(checkboxError.error || field.helperText) &&
+              <FormHelperText>
                   {checkboxError.error ? checkboxError.helperText : field.helperText}
                 </FormHelperText>
-              )}
+              }
             </FormControl>
-          </ResponsiveGridItem>
-        );
+          </ResponsiveGridItem>);
+
 
       default:
         return null;
@@ -458,21 +458,21 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
 
       <form onSubmit={handleSubmit} noValidate>
         <Grid container spacing={gridSpacing}>
-          {fields.map(renderField)}
+          {fields.map(RenderField)}
         </Grid>
 
         <FormActions>
-          {onCancel && (
-            <Button
-              type="button"
-              color="inherit"
-              onClick={onCancel}
-              disabled={loading || disabled}
-              fullWidth={isMobile}
-            >
+          {onCancel &&
+          <Button
+            type="button"
+            color="inherit"
+            onClick={onCancel}
+            disabled={loading || disabled}
+            fullWidth={isMobile}>
+
               {cancelLabel}
             </Button>
-          )}
+          }
           <Button
             type="submit"
             variant="contained"
@@ -480,15 +480,15 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
             disabled={loading || disabled}
             fullWidth={submitFullWidth || isMobile}
             startIcon={
-              loading ? <CircularProgress size={20} color="inherit" /> : undefined
-            }
-          >
+            loading ? <CircularProgress size={20} color="inherit" /> : undefined
+            }>
+
             {submitLabel}
           </Button>
         </FormActions>
       </form>
-    </FormContainer>
-  );
+    </FormContainer>);
+
 };
 
-export default ResponsiveForm; 
+export default ResponsiveForm;

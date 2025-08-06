@@ -12,8 +12,8 @@ import {
   ListItem,
   ListItemText,
   Chip,
-  useTheme
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import {
   BarChart,
   Bar,
@@ -25,8 +25,8 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell
-} from 'recharts';
+  Cell } from
+'recharts';
 import useInspectionStats from '../../pages/inspections/hooks/useInspectionStats';
 
 /**
@@ -40,24 +40,24 @@ const InspectionStatsDashboard: React.FC = () => {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
     return (
       <Box p={2}>
         <Typography color="error">{error}</Typography>
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (!stats) {
     return (
       <Box p={2}>
         <Typography>No statistics available.</Typography>
-      </Box>
-    );
+      </Box>);
+
   }
 
   // Prepare data for pie chart
@@ -73,21 +73,21 @@ const InspectionStatsDashboard: React.FC = () => {
 
   // Colors for pie charts
   const statusColors = [
-    theme.palette.primary.main,
-    theme.palette.secondary.main,
-    theme.palette.success.main,
-    theme.palette.error.main
-  ];
+  theme.palette.primary.main,
+  theme.palette.secondary.main,
+  theme.palette.success.main,
+  theme.palette.error.main];
+
 
   const typeColors = [
-    theme.palette.info.main,
-    theme.palette.warning.main,
-    theme.palette.success.light
-  ];
+  theme.palette.info.main,
+  theme.palette.warning.main,
+  theme.palette.success.light];
+
 
   return (
     <Grid container spacing={3}>
-      {/* Summary Cards */}
+      
       <Grid item xs={12} md={6} lg={3}>
         <Card>
           <CardHeader title="Total Scheduled" />
@@ -129,7 +129,7 @@ const InspectionStatsDashboard: React.FC = () => {
         </Card>
       </Grid>
 
-      {/* Charts */}
+      
       <Grid item xs={12} lg={8}>
         <Card>
           <CardHeader title="Monthly Inspection Trends" />
@@ -142,9 +142,9 @@ const InspectionStatsDashboard: React.FC = () => {
                     top: 5,
                     right: 30,
                     left: 20,
-                    bottom: 5,
-                  }}
-                >
+                    bottom: 5
+                  }}>
+
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis />
@@ -174,11 +174,11 @@ const InspectionStatsDashboard: React.FC = () => {
                     label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                     outerRadius={80}
                     fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {statusData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={statusColors[index % statusColors.length]} />
-                    ))}
+                    dataKey="value">
+
+                    {statusData.map((entry, index) =>
+                    <Cell key={`cell-${index}`} fill={statusColors[index % statusColors.length]} />
+                    )}
                   </Pie>
                   <Tooltip />
                 </PieChart>
@@ -203,11 +203,11 @@ const InspectionStatsDashboard: React.FC = () => {
                     label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                     outerRadius={80}
                     fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {typeData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={typeColors[index % typeColors.length]} />
-                    ))}
+                    dataKey="value">
+
+                    {typeData.map((entry, index) =>
+                    <Cell key={`cell-${index}`} fill={typeColors[index % typeColors.length]} />
+                    )}
                   </Pie>
                   <Tooltip />
                 </PieChart>
@@ -222,37 +222,37 @@ const InspectionStatsDashboard: React.FC = () => {
           <CardHeader title="Top Supplier Performance" />
           <CardContent>
             <List>
-              {stats.supplierPerformance.map((supplier) => (
-                <React.Fragment key={supplier.id}>
+              {stats.supplierPerformance.map((supplier) =>
+              <React.Fragment key={supplier.id}>
                   <ListItem>
                     <ListItemText
-                      primary={supplier.name}
-                      secondary={`${supplier.inspectionCount} inspections`}
-                    />
+                    primary={supplier.name}
+                    secondary={`${supplier.inspectionCount} inspections`} />
+
                     <Box display="flex" alignItems="center">
                       <Typography variant="body2" sx={{ mr: 1 }}>
                         Pass Rate:
                       </Typography>
                       <Chip
-                        label={`${supplier.passRate}%`}
-                        color={
-                          supplier.passRate >= 90 ? 'success' :
-                          supplier.passRate >= 70 ? 'warning' :
-                          'error'
-                        }
-                        size="small"
-                      />
+                      label={`${supplier.passRate}%`}
+                      color={
+                      supplier.passRate >= 90 ? 'success' :
+                      supplier.passRate >= 70 ? 'warning' :
+                      'error'
+                      }
+                      size="small" />
+
                     </Box>
                   </ListItem>
                   <Divider />
                 </React.Fragment>
-              ))}
+              )}
             </List>
           </CardContent>
         </Card>
       </Grid>
-    </Grid>
-  );
+    </Grid>);
+
 };
 
-export default InspectionStatsDashboard; 
+export default InspectionStatsDashboard;

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { 
-  Box, 
-  Card, 
-  CardContent, 
-  Typography, 
-  Stack, 
-  FormControlLabel, 
-  Switch, 
-  Grid, 
-  Button, 
-  Chip, 
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  FormControlLabel,
+  Switch,
+  Grid,
+  Button,
+  Chip,
   Avatar,
-  Paper
-} from '@mui/material';
+  Paper } from
+'@mui/material';
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -21,8 +21,8 @@ import {
   Notifications as NotificationsIcon,
   FilterAlt as FilterIcon,
   Save as SaveIcon,
-  BuildCircle as BuildIcon
-} from '@mui/icons-material';
+  BuildCircle as BuildIcon } from
+'@mui/icons-material';
 import DataTable, { HeadCell, DataTableAction } from '../../../components/common/DataTable';
 
 // Demo data
@@ -53,7 +53,7 @@ const demoData: SupplierData[] = Array.from({ length: 50 }, (_, i) => ({
   ordersCount: Math.floor(Math.random() * 100),
   location: ['New York', 'Chicago', 'Los Angeles', 'Houston', 'Miami'][Math.floor(Math.random() * 5)],
   category: ['Hardware', 'Software', 'Services', 'Consulting', 'Manufacturing'][Math.floor(Math.random() * 5)],
-  notes: Math.random() > 0.5 ? `Additional notes for supplier ${i + 1}` : undefined,
+  notes: Math.random() > 0.5 ? `Additional notes for supplier ${i + 1}` : undefined
 }));
 
 const EnhancedDataTableDemo: React.FC = () => {
@@ -66,174 +66,174 @@ const EnhancedDataTableDemo: React.FC = () => {
   const [rowExpandable, setRowExpandable] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
-  
+
   // Define columns
   const columns: HeadCell<SupplierData>[] = [
-    {
-      id: 'id',
-      label: 'ID',
-      numeric: true,
-      sortable: true,
-      width: 80,
-      minWidth: 60,
-      align: 'left',
-    },
-    {
-      id: 'name',
-      label: 'Name',
-      numeric: false,
-      sortable: true,
-      filterable: true,
-      minWidth: 150,
-      format: (value) => (
-        <Box sx={{ fontWeight: 'bold' }}>{value}</Box>
-      ),
-    },
-    {
-      id: 'category',
-      label: 'Category',
-      numeric: false,
-      sortable: true,
-      filterable: true,
-      filterOptions: [
-        { label: 'Hardware', value: 'Hardware' },
-        { label: 'Software', value: 'Software' },
-        { label: 'Services', value: 'Services' },
-        { label: 'Consulting', value: 'Consulting' },
-        { label: 'Manufacturing', value: 'Manufacturing' },
-      ],
-      width: 140,
-    },
-    {
-      id: 'status',
-      label: 'Status',
-      numeric: false,
-      sortable: true,
-      filterable: true,
-      filterOptions: [
-        { label: 'Active', value: 'active' },
-        { label: 'Pending', value: 'pending' },
-        { label: 'Inactive', value: 'inactive' },
-      ],
-      width: 120,
-      format: (value) => {
-        let color: 'success' | 'warning' | 'error' = 'success';
-        if (value === 'pending') color = 'warning';
-        if (value === 'inactive') color = 'error';
-        
-        return <Chip size="small" color={color} label={value} />;
-      },
-    },
-    {
-      id: 'rating',
-      label: 'Rating',
-      numeric: true,
-      sortable: true,
-      width: 120,
-      format: (value) => {
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {Array.from({ length: 5 }, (_, i) => (
-              <Box 
-                key={i}
-                component="span" 
-                sx={{ 
-                  color: i < value ? 'gold' : 'text.disabled',
-                  mr: 0.2,
-                }}
-              >
+  {
+    id: 'id',
+    label: 'ID',
+    numeric: true,
+    sortable: true,
+    width: 80,
+    minWidth: 60,
+    align: 'left'
+  },
+  {
+    id: 'name',
+    label: 'Name',
+    numeric: false,
+    sortable: true,
+    filterable: true,
+    minWidth: 150,
+    format: (value) =>
+    <Box sx={{ fontWeight: 'bold' }}>{value}</Box>
+
+  },
+  {
+    id: 'category',
+    label: 'Category',
+    numeric: false,
+    sortable: true,
+    filterable: true,
+    filterOptions: [
+    { label: 'Hardware', value: 'Hardware' },
+    { label: 'Software', value: 'Software' },
+    { label: 'Services', value: 'Services' },
+    { label: 'Consulting', value: 'Consulting' },
+    { label: 'Manufacturing', value: 'Manufacturing' }],
+
+    width: 140
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    numeric: false,
+    sortable: true,
+    filterable: true,
+    filterOptions: [
+    { label: 'Active', value: 'active' },
+    { label: 'Pending', value: 'pending' },
+    { label: 'Inactive', value: 'inactive' }],
+
+    width: 120,
+    format: (value) => {
+      let color: 'success' | 'warning' | 'error' = 'success';
+      if (value === 'pending') color = 'warning';
+      if (value === 'inactive') color = 'error';
+
+      return <Chip size="small" color={color} label={value} />;
+    }
+  },
+  {
+    id: 'rating',
+    label: 'Rating',
+    numeric: true,
+    sortable: true,
+    width: 120,
+    format: (value) => {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {Array.from({ length: 5 }, (_, i) =>
+          <Box
+            key={i}
+            component="span"
+            sx={{
+              color: i < value ? 'gold' : 'text.disabled',
+              mr: 0.2
+            }}>
+
                 ★
               </Box>
-            ))}
-          </Box>
-        );
-      },
-    },
-    {
-      id: 'location',
-      label: 'Location',
-      numeric: false,
-      sortable: true,
-      filterable: true,
-      width: 140,
-    },
-    {
-      id: 'ordersCount',
-      label: 'Orders',
-      numeric: true,
-      sortable: true,
-      width: 100,
-    },
-    {
-      id: 'lastOrderDate',
-      label: 'Last Order',
-      numeric: false,
-      sortable: true,
-      width: 130,
-    },
-    {
-      id: 'email',
-      label: 'Email',
-      numeric: false,
-      sortable: true,
-      filterable: true,
-      width: 220,
-    },
-  ];
-  
+          )}
+          </Box>);
+
+    }
+  },
+  {
+    id: 'location',
+    label: 'Location',
+    numeric: false,
+    sortable: true,
+    filterable: true,
+    width: 140
+  },
+  {
+    id: 'ordersCount',
+    label: 'Orders',
+    numeric: true,
+    sortable: true,
+    width: 100
+  },
+  {
+    id: 'lastOrderDate',
+    label: 'Last Order',
+    numeric: false,
+    sortable: true,
+    width: 130
+  },
+  {
+    id: 'email',
+    label: 'Email',
+    numeric: false,
+    sortable: true,
+    filterable: true,
+    width: 220
+  }];
+
+
   // Define actions
   const actions: DataTableAction<SupplierData>[] = [
-    {
-      label: 'Export',
-      icon: <SaveIcon fontSize="small" />,
-      onClick: (selectedRows) => {
-        console.log('Export:', selectedRows);
-      },
-      color: 'primary',
-      tooltip: 'Export selected suppliers',
-      showOnlyWhenSelected: true,
+  {
+    label: 'Export',
+    icon: <SaveIcon fontSize="small" />,
+    onClick: (selectedRows) => {
+      console.log('Export:', selectedRows);
     },
-    {
-      label: 'Delete',
-      icon: <DeleteIcon fontSize="small" />,
-      onClick: (selectedRows) => {
-        console.log('Delete:', selectedRows);
-      },
-      color: 'error',
-      tooltip: 'Delete selected suppliers',
-      showOnlyWhenSelected: true,
+    color: 'primary',
+    tooltip: 'Export selected suppliers',
+    showOnlyWhenSelected: true
+  },
+  {
+    label: 'Delete',
+    icon: <DeleteIcon fontSize="small" />,
+    onClick: (selectedRows) => {
+      console.log('Delete:', selectedRows);
     },
-  ];
-  
+    color: 'error',
+    tooltip: 'Delete selected suppliers',
+    showOnlyWhenSelected: true
+  }];
+
+
   // Handle edit
   const handleEdit = (row: SupplierData) => {
     console.log('Edit:', row);
   };
-  
+
   // Handle row click
   const handleRowClick = (row: SupplierData) => {
     console.log('Row clicked:', row);
   };
-  
+
   // Handle refresh
   const handleRefresh = () => {
     setLoading(true);
     setError(undefined);
-    
+
     // Simulate API call
     setTimeout(() => {
       setLoading(false);
     }, 1500);
   };
-  
+
   // Handle simulated error
   const handleSimulateError = () => {
     setError('Failed to load suppliers. Please try again.');
   };
-  
+
   // Render expanded row
-  const renderExpandedRow = (row: SupplierData) => (
-    <Box>
+  const RenderExpandedRow = (row: SupplierData) =>
+  <Box>
       <Typography variant="subtitle2" gutterBottom>
         Additional Information
       </Typography>
@@ -255,9 +255,9 @@ const EnhancedDataTableDemo: React.FC = () => {
           </Typography>
         </Grid>
       </Grid>
-    </Box>
-  );
-  
+    </Box>;
+
+
   return (
     <Paper elevation={0} sx={{ p: 3, borderRadius: 2 }}>
       <Typography variant="h5" gutterBottom>
@@ -278,38 +278,38 @@ const EnhancedDataTableDemo: React.FC = () => {
             <Grid item xs={6} sm={4} md={3}>
               <FormControlLabel
                 control={<Switch checked={resizableColumns} onChange={(e) => setResizableColumns(e.target.checked)} />}
-                label="Resizable Columns"
-              />
+                label="Resizable Columns" />
+
             </Grid>
             <Grid item xs={6} sm={4} md={3}>
               <FormControlLabel
                 control={<Switch checked={columnFiltering} onChange={(e) => setColumnFiltering(e.target.checked)} />}
-                label="Column Filtering"
-              />
+                label="Column Filtering" />
+
             </Grid>
             <Grid item xs={6} sm={4} md={3}>
               <FormControlLabel
                 control={<Switch checked={exportable} onChange={(e) => setExportable(e.target.checked)} />}
-                label="Export Options"
-              />
+                label="Export Options" />
+
             </Grid>
             <Grid item xs={6} sm={4} md={3}>
               <FormControlLabel
                 control={<Switch checked={zebra} onChange={(e) => setZebra(e.target.checked)} />}
-                label="Zebra Stripes"
-              />
+                label="Zebra Stripes" />
+
             </Grid>
             <Grid item xs={6} sm={4} md={3}>
               <FormControlLabel
                 control={<Switch checked={dense} onChange={(e) => setDense(e.target.checked)} />}
-                label="Dense Layout"
-              />
+                label="Dense Layout" />
+
             </Grid>
             <Grid item xs={6} sm={4} md={3}>
               <FormControlLabel
                 control={<Switch checked={rowExpandable} onChange={(e) => setRowExpandable(e.target.checked)} />}
-                label="Expandable Rows"
-              />
+                label="Expandable Rows" />
+
             </Grid>
           </Grid>
           
@@ -346,7 +346,7 @@ const EnhancedDataTableDemo: React.FC = () => {
           exportable={exportable}
           exportFileName="suppliers-data"
           rowsExpandable={rowExpandable}
-          renderExpandedRow={rowExpandable ? renderExpandedRow : undefined}
+          renderExpandedRow={rowExpandable ? RenderExpandedRow : undefined}
           dense={dense}
           zebra={zebra}
           highlightOnHover
@@ -355,14 +355,14 @@ const EnhancedDataTableDemo: React.FC = () => {
           stickyHeader
           maxHeight={650}
           headerContent={
-            <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary">
               Total suppliers: {demoData.length}
             </Typography>
-          }
-        />
+          } />
+
       </Box>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default EnhancedDataTableDemo; 
+export default EnhancedDataTableDemo;

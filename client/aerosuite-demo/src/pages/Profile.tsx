@@ -13,12 +13,12 @@ import {
   CardContent,
   Switch,
   FormControlLabel,
-  Alert
-} from '@mui/material';
+  Alert } from
+'@mui/material';
 import {
   Save as SaveIcon,
-  Person as PersonIcon
-} from '@mui/icons-material';
+  Person as PersonIcon } from
+'@mui/icons-material';
 
 const Profile: React.FC = () => {
   // Mock user data
@@ -54,12 +54,12 @@ const Profile: React.FC = () => {
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserData(prev => ({ ...prev, [name]: value }));
+    setUserData((prev) => ({ ...prev, [name]: value }));
   };
 
   // Handle notification preference changes
   const handleNotificationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNotifications(prev => ({
+    setNotifications((prev) => ({
       ...prev,
       [e.target.name]: e.target.checked
     }));
@@ -67,7 +67,7 @@ const Profile: React.FC = () => {
 
   return (
     <Box>
-      {/* Page header */}
+      
       <Box mb={4}>
         <Typography variant="h4" gutterBottom>
           Profile
@@ -77,20 +77,20 @@ const Profile: React.FC = () => {
         </Typography>
       </Box>
 
-      {saved && (
-        <Alert severity="success" sx={{ mb: 3 }}>
+      {saved &&
+      <Alert severity="success" sx={{ mb: 3 }}>
           Profile updated successfully!
         </Alert>
-      )}
+      }
 
       <Grid container spacing={3}>
-        {/* Profile Details */}
+        
         <Grid item xs={12} md={8}>
           <Paper sx={{ p: 3, mb: 3 }}>
             <Box display="flex" alignItems="center" mb={3}>
               <Avatar
-                sx={{ width: 80, height: 80, mr: 3, bgcolor: 'primary.main' }}
-              >
+                sx={{ width: 80, height: 80, mr: 3, bgcolor: 'primary.main' }}>
+
                 {userData.firstName.charAt(0)}{userData.lastName.charAt(0)}
               </Avatar>
               <Box>
@@ -114,8 +114,8 @@ const Profile: React.FC = () => {
                     name="firstName"
                     value={userData.firstName}
                     onChange={handleChange}
-                    variant="outlined"
-                  />
+                    variant="outlined" />
+
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -124,8 +124,8 @@ const Profile: React.FC = () => {
                     name="lastName"
                     value={userData.lastName}
                     onChange={handleChange}
-                    variant="outlined"
-                  />
+                    variant="outlined" />
+
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -135,8 +135,8 @@ const Profile: React.FC = () => {
                     value={userData.email}
                     onChange={handleChange}
                     variant="outlined"
-                    type="email"
-                  />
+                    type="email" />
+
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -145,8 +145,8 @@ const Profile: React.FC = () => {
                     name="phone"
                     value={userData.phone}
                     onChange={handleChange}
-                    variant="outlined"
-                  />
+                    variant="outlined" />
+
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -155,8 +155,8 @@ const Profile: React.FC = () => {
                     name="company"
                     value={userData.company}
                     onChange={handleChange}
-                    variant="outlined"
-                  />
+                    variant="outlined" />
+
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -165,8 +165,8 @@ const Profile: React.FC = () => {
                     name="title"
                     value={userData.title}
                     onChange={handleChange}
-                    variant="outlined"
-                  />
+                    variant="outlined" />
+
                 </Grid>
                 <Grid item xs={12}>
                   <Box display="flex" justifyContent="flex-end" mt={2}>
@@ -174,8 +174,8 @@ const Profile: React.FC = () => {
                       type="submit"
                       variant="contained"
                       color="primary"
-                      startIcon={<SaveIcon />}
-                    >
+                      startIcon={<SaveIcon />}>
+
                       Save Changes
                     </Button>
                   </Box>
@@ -185,77 +185,77 @@ const Profile: React.FC = () => {
           </Paper>
         </Grid>
 
-        {/* Notification Preferences */}
+        
         <Grid item xs={12} md={4}>
           <Card>
             <CardHeader title="Notification Preferences" />
             <CardContent>
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={notifications.emailNotifications}
-                    onChange={handleNotificationChange}
-                    name="emailNotifications"
-                    color="primary"
-                  />
+                <Switch
+                  checked={notifications.emailNotifications}
+                  onChange={handleNotificationChange}
+                  name="emailNotifications"
+                  color="primary" />
+
                 }
-                label="Email Notifications"
-              />
+                label="Email Notifications" />
+
               <Typography variant="body2" color="textSecondary" sx={{ ml: 3, mb: 2 }}>
                 Receive email notifications for important updates
               </Typography>
 
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={notifications.newInspections}
-                    onChange={handleNotificationChange}
-                    name="newInspections"
-                    color="primary"
-                    disabled={!notifications.emailNotifications}
-                  />
+                <Switch
+                  checked={notifications.newInspections}
+                  onChange={handleNotificationChange}
+                  name="newInspections"
+                  color="primary"
+                  disabled={!notifications.emailNotifications} />
+
                 }
-                label="New Inspections"
-              />
+                label="New Inspections" />
+
 
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={notifications.inspectionUpdates}
-                    onChange={handleNotificationChange}
-                    name="inspectionUpdates"
-                    color="primary"
-                    disabled={!notifications.emailNotifications}
-                  />
+                <Switch
+                  checked={notifications.inspectionUpdates}
+                  onChange={handleNotificationChange}
+                  name="inspectionUpdates"
+                  color="primary"
+                  disabled={!notifications.emailNotifications} />
+
                 }
-                label="Inspection Updates"
-              />
+                label="Inspection Updates" />
+
 
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={notifications.inspectionResults}
-                    onChange={handleNotificationChange}
-                    name="inspectionResults"
-                    color="primary"
-                    disabled={!notifications.emailNotifications}
-                  />
+                <Switch
+                  checked={notifications.inspectionResults}
+                  onChange={handleNotificationChange}
+                  name="inspectionResults"
+                  color="primary"
+                  disabled={!notifications.emailNotifications} />
+
                 }
-                label="Inspection Results"
-              />
+                label="Inspection Results" />
+
 
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={notifications.systemUpdates}
-                    onChange={handleNotificationChange}
-                    name="systemUpdates"
-                    color="primary"
-                    disabled={!notifications.emailNotifications}
-                  />
+                <Switch
+                  checked={notifications.systemUpdates}
+                  onChange={handleNotificationChange}
+                  name="systemUpdates"
+                  color="primary"
+                  disabled={!notifications.emailNotifications} />
+
                 }
-                label="System Updates"
-              />
+                label="System Updates" />
+
 
               <Box display="flex" justifyContent="flex-end" mt={2}>
                 <Button
@@ -265,8 +265,8 @@ const Profile: React.FC = () => {
                     // Save notification preferences
                     setSaved(true);
                     setTimeout(() => setSaved(false), 3000);
-                  }}
-                >
+                  }}>
+
                   Save Preferences
                 </Button>
               </Box>
@@ -274,8 +274,8 @@ const Profile: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default Profile; 
+export default Profile;

@@ -14,8 +14,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Tooltip
-} from '@mui/material';
+  Tooltip } from
+'@mui/material';
 import {
   Add as AddIcon,
   Edit as EditIcon,
@@ -24,8 +24,8 @@ import {
   Refresh as RefreshIcon,
   LocalShipping as ShippingIcon,
   Receipt as ReceiptIcon,
-  AttachMoney as PaymentIcon
-} from '@mui/icons-material';
+  AttachMoney as PaymentIcon } from
+'@mui/icons-material';
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import customerService from '../../../services/customer.service';
@@ -84,13 +84,13 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
     try {
       setLoading(true);
       setError(null);
-      
+
       // If customerId is provided, get orders for that customer only
       // Otherwise get all orders
-      const response = customerId 
-        ? await customerService.getCustomerOrders(customerId) 
-        : await customerService.getAllOrders();
-      
+      const response = customerId ?
+      await customerService.getCustomerOrders(customerId) :
+      await customerService.getAllOrders();
+
       setOrders(response.orders || []);
     } catch (err: any) {
       console.error('Error loading orders:', err);
@@ -129,7 +129,7 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
   // Confirm delete order
   const confirmDeleteOrder = async () => {
     if (!selectedOrder) return;
-    
+
     try {
       setLoading(true);
       await customerService.deleteOrder(selectedOrder._id);
@@ -164,101 +164,101 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
 
   // DataGrid columns
   const columns: GridColDef[] = [
-    {
-      field: 'orderNumber',
-      headerName: 'Order #',
-      width: 150
-    },
-    {
-      field: 'customerName',
-      headerName: 'Customer',
-      width: 200,
-      flex: customerId ? 0 : 1
-    },
-    {
-      field: 'createdAt',
-      headerName: 'Date',
-      width: 120,
-      valueFormatter: (params) => formatDate(params.value as string)
-    },
-    {
-      field: 'totalAmount',
-      headerName: 'Total',
-      width: 120,
-      valueFormatter: (params) => formatCurrency(params.value as number)
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 130,
-      renderCell: (params) => {
-        const status = params.value as string;
-        let color;
-        switch (status) {
-          case 'pending':
-            color = 'warning';
-            break;
-          case 'processing':
-            color = 'info';
-            break;
-          case 'shipped':
-            color = 'primary';
-            break;
-          case 'delivered':
-            color = 'success';
-            break;
-          case 'cancelled':
-            color = 'error';
-            break;
-          default:
-            color = 'default';
-        }
-        
-        return (
-          <Chip 
-            label={status.charAt(0).toUpperCase() + status.slice(1)} 
-            color={color as any}
-            size="small"
-          />
-        );
+  {
+    field: 'orderNumber',
+    headerName: 'Order #',
+    width: 150
+  },
+  {
+    field: 'customerName',
+    headerName: 'Customer',
+    width: 200,
+    flex: customerId ? 0 : 1
+  },
+  {
+    field: 'createdAt',
+    headerName: 'Date',
+    width: 120,
+    valueFormatter: (params) => formatDate(params.value as string)
+  },
+  {
+    field: 'totalAmount',
+    headerName: 'Total',
+    width: 120,
+    valueFormatter: (params) => formatCurrency(params.value as number)
+  },
+  {
+    field: 'status',
+    headerName: 'Status',
+    width: 130,
+    renderCell: (params) => {
+      const status = params.value as string;
+      let color;
+      switch (status) {
+        case 'pending':
+          color = 'warning';
+          break;
+        case 'processing':
+          color = 'info';
+          break;
+        case 'shipped':
+          color = 'primary';
+          break;
+        case 'delivered':
+          color = 'success';
+          break;
+        case 'cancelled':
+          color = 'error';
+          break;
+        default:
+          color = 'default';
       }
-    },
-    {
-      field: 'paymentStatus',
-      headerName: 'Payment',
-      width: 120,
-      renderCell: (params) => {
-        const status = params.value as string;
-        let color;
-        switch (status) {
-          case 'paid':
-            color = 'success';
-            break;
-          case 'pending':
-            color = 'warning';
-            break;
-          case 'overdue':
-            color = 'error';
-            break;
-          case 'refunded':
-            color = 'info';
-            break;
-          default:
-            color = 'default';
-        }
-        
-        return (
-          <Chip 
-            label={status.charAt(0).toUpperCase() + status.slice(1)} 
-            color={color as any}
-            size="small"
-            icon={<PaymentIcon />}
-            variant="outlined"
-          />
-        );
-      }
+
+      return (
+        <Chip
+          label={status.charAt(0).toUpperCase() + status.slice(1)}
+          color={color as any}
+          size="small" />);
+
+
     }
-  ];
+  },
+  {
+    field: 'paymentStatus',
+    headerName: 'Payment',
+    width: 120,
+    renderCell: (params) => {
+      const status = params.value as string;
+      let color;
+      switch (status) {
+        case 'paid':
+          color = 'success';
+          break;
+        case 'pending':
+          color = 'warning';
+          break;
+        case 'overdue':
+          color = 'error';
+          break;
+        case 'refunded':
+          color = 'info';
+          break;
+        default:
+          color = 'default';
+      }
+
+      return (
+        <Chip
+          label={status.charAt(0).toUpperCase() + status.slice(1)}
+          color={color as any}
+          size="small"
+          icon={<PaymentIcon />}
+          variant="outlined" />);
+
+
+    }
+  }];
+
 
   // Add actions column if showActions is true
   if (showActions) {
@@ -267,95 +267,95 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
       headerName: 'Actions',
       width: 150,
       sortable: false,
-      renderCell: (params) => (
-        <Box>
+      renderCell: (params) =>
+      <Box>
           <Tooltip title="View Order">
             <IconButton
-              size="small"
-              onClick={() => handleViewOrder(params.row._id)}
-            >
+            size="small"
+            onClick={() => handleViewOrder(params.row._id)}>
+
               <VisibilityIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Edit Order">
             <IconButton
-              size="small"
-              onClick={() => handleEditOrder(params.row)}
-            >
+            size="small"
+            onClick={() => handleEditOrder(params.row)}>
+
               <EditIcon fontSize="small" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete Order">
             <IconButton
-              size="small"
-              onClick={() => handleDeleteOrder(params.row)}
-              color="error"
-            >
+            size="small"
+            onClick={() => handleDeleteOrder(params.row)}
+            color="error">
+
               <DeleteIcon fontSize="small" />
             </IconButton>
           </Tooltip>
         </Box>
-      )
+
     });
   }
 
   return (
     <Box>
-      {showHeader && (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+      {showHeader &&
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
           <Typography variant="h5" component="h2">
             {customerId ? 'Customer Orders' : 'All Orders'}
           </Typography>
           <Box>
             <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<RefreshIcon />}
-              onClick={loadOrders}
-              sx={{ mr: 2 }}
-              disabled={loading}
-            >
+            variant="outlined"
+            color="primary"
+            startIcon={<RefreshIcon />}
+            onClick={loadOrders}
+            sx={{ mr: 2 }}
+            disabled={loading}>
+
               Refresh
             </Button>
             <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AddIcon />}
-              onClick={handleCreateOrder}
-            >
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleCreateOrder}>
+
               New Order
             </Button>
           </Box>
         </Box>
-      )}
+      }
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
 
       <Card>
         <CardContent>
           <Box sx={{ height: 500, width: '100%', position: 'relative' }}>
-            {loading && (
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                  zIndex: 1
-                }}
-              >
+            {loading &&
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                zIndex: 1
+              }}>
+
                 <CircularProgress />
               </Box>
-            )}
+            }
             <DataGrid
               rows={orders}
               columns={columns}
@@ -376,17 +376,17 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
                   showQuickFilter: true,
                   quickFilterProps: { debounceMs: 500 }
                 }
-              }}
-            />
+              }} />
+
           </Box>
         </CardContent>
       </Card>
 
-      {/* Delete Confirmation Dialog */}
+      
       <Dialog
         open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-      >
+        onClose={() => setDeleteDialogOpen(false)}>
+
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -402,8 +402,8 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default CustomerOrderList; 
+export default CustomerOrderList;

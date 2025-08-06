@@ -29,8 +29,8 @@ import {
   DialogActions,
   Tab,
   Tabs,
-  Snackbar
-} from '@mui/material';
+  Snackbar } from
+'@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -42,8 +42,8 @@ import {
   NoteAdd as NoteAddIcon,
   History as HistoryIcon,
   Add as AddIcon,
-  ArrowBack as ArrowBackIcon
-} from '@mui/icons-material';
+  ArrowBack as ArrowBackIcon } from
+'@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 // Import custom components
@@ -66,7 +66,7 @@ const SupplierAuditChecklist: React.FC = () => {
     status: 'planned'
   });
   const [showHistoryDialog, setShowHistoryDialog] = useState(false);
-  
+
   const {
     loading,
     suppliers,
@@ -93,9 +93,9 @@ const SupplierAuditChecklist: React.FC = () => {
   useEffect(() => {
     if (selectedSupplier && !currentAudit) {
       createNewAuditWithTemplate();
-      setAuditInfo(prev => ({
+      setAuditInfo((prev) => ({
         ...prev,
-        title: `${selectedSupplier.name} - Supplier Audit`,
+        title: `${selectedSupplier.name} - Supplier Audit`
       }));
     }
   }, [selectedSupplier, currentAudit, createNewAuditWithTemplate]);
@@ -106,7 +106,7 @@ const SupplierAuditChecklist: React.FC = () => {
   };
 
   // Handle input change for audit info
-  const handleAuditInfoChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleAuditInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<any>) => {
     const { name, value } = e.target;
     if (name) {
       setAuditInfo({
@@ -133,7 +133,7 @@ const SupplierAuditChecklist: React.FC = () => {
       ...updatedTeam[index],
       [field]: value
     };
-    
+
     setAuditInfo({
       ...auditInfo,
       auditTeam: updatedTeam
@@ -152,7 +152,7 @@ const SupplierAuditChecklist: React.FC = () => {
   const handleRemoveTeamMember = (index: number) => {
     const updatedTeam = [...(auditInfo.auditTeam || [])];
     updatedTeam.splice(index, 1);
-    
+
     setAuditInfo({
       ...auditInfo,
       auditTeam: updatedTeam
@@ -165,11 +165,11 @@ const SupplierAuditChecklist: React.FC = () => {
     const auditData: Partial<SupplierAudit> = {
       ...auditInfo,
       supplierId: selectedSupplier?._id || '',
-      checklist: checklist,
+      checklist: checklist
     };
-    
+
     let savedAudit;
-    
+
     if (currentAudit?._id) {
       // Update existing audit
       savedAudit = await updateAudit(currentAudit._id, auditData);
@@ -177,7 +177,7 @@ const SupplierAuditChecklist: React.FC = () => {
       // Create new audit
       savedAudit = await createAudit(auditData);
     }
-    
+
     if (savedAudit) {
       setShowSaveDialog(false);
     }
@@ -213,7 +213,7 @@ const SupplierAuditChecklist: React.FC = () => {
   };
 
   // Render audit info section
-  const renderAuditInfo = () => {
+  const RenderAuditInfo = () => {
     return (
       <Paper sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" gutterBottom>
@@ -229,8 +229,8 @@ const SupplierAuditChecklist: React.FC = () => {
               value={auditInfo.title || ''}
               onChange={handleAuditInfoChange}
               required
-              margin="normal"
-            />
+              margin="normal" />
+
           </Grid>
           
           <Grid item xs={12} md={6}>
@@ -240,8 +240,8 @@ const SupplierAuditChecklist: React.FC = () => {
                 name="auditType"
                 value={auditInfo.auditType || 'initial'}
                 onChange={handleAuditInfoChange}
-                label="Audit Type"
-              >
+                label="Audit Type">
+
                 <MenuItem value="initial">Initial</MenuItem>
                 <MenuItem value="surveillance">Surveillance</MenuItem>
                 <MenuItem value="recertification">Recertification</MenuItem>
@@ -262,8 +262,8 @@ const SupplierAuditChecklist: React.FC = () => {
                     fullWidth: true,
                     margin: 'normal'
                   }
-                }}
-              />
+                }} />
+
             </LocalizationProvider>
           </Grid>
           
@@ -278,8 +278,8 @@ const SupplierAuditChecklist: React.FC = () => {
                     fullWidth: true,
                     margin: 'normal'
                   }
-                }}
-              />
+                }} />
+
             </LocalizationProvider>
           </Grid>
           
@@ -290,8 +290,8 @@ const SupplierAuditChecklist: React.FC = () => {
                 name="status"
                 value={auditInfo.status || 'planned'}
                 onChange={handleAuditInfoChange}
-                label="Status"
-              >
+                label="Status">
+
                 <MenuItem value="planned">Planned</MenuItem>
                 <MenuItem value="in-progress">In Progress</MenuItem>
                 <MenuItem value="completed">Completed</MenuItem>
@@ -310,8 +310,8 @@ const SupplierAuditChecklist: React.FC = () => {
               onChange={handleAuditInfoChange}
               multiline
               rows={2}
-              margin="normal"
-            />
+              margin="normal" />
+
           </Grid>
           
           <Grid item xs={12}>
@@ -322,8 +322,8 @@ const SupplierAuditChecklist: React.FC = () => {
               value={auditInfo.auditorName || ''}
               onChange={handleAuditInfoChange}
               required
-              margin="normal"
-            />
+              margin="normal" />
+
           </Grid>
           
           <Grid item xs={12}>
@@ -331,45 +331,45 @@ const SupplierAuditChecklist: React.FC = () => {
               Audit Team
             </Typography>
             
-            {auditInfo.auditTeam && auditInfo.auditTeam.map((member, index) => (
-              <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            {auditInfo.auditTeam && auditInfo.auditTeam.map((member, index) =>
+            <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <TextField
-                  label="Name"
-                  value={member.name || ''}
-                  onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
-                  sx={{ mr: 2, flex: 1 }}
-                  size="small"
-                />
+                label="Name"
+                value={member.name || ''}
+                onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)}
+                sx={{ mr: 2, flex: 1 }}
+                size="small" />
+
                 <TextField
-                  label="Role"
-                  value={member.role || ''}
-                  onChange={(e) => handleTeamMemberChange(index, 'role', e.target.value)}
-                  sx={{ mr: 2, flex: 1 }}
-                  size="small"
-                />
-                <IconButton 
-                  color="error" 
-                  onClick={() => handleRemoveTeamMember(index)}
-                  disabled={auditInfo.auditTeam && auditInfo.auditTeam.length <= 1}
-                >
+                label="Role"
+                value={member.role || ''}
+                onChange={(e) => handleTeamMemberChange(index, 'role', e.target.value)}
+                sx={{ mr: 2, flex: 1 }}
+                size="small" />
+
+                <IconButton
+                color="error"
+                onClick={() => handleRemoveTeamMember(index)}
+                disabled={auditInfo.auditTeam && auditInfo.auditTeam.length <= 1}>
+
                   <DeleteIcon />
                 </IconButton>
               </Box>
-            ))}
+            )}
             
             <Button
               startIcon={<AddIcon />}
               onClick={handleAddTeamMember}
               variant="outlined"
               size="small"
-              sx={{ mt: 1 }}
-            >
+              sx={{ mt: 1 }}>
+
               Add Team Member
             </Button>
           </Grid>
         </Grid>
-      </Paper>
-    );
+      </Paper>);
+
   };
 
   // If loading, show loading indicator
@@ -377,8 +377,8 @@ const SupplierAuditChecklist: React.FC = () => {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
         <CircularProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
@@ -387,60 +387,60 @@ const SupplierAuditChecklist: React.FC = () => {
         title="Supplier Audit Checklist"
         subtitle="Conduct and manage supplier audits"
         breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'Suppliers', href: '/suppliers' },
-          { label: 'Audit Checklist' }
-        ]}
+        { label: 'Home', href: '/' },
+        { label: 'Suppliers', href: '/suppliers' },
+        { label: 'Audit Checklist' }]
+        }
         actions={
-          <Box>
+        <Box>
             <Button
-              variant="outlined"
-              color="inherit"
-              startIcon={<ArrowBackIcon />}
-              onClick={() => navigate('/suppliers')}
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            color="inherit"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/suppliers')}
+            sx={{ mr: 1 }}>
+
               Back
             </Button>
             <Button
-              variant="contained"
-              color="primary"
-              startIcon={<SaveIcon />}
-              onClick={() => setShowSaveDialog(true)}
-              disabled={!selectedSupplier || !auditInfo.title || !auditInfo.auditorName}
-            >
+            variant="contained"
+            color="primary"
+            startIcon={<SaveIcon />}
+            onClick={() => setShowSaveDialog(true)}
+            disabled={!selectedSupplier || !auditInfo.title || !auditInfo.auditorName}>
+
               Save Audit
             </Button>
           </Box>
-        }
-      />
+        } />
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
 
       <Paper sx={{ p: 3, mb: 3 }}>
         <SupplierSelector
           suppliers={suppliers}
           selectedSupplier={selectedSupplier}
           onSupplierChange={handleSupplierChange}
-          disabled={loading || !!currentAudit?._id}
-        />
+          disabled={loading || !!currentAudit?._id} />
+
         
-        {audits.length > 0 && (
-          <Box sx={{ mt: 2 }}>
+        {audits.length > 0 &&
+        <Box sx={{ mt: 2 }}>
             <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<HistoryIcon />}
-              onClick={() => setShowHistoryDialog(true)}
-            >
+            variant="outlined"
+            color="primary"
+            startIcon={<HistoryIcon />}
+            onClick={() => setShowHistoryDialog(true)}>
+
               View Audit History ({audits.length})
             </Button>
           </Box>
-        )}
+        }
       </Paper>
 
       <Tabs value={activeTab} onChange={handleTabChange} sx={{ mb: 3 }}>
@@ -449,23 +449,23 @@ const SupplierAuditChecklist: React.FC = () => {
         <Tab label="Summary & Findings" />
       </Tabs>
 
-      {activeTab === 0 && renderAuditInfo()}
+      {activeTab === 0 && RenderAuditInfo()}
       
-      {activeTab === 1 && (
-        <AuditChecklist
-          checklist={checklist}
-          onAddItem={addChecklistItem}
-          onUpdateItem={updateChecklistItem}
-          onDeleteItem={removeChecklistItem}
-          onAddFinding={addFinding}
-          onRemoveFinding={removeFinding}
-          loading={loading}
-          readOnly={auditInfo.status === 'completed' || auditInfo.status === 'cancelled'}
-        />
-      )}
+      {activeTab === 1 &&
+      <AuditChecklist
+        checklist={checklist}
+        onAddItem={addChecklistItem}
+        onUpdateItem={updateChecklistItem}
+        onDeleteItem={removeChecklistItem}
+        onAddFinding={addFinding}
+        onRemoveFinding={removeFinding}
+        loading={loading}
+        readOnly={auditInfo.status === 'completed' || auditInfo.status === 'cancelled'} />
+
+      }
       
-      {activeTab === 2 && (
-        <Paper sx={{ p: 3 }}>
+      {activeTab === 2 &&
+      <Paper sx={{ p: 3 }}>
           <Typography variant="h6" gutterBottom>
             Audit Summary & Findings
           </Typography>
@@ -473,28 +473,28 @@ const SupplierAuditChecklist: React.FC = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TextField
-                fullWidth
-                name="summary"
-                label="Audit Summary"
-                value={auditInfo.summary || ''}
-                onChange={handleAuditInfoChange}
-                multiline
-                rows={4}
-                margin="normal"
-              />
+              fullWidth
+              name="summary"
+              label="Audit Summary"
+              value={auditInfo.summary || ''}
+              onChange={handleAuditInfoChange}
+              multiline
+              rows={4}
+              margin="normal" />
+
             </Grid>
             
             <Grid item xs={12} md={6}>
               <TextField
-                fullWidth
-                name="recommendations"
-                label="Recommendations"
-                value={auditInfo.recommendations || ''}
-                onChange={handleAuditInfoChange}
-                multiline
-                rows={4}
-                margin="normal"
-              />
+              fullWidth
+              name="recommendations"
+              label="Recommendations"
+              value={auditInfo.recommendations || ''}
+              onChange={handleAuditInfoChange}
+              multiline
+              rows={4}
+              margin="normal" />
+
             </Grid>
             
             <Grid item xs={12}>
@@ -507,9 +507,9 @@ const SupplierAuditChecklist: React.FC = () => {
                         Observations
                       </Typography>
                       <Typography variant="h5">
-                        {checklist.reduce((count, item) => 
-                          count + (item.findings?.filter(f => f.type === 'observation').length || 0), 0
-                        )}
+                        {checklist.reduce((count, item) =>
+                      count + (item.findings?.filter((f) => f.type === 'observation').length || 0), 0
+                      )}
                       </Typography>
                     </Grid>
                     
@@ -518,9 +518,9 @@ const SupplierAuditChecklist: React.FC = () => {
                         Minor Nonconformities
                       </Typography>
                       <Typography variant="h5" color="warning.main">
-                        {checklist.reduce((count, item) => 
-                          count + (item.findings?.filter(f => f.type === 'minor-nc').length || 0), 0
-                        )}
+                        {checklist.reduce((count, item) =>
+                      count + (item.findings?.filter((f) => f.type === 'minor-nc').length || 0), 0
+                      )}
                       </Typography>
                     </Grid>
                     
@@ -529,9 +529,9 @@ const SupplierAuditChecklist: React.FC = () => {
                         Major Nonconformities
                       </Typography>
                       <Typography variant="h5" color="error.main">
-                        {checklist.reduce((count, item) => 
-                          count + (item.findings?.filter(f => f.type === 'major-nc').length || 0), 0
-                        )}
+                        {checklist.reduce((count, item) =>
+                      count + (item.findings?.filter((f) => f.type === 'major-nc').length || 0), 0
+                      )}
                       </Typography>
                     </Grid>
                     
@@ -540,9 +540,9 @@ const SupplierAuditChecklist: React.FC = () => {
                         Critical Nonconformities
                       </Typography>
                       <Typography variant="h5" color="error.dark">
-                        {checklist.reduce((count, item) => 
-                          count + (item.findings?.filter(f => f.type === 'critical-nc').length || 0), 0
-                        )}
+                        {checklist.reduce((count, item) =>
+                      count + (item.findings?.filter((f) => f.type === 'critical-nc').length || 0), 0
+                      )}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -553,34 +553,34 @@ const SupplierAuditChecklist: React.FC = () => {
             <Grid item xs={12}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                  label="Next Audit Date"
-                  value={auditInfo.nextAuditDate ? new Date(auditInfo.nextAuditDate) : null}
-                  onChange={(date) => handleDateChange('nextAuditDate', date)}
-                  slotProps={{
-                    textField: {
-                      fullWidth: true,
-                      margin: 'normal'
-                    }
-                  }}
-                />
+                label="Next Audit Date"
+                value={auditInfo.nextAuditDate ? new Date(auditInfo.nextAuditDate) : null}
+                onChange={(date) => handleDateChange('nextAuditDate', date)}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    margin: 'normal'
+                  }
+                }} />
+
               </LocalizationProvider>
             </Grid>
           </Grid>
         </Paper>
-      )}
+      }
 
-      {/* Save Dialog */}
+      
       <Dialog open={showSaveDialog} onClose={() => setShowSaveDialog(false)}>
         <DialogTitle>Save Audit</DialogTitle>
         <DialogContent>
           <Typography>
             Are you sure you want to save this audit?
           </Typography>
-          {auditInfo.status === 'completed' && (
-            <Alert severity="warning" sx={{ mt: 2 }}>
+          {auditInfo.status === 'completed' &&
+          <Alert severity="warning" sx={{ mt: 2 }}>
               This audit is marked as completed. The audit results will be finalized and cannot be changed later.
             </Alert>
-          )}
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowSaveDialog(false)} color="inherit">
@@ -592,19 +592,19 @@ const SupplierAuditChecklist: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* History Dialog */}
-      <Dialog 
-        open={showHistoryDialog} 
+      
+      <Dialog
+        open={showHistoryDialog}
         onClose={() => setShowHistoryDialog(false)}
         maxWidth="md"
-        fullWidth
-      >
+        fullWidth>
+
         <DialogTitle>Audit History</DialogTitle>
         <DialogContent>
-          {audits.length > 0 ? (
-            <Grid container spacing={2}>
-              {audits.map((audit) => (
-                <Grid item xs={12} sm={6} key={audit._id}>
+          {audits.length > 0 ?
+          <Grid container spacing={2}>
+              {audits.map((audit) =>
+            <Grid item xs={12} sm={6} key={audit._id}>
                   <Card variant="outlined">
                     <CardContent>
                       <Typography variant="h6" gutterBottom>
@@ -622,22 +622,22 @@ const SupplierAuditChecklist: React.FC = () => {
                       <Typography variant="body2">
                         Lead Auditor: {audit.auditorName}
                       </Typography>
-                      <Button 
-                        variant="outlined" 
-                        size="small" 
-                        sx={{ mt: 2 }}
-                        onClick={() => handleSelectAudit(audit._id!)}
-                      >
+                      <Button
+                    variant="outlined"
+                    size="small"
+                    sx={{ mt: 2 }}
+                    onClick={() => handleSelectAudit(audit._id!)}>
+
                         Load Audit
                       </Button>
                     </CardContent>
                   </Card>
                 </Grid>
-              ))}
-            </Grid>
-          ) : (
-            <Typography>No audit history found for this supplier.</Typography>
-          )}
+            )}
+            </Grid> :
+
+          <Typography>No audit history found for this supplier.</Typography>
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowHistoryDialog(false)} color="primary">
@@ -646,27 +646,27 @@ const SupplierAuditChecklist: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Floating action buttons */}
+      
       <Box sx={{ position: 'fixed', bottom: 20, right: 20 }}>
-        {currentAudit?._id && (
-          <Tooltip title="Delete Audit">
+        {currentAudit?._id &&
+        <Tooltip title="Delete Audit">
             <Fab color="error" size="small" sx={{ mr: 1 }} onClick={handleDeleteAudit}>
               <DeleteIcon />
             </Fab>
           </Tooltip>
-        )}
+        }
         <Tooltip title="Save Audit">
-          <Fab 
-            color="primary" 
+          <Fab
+            color="primary"
             onClick={() => setShowSaveDialog(true)}
-            disabled={!selectedSupplier || !auditInfo.title || !auditInfo.auditorName}
-          >
+            disabled={!selectedSupplier || !auditInfo.title || !auditInfo.auditorName}>
+
             <SaveIcon />
           </Fab>
         </Tooltip>
       </Box>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default SupplierAuditChecklist; 
+export default SupplierAuditChecklist;

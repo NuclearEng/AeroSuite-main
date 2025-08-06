@@ -41,29 +41,29 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user }) => {
     notifications: {
       email: true,
       browser: true,
-      mobile: false,
+      mobile: false
     },
     emailNotifications: {
       newInspections: true,
       inspectionUpdates: true,
       newFindings: true,
-      weeklyDigest: false,
+      weeklyDigest: false
     },
     privacy: {
       shareData: false,
-      allowAnalytics: true,
+      allowAnalytics: true
     },
     display: {
       dashboardLayout: 'grid',
       compactView: false,
       showAnimations: true,
-      highContrastMode: false,
-    },
+      highContrastMode: false
+    }
   });
 
   React.useEffect(() => {
     if (user.preferences) {
-      setSettings(prevSettings => ({
+      setSettings((prevSettings) => ({
         ...prevSettings,
         theme: user.preferences?.theme || prevSettings.theme,
         language: user.preferences?.language || prevSettings.language,
@@ -71,23 +71,23 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user }) => {
           ...prevSettings.notifications,
           email: user.preferences?.notifications?.email ?? prevSettings.notifications.email,
           browser: user.preferences?.notifications?.browser ?? prevSettings.notifications.browser,
-          mobile: user.preferences?.notifications?.mobile ?? prevSettings.notifications.mobile,
+          mobile: user.preferences?.notifications?.mobile ?? prevSettings.notifications.mobile
         },
         display: {
           ...prevSettings.display,
           dashboardLayout: user.preferences?.display?.dashboardLayout || prevSettings.display.dashboardLayout,
           compactView: user.preferences?.display?.compactView ?? prevSettings.display.compactView,
           showAnimations: user.preferences?.display?.showAnimations ?? prevSettings.display.showAnimations,
-          highContrastMode: user.preferences?.display?.highContrastMode ?? prevSettings.display.highContrastMode,
-        },
+          highContrastMode: user.preferences?.display?.highContrastMode ?? prevSettings.display.highContrastMode
+        }
       }));
     }
   }, [user.preferences]);
 
   const handleThemeChange = (newTheme: 'light' | 'dark') => {
-    setSettings(prev => ({
+    setSettings((prev) => ({
       ...prev,
-      theme: newTheme,
+      theme: newTheme
     }));
     toggleColorMode();
   };
@@ -101,7 +101,7 @@ export const UserSettings: React.FC<UserSettingsProps> = ({ user }) => {
           Toggle Theme
         </button>
       </section>
-      {/* Add other settings sections */}
-    </div>
-  );
+      
+    </div>);
+
 };

@@ -18,15 +18,15 @@ import {
   Card,
   CardContent,
   Chip,
-  Divider
-} from '@mui/material';
-import { 
-  PhoneAndroid as PhoneIcon, 
-  Email as EmailIcon, 
+  Divider } from
+'@mui/material';
+import {
+  PhoneAndroid as PhoneIcon,
+  Email as EmailIcon,
   QrCode as QrCodeIcon,
   Lock as LockIcon,
-  Security as SecurityIcon
-} from '@mui/icons-material';
+  Security as SecurityIcon } from
+'@mui/icons-material';
 
 // API services
 import AuthService from '../../services/auth.service';
@@ -43,7 +43,7 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
   const [method, setMethod] = useState<'app' | 'email' | 'sms'>('app');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Setup data
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [secret, setSecret] = useState<string | null>(null);
@@ -65,15 +65,15 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
   const handleSetup = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await AuthService.setupTwoFactor(method);
-      
+
       if (method === 'app') {
         setQrCode(response.qrCode);
         setSecret(response.secret);
       }
-      
+
       handleNext();
     } catch (err: any) {
       setError(err.message || 'Failed to setup two-factor authentication');
@@ -85,7 +85,7 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
   const handleVerify = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const response = await AuthService.verifyTwoFactor(verificationCode);
       setBackupCodes(response.backupCodes);
@@ -101,8 +101,8 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
     onComplete();
   };
 
-  const renderMethodSelection = () => (
-    <Box sx={{ mt: 2 }}>
+  const RenderMethodSelection = () =>
+  <Box sx={{ mt: 2 }}>
       <Typography variant="h6" gutterBottom>
         Choose Authentication Method
       </Typography>
@@ -110,11 +110,11 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
       <FormControl component="fieldset" sx={{ width: '100%', mt: 2 }}>
         <RadioGroup value={method} onChange={handleMethodChange}>
           <Paper variant="outlined" sx={{ mb: 2, p: 2, border: method === 'app' ? '2px solid' : '1px solid', borderColor: method === 'app' ? 'primary.main' : 'divider' }}>
-            <FormControlLabel 
-              value="app" 
-              control={<Radio />} 
-              label={
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <FormControlLabel
+            value="app"
+            control={<Radio />}
+            label={
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <QrCodeIcon sx={{ mr: 1, color: 'primary.main' }} />
                   <Box>
                     <Typography variant="subtitle1">Authenticator App</Typography>
@@ -122,23 +122,23 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
                       Use an app like Google Authenticator, Authy, or Microsoft Authenticator
                     </Typography>
                   </Box>
-                  <Chip 
-                    label="Recommended" 
-                    color="primary" 
-                    size="small" 
-                    sx={{ ml: 2, display: { xs: 'none', sm: 'flex' } }} 
-                  />
+                  <Chip
+                label="Recommended"
+                color="primary"
+                size="small"
+                sx={{ ml: 2, display: { xs: 'none', sm: 'flex' } }} />
+
                 </Box>
-              }
-            />
+            } />
+
           </Paper>
           
           <Paper variant="outlined" sx={{ mb: 2, p: 2, border: method === 'email' ? '2px solid' : '1px solid', borderColor: method === 'email' ? 'primary.main' : 'divider' }}>
-            <FormControlLabel 
-              value="email" 
-              control={<Radio />} 
-              label={
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <FormControlLabel
+            value="email"
+            control={<Radio />}
+            label={
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <EmailIcon sx={{ mr: 1, color: 'primary.main' }} />
                   <Box>
                     <Typography variant="subtitle1">Email</Typography>
@@ -147,16 +147,16 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
                     </Typography>
                   </Box>
                 </Box>
-              }
-            />
+            } />
+
           </Paper>
           
           <Paper variant="outlined" sx={{ p: 2, border: method === 'sms' ? '2px solid' : '1px solid', borderColor: method === 'sms' ? 'primary.main' : 'divider' }}>
-            <FormControlLabel 
-              value="sms" 
-              control={<Radio />} 
-              label={
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <FormControlLabel
+            value="sms"
+            control={<Radio />}
+            label={
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <PhoneIcon sx={{ mr: 1, color: 'primary.main' }} />
                   <Box>
                     <Typography variant="subtitle1">SMS</Typography>
@@ -165,15 +165,15 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
                     </Typography>
                   </Box>
                 </Box>
-              }
-            />
+            } />
+
           </Paper>
         </RadioGroup>
       </FormControl>
-    </Box>
-  );
+    </Box>;
 
-  const renderSetup = () => {
+
+  const RenderSetup = () => {
     if (method === 'app') {
       return (
         <Box sx={{ mt: 2, textAlign: 'center' }}>
@@ -189,33 +189,33 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
             2. Scan this QR code with your authenticator app
           </Typography>
           
-          {qrCode && (
-            <Box sx={{ mt: 2, mb: 3, display: 'flex', justifyContent: 'center' }}>
+          {qrCode &&
+          <Box sx={{ mt: 2, mb: 3, display: 'flex', justifyContent: 'center' }}>
               <img src={qrCode} alt="QR Code" style={{ width: 200, height: 200 }} />
             </Box>
-          )}
+          }
           
           <Typography variant="body1" paragraph>
             3. If you can't scan the code, enter this setup key manually:
           </Typography>
           
           <Box sx={{ mb: 3 }}>
-            <Paper 
-              variant="outlined" 
-              sx={{ 
-                display: 'inline-block', 
-                p: 2, 
+            <Paper
+              variant="outlined"
+              sx={{
+                display: 'inline-block',
+                p: 2,
                 letterSpacing: 1,
                 fontFamily: 'monospace',
                 fontWeight: 'bold',
                 fontSize: '1.1rem'
-              }}
-            >
+              }}>
+
               {secret}
             </Paper>
           </Box>
-        </Box>
-      );
+        </Box>);
+
     } else if (method === 'email') {
       return (
         <Box sx={{ mt: 2 }}>
@@ -230,8 +230,8 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
           <Typography variant="body1">
             With email authentication, you'll receive a unique code via email each time you log in.
           </Typography>
-        </Box>
-      );
+        </Box>);
+
     } else {
       return (
         <Box sx={{ mt: 2 }}>
@@ -246,44 +246,44 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
           <Typography variant="body1">
             With SMS authentication, you'll receive a unique code via text message each time you log in.
           </Typography>
-        </Box>
-      );
+        </Box>);
+
     }
   };
 
-  const renderVerification = () => (
-    <Box sx={{ mt: 2 }}>
+  const RenderVerification = () =>
+  <Box sx={{ mt: 2 }}>
       <Typography variant="h6" gutterBottom>
         Verify {method === 'app' ? 'Authenticator App' : method === 'email' ? 'Email' : 'SMS'}
       </Typography>
       
       <Typography variant="body1" sx={{ mb: 3 }}>
-        {method === 'app' 
-          ? 'Enter the 6-digit code from your authenticator app to verify setup.' 
-          : method === 'email'
-            ? 'Enter the verification code sent to your email.'
-            : 'Enter the verification code sent to your phone.'}
+        {method === 'app' ?
+      'Enter the 6-digit code from your authenticator app to verify setup.' :
+      method === 'email' ?
+      'Enter the verification code sent to your email.' :
+      'Enter the verification code sent to your phone.'}
       </Typography>
       
       <TextField
-        label="Verification Code"
-        variant="outlined"
-        fullWidth
-        value={verificationCode}
-        onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').substring(0, 6))}
-        placeholder="123456"
-        inputProps={{ 
-          maxLength: 6,
-          inputMode: 'numeric',
-          pattern: '[0-9]*'
-        }}
-        autoFocus
-      />
-    </Box>
-  );
+      label="Verification Code"
+      variant="outlined"
+      fullWidth
+      value={verificationCode}
+      onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').substring(0, 6))}
+      placeholder="123456"
+      inputProps={{
+        maxLength: 6,
+        inputMode: 'numeric',
+        pattern: '[0-9]*'
+      }}
+      autoFocus />
 
-  const renderBackupCodes = () => (
-    <Box sx={{ mt: 2 }}>
+    </Box>;
+
+
+  const RenderBackupCodes = () =>
+  <Box sx={{ mt: 2 }}>
       <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
         <SecurityIcon sx={{ mr: 1, color: 'primary.main' }} />
         Backup Codes
@@ -300,33 +300,33 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
       </Typography>
       
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        {backupCodes.map((code, index) => (
-          <Grid item xs={6} sm={4} key={index}>
+        {backupCodes.map((code, index) =>
+      <Grid item xs={6} sm={4} key={index}>
             <Card variant="outlined">
               <CardContent sx={{ py: 1, px: 2, textAlign: 'center', fontFamily: 'monospace' }}>
                 {code}
               </CardContent>
             </Card>
           </Grid>
-        ))}
+      )}
       </Grid>
       
       <Typography variant="body2" color="text.secondary">
         Two-factor authentication is now enabled for your account.
       </Typography>
-    </Box>
-  );
+    </Box>;
+
 
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return renderMethodSelection();
+        return RenderMethodSelection();
       case 1:
-        return renderSetup();
+        return RenderSetup();
       case 2:
-        return renderVerification();
+        return RenderVerification();
       case 3:
-        return renderBackupCodes();
+        return RenderBackupCodes();
       default:
         return 'Unknown step';
     }
@@ -342,18 +342,18 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
       <Divider sx={{ mb: 3 }} />
       
       <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-        {steps.map((label) => (
-          <Step key={label}>
+        {steps.map((label) =>
+        <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
-        ))}
+        )}
       </Stepper>
       
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
       
       {getStepContent(activeStep)}
       
@@ -361,31 +361,31 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
         <Button
           variant="outlined"
           onClick={activeStep === 0 ? onCancel : handleBack}
-          disabled={loading}
-        >
+          disabled={loading}>
+
           {activeStep === 0 ? 'Cancel' : 'Back'}
         </Button>
         
         <Button
           variant="contained"
           onClick={
-            activeStep === 0 ? handleSetup : 
-            activeStep === 1 ? handleNext : 
-            activeStep === 2 ? handleVerify : 
-            handleComplete
+          activeStep === 0 ? handleSetup :
+          activeStep === 1 ? handleNext :
+          activeStep === 2 ? handleVerify :
+          handleComplete
           }
-          disabled={loading || (activeStep === 2 && verificationCode.length !== 6)}
-          startIcon={loading ? <CircularProgress size={20} /> : null}
-        >
-          {loading ? 'Processing...' : 
-           activeStep === steps.length - 1 ? 'Finish' : 
-           activeStep === 0 ? 'Continue' : 
-           activeStep === 1 ? 'Next' : 
-           'Verify'}
+          disabled={loading || activeStep === 2 && verificationCode.length !== 6}
+          startIcon={loading ? <CircularProgress size={20} /> : null}>
+
+          {loading ? 'Processing...' :
+          activeStep === steps.length - 1 ? 'Finish' :
+          activeStep === 0 ? 'Continue' :
+          activeStep === 1 ? 'Next' :
+          'Verify'}
         </Button>
       </Box>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default TwoFactorSetup; 
+export default TwoFactorSetup;

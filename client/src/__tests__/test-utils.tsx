@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
 
 // Mock store
 const mockStore = configureStore({
-  reducer: rootReducer,
+  reducer: rootReducer
 });
 
 // Interface for render options with custom props
@@ -39,14 +39,14 @@ interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
 }
 
 // Custom render function that wraps components with all necessary providers
-function customRender(
-  ui: ReactElement,
-  {
-    store = mockStore,
-    ...renderOptions
-  }: CustomRenderOptions = {}
-) {
-  function Wrapper({ children }: { children: React.ReactNode }) {
+function CustomRender(
+ui: ReactElement,
+{
+  store = mockStore,
+  ...renderOptions
+}: CustomRenderOptions = {})
+{
+  function Wrapper({ children }: {children: React.ReactNode;}) {
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -57,8 +57,8 @@ function customRender(
             </BrowserRouter>
           </SnackbarProvider>
         </ThemeProvider>
-      </Provider>
-    );
+      </Provider>);
+
   }
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 }
@@ -67,5 +67,5 @@ function customRender(
 export * from '@testing-library/react';
 
 // Export both names for backward compatibility
-export { customRender as render };
-export { customRender as renderWithProviders }; 
+export { CustomRender as render };
+export { CustomRender as renderWithProviders };

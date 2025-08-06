@@ -21,18 +21,18 @@ import {
   ListItemText,
   ListItemIcon,
   Switch,
-  FormControlLabel
-} from '@mui/material';
+  FormControlLabel } from
+'@mui/material';
 import { PageHeader } from '../components/common';
 import { useDynamicImport } from '../utils/codeSplitting';
-import { 
+import {
   Speed as SpeedIcon,
   Visibility as VisibilityIcon,
   TouchApp as TouchAppIcon,
   Route as RouteIcon,
   Image as ImageIcon,
-  Code as CodeIcon
-} from '@mui/icons-material';
+  Code as CodeIcon } from
+'@mui/icons-material';
 import LazyLoadedImage from '../components/ui-library/molecules/LazyLoadedImage';
 import LazyLoadedComponent from '../components/ui-library/molecules/LazyLoadedComponent';
 import { usePrefetchRoutesOnHover } from '../hooks/useLazyRoute';
@@ -57,74 +57,74 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== index}
       id={`code-splitting-tabpanel-${index}`}
       aria-labelledby={`code-splitting-tab-${index}`}
-      {...other}
-    >
+      {...other}>
+
       {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
-    </div>
-  );
+    </div>);
+
 };
 
 // Demo images for lazy loading
 const demoImages = [
-  {
-    src: 'https://source.unsplash.com/random/800x400?aerospace',
-    alt: 'Aerospace Image 1'
-  },
-  {
-    src: 'https://source.unsplash.com/random/800x400?aircraft',
-    alt: 'Aircraft Image'
-  },
-  {
-    src: 'https://source.unsplash.com/random/800x400?manufacturing',
-    alt: 'Manufacturing Image'
-  },
-  {
-    src: 'https://source.unsplash.com/random/800x400?technology',
-    alt: 'Technology Image'
-  }
-];
+{
+  src: 'https://source.unsplash.com/random/800x400?aerospace',
+  alt: 'Aerospace Image 1'
+},
+{
+  src: 'https://source.unsplash.com/random/800x400?aircraft',
+  alt: 'Aircraft Image'
+},
+{
+  src: 'https://source.unsplash.com/random/800x400?manufacturing',
+  alt: 'Manufacturing Image'
+},
+{
+  src: 'https://source.unsplash.com/random/800x400?technology',
+  alt: 'Technology Image'
+}];
+
 
 // Demo components for lazy loading
 const demoComponents = [
-  {
-    name: 'Chart Component',
-    importFn: () => import('../components/ui-library/molecules/charts/LineChart')
-  },
-  {
-    name: 'Data Grid Component',
-    importFn: () => import('../components/ui-library/organisms/DataGrid')
-  },
-  {
-    name: 'Form Builder Component',
-    importFn: () => import('../components/ui-library/organisms/FormBuilder')
-  }
-];
+{
+  name: 'Chart Component',
+  importFn: () => import('../components/ui-library/molecules/charts/LineChart')
+},
+{
+  name: 'Data Grid Component',
+  importFn: () => import('../components/ui-library/organisms/DataGrid')
+},
+{
+  name: 'Form Builder Component',
+  importFn: () => import('../components/ui-library/organisms/FormBuilder')
+}];
+
 
 // Demo routes for prefetching
 const demoRoutes = [
-  '/dashboard',
-  '/customers',
-  '/suppliers',
-  '/inspections'
-];
+'/dashboard',
+'/customers',
+'/suppliers',
+'/inspections'];
+
 
 const CodeSplittingDemo: React.FC = () => {
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
   const [activeComponent, setActiveComponent] = useState<number | null>(null);
   const [loadComponentOnDemand, setLoadComponentOnDemand] = useState(false);
-  
+
   // Use dynamic imports for each heavy component
   const heavyComponent1 = useDynamicImport(HeavyComponent1);
   const heavyComponent2 = useDynamicImport(HeavyComponent2);
   const heavyComponent3 = useDynamicImport(HeavyComponent3);
-  
+
   const { hoverProps, isPrefetching } = usePrefetchRoutesOnHover(demoRoutes);
-  
+
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   const loadComponent = async (componentNumber: number) => {
     setActiveComponent(componentNumber);
     try {
@@ -143,9 +143,9 @@ const CodeSplittingDemo: React.FC = () => {
       console.error('Failed to load component:', error);
     }
   };
-  
+
   // Render the dynamically loaded component
-  const renderComponent = () => {
+  const RenderComponent = () => {
     if (activeComponent === 1 && heavyComponent1.module) {
       const Component = heavyComponent1.module.default;
       return <Component />;
@@ -158,9 +158,9 @@ const CodeSplittingDemo: React.FC = () => {
     }
     return null;
   };
-  
+
   const isLoading = heavyComponent1.loading || heavyComponent2.loading || heavyComponent3.loading;
-  
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -171,7 +171,7 @@ const CodeSplittingDemo: React.FC = () => {
         This page demonstrates the various lazy loading techniques implemented in RF033 (Code Splitting) and RF034 (Lazy Loading).
       </Typography>
       
-      {/* Overview Section */}
+      
       <Card sx={{ mb: 4 }}>
         <CardHeader title="Overview" />
         <CardContent>
@@ -185,43 +185,43 @@ const CodeSplittingDemo: React.FC = () => {
               <ListItemIcon>
                 <SpeedIcon color="primary" />
               </ListItemIcon>
-              <ListItemText 
-                primary="Improved Performance" 
-                secondary="Reduces initial bundle size and improves time-to-interactive" 
-              />
+              <ListItemText
+                primary="Improved Performance"
+                secondary="Reduces initial bundle size and improves time-to-interactive" />
+
             </ListItem>
             <ListItem>
               <ListItemIcon>
                 <VisibilityIcon color="primary" />
               </ListItemIcon>
-              <ListItemText 
-                primary="Visibility-Based Loading" 
-                secondary="Components load only when they become visible in the viewport" 
-              />
+              <ListItemText
+                primary="Visibility-Based Loading"
+                secondary="Components load only when they become visible in the viewport" />
+
             </ListItem>
             <ListItem>
               <ListItemIcon>
                 <RouteIcon color="primary" />
               </ListItemIcon>
-              <ListItemText 
-                primary="Route-Based Splitting" 
-                secondary="Routes are loaded on demand when navigating" 
-              />
+              <ListItemText
+                primary="Route-Based Splitting"
+                secondary="Routes are loaded on demand when navigating" />
+
             </ListItem>
             <ListItem>
               <ListItemIcon>
                 <TouchAppIcon color="primary" />
               </ListItemIcon>
-              <ListItemText 
-                primary="Interaction-Based Prefetching" 
-                secondary="Resources are prefetched based on user interactions" 
-              />
+              <ListItemText
+                primary="Interaction-Based Prefetching"
+                secondary="Resources are prefetched based on user interactions" />
+
             </ListItem>
           </List>
         </CardContent>
       </Card>
       
-      {/* Image Lazy Loading Demo */}
+      
       <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         <ImageIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
         Image Lazy Loading
@@ -231,41 +231,41 @@ const CodeSplittingDemo: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {demoImages.map((image, index) => (
-          <Grid item xs={12} md={6} key={index}>
+        {demoImages.map((image, index) =>
+        <Grid item xs={12} md={6} key={index}>
             <Paper elevation={2} sx={{ p: 2 }}>
               <Typography variant="subtitle1" gutterBottom>
                 Image {index + 1}
               </Typography>
               <LazyLoadedImage
-                src={image.src}
-                alt={image.alt}
-                height={300}
-                width="100%"
-                placeholder={
-                  <Box 
-                    sx={{ 
-                      height: 300, 
-                      width: '100%', 
-                      bgcolor: 'grey.200',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
+              src={image.src}
+              alt={image.alt}
+              height={300}
+              width="100%"
+              placeholder={
+              <Box
+                sx={{
+                  height: 300,
+                  width: '100%',
+                  bgcolor: 'grey.200',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+
                     <Typography variant="body2" color="text.secondary">
                       Loading image...
                     </Typography>
                   </Box>
-                }
-                blurEffect={true}
-              />
+              }
+              blurEffect={true} />
+
             </Paper>
           </Grid>
-        ))}
+        )}
       </Grid>
       
-      {/* Component Lazy Loading Demo */}
+      
       <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         <CodeIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
         Component Lazy Loading
@@ -275,32 +275,32 @@ const CodeSplittingDemo: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {demoComponents.map((component, index) => (
-          <Grid item xs={12} md={4} key={index}>
+        {demoComponents.map((component, index) =>
+        <Grid item xs={12} md={4} key={index}>
             <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
               <Typography variant="subtitle1" gutterBottom>
                 {component.name}
               </Typography>
               <LazyLoadedComponent
-                importFn={component.importFn}
-                componentProps={{ 
-                  data: [
-                    { name: 'Jan', value: 400 },
-                    { name: 'Feb', value: 300 },
-                    { name: 'Mar', value: 600 },
-                    { name: 'Apr', value: 800 },
-                    { name: 'May', value: 500 }
-                  ] 
-                }}
-                height={250}
-                rootMargin="50px"
-              />
+              importFn={component.importFn}
+              componentProps={{
+                data: [
+                { name: 'Jan', value: 400 },
+                { name: 'Feb', value: 300 },
+                { name: 'Mar', value: 600 },
+                { name: 'Apr', value: 800 },
+                { name: 'May', value: 500 }]
+
+              }}
+              height={250}
+              rootMargin="50px" />
+
             </Paper>
           </Grid>
-        ))}
+        )}
       </Grid>
       
-      {/* On-Demand Loading Demo */}
+      
       <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         On-Demand Component Loading
       </Typography>
@@ -312,26 +312,26 @@ const CodeSplittingDemo: React.FC = () => {
         <CardContent>
           <FormControlLabel
             control={
-              <Switch 
-                checked={loadComponentOnDemand} 
-                onChange={() => setLoadComponentOnDemand(!loadComponentOnDemand)}
-              />
+            <Switch
+              checked={loadComponentOnDemand}
+              onChange={() => setLoadComponentOnDemand(!loadComponentOnDemand)} />
+
             }
-            label="Load Calendar Component"
-          />
+            label="Load Calendar Component" />
+
           
           <Box sx={{ mt: 2, minHeight: 300 }}>
-            {loadComponentOnDemand && (
-              <LazyLoadedComponent
-                importFn={() => import('../components/ui-library/organisms/Calendar')}
-                height={300}
-              />
-            )}
+            {loadComponentOnDemand &&
+            <LazyLoadedComponent
+              importFn={() => import('../components/ui-library/organisms/Calendar')}
+              height={300} />
+
+            }
           </Box>
         </CardContent>
       </Card>
       
-      {/* Route Prefetching Demo */}
+      
       <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         Route Prefetching on Hover
       </Typography>
@@ -342,11 +342,11 @@ const CodeSplittingDemo: React.FC = () => {
       <Card>
         <CardContent>
           <Box {...hoverProps}>
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               color="primary"
-              sx={{ mr: 2 }}
-            >
+              sx={{ mr: 2 }}>
+
               Hover to Prefetch Routes
             </Button>
             
@@ -361,7 +361,7 @@ const CodeSplittingDemo: React.FC = () => {
         </CardContent>
       </Card>
       
-      {/* Implementation Details */}
+      
       <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         Implementation Details
       </Typography>
@@ -374,40 +374,40 @@ const CodeSplittingDemo: React.FC = () => {
           
           <List dense>
             <ListItem>
-              <ListItemText 
-                primary="LazyLoadedImage Component" 
-                secondary="Loads images only when they scroll into view" 
-              />
+              <ListItemText
+                primary="LazyLoadedImage Component"
+                secondary="Loads images only when they scroll into view" />
+
             </ListItem>
             <ListItem>
-              <ListItemText 
-                primary="LazyLoadedComponent" 
-                secondary="Generic wrapper for lazy loading any component" 
-              />
+              <ListItemText
+                primary="LazyLoadedComponent"
+                secondary="Generic wrapper for lazy loading any component" />
+
             </ListItem>
             <ListItem>
-              <ListItemText 
-                primary="useVisibilityLazyLoad Hook" 
-                secondary="Loads components when they become visible in the viewport" 
-              />
+              <ListItemText
+                primary="useVisibilityLazyLoad Hook"
+                secondary="Loads components when they become visible in the viewport" />
+
             </ListItem>
             <ListItem>
-              <ListItemText 
-                primary="usePrefetchRoutesOnHover Hook" 
-                secondary="Prefetches routes when hovering over links" 
-              />
+              <ListItemText
+                primary="usePrefetchRoutesOnHover Hook"
+                secondary="Prefetches routes when hovering over links" />
+
             </ListItem>
             <ListItem>
-              <ListItemText 
-                primary="useAdvancedLazyLoad Hook" 
-                secondary="Advanced lazy loading with priority-based loading" 
-              />
+              <ListItemText
+                primary="useAdvancedLazyLoad Hook"
+                secondary="Advanced lazy loading with priority-based loading" />
+
             </ListItem>
           </List>
         </CardContent>
       </Card>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default CodeSplittingDemo; 
+export default CodeSplittingDemo;

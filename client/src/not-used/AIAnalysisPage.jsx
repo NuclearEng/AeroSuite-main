@@ -1,37 +1,37 @@
 import React, { useState } from 'react';
-import { 
-  Box, 
-  Button, 
-  Card, 
-  CardContent, 
-  CircularProgress, 
-  Container, 
-  Divider, 
-  FormControl, 
-  Grid, 
-  InputLabel, 
-  MenuItem, 
-  Paper, 
-  Select, 
-  Tab, 
-  Tabs, 
-  TextField, 
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Container,
+  Divider,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Tab,
+  Tabs,
+  TextField,
   Typography,
   Tooltip,
   Skeleton,
-  IconButton
-} from '@mui/material';
-import { 
-  BarChart, 
-  Bar, 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Legend, 
-  ResponsiveContainer 
-} from 'recharts';
+  IconButton } from
+'@mui/material';
+import {
+  BarChart,
+  Bar,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer } from
+'recharts';
 import { useTheme } from '@mui/material/styles';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -53,7 +53,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 const AIAnalysisPage = () => {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
-  
+
   // State management
   const [inputMethod, setInputMethod] = useState('paste');
   const [inputData, setInputData] = useState('');
@@ -72,17 +72,17 @@ const AIAnalysisPage = () => {
   const [previewData, setPreviewData] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [validationErrors, setValidationErrors] = useState([]);
-  
+
   const DataArraySchema = z.array(z.object({}).passthrough());
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-  
+
   const SAMPLE_DATA = '[{"value":1},{"value":2},{"value":3}]';
-  
+
   // Handle tab change
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
-  
+
   // Handle input method change
   const handleInputMethodChange = (event) => {
     setInputMethod(event.target.value);
@@ -90,7 +90,7 @@ const AIAnalysisPage = () => {
     setAnalysis(null);
     setInputError('');
   };
-  
+
   // Handle data format change
   const handleDataFormatChange = (event) => {
     setDataFormat(event.target.value);
@@ -98,7 +98,7 @@ const AIAnalysisPage = () => {
     setInputData('');
     setInputError('');
   };
-  
+
   // Handle options change
   const handleOptionChange = (event) => {
     setAnalysisOptions({
@@ -106,7 +106,7 @@ const AIAnalysisPage = () => {
       [event.target.name]: event.target.value
     });
   };
-  
+
   // Handle checkbox options
   const handleCheckboxChange = (event) => {
     setAnalysisOptions({
@@ -114,7 +114,7 @@ const AIAnalysisPage = () => {
       [event.target.name]: event.target.checked
     });
   };
-  
+
   // Handle file upload
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -133,7 +133,7 @@ const AIAnalysisPage = () => {
     };
     reader.readAsText(file);
   };
-  
+
   // Parse input data based on format
   const parseInputData = () => {
     try {
@@ -152,9 +152,9 @@ const AIAnalysisPage = () => {
       return null;
     }
   };
-  
+
   const validateInput = (data) => {
-    if (!data || (typeof data === 'string' && data.trim() === '')) {
+    if (!data || typeof data === 'string' && data.trim() === '') {
       setInputError('Input cannot be empty or whitespace.');
       return false;
     }
@@ -167,38 +167,38 @@ const AIAnalysisPage = () => {
       return false;
     }
   };
-  
+
   // Submit data for analysis
   const handleSubmit = async () => {
     const parsedData = parseInputData();
     if (!parsedData) return;
-    
+
     setLoading(true);
     try {
       const response = await axios.post('/api/v1/ai/analysis', {
         data: parsedData,
         options: analysisOptions
       });
-      
+
       setAnalysis(response.data.analysis);
       enqueueSnackbar('Analysis completed successfully', { variant: 'success' });
     } catch (_error) {
-      enqueueSnackbar(`Analysis failed: ${error.response?.data?.message || error.message}`, { 
-        variant: 'error' 
+      enqueueSnackbar(`Analysis failed: ${error.response?.data?.message || error.message}`, {
+        variant: 'error'
       });
     } finally {
       setLoading(false);
     }
   };
-  
+
   // Render summary statistics as cards
-  const renderSummaryStats = () => {
+  const RenderSummaryStats = () => {
     if (!analysis || !analysis.summary) return null;
-    
+
     return (
       <Grid container spacing={3} sx={{ mt: 2 }}>
-        {Object.entries(analysis.summary).map(([key, stats]) => (
-          <Grid item xs={12} md={6} lg={4} key={key}>
+        {Object.entries(analysis.summary).map(([key, stats]) =>
+        <Grid item xs={12} md={6} lg={4} key={key}>
             <Card>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -207,17 +207,17 @@ const AIAnalysisPage = () => {
                 <Typography variant="body2">Min: {stats.min}</Typography>
                 <Typography variant="body2">Max: {stats.max}</Typography>
                 <Typography variant="body2">Mean: {stats.mean}</Typography>
-                {stats.median && (
-                  <Typography variant="body2">Median: {stats.median}</Typography>
-                )}
+                {stats.median &&
+              <Typography variant="body2">Median: {stats.median}</Typography>
+              }
               </CardContent>
             </Card>
           </Grid>
-        ))}
-      </Grid>
-    );
+        )}
+      </Grid>);
+
   };
-  
+
   // Add a utility function to compute histogram if needed
   function computeHistogram(values, bucketCount = 10) {
     if (!Array.isArray(values) || values.length === 0) return [];
@@ -229,7 +229,7 @@ const AIAnalysisPage = () => {
       name: `${(min + i * size).toFixed(1)}-${(min + (i + 1) * size).toFixed(1)}`,
       value: 0
     }));
-    values.forEach(v => {
+    values.forEach((v) => {
       if (typeof v !== 'number') return;
       let idx = Math.floor((v - min) / size);
       if (idx === bucketCount) idx--;
@@ -237,9 +237,9 @@ const AIAnalysisPage = () => {
     });
     return buckets;
   }
-  
+
   // Render charts based on analysis data
-  const renderCharts = () => {
+  const RenderCharts = () => {
     if (!analysis || !analysis.summary) return null;
     const chartData = [];
     if (analysis.receivedType === 'array' && analysis.itemCount > 0) {
@@ -261,57 +261,57 @@ const AIAnalysisPage = () => {
         });
       }
     }
-    
+
     return (
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
           Data Visualization
         </Typography>
         <Grid container spacing={3}>
-          {chartData.map((chart, index) => (
-            <Grid item xs={12} md={6} key={index}>
+          {chartData.map((chart, index) =>
+          <Grid item xs={12} md={6} key={index}>
               <Paper sx={{ p: 2, height: 300 }}>
                 <Typography variant="subtitle1" gutterBottom>
                   {chart.field}
                 </Typography>
                 <ResponsiveContainer width="100%" height="90%">
-                  {chart.type === 'bar' ? (
-                    <BarChart data={chart.data}>
+                  {chart.type === 'bar' ?
+                <BarChart data={chart.data}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
                       <Tooltip />
                       <Legend />
                       <Bar dataKey="value" fill={theme.palette.primary.main} />
-                    </BarChart>
-                  ) : (
-                    <LineChart data={chart.data}>
+                    </BarChart> :
+
+                <LineChart data={chart.data}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Line 
-                        type="monotone" 
-                        dataKey="value" 
-                        stroke={theme.palette.secondary.main} 
-                        activeDot={{ r: 8 }} 
-                      />
+                      <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke={theme.palette.secondary.main}
+                    activeDot={{ r: 8 }} />
+
                     </LineChart>
-                  )}
+                }
                 </ResponsiveContainer>
               </Paper>
             </Grid>
-          ))}
+          )}
         </Grid>
-      </Box>
-    );
+      </Box>);
+
   };
-  
+
   // Render insights and recommendations
-  const renderInsights = () => {
+  const RenderInsights = () => {
     if (!analysis) return null;
-    
+
     return (
       <Box sx={{ mt: 4 }}>
         <Typography variant="h6" gutterBottom>
@@ -322,8 +322,8 @@ const AIAnalysisPage = () => {
             {analysis.message}
           </Typography>
           
-          {analysis.suggestedAnalysis && (
-            <>
+          {analysis.suggestedAnalysis &&
+          <>
               <Typography variant="subtitle1" gutterBottom>
                 Suggested Analysis
               </Typography>
@@ -331,29 +331,29 @@ const AIAnalysisPage = () => {
                 {analysis.suggestedAnalysis}
               </Typography>
             </>
-          )}
+          }
           
-          {analysis.outliers && analysis.outliers.length > 0 && (
-            <>
+          {analysis.outliers && analysis.outliers.length > 0 &&
+          <>
               <Typography variant="subtitle1" gutterBottom>
                 Outliers Detected
               </Typography>
               <ul>
-                {analysis.outliers.map((outlier, index) => (
-                  <li key={index}>
+                {analysis.outliers.map((outlier, index) =>
+              <li key={index}>
                     <Typography variant="body2">
                       {outlier.field}: {outlier.value} ({outlier.reason})
                     </Typography>
                   </li>
-                ))}
+              )}
               </ul>
             </>
-          )}
+          }
         </Paper>
-      </Box>
-    );
+      </Box>);
+
   };
-  
+
   const handleInputChange = (value) => {
     setHistory((h) => [...h, inputData]);
     setFuture([]);
@@ -361,21 +361,21 @@ const AIAnalysisPage = () => {
     setShowPreview(true);
     tryAutoDetectFormat(value);
   };
-  
+
   const handleUndo = () => {
     if (history.length === 0) return;
     setFuture((f) => [inputData, ...f]);
     setInputData(history[history.length - 1]);
     setHistory((h) => h.slice(0, -1));
   };
-  
+
   const handleRedo = () => {
     if (future.length === 0) return;
     setHistory((h) => [...h, inputData]);
     setInputData(future[0]);
     setFuture((f) => f.slice(1));
   };
-  
+
   const handleClearAll = () => {
     setInputData('');
     setAnalysis(null);
@@ -386,12 +386,12 @@ const AIAnalysisPage = () => {
     setHistory([]);
     setFuture([]);
   };
-  
+
   const handleTrySampleData = () => {
     handleInputChange(SAMPLE_DATA);
     setShowPreview(true);
   };
-  
+
   const tryAutoDetectFormat = (value) => {
     if (!value) return;
     if (value.trim().startsWith('[') || value.trim().startsWith('{')) {
@@ -400,7 +400,7 @@ const AIAnalysisPage = () => {
       setDataFormat('csv');
     }
   };
-  
+
   const handlePreview = () => {
     try {
       let parsed;
@@ -420,7 +420,7 @@ const AIAnalysisPage = () => {
       setShowPreview(false);
     }
   };
-  
+
   const handleDownloadResults = (type = 'json') => {
     if (!analysis) return;
     let dataStr = '';
@@ -430,7 +430,7 @@ const AIAnalysisPage = () => {
     } else {
       // Simple CSV export for summary
       const keys = Object.keys(analysis.summary || {});
-      const rows = keys.map(k => {
+      const rows = keys.map((k) => {
         const s = analysis.summary[k];
         return `${k},${s.min},${s.max},${s.mean},${s.median || ''}`;
       });
@@ -445,7 +445,7 @@ const AIAnalysisPage = () => {
     a.click();
     URL.revokeObjectURL(url);
   };
-  
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" gutterBottom>
@@ -456,7 +456,7 @@ const AIAnalysisPage = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {/* Input Section */}
+        
         <Grid item xs={12} md={5}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" gutterBottom>
@@ -490,8 +490,8 @@ const AIAnalysisPage = () => {
                 value={inputMethod}
                 label="Input Method"
                 onChange={handleInputMethodChange}
-                aria-label="Input Method"
-              >
+                aria-label="Input Method">
+
                 <MenuItem value="paste">Paste Data</MenuItem>
                 <MenuItem value="upload">Upload File</MenuItem>
               </Select>
@@ -504,71 +504,71 @@ const AIAnalysisPage = () => {
                 value={dataFormat}
                 label="Data Format"
                 onChange={handleDataFormatChange}
-                aria-label="Data Format"
-              >
+                aria-label="Data Format">
+
                 <MenuItem value="json">JSON</MenuItem>
                 <MenuItem value="csv">CSV</MenuItem>
               </Select>
             </FormControl>
             
-            {inputMethod === 'paste' ? (
-              <TextField
-                label={`Paste ${dataFormat.toUpperCase()} Data`}
-                aria-label="Paste Data"
-                multiline
-                rows={10}
-                value={inputData}
-                onChange={(e) => setInputData(e.target.value)}
-                margin="normal"
-                fullWidth
-                variant="outlined"
-                placeholder={dataFormat === 'json' ? '[ { "key": "value" } ]' : 'header1,header2\nvalue1,value2'}
-                aria-invalid={!!inputError}
-                aria-describedby="input-error-text"
-                inputProps={{ tabIndex: 0 }}
-                sx={{ '&:focus-within': { outline: '2px solid #1976d2' } }}
-              />
-            ) : (
-              <Button
-                variant="contained"
-                component="label"
-                sx={{ mt: 2, '&:focus': { outline: '2px solid #1976d2' } }}
-                tabIndex={0}
-                aria-label={`Upload ${dataFormat.toUpperCase()} File`}
-              >
+            {inputMethod === 'paste' ?
+            <TextField
+              label={`Paste ${dataFormat.toUpperCase()} Data`}
+              aria-label="Paste Data"
+              multiline
+              rows={10}
+              value={inputData}
+              onChange={(e) => setInputData(e.target.value)}
+              margin="normal"
+              fullWidth
+              variant="outlined"
+              placeholder={dataFormat === 'json' ? '[ { "key": "value" } ]' : 'header1,header2\nvalue1,value2'}
+              aria-invalid={!!inputError}
+              aria-describedby="input-error-text"
+              inputProps={{ tabIndex: 0 }}
+              sx={{ '&:focus-within': { outline: '2px solid #1976d2' } }} /> :
+
+
+            <Button
+              variant="contained"
+              component="label"
+              sx={{ mt: 2, '&:focus': { outline: '2px solid #1976d2' } }}
+              tabIndex={0}
+              aria-label={`Upload ${dataFormat.toUpperCase()} File`}>
+
                 Upload {dataFormat.toUpperCase()} File
                 <input
-                  type="file"
-                  accept={dataFormat === 'json' ? '.json' : '.csv'}
-                  hidden
-                  onChange={handleFileUpload}
-                  tabIndex={-1}
-                />
+                type="file"
+                accept={dataFormat === 'json' ? '.json' : '.csv'}
+                hidden
+                onChange={handleFileUpload}
+                tabIndex={-1} />
+
               </Button>
-            )}
+            }
             
-            {inputError && (
-              <Typography id="input-error-text" color="error" variant="body2" sx={{ mt: 1 }} role="alert">
+            {inputError &&
+            <Typography id="input-error-text" color="error" variant="body2" sx={{ mt: 1 }} role="alert">
                 {inputError}
               </Typography>
-            )}
+            }
             
-            {showPreview && previewData && (
-              <Paper sx={{ p: 2, mt: 2, bgcolor: '#f9f9f9' }}>
+            {showPreview && previewData &&
+            <Paper sx={{ p: 2, mt: 2, bgcolor: '#f9f9f9' }}>
                 <Typography variant="subtitle2">Preview ({Array.isArray(previewData) ? previewData.length : 0} rows)</Typography>
-                {Array.isArray(previewData) && previewData.length > 1000 && (
-                  <Typography color="warning.main" variant="body2">Warning: Large dataset, results may be slow to display.</Typography>
-                )}
+                {Array.isArray(previewData) && previewData.length > 1000 &&
+              <Typography color="warning.main" variant="body2">Warning: Large dataset, results may be slow to display.</Typography>
+              }
                 <pre style={{ maxHeight: 200, overflow: 'auto', fontSize: 12 }}>{JSON.stringify(previewData, null, 2)}</pre>
               </Paper>
-            )}
+            }
             
-            {validationErrors.length > 0 && (
-              <Paper sx={{ p: 2, mt: 2, bgcolor: '#fff3e0' }}>
+            {validationErrors.length > 0 &&
+            <Paper sx={{ p: 2, mt: 2, bgcolor: '#fff3e0' }}>
                 <Typography color="error" variant="body2">Validation Errors:</Typography>
                 <ul>{validationErrors.map((err, i) => <li key={i}><Typography color="error" variant="body2">{err}</Typography></li>)}</ul>
               </Paper>
-            )}
+            }
             
             <Divider sx={{ my: 2 }} />
             
@@ -582,8 +582,8 @@ const AIAnalysisPage = () => {
                 name="analysisType"
                 value={analysisOptions.analysisType}
                 label="Analysis Type"
-                onChange={handleOptionChange}
-              >
+                onChange={handleOptionChange}>
+
                 <MenuItem value="auto">Auto-detect</MenuItem>
                 <MenuItem value="numeric">Numeric</MenuItem>
                 <MenuItem value="categorical">Categorical</MenuItem>
@@ -599,8 +599,8 @@ const AIAnalysisPage = () => {
                     name="includeOutliers"
                     value={analysisOptions.includeOutliers}
                     label="Include Outliers"
-                    onChange={handleCheckboxChange}
-                  >
+                    onChange={handleCheckboxChange}>
+
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                   </Select>
@@ -613,8 +613,8 @@ const AIAnalysisPage = () => {
                     name="detailedStats"
                     value={analysisOptions.detailedStats}
                     label="Detailed Stats"
-                    onChange={handleCheckboxChange}
-                  >
+                    onChange={handleCheckboxChange}>
+
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                   </Select>
@@ -628,14 +628,14 @@ const AIAnalysisPage = () => {
               onClick={handleSubmit}
               disabled={!inputData || loading}
               sx={{ mt: 3 }}
-              fullWidth
-            >
+              fullWidth>
+
               {loading ? <CircularProgress size={24} /> : 'Analyze Data'}
             </Button>
           </Paper>
         </Grid>
         
-        {/* Results Section */}
+        
         <Grid item xs={12} md={7}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" gutterBottom>
@@ -643,22 +643,22 @@ const AIAnalysisPage = () => {
               <Tooltip title="Results will appear here after analysis. You can download them as JSON or CSV.">
                 <HelpOutlineIcon fontSize="small" sx={{ ml: 1 }} />
               </Tooltip>
-              {analysis && (
-                <Tooltip title="Download as JSON">
+              {analysis &&
+              <Tooltip title="Download as JSON">
                   <span><IconButton onClick={() => handleDownloadResults('json')}><DownloadIcon /></IconButton></span>
                 </Tooltip>
-              )}
-              {analysis && (
-                <Tooltip title="Download as CSV">
+              }
+              {analysis &&
+              <Tooltip title="Download as CSV">
                   <span><IconButton onClick={() => handleDownloadResults('csv')}><DownloadIcon /></IconButton></span>
                 </Tooltip>
-              )}
+              }
             </Typography>
             
-            {loading ? (
-              <Skeleton variant="rectangular" height={300} sx={{ my: 4 }} />
-            ) : analysis ? (
-              <>
+            {loading ?
+            <Skeleton variant="rectangular" height={300} sx={{ my: 4 }} /> :
+            analysis ?
+            <>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <Tabs value={activeTab} onChange={handleTabChange}>
                     <Tab label="Summary" />
@@ -668,68 +668,68 @@ const AIAnalysisPage = () => {
                   </Tabs>
                 </Box>
                 
-                {/* Summary Tab */}
-                {activeTab === 0 && (
-                  <Box sx={{ pt: 2 }}>
+                
+                {activeTab === 0 &&
+              <Box sx={{ pt: 2 }}>
                     <Typography variant="subtitle1">
                       Data Type: <strong>{analysis.receivedType}</strong>
                     </Typography>
-                    {analysis.receivedType === 'array' && (
-                      <Typography variant="subtitle1">
+                    {analysis.receivedType === 'array' &&
+                <Typography variant="subtitle1">
                         Item Count: <strong>{analysis.itemCount}</strong>
                       </Typography>
-                    )}
-                    {renderSummaryStats()}
+                }
+                    {RenderSummaryStats()}
                   </Box>
-                )}
+              }
                 
-                {/* Visualizations Tab */}
-                {activeTab === 1 && (
-                  <Box sx={{ pt: 2 }}>
-                    {renderCharts()}
+                
+                {activeTab === 1 &&
+              <Box sx={{ pt: 2 }}>
+                    {RenderCharts()}
                   </Box>
-                )}
+              }
                 
-                {/* Insights Tab */}
-                {activeTab === 2 && (
-                  <Box sx={{ pt: 2 }}>
-                    {renderInsights()}
+                
+                {activeTab === 2 &&
+              <Box sx={{ pt: 2 }}>
+                    {RenderInsights()}
                   </Box>
-                )}
+              }
                 
-                {/* Raw Data Tab */}
-                {activeTab === 3 && (
-                  <Box sx={{ pt: 2 }}>
+                
+                {activeTab === 3 &&
+              <Box sx={{ pt: 2 }}>
                     <Typography variant="subtitle1" gutterBottom>
                       Raw Analysis Results
                     </Typography>
-                    <Paper 
-                      sx={{ 
-                        p: 2, 
-                        maxHeight: 400, 
-                        overflow: 'auto',
-                        bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#F5F5F5'
-                      }}
-                    >
+                    <Paper
+                  sx={{
+                    p: 2,
+                    maxHeight: 400,
+                    overflow: 'auto',
+                    bgcolor: theme.palette.mode === 'dark' ? '#1E1E1E' : '#F5F5F5'
+                  }}>
+
                       <pre style={{ margin: 0 }}>
                         {JSON.stringify(analysis, null, 2)}
                       </pre>
                     </Paper>
                   </Box>
-                )}
-              </>
-            ) : (
-              <Box sx={{ my: 4, textAlign: 'center' }}>
+              }
+              </> :
+
+            <Box sx={{ my: 4, textAlign: 'center' }}>
                 <Typography variant="body1" color="textSecondary">
                   Enter your data and click "Analyze Data" to see results
                 </Typography>
               </Box>
-            )}
+            }
           </Paper>
         </Grid>
       </Grid>
-    </Container>
-  );
+    </Container>);
+
 };
 
-export default AIAnalysisPage; 
+export default AIAnalysisPage;

@@ -28,15 +28,15 @@ import {
   Alert,
   AlertTitle,
   IconButton,
-  Tooltip
-} from '@mui/material';
+  Tooltip } from
+'@mui/material';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
   Refresh as RefreshIcon,
   FileDownload as FileDownloadIcon,
-  Compare as CompareIcon
-} from '@mui/icons-material';
+  Compare as CompareIcon } from
+'@mui/icons-material';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -46,8 +46,8 @@ import {
   RadialLinearScale,
   Title,
   Tooltip as ChartTooltip,
-  Legend
-} from 'chart.js';
+  Legend } from
+'chart.js';
 import { Bar, Radar } from 'react-chartjs-2';
 import supplierService from '../../../services/supplier.service';
 import ErrorHandler from '../../../components/common/ErrorHandler';
@@ -97,7 +97,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [period, setPeriod] = useState<'3months' | '6months' | '1year'>('6months');
-  
+
   // Load suppliers for selection
   useEffect(() => {
     const loadSuppliers = async () => {
@@ -106,23 +106,23 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
           limit: 100,
           status: 'active'
         });
-        
-        const supplierOptions = response.suppliers.map(supplier => ({
+
+        const supplierOptions = response.suppliers.map((supplier) => ({
           id: supplier._id,
           name: supplier.name,
           code: supplier.code
         }));
-        
+
         setSuppliers(supplierOptions);
       } catch (err: any) {
         console.error('Error loading suppliers:', err);
         setError(err.message || 'Failed to load suppliers');
       }
     };
-    
+
     loadSuppliers();
   }, []);
-  
+
   // Load comparison data when selected suppliers change
   useEffect(() => {
     const loadComparisonData = async () => {
@@ -130,32 +130,32 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
         setComparisonData([]);
         return;
       }
-      
+
       try {
         setLoading(true);
         setError(null);
-        
-        const promises = selectedSuppliers.map(supplierId => 
-          supplierService.getSupplierAnalytics(supplierId, {
-            period: period === '3months' ? 'month' : period === '6months' ? 'month' : 'quarter',
-            metrics: comparisonMetrics
-          })
+
+        const promises = selectedSuppliers.map((supplierId) =>
+        supplierService.getSupplierAnalytics(supplierId, {
+          period: period === '3months' ? 'month' : period === '6months' ? 'month' : 'quarter',
+          metrics: comparisonMetrics
+        })
         );
-        
+
         const results = await Promise.all(promises);
-        
+
         // Transform the results into the format we need
         const supplierMetrics: SupplierMetrics[] = results.map((result, index) => {
           const supplierId = selectedSuppliers[index];
-          const supplierInfo = suppliers.find(s => s.id === supplierId);
-          
+          const supplierInfo = suppliers.find((s) => s.id === supplierId);
+
           return {
             supplierId,
             name: supplierInfo?.name || `Supplier ${index + 1}`,
             metrics: result.metrics
           };
         });
-        
+
         setComparisonData(supplierMetrics);
       } catch (err: any) {
         console.error('Error loading comparison data:', err);
@@ -164,37 +164,37 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
         setLoading(false);
       }
     };
-    
+
     if (selectedSuppliers.length > 0) {
       loadComparisonData();
     }
   }, [selectedSuppliers, period, comparisonMetrics]);
-  
+
   // Handle supplier selection
   const handleSupplierChange = (event: any, value: SupplierOption | null) => {
     if (value && !selectedSuppliers.includes(value.id)) {
       setSelectedSuppliers([...selectedSuppliers, value.id]);
     }
   };
-  
+
   // Handle removing a supplier
   const handleRemoveSupplier = (supplierId: string) => {
     // Don't allow removing the current supplier
     if (supplierId === currentSupplierId) return;
-    
-    setSelectedSuppliers(selectedSuppliers.filter(id => id !== supplierId));
+
+    setSelectedSuppliers(selectedSuppliers.filter((id) => id !== supplierId));
   };
-  
+
   // Handle period change
   const handlePeriodChange = (event: SelectChangeEvent) => {
     setPeriod(event.target.value as '3months' | '6months' | '1year');
   };
-  
+
   // Handle chart type change
   const handleChartTypeChange = (event: SelectChangeEvent) => {
     setChartType(event.target.value as 'bar' | 'radar');
   };
-  
+
   // Handle refresh
   const handleRefresh = () => {
     // Re-trigger the comparison data loading
@@ -204,50 +204,50 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
       setSelectedSuppliers(currentSelected);
     }, 100);
   };
-  
+
   // Handle export
   const handleExport = () => {
     // Implementation for exporting comparison data
     alert('Export functionality will be implemented');
   };
-  
+
   // Prepare chart data
   const chartData = {
-    labels: comparisonMetrics.map(metric => 
-      metric.charAt(0).toUpperCase() + metric.slice(1)
+    labels: comparisonMetrics.map((metric) =>
+    metric.charAt(0).toUpperCase() + metric.slice(1)
     ),
     datasets: comparisonData.map((supplier, index) => ({
       label: supplier.name,
-      data: comparisonMetrics.map(metric => supplier.metrics[metric] || 0),
+      data: comparisonMetrics.map((metric) => supplier.metrics[metric] || 0),
       backgroundColor: `rgba(${index * 50}, ${255 - index * 30}, ${150 + index * 20}, 0.6)`,
       borderColor: `rgba(${index * 50}, ${255 - index * 30}, ${150 + index * 20}, 1)`,
       borderWidth: 1
     }))
   };
-  
+
   // Chart options
   const barOptions = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top' as const
       },
       title: {
         display: true,
-        text: 'Supplier Performance Comparison',
-      },
+        text: 'Supplier Performance Comparison'
+      }
     },
     scales: {
       y: {
         beginAtZero: true,
         max: 100,
         ticks: {
-          callback: (value: any) => `${value}%`,
-        },
-      },
-    },
+          callback: (value: any) => `${value}%`
+        }
+      }
+    }
   };
-  
+
   const radarOptions = {
     responsive: true,
     scales: {
@@ -261,80 +261,80 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
     },
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top' as const
       },
       title: {
         display: true,
-        text: 'Supplier Performance Comparison',
-      },
-    },
+        text: 'Supplier Performance Comparison'
+      }
+    }
   };
-  
+
   // Render comparison table
-  const renderComparisonTable = () => {
+  const RenderComparisonTable = () => {
     if (comparisonData.length === 0) {
       return (
         <Alert severity="info">
           <AlertTitle>No Comparison Data</AlertTitle>
           Please select suppliers to compare.
-        </Alert>
-      );
+        </Alert>);
+
     }
-    
+
     return (
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Metric</TableCell>
-              {comparisonData.map(supplier => (
-                <TableCell key={supplier.supplierId}>
+              {comparisonData.map((supplier) =>
+              <TableCell key={supplier.supplierId}>
                   {supplier.name}
-                  {supplier.supplierId !== currentSupplierId && (
-                    <IconButton
-                      size="small"
-                      onClick={() => handleRemoveSupplier(supplier.supplierId)}
-                      sx={{ ml: 1 }}
-                    >
+                  {supplier.supplierId !== currentSupplierId &&
+                <IconButton
+                  size="small"
+                  onClick={() => handleRemoveSupplier(supplier.supplierId)}
+                  sx={{ ml: 1 }}>
+
                       <DeleteIcon fontSize="small" />
                     </IconButton>
-                  )}
+                }
                 </TableCell>
-              ))}
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
-            {comparisonMetrics.map(metric => (
-              <TableRow key={metric}>
+            {comparisonMetrics.map((metric) =>
+            <TableRow key={metric}>
                 <TableCell component="th" scope="row" sx={{ textTransform: 'capitalize' }}>
                   {metric}
                 </TableCell>
-                {comparisonData.map(supplier => (
-                  <TableCell key={supplier.supplierId}>
+                {comparisonData.map((supplier) =>
+              <TableCell key={supplier.supplierId}>
                     {supplier.metrics[metric]?.toFixed(1)}%
                     <LinearProgress
-                      variant="determinate"
-                      value={supplier.metrics[metric] || 0}
-                      color={
-                        supplier.metrics[metric] >= 80 ? 'success' :
-                        supplier.metrics[metric] >= 60 ? 'primary' :
-                        supplier.metrics[metric] >= 40 ? 'warning' : 'error'
-                      }
-                      sx={{ mt: 1, height: 5, borderRadius: 2 }}
-                    />
+                  variant="determinate"
+                  value={supplier.metrics[metric] || 0}
+                  color={
+                  supplier.metrics[metric] >= 80 ? 'success' :
+                  supplier.metrics[metric] >= 60 ? 'primary' :
+                  supplier.metrics[metric] >= 40 ? 'warning' : 'error'
+                  }
+                  sx={{ mt: 1, height: 5, borderRadius: 2 }} />
+
                   </TableCell>
-                ))}
+              )}
               </TableRow>
-            ))}
+            )}
             <TableRow>
               <TableCell component="th" scope="row">
                 <strong>Overall Score</strong>
               </TableCell>
-              {comparisonData.map(supplier => {
+              {comparisonData.map((supplier) => {
                 // Calculate average of all metrics
-                const metricValues = comparisonMetrics.map(metric => supplier.metrics[metric] || 0);
+                const metricValues = comparisonMetrics.map((metric) => supplier.metrics[metric] || 0);
                 const average = metricValues.reduce((sum, value) => sum + value, 0) / metricValues.length;
-                
+
                 return (
                   <TableCell key={supplier.supplierId}>
                     <strong>{average.toFixed(1)}%</strong>
@@ -342,30 +342,30 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
                       variant="determinate"
                       value={average}
                       color={
-                        average >= 80 ? 'success' :
-                        average >= 60 ? 'primary' :
-                        average >= 40 ? 'warning' : 'error'
+                      average >= 80 ? 'success' :
+                      average >= 60 ? 'primary' :
+                      average >= 40 ? 'warning' : 'error'
                       }
-                      sx={{ mt: 1, height: 5, borderRadius: 2 }}
-                    />
-                  </TableCell>
-                );
+                      sx={{ mt: 1, height: 5, borderRadius: 2 }} />
+
+                  </TableCell>);
+
               })}
             </TableRow>
           </TableBody>
         </Table>
-      </TableContainer>
-    );
+      </TableContainer>);
+
   };
-  
+
   return (
     <ErrorHandler context="Supplier Comparison Tool">
       <Card>
-        <CardHeader 
+        <CardHeader
           title={t('suppliers.comparison.title')}
           subheader={t('suppliers.comparison.description')}
           action={
-            <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box sx={{ display: 'flex', gap: 1 }}>
               <Tooltip title={t('common.refresh')}>
                 <IconButton onClick={handleRefresh} disabled={loading}>
                   <RefreshIcon />
@@ -377,26 +377,26 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
                 </IconButton>
               </Tooltip>
             </Box>
-          }
-        />
+          } />
+
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <Autocomplete
-                options={suppliers.filter(s => !selectedSuppliers.includes(s.id))}
+                options={suppliers.filter((s) => !selectedSuppliers.includes(s.id))}
                 getOptionLabel={(option) => `${option.name} (${option.code})`}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label={t('suppliers.comparison.selectSuppliers')}
-                    variant="outlined"
-                    fullWidth
-                  />
-                )}
+                renderInput={(params) =>
+                <TextField
+                  {...params}
+                  label={t('suppliers.comparison.selectSuppliers')}
+                  variant="outlined"
+                  fullWidth />
+
+                }
                 onChange={handleSupplierChange}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-              />
+                isOptionEqualToValue={(option, value) => option.id === value.id} />
+
             </Grid>
             <Grid item xs={12} md={2}>
               <FormControl fullWidth>
@@ -406,8 +406,8 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
                   id="period-select"
                   value={period}
                   onChange={handlePeriodChange}
-                  label={t('common.period')}
-                >
+                  label={t('common.period')}>
+
                   <MenuItem value="3months">{t('suppliers.analytics.period.3months')}</MenuItem>
                   <MenuItem value="6months">{t('suppliers.analytics.period.6months')}</MenuItem>
                   <MenuItem value="1year">{t('suppliers.analytics.period.1year')}</MenuItem>
@@ -422,8 +422,8 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
                   id="chart-type-select"
                   value={chartType}
                   onChange={handleChartTypeChange}
-                  label={t('suppliers.comparison.chartType')}
-                >
+                  label={t('suppliers.comparison.chartType')}>
+
                   <MenuItem value="bar">{t('suppliers.comparison.chartType.bar')}</MenuItem>
                   <MenuItem value="radar">{t('suppliers.comparison.chartType.radar')}</MenuItem>
                 </Select>
@@ -437,47 +437,47 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
                 fullWidth
                 onClick={handleRefresh}
                 disabled={loading}
-                sx={{ height: '56px' }}
-              >
+                sx={{ height: '56px' }}>
+
                 {t('suppliers.comparison.compare')}
               </Button>
             </Grid>
           </Grid>
           
-          {loading ? (
-            <Box sx={{ width: '100%', mt: 3 }}>
+          {loading ?
+          <Box sx={{ width: '100%', mt: 3 }}>
               <LinearProgress />
               <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
                 {t('suppliers.comparison.loading')}
               </Typography>
-            </Box>
-          ) : error ? (
-            <Alert severity="error" sx={{ mt: 3 }}>
+            </Box> :
+          error ?
+          <Alert severity="error" sx={{ mt: 3 }}>
               <AlertTitle>{t('common.error')}</AlertTitle>
               {error}
-            </Alert>
-          ) : (
-            <>
+            </Alert> :
+
+          <>
               <Box sx={{ mt: 4, mb: 4 }}>
-                {chartType === 'bar' ? (
-                  <Bar data={chartData} options={barOptions} />
-                ) : (
-                  <Radar data={chartData} options={radarOptions} />
-                )}
+                {chartType === 'bar' ?
+              <Bar data={chartData} options={barOptions} /> :
+
+              <Radar data={chartData} options={radarOptions} />
+              }
               </Box>
               
               <Box sx={{ mt: 4 }}>
                 <Typography variant="h6" gutterBottom>
                   {t('suppliers.comparison.detailedComparison')}
                 </Typography>
-                {renderComparisonTable()}
+                {RenderComparisonTable()}
               </Box>
             </>
-          )}
+          }
         </CardContent>
       </Card>
-    </ErrorHandler>
-  );
+    </ErrorHandler>);
+
 };
 
-export default SupplierComparisonTool; 
+export default SupplierComparisonTool;

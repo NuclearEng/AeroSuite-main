@@ -16,13 +16,13 @@ import {
   MenuItem,
   FormHelperText,
   Chip,
-  Autocomplete
-} from '@mui/material';
+  Autocomplete } from
+'@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   Save as SaveIcon,
-  LocationOn as LocationIcon
-} from '@mui/icons-material';
+  LocationOn as LocationIcon } from
+'@mui/icons-material';
 import MockDataService from '../../services/mockDataService';
 import type { Supplier, Customer } from '../../services/mockDataService';
 
@@ -30,7 +30,7 @@ import type { Supplier, Customer } from '../../services/mockDataService';
 interface SupplierWithRelationships extends Supplier {
   tier: 'tier1' | 'tier2' | 'tier3';
   category?: string;
-  customers?: { _id: string; name: string; code: string }[];
+  customers?: {_id: string;name: string;code: string;}[];
 }
 
 interface FormData {
@@ -70,7 +70,7 @@ const AddSupplier: React.FC = () => {
     tier: 'tier1',
     customerIds: []
   });
-  
+
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -83,14 +83,14 @@ const AddSupplier: React.FC = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -99,14 +99,14 @@ const AddSupplier: React.FC = () => {
 
   const handleSelectChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
-    
+
     // Clear error when field is updated
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -120,8 +120,8 @@ const AddSupplier: React.FC = () => {
       // Generate random-ish coordinates for demonstration
       const lat = (Math.random() * 10 + 30).toFixed(6); // Random latitude around 30-40
       const lng = (Math.random() * 10 - 100).toFixed(6); // Random longitude around -90 to -100
-      
-      setFormData(prev => ({
+
+      setFormData((prev) => ({
         ...prev,
         latitude: lat,
         longitude: lng
@@ -134,29 +134,29 @@ const AddSupplier: React.FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Supplier name is required';
     }
-    
+
     if (!formData.code.trim()) {
       newErrors.code = 'Supplier code is required';
     }
-    
+
     if (!formData.tier) {
       newErrors.tier = 'Supplier tier is required';
     }
-    
+
     if (formData.contactEmail && !/^\S+@\S+\.\S+$/.test(formData.contactEmail)) {
       newErrors.contactEmail = 'Invalid email address';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const getCustomerOptions = () => {
-    return customers.map(customer => ({
+    return customers.map((customer) => ({
       id: customer._id,
       label: customer.name,
       code: customer.code
@@ -165,21 +165,21 @@ const AddSupplier: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
-    
+
     try {
       // Get selected customers
-      const relatedCustomers = customers
-        .filter(c => formData.customerIds.includes(c._id))
-        .map(c => ({
-          _id: c._id,
-          name: c.name,
-          code: c.code
-        }));
-      
+      const relatedCustomers = customers.
+      filter((c) => formData.customerIds.includes(c._id)).
+      map((c) => ({
+        _id: c._id,
+        name: c.name,
+        code: c.code
+      }));
+
       // Create supplier object
       const newSupplier: Partial<SupplierWithRelationships> = {
         _id: `supp_${Date.now()}`,
@@ -199,7 +199,7 @@ const AddSupplier: React.FC = () => {
         tier: formData.tier,
         customers: relatedCustomers.length > 0 ? relatedCustomers : undefined
       };
-      
+
       // Add the supplier to mock data service
       // Use the appropriate method based on MockDataService
       if (typeof MockDataService.addSupplier === 'function') {
@@ -210,10 +210,10 @@ const AddSupplier: React.FC = () => {
         suppliers.push(newSupplier as SupplierWithRelationships);
         console.log('Added supplier to existing suppliers array');
       }
-      
+
       // Show success message
       setSubmitSuccess(true);
-      
+
       // Redirect after a short delay
       setTimeout(() => {
         navigate('/suppliers');
@@ -235,21 +235,21 @@ const AddSupplier: React.FC = () => {
         </Typography>
       </Box>
 
-      {submitSuccess && (
-        <Alert severity="success" sx={{ mb: 3 }}>
+      {submitSuccess &&
+      <Alert severity="success" sx={{ mb: 3 }}>
           Supplier added successfully!
         </Alert>
-      )}
+      }
 
-      {submitError && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {submitError &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {submitError}
         </Alert>
-      )}
+      }
 
       <Paper component="form" onSubmit={handleSubmit} sx={{ p: 3 }}>
         <Grid container spacing={3}>
-          {/* Basic Information */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom>
               Basic Information
@@ -267,8 +267,8 @@ const AddSupplier: React.FC = () => {
               helperText={errors.name}
               fullWidth
               required
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
             
             <TextField
               name="code"
@@ -279,8 +279,8 @@ const AddSupplier: React.FC = () => {
               helperText={errors.code}
               fullWidth
               required
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
             
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel id="category-label">Category</InputLabel>
@@ -289,8 +289,8 @@ const AddSupplier: React.FC = () => {
                 name="category"
                 value={formData.category}
                 onChange={handleSelectChange}
-                label="Category"
-              >
+                label="Category">
+
                 <MenuItem value="Machining">Machining</MenuItem>
                 <MenuItem value="Electronics">Electronics</MenuItem>
                 <MenuItem value="Assembly">Assembly</MenuItem>
@@ -310,14 +310,14 @@ const AddSupplier: React.FC = () => {
                 value={formData.location}
                 onChange={handleInputChange}
                 fullWidth
-                sx={{ mr: 1 }}
-              />
-              <Button 
-                variant="outlined" 
+                sx={{ mr: 1 }} />
+
+              <Button
+                variant="outlined"
                 startIcon={<LocationIcon />}
                 onClick={handleGetCoordinates}
-                sx={{ minWidth: '160px', height: '56px' }}
-              >
+                sx={{ minWidth: '160px', height: '56px' }}>
+
                 Get Coordinates
               </Button>
             </Box>
@@ -328,19 +328,19 @@ const AddSupplier: React.FC = () => {
                 label="Latitude"
                 value={formData.latitude}
                 onChange={handleInputChange}
-                fullWidth
-              />
+                fullWidth />
+
               <TextField
                 name="longitude"
                 label="Longitude"
                 value={formData.longitude}
                 onChange={handleInputChange}
-                fullWidth
-              />
+                fullWidth />
+
             </Box>
           </Grid>
           
-          {/* Supplier Tier & Customer Relationships */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
               Tier & Relationships
@@ -357,8 +357,8 @@ const AddSupplier: React.FC = () => {
                 value={formData.tier}
                 onChange={handleSelectChange}
                 label="Supplier Tier"
-                required
-              >
+                required>
+
                 <MenuItem value="tier1">Tier 1 (Direct Supplier)</MenuItem>
                 <MenuItem value="tier2">Tier 2 (Secondary Supplier)</MenuItem>
                 <MenuItem value="tier3">Tier 3 (Tertiary Supplier)</MenuItem>
@@ -380,36 +380,36 @@ const AddSupplier: React.FC = () => {
                       <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
                         {option.label}
                       </Typography>
-                      <Chip 
-                        label={option.code} 
-                        size="small" 
-                        sx={{ ml: 1 }} 
-                      />
+                      <Chip
+                        label={option.code}
+                        size="small"
+                        sx={{ ml: 1 }} />
+
                     </Box>
-                  </li>
-                );
+                  </li>);
+
               }}
               onChange={(_, value) => {
-                setFormData(prev => ({
+                setFormData((prev) => ({
                   ...prev,
-                  customerIds: value.map(v => v.id)
+                  customerIds: value.map((v) => v.id)
                 }));
               }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Related Customers"
-                  helperText="Select customers this supplier works with"
-                  sx={{ mb: 2 }}
-                />
-              )}
+              renderInput={(params) =>
+              <TextField
+                {...params}
+                label="Related Customers"
+                helperText="Select customers this supplier works with"
+                sx={{ mb: 2 }} />
+
+              }
               ListboxProps={{
                 style: { maxHeight: '200px' }
-              }}
-            />
+              }} />
+
           </Grid>
           
-          {/* Contact Information */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
               Contact Information
@@ -424,8 +424,8 @@ const AddSupplier: React.FC = () => {
               value={formData.contactName}
               onChange={handleInputChange}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
@@ -437,8 +437,8 @@ const AddSupplier: React.FC = () => {
               error={!!errors.contactEmail}
               helperText={errors.contactEmail}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
@@ -448,32 +448,32 @@ const AddSupplier: React.FC = () => {
               value={formData.contactPhone}
               onChange={handleInputChange}
               fullWidth
-              sx={{ mb: 2 }}
-            />
+              sx={{ mb: 2 }} />
+
           </Grid>
           
-          {/* Submit Buttons */}
+          
           <Grid sx={{ gridColumn: 'span 12' }}>
             <Box display="flex" justifyContent="flex-end" mt={3} gap={2}>
               <Button
                 variant="outlined"
-                onClick={() => navigate('/suppliers')}
-              >
+                onClick={() => navigate('/suppliers')}>
+
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 startIcon={<SaveIcon />}
-                type="submit"
-              >
+                type="submit">
+
                 Add Supplier
               </Button>
             </Box>
           </Grid>
         </Grid>
       </Paper>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default AddSupplier; 
+export default AddSupplier;

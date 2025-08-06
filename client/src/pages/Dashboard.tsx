@@ -18,8 +18,8 @@ import {
   Chip,
   IconButton,
   CircularProgress,
-  useTheme
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import {
   Assignment as InspectionIcon,
   Business as CustomerIcon,
@@ -30,8 +30,8 @@ import {
   Event as EventIcon,
   ArrowForward as ArrowForwardIcon,
   Add as AddIcon,
-  CalendarMonth as CalendarIcon,
-} from '@mui/icons-material';
+  CalendarMonth as CalendarIcon } from
+'@mui/icons-material';
 import { PageHeader, StatusBadge } from '../components/common';
 import inspectionService from '../services/inspection.service';
 
@@ -48,59 +48,59 @@ const mockStats = {
 
 // Mock data for upcoming inspections
 const mockUpcomingInspections = [
-  {
-    id: 'INS-5432',
-    supplierName: 'Aerospace Parts Inc.',
-    inspectionType: 'quality_audit',
-    inspectionDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-    status: 'scheduled',
-    priority: 'high'
-  },
-  {
-    id: 'INS-5433',
-    supplierName: 'Global Aviation Technologies',
-    inspectionType: 'process_audit',
-    inspectionDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
-    status: 'scheduled',
-    priority: 'medium'
-  },
-  {
-    id: 'INS-5435',
-    supplierName: 'Precision Manufacturing Ltd',
-    inspectionType: 'first_article',
-    inspectionDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
-    status: 'scheduled',
-    priority: 'medium'
-  }
-];
+{
+  id: 'INS-5432',
+  supplierName: 'Aerospace Parts Inc.',
+  inspectionType: 'quality_audit',
+  inspectionDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+  status: 'scheduled',
+  priority: 'high'
+},
+{
+  id: 'INS-5433',
+  supplierName: 'Global Aviation Technologies',
+  inspectionType: 'process_audit',
+  inspectionDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+  status: 'scheduled',
+  priority: 'medium'
+},
+{
+  id: 'INS-5435',
+  supplierName: 'Precision Manufacturing Ltd',
+  inspectionType: 'first_article',
+  inspectionDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+  status: 'scheduled',
+  priority: 'medium'
+}];
+
 
 // Mock data for recent inspections
 const mockRecentInspections = [
-  {
-    id: 'INS-5429',
-    supplierName: 'MetalWorks Industries',
-    inspectionType: 'receiving_inspection',
-    inspectionDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-    status: 'completed',
-    score: 92
-  },
-  {
-    id: 'INS-5428',
-    supplierName: 'Electronic Components Co.',
-    inspectionType: 'quality_audit',
-    inspectionDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), // 4 days ago
-    status: 'completed',
-    score: 78
-  },
-  {
-    id: 'INS-5427',
-    supplierName: 'Aerospace Parts Inc.',
-    inspectionType: 'certification_audit',
-    inspectionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
-    status: 'completed',
-    score: 95
-  }
-];
+{
+  id: 'INS-5429',
+  supplierName: 'MetalWorks Industries',
+  inspectionType: 'receiving_inspection',
+  inspectionDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+  status: 'completed',
+  score: 92
+},
+{
+  id: 'INS-5428',
+  supplierName: 'Electronic Components Co.',
+  inspectionType: 'quality_audit',
+  inspectionDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), // 4 days ago
+  status: 'completed',
+  score: 78
+},
+{
+  id: 'INS-5427',
+  supplierName: 'Aerospace Parts Inc.',
+  inspectionType: 'certification_audit',
+  inspectionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+  status: 'completed',
+  score: 95
+}];
+
 
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat('en-US', {
@@ -123,7 +123,7 @@ const Dashboard: React.FC = () => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 1500);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -145,23 +145,23 @@ const Dashboard: React.FC = () => {
         title="Dashboard"
         subtitle="Overview of your inspection activities"
         actions={
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={handleScheduleInspection}
-          >
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={handleScheduleInspection}>
+
             Schedule Inspection
           </Button>
-        }
-      />
+        } />
 
-      {loading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+
+      {loading ?
+      <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
           <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          {/* Stats summary cards */}
+        </Box> :
+
+      <>
+          
           <Box sx={{ mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={3}>
@@ -246,53 +246,53 @@ const Dashboard: React.FC = () => {
             </Grid>
           </Box>
 
-          {/* Upcoming and Recent Inspections */}
+          
           <Grid container spacing={3}>
-            {/* Upcoming Inspections */}
+            
             <Grid item xs={12} md={6}>
               <Card>
-                <CardHeader 
-                  title="Upcoming Inspections" 
-                  action={
-                    <Button 
-                      size="small" 
-                      endIcon={<ArrowForwardIcon />}
-                      onClick={handleViewAllInspections}
-                    >
+                <CardHeader
+                title="Upcoming Inspections"
+                action={
+                <Button
+                  size="small"
+                  endIcon={<ArrowForwardIcon />}
+                  onClick={handleViewAllInspections}>
+
                       View All
                     </Button>
-                  }
-                />
+                } />
+
                 <Divider />
                 <CardContent sx={{ p: 0 }}>
                   <List>
-                    {upcomingInspections.map((inspection) => (
-                      <ListItem 
-                        key={inspection.id}
-                        divider
-                        button
-                        onClick={() => handleViewInspection(inspection.id)}
-                      >
+                    {upcomingInspections.map((inspection) =>
+                  <ListItem
+                    key={inspection.id}
+                    divider
+                    button
+                    onClick={() => handleViewInspection(inspection.id)}>
+
                         <ListItemAvatar>
                           <Avatar sx={{ bgcolor: theme.palette.primary.light }}>
                             <InspectionIcon />
                           </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                          primary={
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      primary={
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
                               <Typography variant="body1">{inspection.supplierName}</Typography>
-                              <Chip 
-                                size="small" 
-                                label={inspection.priority} 
-                                color={inspection.priority === 'high' ? 'error' : (inspection.priority === 'medium' ? 'warning' : 'success')}
-                                sx={{ ml: 1 }}
-                                variant="outlined"
-                              />
+                              <Chip
+                          size="small"
+                          label={inspection.priority}
+                          color={inspection.priority === 'high' ? 'error' : inspection.priority === 'medium' ? 'warning' : 'success'}
+                          sx={{ ml: 1 }}
+                          variant="outlined" />
+
                             </Box>
-                          }
-                          secondary={
-                            <>
+                      }
+                      secondary={
+                      <>
                               <Typography variant="body2" component="span">
                                 {formatDate(inspection.inspectionDate)}
                               </Typography>
@@ -300,61 +300,61 @@ const Dashboard: React.FC = () => {
                                 • {inspection.inspectionType.replace('_', ' ')}
                               </Typography>
                             </>
-                          }
-                        />
-                        <StatusBadge 
-                          status="warning" 
-                          label="Scheduled" 
-                        />
+                      } />
+
+                        <StatusBadge
+                      status="warning"
+                      label="Scheduled" />
+
                       </ListItem>
-                    ))}
-                    {upcomingInspections.length === 0 && (
-                      <ListItem>
+                  )}
+                    {upcomingInspections.length === 0 &&
+                  <ListItem>
                         <ListItemText
-                          primary="No upcoming inspections"
-                          secondary="Schedule a new inspection to get started"
-                        />
+                      primary="No upcoming inspections"
+                      secondary="Schedule a new inspection to get started" />
+
                       </ListItem>
-                    )}
+                  }
                   </List>
                 </CardContent>
               </Card>
             </Grid>
 
-            {/* Recent Inspections */}
+            
             <Grid item xs={12} md={6}>
               <Card>
-                <CardHeader 
-                  title="Recently Completed" 
-                  action={
-                    <Button 
-                      size="small" 
-                      endIcon={<ArrowForwardIcon />}
-                      onClick={handleViewAllInspections}
-                    >
+                <CardHeader
+                title="Recently Completed"
+                action={
+                <Button
+                  size="small"
+                  endIcon={<ArrowForwardIcon />}
+                  onClick={handleViewAllInspections}>
+
                       View All
                     </Button>
-                  }
-                />
+                } />
+
                 <Divider />
                 <CardContent sx={{ p: 0 }}>
                   <List>
-                    {recentInspections.map((inspection) => (
-                      <ListItem 
-                        key={inspection.id}
-                        divider
-                        button
-                        onClick={() => handleViewInspection(inspection.id)}
-                      >
+                    {recentInspections.map((inspection) =>
+                  <ListItem
+                    key={inspection.id}
+                    divider
+                    button
+                    onClick={() => handleViewInspection(inspection.id)}>
+
                         <ListItemAvatar>
                           <Avatar sx={{ bgcolor: getScoreColor(inspection.score) }}>
                             {inspection.score}
                           </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                          primary={inspection.supplierName}
-                          secondary={
-                            <>
+                      primary={inspection.supplierName}
+                      secondary={
+                      <>
                               <Typography variant="body2" component="span">
                                 {formatDate(inspection.inspectionDate)}
                               </Typography>
@@ -362,31 +362,31 @@ const Dashboard: React.FC = () => {
                                 • {inspection.inspectionType.replace('_', ' ')}
                               </Typography>
                             </>
-                          }
-                        />
-                        <StatusBadge 
-                          status="success" 
-                          label="Completed" 
-                        />
+                      } />
+
+                        <StatusBadge
+                      status="success"
+                      label="Completed" />
+
                       </ListItem>
-                    ))}
-                    {recentInspections.length === 0 && (
-                      <ListItem>
+                  )}
+                    {recentInspections.length === 0 &&
+                  <ListItem>
                         <ListItemText
-                          primary="No recent inspections"
-                          secondary="Completed inspections will appear here"
-                        />
+                      primary="No recent inspections"
+                      secondary="Completed inspections will appear here" />
+
                       </ListItem>
-                    )}
+                  }
                   </List>
                 </CardContent>
               </Card>
             </Grid>
           </Grid>
         </>
-      )}
-    </Box>
-  );
+      }
+    </Box>);
+
 };
 
 // Helper function to get color based on score
@@ -396,4 +396,4 @@ const getScoreColor = (score: number) => {
   return '#f44336'; // red
 };
 
-export default Dashboard; 
+export default Dashboard;

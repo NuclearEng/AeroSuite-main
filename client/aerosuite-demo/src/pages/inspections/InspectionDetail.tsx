@@ -17,8 +17,8 @@ import {
   ListItemIcon,
   Avatar,
   LinearProgress,
-  Alert
-} from '@mui/material';
+  Alert } from
+'@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   Business as BusinessIcon,
@@ -29,13 +29,13 @@ import {
   Warning as WarningIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Assignment as AssignmentIcon
-} from '@mui/icons-material';
+  Assignment as AssignmentIcon } from
+'@mui/icons-material';
 import type { Inspection } from '../../services/mockDataService';
 import MockDataService from '../../services/mockDataService';
 
 // Status chip component
-const StatusChip = ({ status }: { status: string }) => {
+const StatusChip = ({ status }: {status: string;}) => {
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'scheduled':
@@ -56,13 +56,13 @@ const StatusChip = ({ status }: { status: string }) => {
     <Chip
       label={config.label}
       color={config.color as 'info' | 'warning' | 'success' | 'error' | 'default'}
-      size="small"
-    />
-  );
+      size="small" />);
+
+
 };
 
 // Result chip
-const ResultChip = ({ result }: { result: string }) => {
+const ResultChip = ({ result }: {result: string;}) => {
   const getResultConfig = (result: string) => {
     switch (result) {
       case 'pass':
@@ -83,9 +83,9 @@ const ResultChip = ({ result }: { result: string }) => {
     <Chip
       label={config.label}
       color={config.color as 'success' | 'error' | 'warning' | 'default'}
-      size="small"
-    />
-  );
+      size="small" />);
+
+
 };
 
 // Format date for display
@@ -94,7 +94,7 @@ const formatDate = (dateString: string) => {
 };
 
 const InspectionDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{id: string;}>();
   const navigate = useNavigate();
   const [inspection, setInspection] = useState<Inspection | null>(null);
   const [loading, setLoading] = useState(true);
@@ -103,22 +103,22 @@ const InspectionDetail: React.FC = () => {
   useEffect(() => {
     // Initialize mock data service
     MockDataService.initialize();
-    
+
     if (!id) {
       setError('No inspection ID provided');
       setLoading(false);
       return;
     }
-    
+
     // Load inspection data
     const inspectionData = MockDataService.getInspectionById(id);
-    
+
     if (inspectionData) {
       setInspection(inspectionData);
     } else {
       setError('Inspection not found');
     }
-    
+
     setLoading(false);
   }, [id]);
 
@@ -136,23 +136,23 @@ const InspectionDetail: React.FC = () => {
           variant="outlined"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/inspections')}
-          sx={{ mt: 2 }}
-        >
+          sx={{ mt: 2 }}>
+
           Back to Inspections
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   return (
     <Box>
-      {/* Header with back button and actions */}
+      
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Box display="flex" alignItems="center">
-          <IconButton 
+          <IconButton
             onClick={() => navigate('/inspections')}
-            sx={{ mr: 2 }}
-          >
+            sx={{ mr: 2 }}>
+
             <ArrowBackIcon />
           </IconButton>
           <Box>
@@ -160,11 +160,11 @@ const InspectionDetail: React.FC = () => {
               {inspection.title}
             </Typography>
             <Box display="flex" alignItems="center" mt={1}>
-              <Chip 
-                label={inspection.inspectionNumber} 
-                color="primary" 
-                sx={{ mr: 1 }} 
-              />
+              <Chip
+                label={inspection.inspectionNumber}
+                color="primary"
+                sx={{ mr: 1 }} />
+
               <StatusChip status={inspection.status} />
               <Box ml={1}>
                 <ResultChip result={inspection.result} />
@@ -173,30 +173,30 @@ const InspectionDetail: React.FC = () => {
           </Box>
         </Box>
         <Box>
-          {inspection.status === 'scheduled' && (
-            <Button
-              variant="outlined"
-              startIcon={<EditIcon />}
-              onClick={() => navigate(`/inspections/${id}/edit`)}
-              sx={{ mr: 1 }}
-            >
+          {inspection.status === 'scheduled' &&
+          <Button
+            variant="outlined"
+            startIcon={<EditIcon />}
+            onClick={() => navigate(`/inspections/${id}/edit`)}
+            sx={{ mr: 1 }}>
+
               Edit
             </Button>
-          )}
-          {['scheduled', 'in-progress'].includes(inspection.status) && (
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AssignmentIcon />}
-              onClick={() => navigate(`/inspections/${id}/conduct`)}
-            >
+          }
+          {['scheduled', 'in-progress'].includes(inspection.status) &&
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AssignmentIcon />}
+            onClick={() => navigate(`/inspections/${id}/conduct`)}>
+
               {inspection.status === 'scheduled' ? 'Start Inspection' : 'Continue Inspection'}
             </Button>
-          )}
+          }
         </Box>
       </Box>
 
-      {/* Inspection details */}
+      
       <Grid container spacing={3}>
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 8' } }}>
           <Paper sx={{ p: 3, mb: 3 }}>
@@ -218,8 +218,8 @@ const InspectionDetail: React.FC = () => {
                   {inspection.inspectionType.charAt(0).toUpperCase() + inspection.inspectionType.slice(1)} Inspection
                 </Typography>
               </Box>
-              {inspection.purchaseOrderNumber && (
-                <Box>
+              {inspection.purchaseOrderNumber &&
+              <Box>
                   <Typography variant="subtitle2" color="text.secondary">
                     Purchase Order
                   </Typography>
@@ -227,9 +227,9 @@ const InspectionDetail: React.FC = () => {
                     {inspection.purchaseOrderNumber}
                   </Typography>
                 </Box>
-              )}
-              {inspection.partNumber && (
-                <Box>
+              }
+              {inspection.partNumber &&
+              <Box>
                   <Typography variant="subtitle2" color="text.secondary">
                     Part Number
                   </Typography>
@@ -237,9 +237,9 @@ const InspectionDetail: React.FC = () => {
                     {inspection.partNumber} {inspection.revision && `Rev ${inspection.revision}`}
                   </Typography>
                 </Box>
-              )}
-              {inspection.quantity && (
-                <Box>
+              }
+              {inspection.quantity &&
+              <Box>
                   <Typography variant="subtitle2" color="text.secondary">
                     Quantity
                   </Typography>
@@ -247,55 +247,55 @@ const InspectionDetail: React.FC = () => {
                     {inspection.quantity} units
                   </Typography>
                 </Box>
-              )}
+              }
             </Box>
           </Paper>
           
-          {/* Checklist items */}
+          
           <Paper sx={{ p: 3, mb: 3 }}>
             <Typography variant="h6" gutterBottom>
               Checklist Items ({inspection.checklistItems.length})
             </Typography>
             
-            {inspection.checklistItems.length > 0 ? (
-              <List>
-                {inspection.checklistItems.map((item) => (
-                  <ListItem key={item.id} divider>
+            {inspection.checklistItems.length > 0 ?
+            <List>
+                {inspection.checklistItems.map((item) =>
+              <ListItem key={item.id} divider>
                     <ListItemIcon>
-                      {item.result === 'pass' ? (
-                        <CheckCircleIcon color="success" />
-                      ) : item.result === 'fail' ? (
-                        <CancelIcon color="error" />
-                      ) : (
-                        <WarningIcon color="warning" />
-                      )}
+                      {item.result === 'pass' ?
+                  <CheckCircleIcon color="success" /> :
+                  item.result === 'fail' ?
+                  <CancelIcon color="error" /> :
+
+                  <WarningIcon color="warning" />
+                  }
                     </ListItemIcon>
                     <ListItemText
-                      primary={item.description}
-                      secondary={item.notes}
-                    />
-                    <Chip 
-                      label={item.result.toUpperCase()}
-                      color={
-                        item.result === 'pass' ? 'success' :
-                        item.result === 'fail' ? 'error' :
-                        'default'
-                      }
-                      size="small"
-                    />
+                  primary={item.description}
+                  secondary={item.notes} />
+
+                    <Chip
+                  label={item.result.toUpperCase()}
+                  color={
+                  item.result === 'pass' ? 'success' :
+                  item.result === 'fail' ? 'error' :
+                  'default'
+                  }
+                  size="small" />
+
                   </ListItem>
-                ))}
-              </List>
-            ) : (
-              <Typography variant="body2" color="text.secondary">
+              )}
+              </List> :
+
+            <Typography variant="body2" color="text.secondary">
                 No checklist items available.
               </Typography>
-            )}
+            }
           </Paper>
           
-          {/* Notes */}
-          {inspection.notes && (
-            <Paper sx={{ p: 3 }}>
+          
+          {inspection.notes &&
+          <Paper sx={{ p: 3 }}>
               <Typography variant="h6" gutterBottom>
                 Notes
               </Typography>
@@ -303,11 +303,11 @@ const InspectionDetail: React.FC = () => {
                 {inspection.notes}
               </Typography>
             </Paper>
-          )}
+          }
         </Grid>
         
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
-          {/* Customer & Supplier Cards */}
+          
           <Card sx={{ mb: 3 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -319,11 +319,11 @@ const InspectionDetail: React.FC = () => {
                   {inspection.customer.name}
                 </Typography>
               </Box>
-              <Chip 
-                label={inspection.customer.code} 
-                size="small" 
-                sx={{ mt: 1 }} 
-              />
+              <Chip
+                label={inspection.customer.code}
+                size="small"
+                sx={{ mt: 1 }} />
+
             </CardContent>
           </Card>
           
@@ -338,15 +338,15 @@ const InspectionDetail: React.FC = () => {
                   {inspection.supplier.name}
                 </Typography>
               </Box>
-              <Chip 
-                label={inspection.supplier.code} 
-                size="small" 
-                sx={{ mt: 1 }} 
-              />
+              <Chip
+                label={inspection.supplier.code}
+                size="small"
+                sx={{ mt: 1 }} />
+
             </CardContent>
           </Card>
           
-          {/* Timeline */}
+          
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -359,40 +359,40 @@ const InspectionDetail: React.FC = () => {
                   </ListItemIcon>
                   <ListItemText
                     primary="Scheduled"
-                    secondary={formatDate(inspection.scheduledDate)}
-                  />
+                    secondary={formatDate(inspection.scheduledDate)} />
+
                 </ListItem>
                 
-                {inspection.startDate && (
-                  <ListItem>
+                {inspection.startDate &&
+                <ListItem>
                     <ListItemIcon>
                       <CalendarIcon color="warning" />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Started"
-                      secondary={formatDate(inspection.startDate)}
-                    />
+                    primary="Started"
+                    secondary={formatDate(inspection.startDate)} />
+
                   </ListItem>
-                )}
+                }
                 
-                {inspection.completionDate && (
-                  <ListItem>
+                {inspection.completionDate &&
+                <ListItem>
                     <ListItemIcon>
                       <CalendarIcon color="success" />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Completed"
-                      secondary={formatDate(inspection.completionDate)}
-                    />
+                    primary="Completed"
+                    secondary={formatDate(inspection.completionDate)} />
+
                   </ListItem>
-                )}
+                }
               </List>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default InspectionDetail; 
+export default InspectionDetail;

@@ -18,8 +18,8 @@ import {
   Snackbar,
   IconButton,
   Tooltip,
-  CircularProgress
-} from '@mui/material';
+  CircularProgress } from
+'@mui/material';
 import {
   Notifications as NotificationsIcon,
   Visibility as VisibilityIcon,
@@ -28,8 +28,8 @@ import {
   Security as SecurityIcon,
   Download as DownloadIcon,
   Delete as DeleteIcon,
-  Info as InfoIcon
-} from '@mui/icons-material';
+  Info as InfoIcon } from
+'@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { updateUserPreferences } from '../../services/userService';
 import { useThemeContext } from '../../theme/ThemeProvider';
@@ -64,12 +64,12 @@ const UserSettings: React.FC = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { mode, setMode } = useThemeContext();
-  
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState(false);
-  
+
   // Settings state
   const [settings, setSettings] = useState<UserSettings>({
     theme: mode,
@@ -96,14 +96,14 @@ const UserSettings: React.FC = () => {
       dashboardLayout: 'default'
     }
   });
-  
+
   // Load user preferences when component mounts
   useEffect(() => {
     if (user?.preferences) {
       const userPrefs = user.preferences;
-      setSettings(prevSettings => ({
+      setSettings((prevSettings) => ({
         ...prevSettings,
-        theme: (userPrefs.theme as 'light' | 'dark' | 'system') || prevSettings.theme,
+        theme: userPrefs.theme as 'light' | 'dark' | 'system' || prevSettings.theme,
         language: userPrefs.language || prevSettings.language,
         notifications: {
           ...prevSettings.notifications,
@@ -116,7 +116,7 @@ const UserSettings: React.FC = () => {
       }));
     }
   }, [user]);
-  
+
   // Handle theme change
   const handleThemeChange = (event: SelectChangeEvent) => {
     const newTheme = event.target.value as 'light' | 'dark' | 'system';
@@ -124,13 +124,13 @@ const UserSettings: React.FC = () => {
       ...settings,
       theme: newTheme
     });
-    
+
     // Update theme in the app
     if (newTheme === 'light' || newTheme === 'dark') {
       setMode(newTheme as 'light' | 'dark');
     }
   };
-  
+
   // Handle language change
   const handleLanguageChange = (event: SelectChangeEvent) => {
     setSettings({
@@ -138,10 +138,10 @@ const UserSettings: React.FC = () => {
       language: event.target.value
     });
   };
-  
+
   // Handle switch changes
   const handleSwitchChange = (section: keyof UserSettings, setting: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSettings(prev => {
+    setSettings((prev) => {
       const sectionData = prev[section] as Record<string, unknown>;
       return {
         ...prev,
@@ -152,7 +152,7 @@ const UserSettings: React.FC = () => {
       };
     });
   };
-  
+
   // Handle dashboard layout change
   const handleDashboardLayoutChange = (event: SelectChangeEvent) => {
     setSettings({
@@ -163,13 +163,13 @@ const UserSettings: React.FC = () => {
       }
     });
   };
-  
+
   // Save settings
   const handleSaveSettings = async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Map settings to user preferences format
       const preferences = {
         theme: settings.theme,
@@ -178,10 +178,10 @@ const UserSettings: React.FC = () => {
         dashboardLayout: settings.display.dashboardLayout,
         defaultView: 'dashboard'
       };
-      
+
       // Call API to update preferences
       await updateUserPreferences(preferences);
-      
+
       setSuccess('Settings saved successfully');
     } catch (err: any) {
       console.error('Error saving settings:', err);
@@ -190,19 +190,19 @@ const UserSettings: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Handle snackbar close
   const handleSnackbarClose = () => {
     setSuccess(null);
     setError(null);
   };
-  
+
   // Export user data
   const handleExportData = () => {
     // In a real app, this would call an API endpoint to generate and download user data
     setSuccess('Your data export has been initiated. You will receive an email when it is ready for download.');
   };
-  
+
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
@@ -213,13 +213,13 @@ const UserSettings: React.FC = () => {
           variant="contained"
           color="primary"
           onClick={handleSaveSettings}
-          disabled={loading}
-        >
+          disabled={loading}>
+
           {loading ? <CircularProgress size={24} /> : 'Save Settings'}
         </Button>
       </Box>
       
-      {/* Appearance Settings */}
+      
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box display="flex" alignItems="center" mb={2}>
@@ -237,8 +237,8 @@ const UserSettings: React.FC = () => {
                   id="theme-select"
                   value={settings.theme}
                   label="Theme"
-                  onChange={handleThemeChange}
-                >
+                  onChange={handleThemeChange}>
+
                   <MenuItem value="light">Light</MenuItem>
                   <MenuItem value="dark">Dark</MenuItem>
                   <MenuItem value="system">System Default</MenuItem>
@@ -249,37 +249,37 @@ const UserSettings: React.FC = () => {
             <Grid item xs={12} md={6}>
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={settings.display.showAnimations}
-                    onChange={handleSwitchChange('display', 'showAnimations')}
-                  />
+                <Switch
+                  checked={settings.display.showAnimations}
+                  onChange={handleSwitchChange('display', 'showAnimations')} />
+
                 }
-                label="Show Animations"
-              />
+                label="Show Animations" />
+
             </Grid>
             
             <Grid item xs={12} md={6}>
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={settings.display.compactView}
-                    onChange={handleSwitchChange('display', 'compactView')}
-                  />
+                <Switch
+                  checked={settings.display.compactView}
+                  onChange={handleSwitchChange('display', 'compactView')} />
+
                 }
-                label="Compact View"
-              />
+                label="Compact View" />
+
             </Grid>
             
             <Grid item xs={12} md={6}>
               <FormControlLabel
                 control={
-                  <Switch
-                    checked={settings.display.highContrastMode}
-                    onChange={handleSwitchChange('display', 'highContrastMode')}
-                  />
+                <Switch
+                  checked={settings.display.highContrastMode}
+                  onChange={handleSwitchChange('display', 'highContrastMode')} />
+
                 }
-                label="High Contrast Mode"
-              />
+                label="High Contrast Mode" />
+
             </Grid>
             
             <Grid item xs={12} md={6}>
@@ -290,8 +290,8 @@ const UserSettings: React.FC = () => {
                   id="dashboard-layout"
                   value={settings.display.dashboardLayout}
                   label="Dashboard Layout"
-                  onChange={handleDashboardLayoutChange}
-                >
+                  onChange={handleDashboardLayoutChange}>
+
                   <MenuItem value="default">Default</MenuItem>
                   <MenuItem value="compact">Compact</MenuItem>
                   <MenuItem value="detailed">Detailed</MenuItem>
@@ -303,7 +303,7 @@ const UserSettings: React.FC = () => {
         </CardContent>
       </Card>
       
-      {/* Language Settings */}
+      
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box display="flex" alignItems="center" mb={2}>
@@ -319,8 +319,8 @@ const UserSettings: React.FC = () => {
               id="language-select"
               value={settings.language}
               label="Language"
-              onChange={handleLanguageChange}
-            >
+              onChange={handleLanguageChange}>
+
               <MenuItem value="en">English</MenuItem>
               <MenuItem value="es">Español</MenuItem>
               <MenuItem value="fr">Français</MenuItem>
@@ -331,7 +331,7 @@ const UserSettings: React.FC = () => {
         </CardContent>
       </Card>
       
-      {/* Notification Settings */}
+      
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box display="flex" alignItems="center" mb={2}>
@@ -347,33 +347,33 @@ const UserSettings: React.FC = () => {
           <Box mb={3}>
             <FormControlLabel
               control={
-                <Switch
-                  checked={settings.notifications.email}
-                  onChange={handleSwitchChange('notifications', 'email')}
-                />
+              <Switch
+                checked={settings.notifications.email}
+                onChange={handleSwitchChange('notifications', 'email')} />
+
               }
-              label="Email Notifications"
-            />
+              label="Email Notifications" />
+
             
             <FormControlLabel
               control={
-                <Switch
-                  checked={settings.notifications.browser}
-                  onChange={handleSwitchChange('notifications', 'browser')}
-                />
+              <Switch
+                checked={settings.notifications.browser}
+                onChange={handleSwitchChange('notifications', 'browser')} />
+
               }
-              label="Browser Notifications"
-            />
+              label="Browser Notifications" />
+
             
             <FormControlLabel
               control={
-                <Switch
-                  checked={settings.notifications.mobile}
-                  onChange={handleSwitchChange('notifications', 'mobile')}
-                />
+              <Switch
+                checked={settings.notifications.mobile}
+                onChange={handleSwitchChange('notifications', 'mobile')} />
+
               }
-              label="Mobile Notifications"
-            />
+              label="Mobile Notifications" />
+
           </Box>
           
           <Typography variant="subtitle1" gutterBottom>
@@ -383,52 +383,52 @@ const UserSettings: React.FC = () => {
           <Box>
             <FormControlLabel
               control={
-                <Switch
-                  checked={settings.emailNotifications.newInspections}
-                  onChange={handleSwitchChange('emailNotifications', 'newInspections')}
-                  disabled={!settings.notifications.email}
-                />
+              <Switch
+                checked={settings.emailNotifications.newInspections}
+                onChange={handleSwitchChange('emailNotifications', 'newInspections')}
+                disabled={!settings.notifications.email} />
+
               }
-              label="New Inspections"
-            />
+              label="New Inspections" />
+
             
             <FormControlLabel
               control={
-                <Switch
-                  checked={settings.emailNotifications.inspectionUpdates}
-                  onChange={handleSwitchChange('emailNotifications', 'inspectionUpdates')}
-                  disabled={!settings.notifications.email}
-                />
+              <Switch
+                checked={settings.emailNotifications.inspectionUpdates}
+                onChange={handleSwitchChange('emailNotifications', 'inspectionUpdates')}
+                disabled={!settings.notifications.email} />
+
               }
-              label="Inspection Updates"
-            />
+              label="Inspection Updates" />
+
             
             <FormControlLabel
               control={
-                <Switch
-                  checked={settings.emailNotifications.newFindings}
-                  onChange={handleSwitchChange('emailNotifications', 'newFindings')}
-                  disabled={!settings.notifications.email}
-                />
+              <Switch
+                checked={settings.emailNotifications.newFindings}
+                onChange={handleSwitchChange('emailNotifications', 'newFindings')}
+                disabled={!settings.notifications.email} />
+
               }
-              label="New Findings"
-            />
+              label="New Findings" />
+
             
             <FormControlLabel
               control={
-                <Switch
-                  checked={settings.emailNotifications.weeklyDigest}
-                  onChange={handleSwitchChange('emailNotifications', 'weeklyDigest')}
-                  disabled={!settings.notifications.email}
-                />
+              <Switch
+                checked={settings.emailNotifications.weeklyDigest}
+                onChange={handleSwitchChange('emailNotifications', 'weeklyDigest')}
+                disabled={!settings.notifications.email} />
+
               }
-              label="Weekly Summary"
-            />
+              label="Weekly Summary" />
+
           </Box>
         </CardContent>
       </Card>
       
-      {/* Privacy Settings */}
+      
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box display="flex" alignItems="center" mb={2}>
@@ -439,13 +439,13 @@ const UserSettings: React.FC = () => {
           
           <FormControlLabel
             control={
-              <Switch
-                checked={settings.privacy.shareUsageData}
-                onChange={handleSwitchChange('privacy', 'shareUsageData')}
-              />
+            <Switch
+              checked={settings.privacy.shareUsageData}
+              onChange={handleSwitchChange('privacy', 'shareUsageData')} />
+
             }
             label={
-              <Box display="flex" alignItems="center">
+            <Box display="flex" alignItems="center">
                 Share Usage Data
                 <Tooltip title="Helps us improve the application by collecting anonymous usage statistics">
                   <IconButton size="small">
@@ -453,22 +453,22 @@ const UserSettings: React.FC = () => {
                   </IconButton>
                 </Tooltip>
               </Box>
-            }
-          />
+            } />
+
           
           <FormControlLabel
             control={
-              <Switch
-                checked={settings.privacy.allowCookies}
-                onChange={handleSwitchChange('privacy', 'allowCookies')}
-              />
+            <Switch
+              checked={settings.privacy.allowCookies}
+              onChange={handleSwitchChange('privacy', 'allowCookies')} />
+
             }
-            label="Allow Cookies"
-          />
+            label="Allow Cookies" />
+
         </CardContent>
       </Card>
       
-      {/* Data Management */}
+      
       <Card>
         <CardContent>
           <Box display="flex" alignItems="center" mb={2}>
@@ -484,8 +484,8 @@ const UserSettings: React.FC = () => {
                 color="primary"
                 startIcon={<DownloadIcon />}
                 fullWidth
-                onClick={handleExportData}
-              >
+                onClick={handleExportData}>
+
                 Export My Data
               </Button>
             </Grid>
@@ -496,8 +496,8 @@ const UserSettings: React.FC = () => {
                 color="error"
                 startIcon={<DeleteIcon />}
                 fullWidth
-                onClick={() => setDeleteAccountDialogOpen(true)}
-              >
+                onClick={() => setDeleteAccountDialogOpen(true)}>
+
                 Delete Account
               </Button>
             </Grid>
@@ -505,23 +505,23 @@ const UserSettings: React.FC = () => {
         </CardContent>
       </Card>
       
-      {/* Success/Error Snackbar */}
+      
       <Snackbar
         open={!!success || !!error}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert 
-          onClose={handleSnackbarClose} 
-          severity={success ? 'success' : 'error'} 
-          sx={{ width: '100%' }}
-        >
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={success ? 'success' : 'error'}
+          sx={{ width: '100%' }}>
+
           {success || error}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
 export default UserSettings;

@@ -16,8 +16,8 @@ import {
   DialogActions,
   Breadcrumbs,
   Link,
-  useTheme
-} from '@mui/material';
+  useTheme } from
+'@mui/material';
 import {
   Add as AddIcon,
   List as ListIcon,
@@ -28,8 +28,8 @@ import {
   Download as DownloadIcon,
   Save as SaveIcon,
   TableChart as ExcelIcon,
-  Menu as MenuIcon
-} from '@mui/icons-material';
+  Menu as MenuIcon } from
+'@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { PageHeader } from '../../components/common';
 import reportService, { ReportTemplate } from '../../services/report.service';
@@ -55,11 +55,11 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`report-builder-tabpanel-${index}`}
       aria-labelledby={`report-builder-tab-${index}`}
-      {...other}
-    >
+      {...other}>
+
       {value === index && <Box sx={{ pt: 2 }}>{children}</Box>}
-    </div>
-  );
+    </div>);
+
 }
 
 // Expand zod schema for report template validation
@@ -72,15 +72,15 @@ const reportTemplateSchema = z.object({
     type: z.string().min(1, 'Section type is required'),
     content: z.string().optional(),
     dataSource: z.any().optional(),
-    chartOptions: z.any().optional(),
-  })).min(1, 'At least one section is required'),
+    chartOptions: z.any().optional()
+  })).min(1, 'At least one section is required')
 });
 
 // Main ReportBuilder component
 const ReportBuilder: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  
+
   // State
   const [tabValue, setTabValue] = useState(0);
   const [templates, setTemplates] = useState<ReportTemplate[]>([]);
@@ -93,12 +93,12 @@ const ReportBuilder: React.FC = () => {
   const [currentAction, setCurrentAction] = useState<'create' | 'edit' | 'view'>('view');
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  
+
   // Load templates
   useEffect(() => {
     fetchTemplates();
   }, []);
-  
+
   // Fetch templates
   const fetchTemplates = async () => {
     try {
@@ -112,38 +112,38 @@ const ReportBuilder: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   // Handle template selection
   const handleSelectTemplate = (template: ReportTemplate) => {
     setSelectedTemplate(template);
     setCurrentAction('view');
     setTabValue(1); // Switch to the Design tab
   };
-  
+
   // Handle new template
   const handleNewTemplate = () => {
     setSelectedTemplate(null);
     setCurrentAction('create');
     setTabValue(1); // Switch to the Design tab
   };
-  
+
   // Handle edit template
   const handleEditTemplate = () => {
     setCurrentAction('edit');
   };
-  
+
   // Handle save template
   const handleSaveTemplate = async (template: Partial<ReportTemplate>) => {
     // Zod validation
     const result = reportTemplateSchema.safeParse(template);
     if (!result.success) {
       const errors: Record<string, string> = {};
-      result.error.errors.forEach(e => {
+      result.error.errors.forEach((e) => {
         if (e.path[0]) errors[e.path[0] as string] = e.message;
       });
       setFormErrors(errors);
@@ -173,7 +173,7 @@ const ReportBuilder: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Handle delete template
   const handleDeleteTemplate = async () => {
     if (!selectedTemplate) return;
@@ -194,28 +194,28 @@ const ReportBuilder: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Handle preview template
   const handlePreviewTemplate = () => {
     setPreviewDialogOpen(true);
   };
-  
+
   // Handle download template
   const handleDownloadTemplate = () => {
     if (!selectedTemplate) return;
-    
+
     const downloadUrl = reportService.getDownloadUrl(selectedTemplate._id);
     window.open(downloadUrl, '_blank');
   };
-  
+
   // Handle Excel export
   const handleExcelExport = () => {
     if (!selectedTemplate) return;
-    
+
     const downloadUrl = reportService.getExcelDownloadUrl(selectedTemplate._id);
     window.open(downloadUrl, '_blank');
   };
-  
+
   // Handle cancel edit
   const handleCancelEdit = () => {
     if (currentAction === 'create') {
@@ -225,31 +225,31 @@ const ReportBuilder: React.FC = () => {
       setCurrentAction('view');
     }
   };
-  
+
   // Handle duplicate template
   const handleDuplicateTemplate = async () => {
     if (!selectedTemplate) return;
-    
+
     try {
       setLoading(true);
-      
+
       // Create a copy of the template
       const templateCopy = {
         ...selectedTemplate,
         name: `${selectedTemplate.name} (Copy)`,
         isPublic: false
       };
-      
+
       // Remove the _id field
       delete (templateCopy as any)._id;
-      
+
       const savedTemplate = await reportService.createReportTemplate(templateCopy);
-      
+
       // Update state
       setSelectedTemplate(savedTemplate);
       setCurrentAction('view');
       setSuccess('Report template duplicated successfully');
-      
+
       // Refresh templates list
       fetchTemplates();
     } catch (err: any) {
@@ -259,42 +259,42 @@ const ReportBuilder: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   // Clear error and success messages
   const handleCloseSnackbar = () => {
     setError(null);
     setSuccess(null);
   };
-  
+
   return (
     <Box sx={{ mb: 4 }}>
       <PageHeader
         title="Report Builder"
         subtitle="Create and manage custom reports"
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Reports', href: '/reports' },
-          { label: 'Report Builder' }
-        ]}
-        onBack={() => navigate('/reports')}
-      />
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Reports', href: '/reports' },
+        { label: 'Report Builder' }]
+        }
+        onBack={() => navigate('/reports')} />
+
       
       <Paper sx={{ mb: 3 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
-            aria-label="report builder tabs"
-          >
+            aria-label="report builder tabs">
+
             <Tab label="Templates" />
-            <Tab 
-              label="Design" 
-              disabled={currentAction === 'view' && !selectedTemplate} 
-            />
+            <Tab
+              label="Design"
+              disabled={currentAction === 'view' && !selectedTemplate} />
+
             <Tab
               label="Preview"
-              disabled={!selectedTemplate}
-            />
+              disabled={!selectedTemplate} />
+
           </Tabs>
         </Box>
         
@@ -305,106 +305,106 @@ const ReportBuilder: React.FC = () => {
               color="primary"
               startIcon={<AddIcon />}
               onClick={handleNewTemplate}
-              sx={{ mb: 2 }}
-            >
+              sx={{ mb: 2 }}>
+
               Create New Template
             </Button>
             
             <ReportTemplateList
               templates={templates}
               loading={loading}
-              onSelectTemplate={handleSelectTemplate}
-            />
+              onSelectTemplate={handleSelectTemplate} />
+
           </Box>
         </TabPanel>
         
         <TabPanel value={tabValue} index={1}>
           <Box sx={{ p: 2 }}>
-            {/* Action buttons for viewing/editing */}
-            {selectedTemplate && currentAction === 'view' && (
-              <Box sx={{ mb: 3, display: 'flex', gap: 2 }}>
+            
+            {selectedTemplate && currentAction === 'view' &&
+            <Box sx={{ mb: 3, display: 'flex', gap: 2 }}>
                 <Button
-                  variant="outlined"
-                  startIcon={<EditIcon />}
-                  onClick={handleEditTemplate}
-                >
+                variant="outlined"
+                startIcon={<EditIcon />}
+                onClick={handleEditTemplate}>
+
                   Edit
                 </Button>
                 <Button
-                  variant="outlined"
-                  startIcon={<PreviewIcon />}
-                  onClick={handlePreviewTemplate}
-                >
+                variant="outlined"
+                startIcon={<PreviewIcon />}
+                onClick={handlePreviewTemplate}>
+
                   Preview
                 </Button>
                 <Button
-                  variant="outlined"
-                  startIcon={<DownloadIcon />}
-                  onClick={handleDownloadTemplate}
-                >
+                variant="outlined"
+                startIcon={<DownloadIcon />}
+                onClick={handleDownloadTemplate}>
+
                   Download
                 </Button>
                 <Button
-                  variant="outlined"
-                  startIcon={<ExcelIcon />}
-                  onClick={handleExcelExport}
-                >
+                variant="outlined"
+                startIcon={<ExcelIcon />}
+                onClick={handleExcelExport}>
+
                   Export to Excel
                 </Button>
                 <Button
-                  variant="outlined"
-                  startIcon={<CopyIcon />}
-                  onClick={handleDuplicateTemplate}
-                >
+                variant="outlined"
+                startIcon={<CopyIcon />}
+                onClick={handleDuplicateTemplate}>
+
                   Duplicate
                 </Button>
                 <Button
-                  variant="outlined"
-                  color="error"
-                  startIcon={<DeleteIcon />}
-                  onClick={() => setDeleteDialogOpen(true)}
-                >
+                variant="outlined"
+                color="error"
+                startIcon={<DeleteIcon />}
+                onClick={() => setDeleteDialogOpen(true)}>
+
                   Delete
                 </Button>
               </Box>
-            )}
+            }
             
-            {/* Template form */}
+            
             <ReportTemplateForm
               template={selectedTemplate}
               mode={currentAction}
               loading={loading}
               onSave={handleSaveTemplate}
-              onCancel={handleCancelEdit}
-            />
+              onCancel={handleCancelEdit} />
+
           </Box>
         </TabPanel>
         
         <TabPanel value={tabValue} index={2}>
           <Box sx={{ p: 2 }}>
-            {selectedTemplate ? (
-              <ReportPreview templateId={selectedTemplate._id} />
-            ) : (
-              <Alert severity="info">
+            {selectedTemplate ?
+            <ReportPreview templateId={selectedTemplate._id} /> :
+
+            <Alert severity="info">
                 Please select or create a template first
               </Alert>
-            )}
+            }
           </Box>
         </TabPanel>
       </Paper>
       
-      {/* Preview Dialog */}
+      
       <Dialog
         open={previewDialogOpen}
         onClose={() => setPreviewDialogOpen(false)}
         maxWidth="lg"
-        fullWidth
-      >
+        fullWidth>
+
         <DialogTitle>Report Preview</DialogTitle>
         <DialogContent sx={{ height: '80vh', p: 0 }}>
-          {selectedTemplate && (
-            <ReportPreview templateId={selectedTemplate._id} />
-          )}
+          {selectedTemplate &&
+          <ReportPreview templateId={selectedTemplate._id} />
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setPreviewDialogOpen(false)}>
@@ -413,21 +413,21 @@ const ReportBuilder: React.FC = () => {
           <Button
             variant="contained"
             startIcon={<DownloadIcon />}
-            onClick={handleDownloadTemplate}
-          >
+            onClick={handleDownloadTemplate}>
+
             Download
           </Button>
         </DialogActions>
       </Dialog>
       
-      {/* Delete Confirmation Dialog */}
+      
       <Dialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
         maxWidth="sm"
         fullWidth
-        aria-labelledby="delete-dialog-title"
-      >
+        aria-labelledby="delete-dialog-title">
+
         <DialogTitle id="delete-dialog-title">Delete Report Template</DialogTitle>
         <DialogContent>
           <Typography>
@@ -443,29 +443,29 @@ const ReportBuilder: React.FC = () => {
           <Button
             variant="contained"
             color="error"
-            onClick={handleDeleteTemplate}
-          >
+            onClick={handleDeleteTemplate}>
+
             Delete
           </Button>
         </DialogActions>
       </Dialog>
       
-      {/* Snackbar for notifications */}
+      
       <Snackbar
         open={!!error || !!success}
         autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-      >
+        onClose={handleCloseSnackbar}>
+
         <Alert
           onClose={handleCloseSnackbar}
           severity={error ? 'error' : 'success'}
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           {error || success}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
 export default ReportBuilder;
@@ -473,4 +473,4 @@ export default ReportBuilder;
 // Contract/performance test hooks can be added here for automation frameworks 
 
 // TEST: should show error for empty/duplicate/large/in-use/download/export
-// TEST: all dialogs/forms are keyboard accessible and have ARIA labels 
+// TEST: all dialogs/forms are keyboard accessible and have ARIA labels

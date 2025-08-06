@@ -27,8 +27,8 @@ import {
   FormControlLabel,
   Stack,
   ToggleButton,
-  ToggleButtonGroup,
-} from '@mui/material';
+  ToggleButtonGroup } from
+'@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {
   FilterList as FilterIcon,
@@ -37,22 +37,22 @@ import {
   Add as AddIcon,
   Close as CloseIcon,
   KeyboardArrowDown as ArrowDownIcon,
-  KeyboardArrowUp as ArrowUpIcon,
-} from '@mui/icons-material';
+  KeyboardArrowUp as ArrowUpIcon } from
+'@mui/icons-material';
 import { animations } from '../../theme/theme';
 
 // Types for filter options
 export type FilterType =
-  | 'text'
-  | 'select'
-  | 'multiSelect'
-  | 'boolean'
-  | 'date'
-  | 'dateRange'
-  | 'number'
-  | 'numberRange'
-  | 'radio'
-  | 'toggle';
+'text' |
+'select' |
+'multiSelect' |
+'boolean' |
+'date' |
+'dateRange' |
+'number' |
+'numberRange' |
+'radio' |
+'toggle';
 
 export interface FilterOption {
   value: string | number | boolean;
@@ -114,69 +114,69 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
   defaultCollapsed = false,
   variant = 'outlined',
   elevation = 0,
-  size = 'small',
+  size = 'small'
 }) => {
   const theme = useTheme();
-  
+
   // State for filters menu
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedFilter, setSelectedFilter] = useState<FilterDefinition | null>(null);
   const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
   const [collapsed, setCollapsed] = useState(defaultCollapsed && collapsible);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
-  
+
   // Update local search term when prop changes
   useEffect(() => {
     setLocalSearchTerm(searchTerm);
   }, [searchTerm]);
-  
+
   // Defensive defaults
   const safeFilters = filters || [];
   const safeActiveFilters = activeFilters || [];
-  
+
   // Determine which filters to show in the main toolbar vs "more filters" dropdown
   const visibleFilters = safeActiveFilters.slice(0, maxShownFilters);
   const hiddenFilters = safeActiveFilters.slice(maxShownFilters);
-  
+
   // Get filter definition by ID
   const getFilterById = (id: string): FilterDefinition | undefined => {
     return safeFilters.find((filter) => filter.id === id);
   };
-  
+
   // Get filter value by ID
   const getFilterValueById = (id: string): any => {
     const filter = safeActiveFilters.find((f) => f.id === id);
     return filter ? filter.value : undefined;
   };
-  
+
   // Handle filter button click
   const handleFilterButtonClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   // Handle filter menu close
   const handleFilterMenuClose = () => {
     setAnchorEl(null);
   };
-  
+
   // Handle filter option click
   const handleFilterOptionClick = (filter: FilterDefinition) => {
     setSelectedFilter(filter);
     handleFilterMenuClose();
   };
-  
+
   // Handle filter selector click
   const handleFilterSelectorClick = (event: React.MouseEvent<HTMLElement>, filter: FilterDefinition) => {
     setSelectedFilter(filter);
     setFilterAnchorEl(event.currentTarget);
   };
-  
+
   // Handle filter selector close
   const handleFilterSelectorClose = () => {
     setFilterAnchorEl(null);
     setSelectedFilter(null);
   };
-  
+
   // Handle search change
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -185,16 +185,16 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
       onSearchChange(value);
     }
   };
-  
+
   // Handle filter value change
   const handleFilterValueChange = (id: string, value: any) => {
     // Get current filters
     const currentFilters = [...safeActiveFilters];
-    
+
     // Check if filter already exists
     const existingFilterIndex = currentFilters.findIndex((f) => f.id === id);
-    
-    if (value === undefined || value === '' || (Array.isArray(value) && value.length === 0)) {
+
+    if (value === undefined || value === '' || Array.isArray(value) && value.length === 0) {
       // Remove filter if value is empty
       if (existingFilterIndex !== -1) {
         currentFilters.splice(existingFilterIndex, 1);
@@ -202,24 +202,24 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
     } else {
       // Update or add filter
       const newFilter: FilterState = { id, value };
-      
+
       if (existingFilterIndex !== -1) {
         currentFilters[existingFilterIndex] = newFilter;
       } else {
         currentFilters.push(newFilter);
       }
     }
-    
+
     // Call onChange handler
     onFilterChange(currentFilters);
   };
-  
+
   // Handle clear filter
   const handleClearFilter = (id: string) => {
     const currentFilters = safeActiveFilters.filter((f) => f.id !== id);
     onFilterChange(currentFilters);
   };
-  
+
   // Handle clear all filters
   const handleClearAllFilters = () => {
     onFilterChange([]);
@@ -228,7 +228,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
     }
     setLocalSearchTerm('');
   };
-  
+
   // Handle clear search
   const handleClearSearch = () => {
     setLocalSearchTerm('');
@@ -236,48 +236,48 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
       onSearchChange('');
     }
   };
-  
+
   // Toggle collapsed state
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
-  
+
   // Render filter value as display text
   const renderFilterValueDisplay = (filter: FilterDefinition, value: any): string => {
     if (value === undefined || value === null) {
       return '';
     }
-    
+
     switch (filter.type) {
       case 'select':
       case 'radio':
         const option = filter.options?.find((opt) => opt.value === value);
         return option ? option.label : String(value);
-        
+
       case 'multiSelect':
         if (!Array.isArray(value) || value.length === 0) {
           return '';
         }
-        
-        const selectedOptions = filter.options
-          ?.filter((opt) => value.includes(opt.value))
-          .map((opt) => opt.label);
-          
+
+        const selectedOptions = filter.options?.
+        filter((opt) => value.includes(opt.value)).
+        map((opt) => opt.label);
+
         if ((selectedOptions?.length ?? 0) === 1) {
           return selectedOptions?.[0] ?? '';
         }
-        
+
         return `${selectedOptions?.[0] ?? ''} (+${(selectedOptions?.length ?? 0) - 1})`;
-        
+
       case 'boolean':
         return value ? 'Yes' : 'No';
-        
+
       case 'date':
         if (value instanceof Date) {
           return value.toLocaleDateString();
         }
         return String(value);
-        
+
       case 'dateRange':
         if (Array.isArray(value) && value.length === 2) {
           const [start, end] = value;
@@ -286,22 +286,22 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
           }
         }
         return String(value);
-        
+
       case 'numberRange':
         if (Array.isArray(value) && value.length === 2) {
           return `${value[0]} - ${value[1]}`;
         }
         return String(value);
-        
+
       default:
         return String(value);
     }
   };
-  
+
   // Render filter input based on type
-  const renderFilterInput = (filter: FilterDefinition) => {
+  const RenderFilterInput = (filter: FilterDefinition) => {
     const value = getFilterValueById(filter.id);
-    
+
     switch (filter.type) {
       case 'text':
         return (
@@ -313,21 +313,21 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
             placeholder={`Filter by ${filter.label}`}
             variant="outlined"
             InputProps={{
-              endAdornment: value ? (
-                <InputAdornment position="end">
+              endAdornment: value ?
+              <InputAdornment position="end">
                   <IconButton
-                    size="small"
-                    onClick={() => handleClearFilter(filter.id)}
-                    edge="end"
-                  >
+                  size="small"
+                  onClick={() => handleClearFilter(filter.id)}
+                  edge="end">
+
                     <ClearIcon fontSize="small" />
                   </IconButton>
-                </InputAdornment>
-              ) : null,
-            }}
-          />
-        );
-        
+                </InputAdornment> :
+              null
+            }} />);
+
+
+
       case 'select':
         return (
           <FormControl fullWidth size={size} variant="outlined">
@@ -340,22 +340,22 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
               renderValue={(selected) => {
                 const option = filter.options?.find((opt) => opt.value === selected);
                 return option?.label || selected;
-              }}
-            >
-              {filter.showClearButton && (
-                <MenuItem value="">
+              }}>
+
+              {filter.showClearButton &&
+              <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-              )}
-              {filter.options?.map((option) => (
-                <MenuItem key={String(option.value)} value={typeof option.value === 'boolean' ? String(option.value) : option.value}>
+              }
+              {filter.options?.map((option) =>
+              <MenuItem key={String(option.value)} value={typeof option.value === 'boolean' ? String(option.value) : option.value}>
                   {option.label}
                 </MenuItem>
-              ))}
+              )}
             </Select>
-          </FormControl>
-        );
-        
+          </FormControl>);
+
+
       case 'multiSelect':
         return (
           <FormControl fullWidth size={size} variant="outlined">
@@ -370,25 +370,25 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                 if (!Array.isArray(selected) || selected.length === 0) {
                   return <em>Select options</em>;
                 }
-                
+
                 if (selected.length === 1) {
                   const option = filter.options?.find((opt) => opt.value === selected[0]);
                   return option?.label || selected[0];
                 }
-                
+
                 return `${selected.length} selected`;
-              }}
-            >
-              {filter.options?.map((option) => (
-                <MenuItem key={String(option.value)} value={typeof option.value === 'boolean' ? String(option.value) : option.value}>
+              }}>
+
+              {filter.options?.map((option) =>
+              <MenuItem key={String(option.value)} value={typeof option.value === 'boolean' ? String(option.value) : option.value}>
                   <Checkbox checked={(value || []).indexOf(option.value) > -1} />
                   <ListItemText primary={option.label} />
                 </MenuItem>
-              ))}
+              )}
             </Select>
-          </FormControl>
-        );
-        
+          </FormControl>);
+
+
       case 'boolean':
         return (
           <FormControl component="fieldset">
@@ -403,14 +403,14 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                 if (newValue !== null) {
                   handleFilterValueChange(filter.id, newValue);
                 }
-              }}
-            >
+              }}>
+
               <ToggleButton value={true}>Yes</ToggleButton>
               <ToggleButton value={false}>No</ToggleButton>
             </ToggleButtonGroup>
-          </FormControl>
-        );
-        
+          </FormControl>);
+
+
       case 'date':
         return (
           <DatePicker
@@ -421,12 +421,12 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
               textField: {
                 size,
                 fullWidth: true,
-                variant: 'outlined',
-              },
-            }}
-          />
-        );
-        
+                variant: 'outlined'
+              }
+            }} />);
+
+
+
       case 'dateRange':
         return (
           <Stack spacing={2}>
@@ -446,10 +446,10 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                   textField: {
                     size,
                     fullWidth: true,
-                    variant: 'outlined',
-                  },
-                }}
-              />
+                    variant: 'outlined'
+                  }
+                }} />
+
               <DatePicker
                 label="To"
                 value={Array.isArray(value) ? value[1] : null}
@@ -462,14 +462,14 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                   textField: {
                     size,
                     fullWidth: true,
-                    variant: 'outlined',
-                  },
-                }}
-              />
+                    variant: 'outlined'
+                  }
+                }} />
+
             </Box>
-          </Stack>
-        );
-        
+          </Stack>);
+
+
       case 'number':
         return (
           <TextField
@@ -483,11 +483,11 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
             inputProps={{
               min: filter.minValue,
               max: filter.maxValue,
-              step: filter.step || 1,
-            }}
-          />
-        );
-        
+              step: filter.step || 1
+            }} />);
+
+
+
       case 'numberRange':
         return (
           <Box sx={{ width: '100%', px: 2 }}>
@@ -500,8 +500,8 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
               valueLabelDisplay="auto"
               min={filter.minValue || 0}
               max={filter.maxValue || 100}
-              step={filter.step || 1}
-            />
+              step={filter.step || 1} />
+
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
               <Typography variant="caption" color="text.secondary">
                 {filter.minValue || 0}
@@ -510,9 +510,9 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                 {filter.maxValue || 100}
               </Typography>
             </Box>
-          </Box>
-        );
-        
+          </Box>);
+
+
       case 'radio':
         return (
           <FormControl component="fieldset">
@@ -521,20 +521,20 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
             </Typography>
             <RadioGroup
               value={value || ''}
-              onChange={(e) => handleFilterValueChange(filter.id, e.target.value)}
-            >
-              {filter.options?.map((option) => (
-                <FormControlLabel
-                  key={String(option.value)}
-                  value={option.value}
-                  control={<Radio size="small" />}
-                  label={option.label}
-                />
-              ))}
+              onChange={(e) => handleFilterValueChange(filter.id, e.target.value)}>
+
+              {filter.options?.map((option) =>
+              <FormControlLabel
+                key={String(option.value)}
+                value={option.value}
+                control={<Radio size="small" />}
+                label={option.label} />
+
+              )}
             </RadioGroup>
-          </FormControl>
-        );
-        
+          </FormControl>);
+
+
       case 'toggle':
         return (
           <Box>
@@ -546,44 +546,44 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
               value={value || []}
               onChange={(_, newValue) => handleFilterValueChange(filter.id, newValue)}
               aria-label={filter.label}
-              sx={{ flexWrap: 'wrap' }}
-            >
-              {filter.options?.map((option) => (
-                <ToggleButton 
-                  key={String(option.value)} 
-                  value={option.value}
-                  sx={{ mb: 0.5 }}
-                >
+              sx={{ flexWrap: 'wrap' }}>
+
+              {filter.options?.map((option) =>
+              <ToggleButton
+                key={String(option.value)}
+                value={option.value}
+                sx={{ mb: 0.5 }}>
+
                   {option.label}
                 </ToggleButton>
-              ))}
+              )}
             </ToggleButtonGroup>
-          </Box>
-        );
-        
+          </Box>);
+
+
       default:
         return null;
     }
   };
-  
+
   // Determine the container component and props based on variant
   const ContainerComponent: React.ElementType = variant === 'none' ? Box : Paper;
-  const containerProps = variant === 'none' 
-    ? {} 
-    : variant === 'outlined' 
-      ? { variant: 'outlined' as const } 
-      : { elevation };
-  
+  const containerProps = variant === 'none' ?
+  {} :
+  variant === 'outlined' ?
+  { variant: 'outlined' as const } :
+  { elevation };
+
   return (
-    <ContainerComponent 
+    <ContainerComponent
       {...containerProps}
-      sx={{ 
-        mb: 3, 
+      sx={{
+        mb: 3,
         borderRadius: 2,
-        overflow: 'hidden',
-      }}
-    >
-      {/* Main Toolbar */}
+        overflow: 'hidden'
+      }}>
+
+      
       <Box
         sx={{
           display: 'flex',
@@ -591,150 +591,150 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
           alignItems: 'center',
           gap: 1,
           p: 2,
-          borderBottom: collapsible ? `1px solid ${theme.palette.divider}` : 'none',
-        }}
-      >
-        {/* Search Field */}
-        {showSearch && (
-          <TextField
-            placeholder={searchPlaceholder}
-            size={size}
-            value={localSearchTerm}
-            onChange={handleSearchChange}
-            disabled={loading}
-            variant="outlined"
-            sx={{
-              flexGrow: 1,
-              minWidth: { xs: '100%', sm: 200 },
-              maxWidth: { sm: 300 },
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
+          borderBottom: collapsible ? `1px solid ${theme.palette.divider}` : 'none'
+        }}>
+
+        
+        {showSearch &&
+        <TextField
+          placeholder={searchPlaceholder}
+          size={size}
+          value={localSearchTerm}
+          onChange={handleSearchChange}
+          disabled={loading}
+          variant="outlined"
+          sx={{
+            flexGrow: 1,
+            minWidth: { xs: '100%', sm: 200 },
+            maxWidth: { sm: 300 }
+          }}
+          InputProps={{
+            startAdornment:
+            <InputAdornment position="start">
                   <SearchIcon fontSize="small" />
-                </InputAdornment>
-              ),
-              endAdornment: localSearchTerm ? (
-                <InputAdornment position="end">
+                </InputAdornment>,
+
+            endAdornment: localSearchTerm ?
+            <InputAdornment position="end">
                   <IconButton size="small" onClick={handleClearSearch}>
                     <ClearIcon fontSize="small" />
                   </IconButton>
-                </InputAdornment>
-              ) : null,
-            }}
-          />
-        )}
+                </InputAdornment> :
+            null
+          }} />
+
+        }
         
-        {/* Visible Filter Chips */}
-        {showActiveFilters && visibleFilters.length > 0 && (
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        
+        {showActiveFilters && visibleFilters.length > 0 &&
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
             {visibleFilters.map((filter) => {
-              const filterDef = getFilterById(filter.id);
-              if (!filterDef) return null;
-              
-              return (
-                <Chip
-                  key={filter.id}
-                  label={`${filterDef.label}: ${renderFilterValueDisplay(filterDef, filter.value)}`}
-                  onDelete={() => handleClearFilter(filter.id)}
-                  onClick={(e) => handleFilterSelectorClick(e, filterDef)}
-                  size={size}
-                  sx={{
-                    transition: animations.microInteraction,
-                    '&:hover': {
-                      backgroundColor: theme.palette.primary.main + '20',
-                    },
-                  }}
-                />
-              );
-            })}
-            
-            {/* More Filters Chip */}
-            {hiddenFilters.length > 0 && (
+            const filterDef = getFilterById(filter.id);
+            if (!filterDef) return null;
+
+            return (
               <Chip
-                label={`+${hiddenFilters.length} more`}
-                onClick={handleFilterButtonClick}
+                key={filter.id}
+                label={`${filterDef.label}: ${renderFilterValueDisplay(filterDef, filter.value)}`}
+                onDelete={() => handleClearFilter(filter.id)}
+                onClick={(e) => handleFilterSelectorClick(e, filterDef)}
                 size={size}
                 sx={{
                   transition: animations.microInteraction,
                   '&:hover': {
-                    backgroundColor: theme.palette.primary.main + '20',
-                  },
-                }}
-              />
-            )}
+                    backgroundColor: theme.palette.primary.main + '20'
+                  }
+                }} />);
+
+
+          })}
             
-            {/* Clear All Button */}
-            {safeActiveFilters.length > 0 && (
-              <Button
-                size={size}
-                variant="outlined"
-                color="primary"
-                onClick={handleClearAllFilters}
-                startIcon={<ClearIcon />}
-                sx={{ ml: 1 }}
-              >
+            
+            {hiddenFilters.length > 0 &&
+          <Chip
+            label={`+${hiddenFilters.length} more`}
+            onClick={handleFilterButtonClick}
+            size={size}
+            sx={{
+              transition: animations.microInteraction,
+              '&:hover': {
+                backgroundColor: theme.palette.primary.main + '20'
+              }
+            }} />
+
+          }
+            
+            
+            {safeActiveFilters.length > 0 &&
+          <Button
+            size={size}
+            variant="outlined"
+            color="primary"
+            onClick={handleClearAllFilters}
+            startIcon={<ClearIcon />}
+            sx={{ ml: 1 }}>
+
                 Clear All
               </Button>
-            )}
+          }
           </Box>
-        )}
+        }
         
-        {/* Filter Button */}
-        {showFilterButton && (
-          <Tooltip title="Add filter">
+        
+        {showFilterButton &&
+        <Tooltip title="Add filter">
             <IconButton
-              color="primary"
-              onClick={handleFilterButtonClick}
-              disabled={loading}
-              size={size === 'small' ? 'small' : 'medium'}
-            >
+            color="primary"
+            onClick={handleFilterButtonClick}
+            disabled={loading}
+            size={size === 'small' ? 'small' : 'medium'}>
+
               <FilterIcon />
             </IconButton>
           </Tooltip>
-        )}
+        }
         
-        {/* Collapse Toggle Button */}
-        {collapsible && (
-          <Tooltip title={collapsed ? 'Show more filters' : 'Hide filters'}>
+        
+        {collapsible &&
+        <Tooltip title={collapsed ? 'Show more filters' : 'Hide filters'}>
             <IconButton
-              onClick={toggleCollapsed}
-              size={size === 'small' ? 'small' : 'medium'}
-            >
+            onClick={toggleCollapsed}
+            size={size === 'small' ? 'small' : 'medium'}>
+
               {collapsed ? <ArrowDownIcon /> : <ArrowUpIcon />}
             </IconButton>
           </Tooltip>
-        )}
+        }
       </Box>
       
-      {/* Collapsible Additional Filters */}
-      {collapsible && (
-        <Collapse in={!collapsed}>
+      
+      {collapsible &&
+      <Collapse in={!collapsed}>
           <Box
+          sx={{
+            p: 2,
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 2
+          }}>
+
+            {safeFilters.map((filter) =>
+          <Box
+            key={filter.id}
             sx={{
-              p: 2,
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 2,
-            }}
-          >
-            {safeFilters.map((filter) => (
-              <Box
-                key={filter.id}
-                sx={{
-                  minWidth: 200,
-                  flexBasis: '22%',
-                  flexGrow: 1,
-                }}
-              >
-                {renderFilterInput(filter)}
+              minWidth: 200,
+              flexBasis: '22%',
+              flexGrow: 1
+            }}>
+
+                {RenderFilterInput(filter)}
               </Box>
-            ))}
+          )}
           </Box>
         </Collapse>
-      )}
+      }
       
-      {/* Filter Menu */}
+      
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -746,79 +746,79 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
             maxHeight: 400,
             overflow: 'auto',
             mt: 1,
-            borderRadius: 1,
-          },
-        }}
-      >
+            borderRadius: 1
+          }
+        }}>
+
         <Typography
           variant="subtitle2"
-          sx={{ px: 2, py: 1, fontWeight: 600 }}
-        >
+          sx={{ px: 2, py: 1, fontWeight: 600 }}>
+
           Add Filter
         </Typography>
         <Divider />
-        {safeFilters
-          .filter((filter) => !safeActiveFilters.some((af) => af.id === filter.id))
-          .map((filter) => (
-            <MenuItem
-              key={filter.id}
-              onClick={() => handleFilterOptionClick(filter)}
-              sx={{ px: 2, py: 1 }}
-            >
-              {filter.icon && (
-                <Box component="span" sx={{ mr: 1, display: 'flex', alignItems: 'center' }}>
+        {safeFilters.
+        filter((filter) => !safeActiveFilters.some((af) => af.id === filter.id)).
+        map((filter) =>
+        <MenuItem
+          key={filter.id}
+          onClick={() => handleFilterOptionClick(filter)}
+          sx={{ px: 2, py: 1 }}>
+
+              {filter.icon &&
+          <Box component="span" sx={{ mr: 1, display: 'flex', alignItems: 'center' }}>
                   {filter.icon}
                 </Box>
-              )}
+          }
               {filter.label}
             </MenuItem>
-          ))}
-        {safeFilters.length === safeActiveFilters.length && (
-          <Typography
-            variant="body2"
-            sx={{ p: 2, color: 'text.secondary' }}
-          >
+        )}
+        {safeFilters.length === safeActiveFilters.length &&
+        <Typography
+          variant="body2"
+          sx={{ p: 2, color: 'text.secondary' }}>
+
             All filters are active
           </Typography>
-        )}
+        }
       </Menu>
       
-      {/* Filter Selector Popover */}
+      
       <Popover
         open={Boolean(filterAnchorEl)}
         anchorEl={filterAnchorEl}
         onClose={handleFilterSelectorClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'left'
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'left',
+          horizontal: 'left'
         }}
         PaperProps={{
           sx: {
             p: 2,
             width: 300,
             maxWidth: '100%',
-            borderRadius: 1,
-          },
-        }}
-      >
-        {selectedFilter && (
-          <>
+            borderRadius: 1
+          }
+        }}>
+
+        {selectedFilter &&
+        <>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="subtitle1">{selectedFilter.label}</Typography>
               <IconButton size="small" onClick={handleFilterSelectorClose}>
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
-            {renderFilterInput(selectedFilter)}
+            {RenderFilterInput(selectedFilter)}
           </>
-        )}
+        }
       </Popover>
-    </ContainerComponent>
-  );
+    </ContainerComponent>);
+
 };
 
-export default FiltersToolbar; 
+export default FiltersToolbar;

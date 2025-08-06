@@ -1,0 +1,90 @@
+{
+  "timestamp": "2025-08-06T06:28:02.556Z",
+  "summary": {
+    "totalFiles": 19,
+    "fixedFiles": 16,
+    "errors": 0
+  },
+  "fixes": [
+    {
+      "name": "textFieldOnChange",
+      "description": "Fix TextField onChange handler types",
+      "files": [
+        "client/src/pages/suppliers/EditSupplier.tsx",
+        "client/src/pages/suppliers/CreateSupplier.tsx"
+      ]
+    },
+    {
+      "name": "responseMissingData",
+      "description": "Fix missing .data property on API responses",
+      "files": [
+        "client/src/pages/suppliers/hooks/useRiskAssessment.ts",
+        "client/src/pages/suppliers/hooks/useSupplierAudit.ts"
+      ]
+    },
+    {
+      "name": "catchBlockErrors",
+      "description": "Fix missing error variables in catch blocks",
+      "files": [
+        "client/src/pages/suppliers/hooks/useSupplierAudit.ts",
+        "client/src/pages/suppliers/hooks/useRiskAssessment.ts"
+      ]
+    },
+    {
+      "name": "chipKeyProps",
+      "description": "Fix duplicate key props in Chip components",
+      "files": [
+        "client/src/pages/suppliers/EditSupplier.tsx",
+        "client/src/pages/suppliers/CreateSupplier.tsx"
+      ]
+    },
+    {
+      "name": "serviceReturnTypes",
+      "description": "Fix service method return types",
+      "files": [
+        "client/src/services/supplier.service.ts",
+        "client/src/services/inspection.service.ts",
+        "client/src/services/feedback.service.ts",
+        "client/src/services/erpService.ts"
+      ]
+    },
+    {
+      "name": "importExportFixes",
+      "description": "Fix import/export naming issues",
+      "files": [
+        "client/src/utils/codeSplitting.tsx",
+        "client/src/utils/componentSplitting.tsx"
+      ]
+    },
+    {
+      "name": "jsxComponentTypes",
+      "description": "Fix JSX component type definitions",
+      "files": [
+        "client/src/App.tsx"
+      ]
+    },
+    {
+      "name": "implicitAnyParams",
+      "description": "Fix implicit any type parameters",
+      "files": [
+        "client/src/pages/suppliers/hooks/useRiskAssessment.ts",
+        "client/src/components/dashboard/DashboardCustomizer.tsx"
+      ]
+    },
+    {
+      "name": "typeExports",
+      "description": "Fix missing type exports",
+      "files": [
+        "client/src/types/api.ts"
+      ]
+    },
+    {
+      "name": "selectOnChange",
+      "description": "Fix Select component onChange handlers",
+      "files": [
+        "client/src/pages/suppliers/SupplierAuditChecklist.tsx"
+      ]
+    }
+  ],
+  "errors": []
+}

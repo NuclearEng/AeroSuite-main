@@ -17,15 +17,15 @@ import {
   DialogTitle,
   Snackbar,
   Alert,
-  CircularProgress
-} from '@mui/material';
+  CircularProgress } from
+'@mui/material';
 import {
   Add as AddIcon,
   Delete as DeleteIcon,
   Edit as EditIcon,
   Business as BusinessIcon,
-  Refresh as RefreshIcon
-} from '@mui/icons-material';
+  Refresh as RefreshIcon } from
+'@mui/icons-material';
 import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { CustomerFormModal } from './components';
 import customerService, { Customer } from '../../services/customer.service';
@@ -35,13 +35,13 @@ const CustomerList: React.FC = () => {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Modal states
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
-  
+
   // Snackbar state
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -76,15 +76,15 @@ const CustomerList: React.FC = () => {
   // Load customers on component mount
   useEffect(() => {
     loadCustomers();
-    
+
     // Set up event listener for customer updates from other parts of the app
     const handleCustomerUpdate = () => {
       loadCustomers();
     };
-    
+
     // In a real app, this would be subscribing to domain events
     window.addEventListener('customer-updated', handleCustomerUpdate);
-    
+
     return () => {
       window.removeEventListener('customer-updated', handleCustomerUpdate);
     };
@@ -120,7 +120,7 @@ const CustomerList: React.FC = () => {
   // Confirm delete customer
   const confirmDeleteCustomer = async () => {
     if (!selectedCustomer) return;
-    
+
     try {
       setLoading(true);
       await customerService.deleteCustomer(selectedCustomer._id);
@@ -152,7 +152,7 @@ const CustomerList: React.FC = () => {
       severity: 'success'
     });
     loadCustomers();
-    
+
     // Dispatch domain event
     const event = new CustomEvent('customer-created', { detail: customer });
     window.dispatchEvent(event);
@@ -166,7 +166,7 @@ const CustomerList: React.FC = () => {
       severity: 'success'
     });
     loadCustomers();
-    
+
     // Dispatch domain event
     const event = new CustomEvent('customer-updated', { detail: customer });
     window.dispatchEvent(event);
@@ -182,84 +182,84 @@ const CustomerList: React.FC = () => {
 
   // DataGrid columns
   const columns: GridColDef[] = [
-    {
-      field: 'name',
-      headerName: 'Customer',
-      flex: 2,
-      renderCell: (params) => (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+  {
+    field: 'name',
+    headerName: 'Customer',
+    flex: 2,
+    renderCell: (params) =>
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Avatar sx={{ mr: 2, bgcolor: 'primary.main' }}>
             {params.row.name.charAt(0)}
           </Avatar>
           <Typography variant="body1">{params.row.name}</Typography>
         </Box>
-      )
-    },
-    {
-      field: 'code',
-      headerName: 'Code',
-      width: 120
-    },
-    {
-      field: 'industry',
-      headerName: 'Industry',
-      width: 150
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 120,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          color={
-            params.value === 'active'
-              ? 'success'
-              : params.value === 'inactive'
-              ? 'error'
-              : 'warning'
-          }
-          size="small"
-        />
-      )
-    },
-    {
-      field: 'primaryContactName',
-      headerName: 'Primary Contact',
-      width: 180
-    },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 150,
-      sortable: false,
-      renderCell: (params) => (
-        <Box>
+
+  },
+  {
+    field: 'code',
+    headerName: 'Code',
+    width: 120
+  },
+  {
+    field: 'industry',
+    headerName: 'Industry',
+    width: 150
+  },
+  {
+    field: 'status',
+    headerName: 'Status',
+    width: 120,
+    renderCell: (params) =>
+    <Chip
+      label={params.value}
+      color={
+      params.value === 'active' ?
+      'success' :
+      params.value === 'inactive' ?
+      'error' :
+      'warning'
+      }
+      size="small" />
+
+
+  },
+  {
+    field: 'primaryContactName',
+    headerName: 'Primary Contact',
+    width: 180
+  },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    width: 150,
+    sortable: false,
+    renderCell: (params) =>
+    <Box>
           <IconButton
-            size="small"
-            onClick={() => handleViewCustomer(params.row._id)}
-            title="View Details"
-          >
+        size="small"
+        onClick={() => handleViewCustomer(params.row._id)}
+        title="View Details">
+
             <BusinessIcon fontSize="small" />
           </IconButton>
           <IconButton
-            size="small"
-            onClick={() => handleEditCustomer(params.row)}
-            title="Edit"
-          >
+        size="small"
+        onClick={() => handleEditCustomer(params.row)}
+        title="Edit">
+
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton
-            size="small"
-            onClick={() => handleDeleteCustomer(params.row)}
-            title="Delete"
-          >
+        size="small"
+        onClick={() => handleDeleteCustomer(params.row)}
+        title="Delete">
+
             <DeleteIcon fontSize="small" />
           </IconButton>
         </Box>
-      )
-    }
-  ];
+
+  }];
+
 
   return (
     <Box sx={{ p: 3 }}>
@@ -274,48 +274,48 @@ const CustomerList: React.FC = () => {
             startIcon={<RefreshIcon />}
             onClick={handleRefresh}
             sx={{ mr: 2 }}
-            disabled={loading}
-          >
+            disabled={loading}>
+
             Refresh
           </Button>
           <Button
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            onClick={handleCreateCustomer}
-          >
+            onClick={handleCreateCustomer}>
+
             Add Customer
           </Button>
         </Box>
       </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
 
       <Card>
         <CardContent>
           <Box sx={{ height: 600, width: '100%', position: 'relative' }}>
-            {loading && (
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                  zIndex: 1
-                }}
-              >
+            {loading &&
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                zIndex: 1
+              }}>
+
                 <CircularProgress />
               </Box>
-            )}
+            }
             <DataGrid
               rows={customers || []}
               columns={columns}
@@ -336,58 +336,58 @@ const CustomerList: React.FC = () => {
                   showQuickFilter: true,
                   quickFilterProps: { debounceMs: 500 }
                 }
-              }}
-            />
+              }} />
+
           </Box>
         </CardContent>
       </Card>
 
-      {/* Create Customer Modal */}
+      
       <CustomerFormModal
         open={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
-        onSave={handleCustomerCreated}
-      />
+        onSave={handleCustomerCreated} />
 
-      {/* Edit Customer Modal */}
-      {selectedCustomer && (
-        <CustomerFormModal
-          open={editModalOpen}
-          onClose={() => {
-            setEditModalOpen(false);
-            setSelectedCustomer(null);
-          }}
-          onSave={handleCustomerUpdated}
-          isEdit
-          customerId={selectedCustomer._id}
-          initialData={{
-            name: selectedCustomer.name,
-            code: selectedCustomer.code,
-            description: selectedCustomer.description || '',
-            industry: selectedCustomer.industry,
-            status: selectedCustomer.status,
-            website: selectedCustomer.website || '',
-            primaryContactName: selectedCustomer.primaryContactName || '',
-            primaryContactEmail: selectedCustomer.primaryContactEmail || '',
-            phone: selectedCustomer.phone || '',
-            serviceLevel: selectedCustomer.serviceLevel || 'standard',
-            address: {
-              street: selectedCustomer.address?.street || '',
-              city: selectedCustomer.address?.city || '',
-              state: selectedCustomer.address?.state || '',
-              zipCode: selectedCustomer.address?.zipCode || '',
-              country: selectedCustomer.address?.country || ''
-            },
-            tags: selectedCustomer.tags || []
-          }}
-        />
-      )}
 
-      {/* Delete Confirmation Dialog */}
+      
+      {selectedCustomer &&
+      <CustomerFormModal
+        open={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setSelectedCustomer(null);
+        }}
+        onSave={handleCustomerUpdated}
+        isEdit
+        customerId={selectedCustomer._id}
+        initialData={{
+          name: selectedCustomer.name,
+          code: selectedCustomer.code,
+          description: selectedCustomer.description || '',
+          industry: selectedCustomer.industry,
+          status: selectedCustomer.status,
+          website: selectedCustomer.website || '',
+          primaryContactName: selectedCustomer.primaryContactName || '',
+          primaryContactEmail: selectedCustomer.primaryContactEmail || '',
+          phone: selectedCustomer.phone || '',
+          serviceLevel: selectedCustomer.serviceLevel || 'standard',
+          address: {
+            street: selectedCustomer.address?.street || '',
+            city: selectedCustomer.address?.city || '',
+            state: selectedCustomer.address?.state || '',
+            zipCode: selectedCustomer.address?.zipCode || '',
+            country: selectedCustomer.address?.country || ''
+          },
+          tags: selectedCustomer.tags || []
+        }} />
+
+      }
+
+      
       <Dialog
         open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-      >
+        onClose={() => setDeleteDialogOpen(false)}>
+
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -404,19 +404,19 @@ const CustomerList: React.FC = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar for notifications */}
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
         <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default CustomerList; 
+export default CustomerList;

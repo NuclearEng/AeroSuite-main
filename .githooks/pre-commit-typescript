@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# TypeScript Pre-commit Hook
+echo "🔍 Running TypeScript checks..."
+
+# Run TypeScript compiler
+cd client && npm run type-check
+if [ $? -ne 0 ]; then
+  echo "❌ TypeScript errors found. Running auto-fixer..."
+  node ../scripts/typescript-auto-fixer.js
+  
+  # Check again
+  npm run type-check
+  if [ $? -ne 0 ]; then
+    echo "❌ TypeScript errors remain after auto-fix. Please fix manually."
+    exit 1
+  fi
+  
+  echo "✅ TypeScript errors auto-fixed. Please review and commit the changes."
+  exit 1
+fi
+
+echo "✅ TypeScript checks passed!"
+exit 0

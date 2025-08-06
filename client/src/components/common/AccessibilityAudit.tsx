@@ -14,8 +14,8 @@ import {
   CircularProgress,
   Divider,
   Alert,
-  Link
-} from '@mui/material';
+  Link } from
+'@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -26,8 +26,8 @@ import {
   AccessibilityAuditResult,
   AccessibilityIssue,
   AccessibilitySeverity,
-  saveAccessibilityReport
-} from '../../utils/accessibilityAudit';
+  saveAccessibilityReport } from
+'../../utils/accessibilityAudit';
 
 interface AccessibilityAuditProps {
   targetSelector?: string;
@@ -79,7 +79,7 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
       });
 
       setAuditResults(results);
-      
+
       // Call the callback if provided
       if (onAuditComplete) {
         onAuditComplete(results);
@@ -95,9 +95,9 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
   // Function to download the audit report
   const downloadReport = () => {
     if (!auditResults) return;
-    
+
     const reportUrl = saveAccessibilityReport(auditResults);
-    
+
     // Create a temporary link and trigger download
     const link = document.createElement('a');
     link.href = reportUrl;
@@ -105,13 +105,13 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
+
     // Clean up the blob URL
     setTimeout(() => URL.revokeObjectURL(reportUrl), 100);
   };
 
   // Helper function to get severity icon
-  const getSeverityIcon = (severity: AccessibilitySeverity) => {
+  const GetSeverityIcon = (severity: AccessibilitySeverity) => {
     switch (severity) {
       case AccessibilitySeverity.CRITICAL:
         return <ErrorIcon color="error" />;
@@ -145,7 +145,7 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
   // Count issues by severity
   const getIssueCounts = () => {
     if (!auditResults) return {};
-    
+
     return auditResults.violations.reduce((counts, violation) => {
       counts[violation.severity] = (counts[violation.severity] || 0) + 1;
       return counts;
@@ -156,43 +156,43 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
 
   return (
     <Box sx={{ mb: 4 }}>
-      {showControls && (
-        <Box sx={{ mb: 2, display: 'flex', gap: 2 }}>
-          <Button 
-            variant="contained" 
-            onClick={runAudit}
-            disabled={isRunning}
-            startIcon={isRunning ? <CircularProgress size={20} /> : undefined}
-          >
+      {showControls &&
+      <Box sx={{ mb: 2, display: 'flex', gap: 2 }}>
+          <Button
+          variant="contained"
+          onClick={runAudit}
+          disabled={isRunning}
+          startIcon={isRunning ? <CircularProgress size={20} /> : undefined}>
+
             {isRunning ? 'Running Audit...' : 'Run Accessibility Audit'}
           </Button>
           
-          {auditResults && (
-            <Button 
-              variant="outlined"
-              onClick={downloadReport}
-            >
+          {auditResults &&
+        <Button
+          variant="outlined"
+          onClick={downloadReport}>
+
               Download Report
             </Button>
-          )}
+        }
         </Box>
-      )}
+      }
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
-      )}
+      }
 
-      {isRunning && !auditResults && (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, my: 4 }}>
+      {isRunning && !auditResults &&
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, my: 4 }}>
           <CircularProgress size={24} />
           <Typography>Running accessibility audit...</Typography>
         </Box>
-      )}
+      }
 
-      {auditResults && (
-        <Paper sx={{ p: 3 }}>
+      {auditResults &&
+      <Paper sx={{ p: 3 }}>
           <Typography variant="h5" gutterBottom>
             Accessibility Audit Results
           </Typography>
@@ -203,69 +203,69 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
             </Typography>
             
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
-              <Chip 
-                icon={<ErrorIcon />} 
-                label={`Critical: ${issueCounts[AccessibilitySeverity.CRITICAL] || 0}`} 
-                color="error" 
-                variant="outlined" 
-              />
-              <Chip 
-                icon={<ErrorIcon />} 
-                label={`Serious: ${issueCounts[AccessibilitySeverity.SERIOUS] || 0}`} 
-                color="error" 
-                variant="outlined" 
-              />
-              <Chip 
-                icon={<WarningIcon />} 
-                label={`Moderate: ${issueCounts[AccessibilitySeverity.MODERATE] || 0}`} 
-                color="warning" 
-                variant="outlined" 
-              />
-              <Chip 
-                icon={<InfoIcon />} 
-                label={`Minor: ${issueCounts[AccessibilitySeverity.MINOR] || 0}`} 
-                color="info" 
-                variant="outlined" 
-              />
-              <Chip 
-                icon={<CheckCircleIcon />} 
-                label={`Passes: ${auditResults.passes.length}`} 
-                color="success" 
-                variant="outlined" 
-              />
+              <Chip
+              icon={<ErrorIcon />}
+              label={`Critical: ${issueCounts[AccessibilitySeverity.CRITICAL] || 0}`}
+              color="error"
+              variant="outlined" />
+
+              <Chip
+              icon={<ErrorIcon />}
+              label={`Serious: ${issueCounts[AccessibilitySeverity.SERIOUS] || 0}`}
+              color="error"
+              variant="outlined" />
+
+              <Chip
+              icon={<WarningIcon />}
+              label={`Moderate: ${issueCounts[AccessibilitySeverity.MODERATE] || 0}`}
+              color="warning"
+              variant="outlined" />
+
+              <Chip
+              icon={<InfoIcon />}
+              label={`Minor: ${issueCounts[AccessibilitySeverity.MINOR] || 0}`}
+              color="info"
+              variant="outlined" />
+
+              <Chip
+              icon={<CheckCircleIcon />}
+              label={`Passes: ${auditResults.passes.length}`}
+              color="success"
+              variant="outlined" />
+
             </Box>
             
-            {auditResults.violations.length === 0 ? (
-              <Alert severity="success">
+            {auditResults.violations.length === 0 ?
+          <Alert severity="success">
                 No accessibility issues found!
-              </Alert>
-            ) : (
-              <Alert severity="warning">
+              </Alert> :
+
+          <Alert severity="warning">
                 Found {auditResults.violations.length} accessibility {auditResults.violations.length === 1 ? 'issue' : 'issues'}.
               </Alert>
-            )}
+          }
           </Box>
 
-          {auditResults.violations.length > 0 && (
-            <>
+          {auditResults.violations.length > 0 &&
+        <>
               <Typography variant="h6" gutterBottom>
                 Issues
               </Typography>
               
-              {auditResults.violations.map((violation, index) => (
-                <Accordion key={`${violation.id}-${index}`} sx={{ mb: 1 }}>
+              {auditResults.violations.map((violation, index) =>
+          <Accordion key={`${violation.id}-${index}`} sx={{ mb: 1 }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
-                      {getSeverityIcon(violation.severity)}
+                      {GetSeverityIcon(violation.severity)}
                       <Typography sx={{ flex: 1 }}>
                         {violation.id}: {violation.description}
                       </Typography>
-                      <Chip 
-                        label={violation.impact || violation.severity} 
-                        size="small" 
-                        color={getSeverityColor(violation.severity) as any}
-                        sx={{ ml: 2 }}
-                      />
+                      <Chip
+                  label={violation.impact || violation.severity}
+                  size="small"
+                  color={getSeverityColor(violation.severity) as any}
+                  sx={{ ml: 2 }} />
+
                     </Box>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -273,12 +273,12 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
                       {violation.help}
                     </Typography>
                     
-                    <Link 
-                      href={violation.helpUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      sx={{ display: 'block', mb: 2 }}
-                    >
+                    <Link
+                href={violation.helpUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ display: 'block', mb: 2 }}>
+
                       Learn more about this issue
                     </Link>
                     
@@ -289,26 +289,26 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
                     </Typography>
                     
                     <List dense>
-                      {violation.nodes.map((node, nodeIndex) => (
-                        <ListItem key={nodeIndex} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                          <ListItemText 
-                            primary={`Element ${nodeIndex + 1}`} 
-                            secondary={
-                              <Box component="pre" sx={{ 
-                                mt: 1, 
-                                p: 1, 
-                                bgcolor: 'grey.100', 
-                                borderRadius: 1,
-                                overflow: 'auto',
-                                fontSize: '0.8rem'
-                              }}>
+                      {violation.nodes.map((node, nodeIndex) =>
+                <ListItem key={nodeIndex} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                          <ListItemText
+                    primary={`Element ${nodeIndex + 1}`}
+                    secondary={
+                    <Box component="pre" sx={{
+                      mt: 1,
+                      p: 1,
+                      bgcolor: 'grey.100',
+                      borderRadius: 1,
+                      overflow: 'auto',
+                      fontSize: '0.8rem'
+                    }}>
                                 {node.html}
                               </Box>
-                            }
-                          />
+                    } />
+
                           
-                          {node.failureSummary && (
-                            <Box sx={{ mt: 1, color: 'text.secondary', fontSize: '0.875rem' }}>
+                          {node.failureSummary &&
+                  <Box sx={{ mt: 1, color: 'text.secondary', fontSize: '0.875rem' }}>
                               <Typography variant="caption" component="div" sx={{ fontWeight: 'bold' }}>
                                 Failure:
                               </Typography>
@@ -316,10 +316,10 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
                                 {node.failureSummary}
                               </Typography>
                             </Box>
-                          )}
+                  }
                           
-                          {node.fix && (
-                            <Box sx={{ mt: 1, color: 'success.main', fontSize: '0.875rem' }}>
+                          {node.fix &&
+                  <Box sx={{ mt: 1, color: 'success.main', fontSize: '0.875rem' }}>
                               <Typography variant="caption" component="div" sx={{ fontWeight: 'bold' }}>
                                 Suggested fix:
                               </Typography>
@@ -327,19 +327,19 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
                                 {node.fix.action} {node.fix.type}: {node.fix.value}
                               </Typography>
                             </Box>
-                          )}
+                  }
                         </ListItem>
-                      ))}
+                )}
                     </List>
                   </AccordionDetails>
                 </Accordion>
-              ))}
-            </>
           )}
+            </>
+        }
         </Paper>
-      )}
-    </Box>
-  );
+      }
+    </Box>);
+
 };
 
-export default AccessibilityAudit; 
+export default AccessibilityAudit;

@@ -29,8 +29,8 @@ import {
   Tooltip,
   Alert,
   LinearProgress,
-  Grid
-} from '@mui/material';
+  Grid } from
+'@mui/material';
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -46,8 +46,8 @@ import {
   MoreVert as MoreVertIcon,
   Close as CloseIcon,
   Sort as SortIcon,
-  TrendingUp as TrendingUpIcon
-} from '@mui/icons-material';
+  TrendingUp as TrendingUpIcon } from
+'@mui/icons-material';
 import MockDataService from '../../services/mockDataService';
 import type { Inspection, Customer, Supplier } from '../../services/mockDataService';
 
@@ -60,7 +60,7 @@ interface FilterState {
 }
 
 // Status chip component
-const StatusChip = ({ status }: { status: string }) => {
+const StatusChip = ({ status }: {status: string;}) => {
   const getStatusConfig = (status: string) => {
     switch (status) {
       case 'scheduled':
@@ -81,13 +81,13 @@ const StatusChip = ({ status }: { status: string }) => {
     <Chip
       label={config.label}
       color={config.color as 'info' | 'warning' | 'success' | 'error' | 'default'}
-      size="small"
-    />
-  );
+      size="small" />);
+
+
 };
 
 // Result chip
-const ResultChip = ({ result }: { result: string }) => {
+const ResultChip = ({ result }: {result: string;}) => {
   const getResultConfig = (result: string) => {
     switch (result) {
       case 'pass':
@@ -108,15 +108,15 @@ const ResultChip = ({ result }: { result: string }) => {
     <Chip
       label={config.label}
       color={config.color as 'success' | 'error' | 'warning' | 'default'}
-      size="small"
-    />
-  );
+      size="small" />);
+
+
 };
 
 // Priority chip
-const PriorityChip = ({ priority }: { priority?: string }) => {
+const PriorityChip = ({ priority }: {priority?: string;}) => {
   if (!priority) return null;
-  
+
   const getPriorityConfig = (priority: string) => {
     switch (priority) {
       case 'high':
@@ -135,9 +135,9 @@ const PriorityChip = ({ priority }: { priority?: string }) => {
     <Chip
       label={config.label}
       color={config.color as 'success' | 'error' | 'warning' | 'default'}
-      size="small"
-    />
-  );
+      size="small" />);
+
+
 };
 
 // Format date for display
@@ -149,17 +149,17 @@ const InspectionList: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  
+
   const [inspections, setInspections] = useState<Inspection[]>([]);
   const [filteredInspections, setFilteredInspections] = useState<Inspection[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Pagination
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  
+
   // Filtering
   const [filters, setFilters] = useState<FilterState>({
     search: '',
@@ -168,7 +168,7 @@ const InspectionList: React.FC = () => {
     supplier: queryParams.get('supplier') || 'all',
     dateRange: 'all'
   });
-  
+
   // Sorting
   const [sortField, setSortField] = useState<keyof Inspection>('scheduledDate');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
@@ -176,74 +176,74 @@ const InspectionList: React.FC = () => {
   useEffect(() => {
     // Initialize mock data service
     MockDataService.initialize();
-    
+
     // Load data
     const allInspections = MockDataService.getInspections();
     setInspections(allInspections);
     setCustomers(MockDataService.getCustomers());
     setSuppliers(MockDataService.getSuppliers());
-    
+
     setLoading(false);
   }, []);
 
   // Apply filters and sorting whenever data changes
   useEffect(() => {
     let result = [...inspections];
-    
+
     // Apply filters
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
       result = result.filter(
-        inspection => 
-          inspection.title.toLowerCase().includes(searchLower) ||
-          inspection.inspectionNumber.toLowerCase().includes(searchLower) ||
-          inspection.customer.name.toLowerCase().includes(searchLower) ||
-          inspection.supplier.name.toLowerCase().includes(searchLower) ||
-          (inspection.partNumber && inspection.partNumber.toLowerCase().includes(searchLower))
+        (inspection) =>
+        inspection.title.toLowerCase().includes(searchLower) ||
+        inspection.inspectionNumber.toLowerCase().includes(searchLower) ||
+        inspection.customer.name.toLowerCase().includes(searchLower) ||
+        inspection.supplier.name.toLowerCase().includes(searchLower) ||
+        inspection.partNumber && inspection.partNumber.toLowerCase().includes(searchLower)
       );
     }
-    
+
     if (filters.status !== 'all') {
-      result = result.filter(inspection => inspection.status === filters.status);
+      result = result.filter((inspection) => inspection.status === filters.status);
     }
-    
+
     if (filters.customer !== 'all') {
-      result = result.filter(inspection => inspection.customer._id === filters.customer);
+      result = result.filter((inspection) => inspection.customer._id === filters.customer);
     }
-    
+
     if (filters.supplier !== 'all') {
-      result = result.filter(inspection => inspection.supplier._id === filters.supplier);
+      result = result.filter((inspection) => inspection.supplier._id === filters.supplier);
     }
-    
+
     if (filters.dateRange !== 'all') {
       const now = new Date();
       let startDate: Date;
-      
+
       switch (filters.dateRange) {
         case 'today':
           startDate = new Date(now.setHours(0, 0, 0, 0));
-          result = result.filter(inspection => new Date(inspection.scheduledDate) >= startDate);
+          result = result.filter((inspection) => new Date(inspection.scheduledDate) >= startDate);
           break;
         case 'week':
           startDate = new Date(now);
           startDate.setDate(now.getDate() - 7);
-          result = result.filter(inspection => new Date(inspection.scheduledDate) >= startDate);
+          result = result.filter((inspection) => new Date(inspection.scheduledDate) >= startDate);
           break;
         case 'month':
           startDate = new Date(now);
           startDate.setMonth(now.getMonth() - 1);
-          result = result.filter(inspection => new Date(inspection.scheduledDate) >= startDate);
+          result = result.filter((inspection) => new Date(inspection.scheduledDate) >= startDate);
           break;
         default:
           break;
       }
     }
-    
+
     // Apply sorting
     result.sort((a, b) => {
       let valueA: any;
       let valueB: any;
-      
+
       // Handle nested properties and date conversions
       if (sortField === 'customer') {
         valueA = a.customer.name;
@@ -258,7 +258,7 @@ const InspectionList: React.FC = () => {
         valueA = a[sortField] || '';
         valueB = b[sortField] || '';
       }
-      
+
       if (valueA < valueB) {
         return sortDirection === 'asc' ? -1 : 1;
       }
@@ -267,9 +267,9 @@ const InspectionList: React.FC = () => {
       }
       return 0;
     });
-    
+
     setFilteredInspections(result);
-    
+
     // Reset to first page when filters change
     setPage(0);
   }, [inspections, filters, sortField, sortDirection]);
@@ -284,7 +284,7 @@ const InspectionList: React.FC = () => {
   };
 
   const handleFilterChange = (name: keyof FilterState, value: string) => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -299,23 +299,23 @@ const InspectionList: React.FC = () => {
     }
   };
 
-  const getSortIcon = (field: keyof Inspection) => {
+  const GetSortIcon = (field: keyof Inspection) => {
     if (field !== sortField) return null;
-    
+
     return (
       <SortIcon
         fontSize="small"
         sx={{
           ml: 0.5,
           transform: sortDirection === 'desc' ? 'rotate(180deg)' : 'none'
-        }}
-      />
-    );
+        }} />);
+
+
   };
 
   return (
     <Box>
-      {/* Page header */}
+      
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4" component="h1">
           Inspections
@@ -326,22 +326,22 @@ const InspectionList: React.FC = () => {
             color="primary"
             startIcon={<TrendingUpIcon />}
             onClick={() => navigate('/inspections/dashboard')}
-            sx={{ mr: 2 }}
-          >
+            sx={{ mr: 2 }}>
+
             View Dashboard
           </Button>
           <Button
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
-            onClick={() => navigate('/inspections/schedule')}
-          >
+            onClick={() => navigate('/inspections/schedule')}>
+
             Schedule Inspection
           </Button>
         </Box>
       </Box>
 
-      {/* Filter and search card */}
+      
       <Paper sx={{ p: 2, mb: 3 }}>
         <Grid container spacing={2} alignItems="center">
           <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
@@ -351,14 +351,14 @@ const InspectionList: React.FC = () => {
               value={filters.search}
               onChange={(e) => handleFilterChange('search', e.target.value)}
               InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
+                startAdornment:
+                <InputAdornment position="start">
                     <SearchIcon />
                   </InputAdornment>
-                )
+
               }}
-              size="small"
-            />
+              size="small" />
+
           </Grid>
           
           <Grid sx={{ gridColumn: { xs: 'span 6', md: 'span 2' } }}>
@@ -368,8 +368,8 @@ const InspectionList: React.FC = () => {
                 labelId="status-filter-label"
                 value={filters.status}
                 onChange={(e) => handleFilterChange('status', e.target.value)}
-                label="Status"
-              >
+                label="Status">
+
                 <MenuItem value="all">All Statuses</MenuItem>
                 <MenuItem value="scheduled">Scheduled</MenuItem>
                 <MenuItem value="in-progress">In Progress</MenuItem>
@@ -386,8 +386,8 @@ const InspectionList: React.FC = () => {
                 labelId="date-filter-label"
                 value={filters.dateRange}
                 onChange={(e) => handleFilterChange('dateRange', e.target.value)}
-                label="Date Range"
-              >
+                label="Date Range">
+
                 <MenuItem value="all">All Dates</MenuItem>
                 <MenuItem value="today">Today</MenuItem>
                 <MenuItem value="week">Last 7 Days</MenuItem>
@@ -403,14 +403,14 @@ const InspectionList: React.FC = () => {
                 labelId="customer-filter-label"
                 value={filters.customer}
                 onChange={(e) => handleFilterChange('customer', e.target.value)}
-                label="Customer"
-              >
+                label="Customer">
+
                 <MenuItem value="all">All Customers</MenuItem>
-                {customers.map(customer => (
-                  <MenuItem key={customer._id} value={customer._id}>
+                {customers.map((customer) =>
+                <MenuItem key={customer._id} value={customer._id}>
                     {customer.name}
                   </MenuItem>
-                ))}
+                )}
               </Select>
             </FormControl>
           </Grid>
@@ -422,76 +422,76 @@ const InspectionList: React.FC = () => {
                 labelId="supplier-filter-label"
                 value={filters.supplier}
                 onChange={(e) => handleFilterChange('supplier', e.target.value)}
-                label="Supplier"
-              >
+                label="Supplier">
+
                 <MenuItem value="all">All Suppliers</MenuItem>
-                {suppliers.map(supplier => (
-                  <MenuItem key={supplier._id} value={supplier._id}>
+                {suppliers.map((supplier) =>
+                <MenuItem key={supplier._id} value={supplier._id}>
                     {supplier.name}
                   </MenuItem>
-                ))}
+                )}
               </Select>
             </FormControl>
           </Grid>
         </Grid>
       </Paper>
 
-      {/* Inspection Table */}
+      
       <Paper>
         <TableContainer>
-          {loading ? (
-            <LinearProgress />
-          ) : (
-            <Table>
+          {loading ?
+          <LinearProgress /> :
+
+          <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell 
-                    onClick={() => handleSort('inspectionNumber')}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                  <TableCell
+                  onClick={() => handleSort('inspectionNumber')}
+                  sx={{ cursor: 'pointer' }}>
+
                     <Box display="flex" alignItems="center">
                       <AssignmentIcon fontSize="small" sx={{ mr: 1 }} />
                       Number
-                      {getSortIcon('inspectionNumber')}
+                      {GetSortIcon('inspectionNumber')}
                     </Box>
                   </TableCell>
-                  <TableCell 
-                    onClick={() => handleSort('title')}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                  <TableCell
+                  onClick={() => handleSort('title')}
+                  sx={{ cursor: 'pointer' }}>
+
                     <Box display="flex" alignItems="center">
                       Title
-                      {getSortIcon('title')}
+                      {GetSortIcon('title')}
                     </Box>
                   </TableCell>
-                  <TableCell 
-                    onClick={() => handleSort('customer')}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                  <TableCell
+                  onClick={() => handleSort('customer')}
+                  sx={{ cursor: 'pointer' }}>
+
                     <Box display="flex" alignItems="center">
                       <BusinessIcon fontSize="small" sx={{ mr: 1 }} />
                       Customer
-                      {getSortIcon('customer')}
+                      {GetSortIcon('customer')}
                     </Box>
                   </TableCell>
-                  <TableCell 
-                    onClick={() => handleSort('supplier')}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                  <TableCell
+                  onClick={() => handleSort('supplier')}
+                  sx={{ cursor: 'pointer' }}>
+
                     <Box display="flex" alignItems="center">
                       <FactoryIcon fontSize="small" sx={{ mr: 1 }} />
                       Supplier
-                      {getSortIcon('supplier')}
+                      {GetSortIcon('supplier')}
                     </Box>
                   </TableCell>
-                  <TableCell 
-                    onClick={() => handleSort('scheduledDate')}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                  <TableCell
+                  onClick={() => handleSort('scheduledDate')}
+                  sx={{ cursor: 'pointer' }}>
+
                     <Box display="flex" alignItems="center">
                       <ScheduleIcon fontSize="small" sx={{ mr: 1 }} />
                       Scheduled Date
-                      {getSortIcon('scheduledDate')}
+                      {GetSortIcon('scheduledDate')}
                     </Box>
                   </TableCell>
                   <TableCell>Status</TableCell>
@@ -499,74 +499,74 @@ const InspectionList: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredInspections.length === 0 ? (
-                  <TableRow>
+                {filteredInspections.length === 0 ?
+              <TableRow>
                     <TableCell colSpan={7} align="center">
                       <Typography variant="body1" py={3}>
                         No inspections found matching the filter criteria.
                       </Typography>
                       <Button
-                        variant="outlined"
-                        startIcon={<FilterListIcon />}
-                        onClick={() => setFilters({
-                          search: '',
-                          status: 'all',
-                          customer: 'all',
-                          supplier: 'all',
-                          dateRange: 'all'
-                        })}
-                        sx={{ mt: 1, mb: 2 }}
-                      >
+                    variant="outlined"
+                    startIcon={<FilterListIcon />}
+                    onClick={() => setFilters({
+                      search: '',
+                      status: 'all',
+                      customer: 'all',
+                      supplier: 'all',
+                      dateRange: 'all'
+                    })}
+                    sx={{ mt: 1, mb: 2 }}>
+
                         Clear Filters
                       </Button>
                     </TableCell>
-                  </TableRow>
-                ) : (
-                  filteredInspections
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((inspection) => (
-                      <TableRow 
-                        key={inspection._id}
-                        onClick={() => navigate(`/inspections/${inspection._id}`)}
-                        hover
-                        sx={{ cursor: 'pointer' }}
-                      >
+                  </TableRow> :
+
+              filteredInspections.
+              slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).
+              map((inspection) =>
+              <TableRow
+                key={inspection._id}
+                onClick={() => navigate(`/inspections/${inspection._id}`)}
+                hover
+                sx={{ cursor: 'pointer' }}>
+
                         <TableCell>{inspection.inspectionNumber}</TableCell>
                         <TableCell>{inspection.title}</TableCell>
                         <TableCell>
                           <Tooltip title={`View ${inspection.customer.name}`}>
-                            <Box 
-                              component="span" 
-                              onClick={(e) => {
-                                e.stopPropagation(); 
-                                navigate(`/customers/${inspection.customer._id}`);
-                              }}
-                              sx={{ 
-                                '&:hover': { 
-                                  textDecoration: 'underline',
-                                  color: 'primary.main'
-                                }
-                              }}
-                            >
+                            <Box
+                      component="span"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/customers/${inspection.customer._id}`);
+                      }}
+                      sx={{
+                        '&:hover': {
+                          textDecoration: 'underline',
+                          color: 'primary.main'
+                        }
+                      }}>
+
                               {inspection.customer.name}
                             </Box>
                           </Tooltip>
                         </TableCell>
                         <TableCell>
                           <Tooltip title={`View ${inspection.supplier.name}`}>
-                            <Box 
-                              component="span" 
-                              onClick={(e) => {
-                                e.stopPropagation(); 
-                                navigate(`/suppliers/${inspection.supplier._id}`);
-                              }}
-                              sx={{ 
-                                '&:hover': { 
-                                  textDecoration: 'underline',
-                                  color: 'secondary.main'
-                                }
-                              }}
-                            >
+                            <Box
+                      component="span"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/suppliers/${inspection.supplier._id}`);
+                      }}
+                      sx={{
+                        '&:hover': {
+                          textDecoration: 'underline',
+                          color: 'secondary.main'
+                        }
+                      }}>
+
                               {inspection.supplier.name}
                             </Box>
                           </Tooltip>
@@ -579,11 +579,11 @@ const InspectionList: React.FC = () => {
                           <ResultChip result={inspection.result} />
                         </TableCell>
                       </TableRow>
-                    ))
-                )}
+              )
+              }
               </TableBody>
             </Table>
-          )}
+          }
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50]}
@@ -592,11 +592,11 @@ const InspectionList: React.FC = () => {
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+          onRowsPerPageChange={handleChangeRowsPerPage} />
+
       </Paper>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default InspectionList; 
+export default InspectionList;

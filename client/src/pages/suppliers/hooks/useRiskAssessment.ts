@@ -85,7 +85,7 @@ const useRiskAssessment = () => {
       try {
         setLoading(true);
         const response = await supplierService.getSuppliers();
-        setSuppliers(response.data);
+        setSuppliers((response as any).data || response);
       } catch (_err) {
         console.error('Error fetching suppliers:', _err);
         enqueueSnackbar('Failed to load suppliers', { variant: 'error' });
@@ -197,7 +197,7 @@ const useRiskAssessment = () => {
     
     // If there are assessments, use the most recent one as active
     if (assessments.length > 0) {
-      const latestAssessment = assessments.sort((a, b) => 
+      const latestAssessment = assessments.sort((a: any, b: any) => 
         new Date(b.assessmentDate).getTime() - new Date(a.assessmentDate).getTime()
       )[0];
       

@@ -1,0 +1,42 @@
+{
+  "autoFix": true,
+  "patterns": [
+    {
+      "name": "onChangeHandler",
+      "enabled": true,
+      "severity": "error"
+    },
+    {
+      "name": "responseData",
+      "enabled": true,
+      "severity": "error"
+    },
+    {
+      "name": "importErrors",
+      "enabled": true,
+      "severity": "error"
+    },
+    {
+      "name": "implicitAny",
+      "enabled": true,
+      "severity": "error"
+    },
+    {
+      "name": "errorReferences",
+      "enabled": true,
+      "severity": "error"
+    },
+    {
+      "name": "chipKeyProp",
+      "enabled": true,
+      "severity": "error"
+    },
+    {
+      "name": "jsxComponentTypes",
+      "enabled": true,
+      "severity": "error"
+    }
+  ],
+  "preCommitHook": true,
+  "ciIntegration": true
+}

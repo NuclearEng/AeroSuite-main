@@ -27,8 +27,8 @@ import {
   LinearProgress,
   Grid,
   CardActionArea,
-  CardActions
-} from '@mui/material';
+  CardActions } from
+'@mui/material';
 import {
   Add as AddIcon,
   Search as SearchIcon,
@@ -40,8 +40,8 @@ import {
   Close as CloseIcon,
   Assessment as AnalyticsIcon,
   Security as RiskIcon,
-  Map as MapIcon
-} from '@mui/icons-material';
+  Map as MapIcon } from
+'@mui/icons-material';
 import type { Supplier } from '../../services/mockDataService';
 import MockDataService from '../../services/mockDataService';
 
@@ -67,7 +67,7 @@ const SupplierList: React.FC = () => {
   const loadSuppliers = () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const data = MockDataService.getSuppliers();
       setSuppliers(data);
@@ -87,20 +87,20 @@ const SupplierList: React.FC = () => {
   // Filter suppliers based on current filters
   const applyFilters = () => {
     let filtered = [...suppliers];
-    
+
     // Apply search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
-        supplier => 
-          supplier.name.toLowerCase().includes(query) ||
-          supplier.code.toLowerCase().includes(query) ||
-          (supplier.industry && supplier.industry.toLowerCase().includes(query)) ||
-          (supplier.location && supplier.location.toLowerCase().includes(query)) ||
-          (supplier.qualification && supplier.qualification.toLowerCase().includes(query))
+        (supplier) =>
+        supplier.name.toLowerCase().includes(query) ||
+        supplier.code.toLowerCase().includes(query) ||
+        supplier.industry && supplier.industry.toLowerCase().includes(query) ||
+        supplier.location && supplier.location.toLowerCase().includes(query) ||
+        supplier.qualification && supplier.qualification.toLowerCase().includes(query)
       );
     }
-    
+
     setFilteredSuppliers(filtered);
     setPage(0); // Reset to first page when filters change
   };
@@ -143,7 +143,7 @@ const SupplierList: React.FC = () => {
 
   return (
     <Box>
-      {/* Page header */}
+      
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4" component="h1">
           Suppliers
@@ -152,29 +152,29 @@ const SupplierList: React.FC = () => {
           variant="contained"
           color="primary"
           startIcon={<AddIcon />}
-          onClick={() => navigate('/suppliers/add')}
-        >
+          onClick={() => navigate('/suppliers/add')}>
+
           Add Supplier
         </Button>
       </Box>
 
-      {/* Error alert */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+      
+      {error &&
+      <Alert severity="error" sx={{ mb: 2 }}>
           {error}
           <IconButton
-            size="small"
-            aria-label="close"
-            color="inherit"
-            onClick={() => setError(null)}
-            sx={{ ml: 2 }}
-          >
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={() => setError(null)}
+          sx={{ ml: 2 }}>
+
             <CloseIcon fontSize="small" />
           </IconButton>
         </Alert>
-      )}
+      }
 
-      {/* Search card */}
+      
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Box display="flex" gap={2}>
@@ -186,20 +186,20 @@ const SupplierList: React.FC = () => {
               size="small"
               sx={{ flexGrow: 1 }}
               InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
+                startAdornment:
+                <InputAdornment position="start">
                     <SearchIcon />
-                  </InputAdornment>
-                ),
-                endAdornment: searchQuery && (
-                  <InputAdornment position="end">
+                  </InputAdornment>,
+
+                endAdornment: searchQuery &&
+                <InputAdornment position="end">
                     <IconButton size="small" onClick={handleClearSearch}>
                       <CloseIcon fontSize="small" />
                     </IconButton>
                   </InputAdornment>
-                )
-              }}
-            />
+
+              }} />
+
             
             <Tooltip title="Refresh">
               <IconButton onClick={loadSuppliers}>
@@ -210,7 +210,7 @@ const SupplierList: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Analytics Cards */}
+      
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid sx={{ gridColumn: { xs: 'span 12', md: 'span 4' } }}>
           <Card variant="outlined">
@@ -261,11 +261,11 @@ const SupplierList: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Suppliers table */}
-      {loading ? (
-        <LinearProgress sx={{ mb: 2 }} />
-      ) : (
-        <>
+      
+      {loading ?
+      <LinearProgress sx={{ mb: 2 }} /> :
+
+      <>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
@@ -280,16 +280,16 @@ const SupplierList: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredSuppliers.length > 0 ? (
-                  filteredSuppliers
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((supplier) => (
-                      <TableRow 
-                        key={supplier._id} 
-                        hover
-                        onClick={() => handleViewSupplier(supplier._id)}
-                        sx={{ cursor: 'pointer' }}
-                      >
+                {filteredSuppliers.length > 0 ?
+              filteredSuppliers.
+              slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).
+              map((supplier) =>
+              <TableRow
+                key={supplier._id}
+                hover
+                onClick={() => handleViewSupplier(supplier._id)}
+                sx={{ cursor: 'pointer' }}>
+
                         <TableCell>
                           <Chip label={supplier.code} size="small" />
                         </TableCell>
@@ -303,66 +303,66 @@ const SupplierList: React.FC = () => {
                         <TableCell>{supplier.location || '-'}</TableCell>
                         <TableCell>{supplier.qualification || '-'}</TableCell>
                         <TableCell>
-                          {supplier.contact ? (
-                            <Box>
+                          {supplier.contact ?
+                  <Box>
                               <Typography variant="body2">{supplier.contact.name}</Typography>
                               <Typography variant="body2" color="text.secondary">{supplier.contact.email}</Typography>
-                            </Box>
-                          ) : (
-                            '-'
-                          )}
+                            </Box> :
+
+                  '-'
+                  }
                         </TableCell>
                         <TableCell align="right">
                           <IconButton
-                            size="small"
-                            onClick={(e) => handleMenuClick(e, supplier._id)}
-                          >
+                    size="small"
+                    onClick={(e) => handleMenuClick(e, supplier._id)}>
+
                             <MoreVertIcon />
                           </IconButton>
                         </TableCell>
                       </TableRow>
-                    ))
-                ) : (
-                  <TableRow>
+              ) :
+
+              <TableRow>
                     <TableCell colSpan={7} align="center">
                       <Box py={3}>
                         <Typography variant="body1" color="textSecondary">
                           No suppliers found
                         </Typography>
                         <Button
-                          variant="text"
-                          startIcon={<FactoryIcon />}
-                          onClick={loadSuppliers}
-                          sx={{ mt: 1 }}
-                        >
+                      variant="text"
+                      startIcon={<FactoryIcon />}
+                      onClick={loadSuppliers}
+                      sx={{ mt: 1 }}>
+
                           Refresh
                         </Button>
                       </Box>
                     </TableCell>
                   </TableRow>
-                )}
+              }
               </TableBody>
             </Table>
           </TableContainer>
           
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={filteredSuppliers.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </>
-      )}
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={filteredSuppliers.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage} />
 
-      {/* Action menu */}
+        </>
+      }
+
+      
       <Menu
         anchorEl={actionMenuAnchor}
         open={Boolean(actionMenuAnchor)}
-        onClose={handleMenuClose}
-      >
+        onClose={handleMenuClose}>
+
         <MenuItem onClick={() => {
           if (selectedSupplier) {
             handleViewSupplier(selectedSupplier);
@@ -390,8 +390,8 @@ const SupplierList: React.FC = () => {
           </ListItemText>
         </MenuItem>
       </Menu>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default SupplierList; 
+export default SupplierList;

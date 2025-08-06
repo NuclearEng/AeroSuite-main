@@ -16,8 +16,8 @@ import {
   Switch,
   FormControlLabel,
   useTheme,
-  alpha
-} from '@mui/material';
+  alpha } from
+'@mui/material';
 import {
   DeleteOutline as ClearIcon,
   Timeline as TimelineIcon,
@@ -25,15 +25,15 @@ import {
   BarChart as ChartIcon,
   Close as CloseIcon,
   ExpandMore as ExpandMoreIcon,
-  ExpandLess as ExpandLessIcon
-} from '@mui/icons-material';
-import { 
-  PerformanceMetric, 
-  getPerformanceMetrics, 
+  ExpandLess as ExpandLessIcon } from
+'@mui/icons-material';
+import {
+  PerformanceMetric,
+  getPerformanceMetrics,
   clearPerformanceMetrics,
   subscribeToPerformanceMetrics,
-  setPerformanceMonitoring
-} from '../../hooks/usePerformanceMonitor';
+  setPerformanceMonitoring } from
+'../../hooks/usePerformanceMonitor';
 
 /**
  * Format milliseconds into a readable format
@@ -58,13 +58,13 @@ const getDurationColor = (duration: number, type: string): string => {
     if (duration < 100) return '#f59e0b'; // Medium - amber
     return '#ef4444'; // Slow - red
   }
-  
+
   if (type === 'load') {
     if (duration < 100) return '#10b981';
     if (duration < 300) return '#f59e0b';
     return '#ef4444';
   }
-  
+
   // Default for other types
   if (duration < 50) return '#10b981';
   if (duration < 200) return '#f59e0b';
@@ -76,15 +76,15 @@ const getDurationColor = (duration: number, type: string): string => {
  */
 const groupMetrics = (metrics: PerformanceMetric[]) => {
   const groups: Record<string, PerformanceMetric[]> = {};
-  
-  metrics.forEach(metric => {
+
+  metrics.forEach((metric) => {
     const key = `${metric.componentName}-${metric.type}`;
     if (!groups[key]) {
       groups[key] = [];
     }
     groups[key].push(metric);
   });
-  
+
   return groups;
 };
 
@@ -93,14 +93,14 @@ const groupMetrics = (metrics: PerformanceMetric[]) => {
  */
 const calculateStats = (metrics: PerformanceMetric[]) => {
   if (metrics.length === 0) return { avg: 0, min: 0, max: 0 };
-  
-  const durations = metrics.map(m => m.duration);
-  
+
+  const durations = metrics.map((m) => m.duration);
+
   return {
     avg: durations.reduce((sum, d) => sum + d, 0) / durations.length,
     min: Math.min(...durations),
     max: Math.max(...durations),
-    count: metrics.length,
+    count: metrics.length
   };
 };
 
@@ -111,37 +111,37 @@ interface PerformanceMonitorProps {
 
 const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
   position = 'bottom-right',
-  defaultOpen = false,
+  defaultOpen = false
 }) => {
   const theme = useTheme();
   const [metrics, setMetrics] = useState<PerformanceMetric[]>([]);
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [enabled, setEnabled] = useState(process.env.NODE_ENV !== 'production');
   const [view, setView] = useState<'details' | 'summary'>('summary');
-  
+
   // Subscribe to metrics updates
   useEffect(() => {
-    const unsubscribe = subscribeToPerformanceMetrics(newMetrics => {
+    const unsubscribe = subscribeToPerformanceMetrics((newMetrics) => {
       setMetrics([...newMetrics]);
     });
-    
+
     return () => {
       unsubscribe();
     };
   }, []);
-  
+
   // Handle toggling monitoring on/off
   const handleToggleMonitoring = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newEnabled = event.target.checked;
     setEnabled(newEnabled);
     setPerformanceMonitoring(newEnabled);
   };
-  
+
   // Handle clearing metrics
   const handleClearMetrics = () => {
     clearPerformanceMetrics();
   };
-  
+
   // Position styles
   const getPositionStyles = () => {
     switch (position) {
@@ -156,13 +156,13 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
         return { bottom: 16, right: 16 };
     }
   };
-  
+
   // Group metrics for summary view
   const groupedMetrics = groupMetrics(metrics);
-  
+
   // Sort metrics for detailed view - most recent first
   const sortedMetrics = [...metrics].sort((a, b) => b.timestamp - a.timestamp);
-  
+
   if (!isOpen) {
     return (
       <Tooltip title="Open Performance Monitor">
@@ -176,16 +176,16 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
             border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
             zIndex: theme.zIndex.drawer + 1,
             '&:hover': {
-              bgcolor: alpha(theme.palette.primary.main, 0.2),
-            },
-          }}
-        >
+              bgcolor: alpha(theme.palette.primary.main, 0.2)
+            }
+          }}>
+
           <SpeedIcon />
         </IconButton>
-      </Tooltip>
-    );
+      </Tooltip>);
+
   }
-  
+
   return (
     <Paper
       elevation={3}
@@ -198,10 +198,10 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        border: `1px solid ${theme.palette.divider}`,
-      }}
-    >
-      {/* Header */}
+        border: `1px solid ${theme.palette.divider}`
+      }}>
+
+      
       <Box
         sx={{
           display: 'flex',
@@ -209,9 +209,9 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
           justifyContent: 'space-between',
           p: 1,
           bgcolor: alpha(theme.palette.primary.main, 0.1),
-          borderBottom: `1px solid ${theme.palette.divider}`,
-        }}
-      >
+          borderBottom: `1px solid ${theme.palette.divider}`
+        }}>
+
         <Box display="flex" alignItems="center">
           <SpeedIcon color="primary" sx={{ mr: 1 }} />
           <Typography variant="subtitle1" fontWeight="medium">
@@ -222,8 +222,8 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
           <Tooltip title="Toggle View">
             <IconButton
               size="small"
-              onClick={() => setView(view === 'details' ? 'summary' : 'details')}
-            >
+              onClick={() => setView(view === 'details' ? 'summary' : 'details')}>
+
               {view === 'details' ? <ChartIcon /> : <TimelineIcon />}
             </IconButton>
           </Tooltip>
@@ -240,57 +240,57 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
         </Box>
       </Box>
       
-      {/* Toolbar */}
+      
       <Box sx={{ display: 'flex', alignItems: 'center', p: 1, borderBottom: `1px solid ${theme.palette.divider}` }}>
         <FormControlLabel
           control={
-            <Switch
-              size="small"
-              checked={enabled}
-              onChange={handleToggleMonitoring}
-              color="primary"
-            />
+          <Switch
+            size="small"
+            checked={enabled}
+            onChange={handleToggleMonitoring}
+            color="primary" />
+
           }
           label="Enable monitoring"
-          sx={{ mr: 1 }}
-        />
+          sx={{ mr: 1 }} />
+
         <Typography variant="caption" color="text.secondary">
           {metrics.length} metrics collected
         </Typography>
       </Box>
       
-      {/* Content */}
+      
       <Box sx={{ overflow: 'auto', flexGrow: 1 }}>
-        {metrics.length === 0 ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              p: 4,
-              height: 200,
-              color: 'text.secondary',
-            }}
-          >
+        {metrics.length === 0 ?
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: 4,
+            height: 200,
+            color: 'text.secondary'
+          }}>
+
             <SpeedIcon sx={{ fontSize: 40, mb: 2, opacity: 0.5 }} />
             <Typography variant="body2">No performance data collected yet</Typography>
-            {!enabled && (
-              <Button
-                size="small"
-                variant="outlined"
-                onClick={() => {
-                  setEnabled(true);
-                  setPerformanceMonitoring(true);
-                }}
-                sx={{ mt: 2 }}
-              >
+            {!enabled &&
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={() => {
+              setEnabled(true);
+              setPerformanceMonitoring(true);
+            }}
+            sx={{ mt: 2 }}>
+
                 Enable Monitoring
               </Button>
-            )}
-          </Box>
-        ) : view === 'summary' ? (
-          <TableContainer>
+          }
+          </Box> :
+        view === 'summary' ?
+        <TableContainer>
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -303,11 +303,11 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
               </TableHead>
               <TableBody>
                 {Object.entries(groupedMetrics).map(([key, groupMetrics]) => {
-                  const stats = calculateStats(groupMetrics);
-                  const [componentName, type] = key.split('-');
-                  
-                  return (
-                    <TableRow key={key} hover>
+                const stats = calculateStats(groupMetrics);
+                const [componentName, type] = key.split('-');
+
+                return (
+                  <TableRow key={key} hover>
                       <TableCell>
                         <Box>
                           <Typography variant="body2" fontWeight="medium" noWrap>
@@ -319,22 +319,22 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
                         </Box>
                       </TableCell>
                       <TableCell align="right">{stats.count}</TableCell>
-                      <TableCell 
-                        align="right"
-                        sx={{ color: getDurationColor(stats.avg, type) }}
-                      >
+                      <TableCell
+                      align="right"
+                      sx={{ color: getDurationColor(stats.avg, type) }}>
+
                         {formatTime(stats.avg)}
                       </TableCell>
                       <TableCell align="right">{formatTime(stats.min)}</TableCell>
                       <TableCell align="right">{formatTime(stats.max)}</TableCell>
-                    </TableRow>
-                  );
-                })}
+                    </TableRow>);
+
+              })}
               </TableBody>
             </Table>
-          </TableContainer>
-        ) : (
-          <TableContainer>
+          </TableContainer> :
+
+        <TableContainer>
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -345,18 +345,18 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedMetrics.map((metric, index) => (
-                  <TableRow key={index} hover>
+                {sortedMetrics.map((metric, index) =>
+              <TableRow key={index} hover>
                     <TableCell>
                       <Typography variant="body2" noWrap>
                         {metric.componentName}
                       </Typography>
                     </TableCell>
                     <TableCell>{metric.type}</TableCell>
-                    <TableCell 
-                      align="right"
-                      sx={{ color: getDurationColor(metric.duration, metric.type) }}
-                    >
+                    <TableCell
+                  align="right"
+                  sx={{ color: getDurationColor(metric.duration, metric.type) }}>
+
                       {formatTime(metric.duration)}
                     </TableCell>
                     <TableCell align="right">
@@ -365,14 +365,14 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
                       </Typography>
                     </TableCell>
                   </TableRow>
-                ))}
+              )}
               </TableBody>
             </Table>
           </TableContainer>
-        )}
+        }
       </Box>
-    </Paper>
-  );
+    </Paper>);
+
 };
 
-export default PerformanceMonitor; 
+export default PerformanceMonitor;

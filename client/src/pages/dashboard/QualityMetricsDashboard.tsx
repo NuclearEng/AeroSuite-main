@@ -18,8 +18,8 @@ import {
   SelectChangeEvent,
   IconButton,
   Tooltip,
-  Divider
-} from '@mui/material';
+  Divider } from
+'@mui/material';
 import {
   Refresh as RefreshIcon,
   BarChart as BarChartIcon,
@@ -28,54 +28,54 @@ import {
   Settings as SettingsIcon,
   Info as InfoIcon,
   Download as DownloadIcon,
-  Dashboard as DashboardIcon
-} from '@mui/icons-material';
+  Dashboard as DashboardIcon } from
+'@mui/icons-material';
 import { ResponsiveContainer, LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, PieChart, Pie, Cell } from 'recharts';
 import AddQualityMetricsButton from '../../components/dashboard/AddQualityMetricsButton';
 
 // Mock data for quality metrics
 const mockQualityData = {
   defectRateHistory: [
-    { month: 'Jan', rate: 2.3 },
-    { month: 'Feb', rate: 2.1 },
-    { month: 'Mar', rate: 2.5 },
-    { month: 'Apr', rate: 1.8 },
-    { month: 'May', rate: 1.5 },
-    { month: 'Jun', rate: 1.2 },
-  ],
+  { month: 'Jan', rate: 2.3 },
+  { month: 'Feb', rate: 2.1 },
+  { month: 'Mar', rate: 2.5 },
+  { month: 'Apr', rate: 1.8 },
+  { month: 'May', rate: 1.5 },
+  { month: 'Jun', rate: 1.2 }],
+
   firstTimeYieldHistory: [
-    { month: 'Jan', yield: 92.5 },
-    { month: 'Feb', yield: 93.1 },
-    { month: 'Mar', yield: 92.8 },
-    { month: 'Apr', yield: 94.2 },
-    { month: 'May', yield: 95.0 },
-    { month: 'Jun', yield: 95.8 },
-  ],
+  { month: 'Jan', yield: 92.5 },
+  { month: 'Feb', yield: 93.1 },
+  { month: 'Mar', yield: 92.8 },
+  { month: 'Apr', yield: 94.2 },
+  { month: 'May', yield: 95.0 },
+  { month: 'Jun', yield: 95.8 }],
+
   inspectionResults: [
-    { name: 'Pass', value: 85 },
-    { name: 'Fail', value: 8 },
-    { name: 'Conditional', value: 7 },
-  ],
+  { name: 'Pass', value: 85 },
+  { name: 'Fail', value: 8 },
+  { name: 'Conditional', value: 7 }],
+
   defectCategories: [
-    { name: 'Dimensional', count: 24 },
-    { name: 'Surface', count: 18 },
-    { name: 'Material', count: 12 },
-    { name: 'Assembly', count: 9 },
-    { name: 'Documentation', count: 6 },
-  ],
+  { name: 'Dimensional', count: 24 },
+  { name: 'Surface', count: 18 },
+  { name: 'Material', count: 12 },
+  { name: 'Assembly', count: 9 },
+  { name: 'Documentation', count: 6 }],
+
   supplierPerformance: [
-    { name: 'Aerospace Components Inc.', score: 95 },
-    { name: 'Global Aviation Parts', score: 88 },
-    { name: 'Precision Engineering Ltd', score: 92 },
-    { name: 'Avionics Solutions', score: 78 },
-    { name: 'JetTech Materials', score: 65 },
-  ],
+  { name: 'Aerospace Components Inc.', score: 95 },
+  { name: 'Global Aviation Parts', score: 88 },
+  { name: 'Precision Engineering Ltd', score: 92 },
+  { name: 'Avionics Solutions', score: 78 },
+  { name: 'JetTech Materials', score: 65 }],
+
   currentMetrics: {
     defectRate: 1.2,
     firstTimeYield: 95.8,
     onTimeDelivery: 97.2,
     supplierQuality: 89.5,
-    ncmrCount: 14,
+    ncmrCount: 14
   }
 };
 
@@ -108,21 +108,21 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== index}
       id={`metrics-tabpanel-${index}`}
       aria-labelledby={`metrics-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ p: 3 }}>
           {children}
         </Box>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const a11yProps = (index: number) => {
   return {
     id: `metrics-tab-${index}`,
-    'aria-controls': `metrics-tabpanel-${index}`,
+    'aria-controls': `metrics-tabpanel-${index}`
   };
 };
 
@@ -139,11 +139,11 @@ const QualityMetricsDashboard: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // In a real implementation, this would be an API call
       // const response = await api.get('/api/v1/quality-metrics', { params: { timeRange } });
       // setQualityData(response.data);
-      
+
       // Using mock data for now
       setTimeout(() => {
         setQualityData(mockQualityData);
@@ -164,13 +164,13 @@ const QualityMetricsDashboard: React.FC = () => {
   // Set up auto-refresh if enabled
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
-    
+
     if (autoRefresh) {
       intervalId = setInterval(() => {
         loadQualityMetrics();
       }, 30000); // Refresh every 30 seconds
     }
-    
+
     return () => {
       if (intervalId) {
         clearInterval(intervalId);
@@ -203,10 +203,10 @@ const QualityMetricsDashboard: React.FC = () => {
           Quality Metrics Dashboard
         </Typography>
         <Box>
-          <AddQualityMetricsButton 
+          <AddQualityMetricsButton
             variant="outlined"
-            sx={{ mr: 2 }}
-          />
+            sx={{ mr: 2 }} />
+
           <FormControl sx={{ minWidth: 120, mr: 2 }}>
             <InputLabel id="time-range-label">Time Range</InputLabel>
             <Select
@@ -215,8 +215,8 @@ const QualityMetricsDashboard: React.FC = () => {
               value={timeRange}
               label="Time Range"
               onChange={handleTimeRangeChange}
-              size="small"
-            >
+              size="small">
+
               <MenuItem value="1m">Last Month</MenuItem>
               <MenuItem value="3m">Last 3 Months</MenuItem>
               <MenuItem value="6m">Last 6 Months</MenuItem>
@@ -228,8 +228,8 @@ const QualityMetricsDashboard: React.FC = () => {
             variant="outlined"
             color={autoRefresh ? "success" : "primary"}
             onClick={toggleAutoRefresh}
-            sx={{ mr: 2 }}
-          >
+            sx={{ mr: 2 }}>
+
             {autoRefresh ? "Auto-Refresh On" : "Auto-Refresh Off"}
           </Button>
           <Button
@@ -237,20 +237,20 @@ const QualityMetricsDashboard: React.FC = () => {
             color="primary"
             startIcon={<RefreshIcon />}
             onClick={loadQualityMetrics}
-            disabled={loading}
-          >
+            disabled={loading}>
+
             Refresh
           </Button>
         </Box>
       </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+      {error &&
+      <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
-      )}
+      }
 
-      {/* Key Metrics Summary */}
+      
       <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} md={4}>
           <Card>
@@ -314,27 +314,27 @@ const QualityMetricsDashboard: React.FC = () => {
           </Tabs>
         </Box>
         
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', p: 5 }}>
+        {loading ?
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 5 }}>
             <CircularProgress />
-          </Box>
-        ) : (
-          <>
-            {/* Trend Analysis Tab */}
+          </Box> :
+
+        <>
+            
             <TabPanel value={tabValue} index={0}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                   <Card variant="outlined">
-                    <CardHeader 
-                      title="Defect Rate Trend" 
-                      action={
-                        <Tooltip title="Download Data">
+                    <CardHeader
+                    title="Defect Rate Trend"
+                    action={
+                    <Tooltip title="Download Data">
                           <IconButton>
                             <DownloadIcon />
                           </IconButton>
                         </Tooltip>
-                      }
-                    />
+                    } />
+
                     <Divider />
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
@@ -344,13 +344,13 @@ const QualityMetricsDashboard: React.FC = () => {
                           <YAxis name="Defect Rate (%)" />
                           <RechartsTooltip />
                           <Legend />
-                          <Line 
-                            type="monotone" 
-                            dataKey="rate" 
-                            name="Defect Rate (%)" 
-                            stroke={CHART_COLORS.error} 
-                            activeDot={{ r: 8 }} 
-                          />
+                          <Line
+                          type="monotone"
+                          dataKey="rate"
+                          name="Defect Rate (%)"
+                          stroke={CHART_COLORS.error}
+                          activeDot={{ r: 8 }} />
+
                         </LineChart>
                       </ResponsiveContainer>
                     </CardContent>
@@ -358,16 +358,16 @@ const QualityMetricsDashboard: React.FC = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Card variant="outlined">
-                    <CardHeader 
-                      title="First Time Yield Trend" 
-                      action={
-                        <Tooltip title="Download Data">
+                    <CardHeader
+                    title="First Time Yield Trend"
+                    action={
+                    <Tooltip title="Download Data">
                           <IconButton>
                             <DownloadIcon />
                           </IconButton>
                         </Tooltip>
-                      }
-                    />
+                    } />
+
                     <Divider />
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
@@ -377,13 +377,13 @@ const QualityMetricsDashboard: React.FC = () => {
                           <YAxis domain={[90, 100]} name="Yield (%)" />
                           <RechartsTooltip />
                           <Legend />
-                          <Line 
-                            type="monotone" 
-                            dataKey="yield" 
-                            name="First Time Yield (%)" 
-                            stroke={CHART_COLORS.success} 
-                            activeDot={{ r: 8 }} 
-                          />
+                          <Line
+                          type="monotone"
+                          dataKey="yield"
+                          name="First Time Yield (%)"
+                          stroke={CHART_COLORS.success}
+                          activeDot={{ r: 8 }} />
+
                         </LineChart>
                       </ResponsiveContainer>
                     </CardContent>
@@ -392,7 +392,7 @@ const QualityMetricsDashboard: React.FC = () => {
               </Grid>
             </TabPanel>
 
-            {/* Defect Analysis Tab */}
+            
             <TabPanel value={tabValue} index={1}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
@@ -403,18 +403,18 @@ const QualityMetricsDashboard: React.FC = () => {
                       <ResponsiveContainer width="100%" height={300}>
                         <PieChart>
                           <Pie
-                            data={qualityData.inspectionResults}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                            outerRadius={100}
-                            fill="#8884d8"
-                            dataKey="value"
-                          >
-                            {qualityData.inspectionResults.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                            ))}
+                          data={qualityData.inspectionResults}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                          outerRadius={100}
+                          fill="#8884d8"
+                          dataKey="value">
+
+                            {qualityData.inspectionResults.map((entry, index) =>
+                          <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                          )}
                           </Pie>
                           <RechartsTooltip formatter={(value) => `${value} inspections`} />
                           <Legend />
@@ -444,7 +444,7 @@ const QualityMetricsDashboard: React.FC = () => {
               </Grid>
             </TabPanel>
 
-            {/* Supplier Performance Tab */}
+            
             <TabPanel value={tabValue} index={2}>
               <Card variant="outlined">
                 <CardHeader title="Supplier Quality Performance" />
@@ -452,31 +452,31 @@ const QualityMetricsDashboard: React.FC = () => {
                 <CardContent>
                   <ResponsiveContainer width="100%" height={400}>
                     <BarChart
-                      data={qualityData.supplierPerformance}
-                      layout="vertical"
-                      margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                    >
+                    data={qualityData.supplierPerformance}
+                    layout="vertical"
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis type="number" domain={[0, 100]} />
                       <YAxis dataKey="name" type="category" width={150} />
                       <RechartsTooltip formatter={(value) => `${value}%`} />
                       <Legend />
-                      <Bar 
-                        dataKey="score" 
-                        name="Quality Score" 
-                        fill={CHART_COLORS.primary}
-                        label={{ position: 'right', formatter: formatPercent }}
-                      />
+                      <Bar
+                      dataKey="score"
+                      name="Quality Score"
+                      fill={CHART_COLORS.primary}
+                      label={{ position: 'right', formatter: formatPercent }} />
+
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
             </TabPanel>
           </>
-        )}
+        }
       </Card>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default QualityMetricsDashboard; 
+export default QualityMetricsDashboard;

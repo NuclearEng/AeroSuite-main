@@ -17,8 +17,8 @@ import {
   Badge,
   Alert,
   Chip,
-  alpha
-} from '@mui/material';
+  alpha } from
+'@mui/material';
 import {
   Refresh as RefreshIcon,
   Speed as SpeedIcon,
@@ -27,8 +27,8 @@ import {
   Warning as WarningIcon,
   Timeline as TimelineIcon,
   Schedule as ScheduleIcon,
-  ArrowForward as ArrowForwardIcon
-} from '@mui/icons-material';
+  ArrowForward as ArrowForwardIcon } from
+'@mui/icons-material';
 import { Link } from 'react-router-dom';
 import DataVisualization from '../../common/DataVisualization';
 import metricsService from '../../../services/metricsService';
@@ -114,25 +114,25 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
   };
 
   // Render metric cards for simplified view
-  const renderSimplifiedMetricCards = () => {
+  const RenderSimplifiedMetricCards = () => {
     if (!metrics) return null;
 
     return (
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        {/* CPU Usage */}
+        
         <Grid item xs={12} sm={6} md={3}>
-          <Card 
+          <Card
             variant="outlined"
             sx={{
               position: 'relative',
               overflow: 'hidden',
-              backgroundColor: metrics.cpu.usage > 80 
-                ? alpha(theme.palette.error.main, 0.1)
-                : metrics.cpu.usage > 60
-                ? alpha(theme.palette.warning.main, 0.1)
-                : alpha(theme.palette.success.main, 0.1)
-            }}
-          >
+              backgroundColor: metrics.cpu.usage > 80 ?
+              alpha(theme.palette.error.main, 0.1) :
+              metrics.cpu.usage > 60 ?
+              alpha(theme.palette.warning.main, 0.1) :
+              alpha(theme.palette.success.main, 0.1)
+            }}>
+
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="subtitle2" color="textSecondary">CPU Usage</Typography>
@@ -143,49 +143,49 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   {metrics.cpu.cores} Cores
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: metrics.cpu.usage > 80 
-                    ? alpha(theme.palette.error.main, 0.2)
-                    : metrics.cpu.usage > 60
-                    ? alpha(theme.palette.warning.main, 0.2)
-                    : alpha(theme.palette.success.main, 0.2)
-                }}
-              >
-                <SpeedIcon 
+                  backgroundColor: metrics.cpu.usage > 80 ?
+                  alpha(theme.palette.error.main, 0.2) :
+                  metrics.cpu.usage > 60 ?
+                  alpha(theme.palette.warning.main, 0.2) :
+                  alpha(theme.palette.success.main, 0.2)
+                }}>
+
+                <SpeedIcon
                   color={
-                    metrics.cpu.usage > 80 
-                      ? "error"
-                      : metrics.cpu.usage > 60
-                      ? "warning"
-                      : "success"
-                  }
-                />
+                  metrics.cpu.usage > 80 ?
+                  "error" :
+                  metrics.cpu.usage > 60 ?
+                  "warning" :
+                  "success"
+                  } />
+
               </Box>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Memory Usage */}
+        
         <Grid item xs={12} sm={6} md={3}>
-          <Card 
+          <Card
             variant="outlined"
             sx={{
               position: 'relative',
               overflow: 'hidden',
-              backgroundColor: metrics.memory.usedPercent > 80 
-                ? alpha(theme.palette.error.main, 0.1)
-                : metrics.memory.usedPercent > 60
-                ? alpha(theme.palette.warning.main, 0.1)
-                : alpha(theme.palette.success.main, 0.1)
-            }}
-          >
+              backgroundColor: metrics.memory.usedPercent > 80 ?
+              alpha(theme.palette.error.main, 0.1) :
+              metrics.memory.usedPercent > 60 ?
+              alpha(theme.palette.warning.main, 0.1) :
+              alpha(theme.palette.success.main, 0.1)
+            }}>
+
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="subtitle2" color="textSecondary">Memory Usage</Typography>
@@ -196,36 +196,36 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   {(metrics.memory.used / 1024).toFixed(1)} GB / {(metrics.memory.total / 1024).toFixed(1)} GB
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: metrics.memory.usedPercent > 80 
-                    ? alpha(theme.palette.error.main, 0.2)
-                    : metrics.memory.usedPercent > 60
-                    ? alpha(theme.palette.warning.main, 0.2)
-                    : alpha(theme.palette.success.main, 0.2)
-                }}
-              >
-                <MemoryIcon 
+                  backgroundColor: metrics.memory.usedPercent > 80 ?
+                  alpha(theme.palette.error.main, 0.2) :
+                  metrics.memory.usedPercent > 60 ?
+                  alpha(theme.palette.warning.main, 0.2) :
+                  alpha(theme.palette.success.main, 0.2)
+                }}>
+
+                <MemoryIcon
                   color={
-                    metrics.memory.usedPercent > 80 
-                      ? "error"
-                      : metrics.memory.usedPercent > 60
-                      ? "warning"
-                      : "success"
-                  }
-                />
+                  metrics.memory.usedPercent > 80 ?
+                  "error" :
+                  metrics.memory.usedPercent > 60 ?
+                  "warning" :
+                  "success"
+                  } />
+
               </Box>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Request Rate */}
+        
         <Grid item xs={12} sm={6} md={3}>
           <Card variant="outlined">
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -238,24 +238,24 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   Requests per second
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: alpha(theme.palette.primary.main, 0.2)
-                }}
-              >
+                }}>
+
                 <TimelineIcon color="primary" />
               </Box>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Response Time */}
+        
         <Grid item xs={12} sm={6} md={3}>
           <Card variant="outlined">
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -268,46 +268,46 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   milliseconds
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: alpha(theme.palette.info.main, 0.2)
-                }}
-              >
+                }}>
+
                 <ScheduleIcon color="info" />
               </Box>
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
 
   // Render metric cards
-  const renderMetricCards = () => {
+  const RenderMetricCards = () => {
     if (!metrics) return null;
 
     return (
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        {/* CPU Usage */}
+        
         <Grid item xs={12} sm={6} md={3}>
-          <Card 
+          <Card
             variant="outlined"
             sx={{
               position: 'relative',
               overflow: 'hidden',
-              backgroundColor: metrics.cpu.usage > 80 
-                ? alpha(theme.palette.error.main, 0.1)
-                : metrics.cpu.usage > 60
-                ? alpha(theme.palette.warning.main, 0.1)
-                : alpha(theme.palette.success.main, 0.1)
-            }}
-          >
+              backgroundColor: metrics.cpu.usage > 80 ?
+              alpha(theme.palette.error.main, 0.1) :
+              metrics.cpu.usage > 60 ?
+              alpha(theme.palette.warning.main, 0.1) :
+              alpha(theme.palette.success.main, 0.1)
+            }}>
+
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="subtitle2" color="textSecondary">CPU Usage</Typography>
@@ -318,49 +318,49 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   {metrics.cpu.cores} Cores
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: metrics.cpu.usage > 80 
-                    ? alpha(theme.palette.error.main, 0.2)
-                    : metrics.cpu.usage > 60
-                    ? alpha(theme.palette.warning.main, 0.2)
-                    : alpha(theme.palette.success.main, 0.2)
-                }}
-              >
-                <SpeedIcon 
+                  backgroundColor: metrics.cpu.usage > 80 ?
+                  alpha(theme.palette.error.main, 0.2) :
+                  metrics.cpu.usage > 60 ?
+                  alpha(theme.palette.warning.main, 0.2) :
+                  alpha(theme.palette.success.main, 0.2)
+                }}>
+
+                <SpeedIcon
                   color={
-                    metrics.cpu.usage > 80 
-                      ? "error"
-                      : metrics.cpu.usage > 60
-                      ? "warning"
-                      : "success"
-                  }
-                />
+                  metrics.cpu.usage > 80 ?
+                  "error" :
+                  metrics.cpu.usage > 60 ?
+                  "warning" :
+                  "success"
+                  } />
+
               </Box>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Memory Usage */}
+        
         <Grid item xs={12} sm={6} md={3}>
-          <Card 
+          <Card
             variant="outlined"
             sx={{
               position: 'relative',
               overflow: 'hidden',
-              backgroundColor: metrics.memory.usedPercent > 80 
-                ? alpha(theme.palette.error.main, 0.1)
-                : metrics.memory.usedPercent > 60
-                ? alpha(theme.palette.warning.main, 0.1)
-                : alpha(theme.palette.success.main, 0.1)
-            }}
-          >
+              backgroundColor: metrics.memory.usedPercent > 80 ?
+              alpha(theme.palette.error.main, 0.1) :
+              metrics.memory.usedPercent > 60 ?
+              alpha(theme.palette.warning.main, 0.1) :
+              alpha(theme.palette.success.main, 0.1)
+            }}>
+
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="subtitle2" color="textSecondary">Memory Usage</Typography>
@@ -371,36 +371,36 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   {(metrics.memory.used / 1024).toFixed(1)} GB / {(metrics.memory.total / 1024).toFixed(1)} GB
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: metrics.memory.usedPercent > 80 
-                    ? alpha(theme.palette.error.main, 0.2)
-                    : metrics.memory.usedPercent > 60
-                    ? alpha(theme.palette.warning.main, 0.2)
-                    : alpha(theme.palette.success.main, 0.2)
-                }}
-              >
-                <MemoryIcon 
+                  backgroundColor: metrics.memory.usedPercent > 80 ?
+                  alpha(theme.palette.error.main, 0.2) :
+                  metrics.memory.usedPercent > 60 ?
+                  alpha(theme.palette.warning.main, 0.2) :
+                  alpha(theme.palette.success.main, 0.2)
+                }}>
+
+                <MemoryIcon
                   color={
-                    metrics.memory.usedPercent > 80 
-                      ? "error"
-                      : metrics.memory.usedPercent > 60
-                      ? "warning"
-                      : "success"
-                  }
-                />
+                  metrics.memory.usedPercent > 80 ?
+                  "error" :
+                  metrics.memory.usedPercent > 60 ?
+                  "warning" :
+                  "success"
+                  } />
+
               </Box>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Request Rate */}
+        
         <Grid item xs={12} sm={6} md={3}>
           <Card variant="outlined">
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -413,24 +413,24 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   Requests per second
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: alpha(theme.palette.primary.main, 0.2)
-                }}
-              >
+                }}>
+
                 <TimelineIcon color="primary" />
               </Box>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Response Time */}
+        
         <Grid item xs={12} sm={6} md={3}>
           <Card variant="outlined">
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -443,105 +443,105 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                   milliseconds
                 </Typography>
               </Box>
-              <Box 
-                sx={{ 
-                  borderRadius: '50%', 
-                  width: 50, 
-                  height: 50, 
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  borderRadius: '50%',
+                  width: 50,
+                  height: 50,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: alpha(theme.palette.info.main, 0.2)
-                }}
-              >
+                }}>
+
                 <ScheduleIcon color="info" />
               </Box>
             </CardContent>
           </Card>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
 
   // Render simplified dashboard
-  const renderSimplifiedDashboard = () => {
+  const RenderSimplifiedDashboard = () => {
     return (
       <Paper sx={{ p: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="h6">System Performance Overview</Typography>
           <Box>
-            <IconButton 
-              size="small" 
+            <IconButton
+              size="small"
               onClick={handleRefresh}
-              disabled={loading}
-            >
+              disabled={loading}>
+
               <RefreshIcon />
             </IconButton>
           </Box>
         </Box>
         
-        {loading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+        {loading &&
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
             <CircularProgress />
           </Box>
-        )}
+        }
         
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
-        )}
+        {error &&
+        <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
+        }
         
-        {!loading && !error && metrics && renderSimplifiedMetricCards()}
+        {!loading && !error && metrics && RenderSimplifiedMetricCards()}
         
-        {!loading && !error && formattedMetrics && (
-          <Grid container spacing={3}>
+        {!loading && !error && formattedMetrics &&
+        <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <Paper variant="outlined" sx={{ p: 2 }}>
                 <Typography variant="subtitle1" gutterBottom>Response Time Trends</Typography>
-                <DataVisualization 
-                  type="line"
-                  data={formattedMetrics.requests.performance}
-                  height={200}
-                  options={{
-                    showLegend: false,
-                    showGrid: true,
-                  }}
-                />
+                <DataVisualization
+                type="line"
+                data={formattedMetrics.requests.performance}
+                height={200}
+                options={{
+                  showLegend: false,
+                  showGrid: true
+                }} />
+
               </Paper>
             </Grid>
             <Grid item xs={12} md={6}>
               <Paper variant="outlined" sx={{ p: 2 }}>
                 <Typography variant="subtitle1" gutterBottom>Request Distribution</Typography>
-                <DataVisualization 
-                  type="pie"
-                  data={formattedMetrics.requests.statusCodes}
-                  height={200}
-                  options={{
-                    showLegend: true,
-                    showGrid: false,
-                  }}
-                />
+                <DataVisualization
+                type="pie"
+                data={formattedMetrics.requests.statusCodes}
+                height={200}
+                options={{
+                  showLegend: true,
+                  showGrid: false
+                }} />
+
               </Paper>
             </Grid>
           </Grid>
-        )}
+        }
         
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-          <Button 
-            variant="outlined" 
-            color="primary" 
-            component={Link} 
+          <Button
+            variant="outlined"
+            color="primary"
+            component={Link}
             to="/monitoring/performance"
-            endIcon={<ArrowForwardIcon />}
-          >
+            endIcon={<ArrowForwardIcon />}>
+
             View Detailed Metrics
           </Button>
         </Box>
-      </Paper>
-    );
+      </Paper>);
+
   };
 
   // Render system metrics tab
-  const renderSystemMetricsDashboard = () => {
+  const RenderSystemMetricsDashboard = () => {
     return (
       <Paper sx={{ p: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -552,43 +552,43 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
               variant={autoRefresh ? "contained" : "outlined"}
               color={autoRefresh ? "primary" : "inherit"}
               onClick={handleAutoRefreshToggle}
-              sx={{ mr: 1 }}
-            >
+              sx={{ mr: 1 }}>
+
               {autoRefresh ? "Auto-refresh On" : "Auto-refresh Off"}
             </Button>
-            <IconButton 
-              size="small" 
+            <IconButton
+              size="small"
               onClick={handleRefresh}
-              disabled={loading}
-            >
+              disabled={loading}>
+
               <RefreshIcon />
             </IconButton>
           </Box>
         </Box>
         
-        {loading && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+        {loading &&
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
             <CircularProgress />
           </Box>
-        )}
+        }
         
-        {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
-        )}
+        {error &&
+        <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>
+        }
         
-        {!loading && !error && metrics && renderMetricCards()}
+        {!loading && !error && metrics && RenderMetricCards()}
         
-        {!loading && !error && formattedMetrics && (
-          <Box sx={{ mt: 4 }}>
+        {!loading && !error && formattedMetrics &&
+        <Box sx={{ mt: 4 }}>
             <Tabs
-              value={activeTab}
-              onChange={handleTabChange}
-              indicatorColor="primary"
-              textColor="primary"
-              variant="scrollable"
-              scrollButtons="auto"
-              aria-label="metrics tabs"
-            >
+            value={activeTab}
+            onChange={handleTabChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="metrics tabs">
+
               <Tab label="System" {...a11yProps(0)} />
               <Tab label="Requests" {...a11yProps(1)} />
               <Tab label="Errors" {...a11yProps(2)} />
@@ -596,206 +596,206 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             </Tabs>
             
             <TabPanel value={activeTab} index={0}>
-              {renderSystemMetricsTab()}
+              {RenderSystemMetricsTab()}
             </TabPanel>
             <TabPanel value={activeTab} index={1}>
-              {renderRequestMetricsTab()}
+              {RenderRequestMetricsTab()}
             </TabPanel>
             <TabPanel value={activeTab} index={2}>
-              {renderErrorMetricsTab()}
+              {RenderErrorMetricsTab()}
             </TabPanel>
             <TabPanel value={activeTab} index={3}>
-              {renderDatabaseMetricsTab()}
+              {RenderDatabaseMetricsTab()}
             </TabPanel>
           </Box>
-        )}
-      </Paper>
-    );
+        }
+      </Paper>);
+
   };
 
   // Tab panel component
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
-    
+
     return (
       <div
         role="tabpanel"
         hidden={value !== index}
         id={`metrics-tabpanel-${index}`}
         aria-labelledby={`metrics-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{ pt: 3 }}>
+        {...other}>
+
+        {value === index &&
+        <Box sx={{ pt: 3 }}>
             {children}
           </Box>
-        )}
-      </div>
-    );
+        }
+      </div>);
+
   }
-  
+
   // Helper function for tab accessibility
   function a11yProps(index) {
     return {
       id: `metrics-tab-${index}`,
-      'aria-controls': `metrics-tabpanel-${index}`,
+      'aria-controls': `metrics-tabpanel-${index}`
     };
   }
 
   // Render system metrics tab
-  const renderSystemMetricsTab = () => {
+  const RenderSystemMetricsTab = () => {
     if (!formattedMetrics) return null;
-    
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>CPU Usage</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="bar"
               data={formattedMetrics.system.cpu}
               height={250}
               options={{
                 showLegend: false,
-                showGrid: true,
-              }}
-            />
+                showGrid: true
+              }} />
+
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Memory Usage</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="pie"
               data={formattedMetrics.system.memory}
               height={250}
               options={{
                 showLegend: true,
-                showGrid: false,
-              }}
-            />
+                showGrid: false
+              }} />
+
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Disk Usage</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="pie"
               data={formattedMetrics.system.disk}
               height={250}
               options={{
                 showLegend: true,
-                showGrid: false,
-              }}
-            />
+                showGrid: false
+              }} />
+
           </Paper>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
 
   // Render request metrics tab
-  const renderRequestMetricsTab = () => {
+  const RenderRequestMetricsTab = () => {
     if (!formattedMetrics) return null;
-    
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Response Status Codes</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="bar"
               data={formattedMetrics.requests.statusCodes}
               height={250}
               options={{
                 showLegend: false,
-                showGrid: true,
-              }}
-            />
+                showGrid: true
+              }} />
+
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Top Endpoints</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="bar"
               data={formattedMetrics.requests.endpoints}
               height={250}
               options={{
                 showLegend: false,
                 showGrid: true,
-                horizontal: true,
-              }}
-            />
+                horizontal: true
+              }} />
+
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Response Times</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="bar"
               data={formattedMetrics.requests.performance}
               height={250}
               options={{
                 showLegend: false,
-                showGrid: true,
-              }}
-            />
+                showGrid: true
+              }} />
+
           </Paper>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
 
   // Render error metrics tab
-  const renderErrorMetricsTab = () => {
+  const RenderErrorMetricsTab = () => {
     if (!formattedMetrics) return null;
-    
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Errors by Type</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="pie"
               data={formattedMetrics.errors}
               height={250}
               options={{
                 showLegend: true,
-                showGrid: false,
-              }}
-            />
+                showGrid: false
+              }} />
+
           </Paper>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
 
   // Render database metrics tab
-  const renderDatabaseMetricsTab = () => {
+  const RenderDatabaseMetricsTab = () => {
     if (!formattedMetrics) return null;
-    
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Typography variant="subtitle1" gutterBottom>Query Times</Typography>
-            <DataVisualization 
+            <DataVisualization
               type="bar"
               data={formattedMetrics.database.performance}
               height={250}
               options={{
                 showLegend: false,
-                showGrid: true,
-              }}
-            />
+                showGrid: true
+              }} />
+
           </Paper>
         </Grid>
-      </Grid>
-    );
+      </Grid>);
+
   };
 
-  return simplified ? renderSimplifiedDashboard() : renderSystemMetricsDashboard();
+  return simplified ? RenderSimplifiedDashboard() : RenderSystemMetricsDashboard();
 };
 
-export default PerformanceMetricsDashboard; 
+export default PerformanceMetricsDashboard;

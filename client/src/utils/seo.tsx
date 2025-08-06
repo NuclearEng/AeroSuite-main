@@ -35,68 +35,68 @@ const SEO: React.FC<SEOProps> = ({
   twitterCard = 'summary_large_image',
   canonicalUrl,
   structuredData,
-  noIndex = false,
+  noIndex = false
 }) => {
   // Use provided values or fall back to defaults
   const metaTitle = title;
   const metaDescription = description;
   const metaOgTitle = ogTitle || title;
   const metaOgDescription = ogDescription || description;
-  
+
   // Base URL for canonical URLs and OG URLs
   const baseUrl = 'https://aerosuite.example.com';
-  
+
   // Determine canonical URL
-  const canonical = canonicalUrl 
-    ? (canonicalUrl.startsWith('http') ? canonicalUrl : `${baseUrl}${canonicalUrl}`)
-    : undefined;
-  
+  const canonical = canonicalUrl ?
+  canonicalUrl.startsWith('http') ? canonicalUrl : `${baseUrl}${canonicalUrl}` :
+  undefined;
+
   // Determine OG URL
-  const ogUrlFull = ogUrl 
-    ? (ogUrl.startsWith('http') ? ogUrl : `${baseUrl}${ogUrl}`)
-    : canonical;
-  
+  const ogUrlFull = ogUrl ?
+  ogUrl.startsWith('http') ? ogUrl : `${baseUrl}${ogUrl}` :
+  canonical;
+
   // Determine OG Image URL
   const ogImageFull = ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
-  
+
   return (
     <Helmet>
-      {/* Standard meta tags */}
+      
       <title>{metaTitle}</title>
       <meta name="description" content={metaDescription} />
       <meta name="keywords" content={keywords} />
       
-      {/* Open Graph tags */}
+      
       <meta property="og:title" content={metaOgTitle} />
       <meta property="og:description" content={metaOgDescription} />
       <meta property="og:image" content={ogImageFull} />
       {ogUrlFull && <meta property="og:url" content={ogUrlFull} />}
       <meta property="og:type" content="website" />
       
-      {/* Twitter Card tags */}
+      
       <meta name="twitter:card" content={twitterCard} />
       <meta name="twitter:title" content={metaOgTitle} />
       <meta name="twitter:description" content={metaOgDescription} />
       <meta name="twitter:image" content={ogImageFull} />
       
-      {/* Canonical URL */}
+      
       {canonical && <link rel="canonical" href={canonical} />}
       
-      {/* Robots meta tag */}
-      {noIndex ? (
-        <meta name="robots" content="noindex, nofollow" />
-      ) : (
-        <meta name="robots" content="index, follow" />
-      )}
       
-      {/* Structured data */}
-      {structuredData && (
-        <script type="application/ld+json">
+      {noIndex ?
+      <meta name="robots" content="noindex, nofollow" /> :
+
+      <meta name="robots" content="index, follow" />
+      }
+      
+      
+      {structuredData &&
+      <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
-      )}
-    </Helmet>
-  );
+      }
+    </Helmet>);
+
 };
 
-export default SEO; 
+export default SEO;

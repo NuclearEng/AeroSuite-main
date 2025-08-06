@@ -30,8 +30,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Rating
-} from '@mui/material';
+  Rating } from
+'@mui/material';
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -47,14 +47,14 @@ import {
   Flag as FlagIcon,
   PlayArrow as PlayArrowIcon,
   AccessTime as TimeIcon,
-  Notes as NotesIcon
-} from '@mui/icons-material';
-import { 
-  PageHeader, 
+  Notes as NotesIcon } from
+'@mui/icons-material';
+import {
+  PageHeader,
   StatusBadge,
   ConfirmationDialog,
-  GenerateReportButton
-} from '../../components/common';
+  GenerateReportButton } from
+'../../components/common';
 import { format } from 'date-fns';
 
 // Mock inspection data
@@ -75,32 +75,32 @@ const mockInspection = {
   notes: 'Focus on recent updates to quality management system and corrective actions from previous findings.',
   createdAt: '2023-05-20T14:30:00Z',
   checklistItems: [
-    { id: '1', title: 'Document Control', description: 'Review document control system', status: 'pending' },
-    { id: '2', title: 'Employee Training', description: 'Verify employee training records', status: 'pending' },
-    { id: '3', title: 'Calibration', description: 'Check calibration of measuring equipment', status: 'pending' },
-    { id: '4', title: 'Process Controls', description: 'Verify process controls are in place', status: 'pending' },
-    { id: '5', title: 'Non-conformance Process', description: 'Review non-conformance handling process', status: 'pending' }
-  ],
+  { id: '1', title: 'Document Control', description: 'Review document control system', status: 'pending' },
+  { id: '2', title: 'Employee Training', description: 'Verify employee training records', status: 'pending' },
+  { id: '3', title: 'Calibration', description: 'Check calibration of measuring equipment', status: 'pending' },
+  { id: '4', title: 'Process Controls', description: 'Verify process controls are in place', status: 'pending' },
+  { id: '5', title: 'Non-conformance Process', description: 'Review non-conformance handling process', status: 'pending' }],
+
   history: [
-    { 
-      timestamp: '2023-05-20T14:30:00Z', 
-      action: 'created', 
-      user: 'John Smith', 
-      details: 'Inspection scheduled' 
-    },
-    { 
-      timestamp: '2023-05-25T10:15:00Z', 
-      action: 'updated', 
-      user: 'Jane Doe', 
-      details: 'Inspector assigned' 
-    },
-    { 
-      timestamp: '2023-05-30T16:45:00Z', 
-      action: 'updated', 
-      user: 'John Smith', 
-      details: 'Added checklist items' 
-    }
-  ]
+  {
+    timestamp: '2023-05-20T14:30:00Z',
+    action: 'created',
+    user: 'John Smith',
+    details: 'Inspection scheduled'
+  },
+  {
+    timestamp: '2023-05-25T10:15:00Z',
+    action: 'updated',
+    user: 'Jane Doe',
+    details: 'Inspector assigned'
+  },
+  {
+    timestamp: '2023-05-30T16:45:00Z',
+    action: 'updated',
+    user: 'John Smith',
+    details: 'Added checklist items'
+  }]
+
 };
 
 // Format date helper
@@ -124,22 +124,22 @@ const TabPanel = (props: TabPanelProps) => {
       hidden={value !== index}
       id={`inspection-tabpanel-${index}`}
       aria-labelledby={`inspection-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ pt: 3 }}>
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ pt: 3 }}>
           {children}
         </Box>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 };
 
 const InspectionDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{id: string;}>();
   const navigate = useNavigate();
   const theme = useTheme();
-  
+
   // State
   const [inspection, setInspection] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -185,14 +185,14 @@ const InspectionDetail: React.FC = () => {
   const handleDeleteConfirm = () => {
     // Delete logic - replace with API call
     console.log(`Deleting inspection ${id}`);
-    
+
     // Show success message
     setSnackbar({
       open: true,
       message: 'Inspection deleted successfully',
       severity: 'success'
     });
-    
+
     navigate('/inspections');
   };
 
@@ -210,12 +210,12 @@ const InspectionDetail: React.FC = () => {
   const handleCancelInspection = () => {
     // Cancel logic - replace with API call
     console.log(`Cancelling inspection ${id}`);
-    
+
     setInspection({
       ...inspection,
       status: 'cancelled'
     });
-    
+
     // Show success message
     setSnackbar({
       open: true,
@@ -226,15 +226,15 @@ const InspectionDetail: React.FC = () => {
 
   // Handle snackbar close
   const handleCloseSnackbar = () => {
-    setSnackbar(prev => ({ ...prev, open: false }));
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   if (loading) {
     return (
       <Box sx={{ width: '100%' }}>
         <LinearProgress />
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (error) {
@@ -245,12 +245,12 @@ const InspectionDetail: React.FC = () => {
           variant="outlined"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/inspections')}
-          sx={{ mt: 2 }}
-        >
+          sx={{ mt: 2 }}>
+
           Back to Inspections
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
   if (!inspection) {
@@ -261,15 +261,15 @@ const InspectionDetail: React.FC = () => {
           variant="outlined"
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate('/inspections')}
-          sx={{ mt: 2 }}
-        >
+          sx={{ mt: 2 }}>
+
           Back to Inspections
         </Button>
-      </Box>
-    );
+      </Box>);
+
   }
 
-  const getStatusActions = () => {
+  const GetStatusActions = () => {
     switch (inspection.status) {
       case 'scheduled':
         return (
@@ -279,39 +279,39 @@ const InspectionDetail: React.FC = () => {
               color="primary"
               startIcon={<PlayArrowIcon />}
               onClick={handleStartInspection}
-              sx={{ mr: 1 }}
-            >
+              sx={{ mr: 1 }}>
+
               Start Inspection
             </Button>
             <Button
               variant="outlined"
               color="error"
               startIcon={<CancelIcon />}
-              onClick={handleCancelInspection}
-            >
+              onClick={handleCancelInspection}>
+
               Cancel Inspection
             </Button>
-          </>
-        );
+          </>);
+
       case 'in_progress':
         return (
           <Button
             variant="contained"
             color="primary"
             startIcon={<PlayArrowIcon />}
-            onClick={handleStartInspection}
-          >
+            onClick={handleStartInspection}>
+
             Continue Inspection
-          </Button>
-        );
+          </Button>);
+
       case 'completed':
         return (
           <GenerateReportButton
             inspectionId={inspection.id}
             variant="contained"
-            color="primary"
-          />
-        );
+            color="primary" />);
+
+
       default:
         return null;
     }
@@ -323,76 +323,76 @@ const InspectionDetail: React.FC = () => {
         title={inspection.title}
         subtitle={`Inspection ID: ${inspection.id}`}
         breadcrumbs={[
-          { label: 'Dashboard', href: '/dashboard' },
-          { label: 'Inspections', href: '/inspections' },
-          { label: inspection.id },
-        ]}
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Inspections', href: '/inspections' },
+        { label: inspection.id }]
+        }
         actions={
-          <>
+        <>
             <Button
-              variant="outlined"
-              startIcon={<ArrowBackIcon />}
-              onClick={() => navigate('/inspections')}
-              sx={{ mr: 1 }}
-            >
+            variant="outlined"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/inspections')}
+            sx={{ mr: 1 }}>
+
               Back
             </Button>
-            {inspection.status !== 'completed' && inspection.status !== 'cancelled' && (
-              <Button
-                variant="outlined"
-                startIcon={<EditIcon />}
-                onClick={handleEditInspection}
-                sx={{ mr: 1 }}
-              >
+            {inspection.status !== 'completed' && inspection.status !== 'cancelled' &&
+          <Button
+            variant="outlined"
+            startIcon={<EditIcon />}
+            onClick={handleEditInspection}
+            sx={{ mr: 1 }}>
+
                 Edit
               </Button>
-            )}
+          }
             <Button
-              variant="outlined"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={handleDeleteClick}
-            >
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={handleDeleteClick}>
+
               Delete
             </Button>
           </>
-        }
-      />
+        } />
 
-      {/* Status badge and actions */}
+
+      
       <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <StatusBadge 
-          status={inspection.status} 
-          size="medium"
-        />
+        <StatusBadge
+          status={inspection.status}
+          size="medium" />
+
         <Box>
-          {getStatusActions()}
+          {GetStatusActions()}
         </Box>
       </Box>
 
-      {/* Tab navigation */}
+      
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs 
-          value={tabValue} 
+        <Tabs
+          value={tabValue}
           onChange={handleTabChange}
-          aria-label="inspection tabs"
-        >
+          aria-label="inspection tabs">
+
           <Tab label="Overview" id="inspection-tab-0" aria-controls="inspection-tabpanel-0" />
           <Tab label="Checklist" id="inspection-tab-1" aria-controls="inspection-tabpanel-1" />
           <Tab label="History" id="inspection-tab-2" aria-controls="inspection-tabpanel-2" />
         </Tabs>
       </Box>
 
-      {/* Overview Tab */}
+      
       <TabPanel value={tabValue} index={0}>
         <Grid container spacing={3}>
-          {/* Inspection Details */}
+          
           <Grid item xs={12} md={6}>
             <Card>
-              <CardHeader 
+              <CardHeader
                 title="Inspection Details"
-                avatar={<AssignmentIcon color="primary" />}
-              />
+                avatar={<AssignmentIcon color="primary" />} />
+
               <Divider />
               <CardContent>
                 <List disablePadding>
@@ -402,8 +402,8 @@ const InspectionDetail: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText
                       primary="Date & Time"
-                      secondary={formatDateTime(inspection.inspectionDate)}
-                    />
+                      secondary={formatDateTime(inspection.inspectionDate)} />
+
                   </ListItem>
                   <ListItem divider>
                     <ListItemIcon>
@@ -411,8 +411,8 @@ const InspectionDetail: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText
                       primary="Location"
-                      secondary={inspection.location}
-                    />
+                      secondary={inspection.location} />
+
                   </ListItem>
                   <ListItem divider>
                     <ListItemIcon>
@@ -420,8 +420,8 @@ const InspectionDetail: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText
                       primary="Type"
-                      secondary={inspection.inspectionType}
-                    />
+                      secondary={inspection.inspectionType} />
+
                   </ListItem>
                   <ListItem divider>
                     <ListItemIcon>
@@ -430,14 +430,14 @@ const InspectionDetail: React.FC = () => {
                     <ListItemText
                       primary="Priority"
                       secondary={
-                        <Chip 
-                          label={inspection.priority} 
-                          color={inspection.priority === 'high' ? 'error' : inspection.priority === 'medium' ? 'warning' : 'success'}
-                          size="small"
-                          sx={{ textTransform: 'capitalize' }}
-                        />
-                      }
-                    />
+                      <Chip
+                        label={inspection.priority}
+                        color={inspection.priority === 'high' ? 'error' : inspection.priority === 'medium' ? 'warning' : 'success'}
+                        size="small"
+                        sx={{ textTransform: 'capitalize' }} />
+
+                      } />
+
                   </ListItem>
                   <ListItem>
                     <ListItemIcon>
@@ -445,21 +445,21 @@ const InspectionDetail: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText
                       primary="Created On"
-                      secondary={formatDateTime(inspection.createdAt)}
-                    />
+                      secondary={formatDateTime(inspection.createdAt)} />
+
                   </ListItem>
                 </List>
               </CardContent>
             </Card>
           </Grid>
 
-          {/* Associated Entities */}
+          
           <Grid item xs={12} md={6}>
             <Card>
-              <CardHeader 
+              <CardHeader
                 title="Associated Entities"
-                avatar={<BusinessIcon color="primary" />}
-              />
+                avatar={<BusinessIcon color="primary" />} />
+
               <Divider />
               <CardContent>
                 <List disablePadding>
@@ -470,17 +470,17 @@ const InspectionDetail: React.FC = () => {
                     <ListItemText
                       primary="Supplier"
                       secondary={
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="primary"
-                          sx={{ cursor: 'pointer' }}
-                          onClick={() => navigate(`/suppliers/${inspection.supplierId}`)}
-                        >
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        color="primary"
+                        sx={{ cursor: 'pointer' }}
+                        onClick={() => navigate(`/suppliers/${inspection.supplierId}`)}>
+
                           {inspection.supplierName}
                         </Typography>
-                      }
-                    />
+                      } />
+
                   </ListItem>
                   <ListItem divider>
                     <ListItemIcon>
@@ -488,8 +488,8 @@ const InspectionDetail: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText
                       primary="Customer"
-                      secondary={inspection.customerName}
-                    />
+                      secondary={inspection.customerName} />
+
                   </ListItem>
                   <ListItem>
                     <ListItemIcon>
@@ -497,21 +497,21 @@ const InspectionDetail: React.FC = () => {
                     </ListItemIcon>
                     <ListItemText
                       primary="Inspector"
-                      secondary={inspection.inspector}
-                    />
+                      secondary={inspection.inspector} />
+
                   </ListItem>
                 </List>
               </CardContent>
             </Card>
           </Grid>
 
-          {/* Description & Notes */}
+          
           <Grid item xs={12}>
             <Card>
-              <CardHeader 
+              <CardHeader
                 title="Description & Notes"
-                avatar={<NotesIcon color="primary" />}
-              />
+                avatar={<NotesIcon color="primary" />} />
+
               <Divider />
               <CardContent>
                 <Typography variant="subtitle1" gutterBottom>
@@ -521,8 +521,8 @@ const InspectionDetail: React.FC = () => {
                   {inspection.description}
                 </Typography>
 
-                {inspection.notes && (
-                  <>
+                {inspection.notes &&
+                <>
                     <Typography variant="subtitle1" gutterBottom>
                       Notes
                     </Typography>
@@ -530,32 +530,32 @@ const InspectionDetail: React.FC = () => {
                       {inspection.notes}
                     </Typography>
                   </>
-                )}
+                }
               </CardContent>
             </Card>
           </Grid>
         </Grid>
       </TabPanel>
 
-      {/* Checklist Tab */}
+      
       <TabPanel value={tabValue} index={1}>
         <Card>
-          <CardHeader 
+          <CardHeader
             title="Inspection Checklist"
             subheader={`${inspection.checklistItems?.length || 0} items`}
             action={
-              inspection.status === 'scheduled' && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<PlayArrowIcon />}
-                  onClick={handleStartInspection}
-                >
+            inspection.status === 'scheduled' &&
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<PlayArrowIcon />}
+              onClick={handleStartInspection}>
+
                   Start Inspection
                 </Button>
-              )
-            }
-          />
+
+            } />
+
           <Divider />
           <CardContent>
             <TableContainer>
@@ -569,8 +569,8 @@ const InspectionDetail: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {inspection.checklistItems.map((item: any, index: number) => (
-                    <TableRow key={item.id}>
+                  {inspection.checklistItems.map((item: any, index: number) =>
+                  <TableRow key={item.id}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{item.title}</TableCell>
                       <TableCell>{item.description}</TableCell>
@@ -578,7 +578,7 @@ const InspectionDetail: React.FC = () => {
                         <StatusBadge status={item.status} />
                       </TableCell>
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -586,45 +586,45 @@ const InspectionDetail: React.FC = () => {
         </Card>
       </TabPanel>
 
-      {/* History Tab */}
+      
       <TabPanel value={tabValue} index={2}>
         <Card>
-          <CardHeader 
+          <CardHeader
             title="Inspection History"
-            subheader="Timeline of inspection activities"
-          />
+            subheader="Timeline of inspection activities" />
+
           <Divider />
           <CardContent>
             <List>
-              {inspection.history.map((entry: any, index: number) => (
-                <ListItem key={index} divider={index < inspection.history.length - 1}>
+              {inspection.history.map((entry: any, index: number) =>
+              <ListItem key={index} divider={index < inspection.history.length - 1}>
                   <ListItemIcon>
-                    {entry.action === 'created' ? (
-                      <AssignmentIcon color="primary" />
-                    ) : (
-                      <EditIcon color="secondary" />
-                    )}
+                    {entry.action === 'created' ?
+                  <AssignmentIcon color="primary" /> :
+
+                  <EditIcon color="secondary" />
+                  }
                   </ListItemIcon>
                   <ListItemText
-                    primary={
-                      <Typography variant="body1">
+                  primary={
+                  <Typography variant="body1">
                         {entry.details}
                       </Typography>
-                    }
-                    secondary={
-                      <Typography variant="body2" color="text.secondary">
+                  }
+                  secondary={
+                  <Typography variant="body2" color="text.secondary">
                         {formatDateTime(entry.timestamp)} by {entry.user}
                       </Typography>
-                    }
-                  />
+                  } />
+
                 </ListItem>
-              ))}
+              )}
             </List>
           </CardContent>
         </Card>
       </TabPanel>
 
-      {/* Delete Confirmation Dialog */}
+      
       <ConfirmationDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
@@ -632,27 +632,27 @@ const InspectionDetail: React.FC = () => {
         title="Delete Inspection"
         message="Are you sure you want to delete this inspection? This action cannot be undone."
         confirmButtonText="Delete"
-        confirmButtonColor="error"
-      />
+        confirmButtonColor="error" />
 
-      {/* Snackbar for notifications */}
+
+      
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
           severity={snackbar.severity}
           variant="filled"
-          sx={{ width: '100%' }}
-        >
+          sx={{ width: '100%' }}>
+
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Box>
-  );
+    </Box>);
+
 };
 
-export default InspectionDetail; 
+export default InspectionDetail;

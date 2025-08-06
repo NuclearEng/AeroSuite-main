@@ -17,37 +17,37 @@ import {
   Autocomplete,
   Chip,
   Box,
-  CircularProgress
-} from '@mui/material';
+  CircularProgress } from
+'@mui/material';
 import { Save as SaveIcon } from '@mui/icons-material';
 import customerService, { Customer, CreateCustomerData, UpdateCustomerData } from '../../../services/customer.service';
 
 // Industry options
 const industryOptions = [
-  { value: 'Aerospace', label: 'Aerospace' },
-  { value: 'Automotive', label: 'Automotive' },
-  { value: 'Aviation', label: 'Aviation' },
-  { value: 'Defense', label: 'Defense' },
-  { value: 'Electronics', label: 'Electronics' },
-  { value: 'Energy', label: 'Energy' },
-  { value: 'Manufacturing', label: 'Manufacturing' },
-  { value: 'Materials', label: 'Materials' },
-  { value: 'Technology', label: 'Technology' }
-];
+{ value: 'Aerospace', label: 'Aerospace' },
+{ value: 'Automotive', label: 'Automotive' },
+{ value: 'Aviation', label: 'Aviation' },
+{ value: 'Defense', label: 'Defense' },
+{ value: 'Electronics', label: 'Electronics' },
+{ value: 'Energy', label: 'Energy' },
+{ value: 'Manufacturing', label: 'Manufacturing' },
+{ value: 'Materials', label: 'Materials' },
+{ value: 'Technology', label: 'Technology' }];
+
 
 // Status options
 const statusOptions = [
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'pending', label: 'Pending' }
-];
+{ value: 'active', label: 'Active' },
+{ value: 'inactive', label: 'Inactive' },
+{ value: 'pending', label: 'Pending' }];
+
 
 // Service level options
 const serviceLevelOptions = [
-  { value: 'standard', label: 'Standard' },
-  { value: 'premium', label: 'Premium' },
-  { value: 'enterprise', label: 'Enterprise' }
-];
+{ value: 'standard', label: 'Standard' },
+{ value: 'premium', label: 'Premium' },
+{ value: 'enterprise', label: 'Enterprise' }];
+
 
 interface FormErrors {
   name?: string;
@@ -165,15 +165,15 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   }, [isEdit, customerId, open]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
     const { name, value } = e.target;
-    
+
     if (!name) return;
-    
+
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         [parent]: {
           ...(prev[parent as keyof typeof prev] as Record<string, unknown>),
@@ -181,15 +181,15 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
         }
       }));
     } else {
-      setFormValues(prev => ({
+      setFormValues((prev) => ({
         ...prev,
         [name]: value
       }));
     }
-    
+
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: undefined
       }));
@@ -198,7 +198,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
 
   // Handle tag changes
   const handleTagsChange = (newValue: string[]) => {
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       tags: newValue
     }));
@@ -207,20 +207,20 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   // Generate customer code
   const generateCode = () => {
     if (!formValues.name) return;
-    
+
     // Create code from first 3 letters of the name, converted to uppercase
     const words = formValues.name.split(' ');
     let code = '';
-    
+
     if (words.length >= 2) {
       // Use first letter of each word for multi-word names
-      code = words.slice(0, 3).map(word => word.charAt(0)).join('');
+      code = words.slice(0, 3).map((word) => word.charAt(0)).join('');
     } else {
       // Use first 3 letters for single-word names
       code = formValues.name.substring(0, 3);
     }
-    
-    setFormValues(prev => ({
+
+    setFormValues((prev) => ({
       ...prev,
       code: code.toUpperCase()
     }));
@@ -229,18 +229,18 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   // Validate form
   const validateForm = () => {
     const newErrors: FormErrors = {};
-    
+
     // Required fields validation
     if (!formValues.name) newErrors.name = 'Name is required';
     if (!formValues.code) newErrors.code = 'Customer code is required';
     if (!formValues.industry) newErrors.industry = 'Industry is required';
     if (!formValues.status) newErrors.status = 'Status is required';
-    
+
     // Email validation
     if (formValues.primaryContactEmail && !/\S+@\S+\.\S+/.test(formValues.primaryContactEmail)) {
       newErrors.primaryContactEmail = 'Invalid email address';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -248,17 +248,17 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!validateForm()) {
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       let customer: Customer;
-      
+
       // Prepare data for API
       const customerData: CreateCustomerData | UpdateCustomerData = {
         name: formValues.name,
@@ -274,7 +274,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
         address: formValues.address,
         tags: formValues.tags
       };
-      
+
       if (isEdit && customerId) {
         // Update existing customer
         customer = await customerService.updateCustomer(customerId, customerData as UpdateCustomerData);
@@ -282,15 +282,15 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
         // Create new customer
         customer = await customerService.createCustomer(customerData as CreateCustomerData);
       }
-      
+
       // Call onSave callback with the created/updated customer
       onSave(customer);
-      
+
       // Close the modal
       onClose();
     } catch (error: any) {
       console.error('Error saving customer:', error);
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         submit: error.message || 'Failed to save customer. Please try again.'
       }));
@@ -300,25 +300,25 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   };
 
   return (
-    <Dialog 
-      open={open} 
+    <Dialog
+      open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md"
-    >
+      maxWidth="md">
+
       <DialogTitle>
         {isEdit ? 'Edit Customer' : 'Add New Customer'}
       </DialogTitle>
       
       <DialogContent dividers>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+        {loading ?
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
             <CircularProgress />
-          </Box>
-        ) : (
-          <form id="customer-form" onSubmit={handleSubmit}>
+          </Box> :
+
+        <form id="customer-form" onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-              {/* Basic Information */}
+              
               <Grid item xs={12}>
                 <Typography variant="h6" gutterBottom>
                   Basic Information
@@ -328,58 +328,58 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
               
               <Grid item xs={12} md={8}>
                 <TextField
-                  fullWidth
-                  required
-                  label="Customer Name"
-                  name="name"
-                  value={formValues.name}
-                  onChange={handleChange}
-                  error={!!errors.name}
-                  helperText={errors.name}
-                  onBlur={generateCode}
-                />
+                fullWidth
+                required
+                label="Customer Name"
+                name="name"
+                value={formValues.name}
+                onChange={handleChange}
+                error={!!errors.name}
+                helperText={errors.name}
+                onBlur={generateCode} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
                 <TextField
-                  fullWidth
-                  required
-                  label="Customer Code"
-                  name="code"
-                  value={formValues.code}
-                  onChange={handleChange}
-                  error={!!errors.code}
-                  helperText={errors.code || 'Unique identifier for this customer'}
-                />
+                fullWidth
+                required
+                label="Customer Code"
+                name="code"
+                value={formValues.code}
+                onChange={handleChange}
+                error={!!errors.code}
+                helperText={errors.code || 'Unique identifier for this customer'} />
+
               </Grid>
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  multiline
-                  rows={2}
-                  label="Description"
-                  name="description"
-                  value={formValues.description}
-                  onChange={handleChange}
-                  placeholder="Brief description of customer"
-                />
+                fullWidth
+                multiline
+                rows={2}
+                label="Description"
+                name="description"
+                value={formValues.description}
+                onChange={handleChange}
+                placeholder="Brief description of customer" />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
                 <FormControl fullWidth required error={!!errors.industry}>
                   <InputLabel>Industry</InputLabel>
                   <Select
-                    name="industry"
-                    value={formValues.industry}
-                    label="Industry"
-                    onChange={handleChange as any}
-                  >
-                    {industryOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                  name="industry"
+                  value={formValues.industry}
+                  label="Industry"
+                  onChange={handleChange as any}>
+
+                    {industryOptions.map((option) =>
+                  <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                   {errors.industry && <FormHelperText>{errors.industry}</FormHelperText>}
                 </FormControl>
@@ -389,16 +389,16 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
                 <FormControl fullWidth required error={!!errors.status}>
                   <InputLabel>Status</InputLabel>
                   <Select
-                    name="status"
-                    value={formValues.status}
-                    label="Status"
-                    onChange={handleChange as any}
-                  >
-                    {statusOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                  name="status"
+                  value={formValues.status}
+                  label="Status"
+                  onChange={handleChange as any}>
+
+                    {statusOptions.map((option) =>
+                  <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                   {errors.status && <FormHelperText>{errors.status}</FormHelperText>}
                 </FormControl>
@@ -408,32 +408,32 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
                 <FormControl fullWidth>
                   <InputLabel>Service Level</InputLabel>
                   <Select
-                    name="serviceLevel"
-                    value={formValues.serviceLevel}
-                    label="Service Level"
-                    onChange={handleChange as any}
-                  >
-                    {serviceLevelOptions.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                  name="serviceLevel"
+                  value={formValues.serviceLevel}
+                  label="Service Level"
+                  onChange={handleChange as any}>
+
+                    {serviceLevelOptions.map((option) =>
+                  <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
-                    ))}
+                  )}
                   </Select>
                 </FormControl>
               </Grid>
               
               <Grid item xs={12} md={12}>
                 <TextField
-                  fullWidth
-                  label="Website"
-                  name="website"
-                  value={formValues.website}
-                  onChange={handleChange}
-                  placeholder="https://example.com"
-                />
+                fullWidth
+                label="Website"
+                name="website"
+                value={formValues.website}
+                onChange={handleChange}
+                placeholder="https://example.com" />
+
               </Grid>
               
-              {/* Contact Information */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Primary Contact
@@ -443,40 +443,40 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
               
               <Grid item xs={12} md={4}>
                 <TextField
-                  fullWidth
-                  label="Contact Name"
-                  name="primaryContactName"
-                  value={formValues.primaryContactName}
-                  onChange={handleChange}
-                  error={!!errors.primaryContactName}
-                  helperText={errors.primaryContactName}
-                />
+                fullWidth
+                label="Contact Name"
+                name="primaryContactName"
+                value={formValues.primaryContactName}
+                onChange={handleChange}
+                error={!!errors.primaryContactName}
+                helperText={errors.primaryContactName} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
                 <TextField
-                  fullWidth
-                  label="Contact Email"
-                  name="primaryContactEmail"
-                  type="email"
-                  value={formValues.primaryContactEmail}
-                  onChange={handleChange}
-                  error={!!errors.primaryContactEmail}
-                  helperText={errors.primaryContactEmail}
-                />
+                fullWidth
+                label="Contact Email"
+                name="primaryContactEmail"
+                type="email"
+                value={formValues.primaryContactEmail}
+                onChange={handleChange}
+                error={!!errors.primaryContactEmail}
+                helperText={errors.primaryContactEmail} />
+
               </Grid>
               
               <Grid item xs={12} md={4}>
                 <TextField
-                  fullWidth
-                  label="Phone"
-                  name="phone"
-                  value={formValues.phone}
-                  onChange={handleChange}
-                />
+                fullWidth
+                label="Phone"
+                name="phone"
+                value={formValues.phone}
+                onChange={handleChange} />
+
               </Grid>
               
-              {/* Address */}
+              
               <Grid item xs={12} sx={{ mt: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Address
@@ -486,56 +486,56 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
               
               <Grid item xs={12}>
                 <TextField
-                  fullWidth
-                  label="Street Address"
-                  name="address.street"
-                  value={formValues.address.street || ''}
-                  onChange={handleChange}
-                />
+                fullWidth
+                label="Street Address"
+                name="address.street"
+                value={formValues.address.street || ''}
+                onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={3}>
                 <TextField
-                  fullWidth
-                  label="City"
-                  name="address.city"
-                  value={formValues.address.city || ''}
-                  onChange={handleChange}
-                />
+                fullWidth
+                label="City"
+                name="address.city"
+                value={formValues.address.city || ''}
+                onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={3}>
                 <TextField
-                  fullWidth
-                  label="State/Province"
-                  name="address.state"
-                  value={formValues.address.state || ''}
-                  onChange={handleChange}
-                />
+                fullWidth
+                label="State/Province"
+                name="address.state"
+                value={formValues.address.state || ''}
+                onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={3}>
                 <TextField
-                  fullWidth
-                  label="Postal Code"
-                  name="address.zipCode"
-                  value={formValues.address.zipCode || ''}
-                  onChange={handleChange}
-                />
+                fullWidth
+                label="Postal Code"
+                name="address.zipCode"
+                value={formValues.address.zipCode || ''}
+                onChange={handleChange} />
+
               </Grid>
               
               <Grid item xs={12} md={3}>
                 <TextField
-                  fullWidth
-                  label="Country"
-                  name="address.country"
-                  value={formValues.address.country || ''}
-                  onChange={handleChange}
-                />
+                fullWidth
+                label="Country"
+                name="address.country"
+                value={formValues.address.country || ''}
+                onChange={handleChange} />
+
               </Grid>
             </Grid>
           </form>
-        )}
+        }
       </DialogContent>
       
       <DialogActions>
@@ -548,13 +548,13 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
           variant="contained"
           color="primary"
           startIcon={<SaveIcon />}
-          disabled={isSubmitting || loading}
-        >
+          disabled={isSubmitting || loading}>
+
           {isSubmitting ? 'Saving...' : isEdit ? 'Update Customer' : 'Create Customer'}
         </Button>
       </DialogActions>
-    </Dialog>
-  );
+    </Dialog>);
+
 };
 
-export default CustomerFormModal; 
+export default CustomerFormModal;
