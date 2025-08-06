@@ -1,18 +1,21 @@
 # Dependency Vulnerability Monitoring
 
-This document describes the dependency vulnerability monitoring system implemented in the AeroSuite project.
+This document describes the dependency vulnerability monitoring system implemented in the AeroSuite
+project.
 
 ## Overview
 
-Dependency vulnerabilities represent a significant security risk in modern applications. Our monitoring system automatically scans all project dependencies for known security vulnerabilities and generates reports to help identify and address these risks.
+Dependency vulnerabilities represent a significant security risk in modern applications. Our
+monitoring system automatically scans all project dependencies for known security vulnerabilities
+and generates reports to help identify and address these risks.
 
 ## Key Features
 
-- **Automated Scanning**: Regular scheduled scans and on-demand scanning
-- **Comprehensive Coverage**: Scans both client and server dependencies
-- **Detailed Reporting**: Reports vulnerabilities by severity level with remediation recommendations
-- **CI/CD Integration**: Automated scanning on code changes and dependency updates
-- **Custom Thresholds**: Configurable severity thresholds for failing builds
+- __Automated Scanning__: Regular scheduled scans and on-demand scanning
+- __Comprehensive Coverage__: Scans both client and server dependencies
+- __Detailed Reporting__: Reports vulnerabilities by severity level with remediation recommendations
+- __CI/CD Integration__: Automated scanning on code changes and dependency updates
+- __Custom Thresholds__: Configurable severity thresholds for failing builds
 
 ## How It Works
 
@@ -27,19 +30,19 @@ Dependency vulnerabilities represent a significant security risk in modern appli
 
 The dependency scan is triggered by:
 
-- **Schedule**: Automatically runs every Sunday at midnight
-- **Code Changes**: Runs when package.json or package-lock.json files are modified
-- **Manual Trigger**: Can be run on-demand through GitHub Actions
+- __Schedule__: Automatically runs every Sunday at midnight
+- __Code Changes__: Runs when package.json or package-lock.json files are modified
+- __Manual Trigger__: Can be run on-demand through GitHub Actions
 
 ### Severity Levels
 
 Vulnerabilities are categorized into the following severity levels:
 
-- **Info**: Informational issues with minimal risk
-- **Low**: Low-risk vulnerabilities
-- **Moderate**: Vulnerabilities with moderate risk
-- **High**: High-risk vulnerabilities that should be addressed promptly
-- **Critical**: Critical vulnerabilities that require immediate attention
+- __Info__: Informational issues with minimal risk
+- __Low__: Low-risk vulnerabilities
+- __Moderate__: Vulnerabilities with moderate risk
+- __High__: High-risk vulnerabilities that should be addressed promptly
+- __Critical__: Critical vulnerabilities that require immediate attention
 
 ## Usage
 
@@ -53,7 +56,7 @@ chmod +x scripts/security-scan.js
 
 # Run the scan
 node scripts/security-scan.js
-```
+```bash
 
 You can customize the scan behavior with environment variables:
 
@@ -63,14 +66,14 @@ MAX_ALLOWED_SEVERITY=moderate node scripts/security-scan.js
 
 # Ignore development dependencies
 IGNORE_DEV_DEPENDENCIES=true node scripts/security-scan.js
-```
+```bash
 
 ### Understanding Reports
 
 The scan generates two types of reports:
 
-1. **JSON Report**: A detailed report with all vulnerability information
-2. **Summary Report**: A human-readable summary of findings
+1. __JSON Report__: A detailed report with all vulnerability information
+2. __Summary Report__: A human-readable summary of findings
 
 Reports are stored in the `security-reports` directory with a timestamp in the filename.
 
@@ -94,7 +97,8 @@ When vulnerabilities are identified:
 
 ## Integration with CI/CD
 
-The dependency scanning is integrated into our CI/CD pipeline via GitHub Actions. The configuration is defined in `.github/workflows/dependency-scan.yml`.
+The dependency scanning is integrated into our CI/CD pipeline via GitHub Actions. The configuration
+is defined in `.github/workflows/dependency-scan.yml`.
 
 The workflow:
 
@@ -108,4 +112,4 @@ The workflow:
 
 - [npm audit documentation](https://docs.npmjs.com/cli/v8/commands/npm-audit)
 - [OWASP Dependency-Check](https://owasp.org/www-project-dependency-check/)
-- [Snyk Vulnerability Database](https://snyk.io/vuln) 
+- [Snyk Vulnerability Database](https://snyk.io/vuln)

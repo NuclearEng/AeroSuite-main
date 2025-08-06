@@ -2,7 +2,9 @@
 
 ## Overview
 
-The query result caching system optimizes database performance by caching the results of database queries, reducing the load on the database and improving response times for frequently accessed data.
+The query result caching system optimizes database performance by caching the results of database
+queries, reducing the load on the database and improving response times for frequently accessed
+data.
 
 ## Key Features
 
@@ -18,7 +20,7 @@ The query result caching system optimizes database performance by caching the re
 
 The query caching system can be configured using environment variables:
 
-```
+```bash
 # Enable/disable query result caching
 ENABLE_QUERY_CACHE=true
 
@@ -30,11 +32,12 @@ QUERY_CACHE_MAX_SIZE=1000
 
 # Redis connection URL (if not specified, in-memory cache is used)
 REDIS_URL=redis://localhost:6379
-```
+```bash
 
 ## Using the Cache
 
-The query result caching is integrated with the `queryOptimizer` utility, so any code that uses this utility will automatically benefit from caching.
+The query result caching is integrated with the `queryOptimizer` utility, so any code that uses
+this utility will automatically benefit from caching.
 
 ### Basic Usage
 
@@ -42,12 +45,12 @@ The query result caching is integrated with the `queryOptimizer` utility, so any
 const { executeOptimizedQuery } = require('../utils/queryOptimizer');
 
 // This query will be cached automatically
-const users = await executeOptimizedQuery(User, 'find', { active: true }, { 
+const users = await executeOptimizedQuery(User, 'find', { active: true }, {
   select: 'name email role',
   sort: { createdAt: -1 },
   limit: 10
 });
-```
+```bash
 
 ### Disabling Cache for Specific Queries
 
@@ -56,7 +59,7 @@ const users = await executeOptimizedQuery(User, 'find', { active: true }, {
 const userData = await executeOptimizedQuery(User, 'findById', userId, {
   skipCache: true
 });
-```
+```bash
 
 ### Custom Cache TTL
 
@@ -65,11 +68,12 @@ const userData = await executeOptimizedQuery(User, 'findById', userId, {
 const products = await executeOptimizedQuery(Product, 'find', { inStock: true }, {
   cacheTTL: 600 // 10 minutes
 });
-```
+```bash
 
 ## Cache Invalidation
 
-Cache invalidation happens automatically when write operations (create, update, delete) are performed through the `executeOptimizedQuery` function.
+Cache invalidation happens automatically when write operations (create, update, delete) are
+performed through the `executeOptimizedQuery` function.
 
 ### Manual Invalidation
 
@@ -83,7 +87,7 @@ await invalidateQueryCache('User');
 
 // Invalidate all cache entries
 await invalidateAllQueryCache();
-```
+```bash
 
 ## API Endpoints
 
@@ -96,7 +100,8 @@ The following API endpoints are available for cache management (admin access onl
 
 ## Monitoring
 
-Cache statistics are available through the `getQueryStats()` function in the `queryOptimizer` utility. The statistics include:
+Cache statistics are available through the `getQueryStats()` function in the `queryOptimizer`
+utility. The statistics include:
 
 - Hit/miss count and ratio
 - Cache size
@@ -107,7 +112,8 @@ Cache statistics are available through the `getQueryStats()` function in the `qu
 
 ## Handling Cache-Related Errors
 
-The caching system is designed to be fault-tolerant. If a cache-related error occurs, the system will:
+The caching system is designed to be fault-tolerant. If a cache-related error occurs, the system
+will:
 
 1. Log the error
 2. Continue with the original database query
@@ -144,4 +150,4 @@ Potential future improvements for the caching system include:
 - Selective cache invalidation based on query patterns
 - Cache warm-up for commonly accessed data
 - More sophisticated eviction policies
-- Integration with database triggers for cache invalidation 
+- Integration with database triggers for cache invalidation

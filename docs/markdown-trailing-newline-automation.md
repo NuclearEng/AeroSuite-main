@@ -1,15 +1,17 @@
 # Markdown Trailing Newline Automation
 
-This document describes the automated systems in place to ensure all markdown files end with exactly one newline character (MD047 compliance).
+This document describes the automated systems in place to ensure all markdown files end with
+exactly one newline character (MD047 compliance).
 
 ## Overview
 
-We have implemented a multi-layered approach to automatically fix and prevent markdown files from missing trailing newlines:
+We have implemented a multi-layered approach to automatically fix and prevent markdown files from
+missing trailing newlines:
 
-1. **Manual Fix Script** - Fix files on demand
-2. **Pre-commit Hook** - Automatically fix files before commit
-3. **Editor Support** - `.editorconfig` for automatic newline insertion
-4. **CI/CD Validation** - GitHub Actions to check PRs
+1. __Manual Fix Script__ - Fix files on demand
+2. __Pre-commit Hook__ - Automatically fix files before commit
+3. __Editor Support__ - `.editorconfig` for automatic newline insertion
+4. __CI/CD Validation__ - GitHub Actions to check PRs
 
 ## Components
 
@@ -29,7 +31,7 @@ node scripts/fix-markdown-trailing-newlines.js --check --path docs/
 
 # Verbose output
 node scripts/fix-markdown-trailing-newlines.js --verbose
-```
+```bash
 
 ### 2. Pre-commit Hook
 
@@ -42,16 +44,16 @@ Automatically fixes markdown files when you commit:
 # The hook will now run automatically on commit
 # To bypass temporarily:
 git commit --no-verify
-```
+```bash
 
 ### 3. Editor Configuration (`.editorconfig`)
 
 Most modern editors respect `.editorconfig` settings:
 
-- **VS Code**: Install "EditorConfig for VS Code" extension
-- **IntelliJ/WebStorm**: Built-in support
-- **Sublime Text**: Install "EditorConfig" package
-- **Vim**: Install "editorconfig-vim" plugin
+- __VS Code__: Install "EditorConfig for VS Code" extension
+- __IntelliJ/WebStorm__: Built-in support
+- __Sublime Text__: Install "EditorConfig" package
+- __Vim__: Install "editorconfig-vim" plugin
 
 The configuration ensures:
 - All files get a final newline
@@ -69,25 +71,25 @@ The CI/CD pipeline:
 
 ### Initial Setup
 
-1. **Install the git hook**:
+1. __Install the git hook__:
    ```bash
    ./scripts/setup-git-hooks.sh
    ```
 
-2. **Fix existing files**:
+2. __Fix existing files__:
    ```bash
    npm run fix:markdown
    ```
 
-3. **Configure your editor** to use `.editorconfig`
+3. __Configure your editor__ to use `.editorconfig`
 
 ### Daily Workflow
 
 The automation works transparently:
 
-1. **When editing**: Your editor adds trailing newlines automatically
-2. **When committing**: Pre-commit hook fixes any missed files
-3. **In PRs**: GitHub Actions validates all markdown files
+1. __When editing__: Your editor adds trailing newlines automatically
+2. __When committing__: Pre-commit hook fixes any missed files
+3. __In PRs__: GitHub Actions validates all markdown files
 
 ### Manual Operations
 
@@ -100,7 +102,7 @@ npm run fix:markdown
 
 # Check a specific directory
 node scripts/fix-markdown-trailing-newlines.js --check --path docs/security/
-```
+```bash
 
 ## Troubleshooting
 
@@ -112,7 +114,7 @@ git config core.hooksPath
 
 # Reinstall hooks
 ./scripts/setup-git-hooks.sh
-```
+```bash
 
 ### Editor not adding newlines
 
@@ -129,15 +131,15 @@ npm run fix:markdown
 git add -u
 git commit --amend
 git push --force-with-lease
-```
+```bash
 
 ## Benefits
 
-1. **Consistency**: All markdown files follow the same standard
-2. **Automation**: No manual intervention needed
-3. **Early Detection**: Issues caught before merge
-4. **Editor Support**: Works with your existing workflow
-5. **Performance**: Fast checks and fixes
+1. __Consistency__: All markdown files follow the same standard
+2. __Automation__: No manual intervention needed
+3. __Early Detection__: Issues caught before merge
+4. __Editor Support__: Works with your existing workflow
+5. __Performance__: Fast checks and fixes
 
 ## Extending
 

@@ -1,6 +1,8 @@
 # AeroSuite Security Training Program
 
-This directory contains the security training materials for the AeroSuite development team. The training program is designed to raise security awareness and ensure that all team members follow security best practices during development.
+This directory contains the security training materials for the AeroSuite development team. The
+training program is designed to raise security awareness and ensure that all team members follow
+security best practices during development.
 
 ## Training Objectives
 
@@ -27,7 +29,8 @@ This directory contains the security training materials for the AeroSuite develo
 
 | Module | Format | Duration | Frequency |
 |--------|--------|----------|-----------|
-| Security Fundamentals | Interactive Workshop | 2 hours | Quarterly for new hires, Annual refresher |
+| Security Fundamentals | Interactive Workshop | 2 hours | Quarterly for new hires, Annual
+refresher |
 | Secure Coding Practices | Hands-on Workshop | 3 hours | Quarterly |
 | Authentication & Authorization | Workshop + Lab | 2 hours | Semi-annually |
 | Data Protection & Privacy | Workshop | 2 hours | Semi-annually |
@@ -42,11 +45,11 @@ This directory contains the security training materials for the AeroSuite develo
 
 The security training program uses a blended learning approach:
 
-1. **Interactive Workshops**: Led by security experts, focusing on practical applications
-2. **Hands-on Labs**: Exercises to practice identifying and fixing security issues
-3. **Self-paced Learning**: Online resources for continuous learning
-4. **Security Champions**: Designated team members who receive advanced training
-5. **Peer Reviews**: Security-focused code reviews to reinforce learning
+1. __Interactive Workshops__: Led by security experts, focusing on practical applications
+2. __Hands-on Labs__: Exercises to practice identifying and fixing security issues
+3. __Self-paced Learning__: Online resources for continuous learning
+4. __Security Champions__: Designated team members who receive advanced training
+5. __Peer Reviews__: Security-focused code reviews to reinforce learning
 
 ## Training Materials
 
@@ -70,7 +73,9 @@ The effectiveness of the security training program is measured through:
 
 ## Certification
 
-Developers who complete the full training program receive an internal "AeroSuite Security-Minded Developer" certification. This certification must be renewed annually by completing refresher courses and demonstrating secure coding practices.
+Developers who complete the full training program receive an internal "AeroSuite Security-Minded
+Developer" certification. This certification must be renewed annually by completing refresher
+courses and demonstrating secure coding practices.
 
 ## Additional Resources
 
@@ -90,4 +95,4 @@ We continuously improve our security training program based on:
 4. Security incident lessons learned
 5. Industry best practices
 
-Please submit feedback and suggestions for improvement to the security team. 
+Please submit feedback and suggestions for improvement to the security team.

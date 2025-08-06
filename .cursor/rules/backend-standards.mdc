@@ -1,0 +1,50 @@
+# Backend Development Standards
+
+When working in the server directory:
+
+## API Structure
+- Use Express.js with proper middleware
+- Follow RESTful API conventions
+- Use proper HTTP status codes
+- Implement proper error handling middleware
+- Use async/await for database operations
+
+## Database
+- Use MongoDB with Mongoose ODM
+- Implement proper data validation
+- Use transactions for critical operations
+- Follow MongoDB best practices
+- Implement proper indexing strategies
+
+## Security
+- Implement JWT authentication
+- Use bcrypt for password hashing
+- Validate all input data
+- Implement rate limiting
+- Use CORS properly
+- Sanitize user inputs
+
+## Error Handling
+- Use try-catch blocks for async operations
+- Implement proper error logging
+- Return consistent error responses
+- Use custom error classes
+- Handle database connection errors
+
+## Code Organization
+- Separate routes, controllers, and models
+- Use middleware for common functionality
+- Keep business logic in services
+- Use environment variables for configuration
+- Implement proper logging
+
+## Testing
+- Write unit tests for business logic
+- Use Jest for testing framework
+- Mock external dependencies
+- Test error scenarios
+- Implement integration tests
+description:
+globs:
+alwaysApply: false
+---

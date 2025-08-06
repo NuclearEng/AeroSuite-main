@@ -2,25 +2,27 @@
 
 ## Overview
 
-This document describes the implementation of frontend component tests (TS345) for the AeroSuite application. These tests verify that the UI components render correctly and behave as expected when users interact with them.
+This document describes the implementation of frontend component tests (TS345) for the AeroSuite
+application. These tests verify that the UI components render correctly and behave as expected when
+users interact with them.
 
 ## Test Structure
 
 The frontend component tests are organized by component and follow a consistent pattern:
 
-1. **Rendering Tests**: Verify that components render correctly with different props
-2. **Interaction Tests**: Verify that components respond correctly to user interactions
-3. **Edge Case Tests**: Verify that components handle unusual situations correctly
-4. **Style Tests**: Verify that components apply custom styles correctly
+1. __Rendering Tests__: Verify that components render correctly with different props
+2. __Interaction Tests__: Verify that components respond correctly to user interactions
+3. __Edge Case Tests__: Verify that components handle unusual situations correctly
+4. __Style Tests__: Verify that components apply custom styles correctly
 
 ## Implementation Details
 
 ### Technology Stack
 
-- **Jest**: Test runner and assertion library
-- **React Testing Library**: Component testing utilities
-- **Mock Service Worker**: For mocking API requests (when needed)
-- **jest-dom**: Custom DOM element matchers
+- __Jest__: Test runner and assertion library
+- __React Testing Library__: Component testing utilities
+- __Mock Service Worker__: For mocking API requests (when needed)
+- __jest-dom__: Custom DOM element matchers
 
 ### Key Files
 
@@ -49,7 +51,7 @@ npm test -- --coverage
 
 # Run tests in watch mode
 npm test -- --watch
-```
+```bash
 
 ## Test Patterns
 
@@ -57,15 +59,16 @@ npm test -- --watch
 
 Each component test follows this general pattern:
 
-1. **Setup**: Create test data and mock functions as needed
-2. **Render**: Render the component with test data
-3. **Assert**: Verify that the component renders and behaves correctly
-4. **Interact**: Trigger user interactions (when applicable)
-5. **Assert again**: Verify that the component responds correctly to interactions
+1. __Setup__: Create test data and mock functions as needed
+2. __Render__: Render the component with test data
+3. __Assert__: Verify that the component renders and behaves correctly
+4. __Interact__: Trigger user interactions (when applicable)
+5. __Assert again__: Verify that the component responds correctly to interactions
 
 ### Test Utils
 
-The `renderWithProviders` function in `test-utils.tsx` wraps components with the necessary providers:
+The `renderWithProviders` function in `test-utils.tsx` wraps components with the necessary
+providers:
 
 - Redux store provider
 - Router provider
@@ -78,40 +81,40 @@ This ensures that components have access to all the context they need during tes
 
 The tests cover these key functional areas:
 
-1. **Data Display Components**:
+1. __Data Display Components__:
    - Rendering data in tables and charts
    - Sorting, filtering, and pagination
    - Empty state handling
    - Loading state display
 
-2. **Input Components**:
+2. __Input Components__:
    - Form field validation
    - Submit and reset handling
    - Error message display
    - Default value handling
 
-3. **Modal Dialogs**:
+3. __Modal Dialogs__:
    - Opening and closing
    - Action button handling
    - Custom styling
 
-4. **Filtering Components**:
+4. __Filtering Components__:
    - Filter selection and application
    - Multiple filter types (text, select, date range, etc.)
    - Clearing filters
 
 ## Best Practices Implemented
 
-1. **Accessibility Testing**: Components are tested for accessibility attributes
-2. **User-Centric Testing**: Tests focus on user interactions rather than implementation details
-3. **Isolation**: Components are tested in isolation from external dependencies
-4. **Comprehensive Coverage**: Multiple test cases cover various aspects of each component
-5. **Mock Testing**: External dependencies are mocked to ensure consistent test results
+1. __Accessibility Testing__: Components are tested for accessibility attributes
+2. __User-Centric Testing__: Tests focus on user interactions rather than implementation details
+3. __Isolation__: Components are tested in isolation from external dependencies
+4. __Comprehensive Coverage__: Multiple test cases cover various aspects of each component
+5. __Mock Testing__: External dependencies are mocked to ensure consistent test results
 
 ## Future Improvements
 
-1. **Visual Regression Testing**: Add visual regression tests for UI components
-2. **Test Coverage Reporting**: Implement test coverage reporting and set coverage thresholds
-3. **End-to-End Testing**: Expand testing to include end-to-end user workflows
-4. **Performance Testing**: Add tests to verify component performance
-5. **Browser Compatibility Testing**: Test components across different browsers 
+1. __Visual Regression Testing__: Add visual regression tests for UI components
+2. __Test Coverage Reporting__: Implement test coverage reporting and set coverage thresholds
+3. __End-to-End Testing__: Expand testing to include end-to-end user workflows
+4. __Performance Testing__: Add tests to verify component performance
+5. __Browser Compatibility Testing__: Test components across different browsers

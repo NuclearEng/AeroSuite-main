@@ -15,10 +15,10 @@ AeroSuite uses Jest for testing and coverage reporting. The system is configured
 
 We track the following coverage metrics:
 
-- **Statements**: Percentage of statements that are executed
-- **Branches**: Percentage of branches (if/else, switch/case, etc.) that are executed
-- **Functions**: Percentage of functions that are called
-- **Lines**: Percentage of lines that are executed
+- __Statements__: Percentage of statements that are executed
+- __Branches__: Percentage of branches (if/else, switch/case, etc.) that are executed
+- __Functions__: Percentage of functions that are called
+- __Lines__: Percentage of lines that are executed
 
 ## Thresholds
 
@@ -39,7 +39,7 @@ To generate coverage reports locally, run:
 
 ```bash
 npm run test:coverage
-```
+```bash
 
 This will create a `coverage` directory with various report formats:
 
@@ -51,7 +51,7 @@ For a quick way to generate and view the report, use:
 
 ```bash
 ./scripts/test-coverage.sh
-```
+```bash
 
 This script will:
 1. Generate the coverage report
@@ -68,9 +68,9 @@ Reports are uploaded to Codecov for tracking and visualization.
 
 ## Viewing Reports
 
-- **Locally**: Open `coverage/lcov-report/index.html` in a browser
-- **CI/CD**: View reports in the GitHub Actions artifacts
-- **Codecov**: Access detailed reports and history on the Codecov dashboard
+- __Locally__: Open `coverage/lcov-report/index.html` in a browser
+- __CI/CD__: View reports in the GitHub Actions artifacts
+- __Codecov__: Access detailed reports and history on the Codecov dashboard
 
 ## Improving Coverage
 
@@ -85,13 +85,14 @@ When adding new features or refactoring code:
 
 ### Common Issues
 
-- **Tests failing in CI but passing locally**: Check for environment-specific code or timing issues
-- **Coverage dropping below thresholds**: Add tests for the affected areas
-- **Certain files not being covered**: Check the `collectCoverageFrom` configuration to ensure they're included
+- __Tests failing in CI but passing locally__: Check for environment-specific code or timing issues
+- __Coverage dropping below thresholds__: Add tests for the affected areas
+- __Certain files not being covered__: Check the `collectCoverageFrom` configuration to ensure
+they're included
 
 ### Getting Help
 
 For questions or issues related to test coverage:
 - Check the testing documentation in the `docs` directory
 - Contact the DevOps team
-- Create an issue in the project repository 
+- Create an issue in the project repository

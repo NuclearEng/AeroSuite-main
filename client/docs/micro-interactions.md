@@ -1,6 +1,7 @@
 # Micro-Interactions System
 
-This document provides an overview of AeroSuite's micro-interactions system, which adds subtle animations and feedback to enhance the user experience.
+This document provides an overview of AeroSuite's micro-interactions system, which adds subtle
+animations and feedback to enhance the user experience.
 
 ## Components
 
@@ -17,7 +18,7 @@ import AnimatedButton from '../components/common/AnimatedButton';
 </AnimatedButton>
 
 // With hover and click effects
-<AnimatedButton 
+<AnimatedButton
   variant="contained"
   hoverEffect="scale"
   clickEffect="ripple"
@@ -26,7 +27,7 @@ import AnimatedButton from '../components/common/AnimatedButton';
 </AnimatedButton>
 
 // With loading state
-<AnimatedButton 
+<AnimatedButton
   variant="contained"
   loading={isLoading}
   onClick={handleClick}
@@ -35,14 +36,14 @@ import AnimatedButton from '../components/common/AnimatedButton';
 </AnimatedButton>
 
 // With success animation
-<AnimatedButton 
+<AnimatedButton
   variant="contained"
   success={isSuccess}
   showSuccessAnimation
 >
   Success Button
 </AnimatedButton>
-```
+```bash
 
 ### AnimatedFeedback
 
@@ -52,13 +53,13 @@ The `AnimatedFeedback` component provides animated feedback messages for differe
 import AnimatedFeedback from '../components/common/AnimatedFeedback';
 
 // Basic usage
-<AnimatedFeedback 
+<AnimatedFeedback
   type="success"
   message="Operation completed successfully."
 />
 
 // With custom duration and callback
-<AnimatedFeedback 
+<AnimatedFeedback
   type="error"
   message="An error occurred."
   duration={5000}
@@ -66,19 +67,19 @@ import AnimatedFeedback from '../components/common/AnimatedFeedback';
 />
 
 // Minimal version
-<AnimatedFeedback 
+<AnimatedFeedback
   type="info"
   message="Processing your request..."
   minimal
 />
 
 // With custom animation
-<AnimatedFeedback 
+<AnimatedFeedback
   type="warning"
   message="This action cannot be undone."
   animationType="slideInLeft"
 />
-```
+```bash
 
 ## Utilities
 
@@ -87,9 +88,9 @@ import AnimatedFeedback from '../components/common/AnimatedFeedback';
 The `animationUtils` module provides utilities for creating and managing animations.
 
 ```tsx
-import { 
-  createTransition, 
-  createKeyframeAnimation, 
+import {
+  createTransition,
+  createKeyframeAnimation,
   animationPresets,
   createHoverAnimation,
   createStaggeredAnimation,
@@ -135,27 +136,27 @@ const getListItemStyles = createStaggeredAnimation(
 if (prefersReducedMotion()) {
   // Provide alternative non-animated experience
 }
-```
+```bash
 
 ### Animation Hooks
 
 The animation hooks provide a React-friendly way to use animations in functional components.
 
 ```tsx
-import { 
-  useAnimation, 
-  useStaggeredAnimation, 
-  useHoverAnimation 
+import {
+  useAnimation,
+  useStaggeredAnimation,
+  useHoverAnimation
 } from '../hooks/useAnimation';
 
 // Basic animation hook
-const fadeIn = useAnimation('fadeIn', { 
+const fadeIn = useAnimation('fadeIn', {
   duration: 500,
   autoPlay: true
 });
 
 // Control animation
-const slideIn = useAnimation('slideInBottom', { 
+const slideIn = useAnimation('slideInBottom', {
   autoPlay: false,
   onComplete: () => console.log('Animation completed')
 });
@@ -171,7 +172,7 @@ const handleClick = () => {
 </Box>
 
 // Staggered animations for lists
-const listAnimations = useStaggeredAnimation('fadeIn', 5, { 
+const listAnimations = useStaggeredAnimation('fadeIn', 5, {
   duration: 400
 });
 
@@ -192,7 +193,7 @@ const hoverStyles = useHoverAnimation({
 <Card sx={hoverStyles}>
   This card will animate on hover
 </Card>
-```
+```bash
 
 ## Animation Presets
 
@@ -242,4 +243,5 @@ The micro-interactions system respects user preferences for reduced motion:
 
 ## Demo Page
 
-Visit the [Micro-Interactions Demo](/demos/micro-interactions) page to see all animation components and utilities in action. 
+Visit the [Micro-Interactions Demo](/demos/micro-interactions) page to see all animation components
+and utilities in action.

@@ -4,7 +4,9 @@ This document describes the domain services implemented in the AeroSuite applica
 
 ## Overview
 
-Domain services encapsulate business logic that doesn't naturally fit within domain entities. They typically operate on multiple domain entities and repositories, and implement complex business rules and workflows.
+Domain services encapsulate business logic that doesn't naturally fit within domain entities. They
+typically operate on multiple domain entities and repositories, and implement complex business
+rules and workflows.
 
 ## Base Domain Service
 
@@ -18,13 +20,13 @@ All domain services extend the `DomainService` base class, which provides common
 
 Each domain service follows a similar structure:
 
-1. **Constructor**: Initializes the service with dependencies
-2. **Dependency Validation**: Ensures all required dependencies are provided
-3. **Repository Access**: Methods to access repositories
-4. **Query Methods**: Methods to find entities by ID, query entities, etc.
-5. **Command Methods**: Methods to create, update, delete entities
-6. **Business Logic Methods**: Methods implementing specific business rules
-7. **Event Publishing**: Publishing domain events when entities change
+1. __Constructor__: Initializes the service with dependencies
+2. __Dependency Validation__: Ensures all required dependencies are provided
+3. __Repository Access__: Methods to access repositories
+4. __Query Methods__: Methods to find entities by ID, query entities, etc.
+5. __Command Methods__: Methods to create, update, delete entities
+6. __Business Logic Methods__: Methods implementing specific business rules
+7. __Event Publishing__: Publishing domain events when entities change
 
 ## Available Domain Services
 
@@ -32,13 +34,13 @@ Each domain service follows a similar structure:
 
 Manages suppliers and their related entities (contacts, qualifications, etc.).
 
-**Key Features:**
+__Key Features:__
 - Supplier lifecycle management (creation, updates, deletion)
 - Contact management
 - Qualification management
 - Supplier search and filtering
 
-**Example Usage:**
+__Example Usage:__
 ```javascript
 const supplierService = require('../domains/supplier/services/SupplierService');
 
@@ -71,19 +73,19 @@ const activeSuppliers = await supplierService.getByStatus('active', {
   limit: 10,
   sort: 'name'
 });
-```
+```bash
 
 ### CustomerService
 
 Manages customers and their related entities.
 
-**Key Features:**
+__Key Features:__
 - Customer lifecycle management
 - Contact management
 - Customer search and filtering
 - Industry and type categorization
 
-**Example Usage:**
+__Example Usage:__
 ```javascript
 const customerService = require('../domains/customer/services/CustomerService');
 
@@ -114,20 +116,20 @@ const searchResults = await customerService.search('xyz', {
   page: 1,
   limit: 10
 });
-```
+```bash
 
 ### InspectionService
 
 Manages inspections and their related entities (findings, etc.).
 
-**Key Features:**
+__Key Features:__
 - Inspection lifecycle management
 - Inspection scheduling
 - Finding management
 - Status transitions (scheduled → in-progress → completed/cancelled)
 - Integration with customers and suppliers
 
-**Example Usage:**
+__Example Usage:__
 ```javascript
 const inspectionService = require('../domains/inspection/services/InspectionService');
 
@@ -165,20 +167,20 @@ const completedInspection = await inspectionService.complete(inspection.id, {
   recommendation: 'Follow-up inspection required in 30 days',
   attachments: ['https://storage.example.com/reports/inspection123.pdf']
 });
-```
+```bash
 
 ### ComponentService
 
 Manages components and their related entities.
 
-**Key Features:**
+__Key Features:__
 - Component lifecycle management
 - Stock management
 - Document management
 - Supplier integration
 - Component search and categorization
 
-**Example Usage:**
+__Example Usage:__
 ```javascript
 const componentService = require('../domains/component/services/ComponentService');
 
@@ -216,17 +218,18 @@ const document = await componentService.addDocument(component.id, {
   url: 'https://storage.example.com/docs/hpv-123-specs.pdf',
   version: '1.0'
 });
-```
+```bash
 
 ## Best Practices
 
-1. **Use Domain Services for Complex Logic**: Place business logic that spans multiple entities in domain services.
-2. **Keep Entities Focused**: Domain entities should focus on their own state and behavior.
-3. **Validate Input**: Always validate input data before processing.
-4. **Publish Domain Events**: Use domain events to communicate changes to other parts of the system.
-5. **Use Dependency Injection**: Pass dependencies to services rather than hard-coding them.
-6. **Handle Errors Appropriately**: Use domain-specific errors for business rule violations.
-7. **Document Service Methods**: Clearly document the purpose and behavior of each service method.
+1. __Use Domain Services for Complex Logic__: Place business logic that spans multiple entities in
+domain services.
+2. __Keep Entities Focused__: Domain entities should focus on their own state and behavior.
+3. __Validate Input__: Always validate input data before processing.
+4. __Publish Domain Events__: Use domain events to communicate changes to other parts of the system.
+5. __Use Dependency Injection__: Pass dependencies to services rather than hard-coding them.
+6. __Handle Errors Appropriately__: Use domain-specific errors for business rule violations.
+7. __Document Service Methods__: Clearly document the purpose and behavior of each service method.
 
 ## Error Handling
 
@@ -257,11 +260,12 @@ try {
     console.error('Unexpected error:', error);
   }
 }
-```
+```bash
 
 ## Event Publishing
 
-Domain services publish events when entities change. These events can be subscribed to by other parts of the system.
+Domain services publish events when entities change. These events can be subscribed to by other
+parts of the system.
 
 Example event subscription:
 
@@ -273,4 +277,4 @@ supplierService.subscribeToEvent('supplier.created', (data) => {
   console.log('Supplier created:', data.supplier);
   // Perform additional actions
 });
-``` 
+```bash

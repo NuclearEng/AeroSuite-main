@@ -2,7 +2,9 @@
 
 ## Introduction
 
-This document outlines the domain boundaries for the AeroSuite application based on Domain-Driven Design (DDD) principles. It serves as a reference for understanding how the system is divided into bounded contexts and how these contexts interact with each other.
+This document outlines the domain boundaries for the AeroSuite application based on Domain-Driven
+Design (DDD) principles. It serves as a reference for understanding how the system is divided into
+bounded contexts and how these contexts interact with each other.
 
 ## Core Domains
 
@@ -10,84 +12,84 @@ AeroSuite is divided into the following core domains:
 
 ### 1. Supplier Management Domain
 
-**Responsibility**: Managing all supplier-related data and operations.
+__Responsibility__: Managing all supplier-related data and operations.
 
-**Key Aggregates**:
+__Key Aggregates__:
 - Supplier (Aggregate Root)
 - SupplierContact
 - SupplierQualification
 - SupplierPerformance
 
-**Domain Events**:
+__Domain Events__:
 - SupplierCreated
 - SupplierUpdated
 - SupplierStatusChanged
 - SupplierQualificationAdded
 - SupplierPerformanceUpdated
 
-**Domain Services**:
+__Domain Services__:
 - SupplierQualificationService
 - SupplierRiskAssessmentService
 - SupplierPerformanceAnalyticsService
 
 ### 2. Customer Management Domain
 
-**Responsibility**: Managing all customer-related data and operations.
+__Responsibility__: Managing all customer-related data and operations.
 
-**Key Aggregates**:
+__Key Aggregates__:
 - Customer (Aggregate Root)
 - CustomerContact
 - CustomerActivity
 
-**Domain Events**:
+__Domain Events__:
 - CustomerCreated
 - CustomerUpdated
 - CustomerStatusChanged
 - CustomerActivityRecorded
 
-**Domain Services**:
+__Domain Services__:
 - CustomerAnalyticsService
 - CustomerCommunicationService
 
 ### 3. Inspection Management Domain
 
-**Responsibility**: Managing inspection processes, checklists, and results.
+__Responsibility__: Managing inspection processes, checklists, and results.
 
-**Key Aggregates**:
+__Key Aggregates__:
 - Inspection (Aggregate Root)
 - InspectionItem
 - Defect
 - InspectionAttachment
 
-**Domain Events**:
+__Domain Events__:
 - InspectionCreated
 - InspectionScheduled
 - InspectionCompleted
 - DefectRecorded
 - DefectResolved
 
-**Domain Services**:
+__Domain Services__:
 - InspectionSchedulingService
 - DefectAnalysisService
 - InspectionReportGenerationService
 
 ### 4. Component Management Domain
 
-**Responsibility**: Managing technical components, specifications, and revisions.
+__Responsibility__: Managing technical components, specifications, and revisions.
 
-**Key Aggregates**:
+__Key Aggregates__:
 - Component (Aggregate Root)
 - Specification
 - Revision
 
-**Domain Events**:
+__Domain Events__:
 - ComponentCreated
 - ComponentUpdated
 - ComponentStatusUpdated
 - SpecificationAdded
 - RevisionCreated
 
-**Domain Services**:
+__Domain Services__:
 - ComponentRevisionService
 - ComponentRelationshipService
 - ComponentDocumentationService
@@ -96,27 +98,27 @@ AeroSuite is divided into the following core domains:
 
 ### 1. User Management Domain
 
-**Responsibility**: Managing user accounts, authentication, and authorization.
+__Responsibility__: Managing user accounts, authentication, and authorization.
 
-**Key Aggregates**:
+__Key Aggregates__:
 - User (Aggregate Root)
 - Role
 - Permission
 
 ### 2. Notification Domain
 
-**Responsibility**: Managing system notifications and alerts.
+__Responsibility__: Managing system notifications and alerts.
 
-**Key Aggregates**:
+__Key Aggregates__:
 - Notification (Aggregate Root)
 - NotificationTemplate
 - NotificationChannel
 
 ### 3. Reporting Domain
 
-**Responsibility**: Generating reports and analytics.
+__Responsibility__: Generating reports and analytics.
 
-**Key Aggregates**:
+__Key Aggregates__:
 - Report (Aggregate Root)
 - ReportTemplate
 - Dashboard
@@ -125,41 +127,41 @@ AeroSuite is divided into the following core domains:
 
 ### Boundary Definition Principles
 
-1. **Linguistic Boundaries**: Each domain has its own ubiquitous language.
-2. **Responsibility Boundaries**: Clear separation of concerns between domains.
-3. **Data Ownership**: Each piece of data has a clear owner domain.
-4. **Autonomous Operation**: Domains should be able to function independently.
+1. __Linguistic Boundaries__: Each domain has its own ubiquitous language.
+2. __Responsibility Boundaries__: Clear separation of concerns between domains.
+3. __Data Ownership__: Each piece of data has a clear owner domain.
+4. __Autonomous Operation__: Domains should be able to function independently.
 
 ### Cross-Domain Interactions
 
 #### Integration Patterns
 
-1. **Domain Events**: Domains communicate primarily through domain events.
-2. **Anti-Corruption Layers**: Used when integrating with external systems or legacy code.
-3. **Shared Kernels**: Limited shared models between closely related domains.
-4. **Customer/Supplier**: When one domain depends on another in a customer-supplier relationship.
+1. __Domain Events__: Domains communicate primarily through domain events.
+2. __Anti-Corruption Layers__: Used when integrating with external systems or legacy code.
+3. __Shared Kernels__: Limited shared models between closely related domains.
+4. __Customer/Supplier__: When one domain depends on another in a customer-supplier relationship.
 
 #### Key Interactions
 
-1. **Inspection ↔ Supplier**:
+1. __Inspection ↔ Supplier__:
    - Inspections are often conducted for specific suppliers
    - Supplier performance metrics are updated based on inspection results
 
-2. **Inspection ↔ Component**:
+2. __Inspection ↔ Component__:
    - Inspections verify component specifications
    - Component revisions may be triggered by inspection findings
 
-3. **Component ↔ Supplier**:
+3. __Component ↔ Supplier__:
    - Components are provided by suppliers
    - Supplier qualifications may be specific to certain component categories
 
-4. **Customer ↔ Inspection**:
+4. __Customer ↔ Inspection__:
    - Inspections may be requested by or conducted for customers
    - Inspection results are shared with relevant customers
 
 ## Context Map
 
-```
+```bash
 +-------------------+       +-------------------+
 |                   |       |                   |
 |     Customer      |<----->|    Inspection     |
@@ -193,21 +195,25 @@ AeroSuite is divided into the following core domains:
                            |     Domain        |
                            |                   |
                            +-------------------+
-```
+```bash
 
 ## Strategic Design Decisions
 
 ### Core vs. Supporting Domains
 
-- **Core Domains**: Supplier, Customer, Inspection, and Component domains represent the core business capabilities of AeroSuite.
-- **Supporting Domains**: User, Notification, and Reporting domains provide essential infrastructure but are not the main business differentiators.
+- __Core Domains__: Supplier, Customer, Inspection, and Component domains represent the core
+business capabilities of AeroSuite.
+- __Supporting Domains__: User, Notification, and Reporting domains provide essential
+infrastructure but are not the main business differentiators.
 
 ### Domain Relationships
 
-1. **Partnership**: Inspection and Component domains work closely together in a partnership relationship.
-2. **Customer/Supplier**: Reporting domain is a customer of all other domains, consuming their data.
-3. **Conformist**: Notification domain conforms to the event structures of other domains.
-4. **Anti-Corruption Layer**: Used when integrating with external ERP systems to protect domain models.
+1. __Partnership__: Inspection and Component domains work closely together in a partnership
+relationship.
+2. __Customer/Supplier__: Reporting domain is a customer of all other domains, consuming their data.
+3. __Conformist__: Notification domain conforms to the event structures of other domains.
+4. __Anti-Corruption Layer__: Used when integrating with external ERP systems to protect domain
+models.
 
 ## Implementation Guidelines
 
@@ -248,14 +254,16 @@ The following concepts may be shared across domains:
 
 ## Workshop Format
 
-1. **Introduction to DDD Concepts** (30 minutes)
-2. **Domain Storytelling** (2 hours)
-3. **Identifying Bounded Contexts** (1 hour)
-4. **Context Mapping Exercise** (2 hours)
-5. **Ubiquitous Language Definition** (1 hour)
-6. **Technical Implementation Discussion** (1 hour)
-7. **Next Steps and Action Items** (30 minutes)
+1. __Introduction to DDD Concepts__ (30 minutes)
+2. __Domain Storytelling__ (2 hours)
+3. __Identifying Bounded Contexts__ (1 hour)
+4. __Context Mapping Exercise__ (2 hours)
+5. __Ubiquitous Language Definition__ (1 hour)
+6. __Technical Implementation Discussion__ (1 hour)
+7. __Next Steps and Action Items__ (30 minutes)
 
 ## Conclusion
 
-This domain boundaries definition serves as the foundation for our DDD implementation. It provides clear guidelines on how domains are separated and how they should interact, ensuring a clean and maintainable architecture that accurately reflects the business domains. 
+This domain boundaries definition serves as the foundation for our DDD implementation. It provides
+clear guidelines on how domains are separated and how they should interact, ensuring a clean and
+maintainable architecture that accurately reflects the business domains.

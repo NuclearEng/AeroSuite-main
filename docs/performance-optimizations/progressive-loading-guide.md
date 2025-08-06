@@ -1,6 +1,8 @@
 # Progressive Loading Strategies Guide
 
-This document provides guidance on implementing progressive loading strategies in the AeroSuite project. Progressive loading improves perceived performance by rendering content in stages of increasing fidelity, allowing users to interact with the application sooner.
+This document provides guidance on implementing progressive loading strategies in the AeroSuite
+project. Progressive loading improves perceived performance by rendering content in stages of
+increasing fidelity, allowing users to interact with the application sooner.
 
 ## Table of Contents
 
@@ -14,28 +16,30 @@ This document provides guidance on implementing progressive loading strategies i
 
 ## Overview
 
-Progressive loading is a technique that improves perceived performance by showing content in stages, from low to high fidelity. Instead of waiting for all content to load at once, users see immediate feedback and gradually improving content quality.
+Progressive loading is a technique that improves perceived performance by showing content in
+stages, from low to high fidelity. Instead of waiting for all content to load at once, users see
+immediate feedback and gradually improving content quality.
 
 Benefits of progressive loading include:
 
-- **Improved perceived performance**: Users see content sooner, even if it's not the final version
-- **Reduced time to interactivity**: Users can start interacting with the application earlier
-- **Better user experience**: Continuous visual feedback keeps users engaged
-- **Reduced bounce rates**: Users are less likely to leave during loading
-- **Optimized resource usage**: Critical resources are loaded first, less important ones later
+- __Improved perceived performance__: Users see content sooner, even if it's not the final version
+- __Reduced time to interactivity__: Users can start interacting with the application earlier
+- __Better user experience__: Continuous visual feedback keeps users engaged
+- __Reduced bounce rates__: Users are less likely to leave during loading
+- __Optimized resource usage__: Critical resources are loaded first, less important ones later
 
 ## Implementation
 
 The progressive loading implementation in AeroSuite consists of several components:
 
-1. **Progressive loading utilities**: Core utilities for implementing progressive loading strategies
-2. **Progressive UI components**: Components that implement progressive loading patterns
-3. **Data streaming utilities**: Utilities for progressively loading and displaying data
-4. **Demo page**: A showcase of various progressive loading techniques
+1. __Progressive loading utilities__: Core utilities for implementing progressive loading strategies
+2. __Progressive UI components__: Components that implement progressive loading patterns
+3. __Data streaming utilities__: Utilities for progressively loading and displaying data
+4. __Demo page__: A showcase of various progressive loading techniques
 
 ### Directory Structure
 
-```
+```bash
 client/src/
 ├── utils/
 │   ├── progressiveLoading.ts     # Core progressive loading utilities
@@ -52,7 +56,7 @@ client/src/
 
 docs/performance-optimizations/
 └── progressive-loading-guide.md   # This documentation
-```
+```bash
 
 ## Progressive Loading Techniques
 
@@ -62,10 +66,10 @@ AeroSuite implements several progressive loading techniques:
 
 Components are rendered in multiple stages of increasing fidelity:
 
-1. **Initial**: Empty placeholder or minimal content
-2. **Skeleton**: Loading skeleton that mimics the layout of the final content
-3. **Low-fidelity**: Simplified version with minimal data and styling
-4. **Full-fidelity**: Complete component with all data and styling
+1. __Initial__: Empty placeholder or minimal content
+2. __Skeleton__: Loading skeleton that mimics the layout of the final content
+3. __Low-fidelity__: Simplified version with minimal data and styling
+4. __Full-fidelity__: Complete component with all data and styling
 
 ```tsx
 // Example using ProgressiveRender component
@@ -83,15 +87,15 @@ Components are rendered in multiple stages of increasing fidelity:
     }
   }}
 />
-```
+```bash
 
 ### 2. Progressive Image Loading
 
 Images are loaded in multiple stages:
 
-1. **Placeholder**: Solid color or low-quality placeholder
-2. **Low-resolution**: Blurred, small version of the image
-3. **Full-resolution**: Complete, high-quality image
+1. __Placeholder__: Solid color or low-quality placeholder
+2. __Low-resolution__: Blurred, small version of the image
+3. __Full-resolution__: Complete, high-quality image
 
 ```tsx
 // Example using ProgressiveImage component
@@ -103,15 +107,15 @@ Images are loaded in multiple stages:
   width={300}
   height={200}
 />
-```
+```bash
 
 ### 3. Progressive Data Loading
 
 Data is loaded and displayed incrementally:
 
-1. **Initial data**: Empty state or minimal placeholder data
-2. **Partial data**: First batch of data or most important fields
-3. **Complete data**: Full dataset with all fields
+1. __Initial data__: Empty state or minimal placeholder data
+2. __Partial data__: First batch of data or most important fields
+3. __Complete data__: Full dataset with all fields
 
 ```tsx
 // Example using useProgressiveDataLoading hook
@@ -126,15 +130,15 @@ const { data, loading, progress } = useProgressiveDataLoading(
     streamInterval: 300
   }
 );
-```
+```bash
 
 ### 4. Incremental Component Hydration
 
 Components are hydrated (made interactive) in batches based on priority and visibility:
 
-1. **Critical components**: Components in the viewport and critical to functionality
-2. **Visible components**: Components currently visible in the viewport
-3. **Off-screen components**: Components below the fold, loaded when resources are available
+1. __Critical components__: Components in the viewport and critical to functionality
+2. __Visible components__: Components currently visible in the viewport
+3. __Off-screen components__: Components below the fold, loaded when resources are available
 
 ```tsx
 // Example using useIncrementalHydration hook
@@ -149,7 +153,7 @@ const { isHydrated, progress } = useIncrementalHydration(
     hydrateAboveTheFoldFirst: true
   }
 );
-```
+```bash
 
 ### 5. Critical Path Rendering
 
@@ -158,18 +162,18 @@ Critical resources are loaded first to render the most important parts of the pa
 ```tsx
 // Example using useCriticalPathRendering hook
 const criticalPathLoaded = useCriticalPathRendering([
-  { 
-    importFn: () => import('../components/Header'), 
+  {
+    importFn: () => import('../components/Header'),
     key: 'Header',
     priority: LoadPriority.CRITICAL
   },
-  { 
-    importFn: () => import('../components/MainContent'), 
+  {
+    importFn: () => import('../components/MainContent'),
     key: 'MainContent',
     priority: LoadPriority.HIGH
   }
 ]);
-```
+```bash
 
 ## Usage Guide
 
@@ -186,7 +190,7 @@ function MyProgressiveComponent({ data }) {
     'low-fidelity': () => <SimplifiedView data={data} />,
     full: () => <CompleteView data={data} />
   };
-  
+
   // Use the progressive loading hook
   const [stage, renderContent, loadingState] = useProgressiveLoading(renderers, {
     initialDelay: 0,
@@ -195,7 +199,7 @@ function MyProgressiveComponent({ data }) {
       'low-fidelity': 500
     }
   });
-  
+
   return (
     <div>
       {renderContent({})}
@@ -203,7 +207,7 @@ function MyProgressiveComponent({ data }) {
     </div>
   );
 }
-```
+```bash
 
 ### Progressive Table
 
@@ -235,7 +239,7 @@ The `ProgressiveTable` component shows data in stages:
   isLoading={isLoading}
   keyExtractor={item => item.id}
 />
-```
+```bash
 
 ### Progressive Form
 
@@ -267,83 +271,85 @@ The `ProgressiveForm` component renders form fields in order of priority:
   ]}
   onSubmit={handleSubmit}
 />
-```
+```bash
 
 ## Best Practices
 
 ### 1. Prioritize Content Correctly
 
-- **Critical content first**: Load and render content that users need immediately
-- **Above-the-fold first**: Prioritize content visible in the initial viewport
-- **Progressive enhancement**: Start with core functionality, then enhance
+- __Critical content first__: Load and render content that users need immediately
+- __Above-the-fold first__: Prioritize content visible in the initial viewport
+- __Progressive enhancement__: Start with core functionality, then enhance
 
 ### 2. Provide Visual Feedback
 
-- **Show loading indicators**: Always indicate that content is loading
-- **Use meaningful placeholders**: Skeleton loaders should match the final layout
-- **Smooth transitions**: Ensure transitions between stages are smooth
+- __Show loading indicators__: Always indicate that content is loading
+- __Use meaningful placeholders__: Skeleton loaders should match the final layout
+- __Smooth transitions__: Ensure transitions between stages are smooth
 
 ### 3. Optimize for Perception
 
-- **Immediate response**: Respond to user actions within 100ms
-- **Progressive rendering**: Show something useful within 1000ms
-- **Complete loading**: Aim to complete loading within 5000ms
+- __Immediate response__: Respond to user actions within 100ms
+- __Progressive rendering__: Show something useful within 1000ms
+- __Complete loading__: Aim to complete loading within 5000ms
 
 ### 4. Balance Quality and Speed
 
-- **Start low, end high**: Begin with lower quality that loads quickly
-- **Minimum viable rendering**: Show the minimum useful content first
-- **Graceful enhancement**: Improve quality as more resources become available
+- __Start low, end high__: Begin with lower quality that loads quickly
+- __Minimum viable rendering__: Show the minimum useful content first
+- __Graceful enhancement__: Improve quality as more resources become available
 
 ### 5. Test on Real Devices
 
-- **Test on low-end devices**: Ensure good performance on slower devices
-- **Test on slow networks**: Use network throttling to simulate slow connections
-- **Measure real user metrics**: Collect field data from actual users
+- __Test on low-end devices__: Ensure good performance on slower devices
+- __Test on slow networks__: Use network throttling to simulate slow connections
+- __Measure real user metrics__: Collect field data from actual users
 
 ## Performance Metrics
 
 To measure the effectiveness of progressive loading:
 
-1. **Perceived loading time**: How quickly users perceive the page as loaded
-2. **Time to Interactive (TTI)**: When users can interact with the page
-3. **First Contentful Paint (FCP)**: When the first content is painted
-4. **Largest Contentful Paint (LCP)**: When the largest content element is painted
-5. **Cumulative Layout Shift (CLS)**: Measure of visual stability during loading
+1. __Perceived loading time__: How quickly users perceive the page as loaded
+2. __Time to Interactive (TTI)__: When users can interact with the page
+3. __First Contentful Paint (FCP)__: When the first content is painted
+4. __Largest Contentful Paint (LCP)__: When the largest content element is painted
+5. __Cumulative Layout Shift (CLS)__: Measure of visual stability during loading
 
 Tools for measurement:
 
-- **Lighthouse**: Run audits in Chrome DevTools
-- **WebPageTest**: Test performance on various devices and networks
-- **Performance API**: Use the browser's Performance API for custom metrics
+- __Lighthouse__: Run audits in Chrome DevTools
+- __WebPageTest__: Test performance on various devices and networks
+- __Performance API__: Use the browser's Performance API for custom metrics
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Flickering content**: Content jumps or flickers between loading stages
-   - **Solution**: Add minimum durations for each stage and ensure smooth transitions
+1. __Flickering content__: Content jumps or flickers between loading stages
+   - __Solution__: Add minimum durations for each stage and ensure smooth transitions
 
-2. **Layout shifts**: Content moves around as it loads
-   - **Solution**: Reserve space for content with placeholders of the correct size
+2. __Layout shifts__: Content moves around as it loads
+   - __Solution__: Reserve space for content with placeholders of the correct size
 
-3. **Slow initial render**: First content takes too long to appear
-   - **Solution**: Reduce initial bundle size and prioritize critical rendering path
+3. __Slow initial render__: First content takes too long to appear
+   - __Solution__: Reduce initial bundle size and prioritize critical rendering path
 
-4. **Memory leaks**: Progressive loading creates memory leaks
-   - **Solution**: Ensure cleanup in useEffect hooks and cancel unnecessary operations
+4. __Memory leaks__: Progressive loading creates memory leaks
+   - __Solution__: Ensure cleanup in useEffect hooks and cancel unnecessary operations
 
-5. **Accessibility issues**: Loading states are not accessible
-   - **Solution**: Use proper ARIA attributes and ensure screen reader compatibility
+5. __Accessibility issues__: Loading states are not accessible
+   - __Solution__: Use proper ARIA attributes and ensure screen reader compatibility
 
 ### Debugging Tips
 
-1. **Use performance profiling**: Chrome DevTools Performance tab can identify bottlenecks
-2. **Monitor memory usage**: Check for memory leaks in Chrome DevTools Memory tab
-3. **Test with throttling**: Use network and CPU throttling to simulate slower conditions
-4. **Log loading stages**: Add logging to track progression through loading stages
-5. **A/B test strategies**: Compare different progressive loading strategies with real users
+1. __Use performance profiling__: Chrome DevTools Performance tab can identify bottlenecks
+2. __Monitor memory usage__: Check for memory leaks in Chrome DevTools Memory tab
+3. __Test with throttling__: Use network and CPU throttling to simulate slower conditions
+4. __Log loading stages__: Add logging to track progression through loading stages
+5. __A/B test strategies__: Compare different progressive loading strategies with real users
 
 ---
 
-For more information, refer to the [Lazy Loading Guide](./lazy-loading-guide.md), [Bundle Size Optimization Guide](./bundle-size-optimization.md), and the [Code Splitting Guide](./code-splitting-guide.md). 
+For more information, refer to the [Lazy Loading Guide](./lazy-loading-guide.md), [Bundle Size
+Optimization Guide](./bundle-size-optimization.md), and the [Code Splitting
+Guide](./code-splitting-guide.md).

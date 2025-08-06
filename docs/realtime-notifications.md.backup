@@ -1,0 +1,127 @@
+# Real-time Notification System
+
+The AeroSuite real-time notification system provides immediate notifications to users through 
+WebSockets using Socket.IO. This enables a responsive user experience with instant updates about 
+important events without requiring page refreshes.
+
+## Features
+
+- Instant delivery of notifications to users
+- Browser notifications for important alerts
+- Support for system-wide broadcast alerts
+- Role-based notification targeting
+- Connection status monitoring and automatic reconnection
+- Seamless integration with the existing notification system
+
+## Architecture
+
+The real-time notification system consists of two main components:
+
+### Server-side
+
+- `realtime-notification.service.js` - Socket.IO server integration that manages:
+  - Socket connections and authentication
+  - User tracking and room management
+  - Notification delivery to specific users or roles
+  - System-wide broadcasts
+
+### Client-side
+
+- `RealtimeNotifications.tsx` - React component that:
+  - Establishes and maintains WebSocket connection
+  - Handles authentication with the server
+  - Processes incoming notifications
+  - Displays notifications through the UI
+  - Manages connection status and reconnection
+
+## Usage
+
+### Server-side
+
+```javascript
+// Import the service
+const realtimeNotificationService = require('./services/realtime-notification.service');
+
+// Send a notification to a specific user
+realtimeNotificationService.sendToUser(userId, {
+  title: 'New Message',
+  message: 'You have received a new message',
+  type: 'info'
+});
+
+// Send a notification to multiple users
+realtimeNotificationService.sendToUsers([userId1, userId2], {
+  title: 'Task Assigned',
+  message: 'A new task has been assigned to you',
+  type: 'info'
+});
+
+// Send a notification to users with specific roles
+realtimeNotificationService.sendToRoles(['admin', 'manager'], {
+  title: 'System Update',
+  message: 'System will be updated in 30 minutes',
+  type: 'warning'
+});
+
+// Broadcast a notification to all users
+realtimeNotificationService.broadcast({
+  title: 'System Maintenance',
+  message: 'The system will be under maintenance at 10:00 PM',
+  type: 'warning'
+});
+
+// Send a system alert to all users
+realtimeNotificationService.sendSystemAlert(
+  'Application update complete',
+  'success'
+);
+```bash
+
+### Client-side
+
+The client-side integration is automatic. The `RealtimeNotifications` component is included in the 
+main layout and will connect to the WebSocket server when a user is authenticated.
+
+## Integration with Existing Notification System
+
+The real-time notification system is fully integrated with the existing notification system:
+
+1. When a notification is created through the `notificationService`, it is automatically sent as a 
+real-time notification if the recipient is currently online.
+
+2. Notifications are persisted in the database, so users will see all notifications even if they 
+were offline when the notification was sent.
+
+3. When a user connects to the WebSocket server, they will receive any pending notifications that 
+were created while they were offline.
+
+## Security Considerations
+
+- All WebSocket connections are authenticated using the same JWT token used for API requests
+- User-specific rooms ensure notifications are only delivered to authorized recipients
+- Rate limiting is applied to prevent abuse
+- Sensitive data is not included in notification payload
+
+## Performance Considerations
+
+- Socket connections are maintained even during temporary network interruptions
+- Automatic reconnection with exponential backoff reduces server load
+- Notification delivery is asynchronous and non-blocking
+- Connection pooling reduces memory usage for users with multiple tabs open
+
+## Monitoring and Debugging
+
+The real-time notification system includes comprehensive logging and monitoring:
+
+- Connection events are logged (connect, disconnect, authentication)
+- Notification delivery events are logged
+- System alerts are logged
+- Connection statistics are available through the monitoring API
+
+## Future Enhancements
+
+- End-to-end encryption for sensitive notifications
+- Support for multimedia notifications (images, videos)
+- Read receipts for critical notifications
+- Notification preference management for users
+- Push notifications for mobile devices

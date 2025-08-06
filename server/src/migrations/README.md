@@ -16,7 +16,8 @@ The automated database migration system provides tools for:
 - `cli.js` - Command-line interface for managing migrations
 - `config.js` - Configuration for the migration system
 - `scripts/` - Migration script files
-- `../scripts/generate-migration.js` - Script to detect schema changes and generate migration templates
+- `../scripts/generate-migration.js` - Script to detect schema changes and generate migration
+templates
 - `../scripts/monitor-migrations.js` - Script to monitor migration status and send notifications
 - `../scripts/deploy-with-migrations.js` - Script to run migrations during deployment
 - `../scripts/migration-crontab.txt` - Crontab configuration for automated tasks
@@ -40,7 +41,7 @@ npm run migrate:status
 
 # List all migrations and their status
 npm run migrate:list
-```
+```bash
 
 ### Automated Tools
 
@@ -53,13 +54,14 @@ npm run migrate:monitor
 
 # Deploy with automatic migrations
 npm run deploy:with-migrations
-```
+```bash
 
 ## Automation Features
 
 ### Schema Change Detection
 
-The `generate-migration.js` script analyzes Mongoose models and compares them to the database schema. It detects:
+The `generate-migration.js` script analyzes Mongoose models and compares them to the database
+schema. It detects:
 
 - New collections
 - Missing fields in existing collections
@@ -70,11 +72,13 @@ When changes are detected, it generates a migration template that can be reviewe
 
 ### Migration Monitoring
 
-The `monitor-migrations.js` script checks for pending migrations and sends notifications via email if any are found. It also logs migration status to the monitoring system.
+The `monitor-migrations.js` script checks for pending migrations and sends notifications via email
+if any are found. It also logs migration status to the monitoring system.
 
 ### Deployment Integration
 
-The `deploy-with-migrations.js` script runs pending migrations during deployment, ensuring the database schema is up to date before the application starts.
+The `deploy-with-migrations.js` script runs pending migrations during deployment, ensuring the
+database schema is up to date before the application starts.
 
 ### Scheduled Tasks
 
@@ -87,12 +91,15 @@ The `migration-crontab.txt` file contains crontab entries for automating:
 
 ## Best Practices
 
-1. **Review Generated Migrations**: Always review automatically generated migrations before applying them.
-2. **Test Migrations**: Test migrations in a development environment before applying them to production.
-3. **Include Rollback Logic**: Always implement the `down` method to allow rolling back changes.
-4. **Keep Migrations Small**: Each migration should make a small, focused change.
-5. **Backup Before Migrating**: Always back up the database before running migrations in production.
-6. **Monitor Migration Status**: Regularly check for pending migrations to ensure the database schema is up to date.
+1. __Review Generated Migrations__: Always review automatically generated migrations before
+applying them.
+2. __Test Migrations__: Test migrations in a development environment before applying them to
+production.
+3. __Include Rollback Logic__: Always implement the `down` method to allow rolling back changes.
+4. __Keep Migrations Small__: Each migration should make a small, focused change.
+5. __Backup Before Migrating__: Always back up the database before running migrations in production.
+6. __Monitor Migration Status__: Regularly check for pending migrations to ensure the database
+schema is up to date.
 
 ## Configuration
 
@@ -114,4 +121,4 @@ If you encounter issues with migrations:
 3. Check the MongoDB connection settings in `.env`
 4. Verify that the migration scripts are valid JavaScript
 
-For more information, see the full documentation in `server/docs/database-migrations.md`. 
+For more information, see the full documentation in `server/docs/database-migrations.md`.

@@ -1,10 +1,13 @@
 # Cache Monitoring and Metrics
 
-This document describes the cache monitoring and metrics implemented as part of RF028 in the AeroSuite project.
+This document describes the cache monitoring and metrics implemented as part of RF028 in the
+AeroSuite project.
 
 ## Overview
 
-Monitoring cache performance is essential for understanding system behavior, identifying bottlenecks, and making data-driven optimization decisions. The AeroSuite project implements comprehensive cache monitoring and metrics collection to provide visibility into cache operations.
+Monitoring cache performance is essential for understanding system behavior, identifying
+bottlenecks, and making data-driven optimization decisions. The AeroSuite project implements
+comprehensive cache monitoring and metrics collection to provide visibility into cache operations.
 
 ## Components
 
@@ -12,7 +15,9 @@ The cache monitoring system consists of the following components:
 
 ### 1. CacheMonitor
 
-The `CacheMonitor` class is the core component responsible for collecting and aggregating cache metrics. It listens to events from the `CacheManager` and tracks various metrics such as hits, misses, latencies, and more.
+The `CacheMonitor` class is the core component responsible for collecting and aggregating cache
+metrics. It listens to events from the `CacheManager` and tracks various metrics such as hits,
+misses, latencies, and more.
 
 Key features:
 - Basic metrics collection (hits, misses, error rates)
@@ -23,7 +28,9 @@ Key features:
 
 ### 2. CachePrometheusExporter
 
-The `CachePrometheusExporter` class exports cache metrics to Prometheus, a popular time-series database for monitoring and alerting. It translates internal metrics into Prometheus-compatible format.
+The `CachePrometheusExporter` class exports cache metrics to Prometheus, a popular time-series
+database for monitoring and alerting. It translates internal metrics into Prometheus-compatible
+format.
 
 Key features:
 - Counter metrics for hits, misses, errors, etc.
@@ -82,7 +89,8 @@ A pre-configured Grafana dashboard provides visualization of cache metrics:
 
 ## Integration with Prometheus
 
-The cache monitoring system integrates with Prometheus through the `CachePrometheusExporter` class. The following metrics are exported:
+The cache monitoring system integrates with Prometheus through the `CachePrometheusExporter` class.
+The following metrics are exported:
 
 ### Counters
 
@@ -112,24 +120,24 @@ The cache monitoring system integrates with Prometheus through the `CachePrometh
 ### Accessing Metrics via REST API
 
 Basic metrics:
-```
+```bash
 GET /api/v1/metrics/cache
-```
+```bash
 
 Detailed metrics:
-```
+```bash
 GET /api/v1/metrics/cache/detailed
-```
+```bash
 
 Prometheus format:
-```
+```bash
 GET /api/v1/metrics/cache/prometheus
-```
+```bash
 
 Reset metrics:
-```
+```bash
 POST /api/v1/metrics/cache/reset
-```
+```bash
 
 ### Accessing Metrics Programmatically
 
@@ -141,7 +149,7 @@ const metrics = getCacheMonitor().getMetrics();
 
 // Get detailed metrics
 const detailedMetrics = getCacheMonitor().getDetailedMetrics();
-```
+```bash
 
 ### Configuring Prometheus
 
@@ -154,11 +162,12 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets: ['localhost:3000']
-```
+```bash
 
 ### Setting Up Grafana
 
-1. Import the dashboard configuration from `server/src/infrastructure/caching/dashboards/cache-dashboard.json`
+1. Import the dashboard configuration from
+`server/src/infrastructure/caching/dashboards/cache-dashboard.json`
 2. Configure Prometheus as a data source in Grafana
 3. Access the dashboard through the Grafana UI
 
@@ -177,7 +186,7 @@ The following alerts are recommended for monitoring cache health:
   annotations:
     summary: "Low cache hit ratio"
     description: "Cache hit ratio is below 50% for more than 10 minutes."
-```
+```bash
 
 ### High Error Rate
 
@@ -190,7 +199,7 @@ The following alerts are recommended for monitoring cache health:
   annotations:
     summary: "High cache error rate"
     description: "Cache error rate is above 5% for more than 5 minutes."
-```
+```bash
 
 ### High Latency
 
@@ -203,22 +212,31 @@ The following alerts are recommended for monitoring cache health:
   annotations:
     summary: "High cache latency"
     description: "Average cache latency is above 100ms for more than 5 minutes."
-```
+```bash
 
 ## Best Practices
 
-1. **Monitor Hit Ratio**: A low hit ratio might indicate that your cache policies need adjustment or that the cache size is too small.
+1. __Monitor Hit Ratio__: A low hit ratio might indicate that your cache policies need adjustment
+or that the cache size is too small.
 
-2. **Track Latency**: High latency might indicate issues with the cache provider or network problems.
+2. __Track Latency__: High latency might indicate issues with the cache provider or network
+problems.
 
-3. **Identify Hot Keys**: Hot keys can lead to uneven load distribution. Consider sharding or other strategies if certain keys are accessed much more frequently than others.
+3. __Identify Hot Keys__: Hot keys can lead to uneven load distribution. Consider sharding or other
+strategies if certain keys are accessed much more frequently than others.
 
-4. **Watch Error Rates**: Spikes in error rates can indicate issues with the cache provider or connectivity problems.
+4. __Watch Error Rates__: Spikes in error rates can indicate issues with the cache provider or
+connectivity problems.
 
-5. **Set Appropriate Alerts**: Configure alerts for key metrics to be notified of potential issues before they impact users.
+5. __Set Appropriate Alerts__: Configure alerts for key metrics to be notified of potential issues
+before they impact users.
 
-6. **Periodically Review Metrics**: Regularly review cache metrics to identify trends and make data-driven optimization decisions.
+6. __Periodically Review Metrics__: Regularly review cache metrics to identify trends and make
+data-driven optimization decisions.
 
 ## Conclusion
 
-The cache monitoring and metrics system provides comprehensive visibility into cache performance, enabling data-driven optimization decisions and early detection of potential issues. By leveraging the Prometheus integration and Grafana dashboards, teams can easily monitor cache behavior and ensure optimal performance. 
+The cache monitoring and metrics system provides comprehensive visibility into cache performance,
+enabling data-driven optimization decisions and early detection of potential issues. By leveraging
+the Prometheus integration and Grafana dashboards, teams can easily monitor cache behavior and
+ensure optimal performance.

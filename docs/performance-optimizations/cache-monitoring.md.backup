@@ -1,0 +1,242 @@
+# Cache Monitoring and Metrics
+
+This document describes the cache monitoring and metrics implemented as part of RF028 in the 
+AeroSuite project.
+
+## Overview
+
+Monitoring cache performance is essential for understanding system behavior, identifying 
+bottlenecks, and making data-driven optimization decisions. The AeroSuite project implements 
+comprehensive cache monitoring and metrics collection to provide visibility into cache operations.
+
+## Components
+
+The cache monitoring system consists of the following components:
+
+### 1. CacheMonitor
+
+The `CacheMonitor` class is the core component responsible for collecting and aggregating cache 
+metrics. It listens to events from the `CacheManager` and tracks various metrics such as hits, 
+misses, latencies, and more.
+
+Key features:
+- Basic metrics collection (hits, misses, error rates)
+- Detailed metrics collection (per-key, per-provider metrics)
+- Latency tracking for cache operations
+- Hot and cold key identification
+- Periodic metrics aggregation
+
+### 2. CachePrometheusExporter
+
+The `CachePrometheusExporter` class exports cache metrics to Prometheus, a popular time-series 
+database for monitoring and alerting. It translates internal metrics into Prometheus-compatible 
+format.
+
+Key features:
+- Counter metrics for hits, misses, errors, etc.
+- Gauge metrics for hit ratios and latencies
+- Histogram metrics for operation latency distribution
+- Provider-specific metrics
+
+### 3. REST API Endpoints
+
+The system exposes REST API endpoints for retrieving cache metrics:
+
+- `/api/v1/metrics/cache` - Basic cache metrics in JSON format
+- `/api/v1/metrics/cache/detailed` - Detailed cache metrics in JSON format
+- `/api/v1/metrics/cache/prometheus` - Metrics in Prometheus format
+- `/api/v1/metrics/cache/reset` - Endpoint to reset metrics
+
+### 4. Grafana Dashboard
+
+A pre-configured Grafana dashboard provides visualization of cache metrics:
+
+- Cache hit/miss rates and ratios
+- Operation latencies with percentiles
+- Provider-specific performance metrics
+- Error rates and invalidation metrics
+
+## Metrics Collected
+
+### Basic Metrics
+
+| Metric | Description |
+|--------|-------------|
+| hits | Number of cache hits |
+| misses | Number of cache misses |
+| errors | Number of cache errors |
+| sets | Number of cache set operations |
+| deletes | Number of cache delete operations |
+| expirations | Number of cache key expirations |
+| invalidations | Number of cache invalidations |
+| hitRatio | Ratio of hits to total requests |
+| missRatio | Ratio of misses to total requests |
+| errorRate | Ratio of errors to total operations |
+| avgLatency | Average latency of cache operations in ms |
+
+### Detailed Metrics
+
+| Metric | Description |
+|--------|-------------|
+| keyMetrics | Metrics per cache key |
+| providerMetrics | Metrics per cache provider |
+| tagMetrics | Metrics per cache tag |
+| operationLatencies | Latencies of individual operations |
+| keySize | Size of cached values in bytes |
+| keyAccess | Access frequency per key |
+| hotKeys | Most frequently accessed keys |
+| coldKeys | Least frequently accessed keys |
+
+## Integration with Prometheus
+
+The cache monitoring system integrates with Prometheus through the `CachePrometheusExporter` class. 
+The following metrics are exported:
+
+### Counters
+
+- `cache_hits_total` - Total number of cache hits
+- `cache_misses_total` - Total number of cache misses
+- `cache_errors_total` - Total number of cache errors
+- `cache_sets_total` - Total number of cache sets
+- `cache_deletes_total` - Total number of cache deletes
+- `cache_expirations_total` - Total number of cache expirations
+- `cache_invalidations_total` - Total number of cache invalidations
+
+### Gauges
+
+- `cache_hit_ratio` - Cache hit ratio
+- `cache_miss_ratio` - Cache miss ratio
+- `cache_error_rate` - Cache error rate
+- `cache_avg_latency_ms` - Average cache operation latency in milliseconds
+- `cache_provider_hit_ratio` - Cache hit ratio by provider
+
+### Histograms
+
+- `cache_operation_latency_ms` - Cache operation latency in milliseconds
+- `cache_key_size_bytes` - Cache key size in bytes
+
+## Usage
+
+### Accessing Metrics via REST API
+
+Basic metrics:
+```bash
+GET /api/v1/metrics/cache
+```bash
+
+Detailed metrics:
+```bash
+GET /api/v1/metrics/cache/detailed
+```bash
+
+Prometheus format:
+```bash
+GET /api/v1/metrics/cache/prometheus
+```bash
+
+Reset metrics:
+```bash
+POST /api/v1/metrics/cache/reset
+```bash
+
+### Accessing Metrics Programmatically
+
+```javascript
+const { getCacheMonitor } = require('../../infrastructure/caching');
+
+// Get basic metrics
+const metrics = getCacheMonitor().getMetrics();
+
+// Get detailed metrics
+const detailedMetrics = getCacheMonitor().getDetailedMetrics();
+```bash
+
+### Configuring Prometheus
+
+Add the following scrape configuration to your `prometheus.yml`:
+
+```yaml
+scrape_configs:
+  - job_name: 'aerosuite'
+    metrics_path: '/api/v1/metrics/cache/prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:3000']
+```bash
+
+### Setting Up Grafana
+
+1. Import the dashboard configuration from 
+`server/src/infrastructure/caching/dashboards/cache-dashboard.json`
+2. Configure Prometheus as a data source in Grafana
+3. Access the dashboard through the Grafana UI
+
+## Alerts
+
+The following alerts are recommended for monitoring cache health:
+
+### Low Hit Ratio
+
+```yaml
+- alert: CacheLowHitRatio
+  expr: cache_hit_ratio < 0.5
+  for: 10m
+  labels:
+    severity: warning
+  annotations:
+    summary: "Low cache hit ratio"
+    description: "Cache hit ratio is below 50% for more than 10 minutes."
+```bash
+
+### High Error Rate
+
+```yaml
+- alert: CacheHighErrorRate
+  expr: cache_error_rate > 0.05
+  for: 5m
+  labels:
+    severity: critical
+  annotations:
+    summary: "High cache error rate"
+    description: "Cache error rate is above 5% for more than 5 minutes."
+```bash
+
+### High Latency
+
+```yaml
+- alert: CacheHighLatency
+  expr: cache_avg_latency_ms > 100
+  for: 5m
+  labels:
+    severity: warning
+  annotations:
+    summary: "High cache latency"
+    description: "Average cache latency is above 100ms for more than 5 minutes."
+```bash
+
+## Best Practices
+
+1. __Monitor Hit Ratio__: A low hit ratio might indicate that your cache policies need adjustment 
+or that the cache size is too small.
+
+2. __Track Latency__: High latency might indicate issues with the cache provider or network 
+problems.
+
+3. __Identify Hot Keys__: Hot keys can lead to uneven load distribution. Consider sharding or other 
+strategies if certain keys are accessed much more frequently than others.
+
+4. __Watch Error Rates__: Spikes in error rates can indicate issues with the cache provider or 
+connectivity problems.
+
+5. __Set Appropriate Alerts__: Configure alerts for key metrics to be notified of potential issues 
+before they impact users.
+
+6. __Periodically Review Metrics__: Regularly review cache metrics to identify trends and make 
+data-driven optimization decisions.
+
+## Conclusion
+
+The cache monitoring and metrics system provides comprehensive visibility into cache performance, 
+enabling data-driven optimization decisions and early detection of potential issues. By leveraging 
+the Prometheus integration and Grafana dashboards, teams can easily monitor cache behavior and 
+ensure optimal performance.

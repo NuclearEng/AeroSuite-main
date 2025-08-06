@@ -1,0 +1,156 @@
+# Markdown Trailing Newline Automation
+
+This document describes the automated systems in place to ensure all markdown files end with 
+exactly one newline character (MD047 compliance).
+
+## Overview
+
+We have implemented a multi-layered approach to automatically fix and prevent markdown files from 
+missing trailing newlines:
+
+1. __Manual Fix Script__ - Fix files on demand
+2. __Pre-commit Hook__ - Automatically fix files before commit
+3. __Editor Support__ - `.editorconfig` for automatic newline insertion
+4. __CI/CD Validation__ - GitHub Actions to check PRs
+
+## Components
+
+### 1. Fix Script (`scripts/fix-markdown-trailing-newlines.js`)
+
+A Node.js script that can check and fix markdown files:
+
+```bash
+# Check all markdown files (exit with error if fixes needed)
+npm run lint:markdown
+
+# Fix all markdown files
+npm run fix:markdown
+
+# Check specific path
+node scripts/fix-markdown-trailing-newlines.js --check --path docs/
+
+# Verbose output
+node scripts/fix-markdown-trailing-newlines.js --verbose
+```bash
+
+### 2. Pre-commit Hook
+
+Automatically fixes markdown files when you commit:
+
+```bash
+# Install the pre-commit hook
+./scripts/setup-git-hooks.sh
+
+# The hook will now run automatically on commit
+# To bypass temporarily:
+git commit --no-verify
+```bash
+
+### 3. Editor Configuration (`.editorconfig`)
+
+Most modern editors respect `.editorconfig` settings:
+
+- __VS Code__: Install "EditorConfig for VS Code" extension
+- __IntelliJ/WebStorm__: Built-in support
+- __Sublime Text__: Install "EditorConfig" package
+- __Vim__: Install "editorconfig-vim" plugin
+
+The configuration ensures:
+- All files get a final newline
+- Markdown files preserve trailing spaces (for line breaks)
+- Consistent line endings (LF)
+
+### 4. GitHub Actions (`markdown-lint.yml`)
+
+The CI/CD pipeline:
+- Runs on all PRs that modify markdown files
+- Checks for trailing newline issues
+- Can auto-fix and commit on push to main (optional)
+
+## Usage
+
+### Initial Setup
+
+1. __Install the git hook__:
+   ```bash
+   ./scripts/setup-git-hooks.sh
+   ```
+
+2. __Fix existing files__:
+   ```bash
+   npm run fix:markdown
+   ```
+
+3. __Configure your editor__ to use `.editorconfig`
+
+### Daily Workflow
+
+The automation works transparently:
+
+1. __When editing__: Your editor adds trailing newlines automatically
+2. __When committing__: Pre-commit hook fixes any missed files
+3. __In PRs__: GitHub Actions validates all markdown files
+
+### Manual Operations
+
+```bash
+# Check specific files before committing
+npm run lint:markdown
+
+# Fix all markdown files in the project
+npm run fix:markdown
+
+# Check a specific directory
+node scripts/fix-markdown-trailing-newlines.js --check --path docs/security/
+```bash
+
+## Troubleshooting
+
+### Pre-commit hook not running
+
+```bash
+# Verify hook is installed
+git config core.hooksPath
+
+# Reinstall hooks
+./scripts/setup-git-hooks.sh
+```bash
+
+### Editor not adding newlines
+
+1. Check if `.editorconfig` plugin is installed
+2. Verify your editor recognizes the `.editorconfig` file
+3. Some editors may need a restart
+
+### CI failing on markdown files
+
+The GitHub Action will fail if markdown files don't have proper trailing newlines. Fix locally:
+
+```bash
+npm run fix:markdown
+git add -u
+git commit --amend
+git push --force-with-lease
+```bash
+
+## Benefits
+
+1. __Consistency__: All markdown files follow the same standard
+2. __Automation__: No manual intervention needed
+3. __Early Detection__: Issues caught before merge
+4. __Editor Support__: Works with your existing workflow
+5. __Performance__: Fast checks and fixes
+
+## Extending
+
+To add more markdown linting rules:
+
+1. Edit `.markdownlint.json` to configure rules
+2. Update the GitHub Action to run full markdownlint
+3. Consider adding more pre-commit checks
+
+## Related Documentation
+
+- [Markdownlint Rules](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md)
+- [EditorConfig Properties](https://editorconfig.org/#file-format-details)
+- [Git Hooks Documentation](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks)

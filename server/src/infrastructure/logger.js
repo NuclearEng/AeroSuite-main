@@ -12,6 +12,7 @@ const winstonLogger = {
   warn: (message, ...args) => logger.warn(message, ...args),
   error: (message, ...args) => logger.error(message, ...args),
   debug: (message, ...args) => logger.debug(message, ...args),
+  log: (level, message, ...args) => logger[level] ? logger[level](message, ...args) : logger.info(message, ...args),
   
   // Winston format methods (simplified)
   format: {
@@ -38,6 +39,7 @@ const winstonLogger = {
       warn: (message, ...args) => contextLogger.warn(message, ...args),
       error: (message, ...args) => contextLogger.error(message, ...args),
       debug: (message, ...args) => contextLogger.debug(message, ...args),
+      log: (level, message, ...args) => contextLogger[level] ? contextLogger[level](message, ...args) : contextLogger.info(message, ...args),
       
       // Add winston-compatible methods
       add: () => ({}),

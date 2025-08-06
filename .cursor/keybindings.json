@@ -1,0 +1,68 @@
+[
+  {
+    "key": "ctrl+shift+a",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "./scripts/agent-workflow.sh start-dev\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "./scripts/agent-workflow.sh test\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+y",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "./scripts/agent-workflow.sh cypress all\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+q",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "./scripts/agent-workflow.sh quality\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+d",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "./scripts/agent-workflow.sh debug\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+h",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "./scripts/agent-workflow.sh health\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+p",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+      "text": "./scripts/agent-workflow.sh deploy\n"
+    },
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+c",
+    "command": "cursor.chat",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+r",
+    "command": "cursor.rules",
+    "when": "editorTextFocus"
+  }
+] 

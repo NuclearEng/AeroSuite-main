@@ -1,0 +1,58 @@
+# AeroSuite Development Mode
+
+## Primary Focus
+- Full-stack development (React + Express + MongoDB)
+- Docker containerization and deployment
+- API development and testing
+- Frontend component development
+- Database schema design
+- Security implementation
+
+## Common Workflows
+
+### Backend Development
+1. API endpoint creation and testing
+2. Database model design
+3. Authentication and authorization
+4. Error handling and logging
+5. Performance optimization
+
+### Frontend Development
+1. React component creation
+2. Material-UI integration
+3. State management with Redux
+4. API integration
+5. Responsive design implementation
+
+### Testing and Quality
+1. Cypress E2E testing
+2. Jest unit testing
+3. API endpoint testing
+4. Performance testing
+5. Security testing
+
+### Deployment and DevOps
+1. Docker container management
+2. Environment configuration
+3. CI/CD pipeline setup
+4. Monitoring and logging
+5. Production deployment
+
+## Tools and Commands
+- Use `docker-compose` for local development
+- Use `npm run` scripts for testing
+- Use `cypress` for E2E testing
+- Use `git` for version control
+- Use `curl` for API testing
+
+## Best Practices
+- Follow established patterns in the codebase
+- Implement proper error handling
+- Use TypeScript for type safety
+- Write comprehensive tests
+- Document API changes
+- Maintain security standards
+description:
+globs:
+alwaysApply: false
+---

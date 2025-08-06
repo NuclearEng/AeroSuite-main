@@ -1,6 +1,7 @@
 # API Security Best Practices
 
-This document outlines the API security best practices implemented in AeroSuite to protect against common vulnerabilities as defined in the OWASP API Security Top 10.
+This document outlines the API security best practices implemented in AeroSuite to protect against
+common vulnerabilities as defined in the OWASP API Security Top 10.
 
 ## Security Measures Implemented
 
@@ -79,7 +80,8 @@ This document outlines the API security best practices implemented in AeroSuite 
 
 ### API Security Middleware
 
-The API security measures are implemented through a set of middleware functions in `server/src/middleware/api-security.middleware.js`:
+The API security measures are implemented through a set of middleware functions in
+`server/src/middleware/api-security.middleware.js`:
 
 ```javascript
 // Example usage of API security middleware
@@ -90,7 +92,7 @@ app.use('/api', apiSecurity.secureApi);
 
 // Apply rate limiting to authentication endpoints
 app.use('/api/auth', apiSecurity.createRateLimiter({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 _ 60 _ 1000, // 15 minutes
   max: 5 // 5 requests per 15 minutes
 }));
 
@@ -100,7 +102,7 @@ app.post('/api/users', apiSecurity.validateRequest.body({
   email: { type: 'string', required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ },
   age: { type: 'number', min: 18, max: 120 }
 }), userController.createUser);
-```
+```bash
 
 ### Environment Variables
 
@@ -119,42 +121,48 @@ The following environment variables can be configured for API security:
 
 | OWASP API Security Risk | Coverage | Implementation |
 |-------------------------|----------|----------------|
-| API1:2019 Broken Object Level Authorization | ✅ | Role-based access control, customer-specific restrictions |
-| API2:2019 Broken User Authentication | ✅ | Enhanced JWT validation, API key auth, rate limiting |
+| API1:2019 Broken Object Level Authorization | ✅ | Role-based access control, customer-specific
+restrictions |
+| API2:2019 Broken User Authentication | ✅ | Enhanced JWT validation, API key auth, rate limiting
+|
 | API3:2019 Excessive Data Exposure | ✅ | Sensitive data filtering, response pruning |
-| API4:2019 Lack of Resources & Rate Limiting | ✅ | Configurable rate limiting, request size limits |
-| API5:2019 Broken Function Level Authorization | ✅ | Role-based middleware, endpoint-specific permissions |
+| API4:2019 Lack of Resources & Rate Limiting | ✅ | Configurable rate limiting, request size
+limits |
+| API5:2019 Broken Function Level Authorization | ✅ | Role-based middleware, endpoint-specific
+permissions |
 | API6:2019 Mass Assignment | ✅ | Input validation, schema-based request validation |
-| API7:2019 Security Misconfiguration | ✅ | Security headers, HTTPS enforcement, content type validation |
+| API7:2019 Security Misconfiguration | ✅ | Security headers, HTTPS enforcement, content type
+validation |
 | API8:2019 Injection | ✅ | SQL injection protection, input sanitization |
 | API9:2019 Improper Assets Management | ✅ | API versioning, deprecated endpoint handling |
-| API10:2019 Insufficient Logging & Monitoring | ✅ | Comprehensive logging, error tracking, monitoring endpoints |
+| API10:2019 Insufficient Logging & Monitoring | ✅ | Comprehensive logging, error tracking,
+monitoring endpoints |
 
 ## Best Practices for Developers
 
 When building new API endpoints, follow these guidelines:
 
-1. **Always apply appropriate middleware**
+1. __Always apply appropriate middleware__
    - Use `apiSecurity.secureApi` for all new routes
    - Add role-based restrictions using `restrictTo`
    - Apply request validation with `validateRequest`
 
-2. **Input validation**
+2. __Input validation__
    - Validate all inputs with appropriate schema
    - Never trust client-provided data
    - Use pattern matching for structured data
 
-3. **Output sanitization**
+3. __Output sanitization__
    - Never return sensitive data
    - Filter all responses with `protectSensitiveData`
    - Return only what the client needs
 
-4. **Authorization**
+4. __Authorization__
    - Check permissions for each operation
    - Implement proper object-level authorization
    - Use customer-specific restrictions where appropriate
 
-5. **Error handling**
+5. __Error handling__
    - Use generic error messages in production
    - Don't expose implementation details
    - Log detailed errors server-side only
@@ -163,13 +171,13 @@ When building new API endpoints, follow these guidelines:
 
 Security testing is performed through:
 
-1. **Automated scanning** with OWASP ZAP during CI/CD pipeline
-2. **Manual penetration testing** on a quarterly basis
-3. **Dependency scanning** for vulnerabilities
-4. **Code reviews** with security focus
+1. __Automated scanning__ with OWASP ZAP during CI/CD pipeline
+2. __Manual penetration testing__ on a quarterly basis
+3. __Dependency scanning__ for vulnerabilities
+4. __Code reviews__ with security focus
 
 ## References
 
 - [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
 - [NIST API Security Guidelines](https://pages.nist.gov/800-95/sp800-95.html)
-- [JWT Best Practices](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-jwt-bcp-02) 
+- [JWT Best Practices](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-jwt-bcp-02)

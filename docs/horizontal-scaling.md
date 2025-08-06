@@ -1,20 +1,27 @@
 # AeroSuite Horizontal Scaling Implementation
 
-This document describes the horizontal scaling capabilities implemented in AeroSuite to handle increased load and improve availability.
+This document describes the horizontal scaling capabilities implemented in AeroSuite to handle
+increased load and improve availability.
 
 ## Overview
 
-Horizontal scaling allows AeroSuite to handle increased traffic by adding more instances of the application rather than increasing the resources of a single instance. This provides better fault tolerance, higher availability, and improved performance under load.
+Horizontal scaling allows AeroSuite to handle increased traffic by adding more instances of the
+application rather than increasing the resources of a single instance. This provides better fault
+tolerance, higher availability, and improved performance under load.
 
 ## Architecture
 
 The horizontal scaling implementation consists of several components:
 
-1. **Kubernetes-based Autoscaling**: Horizontal Pod Autoscalers (HPAs) that automatically adjust the number of running pods based on CPU and memory utilization.
-2. **Redis-based Session Management**: Distributed session storage to ensure user sessions work across multiple instances.
-3. **Worker Process Management**: Cluster module that manages multiple worker processes within each application instance.
-4. **Load Testing Tools**: Scripts to simulate high load and verify scaling behavior.
-5. **Health Monitoring**: System to monitor the health of all components and trigger alerts when issues are detected.
+1. __Kubernetes-based Autoscaling__: Horizontal Pod Autoscalers (HPAs) that automatically adjust
+the number of running pods based on CPU and memory utilization.
+2. __Redis-based Session Management__: Distributed session storage to ensure user sessions work
+across multiple instances.
+3. __Worker Process Management__: Cluster module that manages multiple worker processes within each
+application instance.
+4. __Load Testing Tools__: Scripts to simulate high load and verify scaling behavior.
+5. __Health Monitoring__: System to monitor the health of all components and trigger alerts when
+issues are detected.
 
 ## Kubernetes Configuration
 
@@ -48,7 +55,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 80
-```
+```bash
 
 ### Client HPA
 
@@ -78,24 +85,26 @@ spec:
       target:
         type: Utilization
         averageUtilization: 80
-```
+```bash
 
 ## Session Management
 
 For distributed session management, we implemented a Redis-based session store:
 
-1. **Redis Store**: Uses `connect-redis` and `express-session` to store session data in Redis, making it accessible across all application instances.
-2. **Fallback Mechanism**: If Redis is unavailable, falls back to in-memory session storage (with warning logs).
-3. **Graceful Handling**: Handles Redis connection failures and reconnection.
+1. __Redis Store__: Uses `connect-redis` and `express-session` to store session data in Redis,
+making it accessible across all application instances.
+2. __Fallback Mechanism__: If Redis is unavailable, falls back to in-memory session storage (with
+warning logs).
+3. __Graceful Handling__: Handles Redis connection failures and reconnection.
 
 ## Worker Process Management
 
 Each server instance can run multiple worker processes to utilize all available CPU cores:
 
-1. **Cluster Module**: Uses Node.js cluster module to fork multiple worker processes.
-2. **Zero-downtime Reloads**: Implements rolling restart to update workers without downtime.
-3. **Health Checks**: Monitors worker health and automatically restarts unresponsive workers.
-4. **Graceful Shutdown**: Properly closes connections and saves state during shutdowns.
+1. __Cluster Module__: Uses Node.js cluster module to fork multiple worker processes.
+2. __Zero-downtime Reloads__: Implements rolling restart to update workers without downtime.
+3. __Health Checks__: Monitors worker health and automatically restarts unresponsive workers.
+4. __Graceful Shutdown__: Properly closes connections and saves state during shutdowns.
 
 ## Load Testing
 
@@ -112,8 +121,9 @@ npm run loadtest:high
 npm run loadtest:extreme
 
 # Custom load test
-node scripts/performance/load-test.js --users=150 --duration=90 --target=http://aerosuite.example.com
-```
+node scripts/performance/load-test.js --users=150 --duration=90
+--target=http://aerosuite.example.com
+```bash
 
 ## Environment Variables
 
@@ -131,20 +141,26 @@ The horizontal scaling implementation uses the following environment variables:
 
 ## Scaling Best Practices
 
-1. **Monitor Metrics**: Keep an eye on CPU, memory, and response time metrics to detect scaling issues.
-2. **Adjust HPA Settings**: Fine-tune the min/max replicas and target utilization based on your workload patterns.
-3. **Load Testing**: Regularly run load tests to verify scaling behavior and identify bottlenecks.
-4. **Database Optimization**: Ensure your database is optimized for the increased load from multiple application instances.
-5. **Cache Effectively**: Use Redis caching for frequently accessed data to reduce database load.
+1. __Monitor Metrics__: Keep an eye on CPU, memory, and response time metrics to detect scaling
+issues.
+2. __Adjust HPA Settings__: Fine-tune the min/max replicas and target utilization based on your
+workload patterns.
+3. __Load Testing__: Regularly run load tests to verify scaling behavior and identify bottlenecks.
+4. __Database Optimization__: Ensure your database is optimized for the increased load from
+multiple application instances.
+5. __Cache Effectively__: Use Redis caching for frequently accessed data to reduce database load.
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Session Issues**: If users are unexpectedly logged out, check Redis connectivity and session configuration.
-2. **Scaling Lag**: If the application doesn't scale fast enough, adjust the HPA parameters for more aggressive scaling.
-3. **Worker Crashes**: Check logs for worker process crashes and address the underlying issues.
-4. **Uneven Load**: If some instances receive more traffic than others, check your load balancer configuration.
+1. __Session Issues__: If users are unexpectedly logged out, check Redis connectivity and session
+configuration.
+2. __Scaling Lag__: If the application doesn't scale fast enough, adjust the HPA parameters for
+more aggressive scaling.
+3. __Worker Crashes__: Check logs for worker process crashes and address the underlying issues.
+4. __Uneven Load__: If some instances receive more traffic than others, check your load balancer
+configuration.
 
 ### Debugging Commands
 
@@ -159,8 +175,9 @@ kubectl top pods -n aerosuite
 kubectl logs -l app=aerosuite-server -n aerosuite --tail=100
 
 # Check Redis connectivity
-kubectl exec -it $(kubectl get pods -l app=redis -n aerosuite -o jsonpath='{.items[0].metadata.name}') -n aerosuite -- redis-cli ping
-```
+kubectl exec -it $(kubectl get pods -l app=redis -n aerosuite -o
+jsonpath='{.items[0].metadata.name}') -n aerosuite -- redis-cli ping
+```bash
 
 ## Performance Results
 
@@ -173,11 +190,15 @@ During load testing with 100 concurrent users, the system achieved:
 
 ## Future Improvements
 
-1. **Global Load Balancing**: Implement multi-region deployment for even better availability and performance.
-2. **Predictive Scaling**: Implement predictive scaling based on historical patterns to scale before load increases.
-3. **Advanced Metrics**: Add custom metrics-based scaling for more precise control.
-4. **Stateless Design**: Further improve stateless design to make scaling even more seamless.
+1. __Global Load Balancing__: Implement multi-region deployment for even better availability and
+performance.
+2. __Predictive Scaling__: Implement predictive scaling based on historical patterns to scale
+before load increases.
+3. __Advanced Metrics__: Add custom metrics-based scaling for more precise control.
+4. __Stateless Design__: Further improve stateless design to make scaling even more seamless.
 
 ## Conclusion
 
-The horizontal scaling implementation allows AeroSuite to handle increased load by automatically adding more application instances. This provides better reliability, availability, and performance for users. 
+The horizontal scaling implementation allows AeroSuite to handle increased load by automatically
+adding more application instances. This provides better reliability, availability, and performance
+for users.

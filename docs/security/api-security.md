@@ -1,22 +1,26 @@
 # API Security Guidelines
 
-This document outlines the security standards and best practices for API development and maintenance in the AeroSuite project.
+This document outlines the security standards and best practices for API development and
+maintenance in the AeroSuite project.
 
 ## Overview
 
-Our API security strategy is built on multiple layers of defense to protect sensitive data, prevent unauthorized access, and maintain system integrity. We perform regular security audits and testing to identify and address vulnerabilities proactively.
+Our API security strategy is built on multiple layers of defense to protect sensitive data, prevent
+unauthorized access, and maintain system integrity. We perform regular security audits and testing
+to identify and address vulnerabilities proactively.
 
 ## Security Controls
 
 ### Authentication and Authorization
 
-- **Authentication**: All endpoints that expose sensitive data or operations must verify user identity
+- __Authentication__: All endpoints that expose sensitive data or operations must verify user
+identity
   - JWT-based authentication with secure token handling
   - Tokens must expire after a reasonable time (default: 1 hour)
   - Refresh token rotation strategy for extended sessions
   - Multi-factor authentication for sensitive operations
 
-- **Authorization**: Enforce strict access controls based on user roles and permissions
+- __Authorization__: Enforce strict access controls based on user roles and permissions
   - Role-based access control (RBAC) for all protected endpoints
   - Principle of least privilege for all accounts
   - Regular review of permissions and roles
@@ -24,13 +28,14 @@ Our API security strategy is built on multiple layers of defense to protect sens
 
 ### Input Validation and Sanitization
 
-- **Request Validation**: All request parameters, headers, and bodies must be validated
-  - Schema-based validation using [Joi](https://joi.dev/) or [express-validator](https://express-validator.github.io/)
+- __Request Validation__: All request parameters, headers, and bodies must be validated
+  - Schema-based validation using [Joi](https://joi.dev/) or
+[express-validator](https://express-validator.github.io/)
   - Type checking and data constraints
   - Maximum size limits for all inputs
   - Validation of content types and accepted formats
 
-- **Sanitization**: Proper sanitization to prevent injection attacks
+- __Sanitization__: Proper sanitization to prevent injection attacks
   - HTML/Script tag sanitization for user-generated content
   - SQL query parameterization to prevent SQL injection
   - NoSQL injection protection
@@ -84,30 +89,30 @@ All API responses must include the following security headers:
 
 We use automated security testing to ensure ongoing compliance with security standards:
 
-1. **API Security Audit**: Automated testing of all endpoints for common vulnerabilities
+1. __API Security Audit__: Automated testing of all endpoints for common vulnerabilities
    - Runs on every significant code change
    - Scheduled weekly full scans
    - Covers authentication, authorization, injection, headers, etc.
 
-2. **Dependency Scanning**: Regular checks for vulnerable dependencies
+2. __Dependency Scanning__: Regular checks for vulnerable dependencies
    - Automated with GitHub Dependabot and custom scanning tools
    - Alerts for any critical vulnerabilities
 
-3. **Static Code Analysis**: Code scanning for security issues
+3. __Static Code Analysis__: Code scanning for security issues
    - Integration with code review process
    - Pre-commit hooks for security checks
 
-4. **Penetration Testing**: Regular security testing by security professionals
+4. __Penetration Testing__: Regular security testing by security professionals
    - Scheduled comprehensive tests
    - Focus on critical components and new features
 
 ## Security Incident Response
 
-1. **Detection**: Monitoring systems for detecting security incidents
-2. **Containment**: Procedures for containing the impact of incidents
-3. **Eradication**: Removing the cause of incidents
-4. **Recovery**: Restoring affected systems
-5. **Post-Incident Analysis**: Learning from incidents to prevent recurrence
+1. __Detection__: Monitoring systems for detecting security incidents
+2. __Containment__: Procedures for containing the impact of incidents
+3. __Eradication__: Removing the cause of incidents
+4. __Recovery__: Restoring affected systems
+5. __Post-Incident Analysis__: Learning from incidents to prevent recurrence
 
 ## Compliance Requirements
 

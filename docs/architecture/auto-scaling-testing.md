@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document describes the testing methodology and tools implemented for RF040 - "Test scaling under load" in the AeroSuite project. These tests validate that the auto-scaling capabilities implemented in RF039 function correctly under various load conditions.
+This document describes the testing methodology and tools implemented for RF040 - "Test scaling
+under load" in the AeroSuite project. These tests validate that the auto-scaling capabilities
+implemented in RF039 function correctly under various load conditions.
 
 ## Table of Contents
 
@@ -16,7 +18,10 @@ This document describes the testing methodology and tools implemented for RF040 
 
 ## Introduction
 
-Auto-scaling is a critical capability for modern cloud applications, allowing them to handle varying loads efficiently by automatically adjusting the number of running instances. Testing auto-scaling properly requires generating controlled load patterns and monitoring how the system responds.
+Auto-scaling is a critical capability for modern cloud applications, allowing them to handle
+varying loads efficiently by automatically adjusting the number of running instances. Testing
+auto-scaling properly requires generating controlled load patterns and monitoring how the system
+responds.
 
 The testing framework implemented for RF040 provides:
 
@@ -29,7 +34,8 @@ The testing framework implemented for RF040 provides:
 
 ### Auto-Scaling Test Script
 
-The main test script (`auto-scaling-test.js`) simulates user load according to predefined patterns and monitors the system's auto-scaling behavior. It:
+The main test script (`auto-scaling-test.js`) simulates user load according to predefined patterns
+and monitors the system's auto-scaling behavior. It:
 
 - Generates controlled load patterns
 - Monitors CPU and memory utilization
@@ -39,7 +45,8 @@ The main test script (`auto-scaling-test.js`) simulates user load according to p
 
 ### Visualization Tool
 
-The visualization tool (`auto-scaling-visualizer.js`) converts test results into interactive HTML reports with charts showing:
+The visualization tool (`auto-scaling-visualizer.js`) converts test results into interactive HTML
+reports with charts showing:
 
 - Resource utilization over time (CPU, memory)
 - Instance count changes
@@ -49,17 +56,20 @@ The visualization tool (`auto-scaling-visualizer.js`) converts test results into
 
 ### Test Runner Script
 
-The test runner script (`run-auto-scaling-tests.sh`) automates running multiple tests with different load patterns and generates a combined report.
+The test runner script (`run-auto-scaling-tests.sh`) automates running multiple tests with
+different load patterns and generates a combined report.
 
 ## Test Patterns
 
-The testing framework includes five load patterns designed to test different aspects of auto-scaling:
+The testing framework includes five load patterns designed to test different aspects of
+auto-scaling:
 
 ### 1. Gradual Pattern
 
-A steady, gradual increase in load from zero to maximum over the test duration. This pattern tests how smoothly the system scales up under gradually increasing pressure.
+A steady, gradual increase in load from zero to maximum over the test duration. This pattern tests
+how smoothly the system scales up under gradually increasing pressure.
 
-```
+```bash
 Users
 ^
 |                  /
@@ -72,13 +82,14 @@ Users
 |    /
 |  /
 +----------------------> Time
-```
+```bash
 
 ### 2. Step Pattern
 
-Increases load in discrete steps. This pattern tests how the system responds to specific scaling thresholds.
+Increases load in discrete steps. This pattern tests how the system responds to specific scaling
+thresholds.
 
-```
+```bash
 Users
 ^
 |              ______
@@ -90,13 +101,14 @@ Users
 | _|
 |/
 +----------------------> Time
-```
+```bash
 
 ### 3. Spike Pattern
 
-Maintains low load, then suddenly spikes to maximum before returning to low. This pattern tests how quickly the system can scale up in response to sudden demand.
+Maintains low load, then suddenly spikes to maximum before returning to low. This pattern tests how
+quickly the system can scale up in response to sudden demand.
 
-```
+```bash
 Users
 ^
 |        ____________
@@ -106,13 +118,14 @@ Users
 |_______|            |_______
 |
 +----------------------> Time
-```
+```bash
 
 ### 4. Wave Pattern
 
-Oscillates between low and high load in a sinusoidal pattern. This pattern tests the system's ability to scale both up and down repeatedly.
+Oscillates between low and high load in a sinusoidal pattern. This pattern tests the system's
+ability to scale both up and down repeatedly.
 
-```
+```bash
 Users
 ^
 |      /\      /\      /\
@@ -122,13 +135,14 @@ Users
 |  /
 | /
 +----------------------> Time
-```
+```bash
 
 ### 5. Sustained Pattern
 
-Quickly ramps up to maximum load and sustains it for the duration of the test. This pattern tests stability under prolonged high load.
+Quickly ramps up to maximum load and sustains it for the duration of the test. This pattern tests
+stability under prolonged high load.
 
-```
+```bash
 Users
 ^
 |    _________________
@@ -137,7 +151,7 @@ Users
 | /
 |/
 +----------------------> Time
-```
+```bash
 
 ## Running Tests
 
@@ -152,8 +166,9 @@ Users
 To run a single test with specific parameters:
 
 ```bash
-node scripts/performance/auto-scaling-test.js --pattern=spike --duration=300 --target=http://localhost:5000
-```
+node scripts/performance/auto-scaling-test.js --pattern=spike --duration=300
+--target=http://localhost:5000
+```bash
 
 Available parameters:
 
@@ -175,7 +190,7 @@ To run all test patterns in sequence:
 
 ```bash
 ./scripts/performance/run-auto-scaling-tests.sh [target-url] [duration]
-```
+```bash
 
 This will:
 
@@ -189,11 +204,11 @@ This will:
 
 When analyzing test results, focus on these key metrics:
 
-- **Scaling Events**: How many times did the system scale up or down?
-- **Scaling Latency**: How long did it take to respond to load changes?
-- **Instance Range**: What was the minimum and maximum number of instances?
-- **Resource Utilization**: Did CPU and memory stay within target ranges?
-- **Response Times**: Did response times remain acceptable during scaling?
+- __Scaling Events__: How many times did the system scale up or down?
+- __Scaling Latency__: How long did it take to respond to load changes?
+- __Instance Range__: What was the minimum and maximum number of instances?
+- __Resource Utilization__: Did CPU and memory stay within target ranges?
+- __Response Times__: Did response times remain acceptable during scaling?
 
 ### Success Criteria
 
@@ -207,7 +222,8 @@ Auto-scaling is considered successful if:
 
 ## Integration with CI/CD
 
-The auto-scaling tests can be integrated into CI/CD pipelines to verify scaling behavior before deployment:
+The auto-scaling tests can be integrated into CI/CD pipelines to verify scaling behavior before
+deployment:
 
 ```yaml
 # Example CI/CD integration
@@ -218,7 +234,7 @@ auto-scaling-test:
   artifacts:
     paths:
       - reports/auto-scaling/
-```
+```bash
 
 ## Troubleshooting
 
@@ -247,4 +263,7 @@ auto-scaling-test:
 
 ## Conclusion
 
-The auto-scaling testing framework provides comprehensive validation of the auto-scaling capabilities implemented in RF039. By running tests with different load patterns and analyzing the results, we can ensure that AeroSuite can automatically adjust to varying loads, providing optimal performance and resource utilization. 
+The auto-scaling testing framework provides comprehensive validation of the auto-scaling
+capabilities implemented in RF039. By running tests with different load patterns and analyzing the
+results, we can ensure that AeroSuite can automatically adjust to varying loads, providing optimal
+performance and resource utilization.

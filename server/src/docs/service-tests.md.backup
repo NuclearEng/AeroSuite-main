@@ -1,0 +1,141 @@
+# Service Unit Tests
+
+This document describes the unit testing approach for domain services in the AeroSuite application.
+
+## Overview
+
+Unit tests for domain services ensure that business logic is correctly implemented and that 
+services properly interact with repositories and other dependencies. The testing approach follows 
+these principles:
+
+- __Isolation__: Tests run in isolation using mocks for repositories and other dependencies
+- __Coverage__: Tests cover all public methods and edge cases
+- __Consistency__: Tests follow a consistent structure across all domain services
+- __Readability__: Tests use descriptive names and clear assertions
+
+## Test Structure
+
+Each service test file follows a similar structure:
+
+1. __Setup__: Mock repositories, event emitter, and models
+2. __Interface Tests__: Verify the service implements its interface correctly
+3. __Method Tests__: Test each public method with various inputs and edge cases
+4. __Specialized Tests__: Test domain-specific functionality
+
+## Mocking Strategy
+
+The tests use Jest's mocking capabilities to isolate the service from its dependencies:
+
+```javascript
+// Mock the repositories and dependencies
+jest.mock('../../../../domains/supplier/repositories/SupplierRepository', () => ({
+  findById: jest.fn(),
+  findAll: jest.fn(),
+  count: jest.fn(),
+  exists: jest.fn(),
+  save: jest.fn(),
+  delete: jest.fn()
+}));
+
+// Mock the EventEmitter
+jest.mock('../../../../core/EventEmitter', () => ({
+  getInstance: jest.fn().mockReturnValue({
+    emit: jest.fn(),
+    on: jest.fn()
+  })
+}));
+
+// Mock the model
+jest.mock('../../../../domains/supplier/models/Supplier', () => ({
+  create: jest.fn(),
+}));
+```bash
+
+## Test Cases
+
+Each method is tested with the following cases:
+
+1. __Validation__: Test input validation and error handling
+2. __Success Path__: Test the happy path with valid inputs
+3. __Edge Cases__: Test boundary conditions and special cases
+4. __Error Handling__: Test error conditions and recovery
+
+## Example Test Pattern
+
+```javascript
+describe('methodName', () => {
+  it('should throw an error if required parameter is not provided', async () => {
+    // Arrange
+    const invalidInput = { /_ missing required field _/ };
+
+    // Act & Assert
+    await expect(service.methodName(invalidInput)).rejects.toThrow(ValidationError);
+    expect(mockRepository.method).not.toHaveBeenCalled();
+  });
+
+  it('should perform expected action if input is valid', async () => {
+    // Arrange
+    const validInput = { /_ valid data _/ };
+    const mockResult = { /_ expected result _/ };
+    mockRepository.method.mockResolvedValue(mockResult);
+
+    // Act
+    const result = await service.methodName(validInput);
+
+    // Assert
+    expect(result).toBe(mockResult);
+    expect(mockRepository.method).toHaveBeenCalledWith(validInput);
+    expect(mockEventEmitter.emit).toHaveBeenCalledWith(
+      'event.name',
+      expect.objectContaining({ /_ expected event data _/ })
+    );
+  });
+});
+```bash
+
+## Running Tests
+
+Tests can be run using the Jest test runner:
+
+```bash
+# Run all service tests
+npm test -- --testPathPattern=domains/.*/services
+
+# Run tests for a specific domain service
+npm test -- --testPathPattern=domains/supplier/services
+
+# Run a specific test file
+npm test -- server/src/__tests__/domains/supplier/services/SupplierService.test.js
+```bash
+
+## Test Coverage
+
+The tests aim for high coverage of service methods, focusing on:
+
+1. __Line Coverage__: Ensuring all code paths are executed
+2. __Branch Coverage__: Testing all conditional branches
+3. __Function Coverage__: Testing all public methods
+4. __Statement Coverage__: Testing all statements
+
+## Implemented Tests
+
+The following service tests have been implemented:
+
+1. __SupplierService.test.js__: Tests for supplier domain service
+2. __CustomerService.test.js__: Tests for customer domain service
+3. __InspectionService.test.js__: Tests for inspection domain service
+4. __ComponentService.test.js__: Tests for component domain service
+
+Each test file contains comprehensive tests for all public methods of the corresponding service.
+
+## Best Practices
+
+When writing service tests, follow these best practices:
+
+1. __Arrange-Act-Assert__: Structure tests with clear arrangement, action, and assertion sections
+2. __Clear Naming__: Use descriptive test names that explain the expected behavior
+3. __Minimal Mocking__: Mock only what's necessary for the test
+4. __Reset Mocks__: Clear mock state between tests to ensure isolation
+5. __Test Edge Cases__: Include tests for boundary conditions and error cases
+6. __Verify Events__: Check that appropriate events are emitted with correct data
+7. __Avoid Test Interdependence__: Each test should be able to run independently

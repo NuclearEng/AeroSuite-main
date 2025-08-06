@@ -1,22 +1,30 @@
 # Database Indexing Strategy
 
-This document outlines the database indexing strategy implemented as part of RF030 in the AeroSuite project.
+This document outlines the database indexing strategy implemented as part of RF030 in the AeroSuite
+project.
 
 ## Overview
 
-Indexes are critical for database performance, especially for large datasets. They improve query performance by allowing the database to find data without scanning entire collections. However, indexes also come with costs: they increase storage requirements and can slow down write operations. This document describes our approach to database indexing in the AeroSuite application.
+Indexes are critical for database performance, especially for large datasets. They improve query
+performance by allowing the database to find data without scanning entire collections. However,
+indexes also come with costs: they increase storage requirements and can slow down write
+operations. This document describes our approach to database indexing in the AeroSuite application.
 
 ## Indexing Principles
 
 Our indexing strategy follows these core principles:
 
-1. **Index fields used in query filters**: Fields frequently used in query conditions should be indexed.
-2. **Index fields used for sorting**: Fields used in sort operations should be indexed.
-3. **Create compound indexes for common query patterns**: When queries filter on multiple fields together, create compound indexes.
-4. **Use text indexes for search functionality**: For text search operations, create text indexes with appropriate weights.
-5. **Avoid over-indexing**: Each index adds overhead to write operations and storage requirements.
-6. **Monitor index usage**: Regularly review index usage to identify unused or underused indexes.
-7. **Use background indexing**: Create indexes in the background to avoid blocking database operations.
+1. __Index fields used in query filters__: Fields frequently used in query conditions should be
+indexed.
+2. __Index fields used for sorting__: Fields used in sort operations should be indexed.
+3. __Create compound indexes for common query patterns__: When queries filter on multiple fields
+together, create compound indexes.
+4. __Use text indexes for search functionality__: For text search operations, create text indexes
+with appropriate weights.
+5. __Avoid over-indexing__: Each index adds overhead to write operations and storage requirements.
+6. __Monitor index usage__: Regularly review index usage to identify unused or underused indexes.
+7. __Use background indexing__: Create indexes in the background to avoid blocking database
+operations.
 
 ## Index Types Used
 
@@ -27,7 +35,7 @@ Single field indexes are used for fields that are frequently queried or sorted i
 ```javascript
 // Example: Index on status field
 collection.createIndex({ status: 1 }, { background: true });
-```
+```bash
 
 ### Compound Indexes
 
@@ -36,7 +44,7 @@ Compound indexes are used for queries that filter or sort on multiple fields:
 ```javascript
 // Example: Index on customerId and status fields
 collection.createIndex({ customerId: 1, status: 1 }, { background: true });
-```
+```bash
 
 ### Text Indexes
 
@@ -48,7 +56,7 @@ collection.createIndex(
   { name: 'text', description: 'text', tags: 'text' },
   { weights: { name: 10, description: 5, tags: 3 }, background: true }
 );
-```
+```bash
 
 ### Unique Indexes
 
@@ -57,7 +65,7 @@ Unique indexes are used to enforce uniqueness constraints:
 ```javascript
 // Example: Unique index on email field
 collection.createIndex({ email: 1 }, { unique: true, background: true });
-```
+```bash
 
 ## Collection-Specific Indexing Strategy
 
@@ -72,7 +80,8 @@ collection.createIndex({ email: 1 }, { unique: true, background: true });
 | `address.country` | Single | Support geographical queries |
 | `overallRating` | Single (-1) | Support sorting by rating (descending) |
 | `createdAt` | Single (-1) | Support chronological sorting |
-| `name`, `description`, `tags` | Text (weighted) | Support full-text search with appropriate weights |
+| `name`, `description`, `tags` | Text (weighted) | Support full-text search with appropriate
+weights |
 
 ### Customer Collection
 
@@ -92,18 +101,23 @@ collection.createIndex({ email: 1 }, { unique: true, background: true });
 | Field | Index Type | Justification |
 |-------|------------|---------------|
 | `inspectionNumber` | Unique | Ensure inspection numbers are unique and enable fast lookups |
-| `customerId`, `status` | Compound | Common query pattern: inspections for a customer with a specific status |
-| `supplierId`, `status` | Compound | Common query pattern: inspections for a supplier with a specific status |
+| `customerId`, `status` | Compound | Common query pattern: inspections for a customer with a
+specific status |
+| `supplierId`, `status` | Compound | Common query pattern: inspections for a supplier with a
+specific status |
 | `componentId` | Single | Filtered by component |
 | `scheduledDate` | Single | Filtered and sorted by scheduled date |
 | `startDate` | Single | Filtered and sorted by start date |
 | `completionDate` | Single | Filtered and sorted by completion date |
 | `status` | Single | Frequently filtered by status |
-| `result`, `status` | Compound | Common query pattern: inspections with a specific result and status |
-| `inspectionType`, `status` | Compound | Common query pattern: inspections of a specific type and status |
+| `result`, `status` | Compound | Common query pattern: inspections with a specific result and
+status |
+| `inspectionType`, `status` | Compound | Common query pattern: inspections of a specific type and
+status |
 | `customerId`, `supplierId`, `status` | Compound | Complex filtering pattern |
 | `createdAt` | Single (-1) | Support chronological sorting |
-| `inspectionNumber`, `title`, `description`, `tags` | Text (weighted) | Support full-text search with appropriate weights |
+| `inspectionNumber`, `title`, `description`, `tags` | Text (weighted) | Support full-text search
+with appropriate weights |
 
 ### Component Collection
 
@@ -113,11 +127,13 @@ collection.createIndex({ email: 1 }, { unique: true, background: true });
 | `partNumber`, `revision` | Compound | Common query pattern: specific part number and revision |
 | `customerId` | Single | Filtered by customer |
 | `supplierId` | Single | Filtered by supplier |
-| `customerId`, `supplierId` | Compound | Common query pattern: components for a specific customer and supplier |
+| `customerId`, `supplierId` | Compound | Common query pattern: components for a specific customer
+and supplier |
 | `status` | Single | Frequently filtered by status |
 | `materialInfo.material` | Single | Material-based queries |
 | `createdAt` | Single (-1) | Support chronological sorting |
-| `name`, `partNumber`, `description`, `tags` | Text (weighted) | Support full-text search with appropriate weights |
+| `name`, `partNumber`, `description`, `tags` | Text (weighted) | Support full-text search with
+appropriate weights |
 
 ### User Collection
 
@@ -125,7 +141,8 @@ collection.createIndex({ email: 1 }, { unique: true, background: true });
 |-------|------------|---------------|
 | `email` | Unique | Ensure email addresses are unique and enable fast lookups |
 | `role`, `isActive` | Compound | Common query pattern: active users with a specific role |
-| `customerId`, `role` | Compound | Common query pattern: users for a specific customer with a specific role |
+| `customerId`, `role` | Compound | Common query pattern: users for a specific customer with a
+specific role |
 | `lastLogin` | Single (-1) | Sort by last login time |
 | `createdAt` | Single (-1) | Support chronological sorting |
 | `permissions.role` | Single | Filter by permission role |
@@ -134,8 +151,8 @@ collection.createIndex({ email: 1 }, { unique: true, background: true });
 
 The indexes are implemented in two ways:
 
-1. **Schema-level indexes**: Defined in the Mongoose schema for each model.
-2. **Script-based indexes**: Added using the `add-missing-indexes.js` script.
+1. __Schema-level indexes__: Defined in the Mongoose schema for each model.
+2. __Script-based indexes__: Added using the `add-missing-indexes.js` script.
 
 ### Schema-level indexes example:
 
@@ -152,7 +169,7 @@ supplierSchema.index(
   { name: 'text', description: 'text', tags: 'text' },
   { weights: { name: 10, description: 5, tags: 3 } }
 );
-```
+```bash
 
 ### Script-based indexes:
 
@@ -168,9 +185,10 @@ The `add-missing-indexes.js` script:
 
 To ensure optimal index performance:
 
-1. **Regular monitoring**: Use the MongoDB profiler to identify slow queries.
-2. **Index usage analysis**: Analyze index usage statistics to identify unused indexes.
-3. **Index optimization**: Periodically review and optimize indexes based on changing query patterns.
+1. __Regular monitoring__: Use the MongoDB profiler to identify slow queries.
+2. __Index usage analysis__: Analyze index usage statistics to identify unused indexes.
+3. __Index optimization__: Periodically review and optimize indexes based on changing query
+patterns.
 
 ### Monitoring commands:
 
@@ -184,7 +202,7 @@ db.collection.stats().indexSizes
 // Identify slow queries
 db.setProfilingLevel(1, { slowms: 100 })
 db.system.profile.find({ millis: { $gt: 100 } })
-```
+```bash
 
 ## Running the Index Addition Script
 
@@ -192,7 +210,7 @@ To add missing indexes to the database:
 
 ```bash
 ./scripts/add-missing-indexes.sh
-```
+```bash
 
 This script:
 1. Connects to the database
@@ -202,6 +220,9 @@ This script:
 
 ## Conclusion
 
-A well-designed indexing strategy is crucial for database performance. By following the principles outlined in this document and regularly monitoring index usage, we can ensure that our database operations remain efficient as the application grows.
+A well-designed indexing strategy is crucial for database performance. By following the principles
+outlined in this document and regularly monitoring index usage, we can ensure that our database
+operations remain efficient as the application grows.
 
-Remember that indexing is not a one-time task but an ongoing process that should adapt to changing query patterns and data growth. 
+Remember that indexing is not a one-time task but an ongoing process that should adapt to changing
+query patterns and data growth.

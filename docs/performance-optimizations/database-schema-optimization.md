@@ -1,28 +1,35 @@
 # Database Schema Optimization
 
-This document outlines the database schema optimization plan implemented as part of RF029 in the AeroSuite project.
+This document outlines the database schema optimization plan implemented as part of RF029 in the
+AeroSuite project.
 
 ## Overview
 
-The AeroSuite application uses MongoDB as its primary database, with Mongoose as the ODM (Object-Document Mapper). After reviewing the current schema design, we've identified several areas for optimization to improve performance, reduce storage requirements, and enhance query efficiency.
+The AeroSuite application uses MongoDB as its primary database, with Mongoose as the ODM
+(Object-Document Mapper). After reviewing the current schema design, we've identified several areas
+for optimization to improve performance, reduce storage requirements, and enhance query efficiency.
 
 ## Current Schema Analysis
 
 ### Key Issues Identified
 
-1. **Inconsistent Indexing Strategy**: Some collections have appropriate indexes while others are missing critical indexes for commonly queried fields.
+1. __Inconsistent Indexing Strategy__: Some collections have appropriate indexes while others are
+missing critical indexes for commonly queried fields.
 
-2. **Nested Array Growth**: Several models contain unbounded arrays that can grow indefinitely, potentially causing performance issues.
+2. __Nested Array Growth__: Several models contain unbounded arrays that can grow indefinitely,
+potentially causing performance issues.
 
-3. **Redundant Data**: Some models store redundant data that could be normalized or computed.
+3. __Redundant Data__: Some models store redundant data that could be normalized or computed.
 
-4. **Inconsistent Schema Design**: Variations in field naming conventions and structure across models.
+4. __Inconsistent Schema Design__: Variations in field naming conventions and structure across
+models.
 
-5. **Missing Compound Indexes**: Queries that filter on multiple fields lack compound indexes.
+5. __Missing Compound Indexes__: Queries that filter on multiple fields lack compound indexes.
 
-6. **Text Search Performance**: Text search indexes are defined but not optimized for common search patterns.
+6. __Text Search Performance__: Text search indexes are defined but not optimized for common search
+patterns.
 
-7. **Lack of Schema Validation**: Some schemas lack proper validation rules.
+7. __Lack of Schema Validation__: Some schemas lack proper validation rules.
 
 ## Optimization Plan
 
@@ -51,7 +58,7 @@ componentSchema.index({ 'materialInfo.material': 1 }); // Material-based queries
 // User model
 userSchema.index({ role: 1, isActive: 1 }); // Common filtering pattern
 userSchema.index({ customerId: 1, role: 1 }); // Customer-specific user queries
-```
+```bash
 
 #### Optimize Text Indexes
 
@@ -67,7 +74,7 @@ componentSchema.index(
   { name: 'text', partNumber: 'text', description: 'text', tags: 'text' },
   { weights: { partNumber: 10, name: 8, description: 3, tags: 2 } }
 );
-```
+```bash
 
 ### 2. Schema Structure Optimization
 
@@ -90,7 +97,7 @@ inspectionSchema.path('defects').validate(function(value) {
 inspectionSchema.path('attachments').validate(function(value) {
   return value.length <= MAX_ATTACHMENTS;
 }, `Cannot have more than ${MAX_ATTACHMENTS} attachments`);
-```
+```bash
 
 #### Optimize Embedded Documents
 
@@ -125,7 +132,7 @@ userSchema.pre('save', async function() {
     this.loginHistory = this.loginHistory.slice(-10);
   }
 });
-```
+```bash
 
 ### 3. Data Type and Field Optimization
 
@@ -151,7 +158,7 @@ customerSchema.add({
     maxlength: 2000 // Limit description length
   }
 });
-```
+```bash
 
 #### Add Schema Validation
 
@@ -165,7 +172,7 @@ inspectionSchema.path('quantity').validate(function(value) {
 componentSchema.path('materialInfo.weight').validate(function(value) {
   return value > 0;
 }, 'Weight must be a positive number');
-```
+```bash
 
 ### 4. Denormalization for Performance
 
@@ -192,7 +199,7 @@ inspectionSchema.pre('save', async function() {
       this.supplierName = supplier.name;
     }
   }
-  
+
   if (!this.customerName && this.customerId) {
     const customer = await mongoose.model('Customer').findById(this.customerId);
     if (customer) {
@@ -200,7 +207,7 @@ inspectionSchema.pre('save', async function() {
     }
   }
 });
-```
+```bash
 
 ### 5. Query Optimization
 
@@ -211,17 +218,17 @@ inspectionSchema.pre('save', async function() {
 async function getInspectionSummaries() {
   return await Inspection.find(
     { status: 'completed' },
-    { 
-      inspectionNumber: 1, 
-      title: 1, 
-      result: 1, 
+    {
+      inspectionNumber: 1,
+      title: 1,
+      result: 1,
       completionDate: 1,
       supplierName: 1,
       customerName: 1
     }
   ).lean();
 }
-```
+```bash
 
 #### Implement Pagination
 
@@ -232,13 +239,13 @@ async function getSuppliersPaginated(page = 1, limit = 20, lastId = null) {
   if (lastId) {
     query._id = { $gt: lastId };
   }
-  
+
   return await Supplier.find(query)
     .sort({ _id: 1 })
     .limit(limit)
     .lean();
 }
-```
+```bash
 
 ## Implementation Plan
 
@@ -270,11 +277,11 @@ async function getSuppliersPaginated(page = 1, limit = 20, lastId = null) {
 
 We will measure the following metrics before and after optimization:
 
-1. **Query Response Time**: Average and p95 response time for common queries
-2. **Index Size**: Total size of indexes in the database
-3. **Collection Size**: Size of each collection
-4. **Write Performance**: Average time for document creation and updates
-5. **Index Utilization**: Percentage of queries using indexes
+1. __Query Response Time__: Average and p95 response time for common queries
+2. __Index Size__: Total size of indexes in the database
+3. __Collection Size__: Size of each collection
+4. __Write Performance__: Average time for document creation and updates
+5. __Index Utilization__: Percentage of queries using indexes
 
 ## Monitoring Plan
 
@@ -285,4 +292,6 @@ We will measure the following metrics before and after optimization:
 
 ## Conclusion
 
-The database schema optimization plan addresses key performance issues in the current schema design. By implementing these optimizations, we expect to see improved query performance, reduced storage requirements, and better scalability for the AeroSuite application. 
+The database schema optimization plan addresses key performance issues in the current schema
+design. By implementing these optimizations, we expect to see improved query performance, reduced
+storage requirements, and better scalability for the AeroSuite application.

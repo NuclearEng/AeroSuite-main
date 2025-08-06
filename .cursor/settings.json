@@ -1,0 +1,80 @@
+{
+  "agent": {
+    "autoRun": {
+      "enabled": true,
+      "trustedCommands": [
+        "npm run lint",
+        "npm run type-check",
+        "npm test",
+        "npx cypress run --spec",
+        "docker-compose logs",
+        "git status",
+        "git add",
+        "git commit"
+      ]
+    },
+    "terminal": {
+      "autoConfirm": false,
+      "showOutput": true,
+      "workingDirectory": "/Users/tannercoker/AeroSuite-main"
+    },
+    "modes": {
+      "default": "agent",
+      "available": ["agent", "ask", "manual"]
+    },
+    "tools": {
+      "enabled": [
+        "codebase_search",
+        "file_search",
+        "grep_search",
+        "read_file",
+        "edit_file",
+        "search_replace",
+        "run_terminal_cmd",
+        "list_dir",
+        "delete_file"
+      ]
+    },
+    "checkpoints": {
+      "enabled": true,
+      "autoCreate": true,
+      "maxCheckpoints": 10
+    },
+    "chat": {
+      "maxTabs": 5,
+      "exportFormat": "markdown",
+      "historyRetention": 30
+    },
+    "apply": {
+      "autoReview": false,
+      "showDiffs": true,
+      "confirmLargeChanges": true
+    }
+  },
+  "rules": {
+    "autoApply": true,
+    "showActiveRules": true
+  },
+  "indexing": {
+    "enabled": true,
+    "includePatterns": [
+      "**/*.js",
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.jsx",
+      "**/*.json",
+      "**/*.yml",
+      "**/*.yaml",
+      "**/*.md"
+    ],
+    "excludePatterns": [
+      "node_modules/**",
+      "build/**",
+      "dist/**",
+      ".git/**",
+      "logs/**",
+      "uploads/**",
+      "temp/**"
+    ]
+  }
+} 

@@ -1,10 +1,12 @@
 # Calendar Integration Documentation
 
-**Task: TS366 - Calendar integration implementation**
+__Task: TS366 - Calendar integration implementation__
 
 ## Overview
 
-The AeroSuite Calendar Integration feature provides a comprehensive solution for managing events within the AeroSuite platform and synchronizing with external calendar services. This feature enables users to:
+The AeroSuite Calendar Integration feature provides a comprehensive solution for managing events
+within the AeroSuite platform and synchronizing with external calendar services. This feature
+enables users to:
 
 - View and manage events in a calendar interface
 - Create, edit, and delete events of various types
@@ -15,17 +17,17 @@ The AeroSuite Calendar Integration feature provides a comprehensive solution for
 
 The calendar integration feature follows a layered architecture:
 
-1. **Frontend**
+1. __Frontend__
    - Calendar widget component for dashboard integration
    - Full calendar page for comprehensive event management
    - React hooks for data fetching and state management
 
-2. **Backend**
+2. __Backend__
    - RESTful API endpoints for calendar operations
    - MongoDB models for storing events and integration settings
    - Integration services for external calendar providers
 
-3. **External Integrations**
+3. __External Integrations__
    - Google Calendar API integration
    - Microsoft Graph API integration (for Outlook)
    - iCalendar format support
@@ -43,13 +45,13 @@ A lightweight calendar widget that can be embedded in dashboards and other pages
 
 Usage:
 ```jsx
-<CalendarWidget 
-  height={400} 
+<CalendarWidget
+  height={400}
   defaultView="dayGridMonth"
   onEventClick={(eventId) => handleEventClick(eventId)}
   onDateClick={(date) => handleDateClick(date)}
 />
-```
+```bash
 
 ### CalendarPage
 
@@ -67,7 +69,7 @@ A full-featured calendar page that provides comprehensive event management:
 A custom React hook that provides calendar functionality:
 
 ```jsx
-const { 
+const {
   events,
   isLoading,
   error,
@@ -87,7 +89,7 @@ const {
   startDate: new Date('2023-01-01'),
   endDate: new Date('2023-12-31')
 });
-```
+```bash
 
 ## Backend API
 
@@ -128,7 +130,7 @@ const {
   createdAt: Date,       // Creation timestamp
   updatedAt: Date        // Last update timestamp
 }
-```
+```bash
 
 #### CalendarIntegration
 
@@ -146,25 +148,29 @@ const {
   createdAt: Date,       // Creation timestamp
   updatedAt: Date        // Last update timestamp
 }
-```
+```bash
 
 ## External Calendar Integration
 
 ### Google Calendar
 
-Integration with Google Calendar is implemented using the Google Calendar API. The integration process involves:
+Integration with Google Calendar is implemented using the Google Calendar API. The integration
+process involves:
 
 1. OAuth 2.0 authentication flow
-2. Requesting appropriate scopes (`https://www.googleapis.com/auth/calendar.readonly` for read-only access, `https://www.googleapis.com/auth/calendar` for full access)
+2. Requesting appropriate scopes (`https://www.googleapis.com/auth/calendar.readonly` for read-only
+access, `https://www.googleapis.com/auth/calendar` for full access)
 3. Storing access and refresh tokens
 4. Refreshing tokens when they expire
 
 ### Microsoft Outlook
 
-Integration with Microsoft Outlook is implemented using the Microsoft Graph API. The integration process involves:
+Integration with Microsoft Outlook is implemented using the Microsoft Graph API. The integration
+process involves:
 
 1. OAuth 2.0 authentication flow
-2. Requesting appropriate scopes (`Calendars.Read` for read-only access, `Calendars.ReadWrite` for full access)
+2. Requesting appropriate scopes (`Calendars.Read` for read-only access, `Calendars.ReadWrite` for
+full access)
 3. Storing access and refresh tokens
 4. Refreshing tokens when they expire
 
@@ -216,7 +222,7 @@ fetch('/api/v1/calendar/events', {
     type: 'inspection'
   })
 });
-```
+```bash
 
 ### Connecting to Google Calendar
 
@@ -233,42 +239,46 @@ fetch('/api/v1/calendar/integrations/google/connect', {
     'Authorization': 'Bearer YOUR_TOKEN'
   }
 });
-```
+```bash
 
 ## Security Considerations
 
-1. **Authentication**: All calendar endpoints require authentication.
-2. **Authorization**: Users can only access their own events and integrations.
-3. **OAuth Security**: OAuth tokens are stored securely and never exposed to the frontend.
-4. **Data Validation**: All input data is validated before processing.
-5. **Rate Limiting**: API endpoints are rate-limited to prevent abuse.
+1. __Authentication__: All calendar endpoints require authentication.
+2. __Authorization__: Users can only access their own events and integrations.
+3. __OAuth Security__: OAuth tokens are stored securely and never exposed to the frontend.
+4. __Data Validation__: All input data is validated before processing.
+5. __Rate Limiting__: API endpoints are rate-limited to prevent abuse.
 
 ## Performance Considerations
 
-1. **Caching**: Calendar events are cached on the client side to reduce API calls.
-2. **Pagination**: API endpoints support pagination for large result sets.
-3. **Indexing**: MongoDB collections are indexed for efficient querying.
-4. **Lazy Loading**: Events are loaded on demand based on the visible date range.
-5. **Batch Processing**: Sync operations are performed in batches to improve performance.
+1. __Caching__: Calendar events are cached on the client side to reduce API calls.
+2. __Pagination__: API endpoints support pagination for large result sets.
+3. __Indexing__: MongoDB collections are indexed for efficient querying.
+4. __Lazy Loading__: Events are loaded on demand based on the visible date range.
+5. __Batch Processing__: Sync operations are performed in batches to improve performance.
 
 ## Future Enhancements
 
-1. **iCalendar Import/Export**: Support for importing and exporting events in iCalendar format.
-2. **Calendar Sharing**: Ability to share calendars with other users.
-3. **Event Notifications**: Email and push notifications for upcoming events.
-4. **Recurring Events**: Support for recurring events with complex patterns.
-5. **Event Categories**: Custom event categories and color coding.
-6. **Calendar Views**: Additional calendar views such as agenda and timeline.
-7. **Mobile Support**: Enhanced mobile experience for calendar management.
+1. __iCalendar Import/Export__: Support for importing and exporting events in iCalendar format.
+2. __Calendar Sharing__: Ability to share calendars with other users.
+3. __Event Notifications__: Email and push notifications for upcoming events.
+4. __Recurring Events__: Support for recurring events with complex patterns.
+5. __Event Categories__: Custom event categories and color coding.
+6. __Calendar Views__: Additional calendar views such as agenda and timeline.
+7. __Mobile Support__: Enhanced mobile experience for calendar management.
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Sync Issues**: If events are not syncing properly, check the integration status and try reconnecting.
-2. **Event Display Issues**: If events are not displaying correctly, try clearing the cache and refreshing the page.
-3. **Authentication Errors**: If you encounter authentication errors, try logging out and logging back in.
-4. **Performance Issues**: If the calendar is slow to load, try reducing the date range or filtering by event type.
+1. __Sync Issues__: If events are not syncing properly, check the integration status and try
+reconnecting.
+2. __Event Display Issues__: If events are not displaying correctly, try clearing the cache and
+refreshing the page.
+3. __Authentication Errors__: If you encounter authentication errors, try logging out and logging
+back in.
+4. __Performance Issues__: If the calendar is slow to load, try reducing the date range or
+filtering by event type.
 
 ### Logging
 
@@ -279,4 +289,6 @@ Calendar-related activities are logged for debugging purposes:
 
 ## Conclusion
 
-The AeroSuite Calendar Integration feature provides a comprehensive solution for managing events within the AeroSuite platform and synchronizing with external calendar services. It is designed to be flexible, secure, and performant, with a focus on user experience and integration capabilities. 
+The AeroSuite Calendar Integration feature provides a comprehensive solution for managing events
+within the AeroSuite platform and synchronizing with external calendar services. It is designed to
+be flexible, secure, and performant, with a focus on user experience and integration capabilities.

@@ -20,7 +20,7 @@ All API responses follow a standardized format to ensure consistency across the 
   },
   "apiVersion": "v1"
 }
-```
+```bash
 
 ### Error Response
 
@@ -38,19 +38,20 @@ All API responses follow a standardized format to ensure consistency across the 
   "requestId": "req-123456",
   "apiVersion": "v1"
 }
-```
+```bash
 
 ## Pagination
 
-For endpoints that return collections of resources, pagination is implemented using the following pattern:
+For endpoints that return collections of resources, pagination is implemented using the following
+pattern:
 
 ### Request
 
 Pagination parameters are passed as query parameters:
 
-```
+```http
 GET /api/v1/resources?page=2&limit=10
-```
+```bash
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
@@ -78,44 +79,44 @@ Paginated responses include metadata about the pagination:
     }
   }
 }
-```
+```bash
 
 ## Filtering
 
 Filtering is implemented using query parameters:
 
-```
+```http
 GET /api/v1/resources?filter[status]=active&filter[type]=supplier
-```
+```bash
 
 Complex filters can be implemented using a JSON string:
 
-```
+```http
 GET /api/v1/resources?filter={"status":"active","createdAt":{"$gt":"2023-01-01"}}
-```
+```bash
 
 ## Sorting
 
 Sorting is implemented using the `sort` query parameter:
 
-```
+```http
 GET /api/v1/resources?sort=name
 GET /api/v1/resources?sort=-createdAt
-```
+```bash
 
 Multiple sort fields can be specified using commas:
 
-```
+```http
 GET /api/v1/resources?sort=status,-createdAt
-```
+```bash
 
 ## Field Selection
 
 Field selection is implemented using the `fields` query parameter:
 
-```
+```http
 GET /api/v1/resources?fields=id,name,status
-```
+```bash
 
 ## Error Codes
 
@@ -164,17 +165,17 @@ AeroSuite supports two authentication methods:
 
 For user-based authentication, JWT tokens are used:
 
-```
+```http
 Authorization: Bearer <token>
-```
+```bash
 
 ### API Key Authentication
 
 For service-to-service authentication, API keys are used:
 
-```
+```http
 X-API-Key: <api-key>
-```
+```bash
 
 ## Rate Limiting
 
@@ -186,11 +187,12 @@ Rate limiting is implemented using the following headers:
 | `X-RateLimit-Remaining` | The number of requests remaining in the current time window |
 | `X-RateLimit-Reset` | The time at which the current rate limit window resets (Unix timestamp) |
 
-When the rate limit is exceeded, the API returns a 429 Too Many Requests response with the following headers:
+When the rate limit is exceeded, the API returns a 429 Too Many Requests response with the
+following headers:
 
-```
+```http
 Retry-After: <seconds>
-```
+```bash
 
 ## Versioning
 
@@ -198,33 +200,34 @@ API versioning is implemented using one of the following methods:
 
 ### URL Path
 
-```
+```http
 GET /api/v1/resources
-```
+```bash
 
 ### Custom Header
 
-```
+```http
 X-API-Version: v1
-```
+```bash
 
 ### Accept Header
 
-```
+```http
 Accept: application/vnd.aerosuite.v1+json
-```
+```bash
 
 ### Query Parameter
 
-```
+```http
 GET /api/resources?api-version=v1
-```
+```bash
 
 See the [API Versioning Guide](/api/docs/versioning) for more information.
 
 ## Webhooks
 
-AeroSuite supports webhooks for event notifications. Webhook payloads follow the same standardized format as API responses:
+AeroSuite supports webhooks for event notifications. Webhook payloads follow the same standardized
+format as API responses:
 
 ```json
 {
@@ -235,7 +238,7 @@ AeroSuite supports webhooks for event notifications. Webhook payloads follow the
   },
   "apiVersion": "v1"
 }
-```
+```bash
 
 Webhook requests include the following headers:
 
@@ -264,7 +267,7 @@ POST /api/v1/resources/bulk
     }
   ]
 }
-```
+```bash
 
 ### Bulk Update
 
@@ -282,7 +285,7 @@ PATCH /api/v1/resources/bulk
     }
   ]
 }
-```
+```bash
 
 ### Bulk Delete
 
@@ -291,7 +294,7 @@ DELETE /api/v1/resources/bulk
 {
   "ids": ["resource-id-1", "resource-id-2"]
 }
-```
+```bash
 
 ### Bulk Response
 
@@ -315,8 +318,9 @@ DELETE /api/v1/resources/bulk
     ]
   }
 }
-```
+```bash
 
 ## Conclusion
 
-This document describes the standardized API contracts used in the AeroSuite platform. By following these contracts, you can ensure consistent behavior across all API endpoints. 
+This document describes the standardized API contracts used in the AeroSuite platform. By following
+these contracts, you can ensure consistent behavior across all API endpoints.

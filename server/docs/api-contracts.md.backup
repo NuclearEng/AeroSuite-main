@@ -1,0 +1,196 @@
+# AeroSuite API Contract Standards
+
+This document outlines the standardized API contract patterns implemented across the AeroSuite 
+platform.
+
+## Response Format
+
+All API endpoints follow a consistent response format:
+
+### Success Response
+
+```json
+{
+  "success": true,
+  "message": "Success message",
+  "data": {
+    // Response data object or array
+  },
+  "meta": {
+    // Optional metadata
+  },
+  "timestamp": "2023-06-15T10:30:00.000Z"
+}
+```bash
+
+### Paginated Response
+
+```json
+{
+  "success": true,
+  "message": "Success message",
+  "data": [
+    // Array of items
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 100,
+    "totalPages": 10,
+    "hasNextPage": true,
+    "hasPrevPage": false
+  },
+  "meta": {
+    // Optional metadata
+  },
+  "timestamp": "2023-06-15T10:30:00.000Z"
+}
+```bash
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "message": "Error message",
+  "code": "ERROR_CODE",
+  "errors": {
+    // Validation errors or details
+    "field1": ["Error message 1", "Error message 2"],
+    "field2": ["Error message"]
+  },
+  "meta": {
+    "requestId": "unique-request-id"
+  },
+  "timestamp": "2023-06-15T10:30:00.000Z"
+}
+```bash
+
+## Common Error Codes
+
+| Status Code | Error Code | Description |
+|-------------|------------|-------------|
+| 400 | BAD_REQUEST | Invalid request parameters |
+| 400 | VALIDATION_ERROR | Request validation failed |
+| 401 | UNAUTHORIZED | Authentication required |
+| 403 | FORBIDDEN | Insufficient permissions |
+| 404 | RESOURCE_NOT_FOUND | Resource not found |
+| 409 | RESOURCE_CONFLICT | Resource already exists |
+| 429 | RATE_LIMIT_EXCEEDED | Too many requests |
+| 500 | INTERNAL_ERROR | Server error |
+
+## Query Parameters
+
+### Pagination
+
+All list endpoints support the following pagination parameters:
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| page | integer | 1 | Page number |
+| limit | integer | 10 | Items per page (max 100) |
+
+Example: `GET /api/customers?page=2&limit=20`
+
+### Sorting
+
+Sort results by one or more fields:
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| sort | string | createdAt:-1 | Comma-separated list of fields to sort by. Prefix with - for 
+descending order. |
+
+Example: `GET /api/customers?sort=name,-createdAt`
+
+### Filtering
+
+Filter results by field values:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| filter | string | Filter in format field:operator:value |
+
+Supported operators:
+- eq: Equal
+- ne: Not equal
+- gt: Greater than
+- gte: Greater than or equal
+- lt: Less than
+- lte: Less than or equal
+- in: In array (values separated by |)
+- nin: Not in array (values separated by |)
+- regex: Regular expression match
+
+Example: `GET /api/customers?filter=status:eq:active,createdAt:gte:2023-01-01`
+
+### Search
+
+Search across multiple fields:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| search | string | Search term for text search across multiple fields |
+
+Example: `GET /api/customers?search=aerospace`
+
+## Authentication
+
+All authenticated endpoints require one of the following:
+
+1. Bearer Token Authentication:
+   ```
+   Authorization: Bearer <token>
+   ```
+
+2. API Key Authentication:
+   ```
+   X-API-Key: <api-key>
+   ```
+
+## Rate Limiting
+
+API endpoints are subject to rate limiting. The following headers are included in responses:
+
+```bash
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 99
+X-RateLimit-Reset: 1623760800
+```bash
+
+## Versioning
+
+API versioning is supported through URL path prefixes:
+
+```bash
+/api/v1/customers
+/api/v2/customers
+```bash
+
+## Implementation
+
+The standardized API contracts are implemented using:
+
+1. __BaseController__: A base controller class that all controllers extend
+2. __ApiResponse__: A utility class for creating standardized responses
+3. __validateRequest__: A middleware for consistent validation error handling
+4. __controllerHandler__: A wrapper for controller methods to ensure consistent error handling
+5. __errorHandler__: A middleware for standardized error responses
+
+## Example Usage
+
+```javascript
+// Controller method
+async getCustomers(req, res) {
+  const { page, limit, skip, sort, filter } = this.getQueryOptions(req);
+
+  const customers = await CustomerModel.find(filter)
+    .sort(sort)
+    .skip(skip)
+    .limit(limit);
+
+  const total = await CustomerModel.countDocuments(filter);
+
+  this.sendPaginated(res, customers, page, limit, total, 'Customers retrieved successfully');
+}
+```bash

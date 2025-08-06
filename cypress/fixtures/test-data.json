@@ -1,0 +1,87 @@
+{
+  "users": {
+    "admin": {
+      "email": "admin@aerosuite.com",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Admin User"
+    },
+    "inspector": {
+      "email": "inspector@aerosuite.com",
+      "password": "inspector123",
+      "role": "inspector",
+      "name": "Inspector User"
+    },
+    "viewer": {
+      "email": "viewer@aerosuite.com",
+      "password": "viewer123",
+      "role": "viewer",
+      "name": "Viewer User"
+    }
+  },
+  "inspections": {
+    "pending": {
+      "title": "Pending Inspection",
+      "status": "pending",
+      "description": "Test pending inspection",
+      "priority": "medium"
+    },
+    "completed": {
+      "title": "Completed Inspection",
+      "status": "completed",
+      "description": "Test completed inspection",
+      "priority": "high"
+    },
+    "failed": {
+      "title": "Failed Inspection",
+      "status": "failed",
+      "description": "Test failed inspection",
+      "priority": "critical"
+    }
+  },
+  "customers": {
+    "active": {
+      "name": "Active Customer",
+      "email": "customer@example.com",
+      "status": "active",
+      "contact": "John Doe"
+    },
+    "inactive": {
+      "name": "Inactive Customer",
+      "email": "inactive@example.com",
+      "status": "inactive",
+      "contact": "Jane Smith"
+    }
+  },
+  "suppliers": {
+    "certified": {
+      "name": "Certified Supplier",
+      "email": "supplier@example.com",
+      "status": "certified",
+      "certification": "ISO 9001"
+    },
+    "pending": {
+      "name": "Pending Supplier",
+      "email": "pending@example.com",
+      "status": "pending",
+      "certification": "None"
+    }
+  },
+  "apiResponses": {
+    "health": {
+      "status": "healthy",
+      "timestamp": "2024-01-01T00:00:00Z",
+      "version": "1.0.0"
+    },
+    "error": {
+      "error": "Internal Server Error",
+      "message": "Something went wrong",
+      "code": 500
+    },
+    "notFound": {
+      "error": "Not Found",
+      "message": "Resource not found",
+      "code": 404
+    }
+  }
+} 

@@ -1,10 +1,12 @@
 # Webpack Chunk Optimization Strategy
 
-This document explains the chunk optimization strategy implemented in the AeroSuite application to improve loading performance and caching.
+This document explains the chunk optimization strategy implemented in the AeroSuite application to
+improve loading performance and caching.
 
 ## Overview
 
-Modern web applications often suffer from large bundle sizes that can negatively impact loading times and user experience. Our chunk optimization strategy addresses this by:
+Modern web applications often suffer from large bundle sizes that can negatively impact loading
+times and user experience. Our chunk optimization strategy addresses this by:
 
 1. Splitting the application into smaller, more manageable chunks
 2. Optimizing chunk sizes for HTTP/2 performance
@@ -15,13 +17,14 @@ Modern web applications often suffer from large bundle sizes that can negatively
 
 We've implemented an advanced chunk splitting strategy with the following size targets:
 
-- **Optimal chunk size**: ~170KB (optimal for HTTP/2 multiplexing)
-- **Minimum chunk size**: 20KB (avoids overhead of too many small requests)
-- **Maximum chunk size**: 244KB (prevents large, slow-loading chunks)
-- **Vendor maximum size**: 300KB (slightly larger allowance for third-party code)
-- **Async minimum size**: 10KB (smaller chunks for dynamically loaded code)
+- __Optimal chunk size__: ~170KB (optimal for HTTP/2 multiplexing)
+- __Minimum chunk size__: 20KB (avoids overhead of too many small requests)
+- __Maximum chunk size__: 244KB (prevents large, slow-loading chunks)
+- __Vendor maximum size__: 300KB (slightly larger allowance for third-party code)
+- __Async minimum size__: 10KB (smaller chunks for dynamically loaded code)
 
-These values are based on research into optimal chunk sizes for HTTP/2 performance and browser processing time.
+These values are based on research into optimal chunk sizes for HTTP/2 performance and browser
+processing time.
 
 ## Chunk Categories
 
@@ -39,19 +42,19 @@ framework: {
   priority: 40,
   enforce: true,
 }
-```
+```bash
 
 ### Library-Specific Chunks
 
 Major libraries are grouped into their own chunks:
 
-- **UI libraries**: Material-UI and Emotion
-- **State management**: Redux and related packages
-- **Data fetching**: React Query, Axios
-- **Charts**: Chart.js, Recharts, D3
-- **Date handling**: date-fns
-- **Forms**: Formik, Yup
-- **Utilities**: Lodash, UUID, Joi
+- __UI libraries__: Material-UI and Emotion
+- __State management__: Redux and related packages
+- __Data fetching__: React Query, Axios
+- __Charts__: Chart.js, Recharts, D3
+- __Date handling__: date-fns
+- __Forms__: Formik, Yup
+- __Utilities__: Lodash, UUID, Joi
 
 ### Feature-Based Chunks
 
@@ -70,22 +73,22 @@ features: {
   maxSize: CHUNK_SIZE_LIMITS.maxSize,
   reuseExistingChunk: true,
 }
-```
+```bash
 
 ### Common and Async Chunks
 
-- **Common**: Shared code used across multiple parts of the application
-- **Async**: Dynamically imported code (lazy-loaded components)
+- __Common__: Shared code used across multiple parts of the application
+- __Async__: Dynamically imported code (lazy-loaded components)
 
 ## Benefits
 
 This optimization strategy provides several benefits:
 
-1. **Improved initial load time**: Critical code is loaded first
-2. **Better caching**: Stable chunks for frameworks and libraries
-3. **Parallel downloads**: Multiple smaller chunks can download in parallel
-4. **Reduced memory usage**: Smaller chunks require less memory to parse and execute
-5. **Better code splitting**: Feature-based chunks align with user navigation patterns
+1. __Improved initial load time__: Critical code is loaded first
+2. __Better caching__: Stable chunks for frameworks and libraries
+3. __Parallel downloads__: Multiple smaller chunks can download in parallel
+4. __Reduced memory usage__: Smaller chunks require less memory to parse and execute
+5. __Better code splitting__: Feature-based chunks align with user navigation patterns
 
 ## Implementation
 
@@ -113,6 +116,7 @@ Potential future enhancements include:
 
 ## References
 
-- [Web.dev: Apply instant loading with the PRPL pattern](https://web.dev/apply-instant-loading-with-prpl/)
+- [Web.dev: Apply instant loading with the PRPL
+pattern](https://web.dev/apply-instant-loading-with-prpl/)
 - [Webpack documentation: SplitChunksPlugin](https://webpack.js.org/plugins/split-chunks-plugin/)
-- [HTTP/2 Best Practices](https://developers.google.com/web/fundamentals/performance/http2) 
+- [HTTP/2 Best Practices](https://developers.google.com/web/fundamentals/performance/http2)

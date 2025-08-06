@@ -2,7 +2,9 @@
 
 ## Overview
 
-The client-side query result caching system complements the server-side caching to improve application performance and reduce unnecessary API calls. This system caches API responses in memory based on request parameters and provides automatic cache invalidation when data is modified.
+The client-side query result caching system complements the server-side caching to improve
+application performance and reduce unnecessary API calls. This system caches API responses in
+memory based on request parameters and provides automatic cache invalidation when data is modified.
 
 ## Key Features
 
@@ -18,14 +20,15 @@ The client-side query result caching system complements the server-side caching 
 
 The client-side caching system can be configured using environment variables:
 
-```
+```bash
 # Enable/disable client-side caching
 REACT_APP_ENABLE_CLIENT_CACHE=true
-```
+```bash
 
 ## Cache Service
 
-The core of the caching system is the `cacheService.ts` file, which provides a ClientCache class with the following features:
+The core of the caching system is the `cacheService.ts` file, which provides a ClientCache class
+with the following features:
 
 - Memory-efficient cache storage
 - Automatic expiry of cached items
@@ -56,7 +59,7 @@ const freshData = await api.get<UserData[]>('/users', {}, { useCache: false });
 
 // Custom cache TTL (in milliseconds)
 const data = await api.get<UserData[]>('/users', {}, { ttl: 60000 }); // 1 minute
-```
+```bash
 
 ### Using the useCachedData Hook
 
@@ -88,7 +91,7 @@ function UserList() {
     </div>
   );
 }
-```
+```bash
 
 ## Cache Invalidation
 
@@ -108,7 +111,7 @@ clearCacheByPattern(/^GET:\/users.*/);
 
 // Clear all cache
 clearAllCache();
-```
+```bash
 
 ## Performance Considerations
 
@@ -133,7 +136,7 @@ import { getCacheStats } from '../services/api';
 
 const stats = getCacheStats();
 console.log(`Cache size: ${stats.size}/${stats.maxSize}, Enabled: ${stats.enabled}`);
-```
+```bash
 
 ## Troubleshooting
 
@@ -151,4 +154,4 @@ Potential future improvements for the client-side caching system include:
 - IndexedDB storage for larger datasets and persistence across sessions
 - Synchronization with server-side cache invalidation events
 - Prefetching commonly accessed data
-- Improved cache compression for memory efficiency 
+- Improved cache compression for memory efficiency

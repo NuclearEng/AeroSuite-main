@@ -1,6 +1,7 @@
 # Task-to-Code Relationship Report
 
-This report shows the relationship between tasks and code files in the AeroSuite project. It is automatically generated and updated by the post-commit hook.
+This report shows the relationship between tasks and code files in the AeroSuite project. It is
+automatically generated and updated by the post-commit hook.
 
 ## Overview
 
@@ -10,7 +11,7 @@ This report shows the relationship between tasks and code files in the AeroSuite
 | Features      | 0         | 0           | 0    | 0     |
 | Security      | 0         | 0           | 0    | 0     |
 | AI/ML         | 0         | 0           | 0    | 0     |
-| **Total**     | 0         | 0           | 0    | 0     |
+| __Total__     | 0         | 0           | 0    | 0     |
 
 ## Task Coverage
 
@@ -20,19 +21,19 @@ This report shows the relationship between tasks and code files in the AeroSuite
 
 ## Recent Changes
 
-*This section will be updated automatically by the post-commit hook.*
+_This section will be updated automatically by the post-commit hook._
 
 ## Task-to-Code Mapping
 
-*This section will be populated with detailed task-to-code relationships.*
+_This section will be populated with detailed task-to-code relationships._
 
 ### Example Task Mapping
 
 #### TS001: Health check system implementation
 
-**Status:** ✅ Completed  
-**Priority:** 🔴 High  
-**Dependencies:** None  
+__Status:__ ✅ Completed
+__Priority:__ 🔴 High
+__Dependencies:__ None
 
 ##### Associated Files
 
@@ -46,13 +47,15 @@ This report shows the relationship between tasks and code files in the AeroSuite
 
 ## Dependency Graph
 
-*A visual representation of task dependencies will be generated here.*
+_A visual representation of task dependencies will be generated here._
 
 ## How to Use This Report
 
-1. **Find files related to a task**: Use the task-to-code mapping to find all files related to a specific task.
-2. **Understand dependencies**: View the dependency graph to understand task relationships.
-3. **Identify coverage gaps**: Check the task coverage section to identify areas with insufficient traceability.
+1. __Find files related to a task__: Use the task-to-code mapping to find all files related to a
+specific task.
+2. __Understand dependencies__: View the dependency graph to understand task relationships.
+3. __Identify coverage gaps__: Check the task coverage section to identify areas with insufficient
+traceability.
 
 ## Maintaining Traceability
 
@@ -71,4 +74,4 @@ To improve task traceability:
 3. Run the visualization tool to update this report:
    ```
    node scripts/task-management/enhanced-task-reference.js --visualize-only
-   ``` 
+   ```

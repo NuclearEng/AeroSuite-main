@@ -1,57 +1,58 @@
 # Audit Logging System
 
-This document provides an overview of the comprehensive audit logging system implemented in AeroSuite to track sensitive operations.
+This document provides an overview of the comprehensive audit logging system implemented in
+AeroSuite to track sensitive operations.
 
 ## Overview
 
 AeroSuite implements a robust audit logging system that:
 
-1. **Automatically logs sensitive operations** across the application
-2. **Provides detailed audit trails** for security and compliance purposes
-3. **Supports forensic analysis** in case of security incidents
-4. **Enables compliance** with regulatory requirements (GDPR, SOC 2, etc.)
+1. __Automatically logs sensitive operations__ across the application
+2. __Provides detailed audit trails__ for security and compliance purposes
+3. __Supports forensic analysis__ in case of security incidents
+4. __Enables compliance__ with regulatory requirements (GDPR, SOC 2, etc.)
 
 ## Architecture
 
 The audit logging system consists of the following components:
 
-1. **AuditLog Model**: A MongoDB model for storing audit log entries
-2. **Audit Logging Service**: A service that provides methods for creating and querying audit logs
-3. **Audit Logging Middleware**: Middleware that automatically logs sensitive operations
-4. **Audit Logging Controller**: API endpoints for accessing and managing audit logs
-5. **Audit Logging Routes**: RESTful routes for the audit logging API
+1. __AuditLog Model__: A MongoDB model for storing audit log entries
+2. __Audit Logging Service__: A service that provides methods for creating and querying audit logs
+3. __Audit Logging Middleware__: Middleware that automatically logs sensitive operations
+4. __Audit Logging Controller__: API endpoints for accessing and managing audit logs
+5. __Audit Logging Routes__: RESTful routes for the audit logging API
 
 ## Sensitive Operations
 
 The following types of operations are considered sensitive and are automatically logged:
 
-1. **Authentication Operations**
+1. __Authentication Operations__
    - User login/logout
    - Failed login attempts
    - Password changes/resets
    - MFA enablement/disablement
    - API key generation/revocation
 
-2. **User Management Operations**
+2. __User Management Operations__
    - User creation/modification/deletion
    - Role changes
    - Permission changes
    - Account locking/unlocking
 
-3. **Data Operations**
+3. __Data Operations__
    - Access to sensitive data
    - Export of sensitive data
    - Deletion of sensitive data
    - Encryption key rotation
    - Data anonymization
 
-4. **System Operations**
+4. __System Operations__
    - System settings changes
    - Security settings changes
    - Feature flag changes
    - Integration configuration
 
-5. **Admin Operations**
+5. __Admin Operations__
    - Admin actions
    - Bulk operations
    - Report generation
@@ -72,17 +73,17 @@ const auditLogSchema = new Schema({
     email: String,
     role: String
   },
-  
+
   // Action information
   action: String,
   entity: String,
   entityId: mongoose.Schema.Types.ObjectId,
   status: String, // success, failure, warning, info
   description: String,
-  
+
   // Timestamp
   timestamp: Date,
-  
+
   // Additional metadata
   metadata: {
     ip: String,
@@ -91,14 +92,14 @@ const auditLogSchema = new Schema({
     changes: Object,
     context: Object
   },
-  
+
   // Severity level
   severity: String, // low, medium, high, critical
-  
+
   // Whether this is a sensitive operation
   sensitive: Boolean
 });
-```
+```bash
 
 ### Audit Logging Service
 
@@ -150,11 +151,12 @@ auditLoggingService.getSensitiveOperationLogs({
   from: new Date('2023-01-01'),
   to: new Date()
 });
-```
+```bash
 
 ### Automatic Audit Logging
 
-The audit logging middleware automatically logs sensitive operations based on predefined route patterns. For example:
+The audit logging middleware automatically logs sensitive operations based on predefined route
+patterns. For example:
 
 ```javascript
 // User management
@@ -183,7 +185,7 @@ The audit logging middleware automatically logs sensitive operations based on pr
   entity: 'Encryption',
   description: 'Encryption keys rotated'
 }
-```
+```bash
 
 ## API Endpoints
 
@@ -214,19 +216,19 @@ The `/api/v1/audit-logs` endpoint supports the following query parameters:
 
 ## Security Considerations
 
-1. **Access Control**:
+1. __Access Control__:
    - Audit logs are only accessible to authorized roles (ADMIN, SECURITY_OFFICER, AUDITOR)
    - Sensitive data in logs can be sanitized before being returned
 
-2. **Data Protection**:
+2. __Data Protection__:
    - Sensitive data in audit logs (e.g., IP addresses, emails) can be sanitized
    - Audit logs are stored securely with appropriate access controls
 
-3. **Performance**:
+3. __Performance__:
    - Audit logging is designed to have minimal impact on application performance
    - Audit log creation is asynchronous and non-blocking
 
-4. **Reliability**:
+4. __Reliability__:
    - Audit logging failures are handled gracefully and do not affect the main application flow
    - Errors in audit logging are logged to the security event system
 
@@ -240,7 +242,7 @@ const auditLoggingService = require('../services/audit-logging.service');
 async function changeUserRole(userId, newRole) {
   // Perform the role change
   await User.findByIdAndUpdate(userId, { role: newRole });
-  
+
   // Log the sensitive operation
   await auditLoggingService.logSensitiveOperation({
     user: req.user,
@@ -258,7 +260,7 @@ async function changeUserRole(userId, newRole) {
     }
   });
 }
-```
+```bash
 
 ### Querying Audit Logs
 
@@ -268,15 +270,15 @@ const auditLoggingService = require('../services/audit-logging.service');
 async function getUserActivityAudit(userId) {
   // Get all audit logs for the user
   const userLogs = await auditLoggingService.getUserAuditLogs(userId, {
-    from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
+    from: new Date(Date.now() - 30 _ 24 _ 60 _ 60 _ 1000), // Last 30 days
     limit: 100,
     sort: -1, // Most recent first
     sanitize: true
   });
-  
+
   return userLogs;
 }
-```
+```bash
 
 ### Exporting Audit Logs
 
@@ -284,22 +286,22 @@ async function getUserActivityAudit(userId) {
 // In a controller
 async function exportUserAuditLogs(req, res) {
   const { userId, format = 'csv' } = req.body;
-  
+
   // Get logs for the user
   const logs = await auditLoggingService.getUserAuditLogs(userId, {
     limit: 1000,
     sanitize: true
   });
-  
+
   // Format as CSV
   const csv = convertLogsToCSV(logs);
-  
+
   // Send as download
   res.setHeader('Content-Type', 'text/csv');
   res.setHeader('Content-Disposition', `attachment; filename="user-audit-${userId}.csv"`);
   res.send(csv);
 }
-```
+```bash
 
 ## Compliance Mapping
 
@@ -325,4 +327,4 @@ The audit logging system helps meet the following compliance requirements:
 - [x] Document the audit logging system
 - [ ] Create audit log visualization dashboard
 - [ ] Implement automated audit log analysis
-- [ ] Set up audit log retention policies 
+- [ ] Set up audit log retention policies

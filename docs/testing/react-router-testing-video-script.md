@@ -2,19 +2,23 @@
 
 ## Introduction (0:00 - 0:30)
 
-Hello everyone! In this tutorial, we'll be looking at how to test React components that use React Router hooks in the AeroSuite application.
+Hello everyone! In this tutorial, we'll be looking at how to test React components that use React
+Router hooks in the AeroSuite application.
 
-If you've tried to test components that use hooks like `useNavigate`, `useParams`, or other React Router hooks, you might have encountered errors like this:
+If you've tried to test components that use hooks like `useNavigate`, `useParams`, or other React
+Router hooks, you might have encountered errors like this:
 
-```
+```bash
 Error: useNavigate() may be used only in the context of a <Router> component.
-```
+```bash
 
 Today, we'll show you how to solve this problem using our new testing utilities.
 
 ## The Problem (0:30 - 1:30)
 
-Let's start by understanding the problem. React Router hooks need to be used within a Router context. When we render a component in isolation during testing, that context is missing, which causes the error.
+Let's start by understanding the problem. React Router hooks need to be used within a Router
+context. When we render a component in isolation during testing, that context is missing, which
+causes the error.
 
 Let's look at a typical test file:
 
@@ -29,7 +33,7 @@ describe('CustomerDetail', () => {
     expect(screen.getByText(/customer/i)).toBeInTheDocument();
   });
 });
-```
+```bash
 
 If `CustomerDetail` uses React Router hooks, this test will fail because there's no Router context.
 
@@ -59,7 +63,7 @@ describe('CustomerDetail', () => {
     expect(screen.getByText(/customer/i)).toBeInTheDocument();
   });
 });
-```
+```bash
 
 Notice how we've replaced `render` with `renderWithRouterAndTheme` and added some options:
 - `path` defines the route pattern with parameter placeholders
@@ -70,7 +74,8 @@ Notice how we've replaced `render` with `renderWithRouterAndTheme` and added som
 
 How do you know which utility to use? It depends on what your component needs:
 
-1. If your component uses React Router hooks like `useNavigate` or `useParams`, use `renderWithRouter`
+1. If your component uses React Router hooks like `useNavigate` or `useParams`, use
+`renderWithRouter`
 2. If your component uses Material-UI Theme hooks like `useTheme`, use `renderWithTheme`
 3. If your component uses both, use `renderWithRouterAndTheme`
 
@@ -93,7 +98,7 @@ renderWithRouterAndTheme(<ComplexComponent />, {
   route: '/dashboard',
   initialEntries: ['/dashboard']
 });
-```
+```bash
 
 ## Route Parameters (4:00 - 5:00)
 
@@ -111,7 +116,7 @@ renderWithRouter(<CustomerDetail />, {
   route: '/customers/123',
   initialEntries: ['/customers/123']
 });
-```
+```bash
 
 This will make the `id` parameter available to your component via `useParams()`.
 
@@ -122,7 +127,7 @@ We've also created scripts to help automate the process of fixing tests:
 ```bash
 cd client
 ./scripts/fix-router-tests.sh
-```
+```bash
 
 This script offers three modes:
 1. Interactive mode: Fix tests one by one with confirmation
@@ -152,7 +157,8 @@ Here are some best practices for testing React Router components:
 
 ## Conclusion (7:30 - 8:00)
 
-That's it! You now know how to test React components that use React Router hooks in the AeroSuite application.
+That's it! You now know how to test React components that use React Router hooks in the AeroSuite
+application.
 
 Remember, you can find more information in our documentation:
 - The React Router Testing documentation in `docs/testing/react-router-testing.md`
@@ -161,4 +167,4 @@ Remember, you can find more information in our documentation:
 
 If you have any questions, feel free to reach out to the team.
 
-Thanks for watching! 
+Thanks for watching!

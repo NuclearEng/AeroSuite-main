@@ -4,13 +4,15 @@ This document outlines the API versioning strategy for the AeroSuite application
 
 ## Overview
 
-API versioning allows us to evolve our API while maintaining backward compatibility for existing clients. This strategy ensures a smooth transition for clients when we introduce breaking changes.
+API versioning allows us to evolve our API while maintaining backward compatibility for existing
+clients. This strategy ensures a smooth transition for clients when we introduce breaking changes.
 
 ## Version Format
 
 API versions follow a simple format: `v{major}`. For example: `v1`, `v2`, etc.
 
-We increment the major version number only when introducing breaking changes. Breaking changes include:
+We increment the major version number only when introducing breaking changes. Breaking changes
+include:
 
 - Removing or renaming endpoints
 - Removing or renaming fields in responses
@@ -22,10 +24,10 @@ We increment the major version number only when introducing breaking changes. Br
 
 We support multiple versioning mechanisms to accommodate different client needs:
 
-1. **URL Path Prefix** (Primary): `/api/v1/users`, `/api/v2/users`
-2. **Custom Header**: `X-API-Version: v1`
-3. **Accept Header**: `Accept: application/json; version=1`
-4. **Query Parameter**: `?api-version=v1`
+1. __URL Path Prefix__ (Primary): `/api/v1/users`, `/api/v2/users`
+2. __Custom Header__: `X-API-Version: v1`
+3. __Accept Header__: `Accept: application/json; version=1`
+4. __Query Parameter__: `?api-version=v1`
 
 If no version is specified, the client will receive the default version (currently `v1`).
 
@@ -33,9 +35,10 @@ If no version is specified, the client will receive the default version (current
 
 Each API version goes through the following lifecycle stages:
 
-1. **Active**: The version is fully supported and recommended for use.
-2. **Deprecated**: The version is still available but will be removed in the future. Clients should migrate to a newer version.
-3. **Sunset**: The version is no longer available. All clients must use a newer version.
+1. __Active__: The version is fully supported and recommended for use.
+2. __Deprecated__: The version is still available but will be removed in the future. Clients should
+migrate to a newer version.
+3. __Sunset__: The version is no longer available. All clients must use a newer version.
 
 When a version is deprecated, we provide the following information to clients:
 - Warning HTTP header (`Warning: 299 - "Deprecated API Version"`)
@@ -76,7 +79,7 @@ const response = await axios.get('/api/users', {
 
 // Query Parameter
 const response = await axios.get('/api/users?api-version=v1');
-```
+```bash
 
 ### Using the Versioned API Service
 
@@ -94,7 +97,7 @@ const users = await versionedApi.get('/v2/users');
 // Change default version for all requests
 versionedApi.setVersion('v2');
 const users = await versionedApi.get('/users'); // Uses v2
-```
+```bash
 
 ## Server Implementation
 
@@ -115,7 +118,7 @@ router.use('/v1', versionRoute(['v1']), v1Routes);
 
 // Routes for v2
 router.use('/v2', versionRoute(['v2']), v2Routes);
-```
+```bash
 
 ## Migration Guidelines
 
@@ -134,7 +137,7 @@ Clients can discover available API versions by making a GET request to `/api`:
 ```javascript
 const response = await axios.get('/api');
 console.log(response.data.supportedVersions);
-```
+```bash
 
 This returns metadata about all available versions, including their status and lifecycle dates.
 
@@ -145,4 +148,4 @@ This returns metadata about all available versions, including their status and l
 - Maintain backward compatibility as much as possible
 - Document all changes clearly
 - Provide migration paths for clients
-- Consider client update cycles when setting deprecation dates 
+- Consider client update cycles when setting deprecation dates

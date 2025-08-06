@@ -7,7 +7,8 @@ This directory contains scripts for managing task traceability in the AeroSuite 
 ### Enhanced Task Reference Manager
 `enhanced-task-reference.js`
 
-This tool helps maintain task references in code files and generates visualizations of task-to-code relationships.
+This tool helps maintain task references in code files and generates visualizations of task-to-code
+relationships.
 
 ```bash
 # Interactive mode (select a task and add references)
@@ -21,7 +22,7 @@ node scripts/task-management/enhanced-task-reference.js --visualize-only
 
 # Process a specific task
 node scripts/task-management/enhanced-task-reference.js TS123
-```
+```bash
 
 ### Git Hooks Setup
 `setup-git-hooks.js`
@@ -30,7 +31,7 @@ Sets up Git hooks for enforcing task traceability.
 
 ```bash
 node scripts/task-management/setup-git-hooks.js
-```
+```bash
 
 ### Task Metrics Dashboard
 `task-metrics-dashboard.js`
@@ -39,7 +40,7 @@ Generates a metrics dashboard showing task completion progress, code coverage, a
 
 ```bash
 node scripts/task-management/task-metrics-dashboard.js
-```
+```bash
 
 ### JIRA Synchronization
 `task-jira-sync.js`
@@ -58,7 +59,7 @@ node scripts/task-management/task-jira-sync.js --export
 
 # Import tasks from JIRA
 node scripts/task-management/task-jira-sync.js --import
-```
+```bash
 
 ## Git Hooks
 
@@ -94,4 +95,4 @@ The scripts generate the following reports in the `reports/task-management` dire
 For more information about the task traceability system, see:
 
 - [Task Traceability](../../docs/task-traceability.md): Overview of the traceability system
-- [JIRA Integration](../../docs/jira-integration.md): Details on JIRA synchronization 
+- [JIRA Integration](../../docs/jira-integration.md): Details on JIRA synchronization

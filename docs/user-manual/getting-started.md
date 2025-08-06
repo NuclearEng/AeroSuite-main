@@ -1,25 +1,26 @@
 # Getting Started with AeroSuite
 
-This guide will help you get up and running with AeroSuite quickly. Follow these steps to set up your account and learn the basics of the platform.
+This guide will help you get up and running with AeroSuite quickly. Follow these steps to set up
+your account and learn the basics of the platform.
 
 ## System Requirements
 
 AeroSuite is a web-based application that works on modern web browsers:
 
-- **Web Browsers**: 
+- __Web Browsers__:
   - Google Chrome 90+
   - Mozilla Firefox 88+
   - Microsoft Edge 90+
   - Apple Safari 14+
 
-- **Screen Resolution**: 
+- __Screen Resolution__:
   - Minimum: 1366 x 768
   - Recommended: 1920 x 1080 or higher
 
-- **Internet Connection**: 
+- __Internet Connection__:
   - Broadband connection (1 Mbps or faster)
 
-- **Mobile Devices**: 
+- __Mobile Devices__:
   - iOS 14+ or Android 10+
   - Responsive design works on tablets and smartphones
 
@@ -57,15 +58,17 @@ AeroSuite is a web-based application that works on modern web browsers:
 
 ## Two-Factor Authentication (2FA)
 
-If your organization has enabled two-factor authentication, you'll need to complete this step after entering your credentials:
+If your organization has enabled two-factor authentication, you'll need to complete this step after
+entering your credentials:
 
 ### Setting Up 2FA (First Time)
 
 1. After logging in, you'll be prompted to set up 2FA
 2. Choose your preferred method:
-   - **Authenticator App**: Scan the QR code with Google Authenticator, Microsoft Authenticator, or a similar app
-   - **SMS Authentication**: Enter your mobile number to receive codes via text message
-   - **Email Authentication**: Use your registered email address to receive codes
+   - __Authenticator App__: Scan the QR code with Google Authenticator, Microsoft Authenticator, or
+a similar app
+   - __SMS Authentication__: Enter your mobile number to receive codes via text message
+   - __Email Authentication__: Use your registered email address to receive codes
 
 3. Follow the on-screen instructions to complete setup
 4. Store your backup codes in a secure location
@@ -82,9 +85,9 @@ After logging in, you'll see the main interface with these key elements:
 
 ### Navigation
 
-- **Top Navigation Bar**: Contains search function, notifications, and user profile menu
-- **Side Navigation**: Provides access to all main modules of the application
-- **Breadcrumb Navigation**: Shows your current location in the application hierarchy
+- __Top Navigation Bar__: Contains search function, notifications, and user profile menu
+- __Side Navigation__: Provides access to all main modules of the application
+- __Breadcrumb Navigation__: Shows your current location in the application hierarchy
 
 ### Dashboard
 
@@ -116,18 +119,19 @@ To access and update your profile:
 
 ## Automated Multi-Agent QA & Audit System
 
-AeroSuite automatically runs a suite of expert agents on every code update and regularly in production. These agents:
+AeroSuite automatically runs a suite of expert agents on every code update and regularly in
+production. These agents:
 - Check for code quality, security, compliance, and best-in-class UX/UI
 - Run real tests, linting, accessibility, and security scans
 - Learn from previous results to focus on unresolved issues
 - Provide clear, actionable feedback to users and admins
 
-**How to interpret results:**
+__How to interpret results:__
 - Green status: All agents passed, system is healthy
 - Warnings: Some agents found issues—review details in the QA/Audit dashboard or ask your admin
 - Red status: Critical issues found—immediate attention required
 
-**Where to find results:**
+__Where to find results:__
 - QA/Audit dashboard in the app
 - Developer/admins: see terminal output from orchestrator runs
 
@@ -137,65 +141,85 @@ This system ensures AeroSuite remains secure, reliable, and user-friendly at all
 
 If you need assistance while using AeroSuite:
 
-- **In-App Help**: Click the "?" icon in the top navigation bar
-- **Tooltips**: Hover over icons and buttons for helpful tooltips
-- **User Manual**: Access the full user manual from the help menu
-- **Support**: Contact support through the help menu or at support@aerosuite.example.com
+- __In-App Help__: Click the "?" icon in the top navigation bar
+- __Tooltips__: Hover over icons and buttons for helpful tooltips
+- __User Manual__: Access the full user manual from the help menu
+- __Support__: Contact support through the help menu or at support@aerosuite.example.com
 
 ## Next Steps
 
-Now that you're logged in and familiar with the basic interface, here are some recommended next steps:
+Now that you're logged in and familiar with the basic interface, here are some recommended next
+steps:
 
 1. [Explore the Dashboard](./dashboard.md) to understand the available metrics and widgets
 2. Learn about [Supplier Management](./features/supplier-management.md) if you work with suppliers
 3. Check out [Inspection Management](./features/inspection-management.md) if you conduct inspections
-4. Review [User Settings and Preferences](./features/user-settings.md) to personalize your experience
+4. Review [User Settings and Preferences](./features/user-settings.md) to personalize your
+experience
 
 ---
 
-*If you encounter any issues during the login process, please contact your system administrator or the AeroSuite support team.* 
+_If you encounter any issues during the login process, please contact your system administrator or
+the AeroSuite support team._
 
 ## Multi-Agent QA & Audit System
 
 ### Summary for the Team
 
-**AeroSuite now features a best-in-class, memory-driven multi-agent QA, audit, and improvement system.**  
-This system leverages specialized agents for architecture, security, test automation, QA, DevOps, product logic, UX/UI, compliance, and human psychology. The orchestrator coordinates all agents, prioritizes based on memory (previous failures), and aggregates results for every module and the entire application. All checks are automated and run on every code update, pre-push, and CI/CD event, with persistent memory for adaptive improvement and human-in-the-loop review for unresolved issues.
+__AeroSuite now features a best-in-class, memory-driven multi-agent QA, audit, and improvement
+system.__
+This system leverages specialized agents for architecture, security, test automation, QA, DevOps,
+product logic, UX/UI, compliance, and human psychology. The orchestrator coordinates all agents,
+prioritizes based on memory (previous failures), and aggregates results for every module and the
+entire application. All checks are automated and run on every code update, pre-push, and CI/CD
+event, with persistent memory for adaptive improvement and human-in-the-loop review for unresolved
+issues.
 
-**Key Benefits:**
+__Key Benefits:__
 - Continuous, automated QA, security, and UX checks
 - Adaptive focus on unresolved or high-priority issues
 - Best-in-class user experience and psychological engagement
 - Results surfaced in dashboards and available for developer/admin review
 - Human review triggered for critical or persistent issues
 
-**How to Run:**
+__How to Run:__
 ```sh
 npx ts-node automation/orchestrator.ts --modules=Login,Reports,Settings,Suppliers
-```
-Agents will run real checks (lint, test, coverage, a11y, security, infra, etc.) for each module and globally, reporting results and persisting findings for adaptive improvement.
+```bash
+Agents will run real checks (lint, test, coverage, a11y, security, infra, etc.) for each module and
+globally, reporting results and persisting findings for adaptive improvement.
 
 ### README and Documentation Updates
 
-- **README.md** now includes a summary of the multi-agent system, orchestrator usage, and links to automation details.
-- **docs/README.md** and **docs/user-manual/index.md** reference the new system and its benefits.
-- **automation/README.md** documents all agent roles, including the new UX/UI and Human Psychology agents, and explains how to interpret orchestrator results.
-- **docs/user-manual/getting-started.md** and **docs/user-manual/roles/quality-manager.md** explain how users and quality managers can view, interpret, and act on agent results.
+- __README.md__ now includes a summary of the multi-agent system, orchestrator usage, and links to
+automation details.
+- __docs/README.md__ and __docs/user-manual/index.md__ reference the new system and its benefits.
+- __automation/README.md__ documents all agent roles, including the new UX/UI and Human Psychology
+agents, and explains how to interpret orchestrator results.
+- __docs/user-manual/getting-started.md__ and __docs/user-manual/roles/quality-manager.md__ explain
+how users and quality managers can view, interpret, and act on agent results.
 
 ### User Manual Additions
 
-**New Section: Multi-Agent QA & Audit System**
+__New Section: Multi-Agent QA & Audit System__
 - Explains the purpose, benefits, and operation of the multi-agent system.
-- Describes how users can view results, interpret agent findings, and leverage the system for continuous improvement.
-- Details on how to interpret green/yellow/red statuses and where to find results (QA/Audit dashboard, orchestrator output).
+- Describes how users can view results, interpret agent findings, and leverage the system for
+continuous improvement.
+- Details on how to interpret green/yellow/red statuses and where to find results (QA/Audit
+dashboard, orchestrator output).
 
 ### Next Steps for the Team
 
-- **Developers/Admins:** Use the orchestrator to run all agents on every code update or PR. Review results and address any flagged issues.
-- **Quality Managers:** Monitor the QA/Audit dashboard for agent findings and use them to drive corrective actions.
-- **UX/UI and Product Teams:** Collaborate with the new UX/UI and Human Psychology agents to ensure best-in-class user experience and engagement.
-- **All Users:** Benefit from a continuously improving, secure, and user-friendly AeroSuite platform.
+- __Developers/Admins:__ Use the orchestrator to run all agents on every code update or PR. Review
+results and address any flagged issues.
+- __Quality Managers:__ Monitor the QA/Audit dashboard for agent findings and use them to drive
+corrective actions.
+- __UX/UI and Product Teams:__ Collaborate with the new UX/UI and Human Psychology agents to ensure
+best-in-class user experience and engagement.
+- __All Users:__ Benefit from a continuously improving, secure, and user-friendly AeroSuite
+platform.
 
 ---
 
-**If you need further quick guides, role-based instructions, or want to expand the user manual with agent-specific workflows, let me know!** 
+__If you need further quick guides, role-based instructions, or want to expand the user manual with
+agent-specific workflows, let me know!__

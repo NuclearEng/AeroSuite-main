@@ -1,0 +1,116 @@
+# React Router Test Fixer
+
+This directory contains scripts to help fix React Router testing issues in the AeroSuite 
+application.
+
+## Overview
+
+The React Router Test Fixer is a set of scripts that help you update component tests to use the new 
+testing utilities for React Router and Material-UI Theme. These scripts can identify components 
+that use React Router hooks or Material-UI Theme hooks and update their tests to use the 
+appropriate wrapper components.
+
+## Available Scripts
+
+### `fix-router-tests.sh`
+
+This is the main script that provides a simple interface to run the test fixing scripts. It offers 
+three modes:
+
+1. __Interactive mode__: Fix tests one by one with confirmation for each file
+2. __Batch mode__: Fix all tests at once without confirmation
+3. __Directory mode__: Fix tests in a specific directory
+
+### `apply-router-test-fixes.js`
+
+This script analyzes test files and suggests changes to use the new testing utilities. It prompts 
+for confirmation before applying changes to each file.
+
+### `batch-fix-router-tests.js`
+
+This script applies the React Router testing utilities to multiple test files without requiring 
+confirmation for each file. It creates backups of the original files before making changes.
+
+## Usage
+
+### Using the Shell Script
+
+1. Open a terminal and navigate to the client directory
+2. Run the script: `./scripts/fix-router-tests.sh`
+3. Follow the prompts to select the mode you want to use
+
+### Using the Node Scripts Directly
+
+#### Interactive Mode
+
+```bash
+node scripts/apply-router-test-fixes.js
+```bash
+
+#### Batch Mode
+
+```bash
+node scripts/batch-fix-router-tests.js
+```bash
+
+#### Directory Mode
+
+```bash
+node scripts/batch-fix-router-tests.js "src/pages/customers/__/*.test.{js,jsx,ts,tsx}"
+```bash
+
+## What the Scripts Do
+
+The scripts perform the following actions:
+
+1. Analyze test files to identify components that use React Router hooks or Material-UI Theme hooks
+2. Add the appropriate import statements for the testing utilities
+3. Replace `render` calls with the appropriate wrapper function:
+   - `renderWithRouter` for components that use React Router hooks
+   - `renderWithTheme` for components that use Material-UI Theme hooks
+   - `renderWithRouterAndTheme` for components that use both
+4. Add the task reference comment to the test file
+
+## Examples
+
+### Before
+
+```jsx
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import CustomerDetail from './CustomerDetail';
+
+describe('CustomerDetail', () => {
+  it('renders without crashing', () => {
+    render(<CustomerDetail />);
+    expect(screen.getByText(/customer/i)).toBeInTheDocument();
+  });
+});
+```bash
+
+### After
+
+```jsx
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { renderWithRouterAndTheme } from '../../test-utils/combined-wrapper';
+import CustomerDetail from './CustomerDetail';
+
+// Task: DEV004 - Fix component tests for React Router
+describe('CustomerDetail', () => {
+  it('renders without crashing', () => {
+    renderWithRouterAndTheme(<CustomerDetail />, {
+      path: '/path',
+      route: '/path',
+      initialEntries: ['/path']
+    });
+    expect(screen.getByText(/customer/i)).toBeInTheDocument();
+  });
+});
+```bash
+
+## Notes
+
+- The scripts create backups of the original files before making changes
+- You may need to manually adjust the path, route, and initialEntries values after the script runs
+- The scripts add the task reference comment to help track which files have been updated

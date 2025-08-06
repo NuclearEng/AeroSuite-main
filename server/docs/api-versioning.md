@@ -4,36 +4,38 @@ This document describes the API versioning strategy implemented in the AeroSuite
 
 ## Versioning Strategy
 
-AeroSuite uses a robust API versioning strategy that allows clients to specify which version of the API they want to use. This ensures backward compatibility while allowing the API to evolve.
+AeroSuite uses a robust API versioning strategy that allows clients to specify which version of the
+API they want to use. This ensures backward compatibility while allowing the API to evolve.
 
 ### Version Format
 
 API versions follow a simplified semantic versioning format:
 
-- **Major versions** (v1, v2): Represent significant changes that may include breaking changes
-- **Minor versions** (v1.1, v2.1): Represent backward-compatible feature additions within a major version
+- __Major versions__ (v1, v2): Represent significant changes that may include breaking changes
+- __Minor versions__ (v1.1, v2.1): Represent backward-compatible feature additions within a major
+version
 
 ### Specifying API Version
 
 Clients can specify which API version to use in several ways (in order of precedence):
 
-1. **URL Path**: Include the version in the URL path
+1. __URL Path__: Include the version in the URL path
    ```
    GET /api/v1/customers
    GET /api/v2.1/customers
    ```
 
-2. **Custom Header**: Use the `X-API-Version` header
+2. __Custom Header__: Use the `X-API-Version` header
    ```
    X-API-Version: v1
    ```
 
-3. **Accept Header**: Use content negotiation with vendor-specific media type
+3. __Accept Header__: Use content negotiation with vendor-specific media type
    ```
    Accept: application/vnd.aerosuite.v1+json
    ```
 
-4. **Query Parameter**: Use the `api-version` query parameter
+4. __Query Parameter__: Use the `api-version` query parameter
    ```
    GET /api/customers?api-version=v1
    ```
@@ -42,16 +44,16 @@ If no version is specified, the default version will be used (currently `v1`).
 
 ### Version Compatibility
 
-- **Major versions** (v1 → v2): May contain breaking changes
-- **Minor versions** (v1 → v1.1): Backward compatible within the same major version
+- __Major versions__ (v1 → v2): May contain breaking changes
+- __Minor versions__ (v1 → v1.1): Backward compatible within the same major version
 
 ## Version Lifecycle
 
 Each API version goes through the following lifecycle:
 
-1. **Active**: The version is fully supported
-2. **Deprecated**: The version is still available but will be removed in the future
-3. **Sunset**: The version is no longer available
+1. __Active__: The version is fully supported
+2. __Deprecated__: The version is still available but will be removed in the future
+3. __Sunset__: The version is no longer available
 
 When a version is deprecated, the following headers are included in responses:
 
@@ -91,73 +93,73 @@ The following endpoints are available for API version management:
 
 ### Get All Versions
 
-```
+```bash
 GET /api/versions
-```
+```bash
 
 Returns a list of all available API versions and their status.
 
 ### Get Version Families
 
-```
+```bash
 GET /api/versions/families
-```
+```bash
 
 Returns API versions organized by families (major versions and their minor versions).
 
 ### Get Version Details
 
-```
+```bash
 GET /api/versions/{version}
-```
+```bash
 
 Returns detailed information about a specific API version.
 
 ### Get Version Features
 
-```
+```bash
 GET /api/versions/{version}/features
-```
+```bash
 
 Returns a list of features available in a specific API version.
 
 ### Check Version Compatibility
 
-```
+```bash
 GET /api/versions/compatibility/{clientVersion}/{serverVersion}
-```
+```bash
 
 Checks compatibility between client and server versions.
 
 ### Get Migration Guide
 
-```
+```bash
 GET /api/versions/migration/{fromVersion}/{toVersion}
-```
+```bash
 
 Returns a migration guide for moving from one API version to another.
 
 ### Get Feature Information
 
-```
+```bash
 GET /api/versions/feature/{featureId}
-```
+```bash
 
 Returns information about which versions support a specific feature.
 
 ### Get Latest Version
 
-```
+```bash
 GET /api/versions/latest
-```
+```bash
 
 Returns the latest API version.
 
 ### Get Latest Version in a Family
 
-```
+```bash
 GET /api/versions/latest/{majorVersion}
-```
+```bash
 
 Returns the latest version within a major version family.
 
@@ -172,8 +174,9 @@ When upgrading between API versions, please refer to the migration guides:
 
 ## Best Practices
 
-1. **Specify a version explicitly**: Always specify the API version you want to use.
-2. **Use feature detection**: Check if a feature is available before using it.
-3. **Follow migration guides**: When upgrading to a new version, follow the migration guide.
-4. **Monitor deprecation notices**: Watch for deprecation headers in API responses.
-5. **Test with multiple versions**: Test your client with different API versions to ensure compatibility. 
+1. __Specify a version explicitly__: Always specify the API version you want to use.
+2. __Use feature detection__: Check if a feature is available before using it.
+3. __Follow migration guides__: When upgrading to a new version, follow the migration guide.
+4. __Monitor deprecation notices__: Watch for deprecation headers in API responses.
+5. __Test with multiple versions__: Test your client with different API versions to ensure
+compatibility.

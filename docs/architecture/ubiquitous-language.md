@@ -2,7 +2,10 @@
 
 ## Introduction
 
-This document defines the ubiquitous language for each domain in the AeroSuite application. Ubiquitous language is a common, shared language used by both domain experts and the development team to describe domain concepts and processes. It ensures that everyone has a consistent understanding of the system.
+This document defines the ubiquitous language for each domain in the AeroSuite application.
+Ubiquitous language is a common, shared language used by both domain experts and the development
+team to describe domain concepts and processes. It ensures that everyone has a consistent
+understanding of the system.
 
 ## Supplier Management Domain
 
@@ -10,13 +13,19 @@ This document defines the ubiquitous language for each domain in the AeroSuite a
 |------|------------|
 | Supplier | An organization that provides components, materials, or services to the company. |
 | Supplier Contact | A person who is the point of contact at a supplier organization. |
-| Supplier Qualification | The process and status of verifying a supplier's capability to provide components or services at the required quality level. |
-| Qualification Status | The current status of a supplier's qualification (e.g., "qualified", "provisional", "disqualified"). |
-| Supplier Performance | Metrics and data about a supplier's quality, delivery, and overall performance. |
-| Risk Factor | A specific aspect of a supplier that poses a potential risk (e.g., financial stability, quality issues). |
+| Supplier Qualification | The process and status of verifying a supplier's capability to provide
+components or services at the required quality level. |
+| Qualification Status | The current status of a supplier's qualification (e.g., "qualified",
+"provisional", "disqualified"). |
+| Supplier Performance | Metrics and data about a supplier's quality, delivery, and overall
+performance. |
+| Risk Factor | A specific aspect of a supplier that poses a potential risk (e.g., financial
+stability, quality issues). |
 | Risk Assessment | The process of evaluating potential risks associated with a supplier. |
-| Supplier Category | Classification of suppliers based on the type of products or services they provide. |
-| Supplier Tier | Classification of suppliers based on their importance to the business (e.g., Tier 1, Tier 2). |
+| Supplier Category | Classification of suppliers based on the type of products or services they
+provide. |
+| Supplier Tier | Classification of suppliers based on their importance to the business (e.g., Tier
+1, Tier 2). |
 | Audit | A formal evaluation of a supplier's facilities, processes, and quality systems. |
 
 ## Customer Management Domain
@@ -26,31 +35,39 @@ This document defines the ubiquitous language for each domain in the AeroSuite a
 | Customer | An organization that purchases products or services from the company. |
 | Customer Contact | A person who is the point of contact at a customer organization. |
 | Customer Activity | A record of interaction or transaction with a customer. |
-| Customer Status | The current status of a customer relationship (e.g., "active", "inactive", "prospect"). |
-| Account Manager | The employee responsible for managing the relationship with a specific customer. |
-| Service Level Agreement (SLA) | A formal agreement defining the expected service quality for a customer. |
+| Customer Status | The current status of a customer relationship (e.g., "active", "inactive",
+"prospect"). |
+| Account Manager | The employee responsible for managing the relationship with a specific
+customer. |
+| Service Level Agreement (SLA) | A formal agreement defining the expected service quality for a
+customer. |
 | Customer Segment | Classification of customers based on their industry, size, or other criteria. |
 | Customer Feedback | Comments, suggestions, or complaints received from a customer. |
 | Customer Journey | The series of interactions a customer has with the company over time. |
-| Customer Satisfaction Score | A metric measuring how satisfied a customer is with the company's products or services. |
+| Customer Satisfaction Score | A metric measuring how satisfied a customer is with the company's
+products or services. |
 
 ## Inspection Management Domain
 
 | Term | Definition |
 |------|------------|
-| Inspection | A formal examination of a component, process, or facility to verify compliance with requirements. |
+| Inspection | A formal examination of a component, process, or facility to verify compliance with
+requirements. |
 | Inspection Item | A specific check or verification point within an inspection. |
 | Defect | A non-conformance or issue found during an inspection. |
-| Defect Severity | Classification of defects based on their impact (e.g., "critical", "major", "minor"). |
+| Defect Severity | Classification of defects based on their impact (e.g., "critical", "major",
+"minor"). |
 | Inspection Schedule | Planned timing and resource allocation for inspections. |
 | Inspector | A person qualified to perform inspections. |
-| Inspection Type | Classification of inspections based on their purpose (e.g., "incoming", "in-process", "final"). |
+| Inspection Type | Classification of inspections based on their purpose (e.g., "incoming",
+"in-process", "final"). |
 | Inspection Report | A formal document summarizing the findings of an inspection. |
 | Corrective Action | Action taken to address and resolve a defect or non-conformance. |
 | Preventive Action | Action taken to prevent potential defects or issues from occurring. |
 | Root Cause Analysis | The process of identifying the underlying cause of a defect or issue. |
 | Inspection Attachment | A document, photo, or other file associated with an inspection. |
-| Acceptance Criteria | The standards or requirements that must be met for an inspection item to pass. |
+| Acceptance Criteria | The standards or requirements that must be met for an inspection item to
+pass. |
 
 ## Component Management Domain
 
@@ -60,11 +77,13 @@ This document defines the ubiquitous language for each domain in the AeroSuite a
 | Specification | A technical requirement or characteristic of a component. |
 | Tolerance | The acceptable deviation from a specified value for a component characteristic. |
 | Revision | A version of a component with specific changes from previous versions. |
-| Component Status | The current status of a component in its lifecycle (e.g., "active", "obsolete", "development"). |
+| Component Status | The current status of a component in its lifecycle (e.g., "active",
+"obsolete", "development"). |
 | Component Category | Classification of components based on their function or type. |
 | Component Code | A unique identifier for a component. |
 | Bill of Materials (BOM) | A structured list of components required to build a product. |
-| Component Relationship | A defined connection between components (e.g., parent-child, assembly-part). |
+| Component Relationship | A defined connection between components (e.g., parent-child,
+assembly-part). |
 | Technical Documentation | Drawings, specifications, and other documents describing a component. |
 | Component History | The record of changes and events related to a component over time. |
 | Effectivity Date | The date when a component revision becomes active or official. |
@@ -121,7 +140,8 @@ This document defines the ubiquitous language for each domain in the AeroSuite a
 |------|------------|---------------|
 | Quality | Conformance to requirements and fitness for use. | Shared |
 | Compliance | Adherence to internal or external standards and regulations. | Shared |
-| Traceability | The ability to track the history and location of an item throughout its lifecycle. | Shared |
+| Traceability | The ability to track the history and location of an item throughout its lifecycle.
+| Shared |
 | Workflow | A defined sequence of steps or activities to complete a process. | Shared |
 | Approval | Formal confirmation that something meets requirements or standards. | Shared |
 | Status | The current state of an entity in its lifecycle. | Shared |
@@ -129,17 +149,21 @@ This document defines the ubiquitous language for each domain in the AeroSuite a
 
 ## Language Evolution Process
 
-The ubiquitous language is not static and will evolve as the business and system evolve. To manage this evolution:
+The ubiquitous language is not static and will evolve as the business and system evolve. To manage
+this evolution:
 
-1. **Documentation**: This document should be maintained as the authoritative source of the ubiquitous language.
+1. __Documentation__: This document should be maintained as the authoritative source of the
+ubiquitous language.
 
-2. **Review Process**: Regular reviews should be conducted to ensure the language remains accurate and relevant.
+2. __Review Process__: Regular reviews should be conducted to ensure the language remains accurate
+and relevant.
 
-3. **Change Management**: Changes to the language should be discussed and agreed upon by both domain experts and the development team.
+3. __Change Management__: Changes to the language should be discussed and agreed upon by both
+domain experts and the development team.
 
-4. **Communication**: Changes to the language should be communicated to all stakeholders.
+4. __Communication__: Changes to the language should be communicated to all stakeholders.
 
-5. **Code Alignment**: The codebase should be updated to reflect changes in the ubiquitous language.
+5. __Code Alignment__: The codebase should be updated to reflect changes in the ubiquitous language.
 
 ## Usage Guidelines
 
@@ -151,4 +175,5 @@ The ubiquitous language is not static and will evolve as the business and system
 
 4. Ensure that code entities (classes, methods, variables) reflect the ubiquitous language.
 
-5. When terms have different meanings in different domains, be explicit about which domain's definition is being used. 
+5. When terms have different meanings in different domains, be explicit about which domain's
+definition is being used.

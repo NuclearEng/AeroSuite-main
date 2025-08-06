@@ -1,10 +1,12 @@
 # AeroSuite API Documentation
 
-This document provides a comprehensive guide to the AeroSuite API, including authentication, endpoints, request/response formats, and usage examples.
+This document provides a comprehensive guide to the AeroSuite API, including authentication,
+endpoints, request/response formats, and usage examples.
 
 ## Overview
 
-The AeroSuite API provides programmatic access to the AeroSuite quality management system. It enables developers to integrate with:
+The AeroSuite API provides programmatic access to the AeroSuite quality management system. It
+enables developers to integrate with:
 
 - User authentication and authorization
 - Supplier management
@@ -17,7 +19,8 @@ The AeroSuite API provides programmatic access to the AeroSuite quality manageme
 
 ## API Versions
 
-AeroSuite uses versioned APIs to ensure backward compatibility. Currently, the following versions are supported:
+AeroSuite uses versioned APIs to ensure backward compatibility. Currently, the following versions
+are supported:
 
 | Version | Status | Base URL | Release Date | Sunset Date |
 |---------|--------|----------|--------------|-------------|
@@ -28,24 +31,25 @@ AeroSuite uses versioned APIs to ensure backward compatibility. Currently, the f
 
 You can specify the API version in one of the following ways:
 
-1. **URL Path** (recommended): `/api/v1/users`
-2. **Custom Header**: `X-API-Version: v1`
-3. **Accept Header**: `Accept: application/json; version=1`
-4. **Query Parameter**: `?api-version=v1`
+1. __URL Path__ (recommended): `/api/v1/users`
+2. __Custom Header__: `X-API-Version: v1`
+3. __Accept Header__: `Accept: application/json; version=1`
+4. __Query Parameter__: `?api-version=v1`
 
 If no version is specified, the default version (currently v1) will be used.
 
 ## Authentication
 
-AeroSuite API uses JWT (JSON Web Tokens) for authentication. Most endpoints require authentication, except for public endpoints like login and registration.
+AeroSuite API uses JWT (JSON Web Tokens) for authentication. Most endpoints require authentication,
+except for public endpoints like login and registration.
 
 ### Obtaining a Token
 
 To authenticate, you need to obtain a JWT token by sending a POST request to the login endpoint:
 
-```
+```bash
 POST /api/v1/auth/login
-```
+```bash
 
 Request body:
 ```json
@@ -53,7 +57,7 @@ Request body:
   "email": "user@example.com",
   "password": "your-password"
 }
-```
+```bash
 
 Response:
 ```json
@@ -73,46 +77,48 @@ Response:
     "expiresIn": 3600
   }
 }
-```
+```bash
 
 ### Using the Token
 
 Include the token in the Authorization header of your requests:
 
-```
+```bash
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
+```bash
 
 ### Token Refresh
 
-Tokens expire after a certain period (default: 1 hour). You can use the refresh token to get a new token without requiring the user to log in again:
+Tokens expire after a certain period (default: 1 hour). You can use the refresh token to get a new
+token without requiring the user to log in again:
 
-```
+```bash
 POST /api/v1/auth/refresh-token
-```
+```bash
 
 Request body:
 ```json
 {
   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
-```
+```bash
 
 ### Logout
 
 To invalidate a token (e.g., when the user logs out), send a request to:
 
-```
+```bash
 POST /api/v1/auth/logout
-```
+```bash
 
 ## API Keys
 
-For service-to-service integrations, you can use API keys. API keys are long-lived credentials that don't expire like JWTs. To use an API key, include it in the `X-API-Key` header:
+For service-to-service integrations, you can use API keys. API keys are long-lived credentials that
+don't expire like JWTs. To use an API key, include it in the `X-API-Key` header:
 
-```
+```bash
 X-API-Key: your-api-key
-```
+```bash
 
 API keys can be created and managed in the admin console.
 
@@ -133,7 +139,7 @@ All API responses follow a consistent JSON format:
     // Pagination details (if applicable)
   }
 }
-```
+```bash
 
 ### Error Responses
 
@@ -147,7 +153,7 @@ All API responses follow a consistent JSON format:
   "path": "/api/v1/users",
   "requestId": "req-123456"
 }
-```
+```bash
 
 ## Common Parameters
 
@@ -159,9 +165,9 @@ For endpoints that return lists of items, pagination is supported with these que
 - `limit` - Number of items per page (default: 10, max: 100)
 
 Example:
-```
+```bash
 GET /api/v1/suppliers?page=2&limit=20
-```
+```bash
 
 ### Filtering
 
@@ -171,9 +177,9 @@ Many list endpoints support filtering by various fields:
 - Other endpoint-specific filters (e.g., `status`, `type`)
 
 Example:
-```
+```bash
 GET /api/v1/inspections?status=scheduled&type=incoming
-```
+```bash
 
 ### Sorting
 
@@ -183,9 +189,9 @@ Sort results using the `sort` parameter:
 - `sort=-field` for descending order
 
 Example:
-```
+```bash
 GET /api/v1/customers?sort=-created
-```
+```bash
 
 ## Rate Limiting
 
@@ -194,7 +200,8 @@ To protect the API from abuse, rate limiting is applied. The default limits are:
 - 100 requests per 15-minute window for authenticated users
 - 20 requests per 15-minute window for unauthenticated users
 
-When a rate limit is exceeded, the API returns a 429 status code with a `Retry-After` header indicating when you can resume making requests.
+When a rate limit is exceeded, the API returns a 429 status code with a `Retry-After` header
+indicating when you can resume making requests.
 
 ## Core Resources
 
@@ -299,9 +306,9 @@ Endpoints for generating reports and analytics.
 
 For operations on multiple resources, use the batch endpoints:
 
-```
+```bash
 POST /api/v1/batch/suppliers
-```
+```bash
 
 Request body:
 ```json
@@ -324,11 +331,12 @@ Request body:
     }
   ]
 }
-```
+```bash
 
 ### Webhooks
 
-AeroSuite supports webhooks for real-time event notifications. You can configure webhooks in the admin console to receive notifications for events like:
+AeroSuite supports webhooks for real-time event notifications. You can configure webhooks in the
+admin console to receive notifications for events like:
 
 - Inspection created/updated/completed
 - Supplier qualification changes
@@ -346,7 +354,7 @@ Webhook payload example:
     "result": "passed"
   }
 }
-```
+```bash
 
 ## SDK and Client Libraries
 
@@ -375,7 +383,7 @@ const inspection = await client.inspections.create({
   supplierId: '5f8d0f3a7c213e5cb3c3b4e2',
   type: 'incoming'
 });
-```
+```bash
 
 ## API Explorer
 
@@ -415,4 +423,4 @@ We welcome feedback on the API and documentation.
 - Core authentication and resource management
 - Basic inspection workflows
 - Document management
-- Supplier and customer management 
+- Supplier and customer management

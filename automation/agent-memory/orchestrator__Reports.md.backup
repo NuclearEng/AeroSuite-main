@@ -1,0 +1,31 @@
+Prioritizing agents due to previous failures: softwareArchitect, devSecOps, testAutomation, qa, 
+devOps, productLogic, ux, compliance
+Best agent: devOps
+Best answer:
+Previous findings:
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+---
+CI/CD: /bin/sh: cursor: command not found
+
+Health: /bin/sh: cursor: command not found
+
+Logging: /bin/sh: cursor: command not found
+
+Secrets: /bin/sh: cursor: command not found
+
+(Memory updated)
+Agent failed: softwareArchitect
+Agent failed: devSecOps
+Agent failed: testAutomation
+Agent failed: qa
+Agent failed: devOps
+Agent failed: productLogic
+Agent failed: ux
+Agent failed: compliance

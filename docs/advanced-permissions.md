@@ -1,6 +1,8 @@
 # Advanced User Permissions Management in AeroSuite
 
-This document describes the advanced permission management system implemented in AeroSuite. The system provides fine-grained control over user permissions beyond the basic role-based access control.
+This document describes the advanced permission management system implemented in AeroSuite. The
+system provides fine-grained control over user permissions beyond the basic role-based access
+control.
 
 ## Table of Contents
 
@@ -14,7 +16,8 @@ This document describes the advanced permission management system implemented in
 
 ## Overview
 
-The advanced permission system enhances the basic role-based access control (RBAC) with the following features:
+The advanced permission system enhances the basic role-based access control (RBAC) with the
+following features:
 
 - Fine-grained permissions based on action and resource
 - Organized permissions by category
@@ -27,9 +30,9 @@ The advanced permission system enhances the basic role-based access control (RBA
 
 Permissions follow a structured naming convention:
 
-```
+```bash
 category:action:resource
-```
+```bash
 
 For example:
 - `supplier:read` - Permission to view suppliers
@@ -37,29 +40,29 @@ For example:
 - `user:update:permission` - Permission to modify user permissions
 
 Each permission has the following attributes:
-- **Name**: Unique identifier (e.g., `supplier:read`)
-- **Description**: Human-readable description
-- **Category**: Functional area (e.g., supplier, customer, inspection)
-- **Action**: Operation (create, read, update, delete, manage, approve, execute, export)
-- **Resource**: Target of the action (e.g., supplier, inspection, defect)
+- __Name__: Unique identifier (e.g., `supplier:read`)
+- __Description__: Human-readable description
+- __Category__: Functional area (e.g., supplier, customer, inspection)
+- __Action__: Operation (create, read, update, delete, manage, approve, execute, export)
+- __Resource__: Target of the action (e.g., supplier, inspection, defect)
 
 ## Role Management
 
 Roles are collections of permissions. The system comes with five default roles:
 
-1. **Admin**: Full system access
-2. **Manager**: Access to most features except some administrative functions
-3. **Inspector**: Access to inspection features and limited supplier/customer access
-4. **Customer**: Limited access to their own data
-5. **Viewer**: Read-only access to most data
+1. __Admin__: Full system access
+2. __Manager__: Access to most features except some administrative functions
+3. __Inspector__: Access to inspection features and limited supplier/customer access
+4. __Customer__: Limited access to their own data
+5. __Viewer__: Read-only access to most data
 
 Roles have the following attributes:
-- **Name**: Unique identifier
-- **Description**: Human-readable description
-- **Permissions**: Array of permission names
-- **IsSystem**: Flag indicating if the role is a system default (cannot be deleted)
-- **Priority**: Numerical priority (higher takes precedence in case of conflicts)
-- **IsActive**: Flag indicating if the role is active
+- __Name__: Unique identifier
+- __Description__: Human-readable description
+- __Permissions__: Array of permission names
+- __IsSystem__: Flag indicating if the role is a system default (cannot be deleted)
+- __Priority__: Numerical priority (higher takes precedence in case of conflicts)
+- __IsActive__: Flag indicating if the role is active
 
 Custom roles can be created with specific sets of permissions tailored to your organization's needs.
 
@@ -67,13 +70,13 @@ Custom roles can be created with specific sets of permissions tailored to your o
 
 Beyond role-based permissions, individual users can have custom permissions:
 
-- **Granted Permissions**: Additional permissions granted to the user
-- **Denied Permissions**: Permissions explicitly denied to the user (overrides role permissions)
+- __Granted Permissions__: Additional permissions granted to the user
+- __Denied Permissions__: Permissions explicitly denied to the user (overrides role permissions)
 
 The effective permissions for a user are calculated as:
-```
+```bash
 (Role Permissions + Granted Permissions) - Denied Permissions
-```
+```bash
 
 This allows for flexible permission assignment without creating numerous specialized roles.
 
@@ -143,7 +146,7 @@ const response = await fetch('/api/v2/permissions/roles', {
     priority: 70
   })
 });
-```
+```bash
 
 ### Adding Custom Permissions to a User
 
@@ -160,7 +163,7 @@ const response = await fetch(`/api/v2/permissions/users/${userId}`, {
     type: 'granted'
   })
 });
-```
+```bash
 
 ### Denying Specific Permissions to a User
 
@@ -177,24 +180,33 @@ const response = await fetch(`/api/v2/permissions/users/${userId}`, {
     type: 'denied'
   })
 });
-```
+```bash
 
 ## Best Practices
 
-1. **Minimize Custom Roles**: Try to use the default roles when possible, as they are maintained and updated with the system.
+1. __Minimize Custom Roles__: Try to use the default roles when possible, as they are maintained
+and updated with the system.
 
-2. **Use Custom Permissions Sparingly**: Prefer role-based permissions for most users and only add custom permissions when necessary.
+2. __Use Custom Permissions Sparingly__: Prefer role-based permissions for most users and only add
+custom permissions when necessary.
 
-3. **Document Custom Roles**: Keep documentation of any custom roles you create, including what permissions they have and why they were created.
+3. __Document Custom Roles__: Keep documentation of any custom roles you create, including what
+permissions they have and why they were created.
 
-4. **Audit Regularly**: Regularly review user permissions to ensure they are appropriate for each user's current responsibilities.
+4. __Audit Regularly__: Regularly review user permissions to ensure they are appropriate for each
+user's current responsibilities.
 
-5. **Follow Least Privilege Principle**: Grant the minimum permissions needed for a user to perform their job.
+5. __Follow Least Privilege Principle__: Grant the minimum permissions needed for a user to perform
+their job.
 
-6. **Use Denied Permissions Carefully**: Denied permissions override role permissions, which can lead to unexpected behavior if not managed carefully.
+6. __Use Denied Permissions Carefully__: Denied permissions override role permissions, which can
+lead to unexpected behavior if not managed carefully.
 
-7. **Test Permission Changes**: After making significant permission changes, test the system to ensure everything works as expected.
+7. __Test Permission Changes__: After making significant permission changes, test the system to
+ensure everything works as expected.
 
-8. **Consider Role Hierarchy**: When creating custom roles, consider the priority level to establish a clear hierarchy.
+8. __Consider Role Hierarchy__: When creating custom roles, consider the priority level to
+establish a clear hierarchy.
 
-9. **Group Related Permissions**: When assigning custom permissions, group them logically by functional area or task. 
+9. __Group Related Permissions__: When assigning custom permissions, group them logically by
+functional area or task.

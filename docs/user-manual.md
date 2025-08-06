@@ -1,6 +1,7 @@
 # AeroSuite User Manual
 
-> **Note**: The AeroSuite User Manual has been reorganized and expanded. Please visit the [new User Manual](./user-manual/index.md) for the most up-to-date and comprehensive documentation.
+> __Note__: The AeroSuite User Manual has been reorganized and expanded. Please visit the [new User
+Manual](./user-manual/index.md) for the most up-to-date and comprehensive documentation.
 
 ## Quick Links to New Documentation
 
@@ -12,7 +13,8 @@
 
 ---
 
-This page will be maintained temporarily for reference but will be removed in a future update. Please update your bookmarks to the new documentation structure.
+This page will be maintained temporarily for reference but will be removed in a future update.
+Please update your bookmarks to the new documentation structure.
 
 ## Table of Contents
 
@@ -76,24 +78,31 @@ This page will be maintained temporarily for reference but will be removed in a 
 
 ## Introduction
 
-AeroSuite is a comprehensive Quality Management System designed specifically for the aerospace industry. It helps aerospace companies manage suppliers, conduct inspections, track quality metrics, and ensure compliance with industry standards.
+AeroSuite is a comprehensive Quality Management System designed specifically for the aerospace
+industry. It helps aerospace companies manage suppliers, conduct inspections, track quality
+metrics, and ensure compliance with industry standards.
 
-This manual provides detailed instructions on how to use all features of the AeroSuite platform. Whether you're a quality manager, inspector, supplier liaison, or administrator, this guide will help you navigate the system efficiently.
+This manual provides detailed instructions on how to use all features of the AeroSuite platform.
+Whether you're a quality manager, inspector, supplier liaison, or administrator, this guide will
+help you navigate the system efficiently.
 
 ## Getting Started
 
 ### System Requirements
 
-AeroSuite is a web-based application that works on modern web browsers. For optimal performance, we recommend:
+AeroSuite is a web-based application that works on modern web browsers. For optimal performance, we
+recommend:
 
-- **Web Browsers**: Chrome (version 90+), Firefox (version 88+), Edge (version 90+), Safari (version 14+)
-- **Screen Resolution**: Minimum 1366 x 768, recommended 1920 x 1080 or higher
-- **Internet Connection**: Broadband connection (1 Mbps or faster)
-- **Mobile Devices**: iOS 14+ or Android 10+
+- __Web Browsers__: Chrome (version 90+), Firefox (version 88+), Edge (version 90+), Safari
+(version 14+)
+- __Screen Resolution__: Minimum 1366 x 768, recommended 1920 x 1080 or higher
+- __Internet Connection__: Broadband connection (1 Mbps or faster)
+- __Mobile Devices__: iOS 14+ or Android 10+
 
 ### Account Creation
 
-New users can be added to AeroSuite only by system administrators. Once an administrator has created your account, you will receive an email with instructions to set up your password.
+New users can be added to AeroSuite only by system administrators. Once an administrator has
+created your account, you will receive an email with instructions to set up your password.
 
 1. Check your email for an invitation from AeroSuite
 2. Click the "Set Password" link in the email
@@ -106,15 +115,16 @@ New users can be added to AeroSuite only by system administrators. Once an admin
 2. Enter your email address and password
 3. Click "Log In"
 
-If your organization has enabled two-factor authentication, you'll be prompted to complete this step after entering your credentials.
+If your organization has enabled two-factor authentication, you'll be prompted to complete this
+step after entering your credentials.
 
 ### Two-Factor Authentication
 
 AeroSuite supports multiple methods of two-factor authentication (2FA):
 
-- **SMS Authentication**: Receive a verification code via text message
-- **Authentication App**: Use an app like Google Authenticator or Microsoft Authenticator
-- **Email Authentication**: Receive a verification code via email
+- __SMS Authentication__: Receive a verification code via text message
+- __Authentication App__: Use an app like Google Authenticator or Microsoft Authenticator
+- __Email Authentication__: Receive a verification code via email
 
 To set up 2FA:
 1. Go to User Settings > Security
@@ -125,19 +135,21 @@ To set up 2FA:
 
 The AeroSuite interface consists of several key elements:
 
-- **Top Navigation Bar**: Contains the search function, notifications, and user profile menu
-- **Side Navigation**: Provides access to all main modules of the application
-- **Main Content Area**: Displays the active module's content
-- **Action Buttons**: Usually located at the top-right of the content area for primary actions
-- **Breadcrumb Navigation**: Shows your current location in the application hierarchy
+- __Top Navigation Bar__: Contains the search function, notifications, and user profile menu
+- __Side Navigation__: Provides access to all main modules of the application
+- __Main Content Area__: Displays the active module's content
+- __Action Buttons__: Usually located at the top-right of the content area for primary actions
+- __Breadcrumb Navigation__: Shows your current location in the application hierarchy
 
 ## Dashboard
 
-The dashboard is your central hub for monitoring key metrics, viewing recent activities, and accessing commonly used functions.
+The dashboard is your central hub for monitoring key metrics, viewing recent activities, and
+accessing commonly used functions.
 
 ### Widgets and Customization
 
-The dashboard consists of widgets that display different types of information. You can customize your dashboard by:
+The dashboard consists of widgets that display different types of information. You can customize
+your dashboard by:
 
 1. Click the "Customize" button at the top-right of the dashboard
 2. Drag and drop widgets to rearrange them
@@ -170,17 +182,20 @@ The notifications center keeps you informed about important events in the system
 
 ### Dashboard Calendar Widget
 
-AeroSuite now includes a calendar widget on the dashboard. This widget displays scheduled inspections and key events in a familiar monthly calendar view.
+AeroSuite now includes a calendar widget on the dashboard. This widget displays scheduled
+inspections and key events in a familiar monthly calendar view.
 
-- **View upcoming inspections**: See all scheduled inspections and audits at a glance.
-- **Navigate by month**: Use the calendar controls to browse events by month.
-- **Event details**: Click on an event to view more information (future enhancement).
+- __View upcoming inspections__: See all scheduled inspections and audits at a glance.
+- __Navigate by month__: Use the calendar controls to browse events by month.
+- __Event details__: Click on an event to view more information (future enhancement).
 
-The calendar widget helps users stay organized and aware of important dates directly from the dashboard.
+The calendar widget helps users stay organized and aware of important dates directly from the
+dashboard.
 
 ## Supplier Management
 
-The Supplier Management module allows you to track and manage all information related to your suppliers.
+The Supplier Management module allows you to track and manage all information related to your
+suppliers.
 
 ### Adding Suppliers
 
@@ -200,13 +215,13 @@ To add a new supplier:
 
 The supplier detail page provides comprehensive information about each supplier:
 
-- **Overview Tab**: Basic information and key performance indicators
-- **Contacts Tab**: Contact persons and their details
-- **Qualifications Tab**: Certifications and capabilities
-- **Performance Tab**: Historical performance metrics
-- **Risk Tab**: Risk assessment scores and history
-- **Audits Tab**: Audit history and findings
-- **Documents Tab**: Related documentation
+- __Overview Tab__: Basic information and key performance indicators
+- __Contacts Tab__: Contact persons and their details
+- __Qualifications Tab__: Certifications and capabilities
+- __Performance Tab__: Historical performance metrics
+- __Risk Tab__: Risk assessment scores and history
+- __Audits Tab__: Audit history and findings
+- __Documents Tab__: Related documentation
 
 ### Supplier Performance Tracking
 
@@ -265,12 +280,12 @@ To add a new customer:
 
 The customer detail page provides comprehensive information about each customer:
 
-- **Overview Tab**: Basic information and relationship summary
-- **Contacts Tab**: Contact persons and their details
-- **Requirements Tab**: Customer-specific quality requirements
-- **Products Tab**: Products supplied to this customer
-- **Inspections Tab**: Inspection history related to this customer
-- **Documents Tab**: Related documentation
+- __Overview Tab__: Basic information and relationship summary
+- __Contacts Tab__: Contact persons and their details
+- __Requirements Tab__: Customer-specific quality requirements
+- __Products Tab__: Products supplied to this customer
+- __Inspections Tab__: Inspection history related to this customer
+- __Documents Tab__: Related documentation
 
 ### Activity History
 
@@ -562,19 +577,19 @@ Configure data synchronization:
 
 ### Common Issues
 
-**Issue: Login Problems**
+__Issue: Login Problems__
 - Verify your username and password
 - Check if Caps Lock is enabled
 - Try resetting your password
 - Contact your administrator if problems persist
 
-**Issue: Slow Performance**
+__Issue: Slow Performance__
 - Check your internet connection
 - Clear your browser cache
 - Try using a different browser
 - Check if the issue is limited to a specific module
 
-**Issue: Data Not Appearing**
+__Issue: Data Not Appearing__
 - Refresh the page
 - Check your filters and search criteria
 - Verify you have permissions to view the data
@@ -594,20 +609,20 @@ For additional help:
 
 Use keyboard shortcuts to navigate the application more efficiently:
 
-- **Global Shortcuts**
+- __Global Shortcuts__
   - `?`: Show keyboard shortcuts reference
   - `/`: Focus search bar
   - `Esc`: Close dialogs or cancel current action
   - `Ctrl+S`: Save current form or data
 
-- **Navigation Shortcuts**
+- __Navigation Shortcuts__
   - `g d`: Go to Dashboard
   - `g s`: Go to Suppliers
   - `g c`: Go to Customers
   - `g i`: Go to Inspections
   - `g r`: Go to Reports
 
-- **Actions Shortcuts**
+- __Actions Shortcuts__
   - `n s`: New Supplier
   - `n c`: New Customer
   - `n i`: New Inspection
@@ -615,46 +630,51 @@ Use keyboard shortcuts to navigate the application more efficiently:
 
 ### Glossary
 
-**Audit**: A systematic examination of a supplier's quality management system.
+__Audit__: A systematic examination of a supplier's quality management system.
 
-**CAPA**: Corrective Action/Preventive Action, a process for addressing and resolving non-conformances.
+__CAPA__: Corrective Action/Preventive Action, a process for addressing and resolving
+non-conformances.
 
-**Defect**: A non-conformance or deviation from specified requirements.
+__Defect__: A non-conformance or deviation from specified requirements.
 
-**ERP**: Enterprise Resource Planning, a business process management software.
+__ERP__: Enterprise Resource Planning, a business process management software.
 
-**Inspection**: A formal evaluation of product or process conformance to specified requirements.
+__Inspection__: A formal evaluation of product or process conformance to specified requirements.
 
-**NCR**: Non-Conformance Report, a document describing a defect or issue.
+__NCR__: Non-Conformance Report, a document describing a defect or issue.
 
-**RBAC**: Role-Based Access Control, a method of regulating access based on user roles.
+__RBAC__: Role-Based Access Control, a method of regulating access based on user roles.
 
-**Supplier**: An organization that provides products or services to your company.
+__Supplier__: An organization that provides products or services to your company.
 
 ### Release Notes
 
-**Version 2.5.0 (Current)**
+__Version 2.5.0 (Current)__
 - Added custom dashboard widget builder
 - Improved ERP integration capabilities
 - Enhanced real-time notification system
 - Added advanced user permissions management
 
-**Version 2.4.0**
+__Version 2.4.0__
 - Added offline mode capabilities
 - Improved mobile responsiveness
 - Enhanced reporting capabilities
 - Added supplier risk assessment module
 
-**Version 2.3.0**
+__Version 2.3.0__
 - Added component revision tracking
 - Improved inspection photo annotations
 - Enhanced user interface
-- Added support for bulk operations 
+- Added support for bulk operations
 
 ## Payments
 
-AeroSuite now supports secure online payments via Stripe. Users can pay for services, subscriptions, or invoices directly from the application.
+AeroSuite now supports secure online payments via Stripe. Users can pay for services,
+subscriptions, or invoices directly from the application.
 
-- **How to pay:** Click the payment button where available, enter the amount, and follow the Stripe Checkout process.
-- **Security:** All payments are processed securely via Stripe. No sensitive card data is stored by AeroSuite.
-- **Receipts:** After a successful payment, you will be redirected to a confirmation page and receive a receipt via email. 
+- __How to pay:__ Click the payment button where available, enter the amount, and follow the Stripe
+Checkout process.
+- __Security:__ All payments are processed securely via Stripe. No sensitive card data is stored by
+AeroSuite.
+- __Receipts:__ After a successful payment, you will be redirected to a confirmation page and
+receive a receipt via email.

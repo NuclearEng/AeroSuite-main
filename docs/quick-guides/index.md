@@ -4,9 +4,12 @@ These quick reference guides provide concise instructions for common tasks in Ae
 
 ## Available Guides
 
-- [Inspection Quick Guide](inspection-quick-guide.md) - Step-by-step instructions for conducting inspections
-- [Supplier Management Quick Guide](supplier-management-quick-guide.md) - Managing suppliers and their performance
-- [Dashboard Customization Guide](dashboard-customization-guide.md) - Customizing your dashboard with widgets
+- [Inspection Quick Guide](inspection-quick-guide.md) - Step-by-step instructions for conducting
+inspections
+- [Supplier Management Quick Guide](supplier-management-quick-guide.md) - Managing suppliers and
+their performance
+- [Dashboard Customization Guide](dashboard-customization-guide.md) - Customizing your dashboard
+with widgets
 
 ## Coming Soon
 
@@ -30,7 +33,8 @@ For more comprehensive information, please refer to the [complete user manual](.
 
 ## Feedback
 
-If you have suggestions for additional quick guides or improvements to existing ones, please contact:
+If you have suggestions for additional quick guides or improvements to existing ones, please
+contact:
 
 - Email: documentation@aerosuite.com
-- In-app feedback form: Help > Documentation Feedback 
+- In-app feedback form: Help > Documentation Feedback

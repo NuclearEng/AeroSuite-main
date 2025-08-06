@@ -1,10 +1,12 @@
 # Service Discovery for Microservices
 
-This document describes the service discovery system implemented for AeroSuite microservices architecture.
+This document describes the service discovery system implemented for AeroSuite microservices
+architecture.
 
 ## Overview
 
-The service discovery system provides a way for microservices to register themselves and discover other services in the system. It supports:
+The service discovery system provides a way for microservices to register themselves and discover
+other services in the system. It supports:
 
 - Service registration and deregistration
 - Service discovery by name, metadata, and other criteria
@@ -17,22 +19,22 @@ The service discovery system provides a way for microservices to register themse
 
 The service discovery system consists of the following components:
 
-1. **ServiceDiscovery**: Core service discovery functionality
-2. **ServiceDiscoveryClient**: Client for interacting with the service discovery system
-3. **StorageAdapter**: Interface for service registry persistence
-   - **InMemoryStorageAdapter**: In-memory implementation (non-persistent)
-   - **RedisStorageAdapter**: Redis-based implementation
-   - **MongoStorageAdapter**: MongoDB-based implementation
+1. __ServiceDiscovery__: Core service discovery functionality
+2. __ServiceDiscoveryClient__: Client for interacting with the service discovery system
+3. __StorageAdapter__: Interface for service registry persistence
+   - __InMemoryStorageAdapter__: In-memory implementation (non-persistent)
+   - __RedisStorageAdapter__: Redis-based implementation
+   - __MongoStorageAdapter__: MongoDB-based implementation
 
 ## Usage
 
 ### Basic Setup
 
 ```javascript
-const { 
-  ServiceDiscovery, 
-  ServiceDiscoveryClient, 
-  InMemoryStorageAdapter 
+const {
+  ServiceDiscovery,
+  ServiceDiscoveryClient,
+  InMemoryStorageAdapter
 } = require('../core/discovery');
 
 // Create storage adapter
@@ -47,7 +49,7 @@ const discovery = ServiceDiscovery.getInstance({
 
 // Start the service discovery system
 await discovery.start();
-```
+```bash
 
 ### Registering a Service
 
@@ -71,7 +73,7 @@ const serviceClient = new ServiceDiscoveryClient({
 // Register the service
 const serviceId = await serviceClient.register();
 console.log(`Service registered with ID: ${serviceId}`);
-```
+```bash
 
 ### Discovering Services
 
@@ -91,7 +93,7 @@ const apiServices = await discovery.discoverServices(null, {
 const userApiServices = await discovery.discoverServices('user-service', {
   metadata: { type: 'api' }
 });
-```
+```bash
 
 ### Using Load Balancing
 
@@ -109,7 +111,7 @@ const service = await client.getServiceInstance('user-service', {
 
 // Get a service URL with load balancing
 const serviceUrl = await client.getServiceUrl('user-service', '/api/v1/users');
-```
+```bash
 
 ### Filtering Services
 
@@ -127,7 +129,7 @@ const service = await client.getServiceInstance('api-service', {
     version: '2.0.0'
   }
 });
-```
+```bash
 
 ### Updating Service Metadata
 
@@ -137,14 +139,14 @@ await serviceClient.updateMetadata({
   status: 'ready',
   capabilities: ['users', 'auth', 'admin']
 });
-```
+```bash
 
 ### Deregistering a Service
 
 ```javascript
 // Deregister the service
 await serviceClient.deregister();
-```
+```bash
 
 ### Subscribing to Events
 
@@ -167,7 +169,7 @@ discovery.on('service:up', (service) => {
 discovery.on('service:down', (service) => {
   console.log(`Service is down: ${service.name} (${service.id})`);
 });
-```
+```bash
 
 ## Storage Adapters
 
@@ -177,7 +179,7 @@ discovery.on('service:down', (service) => {
 const { InMemoryStorageAdapter } = require('../core/discovery');
 
 const storage = new InMemoryStorageAdapter();
-```
+```bash
 
 ### Redis Storage Adapter
 
@@ -194,7 +196,7 @@ const storage = new RedisStorageAdapter({
   client: redisClient,
   keyPrefix: 'aerosuite:service-discovery:'
 });
-```
+```bash
 
 ### MongoDB Storage Adapter
 
@@ -213,50 +215,58 @@ const storage = new MongoStorageAdapter({
 
 // Initialize indexes
 await storage.initialize();
-```
+```bash
 
 ## Service Information
 
 When registering a service, the following information can be provided:
 
-- **name**: Name of the service (required)
-- **version**: Version of the service (default: '1.0.0')
-- **host**: Host of the service (default: hostname of the machine)
-- **port**: Port of the service
-- **protocol**: Protocol of the service (default: 'http')
-- **metadata**: Additional metadata for the service
+- __name__: Name of the service (required)
+- __version__: Version of the service (default: '1.0.0')
+- __host__: Host of the service (default: hostname of the machine)
+- __port__: Port of the service
+- __protocol__: Protocol of the service (default: 'http')
+- __metadata__: Additional metadata for the service
 
 ## Events
 
 The service discovery system emits the following events:
 
-- **service:registered**: When a service is registered
-- **service:deregistered**: When a service is deregistered
-- **service:updated**: When a service is updated
-- **service:up**: When a service changes status to 'up'
-- **service:down**: When a service changes status to 'down'
-- **discovery:started**: When the discovery system is started
-- **discovery:stopped**: When the discovery system is stopped
+- __service:registered__: When a service is registered
+- __service:deregistered__: When a service is deregistered
+- __service:updated__: When a service is updated
+- __service:up__: When a service changes status to 'up'
+- __service:down__: When a service changes status to 'down'
+- __discovery:started__: When the discovery system is started
+- __discovery:stopped__: When the discovery system is stopped
 
 ## Best Practices
 
-1. **Use persistent storage in production**: Use Redis or MongoDB storage adapters in production environments for persistence and distributed access.
+1. __Use persistent storage in production__: Use Redis or MongoDB storage adapters in production
+environments for persistence and distributed access.
 
-2. **Register on startup, deregister on shutdown**: Services should register themselves on startup and deregister on shutdown to maintain an accurate service registry.
+2. __Register on startup, deregister on shutdown__: Services should register themselves on startup
+and deregister on shutdown to maintain an accurate service registry.
 
-3. **Include relevant metadata**: Include metadata that can be used for filtering and service selection, such as region, capabilities, or instance type.
+3. __Include relevant metadata__: Include metadata that can be used for filtering and service
+selection, such as region, capabilities, or instance type.
 
-4. **Use health monitoring**: Configure appropriate heartbeat intervals and timeout thresholds based on your infrastructure and requirements.
+4. __Use health monitoring__: Configure appropriate heartbeat intervals and timeout thresholds
+based on your infrastructure and requirements.
 
-5. **Handle service unavailability**: Implement circuit breakers and fallback mechanisms when services are unavailable.
+5. __Handle service unavailability__: Implement circuit breakers and fallback mechanisms when
+services are unavailable.
 
-6. **Use load balancing**: Utilize the built-in load balancing capabilities for distributing requests across service instances.
+6. __Use load balancing__: Utilize the built-in load balancing capabilities for distributing
+requests across service instances.
 
-7. **Monitor service discovery events**: Subscribe to service discovery events for monitoring and logging purposes.
+7. __Monitor service discovery events__: Subscribe to service discovery events for monitoring and
+logging purposes.
 
 ## Integration with Service Interfaces
 
-The service discovery system integrates with the existing service interface system (RF022) to provide a complete service management solution:
+The service discovery system integrates with the existing service interface system (RF022) to
+provide a complete service management solution:
 
 ```javascript
 const { ServiceDiscoveryClient } = require('../core/discovery');
@@ -274,8 +284,10 @@ const response = await fetch(`${notificationServiceUrl}/api/v1/notifications`, {
   method: 'POST',
   body: JSON.stringify({ message: 'Hello from supplier service!' })
 });
-```
+```bash
 
 ## Conclusion
 
-The service discovery system provides a robust foundation for building and scaling microservices in the AeroSuite application. It enables services to dynamically discover and communicate with each other, supporting the evolution of the application architecture over time. 
+The service discovery system provides a robust foundation for building and scaling microservices in
+the AeroSuite application. It enables services to dynamically discover and communicate with each
+other, supporting the evolution of the application architecture over time.

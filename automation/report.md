@@ -715,51 +715,58 @@ ux: ❌ - Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_704Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_704Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_205Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_205Z-debug-0.log
 
 (Memory updated)
 devSecOps: ❌ - Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_697Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_697Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_204Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_204Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_441Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_441Z-debug-0.log
 
 (Memory updated)
 testAutomation: ✅ - Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Login
@@ -808,51 +815,58 @@ ux: ❌ - Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_004Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_004Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_244Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_244Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_480Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_480Z-debug-0.log
 
 (Memory updated)
 devSecOps: ❌ - Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_001Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_001Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_245Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_245Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_477Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_477Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_716Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_716Z-debug-0.log
 
 (Memory updated)
 testAutomation: ✅ - Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Reports
@@ -901,51 +915,58 @@ ux: ❌ - Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_327Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_327Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_559Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_559Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_788Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_788Z-debug-0.log
 
 (Memory updated)
 devSecOps: ❌ - Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_324Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_324Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_557Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_557Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_789Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_789Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_022Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_022Z-debug-0.log
 
 (Memory updated)
 testAutomation: ✅ - Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Settings
@@ -994,51 +1015,58 @@ ux: ❌ - Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_549Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_549Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_013Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_013Z-debug-0.log
 
 (Memory updated)
 devSecOps: ❌ - Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_541Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_541Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_012Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_012Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_255Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_255Z-debug-0.log
 
 (Memory updated)
 testAutomation: ✅ - Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Suppliers
@@ -1059,19 +1087,22 @@ Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_704Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_704Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_205Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_205Z-debug-0.log
 
 ---
 Simulate: Simulate UI for Login
@@ -1131,25 +1162,29 @@ Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_697Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_697Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_204Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_204Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_441Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_441Z-debug-0.log
 
 ---
 Vuln: Vulnerability scan for Login
@@ -1194,9 +1229,9 @@ Edge: Edge case analysis for Login
 testAutomation: ✅ - Previous findings:
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Login
@@ -1206,9 +1241,9 @@ Mocks: Mocks/fixtures check for Login
 ---
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Login
@@ -1238,19 +1273,22 @@ Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_004Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_004Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_244Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_244Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_480Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_480Z-debug-0.log
 
 ---
 Simulate: Simulate UI for Reports
@@ -1325,25 +1363,29 @@ Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_001Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_001Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_245Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_245Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_477Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_477Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_716Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_56_716Z-debug-0.log
 
 ---
 Vuln: Vulnerability scan for Reports
@@ -1358,9 +1400,9 @@ CSP: CSP check for Reports
 testAutomation: ✅ - Previous findings:
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Reports
@@ -1370,9 +1412,9 @@ Mocks: Mocks/fixtures check for Reports
 ---
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Reports
@@ -1387,19 +1429,22 @@ Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_327Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_327Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_559Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_559Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_788Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_788Z-debug-0.log
 
 ---
 Simulate: Simulate UI for Settings
@@ -1489,25 +1534,29 @@ Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_324Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_324Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_557Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_557Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_789Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_57_789Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_022Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_022Z-debug-0.log
 
 ---
 Vuln: Vulnerability scan for Settings
@@ -1522,9 +1571,9 @@ CSP: CSP check for Settings
 testAutomation: ✅ - Previous findings:
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Settings
@@ -1534,9 +1583,9 @@ Mocks: Mocks/fixtures check for Settings
 ---
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Settings
@@ -1566,19 +1615,22 @@ Simulate: npm error Missing script: "simulate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_549Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_549Z-debug-0.log
 
 Validate: npm error Missing script: "validate-ui"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
 
 A11y: npm error Missing script: "check-a11y"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_013Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_013Z-debug-0.log
 
 ---
 Simulate: Simulate UI for Suppliers
@@ -1653,25 +1705,29 @@ Vuln: npm error Missing script: "scan-vuln"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_541Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_541Z-debug-0.log
 
 RBAC: npm error Missing script: "check-rbac"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_58_784Z-debug-0.log
 
 Encryption: npm error Missing script: "check-encryption"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_012Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_012Z-debug-0.log
 
 CSP: npm error Missing script: "check-csp"
 npm error
 npm error To see a list of scripts, run:
 npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_255Z-debug-0.log
+npm error A complete log of this run can be found in:
+/Users/tannercoker/.npm/_logs/2025-06-15T04_53_59_255Z-debug-0.log
 
 ---
 Vuln: Vulnerability scan for Suppliers
@@ -1686,9 +1742,9 @@ CSP: CSP check for Suppliers
 testAutomation: ✅ - Previous findings:
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Suppliers
@@ -1698,9 +1754,9 @@ Mocks: Mocks/fixtures check for Suppliers
 ---
 Coverage: No tests found, exiting with code 0
 ----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |       0 |        0 |       0 |       0 |                   
+All files |       0 |        0 |       0 |       0 |
 ----------|---------|----------|---------|---------|-------------------
 
 E2E: E2E placeholder for Suppliers

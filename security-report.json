@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-08-06T03:42:45.363Z",
+  "summary": {
+    "criticalVulnerabilities": 0,
+    "highVulnerabilities": 0,
+    "mediumVulnerabilities": 0,
+    "lowVulnerabilities": 0,
+    "infoFindings": 0
+  },
+  "findings": [],
+  "riskScore": 0,
+  "riskLevel": "None"
+}

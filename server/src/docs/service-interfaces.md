@@ -4,26 +4,28 @@ This document describes the service interfaces implemented in the AeroSuite appl
 
 ## Overview
 
-Service interfaces provide a contract between service consumers and service implementations. They define the methods that a service must implement, allowing for:
+Service interfaces provide a contract between service consumers and service implementations. They
+define the methods that a service must implement, allowing for:
 
-- **Loose coupling**: Consumers depend on interfaces, not implementations
-- **Dependency injection**: Services can be easily replaced or mocked for testing
-- **Standardization**: All services follow the same patterns and conventions
-- **Documentation**: Interfaces clearly define the contract for services
+- __Loose coupling__: Consumers depend on interfaces, not implementations
+- __Dependency injection__: Services can be easily replaced or mocked for testing
+- __Standardization__: All services follow the same patterns and conventions
+- __Documentation__: Interfaces clearly define the contract for services
 
 ## Interface Structure
 
 Each service interface follows a similar structure:
 
-1. **Singleton Pattern**: Each interface is a singleton that can be accessed via `getInstance()`
-2. **Implementation Management**: The interface manages a reference to the implementation
-3. **Method Validation**: The interface validates that implementations provide all required methods
-4. **Proxy Methods**: The interface proxies method calls to the implementation
-5. **Registration**: The interface registers itself and its implementation with the service registry
+1. __Singleton Pattern__: Each interface is a singleton that can be accessed via `getInstance()`
+2. __Implementation Management__: The interface manages a reference to the implementation
+3. __Method Validation__: The interface validates that implementations provide all required methods
+4. __Proxy Methods__: The interface proxies method calls to the implementation
+5. __Registration__: The interface registers itself and its implementation with the service registry
 
 ## Service Registry
 
-The `ServiceRegistry` is a central registry for all service interfaces and implementations. It provides:
+The `ServiceRegistry` is a central registry for all service interfaces and implementations. It
+provides:
 
 - Registration of interfaces and implementations
 - Validation that implementations satisfy their interfaces
@@ -43,7 +45,7 @@ The `ServiceProvider` provides convenient access to services:
 
 Interface for supplier services.
 
-**Required Methods:**
+__Required Methods:__
 - `findById(id)`: Find a supplier by ID
 - `findAll(options)`: Find all suppliers matching the query
 - `create(supplierData)`: Create a new supplier
@@ -53,7 +55,8 @@ Interface for supplier services.
 - `updateContact(supplierId, contactId, contactData)`: Update a supplier contact
 - `removeContact(supplierId, contactId)`: Remove a contact from a supplier
 - `addQualification(supplierId, qualificationData)`: Add a qualification to a supplier
-- `updateQualification(supplierId, qualificationId, qualificationData)`: Update a supplier qualification
+- `updateQualification(supplierId, qualificationId, qualificationData)`: Update a supplier
+qualification
 - `removeQualification(supplierId, qualificationId)`: Remove a qualification from a supplier
 - `search(query, options)`: Search suppliers by name, code, or tags
 - `getByQualification(qualificationType, options)`: Get suppliers by qualification type
@@ -63,7 +66,7 @@ Interface for supplier services.
 
 Interface for customer services.
 
-**Required Methods:**
+__Required Methods:__
 - `findById(id)`: Find a customer by ID
 - `findAll(options)`: Find all customers matching the query
 - `create(customerData)`: Create a new customer
@@ -81,7 +84,7 @@ Interface for customer services.
 
 Interface for inspection services.
 
-**Required Methods:**
+__Required Methods:__
 - `findById(id)`: Find an inspection by ID
 - `findAll(options)`: Find all inspections matching the query
 - `create(inspectionData)`: Create a new inspection
@@ -104,7 +107,7 @@ Interface for inspection services.
 
 Interface for component services.
 
-**Required Methods:**
+__Required Methods:__
 - `findById(id)`: Find a component by ID
 - `findAll(options)`: Find all components matching the query
 - `create(componentData)`: Create a new component
@@ -136,7 +139,7 @@ const customerService = ServiceProvider.getCustomerService();
 // Use the services
 const suppliers = await supplierService.findAll({ limit: 10 });
 const customers = await customerService.findAll({ limit: 10 });
-```
+```bash
 
 ### Using Interfaces Directly
 
@@ -149,7 +152,7 @@ const supplierService = SupplierServiceInterface.getInstance();
 
 // Use the service
 const activeSuppliers = await supplierService.getByStatus('active', { limit: 10 });
-```
+```bash
 
 ### Dependency Injection
 
@@ -158,7 +161,7 @@ class SupplierController {
   constructor(supplierService) {
     this.supplierService = supplierService;
   }
-  
+
   async getSuppliers(req, res) {
     const suppliers = await this.supplierService.findAll(req.query);
     res.json(suppliers);
@@ -167,17 +170,17 @@ class SupplierController {
 
 // Create controller with injected service
 const controller = new SupplierController(ServiceProvider.getSupplierService());
-```
+```bash
 
 ## Best Practices
 
-1. **Use the Service Provider**: For most cases, use the `ServiceProvider` to get services
-2. **Inject Dependencies**: Pass services as dependencies rather than importing them directly
-3. **Depend on Interfaces**: Depend on interfaces, not implementations
-4. **Test with Mocks**: Use the interface to create mock implementations for testing
-5. **Validate Implementations**: Ensure that implementations satisfy their interfaces
-6. **Document Interfaces**: Clearly document the contract for each interface
-7. **Follow Patterns**: Follow the established patterns for creating and using interfaces
+1. __Use the Service Provider__: For most cases, use the `ServiceProvider` to get services
+2. __Inject Dependencies__: Pass services as dependencies rather than importing them directly
+3. __Depend on Interfaces__: Depend on interfaces, not implementations
+4. __Test with Mocks__: Use the interface to create mock implementations for testing
+5. __Validate Implementations__: Ensure that implementations satisfy their interfaces
+6. __Document Interfaces__: Clearly document the contract for each interface
+7. __Follow Patterns__: Follow the established patterns for creating and using interfaces
 
 ## Testing with Service Interfaces
 
@@ -200,7 +203,7 @@ supplierServiceInterface.setImplementation(mockSupplierService);
 // Now all code that uses the supplier service will use the mock
 const result = await supplierServiceInterface.findById('123');
 // result = { id: '123', name: 'Test Supplier' }
-```
+```bash
 
 ## Creating New Service Interfaces
 
@@ -211,4 +214,4 @@ To create a new service interface:
 3. Implement the `isValidImplementation` method to validate implementations
 4. Add proxy methods for each required method
 5. Register the interface with the `ServiceRegistry`
-6. Update the `ServiceProvider` to provide access to the new service 
+6. Update the `ServiceProvider` to provide access to the new service

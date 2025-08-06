@@ -60,20 +60,21 @@ The V2 authentication system enhances security and usability through several key
 
 ## PKCE Authentication Flow
 
-PKCE (Proof Key for Code Exchange) is an extension to the authorization code flow that prevents authorization code interception attacks, making it safer for SPAs.
+PKCE (Proof Key for Code Exchange) is an extension to the authorization code flow that prevents
+authorization code interception attacks, making it safer for SPAs.
 
 ### Login Flow with PKCE
 
-1. **Client generates a code verifier and challenge**:
+1. __Client generates a code verifier and challenge__:
    ```javascript
    // Generate a random code verifier
    const codeVerifier = generateRandomString(64);
-   
+
    // Create code challenge from verifier
    const codeChallenge = await createCodeChallenge(codeVerifier);
    ```
 
-2. **Client sends login request with code challenge**:
+2. __Client sends login request with code challenge__:
    ```javascript
    const response = await fetch('/api/v2/auth/login', {
      method: 'POST',
@@ -87,9 +88,9 @@ PKCE (Proof Key for Code Exchange) is an extension to the authorization code flo
    });
    ```
 
-3. **Server stores the code challenge and returns temporary response**
+3. __Server stores the code challenge and returns temporary response__
 
-4. **Client completes authentication with code verifier**:
+4. __Client completes authentication with code verifier__:
    ```javascript
    const response = await fetch('/api/v2/auth/login', {
      method: 'POST',
@@ -102,17 +103,17 @@ PKCE (Proof Key for Code Exchange) is an extension to the authorization code flo
    });
    ```
 
-5. **Server validates the code verifier against the stored challenge**
+5. __Server validates the code verifier against the stored challenge__
 
 ## Refresh Token Implementation
 
 The refresh token system implements security best practices:
 
-1. **Token Rotation**: Each time a refresh token is used, it's invalidated and a new one is issued
-2. **Multiple Device Support**: Users can be logged in from multiple devices simultaneously
-3. **Session Visibility**: Users can see all active sessions and terminate them
-4. **HttpOnly Cookie**: Refresh tokens are stored as HttpOnly cookies for security
-5. **Expiration**: Refresh tokens expire after 7 days by default
+1. __Token Rotation__: Each time a refresh token is used, it's invalidated and a new one is issued
+2. __Multiple Device Support__: Users can be logged in from multiple devices simultaneously
+3. __Session Visibility__: Users can see all active sessions and terminate them
+4. __HttpOnly Cookie__: Refresh tokens are stored as HttpOnly cookies for security
+5. __Expiration__: Refresh tokens expire after 7 days by default
 
 ## Session Management
 
@@ -147,10 +148,10 @@ async function loginWithPkce(email: string, password: string) {
   // Generate PKCE verifier and challenge
   const codeVerifier = pkceUtils.generateCodeVerifier();
   const codeChallenge = await pkceUtils.generateCodeChallenge(codeVerifier);
-  
+
   // Store code verifier in local storage or memory
   localStorage.setItem('pkce_verifier', codeVerifier);
-  
+
   // First request with code challenge
   const response = await api.post('/v2/auth/login', {
     email,
@@ -158,19 +159,19 @@ async function loginWithPkce(email: string, password: string) {
     codeChallenge,
     codeChallengeMethod: 'S256'
   });
-  
+
   // If 2FA is required, handle that flow...
   if (response.data.twoFactorMethod) {
     return handleTwoFactor(response.data);
   }
-  
+
   // Store tokens
   const { accessToken, refreshToken } = response.data;
   storeTokens(accessToken, refreshToken);
-  
+
   return response.data.user;
 }
-```
+```bash
 
 ### Example: Refresh Token Usage
 
@@ -179,17 +180,17 @@ async function refreshAccessToken() {
   try {
     // Get refresh token from cookie or storage
     const refreshToken = getRefreshToken();
-    
+
     if (!refreshToken) {
       throw new Error('No refresh token available');
     }
-    
+
     const response = await api.post('/v2/auth/refresh-token', { refreshToken });
-    
+
     // Update stored tokens
     const { accessToken, refreshToken: newRefreshToken } = response.data;
     storeTokens(accessToken, newRefreshToken);
-    
+
     return accessToken;
   } catch (error) {
     // Handle token refresh error
@@ -198,13 +199,13 @@ async function refreshAccessToken() {
     return null;
   }
 }
-```
+```bash
 
 ## Upgrade Guide
 
 To upgrade existing clients to use the V2 authentication:
 
-1. Update API endpoint URLs from `/api/auth/*` to `/api/v2/auth/*`
+1. Update API endpoint URLs from `/api/auth/_` to `/api/v2/auth/_`
 2. Implement PKCE for enhanced security
 3. Add refresh token handling
 4. Update token storage mechanism
@@ -212,4 +213,5 @@ To upgrade existing clients to use the V2 authentication:
 
 ## Backward Compatibility
 
-The V1 authentication endpoints will continue to work for a transition period to allow gradual migration of clients to the new system. 
+The V1 authentication endpoints will continue to work for a transition period to allow gradual
+migration of clients to the new system.

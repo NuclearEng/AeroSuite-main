@@ -1,0 +1,217 @@
+# AeroSuite Authentication V2
+
+This document describes the improved authentication system implemented in AeroSuite.
+
+## Overview
+
+The V2 authentication system enhances security and usability through several key improvements:
+
+- PKCE (Proof Key for Code Exchange) support for Single Page Applications
+- Refresh token rotation for enhanced security
+- Session management allowing users to view and terminate active sessions
+- Improved security measures and monitoring
+- Comprehensive login history tracking
+
+## API Endpoints
+
+### Authentication
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v2/auth/login` | POST | Log in with PKCE support |
+| `/api/v2/auth/register` | POST | Register a new user |
+| `/api/v2/auth/refresh-token` | POST | Refresh access token using refresh token |
+| `/api/v2/auth/forgot-password` | POST | Request password reset |
+| `/api/v2/auth/reset-password/:token` | POST | Reset password with token |
+| `/api/v2/auth/me` | GET | Get current user profile |
+| `/api/v2/auth/update-profile` | PUT | Update user profile |
+| `/api/v2/auth/change-password` | POST | Change password |
+| `/api/v2/auth/logout` | POST | Log out and invalidate token |
+
+### Two-Factor Authentication
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v2/auth/2fa/setup` | POST | Set up two-factor authentication |
+| `/api/v2/auth/2fa/verify` | POST | Verify two-factor authentication |
+| `/api/v2/auth/2fa/disable` | POST | Disable two-factor authentication |
+
+### Email Verification
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v2/auth/verify-email/:token` | GET | Verify email with token |
+| `/api/v2/auth/resend-verification` | POST | Resend verification email |
+
+### Session Management
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v2/auth/sessions` | GET | Get all active sessions |
+| `/api/v2/auth/sessions/:sessionId` | DELETE | Terminate a specific session |
+| `/api/v2/auth/sessions` | DELETE | Terminate all sessions except current |
+
+### OAuth
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v2/auth/oauth/:provider` | GET | Redirect to OAuth provider |
+| `/api/v2/auth/oauth/:provider/callback` | GET | OAuth callback handler |
+
+## PKCE Authentication Flow
+
+PKCE (Proof Key for Code Exchange) is an extension to the authorization code flow that prevents 
+authorization code interception attacks, making it safer for SPAs.
+
+### Login Flow with PKCE
+
+1. __Client generates a code verifier and challenge__:
+   ```javascript
+   // Generate a random code verifier
+   const codeVerifier = generateRandomString(64);
+
+   // Create code challenge from verifier
+   const codeChallenge = await createCodeChallenge(codeVerifier);
+   ```
+
+2. __Client sends login request with code challenge__:
+   ```javascript
+   const response = await fetch('/api/v2/auth/login', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({
+       email: 'user@example.com',
+       password: 'password123',
+       codeChallenge: codeChallenge,
+       codeChallengeMethod: 'S256'
+     })
+   });
+   ```
+
+3. __Server stores the code challenge and returns temporary response__
+
+4. __Client completes authentication with code verifier__:
+   ```javascript
+   const response = await fetch('/api/v2/auth/login', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({
+       email: 'user@example.com',
+       password: 'password123',
+       codeVerifier: codeVerifier
+     })
+   });
+   ```
+
+5. __Server validates the code verifier against the stored challenge__
+
+## Refresh Token Implementation
+
+The refresh token system implements security best practices:
+
+1. __Token Rotation__: Each time a refresh token is used, it's invalidated and a new one is issued
+2. __Multiple Device Support__: Users can be logged in from multiple devices simultaneously
+3. __Session Visibility__: Users can see all active sessions and terminate them
+4. __HttpOnly Cookie__: Refresh tokens are stored as HttpOnly cookies for security
+5. __Expiration__: Refresh tokens expire after 7 days by default
+
+## Session Management
+
+The new session management allows users to:
+
+- View all active sessions with device and location information
+- Terminate individual sessions
+- Terminate all sessions except the current one
+- See when each session was created and when it expires
+
+## Security Enhancements
+
+Additional security features include:
+
+- Login attempt tracking
+- IP address and user agent logging
+- Rate limiting for authentication endpoints
+- Password history to prevent reuse of recent passwords
+- Account lockout after multiple failed attempts
+- Comprehensive audit logs for security events
+
+## Client Integration
+
+The frontend can integrate with these authentication improvements using the updated client service.
+
+### Example: Login with PKCE
+
+```typescript
+import * as pkceUtils from '../utils/pkce';
+
+async function loginWithPkce(email: string, password: string) {
+  // Generate PKCE verifier and challenge
+  const codeVerifier = pkceUtils.generateCodeVerifier();
+  const codeChallenge = await pkceUtils.generateCodeChallenge(codeVerifier);
+
+  // Store code verifier in local storage or memory
+  localStorage.setItem('pkce_verifier', codeVerifier);
+
+  // First request with code challenge
+  const response = await api.post('/v2/auth/login', {
+    email,
+    password,
+    codeChallenge,
+    codeChallengeMethod: 'S256'
+  });
+
+  // If 2FA is required, handle that flow...
+  if (response.data.twoFactorMethod) {
+    return handleTwoFactor(response.data);
+  }
+
+  // Store tokens
+  const { accessToken, refreshToken } = response.data;
+  storeTokens(accessToken, refreshToken);
+
+  return response.data.user;
+}
+```bash
+
+### Example: Refresh Token Usage
+
+```typescript
+async function refreshAccessToken() {
+  try {
+    // Get refresh token from cookie or storage
+    const refreshToken = getRefreshToken();
+
+    if (!refreshToken) {
+      throw new Error('No refresh token available');
+    }
+
+    const response = await api.post('/v2/auth/refresh-token', { refreshToken });
+
+    // Update stored tokens
+    const { accessToken, refreshToken: newRefreshToken } = response.data;
+    storeTokens(accessToken, newRefreshToken);
+
+    return accessToken;
+  } catch (error) {
+    // Handle token refresh error
+    console.error('Token refresh failed:', error);
+    logout();
+    return null;
+  }
+}
+```bash
+
+## Upgrade Guide
+
+To upgrade existing clients to use the V2 authentication:
+
+1. Update API endpoint URLs from `/api/auth/_` to `/api/v2/auth/_`
+2. Implement PKCE for enhanced security
+3. Add refresh token handling
+4. Update token storage mechanism
+5. Add session management UI
+
+## Backward Compatibility
+
+The V1 authentication endpoints will continue to work for a transition period to allow gradual 
+migration of clients to the new system.

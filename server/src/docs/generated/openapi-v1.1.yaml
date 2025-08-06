@@ -1,0 +1,1083 @@
+openapi: 3.0.0
+info:
+  title: AeroSuite API V1.1
+  description: >
+    AeroSuite API provides a comprehensive interface for quality management in
+    aerospace manufacturing.
+
+
+    This documentation covers all endpoints, request/response formats, and
+    authentication requirements.
+
+
+
+    ## Version Information
+
+
+    - Status: active
+
+    - Release Date: 2023-03-15
+
+
+    ## Supported Features
+
+
+    - basic-crud
+
+    - pagination
+
+    - sorting
+
+    - field-selection
+
+    - rate-limiting
+
+    - export-data
+  version: v1.1
+  contact:
+    name: AeroSuite Support
+    email: api@aerosuite.com
+  license:
+    name: Proprietary
+servers:
+  - url: /api/v1.1
+    description: AeroSuite API v1.1
+tags:
+  - name: Authentication
+    description: User authentication and authorization endpoints
+  - name: Users
+    description: User management endpoints
+  - name: Suppliers
+    description: Supplier management endpoints
+  - name: Customers
+    description: Customer management endpoints
+  - name: Inspections
+    description: Inspection management endpoints
+  - name: Documents
+    description: Document management endpoints
+  - name: Notifications
+    description: Notification system endpoints
+  - name: Reports
+    description: Reporting and analytics endpoints
+  - name: ERP
+    description: ERP integration endpoints
+  - name: Quality Management
+    description: Quality management system endpoints
+  - name: Monitoring
+    description: System monitoring endpoints
+  - name: AI
+    description: AI-assisted data analysis endpoints
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from the login endpoint
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for service-to-service authentication
+  schemas:
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+        error:
+          type: string
+        statusCode:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        path:
+          type: string
+        requestId:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum:
+            - admin
+            - user
+            - auditor
+            - supplier
+            - customer
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - pending
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    Supplier:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        code:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - pending
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipCode:
+              type: string
+            country:
+              type: string
+        qualifications:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              expiryDate:
+                type: string
+                format: date
+              status:
+                type: string
+        performanceMetrics:
+          type: object
+          properties:
+            qualityScore:
+              type: number
+            deliveryScore:
+              type: number
+            responseTime:
+              type: number
+            overall:
+              type: number
+        riskAssessment:
+          type: object
+          properties:
+            riskLevel:
+              type: string
+              enum:
+                - low
+                - medium
+                - high
+                - critical
+            lastAssessment:
+              type: string
+              format: date
+            factors:
+              type: array
+              items:
+                type: object
+                properties:
+                  factor:
+                    type: string
+                  impact:
+                    type: number
+                  probability:
+                    type: number
+                  score:
+                    type: number
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        code:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - pending
+        contactEmail:
+          type: string
+          format: email
+        contactPhone:
+          type: string
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipCode:
+              type: string
+            country:
+              type: string
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    Inspection:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        status:
+          type: string
+          enum:
+            - scheduled
+            - in-progress
+            - completed
+            - cancelled
+            - failed
+            - passed
+        type:
+          type: string
+          enum:
+            - incoming
+            - in-process
+            - final
+            - audit
+        supplierId:
+          type: string
+          format: uuid
+        customerId:
+          type: string
+          format: uuid
+        partNumber:
+          type: string
+        revision:
+          type: string
+        scheduledDate:
+          type: string
+          format: date-time
+        completionDate:
+          type: string
+          format: date-time
+        assignedTo:
+          type: string
+          format: uuid
+        priority:
+          type: string
+          enum:
+            - low
+            - medium
+            - high
+            - critical
+        checklist:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              result:
+                type: string
+                enum:
+                  - pass
+                  - fail
+                  - pending
+                  - n/a
+              comments:
+                type: string
+        defects:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              description:
+                type: string
+              severity:
+                type: string
+                enum:
+                  - minor
+                  - major
+                  - critical
+              status:
+                type: string
+                enum:
+                  - open
+                  - closed
+                  - pending
+              imageIds:
+                type: array
+                items:
+                  type: string
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              filename:
+                type: string
+              contentType:
+                type: string
+              size:
+                type: number
+              uploadDate:
+                type: string
+                format: date-time
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - info
+            - warning
+            - error
+            - success
+        title:
+          type: string
+        message:
+          type: string
+        recipientId:
+          type: string
+          format: uuid
+        isRead:
+          type: boolean
+        targetEntity:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - inspection
+                - supplier
+                - customer
+                - user
+            id:
+              type: string
+              format: uuid
+        created:
+          type: string
+          format: date-time
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        codeVerifier:
+          type: string
+          description: PKCE code verifier for SPA authentication
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Login successful
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+            refreshToken:
+              type: string
+            user:
+              $ref: "#/components/schemas/User"
+            expiresIn:
+              type: number
+              example: 3600
+            requiresTwoFactor:
+              type: boolean
+              example: false
+    RefreshTokenRequest:
+      type: object
+      required:
+        - refreshToken
+      properties:
+        refreshToken:
+          type: string
+    RefreshTokenResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Token refreshed
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+            refreshToken:
+              type: string
+            expiresIn:
+              type: number
+              example: 3600
+    RegistrationRequest:
+      type: object
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum:
+            - user
+            - supplier
+            - customer
+    RegistrationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Registration successful
+        data:
+          type: object
+          properties:
+            userId:
+              type: string
+              format: uuid
+            verificationRequired:
+              type: boolean
+security:
+  - bearerAuth: []
+  - apiKey: []
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Log in a user
+      description: Authenticates a user and returns a JWT token and refresh token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/refresh-token:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh authentication token
+      description: Uses a refresh token to obtain a new JWT token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshTokenRequest"
+      responses:
+        "200":
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshTokenResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Invalid or expired refresh token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      description: Creates a new user account
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistrationRequest"
+      responses:
+        "201":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistrationResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "409":
+          description: Email already in use
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Log out a user
+      description: Invalidates the current JWT token and refresh token
+      responses:
+        "200":
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Logout successful
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /auth/me:
+    get:
+      tags:
+        - Authentication
+      summary: Get current user profile
+      description: Returns the profile information for the authenticated user
+      responses:
+        "200":
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users:
+    get:
+      tags:
+        - Users
+      summary: List all users
+      description: Returns a paginated list of users
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+              - pending
+        - name: role
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/User"
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                      limit:
+                        type: integer
+                      total:
+                        type: integer
+                      pages:
+                        type: integer
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /ai/analysis:
+    post:
+      tags:
+        - AI
+      summary: AI-assisted data analysis
+      description: >
+        Perform AI-assisted data analysis on provided data. This endpoint
+        accepts a generic data payload (e.g., inspection, supplier, or other
+        business data) and returns an AI-generated analysis. The analysis may
+        include summary statistics, anomaly detection, or other insights
+        depending on the data and available models.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  description: Data to analyze (array or object)
+                  oneOf:
+                    - type: array
+                      items:
+                        type: object
+                    - type: object
+                options:
+                  type: object
+                  description: Optional analysis options
+      responses:
+        "200":
+          description: AI-generated analysis results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      receivedType:
+                        type: string
+                        example: array
+                      itemCount:
+                        type: integer
+                        example: 10
+                      keys:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - field1
+                          - field2
+                      summary:
+                        type: object
+                        description: Summary statistics for numeric fields
+                      message:
+                        type: string
+                        example: This is a placeholder for AI-assisted data analysis. Integrate your ML
+                          model or service here.
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/retraining/models:
+    get:
+      tags:
+        - AI
+      summary: List all available models
+      responses:
+        "200":
+          description: List of models
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  models:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/{modelId}/metrics:
+    get:
+      tags:
+        - AI
+      summary: Get performance metrics for a model
+      parameters:
+        - in: path
+          name: modelId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: metricType
+          schema:
+            type: string
+          description: Metric type (e.g., accuracy, f1, drift)
+        - in: query
+          name: timeWindow
+          schema:
+            type: string
+          description: Time window (e.g., 7d, 30d)
+      responses:
+        "200":
+          description: Model metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metrics:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        timestamp:
+                          type: string
+                          format: date-time
+                        value:
+                          type: number
+                        metricType:
+                          type: string
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/metrics/all:
+    get:
+      tags:
+        - AI
+      summary: Get all model metrics
+      parameters:
+        - in: query
+          name: metricType
+          schema:
+            type: string
+        - in: query
+          name: timeWindow
+          schema:
+            type: string
+      responses:
+        "200":
+          description: All model metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metrics:
+                    type: array
+                    items:
+                      type: object
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/metrics/aggregated:
+    get:
+      tags:
+        - AI
+      summary: Get aggregated model metrics
+      parameters:
+        - in: query
+          name: metricType
+          schema:
+            type: string
+        - in: query
+          name: timeWindow
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Aggregated metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metrics:
+                    type: array
+                    items:
+                      type: object
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/{modelId}/history:
+    get:
+      tags:
+        - AI
+      summary: Get retraining history for a model
+      parameters:
+        - in: path
+          name: modelId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retraining history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  history:
+                    type: array
+                    items:
+                      type: object
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/{modelId}/status:
+    get:
+      tags:
+        - AI
+      summary: Get last retrain status and next eligible retrain time
+      parameters:
+        - in: path
+          name: modelId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retrain status and next eligible time
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  nextEligible:
+                    type: string
+                    format: date-time
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/{modelId}/trigger:
+    post:
+      tags:
+        - AI
+      summary: Trigger retraining for a model
+      parameters:
+        - in: path
+          name: modelId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                event:
+                  type: object
+      responses:
+        "200":
+          description: Retraining triggered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/{modelId}/approve:
+    post:
+      tags:
+        - AI
+      summary: Approve retraining for a model
+      parameters:
+        - in: path
+          name: modelId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retraining approved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  approved:
+                    type: boolean
+        "500":
+          $ref: "#/components/responses/Error"
+  /api/retraining/{modelId}/deny:
+    post:
+      tags:
+        - AI
+      summary: Deny retraining for a model
+      parameters:
+        - in: path
+          name: modelId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retraining denied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  denied:
+                    type: boolean
+        "500":
+          $ref: "#/components/responses/Error"

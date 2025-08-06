@@ -1,20 +1,23 @@
 # End-to-End Testing Guide for AeroSuite
 
-This document outlines the end-to-end testing strategy and implementation for the AeroSuite application.
+This document outlines the end-to-end testing strategy and implementation for the AeroSuite
+application.
 
 ## Overview
 
-The AeroSuite end-to-end testing suite uses Cypress to test the complete application flow from the user interface through to the database and back. These tests verify that the entire system works as expected from a user's perspective.
+The AeroSuite end-to-end testing suite uses Cypress to test the complete application flow from the
+user interface through to the database and back. These tests verify that the entire system works as
+expected from a user's perspective.
 
 ## Test Structure
 
 Our E2E tests are organized by feature area:
 
-- **Authentication**: Login, logout, registration, password reset
-- **Dashboard**: Dashboard components and navigation
-- **Suppliers**: Supplier listing, creation, editing, deletion, and performance metrics
-- **Customers**: Customer listing, creation, editing, deletion, and contacts management
-- **Inspections**: Inspection scheduling, conducting, reporting, and analytics
+- __Authentication__: Login, logout, registration, password reset
+- __Dashboard__: Dashboard components and navigation
+- __Suppliers__: Supplier listing, creation, editing, deletion, and performance metrics
+- __Customers__: Customer listing, creation, editing, deletion, and contacts management
+- __Inspections__: Inspection scheduling, conducting, reporting, and analytics
 
 ## Setting Up the Testing Environment
 
@@ -50,7 +53,7 @@ To run all E2E tests:
 
 ```bash
 npm run test:e2e
-```
+```bash
 
 This command:
 1. Starts the backend server
@@ -78,7 +81,7 @@ npm run cy:run:customers
 
 # Run inspection management tests
 npm run cy:run:inspections
-```
+```bash
 
 ### Opening Cypress UI
 
@@ -86,14 +89,14 @@ To open the Cypress UI for interactive testing:
 
 ```bash
 npm run cy:open
-```
+```bash
 
 ## Test Data
 
 Test data is managed through:
 
-1. **Fixtures**: JSON files in the `cypress/fixtures` directory containing test data
-2. **Dynamic Generation**: Timestamps and random values to ensure unique test data
+1. __Fixtures__: JSON files in the `cypress/fixtures` directory containing test data
+2. __Dynamic Generation__: Timestamps and random values to ensure unique test data
 
 ### Available Fixtures
 
@@ -140,10 +143,10 @@ The CI workflow:
 
 ### Writing Tests
 
-1. **Isolation**: Each test should be independent of others
-2. **Data Management**: Create and clean up test data properly
-3. **Selectors**: Use `data-testid` attributes for stable selectors
-4. **Assertions**: Be specific in assertions to catch regressions
+1. __Isolation__: Each test should be independent of others
+2. __Data Management__: Create and clean up test data properly
+3. __Selectors__: Use `data-testid` attributes for stable selectors
+4. __Assertions__: Be specific in assertions to catch regressions
 
 ### Example Test Structure
 
@@ -159,27 +162,27 @@ describe('Feature', () => {
   it('should perform expected action', () => {
     // Interact with the application
     cy.get('[data-testid="element"]').click();
-    
+
     // Assert expected outcomes
     cy.url().should('include', '/expected-path');
     cy.get('[data-testid="result"]').should('contain', 'Expected text');
   });
 });
-```
+```bash
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Tests Timing Out**
+1. __Tests Timing Out__
    - Increase timeouts in `cypress.config.js`
    - Use `cy.waitForData()` to ensure data is loaded
 
-2. **Authentication Issues**
+2. __Authentication Issues__
    - Check if login endpoints are working
    - Verify that test credentials are valid
 
-3. **Selector Issues**
+3. __Selector Issues__
    - Use the Cypress UI to inspect elements
    - Update selectors if UI has changed
 
@@ -218,4 +221,4 @@ For visual testing:
 For questions about the E2E testing framework, contact:
 
 - QA Team (qa@aerosuite.example.com)
-- DevOps Team (devops@aerosuite.example.com) 
+- DevOps Team (devops@aerosuite.example.com)

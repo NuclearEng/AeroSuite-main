@@ -1,20 +1,23 @@
 # AeroSuite Security Testing
 
-This document outlines the security testing approach for the AeroSuite application and provides guidance on running security tests.
+This document outlines the security testing approach for the AeroSuite application and provides
+guidance on running security tests.
 
 ## Security Testing Approach
 
 AeroSuite implements a multi-layered approach to security testing:
 
-1. **Automated Security Scanning**: Regular automated security scans to detect common vulnerabilities.
-2. **Dependency Vulnerability Analysis**: Monitoring dependencies for known security issues.
-3. **Code Analysis**: Detecting insecure coding patterns and potential vulnerabilities.
-4. **Configuration Analysis**: Evaluating the security of application configurations.
-5. **API Security Testing**: Validating that API endpoints implement proper security controls.
+1. __Automated Security Scanning__: Regular automated security scans to detect common
+vulnerabilities.
+2. __Dependency Vulnerability Analysis__: Monitoring dependencies for known security issues.
+3. __Code Analysis__: Detecting insecure coding patterns and potential vulnerabilities.
+4. __Configuration Analysis__: Evaluating the security of application configurations.
+5. __API Security Testing__: Validating that API endpoints implement proper security controls.
 
 ## Running Security Tests
 
-AeroSuite includes a security testing script that can be used to perform automated security assessments of the application.
+AeroSuite includes a security testing script that can be used to perform automated security
+assessments of the application.
 
 ### Prerequisites
 
@@ -28,7 +31,7 @@ To run a basic security scan:
 
 ```bash
 node scripts/security-test.js
-```
+```bash
 
 By default, this will run a quick security scan and output the results to `security-report.json`.
 
@@ -45,7 +48,7 @@ Example:
 
 ```bash
 node scripts/security-test.js --full --report-file security-reports/full-scan-2023-07-15.json
-```
+```bash
 
 ### Interpreting Results
 
@@ -75,15 +78,15 @@ The security scan produces a JSON report with the following structure:
     // Additional findings...
   ]
 }
-```
+```bash
 
 Each finding includes:
-- **ID**: Unique identifier for the finding
-- **Severity**: Critical, high, medium, low, or info
-- **Title**: Brief description of the issue
-- **Description**: Detailed explanation of the vulnerability
-- **Location**: File or component where the issue was found
-- **Remediation**: Recommended steps to fix the issue
+- __ID__: Unique identifier for the finding
+- __Severity__: Critical, high, medium, low, or info
+- __Title__: Brief description of the issue
+- __Description__: Detailed explanation of the vulnerability
+- __Location__: File or component where the issue was found
+- __Remediation__: Recommended steps to fix the issue
 
 ### Risk Score
 
@@ -106,22 +109,23 @@ It's recommended to run security tests:
 
 In addition to automated security testing, consider performing manual security testing:
 
-1. **Penetration Testing**: Attempt to exploit vulnerabilities in the application
-2. **Code Reviews**: Manual inspection of code for security issues
-3. **Authentication Testing**: Verify that authentication mechanisms work as expected
-4. **Authorization Testing**: Ensure proper access controls are in place
-5. **Input Validation Testing**: Test how the application handles malicious input
+1. __Penetration Testing__: Attempt to exploit vulnerabilities in the application
+2. __Code Reviews__: Manual inspection of code for security issues
+3. __Authentication Testing__: Verify that authentication mechanisms work as expected
+4. __Authorization Testing__: Ensure proper access controls are in place
+5. __Input Validation Testing__: Test how the application handles malicious input
 
 ## Security Testing Best Practices
 
-1. **Regular Testing**: Run security tests regularly, not just when security issues are suspected
-2. **Comprehensive Coverage**: Test all aspects of the application, not just the obvious entry points
-3. **Realistic Testing**: Use realistic test data and scenarios
-4. **Track Progress**: Monitor security improvements over time
-5. **Remediate Issues**: Address security issues in a timely manner based on severity
+1. __Regular Testing__: Run security tests regularly, not just when security issues are suspected
+2. __Comprehensive Coverage__: Test all aspects of the application, not just the obvious entry
+points
+3. __Realistic Testing__: Use realistic test data and scenarios
+4. __Track Progress__: Monitor security improvements over time
+5. __Remediate Issues__: Address security issues in a timely manner based on severity
 
 ## Additional Resources
 
 - [OWASP Top Ten](https://owasp.org/www-project-top-ten/)
 - [OWASP API Security Top Ten](https://owasp.org/www-project-api-security/)
-- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework) 
+- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)

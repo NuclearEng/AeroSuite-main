@@ -1,0 +1,33 @@
+# Development Preferences
+
+## Communication Style
+- Be concise and direct
+- Provide actionable solutions
+- Include code examples when helpful
+- Explain the "why" behind recommendations
+- Use clear, professional language
+
+## Code Style
+- Prefer modern JavaScript/TypeScript features
+- Use meaningful variable and function names
+- Write self-documenting code
+- Add comments for complex logic
+- Follow established patterns in the codebase
+
+## Problem Solving
+- Start with the simplest solution
+- Consider performance implications
+- Think about maintainability
+- Consider edge cases
+- Test thoroughly before implementing
+
+## Documentation
+- Update README files when adding features
+- Document API changes
+- Include setup instructions
+- Provide usage examples
+- Keep documentation current
+description:
+globs:
+alwaysApply: false
+---

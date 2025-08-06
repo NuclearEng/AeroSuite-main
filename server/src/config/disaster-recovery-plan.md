@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document outlines the disaster recovery procedures for the AeroSuite application to ensure business continuity in the event of a system failure, data loss, or other catastrophic events. The plan provides guidelines for system recovery, data protection, and service restoration.
+This document outlines the disaster recovery procedures for the AeroSuite application to ensure
+business continuity in the event of a system failure, data loss, or other catastrophic events. The
+plan provides guidelines for system recovery, data protection, and service restoration.
 
 ## Table of Contents
 
@@ -42,7 +44,8 @@ This plan covers:
 
 | Role | Responsibilities | Contact Information |
 |------|------------------|---------------------|
-| Disaster Recovery Coordinator | Overall coordination of recovery efforts | coordinator@aerosuite.com |
+| Disaster Recovery Coordinator | Overall coordination of recovery efforts |
+coordinator@aerosuite.com |
 | Database Administrator | Database backup and recovery | dba@aerosuite.com |
 | Systems Administrator | Server and infrastructure recovery | sysadmin@aerosuite.com |
 | Application Developer | Application restoration and verification | developer@aerosuite.com |
@@ -51,11 +54,13 @@ This plan covers:
 
 ### Activation Process
 
-1. **Incident Detection**: System monitoring alerts or manual reporting identifies a potential disaster
-2. **Assessment**: Recovery Coordinator evaluates the situation with technical team members
-3. **Plan Activation**: If thresholds are met, the recovery plan is formally activated
-4. **Team Notification**: All recovery team members are notified via multiple channels (email, phone, SMS)
-5. **Command Center Setup**: Virtual or physical command center is established
+1. __Incident Detection__: System monitoring alerts or manual reporting identifies a potential
+disaster
+2. __Assessment__: Recovery Coordinator evaluates the situation with technical team members
+3. __Plan Activation__: If thresholds are met, the recovery plan is formally activated
+4. __Team Notification__: All recovery team members are notified via multiple channels (email,
+phone, SMS)
+5. __Command Center Setup__: Virtual or physical command center is established
 
 ## Critical Systems
 
@@ -78,25 +83,25 @@ This plan covers:
 
 ### Database Backups
 
-- **Full Backups**: Daily at 01:00 UTC
-- **Incremental Backups**: Hourly
-- **Transaction Log Backups**: Every 15 minutes
-- **Retention Policy**: 30 days for daily backups, 7 days for hourly backups
-- **Storage Locations**: Primary cloud storage with geographic redundancy
+- __Full Backups__: Daily at 01:00 UTC
+- __Incremental Backups__: Hourly
+- __Transaction Log Backups__: Every 15 minutes
+- __Retention Policy__: 30 days for daily backups, 7 days for hourly backups
+- __Storage Locations__: Primary cloud storage with geographic redundancy
 
 ```bash
 # MongoDB backup script example
 mongodump --host <db-host> --port <db-port> \
   --username <username> --password <password> \
   --db aerosuite --out /backup/mongo/$(date +%Y-%m-%d)
-```
+```bash
 
 ### File Backups
 
-- **Document Storage**: Real-time replication to redundant storage
-- **System Configuration**: Daily backups
-- **Encryption**: All backups are encrypted at rest
-- **Verification**: Automated backup verification runs daily
+- __Document Storage__: Real-time replication to redundant storage
+- __System Configuration__: Daily backups
+- __Encryption__: All backups are encrypted at rest
+- __Verification__: Automated backup verification runs daily
 
 ### Infrastructure as Code
 
@@ -108,41 +113,41 @@ mongodump --host <db-host> --port <db-port> \
 
 ### Database Recovery
 
-1. **Assessment**: Determine the extent of data loss and most recent valid backup
-2. **Environment Preparation**: Provision recovery database instance
-3. **Restoration**: Restore from the most recent valid backup
-4. **Validation**: Verify data integrity and consistency
-5. **Replication**: Re-establish replication if applicable
-6. **Connection Reconfiguration**: Update application connection strings
+1. __Assessment__: Determine the extent of data loss and most recent valid backup
+2. __Environment Preparation__: Provision recovery database instance
+3. __Restoration__: Restore from the most recent valid backup
+4. __Validation__: Verify data integrity and consistency
+5. __Replication__: Re-establish replication if applicable
+6. __Connection Reconfiguration__: Update application connection strings
 
 ```bash
 # MongoDB restore example
 mongorestore --host <recovery-host> --port <recovery-port> \
   --username <username> --password <password> \
   --db aerosuite /backup/mongo/<backup-date>
-```
+```bash
 
 ### Application Server Recovery
 
-1. **Infrastructure Provisioning**: Deploy new application servers using IaC templates
-2. **Configuration**: Apply system configuration from backups
-3. **Application Deployment**: Deploy application code from artifact repository
-4. **Service Verification**: Start services and verify functionality
-5. **Load Balancer Configuration**: Update routing to new application servers
+1. __Infrastructure Provisioning__: Deploy new application servers using IaC templates
+2. __Configuration__: Apply system configuration from backups
+3. __Application Deployment__: Deploy application code from artifact repository
+4. __Service Verification__: Start services and verify functionality
+5. __Load Balancer Configuration__: Update routing to new application servers
 
 ### File Storage Recovery
 
-1. **Storage Provisioning**: Provision new storage resources
-2. **Data Restoration**: Restore file data from backups
-3. **Permission Configuration**: Apply security and access permissions
-4. **Connectivity Verification**: Ensure application can access restored files
+1. __Storage Provisioning__: Provision new storage resources
+2. __Data Restoration__: Restore file data from backups
+3. __Permission Configuration__: Apply security and access permissions
+4. __Connectivity Verification__: Ensure application can access restored files
 
 ### Network Recovery
 
-1. **Network Infrastructure**: Recover or failover to backup network components
-2. **Security Configuration**: Reapply firewall rules and security groups
-3. **DNS Updates**: Update DNS entries to point to recovered services
-4. **SSL/TLS**: Ensure certificates are properly installed on recovered systems
+1. __Network Infrastructure__: Recover or failover to backup network components
+2. __Security Configuration__: Reapply firewall rules and security groups
+3. __DNS Updates__: Update DNS entries to point to recovered services
+4. __SSL/TLS__: Ensure certificates are properly installed on recovered systems
 
 ## Communication Plan
 
@@ -151,26 +156,29 @@ mongorestore --host <recovery-host> --port <recovery-port> \
 | Event | Audience | Method | Timing | Responsible |
 |-------|----------|--------|--------|-------------|
 | Disaster Declaration | Recovery Team | Call Tree + Group Chat | Immediate | Recovery Coordinator |
-| Recovery Status | Executive Team | Email + Conference Call | Every 2 hours | Communications Officer |
+| Recovery Status | Executive Team | Email + Conference Call | Every 2 hours | Communications
+Officer |
 | Technical Updates | IT Team | Chat + Technical Dashboard | Continuous | Systems Administrator |
 
 ### External Communication
 
 | Event | Audience | Method | Timing | Responsible |
 |-------|----------|--------|--------|-------------|
-| Initial Notification | All Customers | Email + Status Page | Within 30 minutes | Communications Officer |
+| Initial Notification | All Customers | Email + Status Page | Within 30 minutes | Communications
+Officer |
 | Progress Updates | All Customers | Status Page | Every 1 hour | Communications Officer |
-| Recovery Completion | All Customers | Email + Status Page | Upon completion | Recovery Coordinator |
+| Recovery Completion | All Customers | Email + Status Page | Upon completion | Recovery
+Coordinator |
 
 ### Communication Templates
 
 #### Initial Incident Notification
-```
+```bash
 Subject: AeroSuite Service Disruption Notice
 
 Dear AeroSuite Customer,
 
-We are currently experiencing a service disruption affecting the AeroSuite platform. 
+We are currently experiencing a service disruption affecting the AeroSuite platform.
 Our technical team has been alerted and is actively working to resolve the issue.
 
 Current Status: [DESCRIBE CURRENT SITUATION]
@@ -181,7 +189,7 @@ We will provide updates every hour on our status page at status.aerosuite.com.
 We apologize for any inconvenience this may cause. Thank you for your patience.
 
 AeroSuite Support Team
-```
+```bash
 
 ## Testing and Maintenance
 
@@ -207,15 +215,15 @@ AeroSuite Support Team
 
 #### Production Environment
 
-- **Database**: MongoDB 5.0 Cluster (3 nodes)
-- **Application Servers**: 4 x Node.js servers, 2 x Nginx load balancers
-- **Document Storage**: AWS S3 / Equivalent
-- **Monitoring**: Prometheus + Grafana
-- **Logging**: ELK Stack
+- __Database__: MongoDB 5.0 Cluster (3 nodes)
+- __Application Servers__: 4 x Node.js servers, 2 x Nginx load balancers
+- __Document Storage__: AWS S3 / Equivalent
+- __Monitoring__: Prometheus + Grafana
+- __Logging__: ELK Stack
 
 #### Recovery Environment
 
-- **Minimum Viable Configuration**:
+- __Minimum Viable Configuration__:
   - MongoDB 5.0 (single node)
   - 2 x Node.js application servers
   - 1 x Nginx load balancer
@@ -267,4 +275,4 @@ AeroSuite Support Team
 |---------|------|--------|---------|
 | 1.0 | [CURRENT_DATE] | AeroSuite Team | Initial version |
 
-*Last Updated: [CURRENT_DATE]* 
+_Last Updated: [CURRENT_DATE]_

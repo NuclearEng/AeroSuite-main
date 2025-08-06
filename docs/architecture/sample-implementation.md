@@ -1,10 +1,11 @@
 # Sample Implementation: Supplier Domain
 
-This document provides a sample implementation of the Domain-Driven Design approach for the Supplier domain in AeroSuite.
+This document provides a sample implementation of the Domain-Driven Design approach for the
+Supplier domain in AeroSuite.
 
 ## Directory Structure
 
-```
+```bash
 server/
 └── src/
     └── domains/
@@ -31,7 +32,7 @@ server/
             ├── validators/          # Validation
             │   └── SupplierValidator.js
             └── index.js             # Domain module exports
-```
+```bash
 
 ## Domain Model Implementation
 
@@ -64,19 +65,19 @@ class Supplier {
     this.code = code;
     this.status = status;
     this.type = type;
-    this.contacts = contacts.map(contact => 
+    this.contacts = contacts.map(contact =>
       contact instanceof Contact ? contact : new Contact(contact)
     );
     this.address = address instanceof Address ? address : new Address(address);
-    this.qualifications = qualifications.map(qual => 
+    this.qualifications = qualifications.map(qual =>
       qual instanceof Qualification ? qual : new Qualification(qual)
     );
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    
+
     this._validate();
   }
-  
+
   _validate() {
     if (!this.name || this.name.trim() === '') {
       throw new Error('Supplier name is required');
@@ -85,66 +86,66 @@ class Supplier {
       throw new Error('Supplier code is required');
     }
   }
-  
+
   addContact(contactData) {
-    const contact = contactData instanceof Contact 
-      ? contactData 
+    const contact = contactData instanceof Contact
+      ? contactData
       : new Contact(contactData);
-    
+
     this.contacts.push(contact);
     this.updatedAt = new Date();
     return contact;
   }
-  
+
   removeContact(contactId) {
     const initialLength = this.contacts.length;
     this.contacts = this.contacts.filter(c => c.id !== contactId);
-    
+
     if (this.contacts.length !== initialLength) {
       this.updatedAt = new Date();
       return true;
     }
     return false;
   }
-  
+
   addQualification(qualificationData) {
-    const qualification = qualificationData instanceof Qualification 
-      ? qualificationData 
+    const qualification = qualificationData instanceof Qualification
+      ? qualificationData
       : new Qualification(qualificationData);
-    
+
     this.qualifications.push(qualification);
     this.updatedAt = new Date();
-    
+
     // Publish domain event
     DomainEvents.publish(new QualificationUpdatedEvent({
       supplierId: this.id,
       qualification
     }));
-    
+
     return qualification;
   }
-  
+
   updateAddress(addressData) {
-    this.address = addressData instanceof Address 
-      ? addressData 
+    this.address = addressData instanceof Address
+      ? addressData
       : new Address(addressData);
     this.updatedAt = new Date();
   }
-  
+
   activate() {
     if (this.status !== 'active') {
       this.status = 'active';
       this.updatedAt = new Date();
     }
   }
-  
+
   deactivate() {
     if (this.status !== 'inactive') {
       this.status = 'inactive';
       this.updatedAt = new Date();
     }
   }
-  
+
   toJSON() {
     return {
       id: this.id,
@@ -159,22 +160,22 @@ class Supplier {
       updatedAt: this.updatedAt
     };
   }
-  
+
   // Factory method
   static create(data) {
     const supplier = new Supplier(data);
-    
+
     // Publish domain event
     DomainEvents.publish(new SupplierCreatedEvent({
       supplier
     }));
-    
+
     return supplier;
   }
 }
 
 module.exports = Supplier;
-```
+```bash
 
 ## Repository Implementation
 
@@ -192,43 +193,43 @@ class SupplierRepository {
       .populate('contacts')
       .populate('qualifications')
       .lean();
-    
+
     if (!supplierData) return null;
-    
+
     return this._mapToDomainModel(supplierData);
   }
-  
+
   async findByCode(code) {
     const supplierData = await SupplierModel.findOne({ code })
       .populate('contacts')
       .populate('qualifications')
       .lean();
-    
+
     if (!supplierData) return null;
-    
+
     return this._mapToDomainModel(supplierData);
   }
-  
+
   async findAll({ page = 1, limit = 20, filters = {} }) {
     const query = {};
-    
+
     if (filters.status) {
       query.status = filters.status;
     }
-    
+
     if (filters.type) {
       query.type = filters.type;
     }
-    
+
     if (filters.search) {
       query.$or = [
         { name: { $regex: filters.search, $options: 'i' } },
         { code: { $regex: filters.search, $options: 'i' } }
       ];
     }
-    
+
     const skip = (page - 1) * limit;
-    
+
     const [suppliers, total] = await Promise.all([
       SupplierModel.find(query)
         .populate('contacts')
@@ -238,7 +239,7 @@ class SupplierRepository {
         .lean(),
       SupplierModel.countDocuments(query)
     ]);
-    
+
     return {
       suppliers: suppliers.map(s => this._mapToDomainModel(s)),
       pagination: {
@@ -249,7 +250,7 @@ class SupplierRepository {
       }
     };
   }
-  
+
   async save(supplier) {
     const supplierData = {
       name: supplier.name,
@@ -260,33 +261,33 @@ class SupplierRepository {
       createdAt: supplier.createdAt,
       updatedAt: supplier.updatedAt
     };
-    
+
     if (supplier.id) {
       await SupplierModel.findByIdAndUpdate(
         supplier.id,
         supplierData,
         { new: true }
       );
-      
+
       // Handle contacts and qualifications separately
       // (simplified for this example)
-      
+
       return supplier;
     } else {
       const newSupplier = await SupplierModel.create(supplierData);
       supplier.id = newSupplier.id;
-      
+
       // Handle contacts and qualifications separately
       // (simplified for this example)
-      
+
       return supplier;
     }
   }
-  
+
   async delete(id) {
     await SupplierModel.findByIdAndDelete(id);
   }
-  
+
   _mapToDomainModel(data) {
     const contacts = data.contacts?.map(c => new Contact({
       id: c._id.toString(),
@@ -295,7 +296,7 @@ class SupplierRepository {
       phone: c.phone,
       role: c.role
     })) || [];
-    
+
     const qualifications = data.qualifications?.map(q => new Qualification({
       id: q._id.toString(),
       type: q.type,
@@ -304,7 +305,7 @@ class SupplierRepository {
       status: q.status,
       documentUrl: q.documentUrl
     })) || [];
-    
+
     return new Supplier({
       id: data._id.toString(),
       name: data.name,
@@ -321,7 +322,7 @@ class SupplierRepository {
 }
 
 module.exports = new SupplierRepository();
-```
+```bash
 
 ## Domain Service Implementation
 
@@ -336,62 +337,62 @@ const logger = require('../../infrastructure/logging');
 class SupplierService {
   async getSupplierById(id) {
     const supplier = await supplierRepository.findById(id);
-    
+
     if (!supplier) {
       throw new NotFoundError(`Supplier with ID ${id} not found`);
     }
-    
+
     return supplier;
   }
-  
+
   async getSupplierByCode(code) {
     const supplier = await supplierRepository.findByCode(code);
-    
+
     if (!supplier) {
       throw new NotFoundError(`Supplier with code ${code} not found`);
     }
-    
+
     return supplier;
   }
-  
+
   async getAllSuppliers(params) {
     return supplierRepository.findAll(params);
   }
-  
+
   async createSupplier(supplierData) {
     // Validate input
     const validationResult = SupplierValidator.validateCreate(supplierData);
     if (!validationResult.isValid) {
       throw new ValidationError('Invalid supplier data', validationResult.errors);
     }
-    
+
     // Check for duplicate code
     const existingSupplier = await supplierRepository.findByCode(supplierData.code);
     if (existingSupplier) {
       throw new ValidationError('Supplier code already exists');
     }
-    
+
     // Create domain model
     const supplier = Supplier.create(supplierData);
-    
+
     // Persist to database
     await supplierRepository.save(supplier);
-    
+
     logger.info(`Supplier created: ${supplier.id}`);
-    
+
     return supplier;
   }
-  
+
   async updateSupplier(id, supplierData) {
     // Validate input
     const validationResult = SupplierValidator.validateUpdate(supplierData);
     if (!validationResult.isValid) {
       throw new ValidationError('Invalid supplier data', validationResult.errors);
     }
-    
+
     // Get existing supplier
     const supplier = await this.getSupplierById(id);
-    
+
     // Update properties
     if (supplierData.name) supplier.name = supplierData.name;
     if (supplierData.status) {
@@ -403,52 +404,52 @@ class SupplierService {
     }
     if (supplierData.type) supplier.type = supplierData.type;
     if (supplierData.address) supplier.updateAddress(supplierData.address);
-    
+
     supplier.updatedAt = new Date();
-    
+
     // Persist changes
     await supplierRepository.save(supplier);
-    
+
     logger.info(`Supplier updated: ${supplier.id}`);
-    
+
     return supplier;
   }
-  
+
   async deleteSupplier(id) {
     // Check if supplier exists
     await this.getSupplierById(id);
-    
+
     // Delete supplier
     await supplierRepository.delete(id);
-    
+
     logger.info(`Supplier deleted: ${id}`);
-    
+
     return { success: true };
   }
-  
+
   async addContactToSupplier(supplierId, contactData) {
     const supplier = await this.getSupplierById(supplierId);
-    
+
     const contact = supplier.addContact(contactData);
-    
+
     await supplierRepository.save(supplier);
-    
+
     return contact;
   }
-  
+
   async addQualificationToSupplier(supplierId, qualificationData) {
     const supplier = await this.getSupplierById(supplierId);
-    
+
     const qualification = supplier.addQualification(qualificationData);
-    
+
     await supplierRepository.save(supplier);
-    
+
     return qualification;
   }
 }
 
 module.exports = new SupplierService();
-```
+```bash
 
 ## Controller Implementation
 
@@ -463,42 +464,42 @@ class SupplierController {
     const supplier = await supplierService.getSupplierById(req.params.id);
     res.json(SupplierDto.fromDomain(supplier));
   });
-  
+
   getSupplierByCode = asyncHandler(async (req, res) => {
     const supplier = await supplierService.getSupplierByCode(req.params.code);
     res.json(SupplierDto.fromDomain(supplier));
   });
-  
+
   getAllSuppliers = asyncHandler(async (req, res) => {
     const { page, limit, status, type, search } = req.query;
-    
+
     const result = await supplierService.getAllSuppliers({
       page: parseInt(page) || 1,
       limit: parseInt(limit) || 20,
       filters: { status, type, search }
     });
-    
+
     res.json({
       suppliers: result.suppliers.map(SupplierDto.fromDomain),
       pagination: result.pagination
     });
   });
-  
+
   createSupplier = asyncHandler(async (req, res) => {
     const supplier = await supplierService.createSupplier(req.body);
     res.status(201).json(SupplierDto.fromDomain(supplier));
   });
-  
+
   updateSupplier = asyncHandler(async (req, res) => {
     const supplier = await supplierService.updateSupplier(req.params.id, req.body);
     res.json(SupplierDto.fromDomain(supplier));
   });
-  
+
   deleteSupplier = asyncHandler(async (req, res) => {
     await supplierService.deleteSupplier(req.params.id);
     res.status(204).end();
   });
-  
+
   addContactToSupplier = asyncHandler(async (req, res) => {
     const contact = await supplierService.addContactToSupplier(
       req.params.id,
@@ -506,7 +507,7 @@ class SupplierController {
     );
     res.status(201).json(contact);
   });
-  
+
   addQualificationToSupplier = asyncHandler(async (req, res) => {
     const qualification = await supplierService.addQualificationToSupplier(
       req.params.id,
@@ -517,14 +518,14 @@ class SupplierController {
 }
 
 module.exports = new SupplierController();
-```
+```bash
 
 ## Benefits of This Approach
 
-1. **Clear Domain Logic**: Business rules are encapsulated in the domain model
-2. **Rich Domain Model**: Entities have behavior, not just data
-3. **Separation of Concerns**: Clear boundaries between layers
-4. **Testability**: Easy to unit test domain logic in isolation
-5. **Maintainability**: Changes to one domain don't affect others
-6. **Scalability**: Domain services can be extracted to microservices
-7. **Consistency**: Domain events ensure consistency across boundaries 
+1. __Clear Domain Logic__: Business rules are encapsulated in the domain model
+2. __Rich Domain Model__: Entities have behavior, not just data
+3. __Separation of Concerns__: Clear boundaries between layers
+4. __Testability__: Easy to unit test domain logic in isolation
+5. __Maintainability__: Changes to one domain don't affect others
+6. __Scalability__: Domain services can be extracted to microservices
+7. __Consistency__: Domain events ensure consistency across boundaries

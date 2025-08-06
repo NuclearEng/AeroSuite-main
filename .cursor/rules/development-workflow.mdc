@@ -1,0 +1,43 @@
+# Development Workflow
+
+## When starting development:
+1. Ensure Docker containers are running: `docker-compose up -d`
+2. Check backend health: `curl http://localhost:5002/api/health`
+3. Start frontend development server: `cd client && npm start`
+4. Run tests: `npm test` or `npx cypress run`
+5. Run Cypress tests: `./scripts/agent-workflow.sh cypress all`
+
+## When debugging backend issues:
+1. Check Docker container logs: `docker-compose logs server`
+2. Verify MongoDB connection
+3. Check environment variables
+4. Use the debug scripts in `/scripts` directory
+5. Check server logs in `/server/logs`
+
+## When debugging frontend issues:
+1. Check browser console for errors
+2. Verify API connectivity
+3. Check TypeScript compilation
+4. Review React component errors
+5. Test with different browsers
+
+## Code quality checks:
+- Run ESLint: `npm run lint`
+- Run TypeScript check: `npm run type-check`
+- Run tests: `npm test`
+- Run Cypress linting: `npx cypress lint`
+- Validate Cypress config: `npx cypress verify`
+- Check for security vulnerabilities: `npm audit`
+
+## Before committing:
+- Run all tests: `npm test`
+- Run Cypress tests: `./scripts/agent-workflow.sh cypress all`
+- Check code formatting: `npm run lint`
+- Run TypeScript check: `npm run type-check`
+- Verify no console errors
+- Test critical user flows
+- Update documentation if needed
+description:
+globs:
+alwaysApply: false
+---

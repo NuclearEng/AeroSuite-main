@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document describes the stateless services architecture implemented in the AeroSuite project as part of RF037. Stateless services are designed to not maintain state between requests, making them more scalable, reliable, and easier to deploy in distributed environments.
+This document describes the stateless services architecture implemented in the AeroSuite project as
+part of RF037. Stateless services are designed to not maintain state between requests, making them
+more scalable, reliable, and easier to deploy in distributed environments.
 
 ## Table of Contents
 
@@ -15,12 +17,15 @@ This document describes the stateless services architecture implemented in the A
 
 ## Introduction
 
-Stateless services are a key architectural pattern for building scalable and resilient applications. In a stateless architecture, each request to a service is processed independently, without relying on stored client session information or previous requests. This approach offers several advantages:
+Stateless services are a key architectural pattern for building scalable and resilient
+applications. In a stateless architecture, each request to a service is processed independently,
+without relying on stored client session information or previous requests. This approach offers
+several advantages:
 
-- **Horizontal Scalability**: Services can be easily scaled horizontally by adding more instances
-- **Resilience**: No single point of failure due to stored state
-- **Simplified Deployment**: Easier deployment and load balancing
-- **Improved Performance**: Better resource utilization and caching opportunities
+- __Horizontal Scalability__: Services can be easily scaled horizontally by adding more instances
+- __Resilience__: No single point of failure due to stored state
+- __Simplified Deployment__: Easier deployment and load balancing
+- __Improved Performance__: Better resource utilization and caching opportunities
 
 ## Architecture Components
 
@@ -28,7 +33,8 @@ The stateless service architecture consists of the following components:
 
 ### 1. EventEmitter
 
-A centralized event bus that enables communication between services without direct coupling. The `EventEmitter` is implemented as a singleton to ensure all services use the same event bus.
+A centralized event bus that enables communication between services without direct coupling. The
+`EventEmitter` is implemented as a singleton to ensure all services use the same event bus.
 
 ```javascript
 // server/src/core/EventEmitter.js
@@ -39,14 +45,15 @@ class EventEmitter {
     }
     return EventEmitter.instance;
   }
-  
+
   // Event methods: on, emit, etc.
 }
-```
+```bash
 
 ### 2. StatelessService
 
-Base class for all stateless services. It extends the existing `DomainService` class and adds support for request context and stateless execution.
+Base class for all stateless services. It extends the existing `DomainService` class and adds
+support for request context and stateless execution.
 
 ```javascript
 // server/src/core/StatelessService.js
@@ -60,11 +67,12 @@ class StatelessService extends DomainService {
     }
   }
 }
-```
+```bash
 
 ### 3. StatelessServiceFactory
 
-Factory for creating and managing stateless service instances. It ensures that services are created with the correct dependencies and configuration.
+Factory for creating and managing stateless service instances. It ensures that services are created
+with the correct dependencies and configuration.
 
 ```javascript
 // server/src/core/StatelessServiceFactory.js
@@ -75,14 +83,15 @@ class StatelessServiceFactory {
     }
     return StatelessServiceFactory.instance;
   }
-  
+
   // Service creation methods
 }
-```
+```bash
 
 ### 4. RequestContextMiddleware
 
-Middleware that creates and injects a request context into each request. This context is used by stateless services to maintain request-specific information.
+Middleware that creates and injects a request context into each request. This context is used by
+stateless services to maintain request-specific information.
 
 ```javascript
 // server/src/core/middleware/RequestContextMiddleware.js
@@ -95,11 +104,12 @@ function requestContextMiddleware(options = {}) {
     next();
   };
 }
-```
+```bash
 
 ### 5. StatelessController
 
-Controller base class that works with stateless services. It provides methods for executing service methods in a stateless context.
+Controller base class that works with stateless services. It provides methods for executing service
+methods in a stateless context.
 
 ```javascript
 // server/src/core/StatelessController.js
@@ -108,13 +118,14 @@ class StatelessController extends BaseController {
     return service.executeStateless(service[methodName], req.context, ...args);
   }
 }
-```
+```bash
 
 ## Implementation Details
 
 ### Request Context
 
-Request context is a key concept in the stateless architecture. It contains request-specific information that would otherwise be stored as state in the service. The context includes:
+Request context is a key concept in the stateless architecture. It contains request-specific
+information that would otherwise be stored as state in the service. The context includes:
 
 - Request ID
 - User ID
@@ -126,7 +137,8 @@ Request context is a key concept in the stateless architecture. It contains requ
 
 ### Event-Based Communication
 
-Services communicate with each other through events rather than direct method calls. This decouples services and allows them to operate independently.
+Services communicate with each other through events rather than direct method calls. This decouples
+services and allows them to operate independently.
 
 ```javascript
 // Publishing an event
@@ -136,11 +148,12 @@ this.publishEvent('supplier.created', { supplierId: '123', name: 'Acme Inc.' });
 this.subscribeToEvent('supplier.created', (payload) => {
   // Handle event
 });
-```
+```bash
 
 ### Dependency Injection
 
-Services receive their dependencies through constructor injection, making them more testable and configurable.
+Services receive their dependencies through constructor injection, making them more testable and
+configurable.
 
 ```javascript
 const supplierService = new StatelessSupplierService({
@@ -148,18 +161,18 @@ const supplierService = new StatelessSupplierService({
   eventEmitter,
   logger
 });
-```
+```bash
 
 ## Benefits
 
 The stateless service architecture provides several benefits:
 
-1. **Scalability**: Services can be scaled horizontally without session affinity concerns
-2. **Reliability**: No state means fewer points of failure
-3. **Testability**: Services are easier to test due to dependency injection
-4. **Maintainability**: Clear separation of concerns and reduced coupling
-5. **Performance**: Better resource utilization and caching opportunities
-6. **Deployment**: Simplified deployment and load balancing
+1. __Scalability__: Services can be scaled horizontally without session affinity concerns
+2. __Reliability__: No state means fewer points of failure
+3. __Testability__: Services are easier to test due to dependency injection
+4. __Maintainability__: Clear separation of concerns and reduced coupling
+5. __Performance__: Better resource utilization and caching opportunities
+6. __Deployment__: Simplified deployment and load balancing
 
 ## Usage Guidelines
 
@@ -178,7 +191,7 @@ class MyService extends StatelessService {
 
 const serviceFactory = StatelessServiceFactory.getInstance();
 serviceFactory.registerServiceType('myService', MyService, { dependency1, dependency2 });
-```
+```bash
 
 ### Creating a Controller for Stateless Services
 
@@ -189,7 +202,7 @@ serviceFactory.registerServiceType('myService', MyService, { dependency1, depend
 class MyController extends StatelessController {
   constructor() {
     super();
-    
+
     this.doSomething = this.createServiceHandler(
       'myService',
       'doSomething',
@@ -197,7 +210,7 @@ class MyController extends StatelessController {
     );
   }
 }
-```
+```bash
 
 ### Setting Up Routes
 
@@ -209,7 +222,7 @@ class MyController extends StatelessController {
 const router = express.Router();
 router.use(requestContextMiddleware());
 router.post('/do-something', myController.doSomething);
-```
+```bash
 
 ## Migration Strategy
 
@@ -233,4 +246,4 @@ To migrate existing services to the stateless architecture:
 - [ ] Create new routes
 - [ ] Write tests
 - [ ] Deploy and monitor
-- [ ] Complete migration 
+- [ ] Complete migration

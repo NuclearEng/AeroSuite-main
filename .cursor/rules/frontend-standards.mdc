@@ -1,0 +1,43 @@
+# Frontend Development Standards
+
+When working in the client directory:
+
+## React Components
+- Use functional components with hooks
+- Always define TypeScript interfaces for props
+- Use named exports for components
+- Follow PascalCase for component names
+- Place components in appropriate feature directories
+
+## Styling
+- Use Material-UI (MUI) for UI components
+- Use @emotion/styled for custom styling
+- Follow MUI theme system for consistent design
+- Use responsive design patterns
+
+## State Management
+- Use Redux Toolkit for global state
+- Use React hooks for local state
+- Follow Redux Toolkit patterns with createSlice
+
+## Code Organization
+- Group related components in feature folders
+- Use index.ts files for clean imports
+- Keep components focused and single-purpose
+- Use proper TypeScript types throughout
+
+## Error Handling
+- Use ErrorBoundary components for error catching
+- Implement proper loading states
+- Handle API errors gracefully
+- Use try-catch blocks for async operations
+
+## Performance
+- Use React.memo for expensive components
+- Implement proper dependency arrays in useEffect
+- Use lazy loading for routes
+- Optimize bundle size with code splitting
+description:
+globs:
+alwaysApply: false
+---

@@ -1,16 +1,19 @@
 # Advanced Router Testing in AeroSuite
 
-This document describes the advanced router testing utilities available in AeroSuite for testing components that use React Router hooks along with authentication, query parameters, and other advanced routing features.
+This document describes the advanced router testing utilities available in AeroSuite for testing
+components that use React Router hooks along with authentication, query parameters, and other
+advanced routing features.
 
 ## Overview
 
-The `advanced-router-wrapper.tsx` provides enhanced testing utilities that extend our basic React Router testing solution with additional capabilities:
+The `advanced-router-wrapper.tsx` provides enhanced testing utilities that extend our basic React
+Router testing solution with additional capabilities:
 
-1. **Authentication Context** - Test components that require authentication
-2. **Role-Based Access Control** - Test components with role-based permissions
-3. **Query Parameters** - Test components that use query parameters
-4. **Navigation History** - Track and assert on navigation changes
-5. **Protected Routes** - Test components behind route guards
+1. __Authentication Context__ - Test components that require authentication
+2. __Role-Based Access Control__ - Test components with role-based permissions
+3. __Query Parameters__ - Test components that use query parameters
+4. __Navigation History__ - Track and assert on navigation changes
+5. __Protected Routes__ - Test components behind route guards
 
 ## Installation
 
@@ -18,7 +21,7 @@ The advanced router wrapper requires the following dependencies:
 
 ```bash
 npm install --save-dev history use-query-params
-```
+```bash
 
 ## Basic Usage
 
@@ -29,7 +32,7 @@ import { renderWithAdvancedRouter } from '../test-utils/advanced-router-wrapper'
 const MyProtectedComponent = () => {
   const { id } = useParams();
   const auth = useAuthContext();
-  
+
   return (
     <div>
       <h1>User Profile: {id}</h1>
@@ -51,7 +54,7 @@ it('renders the protected component', () => {
   expect(screen.getByText('User Profile: 123')).toBeInTheDocument();
   expect(screen.getByText('Welcome, Test User')).toBeInTheDocument();
 });
-```
+```bash
 
 ## Advanced Features
 
@@ -66,7 +69,7 @@ it('shows user info when authenticated', () => {
     path: '/dashboard',
     isAuthenticated: true,
   });
-  
+
   expect(screen.getByText('Welcome, Test User')).toBeInTheDocument();
 });
 
@@ -77,11 +80,11 @@ it('redirects to login when not authenticated', () => {
     isAuthenticated: false,
     authenticationPath: '/login',
   });
-  
+
   expect(screen.getByTestId('login-page')).toBeInTheDocument();
   expect(screen.queryByText('Welcome')).not.toBeInTheDocument();
 });
-```
+```bash
 
 ### Role-Based Access Control
 
@@ -95,7 +98,7 @@ it('allows access with admin role', () => {
     roles: ['user', 'admin'],
     requiredRole: 'admin',
   });
-  
+
   expect(screen.getByText('Admin Panel')).toBeInTheDocument();
 });
 
@@ -106,11 +109,11 @@ it('denies access without admin role', () => {
     roles: ['user'],
     requiredRole: 'admin',
   });
-  
+
   expect(screen.queryByText('Admin Panel')).not.toBeInTheDocument();
   expect(screen.getByTestId('login-page')).toBeInTheDocument();
 });
-```
+```bash
 
 ### Query Parameters
 
@@ -123,11 +126,11 @@ it('renders with query parameters', () => {
     path: '/search',
     queryParams: { q: 'test', page: 2, sort: 'date' },
   });
-  
+
   expect(screen.getByText('Results for: test')).toBeInTheDocument();
   expect(screen.getByText('Page: 2')).toBeInTheDocument();
 });
-```
+```bash
 
 ### Navigation Testing
 
@@ -137,18 +140,18 @@ Test navigation between routes:
 // Test navigation
 it('navigates to another route', async () => {
   const user = userEvent.setup();
-  
+
   renderWithAdvancedRouter(<Dashboard />, {
     path: '/dashboard',
   });
-  
+
   await user.click(screen.getByText('Go to Profile'));
-  
+
   await waitFor(() => {
     expect(screen.getByTestId('profile-page')).toBeInTheDocument();
   });
 });
-```
+```bash
 
 ### Tracking Navigation History
 
@@ -160,13 +163,13 @@ it('tracks navigation history', async () => {
   const { getNavigationHistory } = renderWithAdvancedRouter(<Navigation />, {
     path: '/',
   });
-  
+
   await user.click(screen.getByText('Products'));
   await user.click(screen.getByText('About'));
-  
+
   expect(getNavigationHistory()).toEqual(['/', '/products', '/about']);
 });
-```
+```bash
 
 ## API Reference
 
@@ -195,7 +198,7 @@ renderWithAdvancedRouter(
   getQueryParams: () => Record<string, string | number | boolean | null>;
   getAuthStatus: () => { isAuthenticated: boolean; roles: string[]; hasRequiredRole: boolean };
 }
-```
+```bash
 
 ### AdvancedRouterWrapper
 
@@ -209,7 +212,7 @@ A component wrapper version of the render function:
 >
   <MyComponent />
 </AdvancedRouterWrapper>
-```
+```bash
 
 ### useAuthContext
 
@@ -218,7 +221,7 @@ A hook to access the authentication context in your components:
 ```tsx
 const MyComponent = () => {
   const auth = useAuthContext();
-  
+
   return (
     <div>
       {auth.isAuthenticated ? (
@@ -229,28 +232,28 @@ const MyComponent = () => {
     </div>
   );
 };
-```
+```bash
 
 ## Best Practices
 
-1. **Match Test Environment to Production**
+1. __Match Test Environment to Production__
    - Configure the router wrapper to match your production environment
    - Use the same route patterns and authentication logic
 
-2. **Test Both Success and Failure Cases**
+2. __Test Both Success and Failure Cases__
    - Test authenticated and unauthenticated states
    - Test with and without required roles
    - Test with valid and invalid query parameters
 
-3. **Isolate Tests**
+3. __Isolate Tests__
    - Each test should have its own router configuration
    - Avoid sharing state between tests
 
-4. **Use Data Testids**
+4. __Use Data Testids__
    - Add data-testid attributes to elements for stable test selectors
    - Avoid testing implementation details
 
-5. **Test Navigation Flows**
+5. __Test Navigation Flows__
    - Test complete user journeys through your application
    - Verify that navigation works as expected
 
@@ -262,19 +265,19 @@ See `advanced-router-example.test.tsx` for complete examples of how to use these
 
 ### Common Issues
 
-1. **Component not rendering**
+1. __Component not rendering__
    - Check that the path pattern matches the route
    - Ensure authentication and role requirements are met
 
-2. **Query parameters not working**
+2. __Query parameters not working__
    - Verify that the queryParams object is correctly formatted
    - Check that your component is using the correct hooks to access query parameters
 
-3. **Navigation not working**
+3. __Navigation not working__
    - Make sure you're using the correct navigation method (useNavigate, Link, etc.)
    - Check that the target route is registered in the router
 
-4. **Auth context not available**
+4. __Auth context not available__
    - Ensure you're using the useAuthContext hook
    - Check that the component is rendered with the AdvancedRouterWrapper
 
@@ -283,4 +286,4 @@ See `advanced-router-example.test.tsx` for complete examples of how to use these
 1. Use `screen.debug()` to see the current state of the DOM
 2. Log the values returned by router hooks to verify they're working
 3. Check the authentication state with `getAuthStatus()`
-4. Inspect the navigation history with `getNavigationHistory()` 
+4. Inspect the navigation history with `getNavigationHistory()`

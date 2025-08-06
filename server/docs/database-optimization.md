@@ -1,20 +1,22 @@
 # Database Query Optimization
 
-This document describes the database query optimization implementation in AeroSuite to improve performance.
+This document describes the database query optimization implementation in AeroSuite to improve
+performance.
 
 ## Overview
 
 The database query optimization consists of several components:
 
-1. **Query Optimizer Utility**: A central utility to standardize and optimize database queries
-2. **Database Indexing**: Optimized indexes for all collections
-3. **Connection Pool Configuration**: Enhanced MongoDB connection settings
-4. **Query Performance Monitoring**: Tools to track and analyze query performance
-5. **Index Optimization Script**: A script to maintain optimal indexes
+1. __Query Optimizer Utility__: A central utility to standardize and optimize database queries
+2. __Database Indexing__: Optimized indexes for all collections
+3. __Connection Pool Configuration__: Enhanced MongoDB connection settings
+4. __Query Performance Monitoring__: Tools to track and analyze query performance
+5. __Index Optimization Script__: A script to maintain optimal indexes
 
 ## Query Optimizer Utility
 
-The query optimizer (`queryOptimizer.js`) provides a standardized way to execute database queries with optimizations:
+The query optimizer (`queryOptimizer.js`) provides a standardized way to execute database queries
+with optimizations:
 
 - Automatic use of `.lean()` for read operations to reduce memory usage
 - Query performance tracking and analysis
@@ -32,19 +34,20 @@ const users = await User.find({ role: 'admin' })
   .lean();
 
 // After optimization
-const users = await executeOptimizedQuery(User, 'find', 
-  { role: 'admin' }, 
+const users = await executeOptimizedQuery(User, 'find',
+  { role: 'admin' },
   {
     sort: { createdAt: -1 },
     limit: 10,
     populate: [{ path: 'department' }]
   }
 );
-```
+```bash
 
 ## Database Indexing
 
-The index optimization script creates and maintains optimal indexes for all collections based on common query patterns:
+The index optimization script creates and maintains optimal indexes for all collections based on
+common query patterns:
 
 - Single-field indexes for frequent query conditions
 - Compound indexes for common query combinations
@@ -74,8 +77,8 @@ The MongoDB connection pool has been optimized with the following settings:
 
 A new monitoring endpoint has been added to track query performance:
 
-- **GET** `/api/monitoring/query-stats`: View query performance statistics
-- **POST** `/api/monitoring/query-stats/reset`: Reset query statistics
+- __GET__ `/api/monitoring/query-stats`: View query performance statistics
+- __POST__ `/api/monitoring/query-stats/reset`: Reset query statistics
 
 The stats include:
 - Average query execution time
@@ -85,7 +88,8 @@ The stats include:
 
 ## Index Optimization Script
 
-The index optimization script (`optimizeIndexes.js`) ensures all necessary indexes are created and maintained:
+The index optimization script (`optimizeIndexes.js`) ensures all necessary indexes are created and
+maintained:
 
 - Run automatically on server startup if `OPTIMIZE_DB_ON_STARTUP=true`
 - Can be run manually with `npm run db:optimize`
@@ -120,4 +124,4 @@ If you encounter database performance issues:
 2. Look for slow queries that may need optimization
 3. Verify appropriate indexes exist for your query patterns
 4. Consider restructuring complex queries
-5. Run the index optimization script: `npm run db:optimize` 
+5. Run the index optimization script: `npm run db:optimize`

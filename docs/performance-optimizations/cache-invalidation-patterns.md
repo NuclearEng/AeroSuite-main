@@ -1,24 +1,29 @@
 # Cache Invalidation Patterns
 
-This document describes the cache invalidation patterns implemented as part of RF027 in the AeroSuite project.
+This document describes the cache invalidation patterns implemented as part of RF027 in the
+AeroSuite project.
 
 ## Overview
 
-Cache invalidation is the process of removing or refreshing cached data when it becomes stale or invalid. Proper cache invalidation ensures that users always see the most up-to-date information while maintaining the performance benefits of caching.
+Cache invalidation is the process of removing or refreshing cached data when it becomes stale or
+invalid. Proper cache invalidation ensures that users always see the most up-to-date information
+while maintaining the performance benefits of caching.
 
-The AeroSuite project implements several advanced cache invalidation patterns to handle different scenarios and use cases.
+The AeroSuite project implements several advanced cache invalidation patterns to handle different
+scenarios and use cases.
 
 ## Invalidation Patterns
 
 ### 1. Tag-Based Invalidation
 
-Tags allow grouping related cache entries together, making it possible to invalidate multiple entries at once based on their relationship.
+Tags allow grouping related cache entries together, making it possible to invalidate multiple
+entries at once based on their relationship.
 
-**Implementation:**
+__Implementation:__
 - Cache entries can be tagged with one or more string identifiers
 - When a resource changes, all cache entries with related tags can be invalidated
 
-**Example:**
+__Example:__
 ```javascript
 // Cache with tags
 cacheManager.get('supplier:123', {
@@ -28,17 +33,18 @@ cacheManager.get('supplier:123', {
 
 // Invalidate all supplier-related caches
 cacheManager.invalidateByTag('supplier');
-```
+```bash
 
 ### 2. Dependency-Based Invalidation
 
-Dependencies establish relationships between cache entries, allowing automatic invalidation of dependent entries when a parent entry changes.
+Dependencies establish relationships between cache entries, allowing automatic invalidation of
+dependent entries when a parent entry changes.
 
-**Implementation:**
+__Implementation:__
 - Cache entries can declare dependencies on other cache keys
 - When a key is invalidated, all entries that depend on it are also invalidated
 
-**Example:**
+__Example:__
 ```javascript
 // Cache with dependencies
 cacheManager.get('supplier-list', {
@@ -48,17 +54,18 @@ cacheManager.get('supplier-list', {
 
 // Invalidate all caches that depend on supplier:123
 cacheManager.invalidateDependents('supplier:123');
-```
+```bash
 
 ### 3. Time-Based Invalidation
 
-Time-based invalidation ensures that cache entries are automatically invalidated after a certain period, even if they haven't been explicitly invalidated.
+Time-based invalidation ensures that cache entries are automatically invalidated after a certain
+period, even if they haven't been explicitly invalidated.
 
-**Implementation:**
+__Implementation:__
 - Hard TTL (Time To Live) can be set for cache entries
 - When the TTL expires, the entry is automatically invalidated
 
-**Example:**
+__Example:__
 ```javascript
 // Cache with hard TTL
 cacheManager.get('weather-data', {
@@ -68,58 +75,61 @@ cacheManager.get('weather-data', {
     hardTTL: true // Force invalidation after TTL expires
   }
 });
-```
+```bash
 
 ### 4. Pattern-Based Invalidation
 
-Pattern-based invalidation allows invalidating multiple cache entries that match a specific pattern, such as a prefix or glob pattern.
+Pattern-based invalidation allows invalidating multiple cache entries that match a specific
+pattern, such as a prefix or glob pattern.
 
-**Implementation:**
+__Implementation:__
 - Cache keys can be invalidated using glob patterns
 - Useful for invalidating groups of related keys without explicit tagging
 
-**Example:**
+__Example:__
 ```javascript
 // Invalidate all supplier list caches
 cacheManager.clear('supplier:list:*');
-```
+```bash
 
 ### 5. Batch Invalidation
 
-Batch invalidation allows invalidating multiple cache entries at once, improving performance when multiple entries need to be invalidated.
+Batch invalidation allows invalidating multiple cache entries at once, improving performance when
+multiple entries need to be invalidated.
 
-**Implementation:**
+__Implementation:__
 - Multiple cache keys can be invalidated in a single operation
 - Reduces overhead when many keys need to be invalidated
 
-**Example:**
+__Example:__
 ```javascript
 // Batch invalidate multiple keys
 cacheManager.batchInvalidate(['supplier:123', 'supplier:456', 'supplier-list']);
-```
+```bash
 
 ### 6. Entity-Based Invalidation
 
-Entity-based invalidation is a specialized pattern for invalidating all cache entries related to a specific entity.
+Entity-based invalidation is a specialized pattern for invalidating all cache entries related to a
+specific entity.
 
-**Implementation:**
+__Implementation:__
 - Cache entries can be associated with entities using tags
 - When an entity changes, all related cache entries are invalidated
 
-**Example:**
+__Example:__
 ```javascript
 // Invalidate all caches related to supplier 123
 cachedService.invalidateEntityCache('123');
-```
+```bash
 
 ## Implementation in AeroSuite
 
 The cache invalidation patterns are implemented through the following classes:
 
-1. **CacheInvalidator**: Core class that implements the invalidation patterns
-2. **CacheManager**: Enhanced with invalidation capabilities
-3. **CachePolicies**: Extended with invalidation-related options
-4. **CachedService**: Base class for domain services with caching and invalidation support
+1. __CacheInvalidator__: Core class that implements the invalidation patterns
+2. __CacheManager__: Enhanced with invalidation capabilities
+3. __CachePolicies__: Extended with invalidation-related options
+4. __CachedService__: Base class for domain services with caching and invalidation support
 
 ### CacheInvalidator
 
@@ -160,7 +170,7 @@ The `CachedService` base class provides domain-specific invalidation methods:
 ```javascript
 // Invalidate a specific key
 await cacheManager.del('supplier:123');
-```
+```bash
 
 ### Tag-Based Invalidation
 
@@ -170,7 +180,7 @@ await cacheManager.invalidateByTag('supplier');
 
 // Invalidate keys with multiple tags
 await cacheManager.invalidateByTags(['supplier', 'active-supplier']);
-```
+```bash
 
 ### Entity-Based Invalidation
 
@@ -180,27 +190,34 @@ await cachedSupplierService.invalidateEntityCache('123');
 
 // Batch invalidate multiple entities
 await cachedSupplierService.batchInvalidateEntities(['123', '456']);
-```
+```bash
 
 ### Pattern-Based Invalidation
 
 ```javascript
 // Invalidate all supplier list caches
 await cacheManager.clear('supplier:list:*');
-```
+```bash
 
 ## Best Practices
 
-1. **Use Tags for Related Data**: Tag cache entries with meaningful identifiers that represent their relationships.
+1. __Use Tags for Related Data__: Tag cache entries with meaningful identifiers that represent
+their relationships.
 
-2. **Be Specific with Invalidation**: Invalidate only what's necessary to avoid over-invalidation.
+2. __Be Specific with Invalidation__: Invalidate only what's necessary to avoid over-invalidation.
 
-3. **Consider Invalidation Hierarchies**: Structure tags and dependencies to allow for granular invalidation.
+3. __Consider Invalidation Hierarchies__: Structure tags and dependencies to allow for granular
+invalidation.
 
-4. **Use Entity-Based Invalidation**: For domain-driven applications, use entity-based invalidation to maintain consistency.
+4. __Use Entity-Based Invalidation__: For domain-driven applications, use entity-based invalidation
+to maintain consistency.
 
-5. **Monitor Invalidation Metrics**: Track invalidation patterns to identify potential optimizations.
+5. __Monitor Invalidation Metrics__: Track invalidation patterns to identify potential
+optimizations.
 
 ## Conclusion
 
-The cache invalidation patterns implemented in AeroSuite provide a robust foundation for maintaining cache consistency while maximizing performance. By using these patterns appropriately, the system can ensure that users always see the most up-to-date information without sacrificing the performance benefits of caching. 
+The cache invalidation patterns implemented in AeroSuite provide a robust foundation for
+maintaining cache consistency while maximizing performance. By using these patterns appropriately,
+the system can ensure that users always see the most up-to-date information without sacrificing the
+performance benefits of caching.

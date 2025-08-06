@@ -1,43 +1,46 @@
 # Database Monitoring Guide
 
-This document outlines the database monitoring system implemented as part of RF032 in the AeroSuite project.
+This document outlines the database monitoring system implemented as part of RF032 in the AeroSuite
+project.
 
 ## Overview
 
-Database monitoring is crucial for maintaining the performance, reliability, and security of the AeroSuite platform. This guide explains the monitoring tools and practices implemented to ensure optimal database performance.
+Database monitoring is crucial for maintaining the performance, reliability, and security of the
+AeroSuite platform. This guide explains the monitoring tools and practices implemented to ensure
+optimal database performance.
 
 ## Monitoring Components
 
 The AeroSuite database monitoring system consists of the following components:
 
-1. **Database Monitoring Script**: A Node.js script that collects and analyzes MongoDB metrics
-2. **Prometheus Integration**: Metrics exposed to Prometheus for long-term storage and alerting
-3. **MongoDB Exporter**: A dedicated exporter that collects detailed MongoDB metrics
-4. **Monitoring Dashboard**: Visualization of database metrics and performance indicators
-5. **Alert System**: Notifications for critical database events and performance issues
+1. __Database Monitoring Script__: A Node.js script that collects and analyzes MongoDB metrics
+2. __Prometheus Integration__: Metrics exposed to Prometheus for long-term storage and alerting
+3. __MongoDB Exporter__: A dedicated exporter that collects detailed MongoDB metrics
+4. __Monitoring Dashboard__: Visualization of database metrics and performance indicators
+5. __Alert System__: Notifications for critical database events and performance issues
 
 ## Key Metrics Monitored
 
 ### Server Metrics
 
-- **Connections**: Current, available, and active connections
-- **Memory Usage**: Resident and virtual memory usage
-- **Operation Counters**: Insert, update, delete, query, and command operations
-- **Uptime**: Server uptime and availability
+- __Connections__: Current, available, and active connections
+- __Memory Usage__: Resident and virtual memory usage
+- __Operation Counters__: Insert, update, delete, query, and command operations
+- __Uptime__: Server uptime and availability
 
 ### Database Metrics
 
-- **Collection Stats**: Document count, size, storage size, and average object size
-- **Index Stats**: Index size and usage statistics
-- **Storage Metrics**: Data size, storage size, and index size
-- **Performance Metrics**: Query execution time, slow queries, and operation latency
+- __Collection Stats__: Document count, size, storage size, and average object size
+- __Index Stats__: Index size and usage statistics
+- __Storage Metrics__: Data size, storage size, and index size
+- __Performance Metrics__: Query execution time, slow queries, and operation latency
 
 ### Query Metrics
 
-- **Slow Queries**: Queries taking longer than 100ms to execute
-- **Query Patterns**: Common query patterns and their performance
-- **Index Usage**: Effectiveness of indexes for queries
-- **Query Errors**: Failed queries and error types
+- __Slow Queries__: Queries taking longer than 100ms to execute
+- __Query Patterns__: Common query patterns and their performance
+- __Index Usage__: Effectiveness of indexes for queries
+- __Query Errors__: Failed queries and error types
 
 ## Running the Monitoring Tools
 
@@ -47,7 +50,7 @@ To run a one-time database monitoring check:
 
 ```bash
 ./scripts/database-monitoring.sh
-```
+```bash
 
 This will:
 1. Connect to the MongoDB database
@@ -61,7 +64,7 @@ To start continuous monitoring:
 
 ```bash
 ./scripts/database-monitoring.sh --continuous
-```
+```bash
 
 This will run the monitoring script at regular intervals (default: 60 seconds).
 
@@ -69,14 +72,14 @@ To specify a custom interval:
 
 ```bash
 ./scripts/database-monitoring.sh --continuous --interval 30000
-```
+```bash
 
 ## Prometheus Integration
 
 The database monitoring system exposes metrics to Prometheus through:
 
-1. **Custom Metrics Endpoint**: `/api/monitoring/metrics` on the AeroSuite server
-2. **MongoDB Exporter**: A dedicated exporter running on port 9216
+1. __Custom Metrics Endpoint__: `/api/monitoring/metrics` on the AeroSuite server
+2. __MongoDB Exporter__: A dedicated exporter running on port 9216
 
 ### Available Prometheus Metrics
 
@@ -91,7 +94,8 @@ The database monitoring system exposes metrics to Prometheus through:
 
 ## MongoDB Exporter
 
-The MongoDB exporter is deployed as a Kubernetes pod that collects detailed metrics from MongoDB. It is configured in `k8s/base/mongodb-exporter.yaml`.
+The MongoDB exporter is deployed as a Kubernetes pod that collects detailed metrics from MongoDB.
+It is configured in `k8s/base/mongodb-exporter.yaml`.
 
 ### Deployment
 
@@ -99,7 +103,7 @@ To deploy the MongoDB exporter:
 
 ```bash
 kubectl apply -f k8s/base/mongodb-exporter.yaml
-```
+```bash
 
 ### Configuration
 
@@ -113,10 +117,10 @@ The exporter is configured to:
 
 A Grafana dashboard is available for visualizing database metrics. The dashboard includes:
 
-1. **Server Overview**: Connections, memory usage, and operation counters
-2. **Database Health**: Collection stats, index usage, and storage metrics
-3. **Query Performance**: Slow queries, operation latency, and error rates
-4. **Resource Utilization**: CPU, memory, and disk usage
+1. __Server Overview__: Connections, memory usage, and operation counters
+2. __Database Health__: Collection stats, index usage, and storage metrics
+3. __Query Performance__: Slow queries, operation latency, and error rates
+4. __Resource Utilization__: CPU, memory, and disk usage
 
 ## Best Practices
 
@@ -152,10 +156,10 @@ Alerts are configured in Prometheus to notify when:
 
 ### Common Issues
 
-1. **High Connection Count**: Check for connection leaks in the application
-2. **Slow Queries**: Review and optimize query patterns, add missing indexes
-3. **High Memory Usage**: Check for memory leaks, optimize query patterns
-4. **Growing Index Size**: Review index strategy, remove unused indexes
+1. __High Connection Count__: Check for connection leaks in the application
+2. __Slow Queries__: Review and optimize query patterns, add missing indexes
+3. __High Memory Usage__: Check for memory leaks, optimize query patterns
+4. __Growing Index Size__: Review index strategy, remove unused indexes
 
 ### Diagnostic Commands
 
@@ -163,20 +167,22 @@ To check database status:
 
 ```javascript
 db.serverStatus()
-```
+```bash
 
 To check collection statistics:
 
 ```javascript
 db.collection.stats()
-```
+```bash
 
 To check index usage:
 
 ```javascript
 db.collection.aggregate([{ $indexStats: {} }])
-```
+```bash
 
 ## Conclusion
 
-The database monitoring system provides comprehensive visibility into the MongoDB database's performance and health. By regularly reviewing the metrics and reports, the team can proactively address issues, optimize performance, and ensure the reliability of the AeroSuite platform. 
+The database monitoring system provides comprehensive visibility into the MongoDB database's
+performance and health. By regularly reviewing the metrics and reports, the team can proactively
+address issues, optimize performance, and ensure the reliability of the AeroSuite platform.

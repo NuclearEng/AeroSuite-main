@@ -1,6 +1,8 @@
 # Code Splitting Guide
 
-This document provides guidance on the code splitting implementation in the AeroSuite project. Code splitting is a technique that allows you to split your code into various bundles which can then be loaded on demand or in parallel, improving application performance.
+This document provides guidance on the code splitting implementation in the AeroSuite project. Code
+splitting is a technique that allows you to split your code into various bundles which can then be
+loaded on demand or in parallel, improving application performance.
 
 ## Table of Contents
 
@@ -14,29 +16,31 @@ This document provides guidance on the code splitting implementation in the Aero
 
 ## Overview
 
-Code splitting is a critical optimization technique that helps reduce the initial load time of your application by splitting the code into smaller chunks that can be loaded on demand. This implementation is part of RF033 - Implement code splitting for frontend.
+Code splitting is a critical optimization technique that helps reduce the initial load time of your
+application by splitting the code into smaller chunks that can be loaded on demand. This
+implementation is part of RF033 - Implement code splitting for frontend.
 
 Benefits of code splitting include:
 
-- **Reduced initial load time**: Users only download the code they need
-- **Improved performance**: Smaller bundles load faster
-- **Better caching**: Changes to one part of the application don't invalidate the entire bundle
-- **On-demand loading**: Features are loaded only when needed
+- __Reduced initial load time__: Users only download the code they need
+- __Improved performance__: Smaller bundles load faster
+- __Better caching__: Changes to one part of the application don't invalidate the entire bundle
+- __On-demand loading__: Features are loaded only when needed
 
 ## Implementation
 
 The code splitting implementation in AeroSuite consists of several components:
 
-1. **Configuration**: `codeSplittingConfig.ts` defines global settings and priorities
-2. **Core utilities**: `codeSplitting.ts` provides the core functionality
-3. **Route-based splitting**: `routeSplitting.tsx` handles route-level code splitting
-4. **Component-based splitting**: `componentSplitting.tsx` handles component-level code splitting
-5. **React hooks**: `useRouteSplitting.ts` integrates with React Router
-6. **Analysis tools**: Scripts to analyze and implement code splitting
+1. __Configuration__: `codeSplittingConfig.ts` defines global settings and priorities
+2. __Core utilities__: `codeSplitting.ts` provides the core functionality
+3. __Route-based splitting__: `routeSplitting.tsx` handles route-level code splitting
+4. __Component-based splitting__: `componentSplitting.tsx` handles component-level code splitting
+5. __React hooks__: `useRouteSplitting.ts` integrates with React Router
+6. __Analysis tools__: Scripts to analyze and implement code splitting
 
 ### Directory Structure
 
-```
+```bash
 client/src/
 ├── utils/
 │   ├── codeSplittingConfig.ts    # Configuration
@@ -50,7 +54,7 @@ client/src/
 scripts/
 ├── implement-code-splitting.js   # Analysis script
 └── implement-code-splitting.sh   # Shell script
-```
+```bash
 
 ## Code Splitting Strategies
 
@@ -58,7 +62,8 @@ AeroSuite implements three main code splitting strategies:
 
 ### 1. Route-Based Splitting
 
-Routes are split into separate chunks, so each page is loaded on demand when the user navigates to it. This is the most common and effective form of code splitting.
+Routes are split into separate chunks, so each page is loaded on demand when the user navigates to
+it. This is the most common and effective form of code splitting.
 
 ```tsx
 // Example from routeSplitting.tsx
@@ -67,7 +72,7 @@ export const routeImports = {
   '/customers': () => import('../pages/customers/CustomerList'),
   // ...
 };
-```
+```bash
 
 ### 2. Component-Based Splitting
 
@@ -80,24 +85,25 @@ export const componentImports = {
   'RichTextEditor': () => import('../components/ui-library/molecules/RichTextEditor'),
   // ...
 };
-```
+```bash
 
 ### 3. Visibility-Based Splitting
 
-Components are loaded only when they become visible in the viewport, using the Intersection Observer API.
+Components are loaded only when they become visible in the viewport, using the Intersection
+Observer API.
 
 ```tsx
 // Example usage of useInViewLazyLoad
 function MyComponent() {
   const [ref, LazyChart] = useInViewLazyLoad(() => import('./Chart'));
-  
+
   return (
     <div ref={ref}>
       {LazyChart && <LazyChart data={chartData} />}
     </div>
   );
 }
-```
+```bash
 
 ## Usage Guide
 
@@ -117,7 +123,7 @@ const CustomerList = createLazyRouteComponent('/customers');
 // Then use these components in your Routes
 <Route path="/dashboard" element={<Dashboard />} />
 <Route path="/customers" element={<CustomerList />} />
-```
+```bash
 
 2. Add the `useRouteSplitting` hook to your main layout component:
 
@@ -128,12 +134,12 @@ import { useRouteSplitting } from '../hooks/useRouteSplitting';
 function MainLayout() {
   // This will prefetch related routes
   useRouteSplitting();
-  
+
   return (
     // Your layout
   );
 }
-```
+```bash
 
 ### Component-Based Splitting
 
@@ -156,7 +162,7 @@ function MyComponent() {
     </div>
   );
 }
-```
+```bash
 
 2. For components that should load when visible:
 
@@ -166,14 +172,14 @@ import { createInViewComponent } from '../utils/componentSplitting';
 
 function MyComponent() {
   const [chartRef, LazyChart] = createInViewComponent('LineChart');
-  
+
   return (
     <div ref={chartRef} style={{ minHeight: 300 }}>
       {LazyChart && <LazyChart data={chartData} />}
     </div>
   );
 }
-```
+```bash
 
 ### Prefetching Components
 
@@ -186,42 +192,42 @@ import { prefetchComponents } from '../utils/componentSplitting';
 function handleButtonHover() {
   prefetchComponents(['ConfirmDialog', 'FormBuilder']);
 }
-```
+```bash
 
 ## Best Practices
 
-1. **Don't over-split**: Only split components that are large or infrequently used
-2. **Consider the network**: Too many small chunks can lead to network overhead
-3. **Prioritize critical paths**: Ensure the main user flows load quickly
-4. **Use appropriate loading indicators**: Show loading states for better UX
-5. **Monitor performance**: Regularly check bundle sizes and load times
-6. **Test on real devices**: Especially on slower connections and devices
-7. **Analyze before implementing**: Use the analysis tools to identify candidates for splitting
+1. __Don't over-split__: Only split components that are large or infrequently used
+2. __Consider the network__: Too many small chunks can lead to network overhead
+3. __Prioritize critical paths__: Ensure the main user flows load quickly
+4. __Use appropriate loading indicators__: Show loading states for better UX
+5. __Monitor performance__: Regularly check bundle sizes and load times
+6. __Test on real devices__: Especially on slower connections and devices
+7. __Analyze before implementing__: Use the analysis tools to identify candidates for splitting
 
 ## Performance Metrics
 
 To measure the effectiveness of code splitting:
 
-1. **Bundle size**: Check the size of your JavaScript bundles
-2. **Load time**: Measure the time to interactive for key user flows
-3. **First contentful paint**: Measure how quickly content appears
-4. **Time to interactive**: Measure when the user can interact with the page
+1. __Bundle size__: Check the size of your JavaScript bundles
+2. __Load time__: Measure the time to interactive for key user flows
+3. __First contentful paint__: Measure how quickly content appears
+4. __Time to interactive__: Measure when the user can interact with the page
 
 You can run the analysis script to get insights:
 
 ```bash
 npm run analyze:code-splitting
-```
+```bash
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Flash of loading content**: Add appropriate loading delays and fallbacks
-2. **Missing chunks**: Ensure all routes and components are properly mapped
-3. **Duplicate code**: Check for duplicated code across chunks
-4. **Too many requests**: Consolidate small chunks
-5. **Errors during loading**: Implement proper error handling and retry logic
+1. __Flash of loading content__: Add appropriate loading delays and fallbacks
+2. __Missing chunks__: Ensure all routes and components are properly mapped
+3. __Duplicate code__: Check for duplicated code across chunks
+4. __Too many requests__: Consolidate small chunks
+5. __Errors during loading__: Implement proper error handling and retry logic
 
 ### Debugging
 
@@ -232,8 +238,10 @@ npm run analyze:code-splitting
 
 ```bash
 npm run analyze
-```
+```bash
 
 ---
 
-For more information, refer to the [React documentation on code splitting](https://reactjs.org/docs/code-splitting.html) and [Webpack documentation on code splitting](https://webpack.js.org/guides/code-splitting/). 
+For more information, refer to the [React documentation on code
+splitting](https://reactjs.org/docs/code-splitting.html) and [Webpack documentation on code
+splitting](https://webpack.js.org/guides/code-splitting/).

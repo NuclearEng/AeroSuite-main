@@ -1,19 +1,22 @@
 # Redis Caching for Frequently Accessed Data
 
-This document describes the Redis caching implementation for frequently accessed data in the AeroSuite application.
+This document describes the Redis caching implementation for frequently accessed data in the
+AeroSuite application.
 
 ## Overview
 
-Redis caching has been implemented to improve performance by reducing database load for frequently accessed data. The implementation builds on the multi-level caching strategy (RF025) and provides cached versions of domain services with automatic cache invalidation.
+Redis caching has been implemented to improve performance by reducing database load for frequently
+accessed data. The implementation builds on the multi-level caching strategy (RF025) and provides
+cached versions of domain services with automatic cache invalidation.
 
 ## Architecture
 
 The Redis caching implementation consists of the following components:
 
-1. **CachedService**: Base class for cached service implementations
-2. **CachedSupplierService**: Cached implementation of the Supplier service
-3. **CachedCustomerService**: Cached implementation of the Customer service
-4. **ServiceFactory**: Factory for creating cached service instances
+1. __CachedService__: Base class for cached service implementations
+2. __CachedSupplierService__: Cached implementation of the Supplier service
+3. __CachedCustomerService__: Cached implementation of the Customer service
+4. __ServiceFactory__: Factory for creating cached service instances
 
 ## How It Works
 
@@ -28,7 +31,8 @@ The `CachedService` class wraps a domain service and provides caching capabiliti
 
 ### Service-Specific Implementations
 
-Service-specific implementations (e.g., `CachedSupplierService`, `CachedCustomerService`) extend the base class and:
+Service-specific implementations (e.g., `CachedSupplierService`, `CachedCustomerService`) extend
+the base class and:
 
 - Define which methods should be cached
 - Specify appropriate cache policies for each method
@@ -47,18 +51,18 @@ The `ServiceFactory` provides a convenient way to create cached service instance
 
 Different cache policies are applied to different methods based on their access patterns:
 
-- **findById**: Uses DYNAMIC policy (5-minute TTL with background refresh)
-- **findAll**: Uses a custom policy (1-minute TTL with stale-while-revalidate)
-- **search**: Uses MICRO policy (10-second TTL) to prevent thundering herd problem
-- **getByX methods**: Use DYNAMIC policy for filtered queries
+- __findById__: Uses DYNAMIC policy (5-minute TTL with background refresh)
+- __findAll__: Uses a custom policy (1-minute TTL with stale-while-revalidate)
+- __search__: Uses MICRO policy (10-second TTL) to prevent thundering herd problem
+- __getByX methods__: Use DYNAMIC policy for filtered queries
 
 ## Cache Invalidation
 
 Cache entries are automatically invalidated when data is modified:
 
-- **create**: Invalidates findAll and search caches
-- **update**: Invalidates specific entity cache and related list caches
-- **delete**: Invalidates all related caches
+- __create__: Invalidates findAll and search caches
+- __update__: Invalidates specific entity cache and related list caches
+- __delete__: Invalidates all related caches
 
 ## Usage
 
@@ -76,7 +80,7 @@ const customerService = serviceFactory.getCustomerService();
 // Use services normally - caching is transparent
 const supplier = await supplierService.findById('supplier-id');
 const customers = await customerService.findAll({ limit: 10 });
-```
+```bash
 
 ### Custom Configuration
 
@@ -95,7 +99,7 @@ const serviceFactory = getServiceFactory({
     }
   }
 });
-```
+```bash
 
 ### Accessing Cache Statistics
 
@@ -103,41 +107,44 @@ const serviceFactory = getServiceFactory({
 // Get cache statistics
 const stats = serviceFactory.getStats();
 console.log('Cache statistics:', stats);
-```
+```bash
 
 ## Performance Impact
 
 The Redis caching implementation provides significant performance improvements:
 
-- **findById operations**: 10-20x faster for cached entities
-- **findAll operations**: 5-10x faster for frequently accessed lists
-- **search operations**: 3-5x faster for repeated searches
+- __findById operations__: 10-20x faster for cached entities
+- __findAll operations__: 5-10x faster for frequently accessed lists
+- __search operations__: 3-5x faster for repeated searches
 
 ## Best Practices
 
-1. **Choose appropriate TTLs**: Balance freshness with performance
-2. **Use stale-while-revalidate**: For data that can be briefly stale
-3. **Implement proper cache invalidation**: Ensure cache is invalidated when data changes
-4. **Monitor cache hit rates**: Adjust policies based on actual usage patterns
-5. **Be mindful of cache size**: Don't cache everything, focus on frequently accessed data
+1. __Choose appropriate TTLs__: Balance freshness with performance
+2. __Use stale-while-revalidate__: For data that can be briefly stale
+3. __Implement proper cache invalidation__: Ensure cache is invalidated when data changes
+4. __Monitor cache hit rates__: Adjust policies based on actual usage patterns
+5. __Be mindful of cache size__: Don't cache everything, focus on frequently accessed data
 
 ## Integration with Other Components
 
 The Redis caching implementation integrates with:
 
-- **Multi-level Caching Strategy (RF025)**: Uses the cache manager and providers
-- **Domain Services (RF068-RF071)**: Wraps domain services with caching
-- **Service Interfaces (RF022)**: Implements the same interfaces as domain services
+- __Multi-level Caching Strategy (RF025)__: Uses the cache manager and providers
+- __Domain Services (RF068-RF071)__: Wraps domain services with caching
+- __Service Interfaces (RF022)__: Implements the same interfaces as domain services
 
 ## Future Enhancements
 
 Future enhancements to the Redis caching implementation could include:
 
-- **Cache warming**: Pre-populate cache with frequently accessed data
-- **Cache analytics**: Track cache hit/miss rates by method and entity
-- **Adaptive TTLs**: Automatically adjust TTLs based on access patterns
-- **Batch operations**: Optimize cache operations for batch processing
+- __Cache warming__: Pre-populate cache with frequently accessed data
+- __Cache analytics__: Track cache hit/miss rates by method and entity
+- __Adaptive TTLs__: Automatically adjust TTLs based on access patterns
+- __Batch operations__: Optimize cache operations for batch processing
 
 ## Conclusion
 
-The Redis caching implementation provides a robust foundation for improving application performance by reducing database load for frequently accessed data. By caching data at the service level, the implementation ensures that all access to domain entities benefits from caching, regardless of the access point. 
+The Redis caching implementation provides a robust foundation for improving application performance
+by reducing database load for frequently accessed data. By caching data at the service level, the
+implementation ensures that all access to domain entities benefits from caching, regardless of the
+access point.

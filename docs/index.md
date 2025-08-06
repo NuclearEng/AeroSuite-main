@@ -1,6 +1,7 @@
 # AeroSuite Documentation
 
-Welcome to the AeroSuite documentation. This documentation provides comprehensive information about using the AeroSuite quality management system for aerospace companies.
+Welcome to the AeroSuite documentation. This documentation provides comprehensive information about
+using the AeroSuite quality management system for aerospace companies.
 
 ## Documentation Overview
 
@@ -8,7 +9,8 @@ The documentation is organized into the following sections:
 
 ### [User Manual](user-manual.md)
 
-The comprehensive user manual provides detailed information about all features and functions of AeroSuite. It includes:
+The comprehensive user manual provides detailed information about all features and functions of
+AeroSuite. It includes:
 
 - Complete system overview
 - Detailed instructions for all modules
@@ -55,23 +57,29 @@ Comprehensive documentation for developers working on the AeroSuite project:
 
 ## Using This Documentation
 
-- **New Users**: Start with the [User Manual](user-manual.md) introduction and getting started sections
-- **Task-Specific Help**: Use the [Quick Reference Guides](quick-guides/index.md) for step-by-step instructions
-- **Administrators**: Review the Administrator Functions section of the user manual
-- **Developers**: Start with the [Developer Guide](developer-guide.md) and [Contributing Guide](contributing.md)
-- **Technical Users**: Refer to the technical documentation for specific implementation details
+- __New Users__: Start with the [User Manual](user-manual.md) introduction and getting started
+sections
+- __Task-Specific Help__: Use the [Quick Reference Guides](quick-guides/index.md) for step-by-step
+instructions
+- __Administrators__: Review the Administrator Functions section of the user manual
+- __Developers__: Start with the [Developer Guide](developer-guide.md) and [Contributing
+Guide](contributing.md)
+- __Technical Users__: Refer to the technical documentation for specific implementation details
 
 ## Additional Resources
 
-- **In-App Help**: Click the **?** icon in the application for contextual help
-- **Training Videos**: Available at [training.aerosuite.com](https://training.aerosuite.com)
-- **Webinars**: Regular webinars on new features and best practices
-- **Support Portal**: Submit and track support tickets at [support.aerosuite.com](https://support.aerosuite.com)
-- **Developer Forum**: Discuss development topics at [developers.aerosuite.com/forum](https://developers.aerosuite.com/forum)
+- __In-App Help__: Click the __?__ icon in the application for contextual help
+- __Training Videos__: Available at [training.aerosuite.com](https://training.aerosuite.com)
+- __Webinars__: Regular webinars on new features and best practices
+- __Support Portal__: Submit and track support tickets at
+[support.aerosuite.com](https://support.aerosuite.com)
+- __Developer Forum__: Discuss development topics at
+[developers.aerosuite.com/forum](https://developers.aerosuite.com/forum)
 
 ## Feedback
 
-We continuously improve our documentation based on user feedback. If you have suggestions, corrections, or requests for additional documentation:
+We continuously improve our documentation based on user feedback. If you have suggestions,
+corrections, or requests for additional documentation:
 
 - Email: documentation@aerosuite.com
 - In-app feedback form: Help > Documentation Feedback
@@ -79,7 +87,8 @@ We continuously improve our documentation based on user feedback. If you have su
 
 ## Documentation Updates
 
-This documentation is updated with each major release of AeroSuite. The current documentation version is aligned with AeroSuite v2.5.0.
+This documentation is updated with each major release of AeroSuite. The current documentation
+version is aligned with AeroSuite v2.5.0.
 
-- **Last Updated**: June 2023
-- **Version**: 2.5 
+- __Last Updated__: June 2023
+- __Version__: 2.5

@@ -1,6 +1,7 @@
 # AeroSuite Code Style Guide
 
-This guide outlines the coding standards and style guidelines for the AeroSuite project. Following these standards ensures consistency, readability, and maintainability across the codebase.
+This guide outlines the coding standards and style guidelines for the AeroSuite project. Following
+these standards ensures consistency, readability, and maintainability across the codebase.
 
 ## Table of Contents
 
@@ -18,11 +19,11 @@ This guide outlines the coding standards and style guidelines for the AeroSuite 
 
 ### Principles
 
-- **Readability**: Write code that is easy to read and understand
-- **Maintainability**: Write code that is easy to maintain and extend
-- **Consistency**: Follow consistent patterns throughout the codebase
-- **Simplicity**: Keep code simple and avoid unnecessary complexity
-- **Testability**: Write code that is easy to test
+- __Readability__: Write code that is easy to read and understand
+- __Maintainability__: Write code that is easy to maintain and extend
+- __Consistency__: Follow consistent patterns throughout the codebase
+- __Simplicity__: Keep code simple and avoid unnecessary complexity
+- __Testability__: Write code that is easy to test
 
 ### Naming Conventions
 
@@ -68,7 +69,7 @@ This guide outlines the coding standards and style guidelines for the AeroSuite 
 // Good
 const getUserData = async (userId: string): Promise<UserData> => {
   const { firstName, lastName, email } = await fetchUser(userId);
-  return { 
+  return {
     fullName: `${firstName} ${lastName}`,
     email,
     isActive: true
@@ -81,13 +82,13 @@ var getData = async function(id) {
   var firstName = data.firstName;
   var lastName = data.lastName;
   var email = data.email;
-  return { 
+  return {
     fullName: firstName + ' ' + lastName,
     email: email,
     isActive: true
   };
 };
-```
+```bash
 
 ## React Components
 
@@ -175,7 +176,7 @@ class UserProfile extends React.Component {
     );
   }
 }
-```
+```bash
 
 ## CSS/SCSS
 
@@ -251,7 +252,7 @@ class UserProfile extends React.Component {
     }
   }
 }
-```
+```bash
 
 ## Node.js/Express
 
@@ -281,7 +282,7 @@ const userController = {
     try {
       const userId = req.params.id;
       const user = await userService.findById(userId);
-      
+
       if (!user) {
         return res.status(404).json({
           success: false,
@@ -289,7 +290,7 @@ const userController = {
           error: 'USER_NOT_FOUND'
         });
       }
-      
+
       return res.json({
         success: true,
         data: user
@@ -320,7 +321,7 @@ app.get('/api/user/:id', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-```
+```bash
 
 ## MongoDB/Mongoose
 
@@ -386,7 +387,7 @@ UserSchema.virtual('fullName').get(function() {
 // Good (Query)
 const getActiveUsers = async (page = 1, limit = 10) => {
   const skip = (page - 1) * limit;
-  
+
   return await User
     .find({ status: 'active' })
     .select('email firstName lastName role')
@@ -395,7 +396,7 @@ const getActiveUsers = async (page = 1, limit = 10) => {
     .limit(limit)
     .exec();
 };
-```
+```bash
 
 ## Testing
 
@@ -435,23 +436,23 @@ describe('UserProfile', () => {
       role: 'Admin'
     };
     jest.spyOn(userService, 'getUser').mockResolvedValue(mockUser);
-    
+
     // Act
     render(<UserProfile userId="123" />);
-    
+
     // Assert
     expect(await screen.findByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('Email: john@example.com')).toBeInTheDocument();
     expect(screen.getByText('Role: Admin')).toBeInTheDocument();
   });
-  
+
   test('displays error message when user fetch fails', async () => {
     // Arrange
     jest.spyOn(userService, 'getUser').mockRejectedValue(new Error('Failed to fetch user'));
-    
+
     // Act
     render(<UserProfile userId="123" />);
-    
+
     // Assert
     expect(await screen.findByText('Error: Failed to fetch user')).toBeInTheDocument();
   });
@@ -469,12 +470,12 @@ describe('User API', () => {
       lastName: 'Doe'
     };
     jest.spyOn(User, 'findById').mockResolvedValue(mockUser);
-    
+
     // Act
     const response = await request(app)
       .get(`/api/users/${userId}`)
       .set('Authorization', `Bearer ${validToken}`);
-    
+
     // Assert
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -485,7 +486,7 @@ describe('User API', () => {
     });
   });
 });
-```
+```bash
 
 ## Documentation
 
@@ -506,14 +507,14 @@ describe('User API', () => {
 ### Examples
 
 ```javascript
-/**
+/__
  * Authenticates a user and returns a JWT token
- * 
+ *
  * @param {string} email - The user's email address
  * @param {string} password - The user's password
  * @returns {Promise<{token: string, user: User}>} The JWT token and user object
  * @throws {AuthError} If authentication fails
- * 
+ *
  * @example
  * try {
  *   const { token, user } = await authService.login('user@example.com', 'password123');
@@ -525,7 +526,7 @@ describe('User API', () => {
 const login = async (email, password) => {
   // Implementation
 };
-```
+```bash
 
 ## File Organization
 
@@ -545,7 +546,7 @@ const login = async (email, password) => {
 
 ### Examples
 
-```
+```bash
 // Good
 features/
   users/
@@ -580,15 +581,17 @@ tests/
   userService.test.ts
 types/
   User.ts
-```
+```bash
 
 ## Conclusion
 
-This style guide is not exhaustive but covers the main aspects of coding standards for the AeroSuite project. When in doubt, consider these principles:
+This style guide is not exhaustive but covers the main aspects of coding standards for the
+AeroSuite project. When in doubt, consider these principles:
 
 1. Consistency is more important than personal preference
 2. Code is read more often than it is written
 3. Follow the conventions of the existing codebase
 4. When adding a new pattern, document it and update this guide
 
-The automatic linting and formatting tools (ESLint, Prettier) should help enforce many of these standards automatically. 
+The automatic linting and formatting tools (ESLint, Prettier) should help enforce many of these
+standards automatically.

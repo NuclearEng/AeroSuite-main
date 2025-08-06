@@ -1,6 +1,7 @@
 # AeroSuite Security Configuration Guide
 
-This guide provides system administrators with detailed instructions for securely configuring and maintaining the AeroSuite platform in production environments.
+This guide provides system administrators with detailed instructions for securely configuring and
+maintaining the AeroSuite platform in production environments.
 
 ## Table of Contents
 
@@ -19,25 +20,25 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Operating System Hardening
 
-1. **Use a minimal server installation**
+1. __Use a minimal server installation__
    - Install only necessary packages
    - Remove unused services and applications
    - Disable unnecessary system accounts
 
-2. **User Management**
+2. __User Management__
    - Create dedicated service accounts with least privilege
    - Disable root SSH access
    - Implement strong password policies
    - Use SSH key authentication instead of passwords
 
-3. **File System Security**
+3. __File System Security__
    - Set appropriate file permissions
    - Use disk encryption for sensitive data
    - Implement file integrity monitoring
 
 ### Firewall Configuration
 
-1. **Enable and configure host-based firewall**
+1. __Enable and configure host-based firewall__
    ```bash
    # Example for Ubuntu/Debian
    sudo ufw default deny incoming
@@ -47,7 +48,7 @@ This guide provides system administrators with detailed instructions for securel
    sudo ufw enable
    ```
 
-2. **Allow only necessary ports**
+2. __Allow only necessary ports__
    - 22 (SSH) - restrict to admin IPs if possible
    - 80 (HTTP) - for redirect to HTTPS
    - 443 (HTTPS) - for application access
@@ -57,20 +58,20 @@ This guide provides system administrators with detailed instructions for securel
 
 ### TLS/SSL Configuration
 
-1. **Obtain and install certificates**
+1. __Obtain and install certificates__
    - Use trusted CA-signed certificates
    - Configure automatic renewal
    - Implement OCSP stapling
 
-2. **NGINX SSL Configuration**
+2. __NGINX SSL Configuration__
    ```nginx
    server {
        listen 443 ssl http2;
        server_name example.com;
-       
+
        ssl_certificate /path/to/fullchain.pem;
        ssl_certificate_key /path/to/privkey.pem;
-       
+
        # Strong SSL settings
        ssl_protocols TLSv1.2 TLSv1.3;
        ssl_prefer_server_ciphers on;
@@ -78,19 +79,20 @@ This guide provides system administrators with detailed instructions for securel
        ssl_session_timeout 1d;
        ssl_session_cache shared:SSL:10m;
        ssl_session_tickets off;
-       
+
        # HSTS
        add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
-       
+
        # Other security headers
        add_header X-Content-Type-Options "nosniff" always;
        add_header X-Frame-Options "SAMEORIGIN" always;
        add_header X-XSS-Protection "1; mode=block" always;
-       add_header Content-Security-Policy "default-src 'self'; script-src 'self'; object-src 'none';" always;
-       
+       add_header Content-Security-Policy "default-src 'self'; script-src 'self'; object-src
+'none';" always;
+
        # ...rest of server configuration
    }
-   
+
    # Redirect HTTP to HTTPS
    server {
        listen 80;
@@ -99,23 +101,23 @@ This guide provides system administrators with detailed instructions for securel
    }
    ```
 
-3. **Certificate Management**
+3. __Certificate Management__
    - Implement automated certificate renewal
    - Monitor certificate expiration
    - Use strong key sizes (RSA 2048+ or ECC 256+)
 
 ### Network Access Controls
 
-1. **Implement network segmentation**
+1. __Implement network segmentation__
    - Separate application, database, and admin networks
    - Use VLANs or network security groups in cloud environments
 
-2. **Configure Web Application Firewall (WAF)**
+2. __Configure Web Application Firewall (WAF)__
    - Protect against OWASP Top 10 vulnerabilities
    - Implement rate limiting
    - Block malicious IP addresses
 
-3. **DDoS Protection**
+3. __DDoS Protection__
    - Use cloud-based DDoS protection services
    - Implement rate limiting at load balancer level
    - Configure TCP/SYN cookies
@@ -124,7 +126,7 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Environment Variables
 
-1. **Sensitive Configuration**
+1. __Sensitive Configuration__
    - Store secrets in environment variables, not in code
    - Use a secrets management solution in production
    - Example environment variables file (DO NOT commit to version control):
@@ -133,28 +135,28 @@ This guide provides system administrators with detailed instructions for securel
    # .env.production (example - DO NOT commit this file)
    NODE_ENV=production
    PORT=3000
-   
+
    # Database
    DB_HOST=db.internal
    DB_PORT=5432
    DB_NAME=aerosuite_prod
    DB_USER=aerosuite_app
    DB_PASSWORD=strong-random-password
-   
+
    # JWT
    JWT_SECRET=strong-random-secret
    JWT_EXPIRY=3600
-   
+
    # API Keys
    API_KEY_EXTERNAL_SERVICE=your-api-key
-   
+
    # Other Configuration
    CORS_ORIGINS=https://app.aerosuite.com,https://admin.aerosuite.com
    RATE_LIMIT_WINDOW_MS=900000
    RATE_LIMIT_MAX_REQUESTS=100
    ```
 
-2. **Secrets Management**
+2. __Secrets Management__
    - In production, use a dedicated secrets management service:
      - AWS Secrets Manager
      - HashiCorp Vault
@@ -164,42 +166,42 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Docker Configuration
 
-1. **Secure Docker Settings**
+1. __Secure Docker Settings__
    ```dockerfile
    # Example Dockerfile with security best practices
    FROM node:18-alpine AS base
-   
+
    # Use non-root user
    RUN addgroup -g 1001 -S nodejs
    RUN adduser -S nodejs -u 1001 -G nodejs
-   
+
    WORKDIR /app
-   
+
    # Install dependencies
    COPY package*.json ./
    RUN npm ci --only=production
-   
+
    # Copy application code
    COPY --chown=nodejs:nodejs . .
-   
+
    # Set proper permissions
    RUN chmod -R 550 /app
-   
+
    # Use non-root user
    USER nodejs
-   
+
    # Expose only necessary port
    EXPOSE 3000
-   
+
    # Run with Node.js best practices
    CMD ["node", "--no-deprecation", "server.js"]
    ```
 
-2. **Docker Compose Security**
+2. __Docker Compose Security__
    ```yaml
    # docker-compose.yml
    version: '3.8'
-   
+
    services:
      app:
        build: .
@@ -221,7 +223,7 @@ This guide provides system administrators with detailed instructions for securel
          interval: 30s
          timeout: 10s
          retries: 3
-     
+
      db:
        image: postgres:14-alpine
        restart: unless-stopped
@@ -233,14 +235,14 @@ This guide provides system administrators with detailed instructions for securel
          - db_password
        networks:
          - app_network
-   
+
    networks:
      app_network:
        driver: bridge
-   
+
    volumes:
      db_data:
-   
+
    secrets:
      db_password:
        file: ./secrets/db_password.txt
@@ -250,12 +252,12 @@ This guide provides system administrators with detailed instructions for securel
 
 ### PostgreSQL Configuration
 
-1. **Authentication**
+1. __Authentication__
    - Use strong password authentication
    - Use SSL/TLS for database connections
    - Implement client certificate authentication for sensitive environments
 
-2. **Access Control**
+2. __Access Control__
    - Create application-specific database users
    - Grant minimal necessary privileges
    - Example SQL for user setup:
@@ -263,24 +265,24 @@ This guide provides system administrators with detailed instructions for securel
    ```sql
    -- Create application user with limited privileges
    CREATE USER aerosuite_app WITH PASSWORD 'strong-password';
-   
+
    -- Grant only necessary privileges
    GRANT CONNECT ON DATABASE aerosuite TO aerosuite_app;
    GRANT USAGE ON SCHEMA public TO aerosuite_app;
-   
+
    -- Grant table-specific privileges
    GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO aerosuite_app;
    GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO aerosuite_app;
-   
+
    -- Set default privileges for future tables
    ALTER DEFAULT PRIVILEGES IN SCHEMA public
    GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO aerosuite_app;
-   
+
    ALTER DEFAULT PRIVILEGES IN SCHEMA public
    GRANT USAGE ON SEQUENCES TO aerosuite_app;
    ```
 
-3. **Database Hardening**
+3. __Database Hardening__
    - Edit postgresql.conf for security settings:
 
    ```
@@ -289,13 +291,13 @@ This guide provides system administrators with detailed instructions for securel
    ssl = on                                # Enable SSL
    ssl_cert_file = 'server.crt'            # SSL certificate
    ssl_key_file = 'server.key'             # SSL key
-   
+
    # Authentication
    password_encryption = scram-sha-256     # Strong password hashing
-   
+
    # Connection security
    max_connections = 100                   # Limit connections
-   
+
    # Logging
    log_connections = on                    # Log connections
    log_disconnections = on                 # Log disconnections
@@ -306,45 +308,45 @@ This guide provides system administrators with detailed instructions for securel
 
 ### JWT Configuration
 
-1. **Secure JWT Settings**
+1. __Secure JWT Settings__
    - Use RS256 (asymmetric) algorithm instead of HS256
    - Generate strong key pairs
    - Set short expiration times (1 hour or less)
    - Implement token rotation
 
-2. **Key Generation Example**
+2. __Key Generation Example__
    ```bash
    # Generate private key
    openssl genrsa -out private.pem 2048
-   
+
    # Generate public key
    openssl rsa -in private.pem -outform PEM -pubout -out public.pem
    ```
 
-3. **JWT Configuration Example**
+3. __JWT Configuration Example__
    ```javascript
    // Example JWT configuration
    const jwt = require('jsonwebtoken');
    const fs = require('fs');
-   
+
    const privateKey = fs.readFileSync('/path/to/private.pem');
    const publicKey = fs.readFileSync('/path/to/public.pem');
-   
+
    // Sign token
    const token = jwt.sign(
-     { 
+     {
        userId: user.id,
        role: user.role
      },
      privateKey,
-     { 
+     {
        algorithm: 'RS256',
        expiresIn: '1h',
        issuer: 'aerosuite.com',
        audience: 'aerosuite-api'
      }
    );
-   
+
    // Verify token
    try {
      const decoded = jwt.verify(token, publicKey, {
@@ -359,13 +361,13 @@ This guide provides system administrators with detailed instructions for securel
 
 ### OAuth Configuration
 
-1. **OAuth Provider Setup**
+1. __OAuth Provider Setup__
    - Register application with OAuth providers
    - Use secure redirect URIs
    - Request minimal scopes
    - Store client secrets securely
 
-2. **OAuth Security Best Practices**
+2. __OAuth Security Best Practices__
    - Implement PKCE for authorization code flow
    - Validate state parameter
    - Verify token signatures and claims
@@ -375,13 +377,13 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Centralized Logging
 
-1. **ELK Stack Configuration**
+1. __ELK Stack Configuration__
    - Configure Filebeat to collect logs
    - Ship logs to Elasticsearch
    - Use Kibana for visualization
    - Set up log rotation and retention policies
 
-2. **Log Security**
+2. __Log Security__
    - Encrypt log transport
    - Implement log integrity verification
    - Restrict access to logs
@@ -389,14 +391,14 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Security Monitoring
 
-1. **Configure Alerts**
+1. __Configure Alerts__
    - Set up alerts for suspicious activities:
      - Multiple failed login attempts
      - Unusual API usage patterns
      - Access from unusual locations
      - Privilege escalation attempts
 
-2. **SIEM Integration**
+2. __SIEM Integration__
    - Forward security-relevant logs to SIEM
    - Configure correlation rules
    - Implement automated responses
@@ -405,20 +407,20 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Backup Strategy
 
-1. **Database Backups**
+1. __Database Backups__
    - Implement automated daily backups
    - Store backups in multiple locations
    - Encrypt backup data
    - Test restoration regularly
 
-2. **Application Backups**
+2. __Application Backups__
    - Back up application configuration
    - Back up user-uploaded content
    - Document backup and restore procedures
 
 ### Disaster Recovery
 
-1. **Recovery Plan**
+1. __Recovery Plan__
    - Document step-by-step recovery procedures
    - Define Recovery Time Objectives (RTO)
    - Define Recovery Point Objectives (RPO)
@@ -428,19 +430,19 @@ This guide provides system administrators with detailed instructions for securel
 
 ### System Updates
 
-1. **OS Patching Strategy**
+1. __OS Patching Strategy__
    - Implement automated security updates
    - Schedule regular maintenance windows
    - Test patches in staging environment first
 
-2. **Application Updates**
+2. __Application Updates__
    - Maintain CI/CD pipeline for rapid deployment
    - Implement blue/green deployment for zero downtime
    - Include automated security testing in deployment pipeline
 
 ### Dependency Management
 
-1. **Dependency Updates**
+1. __Dependency Updates__
    - Regularly update dependencies
    - Subscribe to security advisories
    - Implement automated dependency scanning
@@ -450,13 +452,13 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Incident Response Plan
 
-1. **Response Procedures**
+1. __Response Procedures__
    - Define incident severity levels
    - Document response procedures for each level
    - Establish communication channels
    - Define roles and responsibilities
 
-2. **Containment and Recovery**
+2. __Containment and Recovery__
    - Document containment procedures
    - Prepare recovery scripts and procedures
    - Establish forensic investigation process
@@ -465,13 +467,13 @@ This guide provides system administrators with detailed instructions for securel
 
 ### Compliance Documentation
 
-1. **Maintain Records**
+1. __Maintain Records__
    - Document security controls
    - Record security incidents and responses
    - Keep audit logs for required retention periods
    - Document compliance with relevant standards
 
-2. **Regular Audits**
+2. __Regular Audits__
    - Schedule regular security audits
    - Address findings promptly
    - Update security controls as needed
@@ -503,7 +505,7 @@ openssl x509 -in certificate.crt -text -noout
 
 # Test TLS configuration
 nmap --script ssl-enum-ciphers -p 443 example.com
-```
+```bash
 
 ### Security Configuration Checklist
 
@@ -525,6 +527,9 @@ nmap --script ssl-enum-ciphers -p 443 example.com
 ## Additional Resources
 
 - [AeroSuite Security Practices Guide](./security-practices-guide.md)
-- [NIST SP 800-53 Security Controls](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)
+- [NIST SP 800-53 Security
+Controls](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)
 - [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/)
-- [OWASP Secure Configuration Guide](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/) 
+- [OWASP Secure Configuration
+Guide](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Te
+sting/02-Configuration_and_Deployment_Management_Testing/)

@@ -1,0 +1,55 @@
+# AI001: Computer Vision Defect Detection Pipeline
+
+## Overview
+This pipeline detects visual defects in aerospace component images using a deep learning model. It 
+is accessible via REST API and programmatic interface.
+
+## API Usage
+
+### Endpoint
+`POST /api/v1/ai/defect-detection`
+
+#### Request Body
+- `image`: Image data (base64 string, buffer, or file path)
+- `options`: (optional) Pipeline options, e.g., `{ "threshold": 0.5 }`
+
+#### Example (cURL)
+```sh
+curl -X POST https://your-domain/api/v1/ai/defect-detection \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "image": "data:image/png;base64,iVBORw0KGgoAAAANS...",
+    "options": { "threshold": 0.5 }
+  }'
+```bash
+
+#### Example Response
+```json
+{
+  "status": "success",
+  "data": {
+    "predictions": [
+      { "label": "scratch", "confidence": 0.92 },
+      { "label": "dent", "confidence": 0.87 }
+    ]
+  }
+}
+```bash
+
+## Programmatic Usage
+
+```js
+const { aiFramework } = require('server/src/ai/core/AIFramework');
+const imageBuffer = ...; // Buffer or array for image
+const result = await aiFramework.runDefectDetectionPipeline(imageBuffer, { threshold: 0.5 });
+console.log(result.predictions);
+```bash
+
+## Data Requirements
+- Input: Image (RGB, 640x640 recommended)
+- Output: Array of detected defects with labels and confidence scores
+
+## Notes
+- The pipeline includes preprocessing, model inference, and postprocessing (confidence filtering).
+- For best results, use high-quality, well-lit images.

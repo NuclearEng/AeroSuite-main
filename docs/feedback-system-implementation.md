@@ -2,47 +2,51 @@
 
 ## Overview
 
-This document outlines the implementation plan for TS379: Customer Feedback Collection System. The system enables collecting, managing, and analyzing customer feedback from multiple sources within the AeroSuite platform.
+This document outlines the implementation plan for TS379: Customer Feedback Collection System. The
+system enables collecting, managing, and analyzing customer feedback from multiple sources within
+the AeroSuite platform.
 
 ## Components
 
 ### Backend Components
 
-1. **Database Model**
+1. __Database Model__
    - `feedback.model.js`: Stores feedback data including ratings, comments, and sentiment analysis
-   - Fields include: user, customer, feedbackType, source, content, rating, context, contactInfo, status, priority, sentiment, etc.
+   - Fields include: user, customer, feedbackType, source, content, rating, context, contactInfo,
+status, priority, sentiment, etc.
 
-2. **API Endpoints**
+2. __API Endpoints__
    - `feedback.routes.js`: Routes for submitting, retrieving, and managing feedback
    - Endpoints include: create, get, update, delete, statistics, customer-specific feedback
 
-3. **Business Logic**
+3. __Business Logic__
    - `feedback.service.js`: Handles business logic for feedback operations
-   - Features include: feedback submission, retrieval, updating, sentiment analysis, statistics generation
+   - Features include: feedback submission, retrieval, updating, sentiment analysis, statistics
+generation
 
-4. **Controllers**
+4. __Controllers__
    - `feedback.controller.js`: Handles API requests and responses
    - Implements validation, error handling, and proper response formatting
 
 ### Frontend Components
 
-1. **Feedback Form**
+1. __Feedback Form__
    - `FeedbackForm.tsx`: Reusable component for collecting feedback
    - Features: different feedback types, ratings, contact info, file attachments
 
-2. **Feedback Widget**
+2. __Feedback Widget__
    - `FeedbackWidget.tsx`: Floating widget that can be embedded throughout the application
    - Context-aware: captures page/feature information automatically
 
-3. **Feedback Management**
+3. __Feedback Management__
    - `FeedbackManagement.tsx`: Admin interface for managing feedback
    - Features: dashboard, filtering, sorting, detailed view, response management
 
-4. **Feedback Detail**
+4. __Feedback Detail__
    - `FeedbackDetail.tsx`: Component for viewing and editing feedback details
    - Features: status updates, priority setting, internal notes, customer responses
 
-5. **Client Service**
+5. __Client Service__
    - `feedback.service.ts`: Client-side service for interacting with the feedback API
    - Methods for submitting, retrieving, and managing feedback
 
@@ -119,4 +123,7 @@ This document outlines the implementation plan for TS379: Customer Feedback Coll
 
 ## Conclusion
 
-The Customer Feedback Collection System will provide AeroSuite with valuable insights into customer satisfaction and product improvement opportunities. By implementing a comprehensive system for collecting, managing, and analyzing feedback, we can better understand customer needs and continuously improve our platform. 
+The Customer Feedback Collection System will provide AeroSuite with valuable insights into customer
+satisfaction and product improvement opportunities. By implementing a comprehensive system for
+collecting, managing, and analyzing feedback, we can better understand customer needs and
+continuously improve our platform.

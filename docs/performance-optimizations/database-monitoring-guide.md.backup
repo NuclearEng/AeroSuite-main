@@ -1,0 +1,188 @@
+# Database Monitoring Guide
+
+This document outlines the database monitoring system implemented as part of RF032 in the AeroSuite 
+project.
+
+## Overview
+
+Database monitoring is crucial for maintaining the performance, reliability, and security of the 
+AeroSuite platform. This guide explains the monitoring tools and practices implemented to ensure 
+optimal database performance.
+
+## Monitoring Components
+
+The AeroSuite database monitoring system consists of the following components:
+
+1. __Database Monitoring Script__: A Node.js script that collects and analyzes MongoDB metrics
+2. __Prometheus Integration__: Metrics exposed to Prometheus for long-term storage and alerting
+3. __MongoDB Exporter__: A dedicated exporter that collects detailed MongoDB metrics
+4. __Monitoring Dashboard__: Visualization of database metrics and performance indicators
+5. __Alert System__: Notifications for critical database events and performance issues
+
+## Key Metrics Monitored
+
+### Server Metrics
+
+- __Connections__: Current, available, and active connections
+- __Memory Usage__: Resident and virtual memory usage
+- __Operation Counters__: Insert, update, delete, query, and command operations
+- __Uptime__: Server uptime and availability
+
+### Database Metrics
+
+- __Collection Stats__: Document count, size, storage size, and average object size
+- __Index Stats__: Index size and usage statistics
+- __Storage Metrics__: Data size, storage size, and index size
+- __Performance Metrics__: Query execution time, slow queries, and operation latency
+
+### Query Metrics
+
+- __Slow Queries__: Queries taking longer than 100ms to execute
+- __Query Patterns__: Common query patterns and their performance
+- __Index Usage__: Effectiveness of indexes for queries
+- __Query Errors__: Failed queries and error types
+
+## Running the Monitoring Tools
+
+### One-time Monitoring
+
+To run a one-time database monitoring check:
+
+```bash
+./scripts/database-monitoring.sh
+```bash
+
+This will:
+1. Connect to the MongoDB database
+2. Collect metrics and statistics
+3. Generate a report in both JSON and HTML formats
+4. Store the report in the `reports` directory
+
+### Continuous Monitoring
+
+To start continuous monitoring:
+
+```bash
+./scripts/database-monitoring.sh --continuous
+```bash
+
+This will run the monitoring script at regular intervals (default: 60 seconds).
+
+To specify a custom interval:
+
+```bash
+./scripts/database-monitoring.sh --continuous --interval 30000
+```bash
+
+## Prometheus Integration
+
+The database monitoring system exposes metrics to Prometheus through:
+
+1. __Custom Metrics Endpoint__: `/api/monitoring/metrics` on the AeroSuite server
+2. __MongoDB Exporter__: A dedicated exporter running on port 9216
+
+### Available Prometheus Metrics
+
+- `mongodb_connections`: MongoDB connections by state
+- `mongodb_operations_total`: Total MongoDB operations by type and collection
+- `mongodb_operation_duration_seconds`: MongoDB operation duration histogram
+- `mongodb_document_count`: Document count by collection
+- `mongodb_index_size_bytes`: Index size by collection and index
+- `mongodb_storage_size_bytes`: Storage size by collection
+- `mongodb_slow_queries_total`: Slow query count by collection and operation
+- `mongodb_query_errors_total`: Query error count by collection, operation, and error type
+
+## MongoDB Exporter
+
+The MongoDB exporter is deployed as a Kubernetes pod that collects detailed metrics from MongoDB. 
+It is configured in `k8s/base/mongodb-exporter.yaml`.
+
+### Deployment
+
+To deploy the MongoDB exporter:
+
+```bash
+kubectl apply -f k8s/base/mongodb-exporter.yaml
+```bash
+
+### Configuration
+
+The exporter is configured to:
+- Connect to the MongoDB instance using authentication
+- Collect all available metrics
+- Expose metrics on port 9216
+- Run with resource limits to prevent overloading the system
+
+## Monitoring Dashboard
+
+A Grafana dashboard is available for visualizing database metrics. The dashboard includes:
+
+1. __Server Overview__: Connections, memory usage, and operation counters
+2. __Database Health__: Collection stats, index usage, and storage metrics
+3. __Query Performance__: Slow queries, operation latency, and error rates
+4. __Resource Utilization__: CPU, memory, and disk usage
+
+## Best Practices
+
+### Regular Monitoring
+
+- Run the monitoring script daily to track database performance
+- Review the generated reports for potential issues
+- Set up continuous monitoring in production environments
+
+### Performance Tuning
+
+- Use the slow query reports to identify and optimize problematic queries
+- Monitor index usage and create indexes for common query patterns
+- Review and optimize the database schema based on monitoring data
+
+### Capacity Planning
+
+- Track database growth over time
+- Monitor resource utilization to plan for scaling
+- Set up alerts for resource thresholds
+
+## Alert Configuration
+
+Alerts are configured in Prometheus to notify when:
+
+- Database connections exceed 80% of the maximum
+- Slow query count increases significantly
+- Query error rate exceeds normal thresholds
+- Database size approaches storage limits
+- Index size grows too large relative to data size
+
+## Troubleshooting
+
+### Common Issues
+
+1. __High Connection Count__: Check for connection leaks in the application
+2. __Slow Queries__: Review and optimize query patterns, add missing indexes
+3. __High Memory Usage__: Check for memory leaks, optimize query patterns
+4. __Growing Index Size__: Review index strategy, remove unused indexes
+
+### Diagnostic Commands
+
+To check database status:
+
+```javascript
+db.serverStatus()
+```bash
+
+To check collection statistics:
+
+```javascript
+db.collection.stats()
+```bash
+
+To check index usage:
+
+```javascript
+db.collection.aggregate([{ $indexStats: {} }])
+```bash
+
+## Conclusion
+
+The database monitoring system provides comprehensive visibility into the MongoDB database's 
+performance and health. By regularly reviewing the metrics and reports, the team can proactively 
+address issues, optimize performance, and ensure the reliability of the AeroSuite platform.

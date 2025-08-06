@@ -1,24 +1,26 @@
 # AeroSuite Auto Task Generator
 
-The Auto Task Generator automatically creates high-quality tasks for AeroSuite based on DOD security requirements, state-of-the-art technology trends, and reward-driven UX principles. It provides a curated set of enterprise-grade features to enhance your project.
+The Auto Task Generator automatically creates high-quality tasks for AeroSuite based on DOD
+security requirements, state-of-the-art technology trends, and reward-driven UX principles. It
+provides a curated set of enterprise-grade features to enhance your project.
 
 ## What It Does
 
 The auto task generator:
 
-1. **Generates Enterprise-Grade Tasks** aligned with DOD security requirements
-2. **Creates State-of-the-Art Technology Tasks** reflecting cutting-edge trends
-3. **Adds Reward-Driven UX Tasks** leveraging behavioral psychology principles
-4. **Integrates with Existing Task System** for seamless project management
-5. **Provides Detailed Subtasks** for comprehensive implementation guidance
+1. __Generates Enterprise-Grade Tasks__ aligned with DOD security requirements
+2. __Creates State-of-the-Art Technology Tasks__ reflecting cutting-edge trends
+3. __Adds Reward-Driven UX Tasks__ leveraging behavioral psychology principles
+4. __Integrates with Existing Task System__ for seamless project management
+5. __Provides Detailed Subtasks__ for comprehensive implementation guidance
 
 ## Benefits
 
-- **Security Compliance**: Automatically generates tasks that meet DOD security requirements
-- **Technology Innovation**: Ensures your project leverages cutting-edge technologies
-- **Enhanced User Experience**: Incorporates proven psychological reward mechanisms
-- **Consistent Task Structure**: Maintains proper task hierarchy and relationships
-- **Implementation Guidance**: Provides detailed subtasks with clear dependencies
+- __Security Compliance__: Automatically generates tasks that meet DOD security requirements
+- __Technology Innovation__: Ensures your project leverages cutting-edge technologies
+- __Enhanced User Experience__: Incorporates proven psychological reward mechanisms
+- __Consistent Task Structure__: Maintains proper task hierarchy and relationships
+- __Implementation Guidance__: Provides detailed subtasks with clear dependencies
 
 ## Usage
 
@@ -26,7 +28,7 @@ Run the auto task generator with:
 
 ```bash
 npm run task:auto-generate
-```
+```bash
 
 Or choose specific categories:
 
@@ -42,7 +44,7 @@ npm run task:generate-ux
 
 # Generate tasks from all categories
 npm run task:generate-all
-```
+```bash
 
 ## Command Line Options
 
@@ -58,7 +60,7 @@ The auto task generator supports these options:
 Example:
 ```bash
 node scripts/task-management/auto-task-generator.js --security --tech --count 5
-```
+```bash
 
 ## Feature Categories
 
@@ -104,21 +106,22 @@ Tasks in this category enhance user engagement through behavioral psychology:
 
 The auto task generator integrates with other AeroSuite task tools:
 
-- **Task Recommender**: Uses the recommender engine for task creation
-- **Task-Code Automapper**: Can automatically connect generated tasks to code
-- **Task Traceability Analyzer**: Maintains traceability for generated tasks
+- __Task Recommender__: Uses the recommender engine for task creation
+- __Task-Code Automapper__: Can automatically connect generated tasks to code
+- __Task Traceability Analyzer__: Maintains traceability for generated tasks
 
 ## Best Practices
 
-1. **Generate Security Tasks First**: Start with security requirements as a foundation
-2. **Add Technology Tasks**: Add cutting-edge technology capabilities next
-3. **Enhance with UX Tasks**: Layer in user experience enhancements
-4. **Run Automapper**: Always run the automapper to maintain code traceability
-5. **Review Generated Tasks**: Verify and adjust tasks to fit your specific project needs
+1. __Generate Security Tasks First__: Start with security requirements as a foundation
+2. __Add Technology Tasks__: Add cutting-edge technology capabilities next
+3. __Enhance with UX Tasks__: Layer in user experience enhancements
+4. __Run Automapper__: Always run the automapper to maintain code traceability
+5. __Review Generated Tasks__: Verify and adjust tasks to fit your specific project needs
 
 ## Adding Custom Feature Sets
 
-You can extend the auto task generator with your own feature sets by adding to the feature arrays in the script:
+You can extend the auto task generator with your own feature sets by adding to the feature arrays
+in the script:
 
 ```javascript
 // Custom feature example
@@ -135,4 +138,4 @@ const CUSTOM_FEATURES = [
     ]
   }
 ];
-``` 
+```bash

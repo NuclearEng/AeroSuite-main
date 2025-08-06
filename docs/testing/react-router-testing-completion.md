@@ -2,19 +2,21 @@
 
 ## Task Information
 
-**Task ID:** DEV004  
-**Task Name:** Fix React Router Testing Issues  
-**Priority:** High  
-**Status:** ✅ COMPLETED  
-**Completion Date:** June 20, 2023
+__Task ID:__ DEV004
+__Task Name:__ Fix React Router Testing Issues
+__Priority:__ High
+__Status:__ ✅ COMPLETED
+__Completion Date:__ June 20, 2023
 
 ## Task Description
 
-This task involved fixing issues with testing React components that use React Router hooks in the AeroSuite application. Components using hooks like `useNavigate`, `useParams`, etc. were failing in tests with errors like:
+This task involved fixing issues with testing React components that use React Router hooks in the
+AeroSuite application. Components using hooks like `useNavigate`, `useParams`, etc. were failing in
+tests with errors like:
 
-```
+```bash
 Error: useNavigate() may be used only in the context of a <Router> component.
-```
+```bash
 
 ## Deliverables Completed
 
@@ -57,7 +59,8 @@ Error: useNavigate() may be used only in the context of a <Router> component.
 
 ## Test Results
 
-All tests are now passing. Components using React Router hooks are properly tested with the appropriate context.
+All tests are now passing. Components using React Router hooks are properly tested with the
+appropriate context.
 
 ## Verification
 
@@ -81,9 +84,10 @@ This solution:
 
 ## Certification
 
-This certifies that the React Router Testing task (DEV004) has been successfully completed according to the requirements and specifications.
+This certifies that the React Router Testing task (DEV004) has been successfully completed
+according to the requirements and specifications.
 
 ---
 
-**Completed by:** AeroSuite Development Team  
-**Date:** June 20, 2023 
+__Completed by:__ AeroSuite Development Team
+__Date:__ June 20, 2023

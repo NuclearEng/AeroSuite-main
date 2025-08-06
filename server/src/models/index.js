@@ -401,6 +401,53 @@ const dbUtils = {
   }
 };
 
+/**
+ * Register all models with Mongoose
+ * This ensures models are available for testing and application use
+ */
+function registerModels() {
+  // Register all models to ensure they're available
+  const models = {
+    User,
+    Customer,
+    Supplier,
+    Inspection,
+    Product,
+    Order,
+    Invoice,
+    Report,
+    Dashboard,
+    Widget,
+    Notification,
+    AuditLog,
+    Setting,
+    Permission,
+    Role,
+    Token,
+    Session,
+    File,
+    Task,
+    Workflow,
+    Integration,
+    ApiKey,
+    Webhook,
+    EmailTemplate,
+    SystemConfig
+  };
+
+  // Register each model with Mongoose
+  Object.entries(models).forEach(([name, model]) => {
+    if (!mongoose.models[name]) {
+      mongoose.model(name, model.schema);
+    }
+  });
+
+  console.log('✅ All models registered with Mongoose');
+}
+
+// Register models immediately
+registerModels();
+
 // Export models and utilities
 module.exports = {
   // Models
@@ -439,5 +486,6 @@ module.exports = {
   dbUtils,
   
   // Mongoose instance
-  mongoose
+  mongoose,
+  registerModels
 }; 

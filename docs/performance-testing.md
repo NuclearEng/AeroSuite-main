@@ -1,6 +1,8 @@
 # AeroSuite Performance Testing
 
-This document describes the performance testing system for AeroSuite, which is designed to measure and monitor the application's performance, identify bottlenecks, and ensure that the system meets performance requirements.
+This document describes the performance testing system for AeroSuite, which is designed to measure
+and monitor the application's performance, identify bottlenecks, and ensure that the system meets
+performance requirements.
 
 ## Table of Contents
 
@@ -22,13 +24,15 @@ The AeroSuite performance testing system provides comprehensive testing capabili
 - Database query performance
 - System-wide load testing
 
-The system generates detailed reports showing test results, performance metrics, and recommendations for improvement.
+The system generates detailed reports showing test results, performance metrics, and
+recommendations for improvement.
 
 ## Test Types
 
 ### API Performance Tests
 
-These tests measure API endpoint response times, throughput, and error rates under load. The system tests multiple endpoints and provides both individual and aggregate metrics.
+These tests measure API endpoint response times, throughput, and error rates under load. The system
+tests multiple endpoints and provides both individual and aggregate metrics.
 
 Key metrics:
 - Average response time
@@ -38,7 +42,8 @@ Key metrics:
 
 ### Frontend Performance Tests
 
-These tests measure frontend component rendering performance and page load times using headless browser automation.
+These tests measure frontend component rendering performance and page load times using headless
+browser automation.
 
 Key metrics:
 - First paint time
@@ -50,7 +55,8 @@ Key metrics:
 
 ### Database Performance Tests
 
-These tests measure database query performance by executing common queries and measuring execution time.
+These tests measure database query performance by executing common queries and measuring execution
+time.
 
 Key metrics:
 - Average query time
@@ -60,7 +66,8 @@ Key metrics:
 
 ### System Load Tests
 
-These tests simulate multiple concurrent users performing various actions to measure system performance under load.
+These tests simulate multiple concurrent users performing various actions to measure system
+performance under load.
 
 Key metrics:
 - Sustainable requests per second
@@ -78,11 +85,12 @@ Key metrics:
 
 ### Command Line Usage
 
-The main script for running performance tests is `scripts/performance-test.js`. Here's how to use it:
+The main script for running performance tests is `scripts/performance-test.js`. Here's how to use
+it:
 
 ```bash
 node scripts/performance-test.js [options]
-```
+```bash
 
 Options:
 - `--api` - Run API performance tests only
@@ -102,22 +110,22 @@ Options:
 Run a quick API performance test:
 ```bash
 node scripts/performance-test.js --api --duration 30 --users 5
-```
+```bash
 
 Run a comprehensive performance test with HTML report:
 ```bash
 node scripts/performance-test.js --full --duration 120 --users 20 --output html
-```
+```bash
 
 Test specific API endpoints:
 ```bash
 node scripts/performance-test.js --api --endpoints /api/suppliers,/api/customers
-```
+```bash
 
 Test specific frontend components:
 ```bash
 node scripts/performance-test.js --frontend --components dashboard,suppliers
-```
+```bash
 
 ## Test Configuration
 
@@ -130,37 +138,39 @@ node scripts/performance-test.js --frontend --components dashboard,suppliers
 
 ### Test Data
 
-The performance tests use test data that matches the format of the application's production data. Test fixtures are created automatically when needed.
+The performance tests use test data that matches the format of the application's production data.
+Test fixtures are created automatically when needed.
 
 ## Analyzing Results
 
-Performance test results are saved in the specified report directory (default: `./performance-reports`).
+Performance test results are saved in the specified report directory (default:
+`./performance-reports`).
 
 ### Report Formats
 
-- **Console**: Basic summary printed to the console
-- **JSON**: Complete test results in JSON format for programmatic analysis
-- **HTML**: Interactive HTML report with charts and tables
+- __Console__: Basic summary printed to the console
+- __JSON__: Complete test results in JSON format for programmatic analysis
+- __HTML__: Interactive HTML report with charts and tables
 
 ### Key Performance Indicators (KPIs)
 
 The following KPIs are tracked in the performance reports:
 
-1. **API Performance**
+1. __API Performance__
    - Target: < 200ms average response time
    - Target: < 1% error rate
    - Target: > 100 requests/second
 
-2. **Frontend Performance**
+2. __Frontend Performance__
    - Target: < 1s average page load time
    - Target: < 50ms average component render time
    - Target: < 100MB JavaScript heap usage
 
-3. **Database Performance**
+3. __Database Performance__
    - Target: < 50ms average query time
    - Target: < 200ms slowest query time
 
-4. **System Performance**
+4. __System Performance__
    - Target: > 50 sustainable requests/second
    - Target: < 500ms average response time under load
    - Target: < 80% CPU utilization
@@ -168,7 +178,8 @@ The following KPIs are tracked in the performance reports:
 
 ## Continuous Integration
 
-Performance tests can be run automatically using GitHub Actions. The workflow is defined in `.github/workflows/performance-tests.yml`.
+Performance tests can be run automatically using GitHub Actions. The workflow is defined in
+`.github/workflows/performance-tests.yml`.
 
 ### Scheduled Tests
 
@@ -176,7 +187,8 @@ Performance tests run automatically every Monday at 1:00 AM to track performance
 
 ### Manual Triggers
 
-You can manually trigger performance tests from the GitHub Actions tab by selecting the "Performance Tests" workflow and clicking "Run workflow."
+You can manually trigger performance tests from the GitHub Actions tab by selecting the
+"Performance Tests" workflow and clicking "Run workflow."
 
 ### Test Results
 
@@ -186,40 +198,45 @@ Test reports are saved as GitHub Actions artifacts and can be downloaded for ana
 
 ### Adding Custom API Endpoints
 
-To add custom API endpoints to test, modify the `DEFAULT_ENDPOINTS` array in `scripts/performance/api-performance.js`.
+To add custom API endpoints to test, modify the `DEFAULT_ENDPOINTS` array in
+`scripts/performance/api-performance.js`.
 
 ### Adding Custom Frontend Pages
 
-To add custom frontend pages to test, modify the `DEFAULT_PAGES` array in `scripts/performance/frontend-performance.js`.
+To add custom frontend pages to test, modify the `DEFAULT_PAGES` array in
+`scripts/performance/frontend-performance.js`.
 
 ### Adding Custom Database Queries
 
-To add custom database queries to test, modify the `DEFAULT_QUERIES` array in `scripts/performance/database-performance.js`.
+To add custom database queries to test, modify the `DEFAULT_QUERIES` array in
+`scripts/performance/database-performance.js`.
 
 ### Adding Custom Load Test Scenarios
 
-To add custom load test scenarios, modify the `DEFAULT_SCENARIOS` array in `scripts/performance/system-load-test.js`.
+To add custom load test scenarios, modify the `DEFAULT_SCENARIOS` array in
+`scripts/performance/system-load-test.js`.
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Error: Could not connect to database**
+1. __Error: Could not connect to database__
    - Ensure MongoDB is running
    - Check the MongoDB connection string
 
-2. **Error: Could not get authentication token**
+2. __Error: Could not get authentication token__
    - Ensure the server is running
    - Check that the test user credentials are valid
 
-3. **Error: Could not launch headless browser**
+3. __Error: Could not launch headless browser__
    - Ensure puppeteer dependencies are installed
    - Try running with `--no-sandbox` option
 
-4. **Slow test execution**
+4. __Slow test execution__
    - Reduce the test duration or number of users
    - Run tests on a more powerful machine
 
 ### Getting Help
 
-For more help, please contact the AeroSuite development team or open an issue on the project repository. 
+For more help, please contact the AeroSuite development team or open an issue on the project
+repository.

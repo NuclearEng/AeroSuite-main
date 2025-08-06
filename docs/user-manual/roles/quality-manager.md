@@ -1,6 +1,7 @@
 # Quality Manager Guide
 
-This guide is designed for Quality Managers using AeroSuite. It covers the key features and workflows that will help you manage quality processes effectively.
+This guide is designed for Quality Managers using AeroSuite. It covers the key features and
+workflows that will help you manage quality processes effectively.
 
 ## Role Overview
 
@@ -19,14 +20,14 @@ As a Quality Manager in AeroSuite, you are responsible for:
 
 Your dashboard provides a real-time overview of quality metrics:
 
-1. **Quality KPIs**: Track key performance indicators like:
+1. __Quality KPIs__: Track key performance indicators like:
    - First-time pass rate
    - Defect rates by category
    - Supplier quality scores
    - Open vs. closed defects
    - Inspection completion rates
 
-2. **Customizing Your Quality Dashboard**:
+2. __Customizing Your Quality Dashboard__:
    - Add quality-focused widgets
    - Configure alerts for critical thresholds
    - Set up daily/weekly summary reports
@@ -35,8 +36,8 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Setting Quality Standards
 
-1. Navigate to **Quality > Standards**
-2. Click **Add Standard** to create a new quality standard
+1. Navigate to __Quality > Standards__
+2. Click __Add Standard__ to create a new quality standard
 3. Define:
    - Standard name and description
    - Applicable products/processes
@@ -46,8 +47,8 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Creating Inspection Plans
 
-1. Navigate to **Quality > Inspection Plans**
-2. Click **Create Plan** to define a new inspection plan
+1. Navigate to __Quality > Inspection Plans__
+2. Click __Create Plan__ to define a new inspection plan
 3. Configure:
    - Inspection frequency
    - Required checkpoints
@@ -59,8 +60,8 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Scheduling Inspections
 
-1. Navigate to **Inspections > Schedule**
-2. Click **Schedule Inspection**
+1. Navigate to __Inspections > Schedule__
+2. Click __Schedule Inspection__
 3. Define inspection parameters:
    - Supplier/customer
    - Product/component
@@ -72,7 +73,7 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Monitoring Inspection Progress
 
-1. Navigate to **Inspections > Dashboard**
+1. Navigate to __Inspections > Dashboard__
 2. View real-time status of all scheduled inspections
 3. Filter by:
    - Status (scheduled, in progress, completed)
@@ -83,7 +84,7 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Reviewing Inspection Results
 
-1. Navigate to **Inspections > Results**
+1. Navigate to __Inspections > Results__
 2. Select the inspection to review
 3. Examine:
    - Completed checklist items
@@ -97,7 +98,7 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Analyzing Defect Trends
 
-1. Navigate to **Quality > Defect Analysis**
+1. Navigate to __Quality > Defect Analysis__
 2. Use the interactive dashboard to:
    - View defect distribution by category
    - Analyze defect trends over time
@@ -106,7 +107,7 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Managing Corrective Actions
 
-1. Navigate to **Quality > CAPA**
+1. Navigate to __Quality > CAPA__
 2. View all Corrective Action/Preventive Action items
 3. Create new CAPA items:
    - Link to related defects
@@ -119,7 +120,7 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Supplier Quality Performance
 
-1. Navigate to **Suppliers > Quality Performance**
+1. Navigate to __Suppliers > Quality Performance__
 2. View quality metrics for all suppliers
 3. Drill down into individual supplier performance:
    - Inspection pass rates
@@ -130,7 +131,7 @@ Your dashboard provides a real-time overview of quality metrics:
 
 #### Supplier Audits
 
-1. Navigate to **Suppliers > Audits**
+1. Navigate to __Suppliers > Audits__
 2. Schedule supplier audits
 3. Create and assign audit checklists
 4. Review audit findings
@@ -142,7 +143,7 @@ Your dashboard provides a real-time overview of quality metrics:
 
 Access pre-configured quality reports:
 
-1. Navigate to **Reports > Quality**
+1. Navigate to __Reports > Quality__
 2. Available reports include:
    - Monthly Quality Summary
    - Supplier Quality Comparison
@@ -154,8 +155,8 @@ Access pre-configured quality reports:
 
 Create tailored reports for specific needs:
 
-1. Navigate to **Reports > Custom**
-2. Click **Create Report**
+1. Navigate to __Reports > Custom__
+2. Click __Create Report__
 3. Select quality-related data sources
 4. Configure filters, grouping, and calculations
 5. Choose visualization options
@@ -194,11 +195,14 @@ Create tailored reports for specific needs:
 
 ## Tips for Quality Managers
 
-- **Dashboard Configuration**: Set up your dashboard to show the most critical quality metrics for your operation
-- **Mobile App**: Use the AeroSuite mobile app for on-the-go access to quality data and approvals
-- **Automated Alerts**: Configure alerts for quality thresholds to get notified of issues early
-- **Report Scheduling**: Schedule key reports to be automatically generated and distributed to stakeholders
-- **Data Export**: Use the export function to analyze quality data in external tools like Excel or Power BI
+- __Dashboard Configuration__: Set up your dashboard to show the most critical quality metrics for
+your operation
+- __Mobile App__: Use the AeroSuite mobile app for on-the-go access to quality data and approvals
+- __Automated Alerts__: Configure alerts for quality thresholds to get notified of issues early
+- __Report Scheduling__: Schedule key reports to be automatically generated and distributed to
+stakeholders
+- __Data Export__: Use the export function to analyze quality data in external tools like Excel or
+Power BI
 
 ## Related Resources
 
@@ -210,4 +214,5 @@ Create tailored reports for specific needs:
 
 ---
 
-*For additional assistance with quality management functions, contact the AeroSuite support team at support@aerosuite.example.com* 
+_For additional assistance with quality management functions, contact the AeroSuite support team at
+support@aerosuite.example.com_

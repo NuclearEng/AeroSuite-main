@@ -11,8 +11,26 @@
  * Usage: node optimize-database.js
  */
 
+const mongoose = require('mongoose');
+const fs = require('fs');
 const path = require('path');
-const chalk = require('chalk');
+
+// Import chalk with fallback
+let chalk;
+try {
+  chalk = require('chalk');
+} catch (error) {
+  // Fallback if chalk is not available
+  chalk = {
+    blue: (text) => `\x1b[34m${text}\x1b[0m`,
+    yellow: (text) => `\x1b[33m${text}\x1b[0m`,
+    green: (text) => `\x1b[32m${text}\x1b[0m`,
+    red: (text) => `\x1b[31m${text}\x1b[0m`,
+    cyan: (text) => `\x1b[36m${text}\x1b[0m`,
+    bold: (text) => `\x1b[1m${text}\x1b[0m`
+  };
+}
+
 const ora = require('ora');
 const dotenv = require('dotenv');
 

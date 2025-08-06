@@ -2,15 +2,17 @@
 
 ## Overview
 
-This document outlines the strategy for breaking down large UI components in the AeroSuite application. The goal is to improve code maintainability, reusability, and performance by following component composition principles.
+This document outlines the strategy for breaking down large UI components in the AeroSuite
+application. The goal is to improve code maintainability, reusability, and performance by following
+component composition principles.
 
 ## Principles
 
-1. **Single Responsibility Principle**: Each component should have only one reason to change.
-2. **Composition Over Inheritance**: Build complex UIs by composing small, focused components.
-3. **Reusability**: Components should be designed for reuse across the application.
-4. **Separation of Concerns**: Separate UI, state management, and business logic.
-5. **Testability**: Smaller components are easier to test in isolation.
+1. __Single Responsibility Principle__: Each component should have only one reason to change.
+2. __Composition Over Inheritance__: Build complex UIs by composing small, focused components.
+3. __Reusability__: Components should be designed for reuse across the application.
+4. __Separation of Concerns__: Separate UI, state management, and business logic.
+5. __Testability__: Smaller components are easier to test in isolation.
 
 ## Breakdown Strategy
 
@@ -34,7 +36,8 @@ Break down feature-specific components into smaller, focused parts:
 
 ### 3. Container Components
 
-Container components manage state and data fetching, while delegating rendering to presentational components:
+Container components manage state and data fetching, while delegating rendering to presentational
+components:
 
 - `CustomerActivityHistory` (container) uses:
   - `ActivityHistoryHeader` (presentational)
@@ -44,18 +47,19 @@ Container components manage state and data fetching, while delegating rendering 
 
 ## Benefits
 
-- **Improved Readability**: Smaller components are easier to understand
-- **Better Maintainability**: Changes to one component don't affect others
-- **Enhanced Reusability**: Components can be reused across the application
-- **Code Splitting**: Enables more efficient code splitting for performance
-- **Parallel Development**: Multiple developers can work on different components
-- **Easier Testing**: Smaller components are easier to test in isolation
+- __Improved Readability__: Smaller components are easier to understand
+- __Better Maintainability__: Changes to one component don't affect others
+- __Enhanced Reusability__: Components can be reused across the application
+- __Code Splitting__: Enables more efficient code splitting for performance
+- __Parallel Development__: Multiple developers can work on different components
+- __Easier Testing__: Smaller components are easier to test in isolation
 
 ## Examples
 
 ### Before Refactoring
 
-Before refactoring, components like `CustomerActivityHistory` contained all UI elements, state management, and rendering logic in a single file, making them difficult to maintain and test.
+Before refactoring, components like `CustomerActivityHistory` contained all UI elements, state
+management, and rendering logic in a single file, making them difficult to maintain and test.
 
 ### After Refactoring
 
@@ -72,4 +76,4 @@ After refactoring, we have:
 
 1. Create a comprehensive UI component library (RF014)
 2. Implement component composition patterns (RF015)
-3. Create component documentation (RF016) 
+3. Create component documentation (RF016)

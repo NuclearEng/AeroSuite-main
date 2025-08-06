@@ -17,6 +17,10 @@ import { runSupplierAgent } from './agents/supplierAgent';
 import { runSystemsAgent } from './agents/systemsAgent';
 import { runUxUiAgent } from './agents/uxUiAgent';
 import { runHumanPsychologyAgent } from './agents/humanPsychologyAgent';
+import { runDockerAgent } from './agents/dockerAgent';
+import { runNodejsAgent } from './agents/nodejsAgent';
+import { runNginxUnitAgent } from './agents/nginxUnitAgent';
+import { runRedisAgent } from './agents/redisAgent';
 
 type AgentResult = { passed: boolean; details: string };
 type ModuleResult = {
@@ -48,6 +52,10 @@ const allAgents = [
   'customer',
   'inspection',
   'supplier',
+  'docker',
+  'nodejs',
+  'nginxUnit',
+  'redis',
   // systems agent is global, not per module
 ];
 
@@ -66,6 +74,10 @@ const agentFns: Record<string, (m: string) => Promise<AgentResult>> = {
   customer: runCustomerAgent,
   inspection: runInspectionAgent,
   supplier: runSupplierAgent,
+  docker: runDockerAgent,
+  nodejs: runNodejsAgent,
+  nginxUnit: runNginxUnitAgent,
+  redis: runRedisAgent,
   // systems agent is not per module
 };
 

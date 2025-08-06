@@ -2,39 +2,43 @@
 
 ## Overview
 
-This directory contains documentation and resources for the React Router testing solution implemented in the AeroSuite application (Task DEV004). The solution addresses issues with testing React components that use React Router hooks like `useNavigate` and `useParams`.
+This directory contains documentation and resources for the React Router testing solution
+implemented in the AeroSuite application (Task DEV004). The solution addresses issues with testing
+React components that use React Router hooks like `useNavigate` and `useParams`.
 
 ## Problem
 
 Components using React Router hooks were failing in tests with errors like:
 
-```
+```bash
 Error: useNavigate() may be used only in the context of a <Router> component.
-```
+```bash
 
-This occurred because React Router hooks need to be used within a Router context, but our tests were rendering components in isolation.
+This occurred because React Router hooks need to be used within a Router context, but our tests
+were rendering components in isolation.
 
 ## Solution
 
 We implemented a comprehensive solution with the following components:
 
-1. **Basic Testing Utilities**
+1. __Basic Testing Utilities__
    - `router-wrapper.tsx`: For components using React Router hooks
    - `theme-wrapper.tsx`: For components using Material-UI Theme
    - `combined-wrapper.tsx`: For components using both
    - `test-setup.tsx`: Custom render function with necessary providers
 
-2. **Advanced Testing Utilities**
-   - `advanced-router-wrapper.tsx`: Enhanced utilities for authentication, role-based access, and query parameters
+2. __Advanced Testing Utilities__
+   - `advanced-router-wrapper.tsx`: Enhanced utilities for authentication, role-based access, and
+query parameters
    - Authentication context for protected routes
    - Role-based access control testing
    - Query parameter handling
    - Navigation history tracking
 
-3. **Global Mocks**
+3. __Global Mocks__
    - Updated `setupTests.ts` to include mocks for React Router hooks
 
-4. **Automation Scripts**
+4. __Automation Scripts__
    - `fix-router-tests.sh`: Main script with menu interface
    - Interactive mode: Fix tests one by one
    - Batch mode: Fix all tests at once
@@ -53,7 +57,8 @@ This directory contains the following documentation:
 - [Workshop Outline](./react-router-testing-workshop.md): Outline for hands-on workshop
 - [Final Report](./react-router-testing-final-report.md): Comprehensive summary of all work
 - [Task Completion Certificate](./react-router-testing-completion.md): Official task completion
-- [Advanced Router Testing](./advanced-router-testing.md): Documentation for advanced router testing features
+- [Advanced Router Testing](./advanced-router-testing.md): Documentation for advanced router
+testing features
 
 ## Getting Started
 
@@ -66,22 +71,24 @@ To get started with the React Router testing solution:
 
 ## Components Fixed
 
-- **Customer components:** CustomerDetail, CustomerList, EditCustomer
-- **Supplier components:** SupplierDetail, SupplierList, SupplierEdit, EditSupplier
-- **Inspection components:** InspectionDetail, InspectionList, ScheduleInspection, InspectionAnalytics, ConductInspection
+- __Customer components:__ CustomerDetail, CustomerList, EditCustomer
+- __Supplier components:__ SupplierDetail, SupplierList, SupplierEdit, EditSupplier
+- __Inspection components:__ InspectionDetail, InspectionList, ScheduleInspection,
+InspectionAnalytics, ConductInspection
 
 ## Benefits
 
-1. **Consistent Testing Approach**: All components follow a consistent approach
-2. **Improved Test Reliability**: Tests properly simulate the environment
-3. **Reduced Boilerplate**: Utility functions reduce boilerplate code
-4. **Better Mocking**: Proper mocks for React Router hooks
-5. **Easier Maintenance**: Centralized approach for easier maintenance
-6. **Automation**: Scripts help automate the process of fixing tests
-7. **Advanced Testing**: Support for complex routing scenarios with authentication and query parameters
+1. __Consistent Testing Approach__: All components follow a consistent approach
+2. __Improved Test Reliability__: Tests properly simulate the environment
+3. __Reduced Boilerplate__: Utility functions reduce boilerplate code
+4. __Better Mocking__: Proper mocks for React Router hooks
+5. __Easier Maintenance__: Centralized approach for easier maintenance
+6. __Automation__: Scripts help automate the process of fixing tests
+7. __Advanced Testing__: Support for complex routing scenarios with authentication and query
+parameters
 
 ## Status
 
-✅ **COMPLETED**
+✅ __COMPLETED__
 
-This task has been officially completed and all deliverables have been provided. 
+This task has been officially completed and all deliverables have been provided.

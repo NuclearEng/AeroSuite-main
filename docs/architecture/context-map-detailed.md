@@ -2,7 +2,7 @@
 
 ## Visual Context Map with Integration Patterns
 
-```
+```bash
 +-------------------+                                 +-------------------+
 |                   |      Customer-Supplier          |                   |
 |     Customer      |<--------------------------->    |    Inspection     |
@@ -45,47 +45,51 @@
                                                      |     Domain        |
                                                      |                   |
                                                      +-------------------+
-```
+```bash
 
 ## External System Integration
 
-```
+```bash
 +-------------------+                                 +-------------------+
 |                   |      Anti-Corruption Layer      |                   |
 |    AeroSuite      |<--------------------------->    |    External       |
 |    Domains        |         Adapters                |    ERP System     |
 |                   |                                 |                   |
 +-------------------+                                 +-------------------+
-```
+```bash
 
 ## Legend
 
 ### Relationship Types
 
-- **Partnership**: Close collaboration with aligned goals
-- **Customer-Supplier**: One context provides services to another
-- **Conformist**: One context adapts to the model of another
-- **Separate Ways**: Minimal direct interaction
-- **Open Host Service**: Well-defined API for others to use
-- **Anti-Corruption Layer**: Translation layer between different models
+- __Partnership__: Close collaboration with aligned goals
+- __Customer-Supplier__: One context provides services to another
+- __Conformist__: One context adapts to the model of another
+- __Separate Ways__: Minimal direct interaction
+- __Open Host Service__: Well-defined API for others to use
+- __Anti-Corruption Layer__: Translation layer between different models
 
 ### Integration Mechanisms
 
-- **Domain Events**: Asynchronous communication via events
-- **API**: Synchronous communication via REST or GraphQL APIs
-- **Shared Kernel**: Shared code and models between domains
-- **Published Language**: Shared schema for communication
-- **Read Models**: Denormalized data optimized for specific use cases
-- **Adapters**: Components that translate between different models
+- __Domain Events__: Asynchronous communication via events
+- __API__: Synchronous communication via REST or GraphQL APIs
+- __Shared Kernel__: Shared code and models between domains
+- __Published Language__: Shared schema for communication
+- __Read Models__: Denormalized data optimized for specific use cases
+- __Adapters__: Components that translate between different models
 
 ## Domain Responsibility Summary
 
 | Domain | Primary Responsibility | Key Integration Points |
 |--------|------------------------|------------------------|
-| Customer | Managing customer data and relationships | Provides customer data to Inspection domain |
-| Supplier | Managing supplier data and qualifications | Provides supplier data to Component domain |
-| Inspection | Managing inspection processes and results | Consumes data from Customer, Component; Updates Supplier performance |
-| Component | Managing component specifications and revisions | Consumes data from Supplier; Provides specifications to Inspection |
+| Customer | Managing customer data and relationships | Provides customer data to Inspection domain
+|
+| Supplier | Managing supplier data and qualifications | Provides supplier data to Component domain
+|
+| Inspection | Managing inspection processes and results | Consumes data from Customer, Component;
+Updates Supplier performance |
+| Component | Managing component specifications and revisions | Consumes data from Supplier;
+Provides specifications to Inspection |
 | User | Managing authentication and authorization | Provides identity services to all domains |
 | Reporting | Generating analytics and reports | Consumes events from all domains |
 | Notification | Managing notifications and alerts | Consumes events from all domains |
@@ -138,4 +142,4 @@
 | User ↔ All Domains | Planned | High | RF010, RF011 |
 | All Domains ↔ Reporting | Planned | Medium | RF010, RF012 |
 | All Domains ↔ Notification | Planned | Medium | RF010, RF012 |
-| AeroSuite ↔ ERP | Planned | High | RF010, RF011 | 
+| AeroSuite ↔ ERP | Planned | High | RF010, RF011 |

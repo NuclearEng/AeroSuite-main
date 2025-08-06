@@ -1,6 +1,8 @@
 # Enhanced Form UX
 
-This document provides an overview of AeroSuite's enhanced form UX features, which improve the user experience with forms through inline validation, auto-save functionality, and smart defaults/suggestions.
+This document provides an overview of AeroSuite's enhanced form UX features, which improve the user
+experience with forms through inline validation, auto-save functionality, and smart
+defaults/suggestions.
 
 ## Features
 
@@ -8,10 +10,11 @@ This document provides an overview of AeroSuite's enhanced form UX features, whi
 
 The form system provides real-time validation feedback as users enter information:
 
-- **Immediate Feedback**: Validates input as users type or when they leave a field
-- **Clear Error Messages**: Shows specific error messages that explain how to fix problems
-- **Validation Severity Levels**: Uses different severity levels (error, warning, info) for different types of validation issues
-- **Related Field Validation**: Validates related fields together (e.g., password confirmation)
+- __Immediate Feedback__: Validates input as users type or when they leave a field
+- __Clear Error Messages__: Shows specific error messages that explain how to fix problems
+- __Validation Severity Levels__: Uses different severity levels (error, warning, info) for
+different types of validation issues
+- __Related Field Validation__: Validates related fields together (e.g., password confirmation)
 
 ```tsx
 // Example field with validation
@@ -32,56 +35,57 @@ The form system provides real-time validation feedback as users enter informatio
   ],
   placeholder: 'email@example.com',
 }
-```
+```bash
 
 ### Auto-Save Functionality
 
 Forms automatically save user progress to prevent data loss:
 
-- **Automatic Saving**: Saves form progress after a period of inactivity (default: 2 seconds)
-- **Visual Confirmation**: Provides visual feedback when auto-save occurs
-- **Manual Save Option**: Allows users to manually save their progress
-- **Form History**: Maintains a history of form versions for recovery
+- __Automatic Saving__: Saves form progress after a period of inactivity (default: 2 seconds)
+- __Visual Confirmation__: Provides visual feedback when auto-save occurs
+- __Manual Save Option__: Allows users to manually save their progress
+- __Form History__: Maintains a history of form versions for recovery
 
 ```tsx
 // Example auto-save implementation
 useEffect(() => {
   if (!autoSaveEnabled || Object.keys(formValues).length === 0) return;
-  
+
   // Clear previous timer
   if (autoSaveTimer) {
     clearTimeout(autoSaveTimer);
   }
-  
+
   // Set new timer to save after 2 seconds of inactivity
   const timer = setTimeout(() => {
     handleAutoSave();
   }, 2000);
-  
+
   setAutoSaveTimer(timer);
-  
+
   return () => {
     if (autoSaveTimer) {
       clearTimeout(autoSaveTimer);
     }
   };
 }, [formValues, autoSaveEnabled]);
-```
+```bash
 
 ### Smart Defaults & Suggestions
 
 The form system provides intelligent suggestions and defaults:
 
-- **Intelligent Suggestions**: Offers contextual suggestions based on user input
-- **Pre-filling Fields**: Pre-fills fields based on related information (e.g., email suggestions based on name)
-- **Automatic Formatting**: Formats input automatically (e.g., adding https:// to URLs)
-- **Previous Entry Memory**: Remembers previous entries for returning users
+- __Intelligent Suggestions__: Offers contextual suggestions based on user input
+- __Pre-filling Fields__: Pre-fills fields based on related information (e.g., email suggestions
+based on name)
+- __Automatic Formatting__: Formats input automatically (e.g., adding https:// to URLs)
+- __Previous Entry Memory__: Remembers previous entries for returning users
 
 ```tsx
 // Example smart suggestions implementation
 const handleShowSuggestions = (fieldName: string) => {
   // ...
-  
+
   switch (fieldName) {
     case 'email':
       // Generate email suggestions based on contact name if available
@@ -92,11 +96,11 @@ const handleShowSuggestions = (fieldName: string) => {
       break;
     // ...
   }
-  
+
   setSuggestions({ ...suggestions, [fieldName]: fieldSuggestions });
   setShowSuggestionFor(fieldName);
 };
-```
+```bash
 
 ## Usage
 
@@ -129,7 +133,7 @@ const formSections: FormSection[] = [
   showProgressIndicator={true}
   instantValidation={true}
 />
-```
+```bash
 
 ### Auto-Save Implementation
 
@@ -139,17 +143,18 @@ To implement auto-save functionality:
 // State for auto-save
 const [formValues, setFormValues] = useState<Record<string, any>>({});
 const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null);
-const [formHistory, setFormHistory] = useState<Array<{timestamp: Date, values: Record<string, any>}>>([]);
+const [formHistory, setFormHistory] = useState<Array<{timestamp: Date, values: Record<string,
+any>}>>([]);
 
 // Auto-save effect
 useEffect(() => {
   if (!autoSaveEnabled || Object.keys(formValues).length === 0) return;
-  
+
   // Clear previous timer
   if (autoSaveTimer) {
     clearTimeout(autoSaveTimer);
   }
-  
+
   // Set new timer to save after 2 seconds of inactivity
   const timer = setTimeout(() => {
     // Save form values
@@ -159,16 +164,16 @@ useEffect(() => {
       ...prev.slice(0, 9) // Keep only last 10 entries
     ]);
   }, 2000);
-  
+
   setAutoSaveTimer(timer);
-  
+
   return () => {
     if (autoSaveTimer) {
       clearTimeout(autoSaveTimer);
     }
   };
 }, [formValues, autoSaveEnabled]);
-```
+```bash
 
 ### Smart Suggestions Implementation
 
@@ -186,8 +191,8 @@ const [showSuggestionFor, setShowSuggestionFor] = useState<string | null>(null);
   type: 'email',
   endAdornment: (
     <InputAdornment position="end">
-      <IconButton 
-        size="small" 
+      <IconButton
+        size="small"
         onClick={() => handleShowSuggestions('email')}
         edge="end"
       >
@@ -200,7 +205,7 @@ const [showSuggestionFor, setShowSuggestionFor] = useState<string | null>(null);
 // Render suggestions
 const renderSuggestions = (fieldName: string) => {
   if (fieldName !== showSuggestionFor || !suggestions[fieldName]) return null;
-  
+
   return (
     <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
       {suggestions[fieldName].map((suggestion, index) => (
@@ -216,7 +221,7 @@ const renderSuggestions = (fieldName: string) => {
     </Box>
   );
 };
-```
+```bash
 
 ## Best Practices
 
@@ -257,4 +262,4 @@ const renderSuggestions = (fieldName: string) => {
 
 ## Demo
 
-Visit the [Form UX Demo](/demos/form-ux) page to see all form UX features in action. 
+Visit the [Form UX Demo](/demos/form-ux) page to see all form UX features in action.

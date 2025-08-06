@@ -1,12 +1,14 @@
 # Responsive Design System
 
-This document provides an overview of AeroSuite's responsive design system, which ensures a consistent user experience across different devices and screen sizes.
+This document provides an overview of AeroSuite's responsive design system, which ensures a
+consistent user experience across different devices and screen sizes.
 
 ## Components
 
 ### TouchTargetWrapper
 
-The `TouchTargetWrapper` component enhances interactive elements to meet accessibility standards for touch targets.
+The `TouchTargetWrapper` component enhances interactive elements to meet accessibility standards
+for touch targets.
 
 ```tsx
 import TouchTargetWrapper from '../components/common/TouchTargetWrapper';
@@ -17,7 +19,7 @@ import TouchTargetWrapper from '../components/common/TouchTargetWrapper';
 </TouchTargetWrapper>
 
 // Advanced usage with configuration
-<TouchTargetWrapper 
+<TouchTargetWrapper
   minSize={64}
   applyWidth={true}
   applyHeight={true}
@@ -27,11 +29,12 @@ import TouchTargetWrapper from '../components/common/TouchTargetWrapper';
     <PhoneIcon fontSize="small" />
   </IconButton>
 </TouchTargetWrapper>
-```
+```bash
 
 ### ResponsiveLayoutAudit
 
-The `ResponsiveLayoutAudit` component helps developers audit responsive layouts by showing viewport size and breakpoints.
+The `ResponsiveLayoutAudit` component helps developers audit responsive layouts by showing viewport
+size and breakpoints.
 
 ```tsx
 import ResponsiveLayoutAudit from '../components/common/ResponsiveLayoutAudit';
@@ -46,11 +49,12 @@ import ResponsiveLayoutAudit from '../components/common/ResponsiveLayoutAudit';
   showGridOverlay={false}
   highlightTouchTargets={false}
 />
-```
+```bash
 
 ### ResponsiveGrid
 
-The `ResponsiveGrid` component provides a flexible grid system that adapts to different screen sizes.
+The `ResponsiveGrid` component provides a flexible grid system that adapts to different screen
+sizes.
 
 ```tsx
 import { ResponsiveGrid, ResponsiveGridItem } from '../components/layout/ResponsiveGrid';
@@ -70,16 +74,16 @@ import { ResponsiveGrid, ResponsiveGridItem } from '../components/layout/Respons
 </ResponsiveGrid>
 
 // Advanced usage with configuration
-<ResponsiveGrid 
+<ResponsiveGrid
   spacing={{ xs: 1, sm: 2, md: 3 }}
   mobileDirection="column"
   tabletDirection="row"
   desktopDirection="row"
   mobileSingleColumn={true}
 >
-  {/* Grid items */}
+  {/_ Grid items _/}
 </ResponsiveGrid>
-```
+```bash
 
 ## Utilities
 
@@ -88,9 +92,9 @@ import { ResponsiveGrid, ResponsiveGridItem } from '../components/layout/Respons
 The `touchTargetUtils` module provides utilities for enhancing touch targets on mobile devices.
 
 ```tsx
-import { 
-  useTouchTargetStyles, 
-  createTouchTargetStyles, 
+import {
+  useTouchTargetStyles,
+  createTouchTargetStyles,
   getResponsiveSpacing,
   createResponsivePadding
 } from '../utils/touchTargetUtils';
@@ -115,7 +119,7 @@ const spacing = getResponsiveSpacing(2, 1, isMobile);
 
 // Create responsive padding
 const paddingStyles = createResponsivePadding(2, 1, isMobile);
-```
+```bash
 
 ### useResponsive
 
@@ -156,7 +160,7 @@ const styles = getResponsiveStyles(
     md: { padding: 3 }
   }
 );
-```
+```bash
 
 ## Best Practices
 
@@ -201,4 +205,5 @@ AeroSuite uses the following breakpoints:
 
 ## Demo Page
 
-Visit the [Responsive Design Demo](/demos/responsive-design) page to see all responsive design components and utilities in action. 
+Visit the [Responsive Design Demo](/demos/responsive-design) page to see all responsive design
+components and utilities in action.

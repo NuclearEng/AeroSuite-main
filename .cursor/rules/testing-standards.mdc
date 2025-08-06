@@ -1,0 +1,54 @@
+# Testing Standards
+
+## Cypress E2E Testing
+- Write descriptive test names
+- Use proper selectors (data-testid preferred)
+- Implement proper waiting strategies
+- Test critical user journeys
+- Handle API mocking when needed
+- Use custom commands for common actions
+- Use session-based authentication for performance
+- Implement proper test data seeding and cleanup
+- Use network interception for API testing
+- Handle loading states and error scenarios
+
+## Test Structure
+- Use describe blocks for grouping
+- Use beforeEach for setup
+- Use afterEach for cleanup
+- Keep tests independent
+- Use proper assertions
+
+## API Testing
+- Test all critical endpoints
+- Verify response status codes
+- Check response data structure
+- Test error scenarios
+- Use proper authentication in tests
+- Use network interception for consistent testing
+- Mock API responses for reliable tests
+- Test both success and failure scenarios
+- Validate error handling and user feedback
+
+## Performance Testing
+- Test page load times
+- Verify API response times
+- Test with different data sizes
+- Monitor memory usage
+- Test concurrent user scenarios
+
+## Best Practices
+- Don't test implementation details
+- Focus on user behavior
+- Use meaningful test data
+- Keep tests maintainable
+- Document complex test scenarios
+- Use test fixtures for consistent data
+- Implement proper test isolation
+- Use session caching for performance
+- Handle flaky elements with custom commands
+- Test accessibility and keyboard navigation
+description:
+globs:
+alwaysApply: false
+---

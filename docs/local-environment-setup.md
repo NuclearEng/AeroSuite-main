@@ -1,6 +1,7 @@
 # Local Environment Setup Guide
 
-This guide explains how to set up a local development environment for AeroSuite using the test data generation system.
+This guide explains how to set up a local development environment for AeroSuite using the test data
+generation system.
 
 ## Overview
 
@@ -27,7 +28,7 @@ npm install
 
 # Run the setup script
 node scripts/setup-local-environment.js
-```
+```bash
 
 This will:
 - Create a local-env directory with configuration files
@@ -53,9 +54,9 @@ The setup script supports various options:
 
 Three predefined data profiles are available:
 
-1. **dev** - Small dataset suitable for development (10-20 entities of each type)
-2. **demo** - Medium dataset with realistic demo data (50-100 entities of each type)
-3. **full** - Large dataset with comprehensive test data (200+ entities of each type)
+1. __dev__ - Small dataset suitable for development (10-20 entities of each type)
+2. __demo__ - Medium dataset with realistic demo data (50-100 entities of each type)
+3. __full__ - Large dataset with comprehensive test data (200+ entities of each type)
 
 Example:
 ```bash
@@ -64,11 +65,12 @@ node scripts/setup-local-environment.js --profile=demo
 
 # Set up a full test environment with specific seed
 node scripts/setup-local-environment.js --profile=full --seed=full-test-2025
-```
+```bash
 
 ## Docker Setup
 
-If Docker is detected on your system, the script will generate a Docker Compose file for running the necessary services:
+If Docker is detected on your system, the script will generate a Docker Compose file for running
+the necessary services:
 
 ```bash
 # Navigate to the output directory
@@ -76,7 +78,7 @@ cd local-env
 
 # Start the services
 docker-compose -f docker-compose.local.yml up -d
-```
+```bash
 
 This will start:
 - MongoDB database
@@ -87,19 +89,19 @@ This will start:
 
 If you prefer to set up the services manually:
 
-1. **MongoDB**:
+1. __MongoDB__:
    ```bash
    # Start MongoDB locally
    mongod --dbpath=/path/to/data/db
    ```
 
-2. **Redis**:
+2. __Redis__:
    ```bash
    # Start Redis locally
    redis-server
    ```
 
-3. **Backend**:
+3. __Backend__:
    ```bash
    # Start the backend server
    cd server
@@ -107,7 +109,7 @@ If you prefer to set up the services manually:
    npm run dev
    ```
 
-4. **Frontend**:
+4. __Frontend__:
    ```bash
    # Start the frontend
    cd client
@@ -145,7 +147,7 @@ node scripts/setup-local-environment.js --reset
 
 # Reset and switch to a different profile
 node scripts/setup-local-environment.js --profile=demo --reset
-```
+```bash
 
 ## Debugging
 
@@ -174,4 +176,4 @@ The test data generator can be customized by modifying:
 - Profiles in the setup script
 - The TestDataGenerator class (`server/src/utils/testDataGenerator.js`)
 
-For more details on customizing test data, see [Test Data Generation](./test-data-generation.md). 
+For more details on customizing test data, see [Test Data Generation](./test-data-generation.md).

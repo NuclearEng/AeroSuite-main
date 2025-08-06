@@ -6,7 +6,11 @@ Accepted
 
 ## Context
 
-The AeroSuite application has grown organically, resulting in a codebase with mixed concerns, unclear boundaries between components, and difficulty in maintaining and extending the system. As we prepare to add AI/ML capabilities and scale the application, we need a more structured approach to our architecture that can accommodate complex business rules while keeping the codebase maintainable.
+The AeroSuite application has grown organically, resulting in a codebase with mixed concerns,
+unclear boundaries between components, and difficulty in maintaining and extending the system. As
+we prepare to add AI/ML capabilities and scale the application, we need a more structured approach
+to our architecture that can accommodate complex business rules while keeping the codebase
+maintainable.
 
 We need to address several issues:
 1. Business logic is scattered across controllers, services, and even UI components
@@ -26,23 +30,28 @@ We need to address several issues:
 
 ## Considered Options
 
-* **Continue with current architecture**: Keep the existing architecture and make incremental improvements.
-* **Layered Architecture**: Implement a traditional layered architecture (presentation, business, data).
-* **Domain-Driven Design (DDD)**: Adopt DDD principles with bounded contexts, aggregates, entities, value objects, and domain services.
-* **Microservices Architecture**: Decompose the application into separate microservices.
-* **Clean Architecture**: Implement Uncle Bob's Clean Architecture with use cases and entities.
+* __Continue with current architecture__: Keep the existing architecture and make incremental
+improvements.
+* __Layered Architecture__: Implement a traditional layered architecture (presentation, business,
+data).
+* __Domain-Driven Design (DDD)__: Adopt DDD principles with bounded contexts, aggregates, entities,
+value objects, and domain services.
+* __Microservices Architecture__: Decompose the application into separate microservices.
+* __Clean Architecture__: Implement Uncle Bob's Clean Architecture with use cases and entities.
 
 ## Decision
 
 Chosen option: "Domain-Driven Design (DDD)", because:
 
-1. It provides a structured approach to modeling complex domains, which aligns with our business needs
+1. It provides a structured approach to modeling complex domains, which aligns with our business
+needs
 2. It creates clear boundaries between different parts of the system through bounded contexts
 3. It separates domain logic from infrastructure concerns, improving testability
 4. It provides patterns for handling complex business rules and workflows
 5. It creates a shared language between developers and domain experts
 6. It provides a clear path for evolving the architecture as the business grows
-7. It offers better support for our future AI/ML integration plans by having well-defined domain models
+7. It offers better support for our future AI/ML integration plans by having well-defined domain
+models
 
 ## Consequences
 
@@ -91,4 +100,4 @@ Chosen option: "Domain-Driven Design (DDD)", because:
 
 * Evans, Eric. "Domain-Driven Design: Tackling Complexity in the Heart of Software"
 * Vernon, Vaughn. "Implementing Domain-Driven Design"
-* Fowler, Martin. "Patterns of Enterprise Application Architecture" 
+* Fowler, Martin. "Patterns of Enterprise Application Architecture"

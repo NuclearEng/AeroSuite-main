@@ -1,32 +1,39 @@
 # Test Report Generation
 
-This document describes the test report generation solution for the AeroSuite application (Task TS357).
+This document describes the test report generation solution for the AeroSuite application (Task
+TS357).
 
 ## Overview
 
-The test report generation system provides a way to create comprehensive, interactive reports from test results. These reports help track the quality of the application over time, identify trends and issues, and communicate test results to stakeholders.
+The test report generation system provides a way to create comprehensive, interactive reports from
+test results. These reports help track the quality of the application over time, identify trends
+and issues, and communicate test results to stakeholders.
 
 ## Key Features
 
-- **Multiple Output Formats**: Generate reports in HTML, JSON, PDF, or Markdown formats
-- **Interactive Visualizations**: Charts and graphs for test results and code coverage
-- **Test Result Summary**: View a summary of test results including passed, failed, and skipped tests
-- **Code Coverage Integration**: Include code coverage data in reports with visualizations
-- **Trend Visualization**: View historical trends in test results and code coverage
-- **Report Comparison**: Compare current results with previous runs to identify improvements or regressions
-- **Timeline Visualization**: Visualize test execution timeline
-- **CI/CD Integration**: Run in CI mode for automated report generation
-- **Customizable Appearance**: Configure report title, styling, and content
+- __Multiple Output Formats__: Generate reports in HTML, JSON, PDF, or Markdown formats
+- __Interactive Visualizations__: Charts and graphs for test results and code coverage
+- __Test Result Summary__: View a summary of test results including passed, failed, and skipped
+tests
+- __Code Coverage Integration__: Include code coverage data in reports with visualizations
+- __Trend Visualization__: View historical trends in test results and code coverage
+- __Report Comparison__: Compare current results with previous runs to identify improvements or
+regressions
+- __Timeline Visualization__: Visualize test execution timeline
+- __CI/CD Integration__: Run in CI mode for automated report generation
+- __Customizable Appearance__: Configure report title, styling, and content
 
 ## Components
 
 The solution consists of the following components:
 
-1. **Test Report Generator Class**: `server/src/utils/testReportGenerator.js` - Core class for generating test reports
-2. **Main Report Generator Script**: `scripts/generate-test-report.js` - Command-line script for generating test reports
-3. **Historical Data Tracking**: Tracks test results over time for trend analysis
-4. **Report Templates**: HTML, JSON, and Markdown templates for different output formats
-5. **Visualization Components**: Chart.js integration for interactive visualizations
+1. __Test Report Generator Class__: `server/src/utils/testReportGenerator.js` - Core class for
+generating test reports
+2. __Main Report Generator Script__: `scripts/generate-test-report.js` - Command-line script for
+generating test reports
+3. __Historical Data Tracking__: Tracks test results over time for trend analysis
+4. __Report Templates__: HTML, JSON, and Markdown templates for different output formats
+5. __Visualization Components__: Chart.js integration for interactive visualizations
 
 ## Installation
 
@@ -75,7 +82,7 @@ node scripts/generate-test-report.js --compare=./test-reports/latest
 
 # Run in CI mode (no interactive elements)
 node scripts/generate-test-report.js --ci
-```
+```bash
 
 ### Programmatic Usage
 
@@ -100,7 +107,7 @@ const reportGenerator = new TestReportGenerator({
 const reportPath = reportGenerator.generateReport(testResults, coverageData);
 
 console.log(`Report generated: ${reportPath}`);
-```
+```bash
 
 ## Configuration Options
 
@@ -152,7 +159,9 @@ PDF reports are generated from HTML reports and include the same information in 
 
 ## Historical Data
 
-When the `--history` option is enabled, the test report generator tracks test results over time in a `history.json` file in the output directory. This allows for trend analysis and comparison between runs.
+When the `--history` option is enabled, the test report generator tracks test results over time in
+a `history.json` file in the output directory. This allows for trend analysis and comparison
+between runs.
 
 The historical data includes:
 - Timestamp of each run
@@ -161,7 +170,8 @@ The historical data includes:
 
 ## CI/CD Integration
 
-The test report generator can be integrated into CI/CD pipelines using the `--ci` option, which disables interactive elements and optimizes the report for automated environments.
+The test report generator can be integrated into CI/CD pipelines using the `--ci` option, which
+disables interactive elements and optimizes the report for automated environments.
 
 Example GitHub Actions integration:
 
@@ -192,22 +202,23 @@ jobs:
         with:
           name: test-report
           path: test-reports/latest
-```
+```bash
 
 ## Best Practices
 
-1. **Include Coverage Data**: Always include coverage data in reports to track code quality.
-2. **Use Historical Data**: Enable historical data tracking to identify trends over time.
-3. **Set Coverage Thresholds**: Use the `--threshold` option to enforce minimum coverage standards.
-4. **Customize Reports**: Use the `--title` option to provide context for each report.
-5. **Integrate with CI/CD**: Automate report generation as part of your CI/CD pipeline.
-6. **Review Regularly**: Schedule regular reviews of test reports to identify issues early.
+1. __Include Coverage Data__: Always include coverage data in reports to track code quality.
+2. __Use Historical Data__: Enable historical data tracking to identify trends over time.
+3. __Set Coverage Thresholds__: Use the `--threshold` option to enforce minimum coverage standards.
+4. __Customize Reports__: Use the `--title` option to provide context for each report.
+5. __Integrate with CI/CD__: Automate report generation as part of your CI/CD pipeline.
+6. __Review Regularly__: Schedule regular reviews of test reports to identify issues early.
 
 ## Implementation Details
 
 ### Test Report Generator Class
 
-The `TestReportGenerator` class (`server/src/utils/testReportGenerator.js`) is the core of the test report generation system. It provides methods for:
+The `TestReportGenerator` class (`server/src/utils/testReportGenerator.js`) is the core of the test
+report generation system. It provides methods for:
 - Generating reports in different formats
 - Processing test results data
 - Creating visualizations
@@ -216,7 +227,8 @@ The `TestReportGenerator` class (`server/src/utils/testReportGenerator.js`) is t
 
 ### Report Generation Script
 
-The `generate-test-report.js` script provides a command-line interface for generating test reports. It:
+The `generate-test-report.js` script provides a command-line interface for generating test reports.
+It:
 - Parses command-line arguments
 - Runs tests using Jest
 - Generates coverage reports if requested
@@ -243,4 +255,6 @@ The system keeps the last 30 reports in the history file.
 
 ## Conclusion
 
-The test report generation system provides a comprehensive solution for creating, visualizing, and tracking test results. It helps improve code quality by making test results more accessible and actionable. 
+The test report generation system provides a comprehensive solution for creating, visualizing, and
+tracking test results. It helps improve code quality by making test results more accessible and
+actionable.

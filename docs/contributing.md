@@ -1,6 +1,7 @@
 # Contributing to AeroSuite
 
-Thank you for your interest in contributing to AeroSuite! This document provides guidelines and instructions for contributing to the project.
+Thank you for your interest in contributing to AeroSuite! This document provides guidelines and
+instructions for contributing to the project.
 
 ## Table of Contents
 
@@ -18,7 +19,8 @@ Thank you for your interest in contributing to AeroSuite! This document provides
 
 ## Code of Conduct
 
-AeroSuite is committed to fostering an inclusive and welcoming community. We expect all contributors to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+AeroSuite is committed to fostering an inclusive and welcoming community. We expect all
+contributors to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Getting Started
 
@@ -150,42 +152,42 @@ The project uses ESLint and Prettier for code formatting:
 
 We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
 
-```
+```bash
 <type>[optional scope]: <description>
 
 [optional body]
 
 [optional footer(s)]
-```
+```bash
 
 ### Types
 
-- **feat**: A new feature
-- **fix**: A bug fix
-- **docs**: Documentation only changes
-- **style**: Changes that do not affect the meaning of the code
-- **refactor**: Code change that neither fixes a bug nor adds a feature
-- **perf**: Code change that improves performance
-- **test**: Adding missing tests or correcting existing tests
-- **chore**: Changes to the build process or auxiliary tools
+- __feat__: A new feature
+- __fix__: A bug fix
+- __docs__: Documentation only changes
+- __style__: Changes that do not affect the meaning of the code
+- __refactor__: Code change that neither fixes a bug nor adds a feature
+- __perf__: Code change that improves performance
+- __test__: Adding missing tests or correcting existing tests
+- __chore__: Changes to the build process or auxiliary tools
 
 ### Examples
 
-```
+```bash
 feat(auth): add email verification functionality
 
 Implements email verification using JWT tokens.
 
 Closes #123
-```
+```bash
 
-```
+```bash
 fix(ui): prevent form submission on invalid input
 
 The form was being submitted even when validation failed.
 
 Fixes #456
-```
+```bash
 
 ## Testing Guidelines
 
@@ -199,11 +201,11 @@ Fixes #456
 
 ### Types of Tests
 
-- **Unit Tests**: Test individual functions and components
-- **Integration Tests**: Test interactions between components
-- **End-to-End Tests**: Test complete user flows
-- **Performance Tests**: Test system performance
-- **Security Tests**: Test for vulnerabilities
+- __Unit Tests__: Test individual functions and components
+- __Integration Tests__: Test interactions between components
+- __End-to-End Tests__: Test complete user flows
+- __Performance Tests__: Test system performance
+- __Security Tests__: Test for vulnerabilities
 
 ### Running Tests
 
@@ -216,7 +218,7 @@ npm test -- --coverage
 
 # Run specific tests
 npm test -- -t "component name"
-```
+```bash
 
 ## Documentation
 
@@ -268,10 +270,10 @@ Feature requests are welcome! When submitting a feature request:
 
 ### Communication Channels
 
-- **GitHub Issues**: For bug reports and feature requests
-- **Developer Forum**: For technical discussions
-- **Slack Channel**: For real-time communication
-- **Monthly Meetings**: For project planning and updates
+- __GitHub Issues__: For bug reports and feature requests
+- __Developer Forum__: For technical discussions
+- __Slack Channel__: For real-time communication
+- __Monthly Meetings__: For project planning and updates
 
 ### Recognition
 
@@ -283,8 +285,9 @@ All contributors are recognized in:
 
 ### Becoming a Maintainer
 
-Regular contributors who demonstrate expertise and commitment may be invited to become maintainers with additional repository access and responsibilities.
+Regular contributors who demonstrate expertise and commitment may be invited to become maintainers
+with additional repository access and responsibilities.
 
 ## Thank You!
 
-Your contributions make AeroSuite better. We appreciate your time and effort! 
+Your contributions make AeroSuite better. We appreciate your time and effort!

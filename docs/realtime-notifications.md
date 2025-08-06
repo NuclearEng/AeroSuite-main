@@ -1,6 +1,8 @@
 # Real-time Notification System
 
-The AeroSuite real-time notification system provides immediate notifications to users through WebSockets using Socket.IO. This enables a responsive user experience with instant updates about important events without requiring page refreshes.
+The AeroSuite real-time notification system provides immediate notifications to users through
+WebSockets using Socket.IO. This enables a responsive user experience with instant updates about
+important events without requiring page refreshes.
 
 ## Features
 
@@ -70,24 +72,28 @@ realtimeNotificationService.broadcast({
 
 // Send a system alert to all users
 realtimeNotificationService.sendSystemAlert(
-  'Application update complete', 
+  'Application update complete',
   'success'
 );
-```
+```bash
 
 ### Client-side
 
-The client-side integration is automatic. The `RealtimeNotifications` component is included in the main layout and will connect to the WebSocket server when a user is authenticated.
+The client-side integration is automatic. The `RealtimeNotifications` component is included in the
+main layout and will connect to the WebSocket server when a user is authenticated.
 
 ## Integration with Existing Notification System
 
 The real-time notification system is fully integrated with the existing notification system:
 
-1. When a notification is created through the `notificationService`, it is automatically sent as a real-time notification if the recipient is currently online.
+1. When a notification is created through the `notificationService`, it is automatically sent as a
+real-time notification if the recipient is currently online.
 
-2. Notifications are persisted in the database, so users will see all notifications even if they were offline when the notification was sent.
+2. Notifications are persisted in the database, so users will see all notifications even if they
+were offline when the notification was sent.
 
-3. When a user connects to the WebSocket server, they will receive any pending notifications that were created while they were offline.
+3. When a user connects to the WebSocket server, they will receive any pending notifications that
+were created while they were offline.
 
 ## Security Considerations
 
@@ -118,4 +124,4 @@ The real-time notification system includes comprehensive logging and monitoring:
 - Support for multimedia notifications (images, videos)
 - Read receipts for critical notifications
 - Notification preference management for users
-- Push notifications for mobile devices 
+- Push notifications for mobile devices

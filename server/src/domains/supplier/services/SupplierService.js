@@ -68,7 +68,7 @@ class SupplierService extends DomainService {
     const start = Date.now();
     const result = await this.getRepository().findById(id);
     logger.debug('findById duration', { ms: Date.now() - start, id });
-    if (!result) throw new Error('Supplier not found');
+    if (!result) throw new ValidationError('Supplier not found');
     return result;
   }
   

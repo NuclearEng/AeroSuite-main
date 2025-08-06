@@ -1,0 +1,249 @@
+{
+  "timestamp": "2025-08-06T03:33:49.377Z",
+  "categories": {
+    "A01": {
+      "name": "Broken Access Control",
+      "checks": [
+        {
+          "name": "Authentication Middleware",
+          "passed": true,
+          "details": {
+            "reason": "Authentication middleware found"
+          }
+        },
+        {
+          "name": "Role-Based Access Control",
+          "passed": false,
+          "details": {
+            "reason": "No role-based access control found"
+          }
+        },
+        {
+          "name": "Protected Routes",
+          "passed": true,
+          "details": {
+            "reason": "Routes are protected with authentication"
+          }
+        }
+      ],
+      "passedChecks": 2,
+      "failedChecks": 1,
+      "score": 67
+    },
+    "A02": {
+      "name": "Cryptographic Failures",
+      "checks": [
+        {
+          "name": "HTTPS Configuration",
+          "passed": false,
+          "details": {
+            "reason": "HTTPS may not be properly configured"
+          }
+        },
+        {
+          "name": "Password Hashing",
+          "passed": false,
+          "details": {
+            "reason": "Password hashing may not be implemented"
+          }
+        },
+        {
+          "name": "Secure Cookies",
+          "passed": false,
+          "details": {
+            "reason": "Secure cookies may not be configured"
+          }
+        }
+      ],
+      "passedChecks": 0,
+      "failedChecks": 3,
+      "score": 0
+    },
+    "A03": {
+      "name": "Injection",
+      "checks": [
+        {
+          "name": "Input Validation",
+          "passed": true,
+          "details": {
+            "reason": "Input validation middleware found"
+          }
+        },
+        {
+          "name": "Parameterized Queries",
+          "passed": true,
+          "details": {
+            "reason": "Using Mongoose for parameterized queries"
+          }
+        }
+      ],
+      "passedChecks": 2,
+      "failedChecks": 0,
+      "score": 100
+    },
+    "A04": {
+      "name": "Insecure Design",
+      "checks": [],
+      "passedChecks": 0,
+      "failedChecks": 0,
+      "score": 0
+    },
+    "A05": {
+      "name": "Security Misconfiguration",
+      "checks": [
+        {
+          "name": "Security Headers",
+          "passed": true,
+          "details": {
+            "reason": "Security headers are configured"
+          }
+        },
+        {
+          "name": "Error Handling",
+          "passed": true,
+          "details": {
+            "reason": "Error handling is implemented"
+          }
+        }
+      ],
+      "passedChecks": 2,
+      "failedChecks": 0,
+      "score": 100
+    },
+    "A06": {
+      "name": "Vulnerable Components",
+      "checks": [
+        {
+          "name": "No Critical Vulnerabilities",
+          "passed": false,
+          "details": {
+            "reason": "Found 2 critical vulnerabilities"
+          }
+        },
+        {
+          "name": "No High Vulnerabilities",
+          "passed": false,
+          "details": {
+            "reason": "Found 16 high vulnerabilities"
+          }
+        }
+      ],
+      "passedChecks": 0,
+      "failedChecks": 2,
+      "score": 0
+    },
+    "A07": {
+      "name": "Identification and Authentication Failures",
+      "checks": [
+        {
+          "name": "Strong Password Policy",
+          "passed": true,
+          "details": {
+            "reason": "Strong password policy implemented"
+          }
+        },
+        {
+          "name": "Brute Force Protection",
+          "passed": true,
+          "details": {
+            "reason": "Brute force protection implemented"
+          }
+        }
+      ],
+      "passedChecks": 2,
+      "failedChecks": 0,
+      "score": 100
+    },
+    "A08": {
+      "name": "Software and Data Integrity Failures",
+      "checks": [],
+      "passedChecks": 0,
+      "failedChecks": 0,
+      "score": 0
+    },
+    "A09": {
+      "name": "Security Logging and Monitoring Failures",
+      "checks": [
+        {
+          "name": "Logging Implementation",
+          "passed": true,
+          "details": {
+            "reason": "Logging is implemented"
+          }
+        },
+        {
+          "name": "Monitoring Implementation",
+          "passed": true,
+          "details": {
+            "reason": "Monitoring is implemented"
+          }
+        }
+      ],
+      "passedChecks": 2,
+      "failedChecks": 0,
+      "score": 100
+    },
+    "A10": {
+      "name": "Server-Side Request Forgery",
+      "checks": [],
+      "passedChecks": 0,
+      "failedChecks": 0,
+      "score": 0
+    }
+  },
+  "vulnerabilities": [
+    {
+      "category": "A01",
+      "categoryName": "Broken Access Control",
+      "name": "Role-Based Access Control",
+      "details": {
+        "reason": "No role-based access control found"
+      }
+    },
+    {
+      "category": "A02",
+      "categoryName": "Cryptographic Failures",
+      "name": "HTTPS Configuration",
+      "details": {
+        "reason": "HTTPS may not be properly configured"
+      }
+    },
+    {
+      "category": "A02",
+      "categoryName": "Cryptographic Failures",
+      "name": "Password Hashing",
+      "details": {
+        "reason": "Password hashing may not be implemented"
+      }
+    },
+    {
+      "category": "A02",
+      "categoryName": "Cryptographic Failures",
+      "name": "Secure Cookies",
+      "details": {
+        "reason": "Secure cookies may not be configured"
+      }
+    },
+    {
+      "category": "A06",
+      "categoryName": "Vulnerable Components",
+      "name": "No Critical Vulnerabilities",
+      "details": {
+        "reason": "Found 2 critical vulnerabilities"
+      }
+    },
+    {
+      "category": "A06",
+      "categoryName": "Vulnerable Components",
+      "name": "No High Vulnerabilities",
+      "details": {
+        "reason": "Found 16 high vulnerabilities"
+      }
+    }
+  ],
+  "summary": {
+    "passedChecks": 10,
+    "failedChecks": 6,
+    "complianceScore": 63
+  }
+}

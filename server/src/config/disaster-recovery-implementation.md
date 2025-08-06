@@ -2,17 +2,24 @@
 
 ## Overview
 
-This document outlines the implementation steps for the AeroSuite Disaster Recovery Plan. It provides a practical roadmap for deploying the infrastructure, tools, and processes necessary for effective disaster recovery.
+This document outlines the implementation steps for the AeroSuite Disaster Recovery Plan. It
+provides a practical roadmap for deploying the infrastructure, tools, and processes necessary for
+effective disaster recovery.
 
 ## Implementation Timeline
 
 | Phase | Tasks | Timeline | Status |
 |-------|-------|----------|--------|
-| **Phase 1: Assessment & Planning** | Inventory systems, Define RPO/RTO, Draft DR Plan | Weeks 1-2 | Completed |
-| **Phase 2: Infrastructure Setup** | Deploy backup systems, Configure monitoring | Weeks 3-5 | In Progress |
-| **Phase 3: Backup Implementation** | Implement backup procedures, Verify automation | Weeks 6-8 | Not Started |
-| **Phase 4: Testing & Documentation** | Conduct DR tests, Finalize documentation | Weeks 9-12 | Not Started |
-| **Phase 5: Training & Handover** | Team training, Operational handover | Weeks 13-14 | Not Started |
+| __Phase 1: Assessment & Planning__ | Inventory systems, Define RPO/RTO, Draft DR Plan | Weeks 1-2
+| Completed |
+| __Phase 2: Infrastructure Setup__ | Deploy backup systems, Configure monitoring | Weeks 3-5 | In
+Progress |
+| __Phase 3: Backup Implementation__ | Implement backup procedures, Verify automation | Weeks 6-8 |
+Not Started |
+| __Phase 4: Testing & Documentation__ | Conduct DR tests, Finalize documentation | Weeks 9-12 |
+Not Started |
+| __Phase 5: Training & Handover__ | Team training, Operational handover | Weeks 13-14 | Not
+Started |
 
 ## Phase 1: Assessment & Planning (Completed)
 
@@ -29,11 +36,13 @@ This document outlines the implementation steps for the AeroSuite Disaster Recov
 ```bash
 # Create S3 bucket for database backups with versioning
 aws s3api create-bucket --bucket aerosuite-db-backups --region us-east-1
-aws s3api put-bucket-versioning --bucket aerosuite-db-backups --versioning-configuration Status=Enabled
+aws s3api put-bucket-versioning --bucket aerosuite-db-backups --versioning-configuration
+Status=Enabled
 
 # Create IAM policy for backup access
-aws iam create-policy --policy-name AerosuiteBackupPolicy --policy-document file://backup-policy.json
-```
+aws iam create-policy --policy-name AerosuiteBackupPolicy --policy-document
+file://backup-policy.json
+```bash
 
 - [ ] Deploy MongoDB backup server with appropriate IAM roles
 - [ ] Set up incremental backup capabilities
@@ -88,7 +97,7 @@ mongo --host localhost --port 27017 \
   --eval "db.dropDatabase()" aerosuite_verify
 
 echo "Backup completed and verified at $(date +%Y-%m-%d:%H-%M)" >> $LOG_FILE
-```
+```bash
 
 - [ ] Implement daily full backups
 - [ ] Set up hourly incremental backups
@@ -116,44 +125,44 @@ echo "Backup completed and verified at $(date +%Y-%m-%d:%H-%M)" >> $LOG_FILE
 
 #### Database Recovery Test Procedure
 
-1. **Preparation**:
+1. __Preparation__:
    - Schedule test window
    - Notify relevant team members
    - Ensure backup is available
 
-2. **Execution**:
+2. __Execution__:
    - Provision test recovery environment
    - Restore database from latest backup
    - Verify data integrity
 
-3. **Validation**:
+3. __Validation__:
    - Run test queries to verify data
    - Check data consistency
    - Verify application connectivity
 
-4. **Documentation**:
+4. __Documentation__:
    - Record recovery time
    - Document any issues encountered
    - Update procedures based on findings
 
 #### Application Recovery Test Procedure
 
-1. **Preparation**:
+1. __Preparation__:
    - Schedule test window
    - Notify relevant team members
    - Ensure application artifacts are available
 
-2. **Execution**:
+2. __Execution__:
    - Deploy infrastructure using IaC templates
    - Deploy application code
    - Configure environment
 
-3. **Validation**:
+3. __Validation__:
    - Run automated test suite
    - Perform manual validation of critical functions
    - Verify integrations are working
 
-4. **Documentation**:
+4. __Documentation__:
    - Record deployment time
    - Document any issues encountered
    - Update procedures based on findings
@@ -192,18 +201,18 @@ const fs = require('fs');
 const path = require('path');
 const logger = require('../utils/logger');
 
-/**
+/__
  * Execute a MongoDB backup
  */
 async function executeMongoBackup() {
   const timestamp = new Date().toISOString().replace(/:/g, '-').split('.')[0];
   const backupDir = path.join(process.env.BACKUP_ROOT_DIR, 'mongodb', timestamp);
-  
+
   // Ensure backup directory exists
   fs.mkdirSync(backupDir, { recursive: true });
-  
+
   logger.info(`Starting MongoDB backup to ${backupDir}`);
-  
+
   return new Promise((resolve, reject) => {
     const mongodump = spawn('mongodump', [
       '--host', process.env.DB_HOST,
@@ -213,15 +222,15 @@ async function executeMongoBackup() {
       '--db', 'aerosuite',
       '--out', backupDir
     ]);
-    
+
     mongodump.stdout.on('data', (data) => {
       logger.debug(`mongodump: ${data}`);
     });
-    
+
     mongodump.stderr.on('data', (data) => {
       logger.error(`mongodump error: ${data}`);
     });
-    
+
     mongodump.on('close', (code) => {
       if (code === 0) {
         logger.info(`MongoDB backup completed successfully`);
@@ -234,15 +243,15 @@ async function executeMongoBackup() {
   });
 }
 
-/**
+/__
  * Upload backup to cloud storage
  */
 async function uploadBackupToS3(backupDir) {
   const bucketName = process.env.BACKUP_S3_BUCKET;
   const s3Path = `mongodb/${path.basename(backupDir)}`;
-  
+
   logger.info(`Uploading backup to S3: ${bucketName}/${s3Path}`);
-  
+
   return new Promise((resolve, reject) => {
     const s3Upload = spawn('aws', [
       's3', 'cp',
@@ -250,15 +259,15 @@ async function uploadBackupToS3(backupDir) {
       `s3://${bucketName}/${s3Path}`,
       '--recursive'
     ]);
-    
+
     s3Upload.stdout.on('data', (data) => {
       logger.debug(`s3Upload: ${data}`);
     });
-    
+
     s3Upload.stderr.on('data', (data) => {
       logger.error(`s3Upload error: ${data}`);
     });
-    
+
     s3Upload.on('close', (code) => {
       if (code === 0) {
         logger.info(`Backup upload completed successfully`);
@@ -271,7 +280,7 @@ async function uploadBackupToS3(backupDir) {
   });
 }
 
-/**
+/__
  * Main backup job function
  */
 async function runBackupJob() {
@@ -279,11 +288,11 @@ async function runBackupJob() {
     const backupDir = await executeMongoBackup();
     await uploadBackupToS3(backupDir);
     logger.info('Backup job completed successfully');
-    
+
     // Cleanup local backup after successful upload
     // Uncomment when confirmed working
     // fs.rmSync(backupDir, { recursive: true, force: true });
-    
+
     return { success: true, message: 'Backup completed successfully' };
   } catch (error) {
     logger.error('Backup job failed', error);
@@ -300,7 +309,7 @@ if (require.main === module) {
 }
 
 module.exports = { runBackupJob };
-```
+```bash
 
 ### Monitoring Implementation
 
@@ -313,32 +322,32 @@ const os = require('os');
 
 const router = express.Router();
 
-/**
+/__
  * Basic health check endpoint
  */
 router.get('/health', (req, res) => {
   res.status(200).json({ status: 'UP' });
 });
 
-/**
+/__
  * Detailed health check with component status
  */
 router.get('/health/details', async (req, res) => {
   try {
     // Check database connection
     const dbStatus = mongoose.connection.readyState === 1 ? 'UP' : 'DOWN';
-    
+
     // Check disk space
     const diskSpace = await checkDiskSpace();
-    
+
     // Check memory usage
     const memoryUsage = process.memoryUsage();
     const totalMemory = os.totalmem();
     const freeMemory = os.freemem();
-    
+
     // Check recent backup status
     const backupStatus = await checkBackupStatus();
-    
+
     res.status(200).json({
       status: dbStatus === 'UP' ? 'UP' : 'DOWN',
       components: {
@@ -346,11 +355,13 @@ router.get('/health/details', async (req, res) => {
           status: dbStatus
         },
         disk: {
-          status: diskSpace.available > 1024 * 1024 * 100 ? 'UP' : 'WARNING', // Warning if less than 100MB
+          status: diskSpace.available > 1024 _ 1024 _ 100 ? 'UP' : 'WARNING', // Warning if less
+than 100MB
           details: diskSpace
         },
         memory: {
-          status: freeMemory > totalMemory * 0.1 ? 'UP' : 'WARNING', // Warning if less than 10% free
+          status: freeMemory > totalMemory * 0.1 ? 'UP' : 'WARNING', // Warning if less than 10%
+free
           details: {
             total: totalMemory,
             free: freeMemory,
@@ -369,7 +380,7 @@ router.get('/health/details', async (req, res) => {
   }
 });
 
-/**
+/__
  * Check disk space
  */
 async function checkDiskSpace() {
@@ -378,7 +389,7 @@ async function checkDiskSpace() {
       if (err) {
         return reject(err);
       }
-      
+
       resolve({
         total: stats.blocks * stats.blksize,
         available: stats.blocks * stats.blksize
@@ -387,7 +398,7 @@ async function checkDiskSpace() {
   });
 }
 
-/**
+/__
  * Check backup status
  */
 async function checkBackupStatus() {
@@ -403,7 +414,7 @@ async function checkBackupStatus() {
 }
 
 module.exports = router;
-```
+```bash
 
 ## Operational Procedures
 
@@ -422,26 +433,26 @@ module.exports = router;
 
 ### Emergency Response Procedure
 
-1. **Identification**:
+1. __Identification__:
    - Monitoring alert or manual reporting identifies potential disaster
    - On-call engineer assesses the situation
 
-2. **Declaration**:
+2. __Declaration__:
    - If criteria are met, declare disaster recovery situation
    - Activate recovery team via automated notification system
    - Set up virtual command center
 
-3. **Response**:
+3. __Response__:
    - Execute relevant recovery procedures
    - Regular status updates to stakeholders
    - Coordinate with third-party vendors if needed
 
-4. **Recovery**:
+4. __Recovery__:
    - Restore services in priority order
    - Verify functionality of each restored service
    - Redirect traffic to recovered systems
 
-5. **Post-Incident**:
+5. __Post-Incident__:
    - Conduct post-mortem analysis
    - Document lessons learned
    - Update DR procedures as needed
@@ -449,8 +460,11 @@ module.exports = router;
 ## Resources and References
 
 - [MongoDB Backup Documentation](https://docs.mongodb.com/manual/core/backups/)
-- [AWS Disaster Recovery Best Practices](https://aws.amazon.com/blogs/architecture/disaster-recovery-dr-architecture-on-aws-part-i-strategies-for-recovery-in-the-cloud/)
-- [NIST Contingency Planning Guide](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-34r1.pdf)
+- [AWS Disaster Recovery Best
+Practices](https://aws.amazon.com/blogs/architecture/disaster-recovery-dr-architecture-on-aws-part-i
+-strategies-for-recovery-in-the-cloud/)
+- [NIST Contingency Planning
+Guide](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-34r1.pdf)
 
 ---
 
@@ -460,4 +474,4 @@ module.exports = router;
 |---------|------|--------|---------|
 | 1.0 | [CURRENT_DATE] | AeroSuite Team | Initial version |
 
-*Last Updated: [CURRENT_DATE]* 
+_Last Updated: [CURRENT_DATE]_

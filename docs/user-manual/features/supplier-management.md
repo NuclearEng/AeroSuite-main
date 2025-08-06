@@ -1,6 +1,7 @@
 # Supplier Management
 
-This guide covers all aspects of supplier management in AeroSuite, including adding suppliers, tracking performance, managing risk, and conducting audits.
+This guide covers all aspects of supplier management in AeroSuite, including adding suppliers,
+tracking performance, managing risk, and conducting audits.
 
 ## Overview
 
@@ -17,7 +18,7 @@ The Supplier Management module allows you to:
 ## Accessing Supplier Management
 
 1. Log in to AeroSuite
-2. Click **Suppliers** in the main navigation menu
+2. Click __Suppliers__ in the main navigation menu
 3. The Supplier Dashboard will display by default
 
 ## Supplier Dashboard
@@ -36,7 +37,7 @@ The Supplier Dashboard provides an overview of your supplier base:
 
 ### Viewing Supplier List
 
-1. Navigate to **Suppliers > All Suppliers**
+1. Navigate to __Suppliers > All Suppliers__
 2. The list displays all suppliers with key information:
    - Supplier name and code
    - Location
@@ -57,38 +58,38 @@ The Supplier Dashboard provides an overview of your supplier base:
 
 ### Adding a New Supplier
 
-1. Navigate to **Suppliers > All Suppliers**
-2. Click the **Add Supplier** button
+1. Navigate to __Suppliers > All Suppliers__
+2. Click the __Add Supplier__ button
 3. Complete the required information:
-   - **Basic Information**:
+   - __Basic Information__:
      - Supplier name
      - Supplier code (generated automatically or entered manually)
      - Website
      - Industry/category
-   - **Contact Information**:
+   - __Contact Information__:
      - Primary contact name
      - Email address
      - Phone number
      - Additional contacts (optional)
-   - **Address Information**:
+   - __Address Information__:
      - Street address
      - City
      - State/Province
      - Postal code
      - Country
-   - **Business Information**:
+   - __Business Information__:
      - Tax ID/VAT number
      - Year established
      - Number of employees
      - Annual revenue (optional)
-4. Click **Save** to create the supplier record
+4. Click __Save__ to create the supplier record
 
 ### Editing Supplier Information
 
 1. Navigate to the supplier's detail page
-2. Click the **Edit** button in the section you want to update
+2. Click the __Edit__ button in the section you want to update
 3. Make your changes
-4. Click **Save** to update the record
+4. Click __Save__ to update the record
 
 ## Supplier Details
 
@@ -107,7 +108,7 @@ Displays key supplier information at a glance:
 
 Manage supplier contacts:
 1. View all contacts associated with the supplier
-2. Click **Add Contact** to add a new contact
+2. Click __Add Contact__ to add a new contact
 3. For each contact, record:
    - Name
    - Title/position
@@ -120,11 +121,11 @@ Manage supplier contacts:
 ### Qualifications Tab
 
 Track supplier capabilities and certifications:
-1. **Capabilities**:
+1. __Capabilities__:
    - Add product categories the supplier can provide
    - Record manufacturing/service capabilities
    - Note special processes or expertise
-2. **Certifications**:
+2. __Certifications__:
    - Add quality certifications (ISO 9001, AS9100, etc.)
    - Upload certification documents
    - Record certification validity period
@@ -147,18 +148,18 @@ Monitor supplier performance metrics:
 
 The Supplier Metrics Card provides a comprehensive visual overview of supplier performance:
 
-1. **Key Performance Indicators**:
-   - **On-Time Delivery Rate**: Percentage of deliveries received on schedule
-   - **Quality Rate**: Percentage of components meeting quality standards
-   - **Response Time**: Average time for supplier to respond to inquiries (in hours)
-   - **Compliance Score**: Percentage of compliance with requirements
+1. __Key Performance Indicators__:
+   - __On-Time Delivery Rate__: Percentage of deliveries received on schedule
+   - __Quality Rate__: Percentage of components meeting quality standards
+   - __Response Time__: Average time for supplier to respond to inquiries (in hours)
+   - __Compliance Score__: Percentage of compliance with requirements
 
-2. **Visual Indicators**:
+2. __Visual Indicators__:
    - Circular progress indicators show real-time percentages
    - Color-coded metrics (green/yellow/red) for quick status assessment
    - Comparative view against targets and historical data
 
-3. **Recent Inspections Panel**:
+3. __Recent Inspections Panel__:
    - List of the most recent inspections for this supplier
    - Status indicators for each inspection (completed, in-progress, scheduled)
    - Quick access to inspection details via clickable links
@@ -176,7 +177,7 @@ Assess and manage supplier risk:
 2. See risk factors and their individual scores
 3. Track risk trend over time
 4. Conduct new risk assessments:
-   - Click **Conduct Risk Assessment**
+   - Click __Conduct Risk Assessment__
    - Complete the risk assessment form
    - Submit for review if required
    - Risk score is automatically calculated
@@ -186,13 +187,13 @@ Assess and manage supplier risk:
 Plan and track supplier audits:
 1. View upcoming and past audits
 2. Schedule new audits:
-   - Click **Schedule Audit**
+   - Click __Schedule Audit__
    - Select audit type
    - Set date and location
    - Assign audit team
    - Select audit checklist template
 3. Conduct audits:
-   - Click **Conduct Audit** for a scheduled audit
+   - Click __Conduct Audit__ for a scheduled audit
    - Complete the audit checklist
    - Record findings and observations
    - Upload supporting evidence
@@ -204,7 +205,7 @@ Plan and track supplier audits:
 Manage supplier-related documentation:
 1. View all documents associated with the supplier
 2. Upload new documents:
-   - Click **Upload Document**
+   - Click __Upload Document__
    - Select document type
    - Choose file to upload
    - Add metadata (description, validity dates, etc.)
@@ -216,7 +217,7 @@ Manage supplier-related documentation:
 
 ### Setting Performance Metrics
 
-1. Navigate to **Suppliers > Settings > Performance Metrics**
+1. Navigate to __Suppliers > Settings > Performance Metrics__
 2. Configure which metrics to track:
    - Select from standard metrics
    - Create custom metrics
@@ -226,22 +227,22 @@ Manage supplier-related documentation:
 ### Recording Performance Data
 
 Performance data can be entered in several ways:
-1. **Manual Entry**:
+1. __Manual Entry__:
    - Navigate to supplier's Performance tab
-   - Click **Record Performance Data**
+   - Click __Record Performance Data__
    - Select metric and enter value
    - Add comments if needed
-2. **Automatic Calculation**:
+2. __Automatic Calculation__:
    - Based on inspection results
    - Based on delivery records
    - Based on defect reports
-3. **Import from External Systems**:
+3. __Import from External Systems__:
    - Through ERP integration
    - Via data import tool
 
 ### Performance Reporting
 
-1. Navigate to **Reports > Supplier Performance**
+1. Navigate to __Reports > Supplier Performance__
 2. Available reports include:
    - Supplier Performance Comparison
    - Performance Trend Analysis
@@ -262,7 +263,7 @@ Performance data can be entered in several ways:
 
 ### Risk Assessment Framework
 
-1. Navigate to **Suppliers > Settings > Risk Assessment**
+1. Navigate to __Suppliers > Settings > Risk Assessment__
 2. Configure risk assessment parameters:
    - Risk factors to evaluate
    - Scoring methodology
@@ -272,7 +273,7 @@ Performance data can be entered in several ways:
 ### Conducting Risk Assessments
 
 1. Navigate to supplier's Risk tab
-2. Click **Conduct Risk Assessment**
+2. Click __Conduct Risk Assessment__
 3. Complete the assessment form:
    - Answer questions for each risk factor
    - Provide supporting evidence
@@ -294,7 +295,7 @@ Performance data can be entered in several ways:
 
 ### Audit Planning
 
-1. Navigate to **Suppliers > Audit Planning**
+1. Navigate to __Suppliers > Audit Planning__
 2. Create annual audit schedule:
    - Prioritize suppliers based on risk and importance
    - Set audit frequency
@@ -303,7 +304,7 @@ Performance data can be entered in several ways:
 
 ### Audit Checklists
 
-1. Navigate to **Suppliers > Settings > Audit Checklists**
+1. Navigate to __Suppliers > Settings > Audit Checklists__
 2. Manage audit checklist templates:
    - Create new templates
    - Edit existing templates
@@ -313,7 +314,7 @@ Performance data can be entered in several ways:
 ### Conducting Audits
 
 1. Navigate to scheduled audit
-2. Click **Conduct Audit**
+2. Click __Conduct Audit__
 3. Complete the audit process:
    - Record responses to checklist items
    - Document evidence
@@ -338,7 +339,7 @@ Performance data can be entered in several ways:
 
 ### Configuring ERP Integration
 
-1. Navigate to **Admin > Integrations > ERP**
+1. Navigate to __Admin > Integrations > ERP__
 2. Configure connection settings:
    - Select ERP system
    - Enter connection parameters
@@ -347,7 +348,7 @@ Performance data can be entered in several ways:
 
 ### Synchronizing Supplier Data
 
-1. Navigate to **Suppliers > ERP Sync**
+1. Navigate to __Suppliers > ERP Sync__
 2. Options include:
    - Sync all suppliers
    - Sync selected suppliers
@@ -356,19 +357,21 @@ Performance data can be entered in several ways:
 
 ## Tips and Best Practices
 
-- **Regular Updates**: Keep supplier information current by scheduling regular review cycles
-- **Performance Reviews**: Conduct quarterly performance reviews with key suppliers
-- **Documentation**: Maintain up-to-date supplier documentation, especially certifications
-- **Risk Monitoring**: Reassess supplier risk when significant changes occur
-- **Audit Planning**: Prioritize audits based on risk level and strategic importance
-- **Data Quality**: Establish processes to ensure data accuracy and completeness
+- __Regular Updates__: Keep supplier information current by scheduling regular review cycles
+- __Performance Reviews__: Conduct quarterly performance reviews with key suppliers
+- __Documentation__: Maintain up-to-date supplier documentation, especially certifications
+- __Risk Monitoring__: Reassess supplier risk when significant changes occur
+- __Audit Planning__: Prioritize audits based on risk level and strategic importance
+- __Data Quality__: Establish processes to ensure data accuracy and completeness
 
 ## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
-| Supplier not appearing in list | Check if the supplier is marked as inactive or if filters are applied |
-| Cannot edit supplier information | Verify you have the necessary permissions for supplier management |
+| Supplier not appearing in list | Check if the supplier is marked as inactive or if filters are
+applied |
+| Cannot edit supplier information | Verify you have the necessary permissions for supplier
+management |
 | Performance metrics not updating | Check if automatic calculations are configured correctly |
 | ERP synchronization failing | Verify connection settings and data mapping configuration |
 | Audit checklist not loading | Try refreshing the page or contact support if the issue persists |
@@ -383,4 +386,5 @@ Performance data can be entered in several ways:
 
 ---
 
-*For additional assistance with supplier management, contact the AeroSuite support team at support@aerosuite.example.com* 
+_For additional assistance with supplier management, contact the AeroSuite support team at
+support@aerosuite.example.com_

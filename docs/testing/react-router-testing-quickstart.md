@@ -1,22 +1,25 @@
 # React Router Testing Quick Start Guide
 
-This guide provides a quick overview of how to test React components that use React Router hooks in the AeroSuite application.
+This guide provides a quick overview of how to test React components that use React Router hooks in
+the AeroSuite application.
 
 ## The Problem
 
-When testing components that use React Router hooks like `useNavigate`, `useParams`, etc., you'll encounter errors like:
+When testing components that use React Router hooks like `useNavigate`, `useParams`, etc., you'll
+encounter errors like:
 
-```
+```bash
 Error: useNavigate() may be used only in the context of a <Router> component.
-```
+```bash
 
 This happens because React Router hooks need to be used within a Router context.
 
 ## The Solution
 
-We've created several testing utilities to make it easy to test components that use React Router hooks:
+We've created several testing utilities to make it easy to test components that use React Router
+hooks:
 
-1. **For components that only use React Router hooks**:
+1. __For components that only use React Router hooks__:
    ```jsx
    import { renderWithRouter } from '../../test-utils/router-wrapper';
 
@@ -28,7 +31,7 @@ We've created several testing utilities to make it easy to test components that 
    });
    ```
 
-2. **For components that use Material-UI Theme**:
+2. __For components that use Material-UI Theme__:
    ```jsx
    import { renderWithTheme } from '../../test-utils/theme-wrapper';
 
@@ -36,7 +39,7 @@ We've created several testing utilities to make it easy to test components that 
    renderWithTheme(<YourComponent />);
    ```
 
-3. **For components that use both React Router and Material-UI Theme**:
+3. __For components that use both React Router and Material-UI Theme__:
    ```jsx
    import { renderWithRouterAndTheme } from '../../test-utils/combined-wrapper';
 
@@ -55,7 +58,7 @@ We've created scripts to help automate the process of fixing tests:
 ```bash
 cd client
 ./scripts/fix-router-tests.sh
-```
+```bash
 
 This script will:
 1. Scan your test files for React Router hooks
@@ -78,7 +81,7 @@ describe('CustomerDetail', () => {
     expect(screen.getByText(/customer/i)).toBeInTheDocument();
   });
 });
-```
+```bash
 
 ### After
 
@@ -99,7 +102,7 @@ describe('CustomerDetail', () => {
     expect(screen.getByText(/customer/i)).toBeInTheDocument();
   });
 });
-```
+```bash
 
 ## Router Parameters
 
@@ -114,4 +117,4 @@ When testing components that use route parameters (e.g., from `useParams`), make
 For more information, see:
 - [React Router Testing Documentation](docs/testing/react-router-testing.md)
 - [Testing Utilities README](client/src/test-utils/README.md)
-- [Test Fixing Scripts README](client/scripts/README-router-test-fixer.md) 
+- [Test Fixing Scripts README](client/scripts/README-router-test-fixer.md)

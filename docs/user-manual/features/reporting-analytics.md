@@ -1,6 +1,7 @@
 # Reporting and Analytics
 
-This guide covers the reporting and analytics capabilities in AeroSuite, including dashboards, metrics, and data visualization tools.
+This guide covers the reporting and analytics capabilities in AeroSuite, including dashboards,
+metrics, and data visualization tools.
 
 ## Overview
 
@@ -16,7 +17,7 @@ The Reporting and Analytics module allows you to:
 ## Accessing Reporting and Analytics
 
 1. Log in to AeroSuite
-2. Click **Reports** in the main navigation menu
+2. Click __Reports__ in the main navigation menu
 3. The Reports Dashboard will display by default
 
 ## Reports Dashboard
@@ -31,11 +32,11 @@ The Reports Dashboard provides an overview of key metrics:
 
 ### Customizing the Dashboard
 
-1. Click the **Customize** button in the top-right corner
+1. Click the __Customize__ button in the top-right corner
 2. Select which widgets to display
 3. Arrange widgets by dragging and dropping
 4. Set refresh intervals for real-time data
-5. Click **Save Layout** to preserve your changes
+5. Click __Save Layout__ to preserve your changes
 
 ## Supplier Analytics
 
@@ -43,7 +44,8 @@ The Reports Dashboard provides an overview of key metrics:
 
 The Supplier Metrics Dashboard provides detailed performance data for individual suppliers:
 
-1. Navigate to **Suppliers > [Supplier Name] > Analytics** or click the Analytics tab on the supplier detail page
+1. Navigate to __Suppliers > [Supplier Name] > Analytics__ or click the Analytics tab on the
+supplier detail page
 2. View the Supplier Metrics Card that displays:
    - On-Time Delivery Rate
    - Quality Rate
@@ -55,23 +57,23 @@ The Supplier Metrics Dashboard provides detailed performance data for individual
 
 The Supplier Metrics Card provides a comprehensive view of supplier performance:
 
-1. **Key Metrics Section**:
+1. __Key Metrics Section__:
    - Circular progress indicators show performance percentages
    - Color coding indicates performance level (green = good, yellow = average, red = poor)
    - Compare metrics against targets and historical data
 
-2. **Additional Metrics Section**:
+2. __Additional Metrics Section__:
    - Response Time: Average time for supplier to respond to inquiries
    - Compliance Score: Percentage of compliance with requirements
 
-3. **Recent Inspections Section**:
+3. __Recent Inspections Section__:
    - List of the most recent inspections for this supplier
    - Quick view of inspection status, type, and date
    - Click on any inspection to view full details
 
 ### Supplier Performance Analysis
 
-1. Navigate to **Reports > Supplier Performance**
+1. Navigate to __Reports > Supplier Performance__
 2. Use filters to select:
    - Specific suppliers or supplier groups
    - Date range
@@ -86,7 +88,7 @@ The Supplier Metrics Card provides a comprehensive view of supplier performance:
 
 The Inspection Statistics Dashboard provides comprehensive analytics on inspection activities:
 
-1. Navigate to **Inspections > Analytics**
+1. Navigate to __Inspections > Analytics__
 2. View summary cards showing:
    - Total Scheduled inspections
    - In Progress inspections
@@ -94,28 +96,28 @@ The Inspection Statistics Dashboard provides comprehensive analytics on inspecti
    - Cancelled inspections
 
 3. Explore visual charts and graphs:
-   - **Monthly Inspection Trends**: Bar chart showing completed vs. scheduled inspections by month
-   - **Inspection Status Distribution**: Pie chart showing the breakdown of inspections by status
-   - **Inspection Type Distribution**: Pie chart showing the breakdown of inspections by type
-   - **Top Supplier Performance**: List of suppliers with their inspection pass rates
+   - __Monthly Inspection Trends__: Bar chart showing completed vs. scheduled inspections by month
+   - __Inspection Status Distribution__: Pie chart showing the breakdown of inspections by status
+   - __Inspection Type Distribution__: Pie chart showing the breakdown of inspections by type
+   - __Top Supplier Performance__: List of suppliers with their inspection pass rates
 
 ### Using the Inspection Analytics Dashboard
 
-1. **Summary Cards**:
+1. __Summary Cards__:
    - Quick view of inspection counts by status
    - Real-time updates as inspection statuses change
 
-2. **Monthly Trends Chart**:
+2. __Monthly Trends Chart__:
    - Track inspection volume over time
    - Identify seasonal patterns or workload issues
    - Compare scheduled vs. completed inspection rates
 
-3. **Distribution Charts**:
+3. __Distribution Charts__:
    - Understand the breakdown of inspections by status and type
    - Identify areas that may need additional resources
    - Monitor the balance of inspection activities
 
-4. **Supplier Performance List**:
+4. __Supplier Performance List__:
    - See which suppliers have the highest and lowest pass rates
    - View the number of inspections conducted for each supplier
    - Identify suppliers that may need intervention or support
@@ -124,22 +126,22 @@ The Inspection Statistics Dashboard provides comprehensive analytics on inspecti
 
 The Inspection Analytics page provides deeper insights through multiple tabs:
 
-1. **Overview Tab**:
+1. __Overview Tab__:
    - Status and result distribution charts
    - Monthly inspection trends
    - Key performance indicators
 
-2. **Supplier Performance Tab**:
+2. __Supplier Performance Tab__:
    - Supplier quality performance rankings
    - Inspection volumes by supplier
    - Pass/fail rates comparison
 
-3. **Defect Analysis Tab**:
+3. __Defect Analysis Tab__:
    - Defects by type
    - Defects by severity
    - Trend analysis of defect occurrences
 
-4. **Time Analysis Tab**:
+4. __Time Analysis Tab__:
    - Inspection duration by type
    - On-time vs. delayed inspections
    - Average delay metrics
@@ -148,7 +150,7 @@ The Inspection Analytics page provides deeper insights through multiple tabs:
 
 ### Standard Reports
 
-1. Navigate to **Reports > Standard Reports**
+1. Navigate to __Reports > Standard Reports__
 2. Available standard reports include:
    - Supplier Performance Report
    - Inspection Summary Report
@@ -158,13 +160,13 @@ The Inspection Analytics page provides deeper insights through multiple tabs:
 
 3. For each report:
    - Select parameters (date range, suppliers, etc.)
-   - Click **Generate Report**
+   - Click __Generate Report__
    - View the report online or export it
 
 ### Custom Reports
 
-1. Navigate to **Reports > Custom Reports**
-2. Click **Create New Report**
+1. Navigate to __Reports > Custom Reports__
+2. Click __Create New Report__
 3. Select data sources:
    - Suppliers
    - Inspections
@@ -177,19 +179,19 @@ The Inspection Analytics page provides deeper insights through multiple tabs:
 
 ### Scheduled Reports
 
-1. Navigate to **Reports > Scheduled Reports**
-2. Click **Create Schedule**
+1. Navigate to __Reports > Scheduled Reports__
+2. Click __Create Schedule__
 3. Select a report template
 4. Set frequency (daily, weekly, monthly)
 5. Choose delivery method (email, dashboard, system notification)
 6. Specify recipients
-7. Click **Save Schedule**
+7. Click __Save Schedule__
 
 ## Exporting Data
 
 Most reports and dashboards allow data export in various formats:
 
-1. Look for the **Export** or **Download** button
+1. Look for the __Export__ or __Download__ button
 2. Select the desired format:
    - PDF (for sharing and printing)
    - Excel (for further analysis)
@@ -202,16 +204,16 @@ Most reports and dashboards allow data export in various formats:
 
 AeroSuite provides various chart types for data visualization:
 
-- **Bar Charts**: For comparing values across categories
-- **Line Charts**: For showing trends over time
-- **Pie/Donut Charts**: For showing proportions of a whole
-- **Scatter Plots**: For showing relationships between variables
-- **Heat Maps**: For showing intensity of values
-- **Gauge Charts**: For showing progress toward goals
+- __Bar Charts__: For comparing values across categories
+- __Line Charts__: For showing trends over time
+- __Pie/Donut Charts__: For showing proportions of a whole
+- __Scatter Plots__: For showing relationships between variables
+- __Heat Maps__: For showing intensity of values
+- __Gauge Charts__: For showing progress toward goals
 
 ### Customizing Visualizations
 
-1. Click the **Customize** button on any chart
+1. Click the __Customize__ button on any chart
 2. Options include:
    - Change chart type
    - Adjust colors and labels
@@ -222,26 +224,26 @@ AeroSuite provides various chart types for data visualization:
 
 ## Best Practices for Analytics
 
-- **Regular Review**: Schedule time to review key metrics weekly or monthly
-- **Comparative Analysis**: Always compare current data with historical trends
-- **Context Matters**: Consider external factors that might influence metrics
-- **Action-Oriented**: Use analytics to drive specific improvements
-- **Share Insights**: Distribute relevant reports to stakeholders
-- **Validate Data**: Cross-check unusual findings before taking action
+- __Regular Review__: Schedule time to review key metrics weekly or monthly
+- __Comparative Analysis__: Always compare current data with historical trends
+- __Context Matters__: Consider external factors that might influence metrics
+- __Action-Oriented__: Use analytics to drive specific improvements
+- __Share Insights__: Distribute relevant reports to stakeholders
+- __Validate Data__: Cross-check unusual findings before taking action
 
 ## Troubleshooting
 
 ### Common Issues
 
-- **Data Not Updating**: Try refreshing the browser or clearing cache
-- **Export Failing**: Check file permissions on your device
-- **Charts Not Displaying**: Ensure JavaScript is enabled in your browser
-- **Slow Performance**: Try reducing the date range or filtering data
+- __Data Not Updating__: Try refreshing the browser or clearing cache
+- __Export Failing__: Check file permissions on your device
+- __Charts Not Displaying__: Ensure JavaScript is enabled in your browser
+- __Slow Performance__: Try reducing the date range or filtering data
 
 ### Getting Help
 
 For additional assistance with reporting and analytics:
 
-1. Click the **Help** icon in any report or dashboard
+1. Click the __Help__ icon in any report or dashboard
 2. Check the [Troubleshooting Guide](../support/troubleshooting.md)
-3. Contact [Support](../support/contact.md) for persistent issues 
+3. Contact [Support](../support/contact.md) for persistent issues

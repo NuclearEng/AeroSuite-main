@@ -4,7 +4,9 @@ This document describes the standardized error handling system used in the AeroS
 
 ## Overview
 
-The AeroSuite API implements a comprehensive error handling system that ensures consistent error responses across all endpoints. This system is designed to provide clear, actionable error messages to clients while also facilitating debugging and monitoring.
+The AeroSuite API implements a comprehensive error handling system that ensures consistent error
+responses across all endpoints. This system is designed to provide clear, actionable error messages
+to clients while also facilitating debugging and monitoring.
 
 ## Error Response Format
 
@@ -25,7 +27,7 @@ All error responses follow a standardized format:
     "timestamp": "2023-07-15T12:34:56.789Z"
   }
 }
-```
+```bash
 
 ### Fields Explained
 
@@ -110,11 +112,11 @@ The API uses standardized error codes to provide more specific information about
 
 ### Best Practices
 
-1. **Always check the `success` field** to determine if the request was successful
-2. **Handle common error codes** specifically in your application
-3. **Display field-specific validation errors** next to the corresponding form fields
-4. **Include the `requestId` in support requests** to help with troubleshooting
-5. **Implement appropriate retry logic** for 5xx errors and rate limiting
+1. __Always check the `success` field__ to determine if the request was successful
+2. __Handle common error codes__ specifically in your application
+3. __Display field-specific validation errors__ next to the corresponding form fields
+4. __Include the `requestId` in support requests__ to help with troubleshooting
+5. __Implement appropriate retry logic__ for 5xx errors and rate limiting
 
 ### Example: Handling Validation Errors
 
@@ -128,9 +130,9 @@ async function createResource(data) {
       },
       body: JSON.stringify(data)
     });
-    
+
     const result = await response.json();
-    
+
     if (!result.success) {
       // Handle validation errors
       if (result.code === 'VALIDATION_ERROR' && result.errors) {
@@ -139,7 +141,7 @@ async function createResource(data) {
           validationErrors: result.errors
         };
       }
-      
+
       // Handle other errors
       return {
         success: false,
@@ -147,7 +149,7 @@ async function createResource(data) {
         code: result.code
       };
     }
-    
+
     // Handle success
     return {
       success: true,
@@ -162,7 +164,7 @@ async function createResource(data) {
     };
   }
 }
-```
+```bash
 
 ## Implementing Error Handling in Controllers
 
@@ -177,7 +179,7 @@ class UserController extends BaseController {
   constructor(userService) {
     super(userService, 'user');
   }
-  
+
   // Custom methods can use the error handling utilities
   async customAction(req, res, next) {
     try {
@@ -189,7 +191,7 @@ class UserController extends BaseController {
     }
   }
 }
-```
+```bash
 
 ### Using Controller Wrappers
 
@@ -201,11 +203,11 @@ const { asyncHandler } = require('../utils/controllerWrapper');
 // Define the controller function
 const getUser = async (req, res, next) => {
   const user = await userService.findById(req.params.id);
-  
+
   if (!user) {
     throw new NotFoundError('User not found');
   }
-  
+
   return user;
 };
 
@@ -213,14 +215,14 @@ const getUser = async (req, res, next) => {
 module.exports = {
   getUser: asyncHandler(getUser, 'User retrieved successfully')
 };
-```
+```bash
 
 ## Throwing Appropriate Errors
 
 The error handling system provides a variety of error classes for different situations:
 
 ```javascript
-const { 
+const {
   BadRequestError,
   ValidationError,
   NotFoundError,
@@ -249,8 +251,9 @@ if (emailExists) {
 if (Object.keys(validationErrors).length > 0) {
   throw new ValidationError('Validation failed', validationErrors);
 }
-```
+```bash
 
 ## Conclusion
 
-By following these guidelines, you can ensure consistent error handling across the AeroSuite API, providing a better experience for API consumers and making debugging easier for developers. 
+By following these guidelines, you can ensure consistent error handling across the AeroSuite API,
+providing a better experience for API consumers and making debugging easier for developers.

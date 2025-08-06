@@ -1,6 +1,7 @@
 # Loading States System
 
-This document provides an overview of AeroSuite's loading states system, which improves user experience during data loading operations.
+This document provides an overview of AeroSuite's loading states system, which improves user
+experience during data loading operations.
 
 ## Components
 
@@ -15,8 +16,8 @@ import SkeletonScreen from '../components/ui-library/molecules/SkeletonScreen';
 <SkeletonScreen variant="card" count={3} />
 
 // Advanced usage with configuration
-<SkeletonScreen 
-  variant="table" 
+<SkeletonScreen
+  variant="table"
   count={5}
   animation="wave"
   config={{
@@ -25,7 +26,7 @@ import SkeletonScreen from '../components/ui-library/molecules/SkeletonScreen';
     withActions: true
   }}
 />
-```
+```bash
 
 #### Variants
 
@@ -61,7 +62,7 @@ The `useLoadingState` hook provides a simple way to manage loading states in com
 import { useLoadingState } from '../hooks/useLoadingState';
 
 function MyComponent() {
-  const { 
+  const {
     state,
     isLoading,
     isSuccess,
@@ -107,7 +108,7 @@ function MyComponent() {
     </div>
   );
 }
-```
+```bash
 
 #### Options
 
@@ -136,13 +137,14 @@ function MyComponent() {
 
 ## Best Practices
 
-1. **Use skeleton screens** that match the layout of the actual content
-2. **Provide immediate feedback** when a user action triggers loading
-3. **Maintain layout stability** by using placeholders with the same dimensions as the final content
-4. **Use progressive loading** for large content sections
-5. **Prioritize above-the-fold content** to load first
-6. **Provide clear error states** with recovery options
+1. __Use skeleton screens__ that match the layout of the actual content
+2. __Provide immediate feedback__ when a user action triggers loading
+3. __Maintain layout stability__ by using placeholders with the same dimensions as the final content
+4. __Use progressive loading__ for large content sections
+5. __Prioritize above-the-fold content__ to load first
+6. __Provide clear error states__ with recovery options
 
 ## Demo
 
-A comprehensive demo of all loading state components and patterns is available at `/demos/loading-states`. 
+A comprehensive demo of all loading state components and patterns is available at
+`/demos/loading-states`.

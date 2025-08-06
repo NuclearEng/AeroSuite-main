@@ -1,6 +1,8 @@
 # Screen Reader Compatibility Guide
 
-This document provides guidelines and best practices for ensuring that all components in the AeroSuite application are compatible with screen readers, making the application accessible to users with visual impairments.
+This document provides guidelines and best practices for ensuring that all components in the
+AeroSuite application are compatible with screen readers, making the application accessible to
+users with visual impairments.
 
 ## Table of Contents
 
@@ -15,33 +17,39 @@ This document provides guidelines and best practices for ensuring that all compo
 
 ## Introduction
 
-Screen readers are assistive technologies that convert digital text into synthesized speech, allowing users with visual impairments to access and interact with applications. Ensuring screen reader compatibility is essential for making our application accessible to all users.
+Screen readers are assistive technologies that convert digital text into synthesized speech,
+allowing users with visual impairments to access and interact with applications. Ensuring screen
+reader compatibility is essential for making our application accessible to all users.
 
-Screen reader users navigate applications differently than sighted users. They rely on keyboard navigation, semantic HTML structure, and ARIA attributes to understand and interact with content. This guide will help you create components that work well with screen readers.
+Screen reader users navigate applications differently than sighted users. They rely on keyboard
+navigation, semantic HTML structure, and ARIA attributes to understand and interact with content.
+This guide will help you create components that work well with screen readers.
 
 ## Testing with Screen Readers
 
-To ensure screen reader compatibility, test your components with actual screen readers. Here are the most common screen readers to test with:
+To ensure screen reader compatibility, test your components with actual screen readers. Here are
+the most common screen readers to test with:
 
-- **NVDA** (NonVisual Desktop Access) - Free, open-source screen reader for Windows
-- **VoiceOver** - Built into macOS and iOS
-- **JAWS** (Job Access With Speech) - Commercial screen reader for Windows
-- **TalkBack** - Built into Android devices
+- __NVDA__ (NonVisual Desktop Access) - Free, open-source screen reader for Windows
+- __VoiceOver__ - Built into macOS and iOS
+- __JAWS__ (Job Access With Speech) - Commercial screen reader for Windows
+- __TalkBack__ - Built into Android devices
 
 ### Basic Testing Steps
 
-1. **Install a screen reader** - Start with NVDA (Windows) or VoiceOver (Mac)
-2. **Learn basic commands** - Each screen reader has different keyboard commands
-3. **Navigate with keyboard only** - Tab, Shift+Tab, arrow keys, Enter, Space
-4. **Check reading order** - Is content read in a logical order?
-5. **Test form controls** - Are labels properly associated with inputs?
-6. **Verify dynamic content** - Are updates properly announced?
+1. __Install a screen reader__ - Start with NVDA (Windows) or VoiceOver (Mac)
+2. __Learn basic commands__ - Each screen reader has different keyboard commands
+3. __Navigate with keyboard only__ - Tab, Shift+Tab, arrow keys, Enter, Space
+4. __Check reading order__ - Is content read in a logical order?
+5. __Test form controls__ - Are labels properly associated with inputs?
+6. __Verify dynamic content__ - Are updates properly announced?
 
 ## Common Screen Reader Patterns
 
 ### Hidden Text for Context
 
-Sometimes visual users can infer context that screen readers cannot. Add hidden text for screen readers in these cases:
+Sometimes visual users can infer context that screen readers cannot. Add hidden text for screen
+readers in these cases:
 
 ```tsx
 import { SROnly } from '../../utils/accessibility';
@@ -51,7 +59,7 @@ import { SROnly } from '../../utils/accessibility';
   Edit
   <SROnly>user profile</SROnly>
 </Button>
-```
+```bash
 
 ### Descriptive Link Text
 
@@ -67,7 +75,7 @@ Screen reader users often navigate by links. Avoid generic "click here" links:
 <Typography>
   Learn more about our <Link href="/docs/accessibility">accessibility guidelines</Link>.
 </Typography>
-```
+```bash
 
 ### Form Input Labels
 
@@ -88,7 +96,7 @@ All form controls must have proper labels:
 <Typography id="email-helper-text" variant="caption">
   We'll never share your email with anyone else.
 </Typography>
-```
+```bash
 
 ### Image Alt Text
 
@@ -100,11 +108,12 @@ All meaningful images must have alt text:
 
 // Decorative image with empty alt text
 <img src="/decorative-pattern.png" alt="" />
-```
+```bash
 
 ## ARIA Attributes
 
-ARIA (Accessible Rich Internet Applications) attributes provide additional semantics for screen readers when HTML alone is not sufficient.
+ARIA (Accessible Rich Internet Applications) attributes provide additional semantics for screen
+readers when HTML alone is not sufficient.
 
 ### ARIA Landmarks
 
@@ -118,9 +127,10 @@ Landmarks help screen reader users navigate between major sections of the page:
 <aside role="complementary">Sidebar Content</aside>
 <footer role="contentinfo">Footer</footer>
 <form role="search">Search Form</form>
-```
+```bash
 
-Note: Modern HTML5 elements like `<header>`, `<nav>`, `<main>`, etc. have implicit landmark roles, so explicit roles are often unnecessary.
+Note: Modern HTML5 elements like `<header>`, `<nav>`, `<main>`, etc. have implicit landmark roles,
+so explicit roles are often unnecessary.
 
 ### ARIA Labeling
 
@@ -132,14 +142,14 @@ ARIA labeling provides accessible names for elements:
 
 // aria-labelledby for elements labeled by other elements
 <div id="slider-label">Volume</div>
-<div 
-  role="slider" 
+<div
+  role="slider"
   aria-labelledby="slider-label"
   aria-valuenow={50}
   aria-valuemin={0}
   aria-valuemax={100}
 ></div>
-```
+```bash
 
 ### ARIA States
 
@@ -152,13 +162,14 @@ ARIA states communicate the current condition of elements:
 <input type="checkbox" aria-checked="true" />
 <button aria-disabled="true">Submit</button>
 <button aria-pressed="true">Toggle</button>
-```
+```bash
 
 Always keep ARIA states updated with JavaScript when the UI changes.
 
 ## Semantic HTML
 
-Using semantic HTML elements provides built-in accessibility benefits. Always prefer semantic HTML over generic divs with ARIA when possible.
+Using semantic HTML elements provides built-in accessibility benefits. Always prefer semantic HTML
+over generic divs with ARIA when possible.
 
 ### Headings Structure
 
@@ -170,9 +181,10 @@ Proper heading structure creates a document outline for screen reader navigation
     <h3>Subsection Heading</h3>
   <h2>Another Section</h2>
     <h3>Another Subsection</h3>
-```
+```bash
 
-Screen reader users can navigate between headings to quickly understand page structure. Never skip heading levels (e.g., h1 to h3).
+Screen reader users can navigate between headings to quickly understand page structure. Never skip
+heading levels (e.g., h1 to h3).
 
 ### Lists
 
@@ -200,7 +212,7 @@ Use proper list elements for groups of related items:
   <dt>Term 2</dt>
   <dd>Definition 2</dd>
 </dl>
-```
+```bash
 
 ### Tables
 
@@ -229,7 +241,7 @@ Use proper table markup for tabular data:
     </tr>
   </tbody>
 </table>
-```
+```bash
 
 ### Buttons vs. Links
 
@@ -241,16 +253,17 @@ Use the right element for the right job:
 
 // Use links for navigation to other pages
 <a href="/documentation">View Documentation</a>
-```
+```bash
 
 ## Live Regions
 
-Live regions announce dynamic content changes to screen readers. They are essential for notifications, alerts, and other dynamic updates.
+Live regions announce dynamic content changes to screen readers. They are essential for
+notifications, alerts, and other dynamic updates.
 
 ```tsx
 // Simple live region
-<div 
-  aria-live="polite" 
+<div
+  aria-live="polite"
   aria-atomic="true"
 >
   {message}
@@ -259,24 +272,24 @@ Live regions announce dynamic content changes to screen readers. They are essent
 // React component with live region
 const NotificationSystem = () => {
   const [message, setMessage] = useState('');
-  
+
   // Function to show a notification
   const showNotification = (text) => {
     setMessage(text);
-    
+
     // Clear after 5 seconds
     setTimeout(() => {
       setMessage('');
     }, 5000);
   };
-  
+
   return (
     <>
-      {/* Your UI components */}
-      
-      {/* Live region for announcements */}
+      {/_ Your UI components _/}
+
+      {/_ Live region for announcements _/}
       {message && (
-        <div 
+        <div
           aria-live="polite"
           aria-atomic="true"
         >
@@ -286,27 +299,34 @@ const NotificationSystem = () => {
     </>
   );
 };
-```
+```bash
 
-Use "polite" for most updates to avoid interrupting the user. Only use "assertive" for critical information that requires immediate attention.
+Use "polite" for most updates to avoid interrupting the user. Only use "assertive" for critical
+information that requires immediate attention.
 
 ## Best Practices
 
-1. **Use semantic HTML** - Prefer native HTML elements over custom widgets when possible
-2. **Maintain keyboard focus** - Ensure focus is visible and logical, especially after dynamic updates
-3. **Provide text alternatives** - For all non-text content (images, icons, etc.)
-4. **Use proper headings** - Create a logical document structure with headings
-5. **Label form controls** - Every form control needs a label
-6. **Test with actual screen readers** - Don't rely solely on automated tools
-7. **Announce dynamic changes** - Use live regions for updates
-8. **Maintain reading order** - Visual order should match DOM order
-9. **Use ARIA sparingly** - Only use ARIA when HTML alone is insufficient
-10. **Keep it simple** - Complex widgets are harder to make accessible
+1. __Use semantic HTML__ - Prefer native HTML elements over custom widgets when possible
+2. __Maintain keyboard focus__ - Ensure focus is visible and logical, especially after dynamic
+updates
+3. __Provide text alternatives__ - For all non-text content (images, icons, etc.)
+4. __Use proper headings__ - Create a logical document structure with headings
+5. __Label form controls__ - Every form control needs a label
+6. __Test with actual screen readers__ - Don't rely solely on automated tools
+7. __Announce dynamic changes__ - Use live regions for updates
+8. __Maintain reading order__ - Visual order should match DOM order
+9. __Use ARIA sparingly__ - Only use ARIA when HTML alone is insufficient
+10. __Keep it simple__ - Complex widgets are harder to make accessible
 
 ## Resources
 
-- [WebAIM Screen Reader Survey](https://webaim.org/projects/screenreadersurvey9/) - Research on screen reader usage patterns
-- [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) - Patterns for accessible components
-- [Screen Reader Keyboard Shortcuts](https://dequeuniversity.com/screenreaders/) - Keyboard commands for popular screen readers
-- [A11Y Project Checklist](https://www.a11yproject.com/checklist/) - Accessibility checklist for web projects
-- [MDN Accessibility Guide](https://developer.mozilla.org/en-US/docs/Web/Accessibility) - Mozilla's accessibility documentation 
+- [WebAIM Screen Reader Survey](https://webaim.org/projects/screenreadersurvey9/) - Research on
+screen reader usage patterns
+- [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) - Patterns for accessible
+components
+- [Screen Reader Keyboard Shortcuts](https://dequeuniversity.com/screenreaders/) - Keyboard
+commands for popular screen readers
+- [A11Y Project Checklist](https://www.a11yproject.com/checklist/) - Accessibility checklist for
+web projects
+- [MDN Accessibility Guide](https://developer.mozilla.org/en-US/docs/Web/Accessibility) - Mozilla's
+accessibility documentation

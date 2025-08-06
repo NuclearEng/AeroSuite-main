@@ -1,10 +1,13 @@
 # ERP System Integration
 
-This document describes the ERP (Enterprise Resource Planning) integration solution for the AeroSuite application.
+This document describes the ERP (Enterprise Resource Planning) integration solution for the
+AeroSuite application.
 
 ## Overview
 
-AeroSuite integrates with external ERP systems to synchronize critical business data including suppliers, inventory, purchase orders, and quality inspections. The integration provides both read and write capabilities, allowing for bidirectional data flow between AeroSuite and ERP systems.
+AeroSuite integrates with external ERP systems to synchronize critical business data including
+suppliers, inventory, purchase orders, and quality inspections. The integration provides both read
+and write capabilities, allowing for bidirectional data flow between AeroSuite and ERP systems.
 
 ## Supported ERP Systems
 
@@ -23,18 +26,20 @@ Future implementations will add support for:
 
 The ERP integration follows a service-oriented architecture with the following components:
 
-- **ERP Service**: A facade service that handles provider selection and delegates operations to the appropriate provider implementation.
-- **Provider Services**: Specific implementations for each ERP system (SAP, Oracle, etc.).
-- **Data Mappers**: Utilities for transforming data between AeroSuite and ERP data models.
-- **Configuration**: Settings for connection details, credentials, and feature flags.
-- **API Controllers**: REST API endpoints for interacting with ERP functionality.
-- **Sync Workers**: Background processes for scheduled data synchronization.
+- __ERP Service__: A facade service that handles provider selection and delegates operations to the
+appropriate provider implementation.
+- __Provider Services__: Specific implementations for each ERP system (SAP, Oracle, etc.).
+- __Data Mappers__: Utilities for transforming data between AeroSuite and ERP data models.
+- __Configuration__: Settings for connection details, credentials, and feature flags.
+- __API Controllers__: REST API endpoints for interacting with ERP functionality.
+- __Sync Workers__: Background processes for scheduled data synchronization.
 
 ## Configuration
 
-ERP integration is configured through environment variables and the `server/src/config/erp-config.js` file. Key configuration options include:
+ERP integration is configured through environment variables and the
+`server/src/config/erp-config.js` file. Key configuration options include:
 
-```
+```bash
 ERP_PROVIDER=sap             # The active ERP provider (sap, oracle, dynamics365, netsuite, mock)
 ERP_TIMEOUT=30000            # Request timeout in milliseconds
 ERP_RETRY_ATTEMPTS=3         # Number of retry attempts for failed requests
@@ -50,7 +55,7 @@ SAP_USERNAME=sap_service_user
 SAP_PASSWORD=password
 SAP_CLIENT_ID=client_id
 SAP_CLIENT_SECRET=client_secret
-```
+```bash
 
 ## API Endpoints
 
@@ -82,7 +87,8 @@ The ERP integration exposes the following API endpoints:
 
 ## Data Mapping
 
-The integration includes data mapping utilities that transform data between AeroSuite and ERP data models. These mappers handle:
+The integration includes data mapping utilities that transform data between AeroSuite and ERP data
+models. These mappers handle:
 
 - Field name translation
 - Data type conversion
@@ -92,7 +98,8 @@ The integration includes data mapping utilities that transform data between Aero
 
 ## Scheduled Synchronization
 
-Scheduled synchronization can be configured using cron jobs or the built-in worker system. Common synchronization schedules include:
+Scheduled synchronization can be configured using cron jobs or the built-in worker system. Common
+synchronization schedules include:
 
 - Suppliers/Vendors: Daily
 - Inventory: Hourly
@@ -111,7 +118,8 @@ The ERP integration includes robust error handling with:
 
 ## Testing with Mock ERP
 
-For development and testing, the integration includes a mock ERP provider that simulates a real ERP system. To use the mock provider:
+For development and testing, the integration includes a mock ERP provider that simulates a real ERP
+system. To use the mock provider:
 
 1. Set `ERP_PROVIDER=mock` in your environment variables
 2. The mock provider generates realistic test data for all entity types
@@ -143,8 +151,8 @@ To add support for a new ERP system:
 
 Common issues and their solutions:
 
-- **Connection Timeouts**: Check network connectivity and increase the `ERP_TIMEOUT` value
-- **Authentication Failures**: Verify credentials and check if the service account is active
-- **Mapping Errors**: Ensure data models are compatible and add additional mapping logic
-- **Sync Performance Issues**: Implement filtering and incremental synchronization
-- **Duplicate Records**: Use proper identification fields and implement deduplication logic 
+- __Connection Timeouts__: Check network connectivity and increase the `ERP_TIMEOUT` value
+- __Authentication Failures__: Verify credentials and check if the service account is active
+- __Mapping Errors__: Ensure data models are compatible and add additional mapping logic
+- __Sync Performance Issues__: Implement filtering and incremental synchronization
+- __Duplicate Records__: Use proper identification fields and implement deduplication logic

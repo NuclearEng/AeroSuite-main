@@ -2,7 +2,10 @@
 
 ## Introduction
 
-This document defines the domain events used for communication between different bounded contexts in the AeroSuite application. Domain events represent significant occurrences within a domain that other domains might be interested in. They enable loose coupling between domains while allowing for necessary integration.
+This document defines the domain events used for communication between different bounded contexts
+in the AeroSuite application. Domain events represent significant occurrences within a domain that
+other domains might be interested in. They enable loose coupling between domains while allowing for
+necessary integration.
 
 ## Event Structure
 
@@ -18,7 +21,7 @@ All domain events follow this standard structure:
     // Event-specific data
   }
 }
-```
+```bash
 
 ## Supplier Domain Events
 
@@ -36,9 +39,9 @@ Emitted when a new supplier is created in the system.
     "status": "active"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Component Domain: To associate components with the new supplier
 - Inspection Domain: To schedule initial supplier audits
 - Notification Domain: To notify relevant users
@@ -57,9 +60,9 @@ Emitted when a supplier's status changes.
     "reason": "Failed quality audit"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Component Domain: To update component sourcing status
 - Inspection Domain: To schedule follow-up inspections
 - Notification Domain: To notify relevant users
@@ -78,9 +81,9 @@ Emitted when a supplier receives a new qualification.
     "expirationDate": "2024-12-31T23:59:59Z"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Component Domain: To update component qualification requirements
 - Notification Domain: To notify relevant users
 
@@ -101,9 +104,9 @@ Emitted when a supplier's performance metrics are updated.
     "period": "2023-Q2"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Reporting Domain: To update dashboards and reports
 - Notification Domain: To trigger alerts for significant changes
 
@@ -123,9 +126,9 @@ Emitted when a new customer is created in the system.
     "status": "active"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Inspection Domain: To associate inspections with the customer
 - Notification Domain: To notify relevant users
 
@@ -143,9 +146,9 @@ Emitted when a customer's status changes.
     "reason": "Contract ended"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Inspection Domain: To update inspection schedules
 - Notification Domain: To notify relevant users
 
@@ -164,9 +167,9 @@ Emitted when significant customer activity occurs.
     "date": "2023-06-15T14:30:00Z"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Reporting Domain: To update customer engagement metrics
 - Notification Domain: To notify account managers
 
@@ -187,9 +190,9 @@ Emitted when a new inspection is created.
     "scheduledDate": "2023-06-20T10:00:00Z"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Supplier Domain: To track inspection activities
 - Component Domain: To associate with component history
 - Notification Domain: To notify inspectors and suppliers
@@ -209,9 +212,9 @@ Emitted when an inspection is completed.
     "summary": "All items passed inspection"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Supplier Domain: To update supplier performance metrics
 - Component Domain: To update component status
 - Reporting Domain: To update quality metrics
@@ -234,9 +237,9 @@ Emitted when a defect is found during an inspection.
     "recordedDate": "2023-06-20T10:45:00Z"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Supplier Domain: To update supplier quality metrics
 - Component Domain: To update component quality history
 - Reporting Domain: To update defect metrics
@@ -257,9 +260,9 @@ Emitted when a defect is resolved.
     "notes": "Component reworked to meet surface finish requirements"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Supplier Domain: To update supplier performance metrics
 - Component Domain: To update component status
 - Reporting Domain: To update resolution metrics
@@ -282,9 +285,9 @@ Emitted when a new component is created.
     "supplierId": "supplier-456"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Supplier Domain: To associate with supplier catalog
 - Inspection Domain: To create inspection templates
 - Notification Domain: To notify engineering team
@@ -303,9 +306,9 @@ Emitted when a component's status changes.
     "reason": "Replaced by newer model"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Supplier Domain: To update supplier catalog
 - Inspection Domain: To update inspection requirements
 - Notification Domain: To notify engineering and procurement teams
@@ -326,9 +329,9 @@ Emitted when a specification is added to a component.
     "tolerance": 100
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Inspection Domain: To update inspection criteria
 - Notification Domain: To notify engineering team
 
@@ -348,9 +351,9 @@ Emitted when a new component revision is created.
     "status": "draft"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Supplier Domain: To update manufacturing requirements
 - Inspection Domain: To update inspection criteria
 - Notification Domain: To notify engineering and procurement teams
@@ -370,9 +373,9 @@ Emitted when a new user is created.
     "roles": ["inspector", "engineer"]
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Notification Domain: To set up notification preferences
 - All domains: To update access control
 
@@ -389,9 +392,9 @@ Emitted when a user's roles change.
     "newRoles": ["inspector", "manager"]
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - All domains: To update access control
 - Notification Domain: To update notification routing
 
@@ -413,9 +416,9 @@ Emitted when a notification is sent.
     "sentAt": "2023-06-15T14:35:00Z"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Reporting Domain: To track notification metrics
 
 ### NotificationRead
@@ -431,43 +434,46 @@ Emitted when a notification is read by a user.
     "readAt": "2023-06-15T15:10:00Z"
   }
 }
-```
+```bash
 
-**Consumers**:
+__Consumers__:
 - Reporting Domain: To track user engagement
 
 ## Event Handling Guidelines
 
-1. **Idempotency**: Event handlers should be idempotent to handle potential duplicate events.
+1. __Idempotency__: Event handlers should be idempotent to handle potential duplicate events.
 
-2. **Failure Handling**: Event handlers should gracefully handle failures and provide appropriate error logging.
+2. __Failure Handling__: Event handlers should gracefully handle failures and provide appropriate
+error logging.
 
-3. **Event Versioning**: As events evolve, maintain backward compatibility or implement versioning.
+3. __Event Versioning__: As events evolve, maintain backward compatibility or implement versioning.
 
-4. **Event Ordering**: Do not assume events will arrive in a specific order. Design handlers to work with events arriving in any order.
+4. __Event Ordering__: Do not assume events will arrive in a specific order. Design handlers to
+work with events arriving in any order.
 
-5. **Event Ownership**: Each domain owns the definition of its events. Other domains should not emit events on behalf of another domain.
+5. __Event Ownership__: Each domain owns the definition of its events. Other domains should not
+emit events on behalf of another domain.
 
 ## Implementation Considerations
 
-1. **Event Bus**: Use a reliable event bus or message broker for event distribution.
+1. __Event Bus__: Use a reliable event bus or message broker for event distribution.
 
-2. **Event Store**: Consider implementing an event store for event sourcing and audit purposes.
+2. __Event Store__: Consider implementing an event store for event sourcing and audit purposes.
 
-3. **Event Schemas**: Maintain formal schemas for all events to ensure consistency.
+3. __Event Schemas__: Maintain formal schemas for all events to ensure consistency.
 
-4. **Monitoring**: Implement monitoring for event processing to detect failures or delays.
+4. __Monitoring__: Implement monitoring for event processing to detect failures or delays.
 
-5. **Testing**: Create comprehensive tests for event producers and consumers.
+5. __Testing__: Create comprehensive tests for event producers and consumers.
 
 ## Event Evolution Strategy
 
 As the system evolves, events will need to change. Follow these guidelines:
 
-1. **Backward Compatibility**: Whenever possible, make changes backward compatible.
+1. __Backward Compatibility__: Whenever possible, make changes backward compatible.
 
-2. **Versioning**: When backward compatibility isn't possible, version the events.
+2. __Versioning__: When backward compatibility isn't possible, version the events.
 
-3. **Deprecation Process**: Clearly communicate deprecated events and provide migration paths.
+3. __Deprecation Process__: Clearly communicate deprecated events and provide migration paths.
 
-4. **Documentation**: Keep this document updated with all event changes. 
+4. __Documentation__: Keep this document updated with all event changes.

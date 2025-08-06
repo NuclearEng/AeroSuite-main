@@ -15,40 +15,40 @@ cd server && npm run dev
 cd client && npm start
 
 # Access the application at http://localhost:3000
-```
+```bash
 
 ## 🏗️ Architecture
 
-- **Frontend**: React 18 with TypeScript, Material-UI
-- **Backend**: Node.js, Express, MongoDB
-- **Authentication**: JWT with SSO and 2FA support
-- **Monitoring**: Grafana + Prometheus
-- **Security**: Enterprise-grade security with OWASP compliance
-- **Deployment**: Docker, Kubernetes, Load balancing
-- **API**: RESTful with versioning and comprehensive documentation
+- __Frontend__: React 18 with TypeScript, Material-UI
+- __Backend__: Node.js, Express, MongoDB
+- __Authentication__: JWT with SSO and 2FA support
+- __Monitoring__: Grafana + Prometheus
+- __Security__: Enterprise-grade security with OWASP compliance
+- __Deployment__: Docker, Kubernetes, Load balancing
+- __API__: RESTful with versioning and comprehensive documentation
 
 ## 🌟 Features
 
 ### Core Functionality
-- **Dashboard**: Interactive aerospace management dashboard
-- **Task Management**: Kanban board with drag-and-drop
-- **Supplier Management**: Comprehensive supplier tracking
-- **Customer Management**: Customer database and analytics
-- **Inspection Management**: Quality control and auditing
-- **Reporting**: Advanced analytics and reporting
+- __Dashboard__: Interactive aerospace management dashboard
+- __Task Management__: Kanban board with drag-and-drop
+- __Supplier Management__: Comprehensive supplier tracking
+- __Customer Management__: Customer database and analytics
+- __Inspection Management__: Quality control and auditing
+- __Reporting__: Advanced analytics and reporting
 
 ### Enterprise Features
-- **Containerization**: Docker + Kubernetes deployment
-- **Monitoring**: Grafana dashboards + Prometheus metrics
-- **Security**: OWASP compliance + API security scanning
-- **Performance**: Load testing + optimization tools
-- **CI/CD**: Automated testing + deployment pipelines
-- **Scalability**: Microservices architecture
-- **Documentation**: Comprehensive enterprise documentation
+- __Containerization__: Docker + Kubernetes deployment
+- __Monitoring__: Grafana dashboards + Prometheus metrics
+- __Security__: OWASP compliance + API security scanning
+- __Performance__: Load testing + optimization tools
+- __CI/CD__: Automated testing + deployment pipelines
+- __Scalability__: Microservices architecture
+- __Documentation__: Comprehensive enterprise documentation
 
 ## 📁 Project Structure
 
-```
+```bash
 AeroSuite/
 ├── client/                   # React.js frontend
 │   ├── src/                 # Source code
@@ -63,7 +63,7 @@ AeroSuite/
 ├── scripts/                  # Automation scripts
 ├── docs/                     # Documentation
 └── package.json             # Root dependencies
-```
+```bash
 
 ## 🚀 Getting Started
 
@@ -74,13 +74,13 @@ AeroSuite/
 
 ### Installation
 
-1. **Clone the repository**
+1. __Clone the repository__
 ```bash
 git clone [repository-url]
 cd AeroSuite
-```
+```bash
 
-2. **Install dependencies**
+2. __Install dependencies__
 ```bash
 # Install root dependencies
 npm install
@@ -90,36 +90,36 @@ cd client && npm install
 
 # Install server dependencies
 cd ../server && npm install
-```
+```bash
 
-3. **Set up environment variables**
+3. __Set up environment variables__
 ```bash
 # Copy the example environment file
 cp server/env.example server/.env
 # Edit server/.env with your configuration
-```
+```bash
 
-4. **Start the application**
+4. __Start the application__
 ```bash
 # Start backend (from server directory)
 npm run dev
 
 # Start frontend (from client directory in new terminal)
 npm start
-```
+```bash
 
 ## 🔒 Security
 
 AeroSuite implements enterprise-grade security measures:
 
 ### Security Features
-- **Authentication**: Multi-factor authentication (MFA) with SSO support
-- **Authorization**: Role-based access control (RBAC) with fine-grained permissions
-- **Encryption**: AES-256-GCM encryption at rest, TLS 1.3 in transit
-- **API Security**: API key management with scope-based permissions
-- **Rate Limiting**: Advanced rate limiting with DDoS protection
-- **Audit Logging**: Comprehensive audit trail for compliance
-- **Security Monitoring**: Real-time threat detection and alerting
+- __Authentication__: Multi-factor authentication (MFA) with SSO support
+- __Authorization__: Role-based access control (RBAC) with fine-grained permissions
+- __Encryption__: AES-256-GCM encryption at rest, TLS 1.3 in transit
+- __API Security__: API key management with scope-based permissions
+- __Rate Limiting__: Advanced rate limiting with DDoS protection
+- __Audit Logging__: Comprehensive audit trail for compliance
+- __Security Monitoring__: Real-time threat detection and alerting
 
 ### Compliance
 - ✅ OWASP Top 10 compliant
@@ -129,17 +129,17 @@ AeroSuite implements enterprise-grade security measures:
 - ✅ ISO 27001 security standards
 
 ### Security Documentation
-- **Security Guide**: [Security Documentation](docs/security/SECURITY.md)
-- **API Security**: [API Security Guide](docs/security/API-SECURITY-GUIDE.md)
-- **Security Updates**: Subscribe at https://aerosuite.com/security-updates
+- __Security Guide__: [Security Documentation](docs/security/SECURITY.md)
+- __API Security__: [API Security Guide](docs/security/API-SECURITY-GUIDE.md)
+- __Security Updates__: Subscribe at https://aerosuite.com/security-updates
 
 ## 📚 Documentation
 
-- **API Documentation**: [API Docs](docs/api/)
-- **User Manual**: [User Guide](docs/user-manual/)
-- **Development Guide**: [Developer Docs](docs/development/)
-- **Deployment Guide**: [Deployment Docs](docs/deployment/)
-- **Security Guide**: [Security Docs](docs/security/)
+- __API Documentation__: [API Docs](docs/api/)
+- __User Manual__: [User Guide](docs/user-manual/)
+- __Development Guide__: [Developer Docs](docs/development/)
+- __Deployment Guide__: [Deployment Docs](docs/deployment/)
+- __Security Guide__: [Security Docs](docs/security/)
 
 ## 🔧 Development
 
@@ -149,10 +149,10 @@ AeroSuite implements enterprise-grade security measures:
 cd client
 npm run dev
 
-# Backend development  
+# Backend development
 cd server
 npm run dev
-```
+```bash
 
 ### Testing
 ```bash
@@ -167,7 +167,7 @@ npm run test:integration
 
 # Run e2e tests
 npm run test:e2e
-```
+```bash
 
 ## 🐳 Docker Deployment
 
@@ -182,7 +182,7 @@ docker build -t aerosuite-server ./server
 # Run containers
 docker run -p 3000:80 aerosuite-client
 docker run -p 5000:5000 aerosuite-server
-```
+```bash
 
 ## 📈 Monitoring & Analytics
 
@@ -234,10 +234,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- **Documentation**: Check the `/docs` directory
-- **Issues**: Submit via GitHub Issues
-- **Enterprise Support**: Contact enterprise support team
+- __Documentation__: Check the `/docs` directory
+- __Issues__: Submit via GitHub Issues
+- __Enterprise Support__: Contact enterprise support team
 
 ---
 
-**Latest Update**: Full enterprise application with advanced features, monitoring, and production-ready deployment capabilities.
+__Latest Update__: Full enterprise application with advanced features, monitoring, and
+production-ready deployment capabilities.

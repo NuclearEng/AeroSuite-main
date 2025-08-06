@@ -1,28 +1,35 @@
 # React Router Test Fixer
 
-This directory contains scripts to help fix React Router testing issues in the AeroSuite application.
+This directory contains scripts to help fix React Router testing issues in the AeroSuite
+application.
 
 ## Overview
 
-The React Router Test Fixer is a set of scripts that help you update component tests to use the new testing utilities for React Router and Material-UI Theme. These scripts can identify components that use React Router hooks or Material-UI Theme hooks and update their tests to use the appropriate wrapper components.
+The React Router Test Fixer is a set of scripts that help you update component tests to use the new
+testing utilities for React Router and Material-UI Theme. These scripts can identify components
+that use React Router hooks or Material-UI Theme hooks and update their tests to use the
+appropriate wrapper components.
 
 ## Available Scripts
 
 ### `fix-router-tests.sh`
 
-This is the main script that provides a simple interface to run the test fixing scripts. It offers three modes:
+This is the main script that provides a simple interface to run the test fixing scripts. It offers
+three modes:
 
-1. **Interactive mode**: Fix tests one by one with confirmation for each file
-2. **Batch mode**: Fix all tests at once without confirmation
-3. **Directory mode**: Fix tests in a specific directory
+1. __Interactive mode__: Fix tests one by one with confirmation for each file
+2. __Batch mode__: Fix all tests at once without confirmation
+3. __Directory mode__: Fix tests in a specific directory
 
 ### `apply-router-test-fixes.js`
 
-This script analyzes test files and suggests changes to use the new testing utilities. It prompts for confirmation before applying changes to each file.
+This script analyzes test files and suggests changes to use the new testing utilities. It prompts
+for confirmation before applying changes to each file.
 
 ### `batch-fix-router-tests.js`
 
-This script applies the React Router testing utilities to multiple test files without requiring confirmation for each file. It creates backups of the original files before making changes.
+This script applies the React Router testing utilities to multiple test files without requiring
+confirmation for each file. It creates backups of the original files before making changes.
 
 ## Usage
 
@@ -38,19 +45,19 @@ This script applies the React Router testing utilities to multiple test files wi
 
 ```bash
 node scripts/apply-router-test-fixes.js
-```
+```bash
 
 #### Batch Mode
 
 ```bash
 node scripts/batch-fix-router-tests.js
-```
+```bash
 
 #### Directory Mode
 
 ```bash
-node scripts/batch-fix-router-tests.js "src/pages/customers/**/*.test.{js,jsx,ts,tsx}"
-```
+node scripts/batch-fix-router-tests.js "src/pages/customers/__/*.test.{js,jsx,ts,tsx}"
+```bash
 
 ## What the Scripts Do
 
@@ -79,7 +86,7 @@ describe('CustomerDetail', () => {
     expect(screen.getByText(/customer/i)).toBeInTheDocument();
   });
 });
-```
+```bash
 
 ### After
 
@@ -100,10 +107,10 @@ describe('CustomerDetail', () => {
     expect(screen.getByText(/customer/i)).toBeInTheDocument();
   });
 });
-```
+```bash
 
 ## Notes
 
 - The scripts create backups of the original files before making changes
 - You may need to manually adjust the path, route, and initialEntries values after the script runs
-- The scripts add the task reference comment to help track which files have been updated 
+- The scripts add the task reference comment to help track which files have been updated

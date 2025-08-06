@@ -2,7 +2,10 @@
 
 ## Overview
 
-This workshop will teach developers how to test React components that use React Router hooks in the AeroSuite application. By the end of this workshop, participants will be able to write reliable tests for components that use React Router hooks and understand the testing utilities provided by the AeroSuite framework.
+This workshop will teach developers how to test React components that use React Router hooks in the
+AeroSuite application. By the end of this workshop, participants will be able to write reliable
+tests for components that use React Router hooks and understand the testing utilities provided by
+the AeroSuite framework.
 
 ## Prerequisites
 
@@ -102,7 +105,7 @@ describe('NavigationComponent', () => {
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
   });
 });
-```
+```bash
 
 ### Exercise 2: Testing a Component with Route Parameters
 
@@ -123,7 +126,7 @@ function UserDetail() {
 }
 
 export default UserDetail;
-```
+```bash
 
 ### Exercise 3: Workshop Challenge
 
@@ -139,4 +142,4 @@ Fix the following tests in the workshop repository:
 - [Testing Utilities README](client/src/test-utils/README.md)
 - [Quick Start Guide](docs/testing/react-router-testing-quickstart.md)
 - [Cheat Sheet](docs/testing/react-router-testing-cheatsheet.md)
-- [Video Tutorial](docs/testing/react-router-testing-video-script.md) 
+- [Video Tutorial](docs/testing/react-router-testing-video-script.md)

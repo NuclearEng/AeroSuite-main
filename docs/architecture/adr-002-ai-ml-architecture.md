@@ -6,7 +6,10 @@ Accepted
 
 ## Context
 
-AeroSuite has plans to integrate advanced AI/ML capabilities including computer vision for defect detection, predictive analytics for supplier performance, document processing, and anomaly detection. These features require a robust, scalable, and maintainable AI/ML architecture that integrates well with the existing system while allowing for independent evolution of ML models.
+AeroSuite has plans to integrate advanced AI/ML capabilities including computer vision for defect
+detection, predictive analytics for supplier performance, document processing, and anomaly
+detection. These features require a robust, scalable, and maintainable AI/ML architecture that
+integrates well with the existing system while allowing for independent evolution of ML models.
 
 Key challenges include:
 - Ensuring ML models can be developed, trained, and deployed independently
@@ -18,58 +21,59 @@ Key challenges include:
 
 ## Decision
 
-We will implement a Model-as-a-Service architecture for AI/ML integration with the following components:
+We will implement a Model-as-a-Service architecture for AI/ML integration with the following
+components:
 
-1. **ML Service Layer**:
+1. __ML Service Layer__:
    - Independent microservices for each ML capability
    - Standardized REST/gRPC APIs for model inference
    - Clear contracts between ML services and core application
 
-2. **Feature Engineering Pipeline**:
+2. __Feature Engineering Pipeline__:
    - Centralized feature store for consistent feature extraction
    - Feature versioning and lineage tracking
    - Reusable feature transformations
 
-3. **Model Training Infrastructure**:
+3. __Model Training Infrastructure__:
    - Containerized training environments
    - Experiment tracking and versioning
    - Automated evaluation and validation
 
-4. **Model Registry and Deployment**:
+4. __Model Registry and Deployment__:
    - Version control for ML models
    - A/B testing capabilities
    - Canary deployments for new models
 
-5. **Model Monitoring**:
+5. __Model Monitoring__:
    - Performance metrics tracking
    - Data drift detection
    - Automated retraining triggers
 
-6. **Explainability Layer**:
+6. __Explainability Layer__:
    - Tools for understanding model decisions
    - Confidence scores for predictions
    - Visualization of decision factors
 
 ## Implementation Approach
 
-1. **Technology Stack**:
+1. __Technology Stack__:
    - PyTorch/TensorFlow for model development
    - ONNX for model interoperability
    - MLflow for experiment tracking
    - Kubernetes for deployment orchestration
    - Prometheus/Grafana for monitoring
 
-2. **Integration Pattern**:
+2. __Integration Pattern__:
    - ML services will expose REST/gRPC endpoints
    - Asynchronous processing for batch operations
    - Streaming for real-time predictions
 
-3. **Development Workflow**:
+3. __Development Workflow__:
    - Data scientists work in notebooks/ML environments
    - CI/CD pipeline for model training and deployment
    - Automated testing for ML components
 
-4. **Data Management**:
+4. __Data Management__:
    - Data versioning for training datasets
    - Data quality validation pipeline
    - Privacy-preserving techniques for sensitive data
@@ -95,15 +99,15 @@ We will implement a Model-as-a-Service architecture for AI/ML integration with t
 
 ## Alternatives Considered
 
-1. **Embedded ML Models**: Simpler but limits scalability and independent development.
+1. __Embedded ML Models__: Simpler but limits scalability and independent development.
 
-2. **Third-party ML Services**: Would reduce development effort but limit customization and control.
+2. __Third-party ML Services__: Would reduce development effort but limit customization and control.
 
-3. **Monolithic ML System**: Would simplify integration but limit independent scaling and evolution.
+3. __Monolithic ML System__: Would simplify integration but limit independent scaling and evolution.
 
 ## References
 
 - Sculley, D., et al. "Hidden Technical Debt in Machine Learning Systems" (NIPS 2015)
 - Amershi, S., et al. "Software Engineering for Machine Learning: A Case Study" (ICSE 2019)
 - Paleyes, A., et al. "Challenges in Deploying and Monitoring Machine Learning Systems" (2020)
-- MLOps: Continuous delivery and automation pipelines in machine learning 
+- MLOps: Continuous delivery and automation pipelines in machine learning

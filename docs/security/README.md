@@ -1,6 +1,7 @@
 # AeroSuite Security Practices
 
-This document provides an overview of security practices, policies, and testing procedures for the AeroSuite project. It serves as the main entry point for all security-related documentation.
+This document provides an overview of security practices, policies, and testing procedures for the
+AeroSuite project. It serves as the main entry point for all security-related documentation.
 
 ## Overview
 
@@ -11,7 +12,8 @@ AeroSuite implements a multi-layered security strategy covering:
 - Infrastructure Security
 - Security Testing & Compliance
 
-Security is integrated at all levels of the architecture, with regular reviews and updates to address new threats and requirements.
+Security is integrated at all levels of the architecture, with regular reviews and updates to
+address new threats and requirements.
 
 ## Key Security Practices
 
@@ -73,8 +75,10 @@ AeroSuite's security practices are designed to meet:
 
 ## Reporting Security Issues
 
-If you discover a security vulnerability, please report it to the security team at security@aerosuite.example.com. Do not disclose vulnerabilities publicly until they have been addressed.
+If you discover a security vulnerability, please report it to the security team at
+security@aerosuite.example.com. Do not disclose vulnerabilities publicly until they have been
+addressed.
 
 ---
 
-For details on any specific area, follow the links above or contact the security team. 
+For details on any specific area, follow the links above or contact the security team.

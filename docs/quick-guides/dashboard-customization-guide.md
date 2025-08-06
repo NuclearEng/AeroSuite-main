@@ -1,11 +1,12 @@
 # Quick Guide: Dashboard Customization
 
-This guide provides instructions for customizing your AeroSuite dashboard to meet your specific needs and preferences.
+This guide provides instructions for customizing your AeroSuite dashboard to meet your specific
+needs and preferences.
 
 ## Quick Steps
 
-1. Navigate to the **Dashboard**
-2. Click the **Customize** button in the top-right corner
+1. Navigate to the __Dashboard__
+2. Click the __Customize__ button in the top-right corner
 3. Add, remove, resize, and rearrange widgets
 4. Configure individual widget settings
 5. Save your custom layout
@@ -14,13 +15,13 @@ This guide provides instructions for customizing your AeroSuite dashboard to mee
 
 ### Accessing Dashboard Customization
 
-1. Navigate to the **Dashboard** (home page)
-2. Click the **Customize** button in the top-right corner
+1. Navigate to the __Dashboard__ (home page)
+2. Click the __Customize__ button in the top-right corner
 3. The dashboard will enter edit mode, indicated by a grid background and widget controls
 
 ### Adding Widgets
 
-1. In customization mode, click the **+ Add Widget** button
+1. In customization mode, click the __+ Add Widget__ button
 2. Browse the widget library by category:
    - Inspection widgets
    - Supplier widgets
@@ -29,13 +30,13 @@ This guide provides instructions for customizing your AeroSuite dashboard to mee
    - Activity widgets
    - Custom widgets
 3. Click on a widget to see its description
-4. Click **Add** to place the widget on your dashboard
+4. Click __Add__ to place the widget on your dashboard
 5. The new widget will appear in a default position
 
 ### Removing Widgets
 
 1. Hover over the widget you want to remove
-2. Click the **×** icon in the top-right corner of the widget
+2. Click the __×__ icon in the top-right corner of the widget
 3. Confirm removal in the dialog that appears
 
 ### Resizing Widgets
@@ -54,7 +55,7 @@ This guide provides instructions for customizing your AeroSuite dashboard to mee
 
 ### Configuring Widget Settings
 
-1. Hover over a widget and click the **⚙️** (gear) icon
+1. Hover over a widget and click the __⚙️__ (gear) icon
 2. Each widget has its own configuration options, which may include:
    - Data source selection
    - Time period/range
@@ -62,11 +63,11 @@ This guide provides instructions for customizing your AeroSuite dashboard to mee
    - Refresh rate
    - Alert thresholds
 3. Make your desired changes
-4. Click **Apply** to update the widget
+4. Click __Apply__ to update the widget
 
 ### Using the Custom Widget Builder
 
-1. Click **+ Add Widget** then select **Custom Widget**
+1. Click __+ Add Widget__ then select __Custom Widget__
 2. Choose a widget type:
    - Data table
    - Chart (bar, line, pie, etc.)
@@ -82,19 +83,20 @@ This guide provides instructions for customizing your AeroSuite dashboard to mee
    - Visualization settings
    - Color scheme
    - Sorting and grouping
-5. Click **Preview** to see how your widget will look
-6. Click **Add to Dashboard** when satisfied
+5. Click __Preview__ to see how your widget will look
+6. Click __Add to Dashboard__ when satisfied
 
 ### Saving Your Dashboard
 
-1. After making all desired changes, click the **Save Layout** button
+1. After making all desired changes, click the __Save Layout__ button
 2. Enter a name for this dashboard configuration if prompted
-3. Your customized dashboard is now saved and will be displayed whenever you visit the Dashboard page
+3. Your customized dashboard is now saved and will be displayed whenever you visit the Dashboard
+page
 
 ### Creating Multiple Dashboard Views
 
-1. Click the **Dashboard Options** (three dots) in the top-right corner
-2. Select **Create New View**
+1. Click the __Dashboard Options__ (three dots) in the top-right corner
+2. Select __Create New View__
 3. Configure your new dashboard view with desired widgets
 4. Save with a unique name
 5. Switch between different dashboard views using the dropdown selector
@@ -103,24 +105,24 @@ This guide provides instructions for customizing your AeroSuite dashboard to mee
 
 AeroSuite offers several pre-configured dashboard templates:
 
-1. Click **Dashboard Options** > **Apply Template**
+1. Click __Dashboard Options__ > __Apply Template__
 2. Choose from available templates:
-   - **Quality Overview**: Focus on quality metrics and trends
-   - **Supplier Performance**: Detailed supplier performance data
-   - **Inspection Management**: Upcoming and recent inspections
-   - **Executive Summary**: High-level metrics for management
-   - **Defect Tracking**: Focus on defect metrics and resolution
+   - __Quality Overview__: Focus on quality metrics and trends
+   - __Supplier Performance__: Detailed supplier performance data
+   - __Inspection Management__: Upcoming and recent inspections
+   - __Executive Summary__: High-level metrics for management
+   - __Defect Tracking__: Focus on defect metrics and resolution
 
 ## Sharing Dashboards
 
 1. Create and save your custom dashboard
-2. Click **Dashboard Options** > **Share**
+2. Click __Dashboard Options__ > __Share__
 3. Choose sharing options:
    - Share with specific users
    - Share with roles (all users with specific roles)
    - Make public (all system users)
 4. Set permissions (View Only or Can Edit)
-5. Click **Share** to confirm
+5. Click __Share__ to confirm
 
 ## Tips
 
@@ -141,6 +143,6 @@ AeroSuite offers several pre-configured dashboard templates:
 
 ## Need Help?
 
-- Hover over any element and click the **?** icon for contextual help
+- Hover over any element and click the __?__ icon for contextual help
 - Refer to the complete user manual for detailed information
-- Contact support at support@aerosuite.com 
+- Contact support at support@aerosuite.com

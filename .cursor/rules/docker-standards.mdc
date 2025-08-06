@@ -1,0 +1,43 @@
+# Docker and Deployment Standards
+
+## Dockerfile Best Practices
+- Use multi-stage builds for optimization
+- Use specific base image versions
+- Minimize layer count
+- Copy package files before source code
+- Use .dockerignore to exclude unnecessary files
+- Run as non-root user when possible
+
+## Docker Compose
+- Use version 3.x syntax
+- Define proper service dependencies
+- Use environment variables for configuration
+- Implement health checks
+- Use named volumes for persistence
+- Set proper resource limits
+
+## Security
+- Scan images for vulnerabilities
+- Use minimal base images
+- Don't run containers as root
+- Keep base images updated
+- Use secrets for sensitive data
+- Implement proper network isolation
+
+## Performance
+- Optimize image sizes
+- Use build cache effectively
+- Implement proper logging
+- Monitor resource usage
+- Use appropriate restart policies
+
+## Development Workflow
+- Use docker-compose for local development
+- Implement hot reloading
+- Use volume mounts for development
+- Keep production and development configs separate
+- Document container setup process
+description:
+globs:
+alwaysApply: false
+---

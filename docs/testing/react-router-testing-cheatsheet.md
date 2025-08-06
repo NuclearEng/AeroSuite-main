@@ -11,7 +11,7 @@ import { renderWithTheme } from '../../test-utils/theme-wrapper';
 
 // For components that use both React Router and Material-UI Theme
 import { renderWithRouterAndTheme } from '../../test-utils/combined-wrapper';
-```
+```bash
 
 ## Basic Usage
 
@@ -32,7 +32,7 @@ renderWithRouterAndTheme(<YourComponent />, {
   route: '/path',
   initialEntries: ['/path']
 });
-```
+```bash
 
 ## Route Parameters
 
@@ -43,7 +43,7 @@ renderWithRouter(<YourComponent />, {
   route: '/users/123',
   initialEntries: ['/users/123']
 });
-```
+```bash
 
 ## Testing Navigation
 
@@ -57,13 +57,13 @@ test('navigates to details page when clicking a link', () => {
     route: '/users',
     initialEntries: ['/users']
   });
-  
+
   userEvent.click(screen.getByText('View Details'));
-  
+
   // Assert that the navigation occurred
   expect(screen.getByText('User Details')).toBeInTheDocument();
 });
-```
+```bash
 
 ## Testing with Query Parameters
 
@@ -74,7 +74,7 @@ renderWithRouter(<YourComponent />, {
   route: '/search?query=test',
   initialEntries: ['/search?query=test']
 });
-```
+```bash
 
 ## Testing with Route State
 
@@ -85,7 +85,7 @@ renderWithRouter(<YourComponent />, {
   route: '/dashboard',
   initialEntries: [{ pathname: '/dashboard', state: { from: 'login' } }]
 });
-```
+```bash
 
 ## Testing Protected Routes
 
@@ -106,7 +106,7 @@ renderWithRouter(
     initialEntries: ['/protected']
   }
 );
-```
+```bash
 
 ## Testing Redirects
 
@@ -127,11 +127,11 @@ test('redirects to login when not authenticated', () => {
       initialEntries: ['/protected']
     }
   );
-  
+
   // Assert that the redirect occurred
   expect(screen.getByText('Login Page')).toBeInTheDocument();
 });
-```
+```bash
 
 ## Mocking React Router Hooks
 
@@ -143,7 +143,7 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({ id: '123' }),
   useLocation: () => ({ pathname: '/test', search: '?query=test' })
 }));
-```
+```bash
 
 ## Automated Fixes
 
@@ -155,13 +155,17 @@ cd client
 # Choose option 1 for interactive mode
 # Choose option 2 for batch mode
 # Choose option 3 for directory mode
-```
+```bash
 
 ## Common Errors
 
 | Error | Solution |
 |-------|----------|
-| `useNavigate() may be used only in the context of a <Router> component` | Use `renderWithRouter` or `renderWithRouterAndTheme` |
-| `useParams() may be used only in the context of a <Router> component` | Use `renderWithRouter` or `renderWithRouterAndTheme` |
-| `Cannot read property 'pathname' of undefined` | Make sure you're providing the correct `initialEntries` |
-| `Cannot read property 'theme' of undefined` | Use `renderWithTheme` or `renderWithRouterAndTheme` | 
+| `useNavigate() may be used only in the context of a <Router> component` | Use `renderWithRouter`
+or `renderWithRouterAndTheme` |
+| `useParams() may be used only in the context of a <Router> component` | Use `renderWithRouter` or
+`renderWithRouterAndTheme` |
+| `Cannot read property 'pathname' of undefined` | Make sure you're providing the correct
+`initialEntries` |
+| `Cannot read property 'theme' of undefined` | Use `renderWithTheme` or `renderWithRouterAndTheme`
+|

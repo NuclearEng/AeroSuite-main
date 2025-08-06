@@ -2,38 +2,42 @@
 
 ## Overview
 
-This document describes the health check system implemented for RF042 - "Implement health checks for all services" in the AeroSuite project. The health check system provides comprehensive monitoring of all services and components, enabling early detection of issues and improved system reliability.
+This document describes the health check system implemented for RF042 - "Implement health checks
+for all services" in the AeroSuite project. The health check system provides comprehensive
+monitoring of all services and components, enabling early detection of issues and improved system
+reliability.
 
 ## Health Check Architecture
 
-The health check system is built around the `HealthCheckManager` class, which provides a centralized way to manage health checks for all services. The architecture consists of:
+The health check system is built around the `HealthCheckManager` class, which provides a
+centralized way to manage health checks for all services. The architecture consists of:
 
 ### Core Components
 
-1. **HealthCheckManager**: Central manager for all health checks
-2. **Health Check Controller**: Exposes health check endpoints via REST API
-3. **Health Check Routes**: Defines API routes for health checks
-4. **Kubernetes Probes**: Integration with Kubernetes for automated recovery
+1. __HealthCheckManager__: Central manager for all health checks
+2. __Health Check Controller__: Exposes health check endpoints via REST API
+3. __Health Check Routes__: Defines API routes for health checks
+4. __Kubernetes Probes__: Integration with Kubernetes for automated recovery
 
 ### Health Status Levels
 
 The system uses the following status levels:
 
-- **Healthy**: The component is functioning normally
-- **Degraded**: The component is functioning but with reduced performance or capacity
-- **Unhealthy**: The component is not functioning correctly
-- **Unknown**: The component's status cannot be determined
+- __Healthy__: The component is functioning normally
+- __Degraded__: The component is functioning but with reduced performance or capacity
+- __Unhealthy__: The component is not functioning correctly
+- __Unknown__: The component's status cannot be determined
 
 ### Monitored Components
 
 The health check system monitors the following components:
 
-- **Database**: MongoDB connection and performance
-- **Cache**: Redis connection and performance
-- **System**: CPU, memory, and disk usage
-- **API**: API endpoint availability and performance
-- **Workers**: Worker thread health and availability
-- **External Services**: Third-party service availability
+- __Database__: MongoDB connection and performance
+- __Cache__: Redis connection and performance
+- __System__: CPU, memory, and disk usage
+- __API__: API endpoint availability and performance
+- __Workers__: Worker thread health and availability
+- __External Services__: Third-party service availability
 
 ## Health Check Endpoints
 
@@ -43,12 +47,17 @@ The health check system monitors the following components:
 |----------|-------------|--------|------------|
 | `/health` | Basic health check | Public | 200 if healthy/degraded, 503 if unhealthy |
 | `/api/health` | API health check for CI/CD | Public | 200 if healthy/degraded, 503 if unhealthy |
-| `/api/v1/health` | Basic health check (v1 API) | Public | 200 if healthy/degraded, 503 if unhealthy |
-| `/api/v1/health/detailed` | Detailed health check | Admin | 200 if healthy/degraded, 503 if unhealthy |
-| `/api/v1/health/component/:component` | Component-specific health check | Admin | 200 if healthy/degraded, 503 if unhealthy |
+| `/api/v1/health` | Basic health check (v1 API) | Public | 200 if healthy/degraded, 503 if
+unhealthy |
+| `/api/v1/health/detailed` | Detailed health check | Admin | 200 if healthy/degraded, 503 if
+unhealthy |
+| `/api/v1/health/component/:component` | Component-specific health check | Admin | 200 if
+healthy/degraded, 503 if unhealthy |
 | `/api/v1/health/liveness` | Kubernetes liveness probe | Public | 200 if alive |
-| `/api/v1/health/readiness` | Kubernetes readiness probe | Public | 200 if ready, 503 if not ready |
-| `/api/v1/health/startup` | Kubernetes startup probe | Public | 200 if started, 503 if initializing |
+| `/api/v1/health/readiness` | Kubernetes readiness probe | Public | 200 if ready, 503 if not ready
+|
+| `/api/v1/health/startup` | Kubernetes startup probe | Public | 200 if started, 503 if
+initializing |
 
 ### Client Endpoints
 
@@ -57,7 +66,8 @@ The health check system monitors the following components:
 | `/health` | Basic health check | Public | 200 |
 | `/health/liveness` | Kubernetes liveness probe | Public | 200 |
 | `/health/readiness` | Kubernetes readiness probe | Public | 200 |
-| `/health/deep` | Deep health check (checks backend) | Public | 200 if backend healthy, 503 if not |
+| `/health/deep` | Deep health check (checks backend) | Public | 200 if backend healthy, 503 if not
+|
 
 ## Kubernetes Integration
 
@@ -65,7 +75,8 @@ The health check system integrates with Kubernetes through three types of probes
 
 ### Liveness Probe
 
-The liveness probe checks if the service is running and responsive. If the liveness probe fails, Kubernetes restarts the container.
+The liveness probe checks if the service is running and responsive. If the liveness probe fails,
+Kubernetes restarts the container.
 
 ```yaml
 livenessProbe:
@@ -77,11 +88,12 @@ livenessProbe:
   timeoutSeconds: 10
   failureThreshold: 3
   successThreshold: 1
-```
+```bash
 
 ### Readiness Probe
 
-The readiness probe checks if the service is ready to handle traffic. If the readiness probe fails, Kubernetes stops sending traffic to the container.
+The readiness probe checks if the service is ready to handle traffic. If the readiness probe fails,
+Kubernetes stops sending traffic to the container.
 
 ```yaml
 readinessProbe:
@@ -93,11 +105,12 @@ readinessProbe:
   timeoutSeconds: 5
   failureThreshold: 3
   successThreshold: 1
-```
+```bash
 
 ### Startup Probe
 
-The startup probe checks if the service has completed initialization. It allows for longer startup times without triggering the liveness probe.
+The startup probe checks if the service has completed initialization. It allows for longer startup
+times without triggering the liveness probe.
 
 ```yaml
 startupProbe:
@@ -109,11 +122,12 @@ startupProbe:
   timeoutSeconds: 5
   failureThreshold: 12
   successThreshold: 1
-```
+```bash
 
 ## Custom Health Checks
 
-The health check system can be extended with custom health checks for specific components or services.
+The health check system can be extended with custom health checks for specific components or
+services.
 
 ### Registering a Custom Health Check
 
@@ -125,7 +139,7 @@ healthCheckManager.registerHealthCheck('my-service', async () => {
   try {
     // Perform health check
     const result = await checkMyService();
-    
+
     return {
       status: result.ok ? 'healthy' : 'unhealthy',
       lastCheck: new Date(),
@@ -141,7 +155,7 @@ healthCheckManager.registerHealthCheck('my-service', async () => {
     };
   }
 });
-```
+```bash
 
 ## Troubleshooting
 
@@ -149,6 +163,6 @@ Use the provided script to test health checks:
 
 ```bash
 ./k8s/scripts/apply-health-checks.sh
-```
+```bash
 
-This script applies health check configurations and tests them against running pods. 
+This script applies health check configurations and tests them against running pods.

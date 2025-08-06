@@ -2,26 +2,28 @@
 
 ## Overview
 
-This document describes the implementation of API integration tests (TS344) for the AeroSuite application. These tests verify that the API endpoints work correctly and that the different components of the system integrate properly.
+This document describes the implementation of API integration tests (TS344) for the AeroSuite
+application. These tests verify that the API endpoints work correctly and that the different
+components of the system integrate properly.
 
 ## Test Structure
 
 The integration tests are organized by API resource and follow a consistent pattern:
 
-1. **Setup**: Each test suite uses a setup module that provides:
+1. __Setup__: Each test suite uses a setup module that provides:
    - In-memory MongoDB database for testing
    - Test data generation
    - Authentication utilities
    - Request helper based on Supertest
 
-2. **Test Categories**: Tests are organized by HTTP method and endpoint path
+2. __Test Categories__: Tests are organized by HTTP method and endpoint path
    - GET endpoints (list, detail, filtering)
    - POST endpoints (creation)
    - PUT endpoints (updates)
    - DELETE endpoints (deletion)
    - Special operations (e.g., complete inspection)
 
-3. **Test Coverage**: Each endpoint is tested for:
+3. __Test Coverage__: Each endpoint is tested for:
    - Successful operations
    - Error conditions
    - Authentication requirements
@@ -31,9 +33,9 @@ The integration tests are organized by API resource and follow a consistent patt
 
 ### Technology Stack
 
-- **Jest**: Test runner and assertion library
-- **Supertest**: HTTP assertion library
-- **mongodb-memory-server**: In-memory MongoDB server for isolated testing
+- __Jest__: Test runner and assertion library
+- __Supertest__: HTTP assertion library
+- __mongodb-memory-server__: In-memory MongoDB server for isolated testing
 
 ### Key Files
 
@@ -56,7 +58,7 @@ npm run test:unit
 
 # Run all tests
 npm test
-```
+```bash
 
 ## Test Data Generation
 
@@ -78,11 +80,11 @@ For authenticated endpoints, the tests:
 
 ## Benefits
 
-- **Isolated Testing**: Each test runs in isolation with its own database
-- **Fast Execution**: In-memory database provides fast test execution
-- **Complete Coverage**: All API endpoints and operations are tested
-- **Realistic Data**: Tests use realistic data with proper relationships
-- **Error Handling**: Tests verify proper error responses and status codes
+- __Isolated Testing__: Each test runs in isolation with its own database
+- __Fast Execution__: In-memory database provides fast test execution
+- __Complete Coverage__: All API endpoints and operations are tested
+- __Realistic Data__: Tests use realistic data with proper relationships
+- __Error Handling__: Tests verify proper error responses and status codes
 
 ## Future Improvements
 
@@ -90,4 +92,4 @@ For authenticated endpoints, the tests:
 2. Implement test coverage reporting
 3. Add data-driven tests for edge cases
 4. Integrate with CI/CD pipeline for automated testing
-5. Add load testing scenarios for API endpoints 
+5. Add load testing scenarios for API endpoints

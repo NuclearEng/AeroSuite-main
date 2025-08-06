@@ -6,25 +6,32 @@ This document describes the test data generation system for the AeroSuite projec
 
 The test data generation system provides:
 
-1. **Entity-specific data generation**: Generate realistic data for users, customers, suppliers, inspections, components, and documents
-2. **Relationship preservation**: Maintain proper relationships between generated entities
-3. **Configurable volume and complexity**: Generate varying amounts of data based on need
-4. **Deterministic or random generation**: Fixed seed for reproducible data or random for variety
-5. **Multiple formats**: Output as JSON or JavaScript modules
-6. **Environment profiles**: Specific configurations for development, testing, and CI environments
-7. **Database seeding**: Direct database population with generated test data
-8. **Test factory functions**: Specialized generators for automated tests
+1. __Entity-specific data generation__: Generate realistic data for users, customers, suppliers,
+inspections, components, and documents
+2. __Relationship preservation__: Maintain proper relationships between generated entities
+3. __Configurable volume and complexity__: Generate varying amounts of data based on need
+4. __Deterministic or random generation__: Fixed seed for reproducible data or random for variety
+5. __Multiple formats__: Output as JSON or JavaScript modules
+6. __Environment profiles__: Specific configurations for development, testing, and CI environments
+7. __Database seeding__: Direct database population with generated test data
+8. __Test factory functions__: Specialized generators for automated tests
 
 ## Components
 
 The test data generation system consists of several components:
 
-1. **Test Data Generator Script** (`scripts/test-data-generator.js`): Command-line tool for generating test data files
-2. **Database Seeder** (`server/src/utils/databaseSeeder.js`): Utility for seeding the database with test data
-3. **Database Seeder CLI** (`scripts/seed-database.js`): Command-line interface for the database seeder
-4. **Test Data Generator Class** (`server/src/utils/testDataGenerator.js`): Core class for generating entity data
-5. **Test Data Generator Functions** (`server/src/__tests__/utils/testDataGenerator.js`): Simplified functions for tests
-6. **Test Data Factory** (`server/src/__tests__/utils/testDataFactory.js`): Factory functions for test data creation
+1. __Test Data Generator Script__ (`scripts/test-data-generator.js`): Command-line tool for
+generating test data files
+2. __Database Seeder__ (`server/src/utils/databaseSeeder.js`): Utility for seeding the database
+with test data
+3. __Database Seeder CLI__ (`scripts/seed-database.js`): Command-line interface for the database
+seeder
+4. __Test Data Generator Class__ (`server/src/utils/testDataGenerator.js`): Core class for
+generating entity data
+5. __Test Data Generator Functions__ (`server/src/__tests__/utils/testDataGenerator.js`):
+Simplified functions for tests
+6. __Test Data Factory__ (`server/src/__tests__/utils/testDataFactory.js`): Factory functions for
+test data creation
 
 ## Installation
 
@@ -32,7 +39,7 @@ To install the required dependencies:
 
 ```bash
 npm install @faker-js/faker commander chalk nanospinner mongoose
-```
+```bash
 
 ## Usage
 
@@ -67,7 +74,7 @@ node scripts/test-data-generator.js generate --no-relationships
 
 # Include image URLs in generated data
 node scripts/test-data-generator.js generate --images
-```
+```bash
 
 ### Command Line Interface for Database Seeding
 
@@ -91,7 +98,7 @@ node scripts/seed-database.js seed --seed my-custom-seed
 
 # Clear the database without seeding
 npm run db:clear
-```
+```bash
 
 ### Programmatic Usage
 
@@ -119,7 +126,7 @@ const data = generateTestData({
 });
 
 console.log(`Generated ${data.users.length} users`);
-```
+```bash
 
 #### Using the Database Seeder
 
@@ -134,7 +141,7 @@ async function seedDatabase() {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
-    
+
     // Create seeder with custom configuration
     const seeder = new DatabaseSeeder({
       seed: 'my-custom-seed',
@@ -148,13 +155,13 @@ async function seedDatabase() {
         defects: 40
       }
     });
-    
+
     // Seed the database
     const generatedIds = await seeder.seedAll();
-    
+
     console.log('Database seeded successfully!');
     console.log(`Generated ${generatedIds.users.length} users`);
-    
+
     // Disconnect from MongoDB
     await mongoose.disconnect();
   } catch (error) {
@@ -163,7 +170,7 @@ async function seedDatabase() {
 }
 
 seedDatabase();
-```
+```bash
 
 #### Using the Test Data Factory for Tests
 
@@ -186,7 +193,7 @@ const relatedData = testDataFactory.createRelatedData({
 
 // Create a test scenario
 const testData = testDataFactory.createTestScenario('basic');
-```
+```bash
 
 ## Configuration
 
@@ -243,7 +250,7 @@ The test data generation system includes predefined profiles for different envir
     "outputDir": "./test-data/minimal"
   }
 }
-```
+```bash
 
 #### Database Seeder Profiles
 
@@ -294,17 +301,17 @@ The test data generation system includes predefined profiles for different envir
     "clearExisting": true
   }
 }
-```
+```bash
 
 ### Test Scenarios
 
 The test data factory includes predefined test scenarios for different testing needs:
 
-- **empty**: No entities
-- **basic**: Small set of related entities (3 users, 2 customers, 2 suppliers, 4 inspections)
-- **complex**: Larger set of related entities (5 users, 10 customers, 8 suppliers, 15 inspections)
-- **admin-only**: Single admin user, no other entities
-- **inspection-heavy**: Focus on inspections with various statuses (20 inspections)
+- __empty__: No entities
+- __basic__: Small set of related entities (3 users, 2 customers, 2 suppliers, 4 inspections)
+- __complex__: Larger set of related entities (5 users, 10 customers, 8 suppliers, 15 inspections)
+- __admin-only__: Single admin user, no other entities
+- __inspection-heavy__: Focus on inspections with various statuses (20 inspections)
 
 ## Generated Data Examples
 
@@ -331,9 +338,10 @@ The test data factory includes predefined test scenarios for different testing n
     "dashboardLayout": "standard",
     "defaultView": "inspections"
   },
-  "profileImage": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1234.jpg"
+  "profileImage":
+"https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1234.jpg"
 }
-```
+```bash
 
 ### Customers
 
@@ -361,7 +369,7 @@ The test data factory includes predefined test scenarios for different testing n
   "website": "https://acmecorp.example.com",
   "status": "active"
 }
-```
+```bash
 
 ### Suppliers
 
@@ -408,7 +416,7 @@ The test data factory includes predefined test scenarios for different testing n
   "updatedAt": "2023-07-05T09:18:45.678Z",
   "status": "approved"
 }
-```
+```bash
 
 ### Inspections
 
@@ -453,16 +461,19 @@ The test data factory includes predefined test scenarios for different testing n
   "outcome": "passed",
   "followUpRequired": false
 }
-```
+```bash
 
 ## Best Practices
 
-1. **Use Deterministic Seeds**: For reproducible tests, use a fixed seed value.
-2. **Maintain Relationships**: When generating related data, ensure proper relationships between entities.
-3. **Use Factory Functions**: For unit tests, use the test data factory functions.
-4. **Clean Up After Tests**: When using the database seeder in tests, clean up the database after tests.
-5. **Use Environment Profiles**: Use the predefined environment profiles for different environments.
-6. **Customize as Needed**: Override specific properties when needed rather than generating completely custom data.
+1. __Use Deterministic Seeds__: For reproducible tests, use a fixed seed value.
+2. __Maintain Relationships__: When generating related data, ensure proper relationships between
+entities.
+3. __Use Factory Functions__: For unit tests, use the test data factory functions.
+4. __Clean Up After Tests__: When using the database seeder in tests, clean up the database after
+tests.
+5. __Use Environment Profiles__: Use the predefined environment profiles for different environments.
+6. __Customize as Needed__: Override specific properties when needed rather than generating
+completely custom data.
 
 ## Implementation Details
 
@@ -478,7 +489,8 @@ The test data generator uses the `@faker-js/faker` library to generate realistic
 
 ### Database Seeder
 
-The database seeder integrates with the test data generator to populate the database with test data. It supports:
+The database seeder integrates with the test data generator to populate the database with test
+data. It supports:
 
 - Clearing existing data
 - Seeding specific entity types
@@ -488,7 +500,8 @@ The database seeder integrates with the test data generator to populate the data
 
 ### Test Data Factory
 
-The test data factory provides simplified functions for creating test data in automated tests. It supports:
+The test data factory provides simplified functions for creating test data in automated tests. It
+supports:
 
 - Creating individual entities
 - Creating multiple entities
@@ -508,8 +521,8 @@ To add support for a new entity type:
 
 ### Common Issues
 
-1. **MongoDB Connection Issues**: Ensure MongoDB is running and the connection URI is correct.
-2. **Missing Dependencies**: Ensure all required dependencies are installed.
-3. **Relationship Errors**: Check that related entities exist before creating dependent entities.
-4. **Duplicate Key Errors**: Clear existing data before seeding or use unique identifiers.
-5. **Schema Validation Errors**: Ensure generated data matches the schema requirements. 
+1. __MongoDB Connection Issues__: Ensure MongoDB is running and the connection URI is correct.
+2. __Missing Dependencies__: Ensure all required dependencies are installed.
+3. __Relationship Errors__: Check that related entities exist before creating dependent entities.
+4. __Duplicate Key Errors__: Clear existing data before seeding or use unique identifiers.
+5. __Schema Validation Errors__: Ensure generated data matches the schema requirements.

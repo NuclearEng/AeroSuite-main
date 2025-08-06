@@ -1,6 +1,8 @@
 # AeroSuite Developer Security Checklist
 
-This checklist provides a quick reference for developers to ensure they are following security best practices while working on the AeroSuite project. Use this checklist during development, code review, and testing phases.
+This checklist provides a quick reference for developers to ensure they are following security best
+practices while working on the AeroSuite project. Use this checklist during development, code
+review, and testing phases.
 
 ## Authentication & Authorization
 
@@ -142,4 +144,4 @@ Use this shortened checklist before committing code:
 - [API Security Guidelines](./api-security.md)
 - [OWASP Top 10](https://owasp.org/Top10/)
 - [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
-- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) 
+- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)

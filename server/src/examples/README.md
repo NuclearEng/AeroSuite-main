@@ -18,7 +18,7 @@ To run this example:
 
 ```bash
 ./run-cache-invalidation-example.sh
-```
+```bash
 
 ### Cache Monitoring Example
 
@@ -33,10 +33,12 @@ To run this example:
 
 ```bash
 ./run-cache-monitoring-example.sh
-```
+```bash
 
 ## Running Examples
 
-All examples are designed to be self-contained and can be run directly from the project root using the provided shell scripts.
+All examples are designed to be self-contained and can be run directly from the project root using
+the provided shell scripts.
 
-The examples use the same infrastructure components as the main application but are configured to run in isolation without affecting production data. 
+The examples use the same infrastructure components as the main application but are configured to
+run in isolation without affecting production data.

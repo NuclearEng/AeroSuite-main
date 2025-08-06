@@ -1,6 +1,7 @@
 # AeroSuite User Manual
 
-Welcome to the AeroSuite User Manual. This comprehensive guide will help you navigate and utilize all features of the AeroSuite platform effectively.
+Welcome to the AeroSuite User Manual. This comprehensive guide will help you navigate and utilize
+all features of the AeroSuite platform effectively.
 
 ## How to Use This Manual
 
@@ -44,18 +45,19 @@ This manual is organized by user roles and common tasks. You can:
 
 ## Multi-Agent QA & Audit System
 
-AeroSuite uses an advanced, automated multi-agent system to ensure the highest standards of quality, security, and user experience. This system:
+AeroSuite uses an advanced, automated multi-agent system to ensure the highest standards of
+quality, security, and user experience. This system:
 - Runs specialized agents for architecture, security, testing, UX/UI, compliance, and more
 - Continuously checks every module and the entire application for issues
 - Learns from previous results to focus on unresolved or high-priority areas
 - Surfaces actionable findings and recommendations to users and administrators
 
-**How it benefits you:**
+__How it benefits you:__
 - Faster detection and resolution of issues
 - Consistent, best-in-class quality and compliance
 - Adaptive improvement with every code update
 
-**How to view results:**
+__How to view results:__
 - Results are summarized in the dashboard and available in the QA/Audit section
 - For developers/admins: run `npx ts-node automation/orchestrator.ts` to see detailed agent output
 
@@ -77,8 +79,10 @@ See the [Getting Started Guide](./getting-started.md) for more.
 
 ## Video Tutorials
 
-Visit our [Video Tutorial Library](https://tutorials.aerosuite.example.com) for step-by-step video guides on using AeroSuite features.
+Visit our [Video Tutorial Library](https://tutorials.aerosuite.example.com) for step-by-step video
+guides on using AeroSuite features.
 
 ---
 
-*This manual is updated regularly to reflect the latest features and improvements in AeroSuite. Last updated: June 2024.* 
+_This manual is updated regularly to reflect the latest features and improvements in AeroSuite.
+Last updated: June 2024._

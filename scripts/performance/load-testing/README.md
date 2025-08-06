@@ -1,17 +1,18 @@
 # AeroSuite Load Testing Framework
 
-This framework provides comprehensive load testing capabilities for the AeroSuite application. It allows you to test various scenarios, simulate different user loads, and generate detailed reports.
+This framework provides comprehensive load testing capabilities for the AeroSuite application. It
+allows you to test various scenarios, simulate different user loads, and generate detailed reports.
 
 ## Features
 
-- **Multiple Test Profiles**: Preconfigured baseline, production, and stress test profiles
-- **Customizable Scenarios**: Create reusable test scenarios that simulate real user behavior
-- **Distributed Testing**: Run tests across multiple worker processes for higher load simulation
-- **Detailed Reporting**: Generate console, JSON, or HTML reports with detailed metrics
-- **Configurable Parameters**: Customize user count, test duration, endpoints, and more
-- **System Metrics**: Monitor CPU, memory, and load metrics during tests
-- **Graceful Ramp-up**: Gradually increase load to prevent immediate system overload
-- **Performance Comparison**: Compare results between different tests to evaluate scaling efficiency
+- __Multiple Test Profiles__: Preconfigured baseline, production, and stress test profiles
+- __Customizable Scenarios__: Create reusable test scenarios that simulate real user behavior
+- __Distributed Testing__: Run tests across multiple worker processes for higher load simulation
+- __Detailed Reporting__: Generate console, JSON, or HTML reports with detailed metrics
+- __Configurable Parameters__: Customize user count, test duration, endpoints, and more
+- __System Metrics__: Monitor CPU, memory, and load metrics during tests
+- __Graceful Ramp-up__: Gradually increase load to prevent immediate system overload
+- __Performance Comparison__: Compare results between different tests to evaluate scaling efficiency
 
 ## Usage
 
@@ -21,7 +22,7 @@ Run a basic load test with default settings:
 
 ```bash
 npm run loadtest:framework
-```
+```bash
 
 ### Using Profiles
 
@@ -36,7 +37,7 @@ npm run loadtest:production
 
 # Stress test profile (high load)
 npm run loadtest:stress
-```
+```bash
 
 ### Running Specific Scenarios
 
@@ -60,11 +61,12 @@ npm run loadtest:concurrent
 
 # Session persistence test (tests Redis-based session management)
 npm run loadtest:session
-```
+```bash
 
 ### Comparing Test Results
 
-To evaluate the effectiveness of horizontal scaling and other optimizations, you can compare results from multiple load tests:
+To evaluate the effectiveness of horizontal scaling and other optimizations, you can compare
+results from multiple load tests:
 
 ```bash
 # Basic comparison with console output
@@ -74,8 +76,9 @@ npm run loadtest:compare -- --files=reports/test1.json,reports/test2.json
 npm run loadtest:compare -- --files=reports/test1.json,reports/test2.json --output=html
 
 # Custom output file
-npm run loadtest:compare -- --files=reports/test1.json,reports/test2.json --output=html --out-file=scaling-report.html
-```
+npm run loadtest:compare -- --files=reports/test1.json,reports/test2.json --output=html
+--out-file=scaling-report.html
+```bash
 
 The comparison tool analyzes:
 - Scaling efficiency (how well performance scales with increased workers)
@@ -83,15 +86,17 @@ The comparison tool analyzes:
 - Resource utilization patterns
 - Success rates across different tests
 
-This is particularly useful for verifying the effectiveness of the horizontal scaling implementation (TS350).
+This is particularly useful for verifying the effectiveness of the horizontal scaling
+implementation (TS350).
 
 ### Custom Parameters
 
 Run with custom parameters:
 
 ```bash
-node scripts/performance/load-testing/index.js --users=50 --duration=60 --target=http://localhost:5000
-```
+node scripts/performance/load-testing/index.js --users=50 --duration=60
+--target=http://localhost:5000
+```bash
 
 ### Available Options
 
@@ -124,13 +129,13 @@ module.exports = {
   targetUrl: 'http://localhost:5000',
   // Add other parameters as needed
 };
-```
+```bash
 
 Then run with your custom profile:
 
 ```bash
 node scripts/performance/load-testing/index.js --profile=custom
-```
+```bash
 
 ## Creating Custom Scenarios
 
@@ -145,13 +150,13 @@ async function run(client, config) {
 }
 
 module.exports = { run };
-```
+```bash
 
 Then run with your custom scenario:
 
 ```bash
 node scripts/performance/load-testing/index.js --scenario=custom
-```
+```bash
 
 ## Available Scenarios
 
@@ -181,7 +186,8 @@ Tests the system's ability to handle multiple simultaneous operations:
 5. Deletes all resources in parallel
 6. Verifies deletions in parallel
 
-This scenario is particularly useful for testing the horizontal scaling capabilities implemented in TS350.
+This scenario is particularly useful for testing the horizontal scaling capabilities implemented in
+TS350.
 
 ### Session Persistence Scenario
 Tests the Redis-based session management implemented for horizontal scaling:
@@ -191,25 +197,29 @@ Tests the Redis-based session management implemented for horizontal scaling:
 4. Verifies session persistence after inactivity
 5. Continues to perform authenticated operations
 
-This scenario verifies that user sessions persist properly in a distributed environment, which is critical for the horizontal scaling implementation in TS350.
+This scenario verifies that user sessions persist properly in a distributed environment, which is
+critical for the horizontal scaling implementation in TS350.
 
 ## Performance Comparison Tool
 
-The performance comparison tool helps evaluate the effectiveness of horizontal scaling by comparing metrics from different load tests. It calculates:
+The performance comparison tool helps evaluate the effectiveness of horizontal scaling by comparing
+metrics from different load tests. It calculates:
 
-- **Scaling Efficiency**: How close the system gets to ideal linear scaling
-- **Response Time Degradation**: How response times change as load increases
-- **Optimal Worker Count**: The most efficient number of workers for different loads
-- **Resource Utilization Patterns**: CPU, memory, and load patterns across tests
-- **Success Rate Stability**: Whether errors increase under higher load
+- __Scaling Efficiency__: How close the system gets to ideal linear scaling
+- __Response Time Degradation__: How response times change as load increases
+- __Optimal Worker Count__: The most efficient number of workers for different loads
+- __Resource Utilization Patterns__: CPU, memory, and load patterns across tests
+- __Success Rate Stability__: Whether errors increase under higher load
 
-The tool provides recommendations for optimizing scaling behavior and can output results in console, JSON, or HTML formats.
+The tool provides recommendations for optimizing scaling behavior and can output results in
+console, JSON, or HTML formats.
 
 ### Usage:
 
 ```bash
-node scripts/performance/load-testing/compare-tests.js --files=file1.json,file2.json,file3.json --output=html
-```
+node scripts/performance/load-testing/compare-tests.js --files=file1.json,file2.json,file3.json
+--output=html
+```bash
 
 ### Options:
 
@@ -226,7 +236,7 @@ For continuous integration testing:
 
 ```bash
 npm run loadtest:ci
-```
+```bash
 
 This will output results in JSON format that can be parsed by CI/CD tools.
 
@@ -246,11 +256,12 @@ This will output results in JSON format that can be parsed by CI/CD tools.
 
 ## Relation to Task TS354
 
-This framework was developed as part of task TS354 to implement comprehensive load testing capabilities for AeroSuite. It provides:
+This framework was developed as part of task TS354 to implement comprehensive load testing
+capabilities for AeroSuite. It provides:
 
 1. Various load testing scenarios
 2. Multiple configurable profiles
 3. Detailed reporting mechanisms
 4. System metrics collection
 5. CI/CD integration
-6. Performance comparison and analysis tools 
+6. Performance comparison and analysis tools

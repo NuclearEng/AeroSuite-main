@@ -1,6 +1,7 @@
 # AeroSuite Developer Guide
 
-This guide provides comprehensive information for developers working on the AeroSuite project. It covers the architecture, technologies, development workflow, and best practices.
+This guide provides comprehensive information for developers working on the AeroSuite project. It
+covers the architecture, technologies, development workflow, and best practices.
 
 ## Table of Contents
 
@@ -18,7 +19,8 @@ This guide provides comprehensive information for developers working on the Aero
 
 ## Project Overview
 
-AeroSuite is a quality management system for aerospace manufacturers and suppliers. It provides tools for:
+AeroSuite is a quality management system for aerospace manufacturers and suppliers. It provides
+tools for:
 
 - Supplier management and qualification
 - Inspection planning and execution
@@ -26,63 +28,73 @@ AeroSuite is a quality management system for aerospace manufacturers and supplie
 - Document management
 - Customer relationship management
 
-The application consists of a React-based frontend and a Node.js/Express backend with a MongoDB database.
+The application consists of a React-based frontend and a Node.js/Express backend with a MongoDB
+database.
 
 ## Architecture
 
 AeroSuite follows a service-oriented architecture with clear separation of concerns:
 
-```
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+```bash
+┌─────────────────┐
+┌─────────────────┐
+┌─────────────────┐
 │                 │      │                 │      │                 │
-│  React Client   │◄────►│  Express API    │◄────►│   MongoDB DB    │
+│  React Client   │◄────►│  Express API    │◄────►│   MongoDB DB
+  │
 │                 │      │                 │      │                 │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
+└─────────────────┘
+└─────────────────┘
+└─────────────────┘
         │                        │                        │
         │                        │                        │
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+┌─────────────────┐
+┌─────────────────┐
+┌─────────────────┐
 │                 │      │                 │      │                 │
 │ Redux/Contexts  │      │Service Modules  │      │   Collections   │
 │                 │      │                 │      │                 │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
-```
+└─────────────────┘
+└─────────────────┘
+└─────────────────┘
+```bash
 
 ### Core Architectural Principles
 
-1. **Separation of Concerns**: Each component has a specific responsibility
-2. **Modularity**: The system is divided into independent, interchangeable modules
-3. **API-First Design**: All functionality is exposed through a well-defined API
-4. **Scalability**: Components can be independently scaled as needed
-5. **Security by Design**: Security is integrated throughout the development lifecycle
+1. __Separation of Concerns__: Each component has a specific responsibility
+2. __Modularity__: The system is divided into independent, interchangeable modules
+3. __API-First Design__: All functionality is exposed through a well-defined API
+4. __Scalability__: Components can be independently scaled as needed
+5. __Security by Design__: Security is integrated throughout the development lifecycle
 
 ## Technology Stack
 
 ### Frontend
-- **Framework**: React (Create React App)
-- **State Management**: Redux Toolkit
-- **UI Library**: Material-UI (MUI)
-- **Data Fetching**: React Query
-- **Forms**: Formik with Yup validation
-- **Testing**: Jest, React Testing Library
-- **Data Visualization**: Chart.js, D3.js
-- **Routing**: React Router
+- __Framework__: React (Create React App)
+- __State Management__: Redux Toolkit
+- __UI Library__: Material-UI (MUI)
+- __Data Fetching__: React Query
+- __Forms__: Formik with Yup validation
+- __Testing__: Jest, React Testing Library
+- __Data Visualization__: Chart.js, D3.js
+- __Routing__: React Router
 
 ### Backend
-- **Runtime**: Node.js
-- **Web Framework**: Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT (JSON Web Tokens)
-- **Validation**: Express Validator
-- **Testing**: Jest, Supertest
-- **Documentation**: OpenAPI/Swagger
-- **Monitoring**: Prometheus/Grafana
+- __Runtime__: Node.js
+- __Web Framework__: Express.js
+- __Database__: MongoDB with Mongoose ODM
+- __Authentication__: JWT (JSON Web Tokens)
+- __Validation__: Express Validator
+- __Testing__: Jest, Supertest
+- __Documentation__: OpenAPI/Swagger
+- __Monitoring__: Prometheus/Grafana
 
 ### DevOps
-- **Containerization**: Docker
-- **Orchestration**: Kubernetes
-- **CI/CD**: GitHub Actions
-- **Monitoring**: Prometheus, Grafana
-- **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
+- __Containerization__: Docker
+- __Orchestration__: Kubernetes
+- __CI/CD__: GitHub Actions
+- __Monitoring__: Prometheus, Grafana
+- __Logging__: ELK Stack (Elasticsearch, Logstash, Kibana)
 
 ## Getting Started
 
@@ -119,10 +131,10 @@ AeroSuite follows a service-oriented architecture with clear separation of conce
    ```bash
    # Start both frontend and backend
    npm run dev
-   
+
    # Start only backend
    npm run server:dev
-   
+
    # Start only frontend
    npm run client:dev
    ```
@@ -138,7 +150,7 @@ For containerized development:
 
 ```bash
 docker-compose up -d
-```
+```bash
 
 This will start the application and all dependencies in Docker containers.
 
@@ -157,13 +169,13 @@ We follow a GitFlow-inspired branching strategy:
 
 ### Task Workflow
 
-1. **Task Assignment**: Tasks are assigned in the task tracking system
-2. **Branch Creation**: Create a feature branch from `develop`
-3. **Development**: Implement the task with appropriate tests
-4. **Testing**: Ensure all tests pass locally
-5. **Code Review**: Submit a pull request for review
-6. **Integration**: Merge to `develop` after approval
-7. **Release**: Include in a release branch for deployment
+1. __Task Assignment__: Tasks are assigned in the task tracking system
+2. __Branch Creation__: Create a feature branch from `develop`
+3. __Development__: Implement the task with appropriate tests
+4. __Testing__: Ensure all tests pass locally
+5. __Code Review__: Submit a pull request for review
+6. __Integration__: Merge to `develop` after approval
+7. __Release__: Include in a release branch for deployment
 
 ### Code Style and Linting
 
@@ -178,34 +190,34 @@ npm run lint:fix
 
 # Format code
 npm run format
-```
+```bash
 
 ### Commit Guidelines
 
 We follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages:
 
-```
+```bash
 <type>[optional scope]: <description>
 
 [optional body]
 
 [optional footer(s)]
-```
+```bash
 
 Types include: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`
 
 Example:
-```
+```bash
 feat(auth): add two-factor authentication
 
 Implements Google Authenticator integration for 2FA
-```
+```bash
 
 ## Code Organization
 
 ### Frontend Structure
 
-```
+```bash
 client/
 ├── public/           # Static assets
 ├── src/
@@ -222,11 +234,11 @@ client/
 │   ├── utils/        # Utility functions
 │   ├── App.tsx       # Main App component
 │   └── index.tsx     # Application entry point
-```
+```bash
 
 ### Backend Structure
 
-```
+```bash
 server/
 ├── src/
 │   ├── config/       # Configuration
@@ -241,7 +253,7 @@ server/
 │   ├── docs/         # API documentation
 │   ├── app.js        # Express application
 │   └── index.js      # Server entry point
-```
+```bash
 
 ## Testing
 
@@ -249,11 +261,11 @@ server/
 
 AeroSuite follows a comprehensive testing strategy:
 
-1. **Unit Testing**: Test individual functions and components
-2. **Integration Testing**: Test interactions between components
-3. **End-to-End Testing**: Test complete user flows
-4. **Performance Testing**: Test system performance
-5. **Security Testing**: Test for vulnerabilities
+1. __Unit Testing__: Test individual functions and components
+2. __Integration Testing__: Test interactions between components
+3. __End-to-End Testing__: Test complete user flows
+4. __Performance Testing__: Test system performance
+5. __Security Testing__: Test for vulnerabilities
 
 ### Frontend Testing
 
@@ -268,7 +280,7 @@ npm test -- --coverage
 
 # Run in watch mode
 npm test -- --watch
-```
+```bash
 
 Testing components follows this pattern:
 
@@ -283,7 +295,7 @@ describe('MyComponent', () => {
     expect(screen.getByText('Expected Text')).toBeInTheDocument();
   });
 });
-```
+```bash
 
 ### Backend Testing
 
@@ -298,7 +310,7 @@ npm run test:integration
 
 # Run unit tests only
 npm run test:unit
-```
+```bash
 
 ### End-to-End Testing
 
@@ -310,25 +322,25 @@ npm run cy:open
 
 # Run Cypress tests headlessly
 npm run cy:run
-```
+```bash
 
 ## Performance Considerations
 
 ### Frontend Performance
 
-1. **Code Splitting**: Use dynamic imports for route-based code splitting
-2. **Memoization**: Use React.memo, useMemo, and useCallback where appropriate
-3. **Virtualization**: Use virtualized lists for large datasets
-4. **Image Optimization**: Optimize images and use responsive images
-5. **Bundle Size**: Monitor bundle size with source-map-explorer
+1. __Code Splitting__: Use dynamic imports for route-based code splitting
+2. __Memoization__: Use React.memo, useMemo, and useCallback where appropriate
+3. __Virtualization__: Use virtualized lists for large datasets
+4. __Image Optimization__: Optimize images and use responsive images
+5. __Bundle Size__: Monitor bundle size with source-map-explorer
 
 ### Backend Performance
 
-1. **Database Indexes**: Ensure proper indexes for frequently queried fields
-2. **Query Optimization**: Use projection and pagination for large result sets
-3. **Caching**: Implement Redis caching for frequently accessed data
-4. **Connection Pooling**: Use connection pooling for database connections
-5. **Compression**: Enable response compression
+1. __Database Indexes__: Ensure proper indexes for frequently queried fields
+2. __Query Optimization__: Use projection and pagination for large result sets
+3. __Caching__: Implement Redis caching for frequently accessed data
+4. __Connection Pooling__: Use connection pooling for database connections
+5. __Compression__: Enable response compression
 
 ### Performance Monitoring
 
@@ -340,7 +352,7 @@ npm run perf
 
 # Generate performance report
 npm run perf:report
-```
+```bash
 
 ## Security Guidelines
 
@@ -378,7 +390,7 @@ npm run security-scan:deps
 
 # OWASP Top 10 compliance check
 npm run security-scan:owasp
-```
+```bash
 
 ## Deployment
 
@@ -386,25 +398,25 @@ npm run security-scan:owasp
 
 The project supports multiple deployment environments:
 
-- **Development**: For ongoing development work
-- **Testing**: For quality assurance
-- **Staging**: Pre-production environment
-- **Production**: Live environment
+- __Development__: For ongoing development work
+- __Testing__: For quality assurance
+- __Staging__: Pre-production environment
+- __Production__: Live environment
 
 ### Deployment Process
 
-1. **Build**: Create optimized production build
+1. __Build__: Create optimized production build
    ```bash
    npm run build
    ```
 
-2. **Containerization**: Build Docker images
+2. __Containerization__: Build Docker images
    ```bash
    docker build -t aerosuite-client ./client
    docker build -t aerosuite-server ./server
    ```
 
-3. **Kubernetes Deployment**: Deploy to Kubernetes cluster
+3. __Kubernetes Deployment__: Deploy to Kubernetes cluster
    ```bash
    kubectl apply -f k8s/overlays/prod
    ```
@@ -413,38 +425,38 @@ The project supports multiple deployment environments:
 
 The project uses GitHub Actions for CI/CD:
 
-- **Pull Request**: Run tests and linting
-- **Merge to Develop**: Build and deploy to dev environment
-- **Release**: Build and deploy to staging
-- **Promotion**: Deploy to production
+- __Pull Request__: Run tests and linting
+- __Merge to Develop__: Build and deploy to dev environment
+- __Release__: Build and deploy to staging
+- __Promotion__: Deploy to production
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Database Connection Issues**
+1. __Database Connection Issues__
    - Check MongoDB connection string
    - Verify network connectivity
    - Check MongoDB service status
 
-2. **Build Failures**
+2. __Build Failures__
    - Clear npm cache: `npm cache clean --force`
    - Delete node_modules: `rm -rf node_modules`
    - Reinstall dependencies: `npm install`
 
-3. **Authentication Issues**
+3. __Authentication Issues__
    - Check JWT secret configuration
    - Verify token expiration settings
    - Check for clock skew between services
 
 ### Debugging
 
-1. **Backend Debugging**
+1. __Backend Debugging__
    - Use `debug` npm package with DEBUG environment variable
    - Check server logs in `/logs` directory
    - Use Node.js inspector: `node --inspect src/index.js`
 
-2. **Frontend Debugging**
+2. __Frontend Debugging__
    - Use React Developer Tools browser extension
    - Check browser console for errors
    - Use Redux DevTools for state debugging
@@ -463,4 +475,4 @@ If you encounter issues that aren't covered here:
 - [Frontend Component Tests](frontend-component-tests.md)
 - [Integration Tests](integration-tests.md)
 - [Performance Optimization](performance-optimizations/README.md)
-- [Security Best Practices](security/README.md) 
+- [Security Best Practices](security/README.md)

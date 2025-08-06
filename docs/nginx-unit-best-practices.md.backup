@@ -1,0 +1,655 @@
+# NGINX Unit Best Practices for AeroSuite
+
+This document outlines NGINX Unit best practices implemented in AeroSuite, based on the [NGINX Unit 
+Express documentation](https://unit.nginx.org/howto/express/) and industry standards.
+
+## Table of Contents
+
+1. [NGINX Unit Overview](#nginx-unit-overview)
+2. [Express Integration](#express-integration)
+3. [Performance Optimization](#performance-optimization)
+4. [Security Best Practices](#security-best-practices)
+5. [Monitoring and Diagnostics](#monitoring-and-diagnostics)
+6. [Deployment and Configuration](#deployment-and-configuration)
+7. [Testing and Validation](#testing-and-validation)
+8. [Automation and CI/CD](#automation-and-cicd)
+9. [Troubleshooting Guide](#troubleshooting-guide)
+
+## NGINX Unit Overview
+
+NGINX Unit is a dynamic web application server that can run applications written in various 
+languages and frameworks. It provides:
+
+- __Dynamic Configuration__: Real-time configuration updates without restarts
+- __Multi-language Support__: Node.js, Python, PHP, Go, Java, and more
+- __Process Management__: Built-in process management and load balancing
+- __SSL/TLS Termination__: Native SSL/TLS support
+- __Monitoring__: Built-in metrics and status API
+
+### Key Benefits for AeroSuite
+
+1. __Performance__: Better process management than PM2
+2. __Scalability__: Built-in load balancing and scaling
+3. __Security__: Native SSL/TLS termination
+4. __Monitoring__: Comprehensive metrics and health checks
+5. __Flexibility__: Dynamic configuration updates
+
+## Express Integration
+
+### Basic Express Setup with Unit
+
+Following the [NGINX Unit Express guide](https://unit.nginx.org/howto/express/):
+
+```javascript
+#!/usr/bin/env node
+const http = require('http');
+const express = require('express');
+
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello, Express on Unit!');
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    unit: true,
+    express: true
+  });
+});
+
+http.createServer(app).listen();
+```bash
+
+### Unit Configuration
+
+```json
+{
+  "listeners": {
+    "*:80": {
+      "pass": "applications/aerosuite"
+    },
+    "*:443": {
+      "pass": "applications/aerosuite",
+      "tls": {
+        "certificate": "/etc/unit/certs/cert.pem",
+        "key": "/etc/unit/certs/key.pem"
+      }
+    }
+  },
+  "applications": {
+    "aerosuite": {
+      "type": "external",
+      "working_directory": "/app",
+      "executable": "/usr/bin/env",
+      "arguments": [
+        "node",
+        "--loader",
+        "unit-http/loader.mjs",
+        "--require",
+        "unit-http/loader",
+        "app.js"
+      ],
+      "processes": 4,
+      "threads": 8,
+      "limits": {
+        "requests": 1000,
+        "timeout": 30
+      },
+      "environment": {
+        "NODE_ENV": "production",
+        "PORT": "5000",
+        "MONGODB_URI": "mongodb://localhost:27017/aerosuite",
+        "REDIS_URL": "redis://localhost:6379"
+      }
+    }
+  }
+}
+```bash
+
+### Installation and Setup
+
+```bash
+# Install NGINX Unit
+curl -s https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+echo "deb https://packages.nginx.org/unit/ubuntu/ $(lsb_release -cs) unit" | sudo tee 
+/etc/apt/sources.list.d/unit.list
+sudo apt-get update
+sudo apt-get install -y unit unit-dev unit-http
+
+# Install unit-http
+sudo npm install -g --unsafe-perm unit-http
+
+# Link unit-http
+sudo npm link unit-http
+```bash
+
+## Performance Optimization
+
+### Process Management
+
+Unit provides superior process management compared to PM2:
+
+```json
+{
+  "applications": {
+    "aerosuite": {
+      "type": "external",
+      "processes": 4,
+      "threads": 8,
+      "limits": {
+        "requests": 1000,
+        "timeout": 30
+      }
+    }
+  }
+}
+```bash
+
+### Load Balancing
+
+Unit automatically handles load balancing across processes:
+
+```javascript
+// Unit automatically distributes requests across workers
+// No manual load balancing needed
+app.get('/api/load-test', (req, res) => {
+  res.json({
+    workerId: process.pid,
+    timestamp: new Date().toISOString(),
+    memoryUsage: process.memoryUsage()
+  });
+});
+```bash
+
+### Resource Optimization
+
+```json
+{
+  "applications": {
+    "aerosuite": {
+      "type": "external",
+      "processes": 4,
+      "threads": 8,
+      "limits": {
+        "requests": 1000,
+        "timeout": 30,
+        "memory": "512M"
+      },
+      "environment": {
+        "NODE_OPTIONS": "--max-old-space-size=512"
+      }
+    }
+  }
+}
+```bash
+
+## Security Best Practices
+
+### SSL/TLS Configuration
+
+```json
+{
+  "listeners": {
+    "*:443": {
+      "pass": "applications/aerosuite",
+      "tls": {
+        "certificate": "/etc/unit/certs/cert.pem",
+        "key": "/etc/unit/certs/key.pem",
+        "protocols": ["TLSv1.2", "TLSv1.3"],
+        "ciphers": [
+          "TLS_AES_256_GCM_SHA384",
+          "TLS_CHACHA20_POLY1305_SHA256"
+        ]
+      }
+    }
+  }
+}
+```bash
+
+### Security Headers
+
+```javascript
+// Express middleware for security headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  next();
+});
+```bash
+
+### Access Control
+
+```json
+{
+  "listeners": {
+    "*:80": {
+      "pass": "applications/aerosuite",
+      "client_max_body_size": "10M",
+      "client_body_timeout": "30s"
+    }
+  }
+}
+```bash
+
+## Monitoring and Diagnostics
+
+### Unit Status API
+
+```bash
+# Get Unit status
+curl --unix-socket /var/run/control.unit.sock http://localhost/status/
+
+# Get Unit configuration
+curl --unix-socket /var/run/control.unit.sock http://localhost/config/
+```bash
+
+### Health Checks
+
+```javascript
+// Express health check endpoint
+app.get('/api/health', (req, res) => {
+  const health = {
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    pid: process.pid,
+    unit: true
+  };
+
+  res.json(health);
+});
+```bash
+
+### Metrics Collection
+
+```javascript
+// Custom metrics middleware
+app.use((req, res, next) => {
+  const start = Date.now();
+
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    console.log(`${req.method} ${req.path} ${res.statusCode} ${duration}ms`);
+  });
+
+  next();
+});
+```bash
+
+## Deployment and Configuration
+
+### Dynamic Configuration Updates
+
+```bash
+# Update configuration without restart
+curl -X PUT --data-binary @new-config.json \
+  --unix-socket /var/run/control.unit.sock \
+  http://localhost/config/
+```bash
+
+### Environment Management
+
+```json
+{
+  "applications": {
+    "aerosuite": {
+      "type": "external",
+      "environment": {
+        "NODE_ENV": "production",
+        "PORT": "5000",
+        "MONGODB_URI": "mongodb://localhost:27017/aerosuite",
+        "REDIS_URL": "redis://localhost:6379",
+        "JWT_SECRET": "your-secret-key"
+      }
+    }
+  }
+}
+```bash
+
+### Zero-Downtime Deployments
+
+```bash
+#!/bin/bash
+# Zero-downtime deployment script
+
+# Backup current configuration
+curl --unix-socket /var/run/control.unit.sock \
+  http://localhost/config/ > backup-config.json
+
+# Update application
+cp new-app.js /app/app.js
+
+# Update Unit configuration
+curl -X PUT --data-binary @new-unit-config.json \
+  --unix-socket /var/run/control.unit.sock \
+  http://localhost/config/
+
+# Verify deployment
+curl http://localhost/api/health
+```bash
+
+## Testing and Validation
+
+### Unit Testing with Unit
+
+```javascript
+// Test Unit integration
+const request = require('supertest');
+const app = require('./app');
+
+describe('Unit Integration Tests', () => {
+  it('should handle requests through Unit', async () => {
+    const response = await request(app)
+      .get('/api/health')
+      .expect(200);
+
+    expect(response.body.unit).toBe(true);
+    expect(response.body.status).toBe('ok');
+  });
+
+  it('should handle load balancing', async () => {
+    const responses = await Promise.all([
+      request(app).get('/api/load-test'),
+      request(app).get('/api/load-test'),
+      request(app).get('/api/load-test')
+    ]);
+
+    const workerIds = responses.map(r => r.body.workerId);
+    const uniqueWorkers = new Set(workerIds);
+
+    expect(uniqueWorkers.size).toBeGreaterThan(1);
+  });
+});
+```bash
+
+### Performance Testing
+
+```javascript
+// Performance test for Unit
+const { performance } = require('perf_hooks');
+const http = require('http');
+
+async function testUnitPerformance() {
+  const startTime = performance.now();
+  const requestCount = 1000;
+  let successfulRequests = 0;
+  let failedRequests = 0;
+  let totalResponseTime = 0;
+
+  const makeRequest = (index) => {
+    return new Promise((resolve) => {
+      if (index >= requestCount) {
+        const endTime = performance.now();
+        const duration = (endTime - startTime) / 1000;
+        const requestsPerSecond = successfulRequests / duration;
+        const averageResponseTime = totalResponseTime / successfulRequests;
+
+        resolve({
+          requestsPerSecond,
+          averageResponseTime,
+          errorRate: (failedRequests / requestCount) * 100
+        });
+        return;
+      }
+
+      const reqStartTime = performance.now();
+
+      const req = http.request({
+        hostname: 'localhost',
+        port: 80,
+        path: '/api/health',
+        method: 'GET'
+      }, (res) => {
+        const reqEndTime = performance.now();
+        const responseTime = reqEndTime - reqStartTime;
+
+        if (res.statusCode === 200) {
+          successfulRequests++;
+          totalResponseTime += responseTime;
+        } else {
+          failedRequests++;
+        }
+
+        resolve();
+      });
+
+      req.on('error', () => {
+        failedRequests++;
+        resolve();
+      });
+
+      req.end();
+    });
+  };
+
+  for (let i = 0; i < requestCount; i++) {
+    await makeRequest(i);
+  }
+
+  const endTime = performance.now();
+  const duration = (endTime - startTime) / 1000;
+  const requestsPerSecond = successfulRequests / duration;
+  const averageResponseTime = totalResponseTime / successfulRequests;
+
+  return {
+    requestsPerSecond,
+    averageResponseTime,
+    errorRate: (failedRequests / requestCount) * 100
+  };
+}
+```bash
+
+## Automation and CI/CD
+
+### Automation Agents
+
+Our automation framework includes a dedicated NGINX Unit agent:
+
+```typescript
+// automation/agents/nginxUnitAgent.ts
+export async function runNginxUnitAgent(module: string) {
+  // Provides Unit-specific testing strategies
+  // Implements Unit best practices
+  // Generates Unit testing recommendations
+}
+```bash
+
+### CI/CD Integration
+
+```yaml
+# Example CI/CD pipeline
+- name: NGINX Unit Test
+  run: ./scripts/nginx-unit-testing-workflow.sh tests
+
+- name: Unit Express Integration Test
+  run: ./scripts/nginx-unit-testing-workflow.sh express
+
+- name: Unit Performance Test
+  run: ./scripts/nginx-unit-testing-workflow.sh performance
+
+- name: Unit SSL Test
+  run: ./scripts/nginx-unit-testing-workflow.sh ssl
+```bash
+
+### Automated Workflows
+
+1. __Unit Installation__: Automated Unit installation and setup
+2. __Configuration Management__: Dynamic configuration updates
+3. __Performance Testing__: Automated performance validation
+4. __Security Testing__: SSL/TLS and security validation
+5. __Integration Testing__: End-to-end Unit functionality testing
+
+## Troubleshooting Guide
+
+### Common Issues
+
+#### Unit Not Starting
+
+```bash
+# Check Unit status
+sudo systemctl status unit
+
+# Check Unit logs
+sudo journalctl -u unit -f
+
+# Check Unit configuration
+curl --unix-socket /var/run/control.unit.sock http://localhost/config/
+```bash
+
+#### Express App Not Loading
+
+```bash
+# Check if unit-http is installed
+npm list -g unit-http
+
+# Check Unit processes
+ps aux | grep unit-http
+
+# Check Unit configuration
+curl --unix-socket /var/run/control.unit.sock http://localhost/config/
+```bash
+
+#### Performance Issues
+
+```bash
+# Check Unit metrics
+curl --unix-socket /var/run/control.unit.sock http://localhost/status/
+
+# Check process limits
+ulimit -a
+
+# Check memory usage
+free -h
+```bash
+
+### Debugging Tools
+
+#### Unit Control API
+
+```bash
+# Get Unit status
+curl --unix-socket /var/run/control.unit.sock http://localhost/status/
+
+# Get Unit configuration
+curl --unix-socket /var/run/control.unit.sock http://localhost/config/
+
+# Update Unit configuration
+curl -X PUT --data-binary @config.json \
+  --unix-socket /var/run/control.unit.sock \
+  http://localhost/config/
+```bash
+
+#### Log Monitoring
+
+```bash
+# Monitor Unit logs
+sudo tail -f /var/log/unit/error.log
+
+# Monitor access logs
+sudo tail -f /var/log/unit/access.log
+
+# Monitor system logs
+sudo journalctl -u unit -f
+```bash
+
+#### Performance Monitoring
+
+```bash
+# Monitor Unit processes
+ps aux | grep unit
+
+# Monitor memory usage
+top -p $(pgrep unitd)
+
+# Monitor network connections
+netstat -tulpn | grep unit
+```bash
+
+## Best Practices Summary
+
+### Performance
+
+1. __Use Unit Process Management__: Replace PM2 with Unit's built-in process management
+2. __Configure Proper Limits__: Set request limits and timeouts
+3. __Optimize Worker Processes__: Configure appropriate number of processes and threads
+4. __Monitor Resource Usage__: Track memory and CPU usage
+5. __Implement Caching__: Use Unit's caching capabilities
+
+### Security
+
+1. __Use Unit SSL/TLS__: Implement SSL/TLS termination at Unit level
+2. __Configure Security Headers__: Set proper security headers
+3. __Implement Access Control__: Use Unit's access control features
+4. __Validate Certificates__: Ensure proper certificate management
+5. __Monitor Security Events__: Track security-related events
+
+### Monitoring
+
+1. __Use Unit Status API__: Monitor Unit metrics and status
+2. __Implement Health Checks__: Create comprehensive health check endpoints
+3. __Configure Logging__: Set up proper logging and log rotation
+4. __Monitor Performance__: Track request rates and response times
+5. __Set Up Alerts__: Configure alerts for critical metrics
+
+### Deployment
+
+1. __Use Dynamic Configuration__: Update configuration without restarts
+2. __Implement Zero-Downtime__: Deploy without service interruption
+3. __Backup Configuration__: Always backup before updates
+4. __Test Deployments__: Validate deployments in staging
+5. __Monitor Deployments__: Track deployment success and rollback if needed
+
+## Integration with AeroSuite
+
+### Module-Specific Testing
+
+Each AeroSuite module has specific Unit testing requirements:
+
+- __Login Module__: Unit session management and authentication endpoints
+- __Reports Module__: Unit file upload handling and streaming capabilities
+- __Settings Module__: Unit configuration management and environment variables
+- __Suppliers Module__: Unit bulk data processing and connection pooling
+
+### Automation Integration
+
+Our Unit testing integrates with:
+
+- __Cypress E2E Tests__: Unit performance and integration validation
+- __Automation Agents__: Unit-specific strategies and recommendations
+- __CI/CD Pipeline__: Automated Unit testing workflows
+- __Monitoring Systems__: Unit performance and health monitoring
+
+### Reporting
+
+Comprehensive reports are generated including:
+
+- __Performance Metrics__: Unit request handling and load balancing performance
+- __Security Scan Results__: SSL/TLS and certificate validation
+- __Integration Test Results__: Express app integration with Unit
+- __Deployment Validation__: Zero-downtime deployment verification
+
+## Conclusion
+
+This NGINX Unit best practices implementation ensures:
+
+1. __Superior Performance__: Better process management than PM2 with built-in load balancing
+2. __Enhanced Security__: Native SSL/TLS termination and security features
+3. __Comprehensive Monitoring__: Built-in metrics and status API
+4. __Flexible Deployment__: Dynamic configuration updates and zero-downtime deployments
+5. __Robust Integration__: Seamless Express app integration with Unit
+
+The integration with NGINX Unit provides a powerful application server environment with:
+
+- __Performance Optimization__: Unit process management and load balancing
+- __Security Features__: Native SSL/TLS termination and access control
+- __Monitoring Capabilities__: Built-in metrics and status API
+- __Deployment Flexibility__: Dynamic configuration and zero-downtime updates
+
+For more information, refer to the [NGINX Unit Express 
+documentation](https://unit.nginx.org/howto/express/).

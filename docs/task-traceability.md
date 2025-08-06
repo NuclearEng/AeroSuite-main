@@ -1,17 +1,18 @@
 # AeroSuite Task Traceability System
 
-This document provides an overview of AeroSuite's task traceability system, which enables bidirectional traceability between tasks and code.
+This document provides an overview of AeroSuite's task traceability system, which enables
+bidirectional traceability between tasks and code.
 
 ## Overview
 
 The task traceability system provides:
 
-1. **Task-to-Code Traceability**: Easily identify which code files implement a specific task.
-2. **Code-to-Task Traceability**: Determine which task(s) a code file is associated with.
-3. **Automated Enforcement**: Git hooks enforce task references in commit messages and files.
-4. **Visualization**: Visual reports showing task-to-code relationships.
-5. **Metrics Dashboard**: Track traceability coverage and task status.
-6. **JIRA Integration**: Synchronize tasks between the local task tracker and JIRA.
+1. __Task-to-Code Traceability__: Easily identify which code files implement a specific task.
+2. __Code-to-Task Traceability__: Determine which task(s) a code file is associated with.
+3. __Automated Enforcement__: Git hooks enforce task references in commit messages and files.
+4. __Visualization__: Visual reports showing task-to-code relationships.
+5. __Metrics Dashboard__: Track traceability coverage and task status.
+6. __JIRA Integration__: Synchronize tasks between the local task tracker and JIRA.
 
 ## Components
 
@@ -19,7 +20,7 @@ The system consists of the following components:
 
 ### 1. Enhanced Task Reference Manager
 
-**File**: `scripts/task-management/enhanced-task-reference.js`
+__File__: `scripts/task-management/enhanced-task-reference.js`
 
 This tool provides advanced functionality for maintaining task references:
 - Automatic detection of files related to specific tasks
@@ -27,7 +28,7 @@ This tool provides advanced functionality for maintaining task references:
 - Generating visualization of task-to-code relationships
 - Integration with git hooks
 
-**Usage**:
+__Usage__:
 ```bash
 # Interactive mode (select a task and add references)
 node scripts/task-management/enhanced-task-reference.js
@@ -40,7 +41,7 @@ node scripts/task-management/enhanced-task-reference.js --visualize-only
 
 # Process a specific task
 node scripts/task-management/enhanced-task-reference.js TS123
-```
+```bash
 
 ### 2. Git Hooks
 
@@ -48,30 +49,32 @@ The system includes three Git hooks:
 
 #### Commit Message Hook
 
-**File**: `scripts/task-management/commit-msg-hook.js`
+__File__: `scripts/task-management/commit-msg-hook.js`
 
-Enforces task ID in commit messages with the format `[TASKID] commit message`. It provides suggestions based on files being committed and in-progress tasks.
+Enforces task ID in commit messages with the format `[TASKID] commit message`. It provides
+suggestions based on files being committed and in-progress tasks.
 
 #### Pre-Commit Hook
 
-**File**: `scripts/task-management/pre-commit-hook.js`
+__File__: `scripts/task-management/pre-commit-hook.js`
 
-Checks if files being committed have task references (`@task TASKID`). It warns about files missing references but allows bypassing the check if needed.
+Checks if files being committed have task references (`@task TASKID`). It warns about files missing
+references but allows bypassing the check if needed.
 
 #### Post-Commit Hook
 
-**File**: `scripts/task-management/post-commit-hook.js`
+__File__: `scripts/task-management/post-commit-hook.js`
 
 Updates the task-to-code relationship report after a commit.
 
-**Setup**:
+__Setup__:
 ```bash
 node scripts/task-management/setup-git-hooks.js
-```
+```bash
 
 ### 3. Task Metrics Dashboard
 
-**File**: `scripts/task-management/task-metrics-dashboard.js`
+__File__: `scripts/task-management/task-metrics-dashboard.js`
 
 Generates a metrics dashboard showing:
 - Task completion progress
@@ -81,21 +84,21 @@ Generates a metrics dashboard showing:
 - Visualizations of task categories and priorities
 - Recent activity
 
-**Usage**:
+__Usage__:
 ```bash
 node scripts/task-management/task-metrics-dashboard.js
-```
+```bash
 
 ### 4. JIRA Integration
 
-**File**: `scripts/task-management/task-jira-sync.js`
+__File__: `scripts/task-management/task-jira-sync.js`
 
 Synchronizes tasks between the local task.md file and JIRA. It supports:
 - Exporting tasks to JIRA (create/update JIRA issues)
 - Importing tasks from JIRA (update task.md)
 - Mapping task statuses, priorities, and fields between systems
 
-**Usage**:
+__Usage__:
 ```bash
 # Setup JIRA configuration
 node scripts/task-management/task-jira-sync.js --setup
@@ -108,7 +111,7 @@ node scripts/task-management/task-jira-sync.js --export
 
 # Import tasks from JIRA
 node scripts/task-management/task-jira-sync.js --import
-```
+```bash
 
 ## Adding Task References to Files
 
@@ -116,58 +119,62 @@ Task references should be added to the top of each file in the following format:
 
 ### JavaScript/TypeScript Files
 ```javascript
-/**
+/__
  * @task TS123 - Task title
  */
-```
+```bash
 
 ### Python Files
 ```python
 """
 @task TS123 - Task title
 """
-```
+```bash
 
 ### Markdown/HTML Files
 ```html
 <!--
 @task TS123 - Task title
 -->
-```
+```bash
 
 ### CSS/SCSS Files
 ```css
 /*
  * @task TS123 - Task title
  */
-```
+```bash
 
 The Enhanced Task Reference Manager can automatically add these references.
 
 ## Best Practices
 
-1. **One Task, One Purpose**: Each task should have a clear, single responsibility.
+1. __One Task, One Purpose__: Each task should have a clear, single responsibility.
 
-2. **Task References in All Files**: Every non-configuration file should have at least one task reference.
+2. __Task References in All Files__: Every non-configuration file should have at least one task
+reference.
 
-3. **Meaningful Commit Messages**: All commits should reference the task ID they relate to.
+3. __Meaningful Commit Messages__: All commits should reference the task ID they relate to.
 
-4. **Regular Metrics Review**: Review the task metrics dashboard regularly to identify areas with low traceability.
+4. __Regular Metrics Review__: Review the task metrics dashboard regularly to identify areas with
+low traceability.
 
-5. **Update Task Status**: Keep task statuses updated in task.md as work progresses.
+5. __Update Task Status__: Keep task statuses updated in task.md as work progresses.
 
-6. **Use the Tools**: Make use of the provided tools to maintain traceability instead of manual updates.
+6. __Use the Tools__: Make use of the provided tools to maintain traceability instead of manual
+updates.
 
-7. **JIRA Synchronization**: Regularly synchronize with JIRA to keep the task tracking systems aligned.
+7. __JIRA Synchronization__: Regularly synchronize with JIRA to keep the task tracking systems
+aligned.
 
 ## Traceability Reports
 
 The system generates several traceability reports:
 
-1. **Task-to-Code Mapping**: `reports/task-management/task-code-mapping.md`
-2. **Task Dependency Graph**: `reports/task-management/task-dependencies.dot` (and .png)
-3. **Task Metrics Dashboard**: `reports/task-management/task-metrics-dashboard.html`
-4. **Task Metrics JSON**: `reports/task-management/task-metrics.json`
+1. __Task-to-Code Mapping__: `reports/task-management/task-code-mapping.md`
+2. __Task Dependency Graph__: `reports/task-management/task-dependencies.dot` (and .png)
+3. __Task Metrics Dashboard__: `reports/task-management/task-metrics-dashboard.html`
+4. __Task Metrics JSON__: `reports/task-management/task-metrics.json`
 
 These reports are automatically updated by the post-commit hook.
 
@@ -175,18 +182,19 @@ These reports are automatically updated by the post-commit hook.
 
 The traceability system supports compliance requirements by:
 
-1. **Requirement Traceability**: Mapping code to specific requirements (tasks).
-2. **Bidirectional Traceability**: Supporting both forward and backward traceability.
-3. **Automated Enforcement**: Ensuring consistent application of traceability practices.
-4. **Evidence Generation**: Providing reports that can be used as evidence for audits.
-5. **Version Control Integration**: Maintaining history of changes and relationships.
+1. __Requirement Traceability__: Mapping code to specific requirements (tasks).
+2. __Bidirectional Traceability__: Supporting both forward and backward traceability.
+3. __Automated Enforcement__: Ensuring consistent application of traceability practices.
+4. __Evidence Generation__: Providing reports that can be used as evidence for audits.
+5. __Version Control Integration__: Maintaining history of changes and relationships.
 
 ## Continuous Improvement
 
-The traceability system should be continuously improved based on team feedback and project needs. Suggested improvements:
+The traceability system should be continuously improved based on team feedback and project needs.
+Suggested improvements:
 
-1. **IDE Integration**: Add plugins or extensions for common IDEs.
-2. **Additional Visualizations**: Create more detailed visualizations of task relationships.
-3. **Impact Analysis**: Add functionality to analyze the impact of changes to a task.
-4. **Requirement-to-Task Mapping**: Add support for mapping requirements to tasks.
-5. **CI/CD Integration**: Integrate traceability checks into CI/CD pipelines. 
+1. __IDE Integration__: Add plugins or extensions for common IDEs.
+2. __Additional Visualizations__: Create more detailed visualizations of task relationships.
+3. __Impact Analysis__: Add functionality to analyze the impact of changes to a task.
+4. __Requirement-to-Task Mapping__: Add support for mapping requirements to tasks.
+5. __CI/CD Integration__: Integrate traceability checks into CI/CD pipelines.

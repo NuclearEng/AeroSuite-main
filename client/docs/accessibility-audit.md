@@ -1,16 +1,21 @@
 # Accessibility Audit Tools
 
-This document provides an overview of the accessibility audit tools implemented in the AeroSuite application.
+This document provides an overview of the accessibility audit tools implemented in the AeroSuite
+application.
 
 ## Overview
 
-The accessibility audit tools are designed to help identify and fix accessibility issues in the application. These tools are based on the Web Content Accessibility Guidelines (WCAG) 2.1 and use the axe-core library for automated testing.
+The accessibility audit tools are designed to help identify and fix accessibility issues in the
+application. These tools are based on the Web Content Accessibility Guidelines (WCAG) 2.1 and use
+the axe-core library for automated testing.
 
 ## Components
 
 ### 1. Accessibility Audit Utility
 
-The `accessibilityAudit.ts` utility provides functions for conducting accessibility audits and generating reports. It uses the axe-core library to analyze the DOM and identify accessibility issues.
+The `accessibilityAudit.ts` utility provides functions for conducting accessibility audits and
+generating reports. It uses the axe-core library to analyze the DOM and identify accessibility
+issues.
 
 Key features:
 - Run accessibility audits on the entire page or specific elements
@@ -28,11 +33,12 @@ const results = await runAccessibilityAudit();
 // Run an audit on a specific element
 const element = document.querySelector('#main-content');
 const results = await runAccessibilityAudit({ context: element });
-```
+```bash
 
 ### 2. Color Contrast Checker
 
-The `ColorContrastChecker` component allows users to check if text and background colors meet WCAG contrast requirements.
+The `ColorContrastChecker` component allows users to check if text and background colors meet WCAG
+contrast requirements.
 
 Key features:
 - Check contrast ratio against WCAG AA and AAA standards
@@ -48,15 +54,16 @@ import ColorContrastChecker from '../../components/common/ColorContrastChecker';
 <ColorContrastChecker />
 
 // With initial colors
-<ColorContrastChecker 
-  initialForeground="#000000" 
-  initialBackground="#FFFFFF" 
+<ColorContrastChecker
+  initialForeground="#000000"
+  initialBackground="#FFFFFF"
 />
-```
+```bash
 
 ### 3. Accessibility Audit Component
 
-The `AccessibilityAudit` component provides a user interface for running accessibility audits and displaying results.
+The `AccessibilityAudit` component provides a user interface for running accessibility audits and
+displaying results.
 
 Key features:
 - Run audits on the entire page or specific elements
@@ -82,11 +89,12 @@ import AccessibilityAudit from '../../components/common/AccessibilityAudit';
 
 // Get results callback
 <AccessibilityAudit onAuditComplete={(results) => console.log(results)} />
-```
+```bash
 
 ### 4. Accessibility Audit Page
 
-The `AccessibilityAuditPage` provides a comprehensive interface for conducting different types of accessibility audits.
+The `AccessibilityAuditPage` provides a comprehensive interface for conducting different types of
+accessibility audits.
 
 Key features:
 - General accessibility audit
@@ -97,7 +105,8 @@ Key features:
 
 ### 5. Keyboard Navigation Utilities
 
-The `keyboardNavigation.ts` utility provides functions for implementing keyboard navigation in components. This helps ensure that all interactive elements are accessible to keyboard users.
+The `keyboardNavigation.ts` utility provides functions for implementing keyboard navigation in
+components. This helps ensure that all interactive elements are accessible to keyboard users.
 
 Key features:
 - Create keyboard navigation controllers for any component
@@ -122,11 +131,12 @@ const controller = createKeyboardNavigation({
 
 // Initialize the controller
 controller.init();
-```
+```bash
 
 ### 6. Keyboard Navigation React Hooks
 
-The `useKeyboardNavigation.ts` hooks provide React-friendly wrappers for the keyboard navigation utilities.
+The `useKeyboardNavigation.ts` hooks provide React-friendly wrappers for the keyboard navigation
+utilities.
 
 Key features:
 - React hooks for keyboard navigation in functional components
@@ -144,7 +154,7 @@ function MyList() {
       console.log(`Selected item ${index}`);
     }
   });
-  
+
   return (
     <ul ref={containerRef}>
       <li tabIndex={0}>Item 1</li>
@@ -153,28 +163,31 @@ function MyList() {
     </ul>
   );
 }
-```
+```bash
 
 ## Best Practices
 
 When using these tools, follow these best practices:
 
-1. **Run audits regularly**: Incorporate accessibility audits into your development workflow.
-2. **Fix critical issues first**: Prioritize issues that prevent users from accessing core functionality.
-3. **Test with real users**: Automated tools can't catch everything. Test with real users, including those with disabilities.
-4. **Use semantic HTML**: Proper HTML structure is essential for accessibility.
-5. **Ensure keyboard accessibility**: Make sure all interactive elements can be accessed and operated using only a keyboard.
-6. **Implement proper focus management**: Ensure focus is visible and follows a logical order.
-7. **Provide text alternatives**: Add descriptive alt text for images and other non-text content.
-8. **Maintain sufficient contrast**: Ensure text has sufficient contrast against its background.
+1. __Run audits regularly__: Incorporate accessibility audits into your development workflow.
+2. __Fix critical issues first__: Prioritize issues that prevent users from accessing core
+functionality.
+3. __Test with real users__: Automated tools can't catch everything. Test with real users,
+including those with disabilities.
+4. __Use semantic HTML__: Proper HTML structure is essential for accessibility.
+5. __Ensure keyboard accessibility__: Make sure all interactive elements can be accessed and
+operated using only a keyboard.
+6. __Implement proper focus management__: Ensure focus is visible and follows a logical order.
+7. __Provide text alternatives__: Add descriptive alt text for images and other non-text content.
+8. __Maintain sufficient contrast__: Ensure text has sufficient contrast against its background.
 
 ## WCAG Compliance Levels
 
 The tools check for compliance with the following WCAG levels:
 
-- **WCAG 2.1 A**: Minimum level of compliance
-- **WCAG 2.1 AA**: Standard level of compliance (recommended)
-- **WCAG 2.1 AAA**: Enhanced level of compliance
+- __WCAG 2.1 A__: Minimum level of compliance
+- __WCAG 2.1 AA__: Standard level of compliance (recommended)
+- __WCAG 2.1 AAA__: Enhanced level of compliance
 
 ## Additional Resources
 
@@ -185,50 +198,51 @@ The tools check for compliance with the following WCAG levels:
 
 ## Keyboard Accessibility
 
-Keyboard accessibility is essential for users who cannot use a mouse. The following keyboard interactions should be supported:
+Keyboard accessibility is essential for users who cannot use a mouse. The following keyboard
+interactions should be supported:
 
 ### General Keyboard Navigation
 
-- **Tab**: Move focus to the next focusable element
-- **Shift+Tab**: Move focus to the previous focusable element
-- **Enter/Space**: Activate the focused element
+- __Tab__: Move focus to the next focusable element
+- __Shift+Tab__: Move focus to the previous focusable element
+- __Enter/Space__: Activate the focused element
 
 ### List Navigation
 
-- **Up/Down arrows**: Move focus between list items
-- **Home**: Move focus to the first item
-- **End**: Move focus to the last item
-- **Enter/Space**: Select the focused item
+- __Up/Down arrows__: Move focus between list items
+- __Home__: Move focus to the first item
+- __End__: Move focus to the last item
+- __Enter/Space__: Select the focused item
 
 ### Grid Navigation
 
-- **Up/Down/Left/Right arrows**: Move focus between cells
-- **Home**: Move focus to the first cell in the row
-- **End**: Move focus to the last cell in the row
-- **Enter/Space**: Select the focused cell
+- __Up/Down/Left/Right arrows__: Move focus between cells
+- __Home__: Move focus to the first cell in the row
+- __End__: Move focus to the last cell in the row
+- __Enter/Space__: Select the focused cell
 
 ### Tab Navigation
 
-- **Left/Right arrows**: Move focus between tabs
-- **Home**: Move focus to the first tab
-- **End**: Move focus to the last tab
-- **Enter/Space**: Activate the focused tab
+- __Left/Right arrows__: Move focus between tabs
+- __Home__: Move focus to the first tab
+- __End__: Move focus to the last tab
+- __Enter/Space__: Activate the focused tab
 
 ### Menu Navigation
 
-- **Up/Down arrows**: Move focus between menu items
-- **Home**: Move focus to the first item
-- **End**: Move focus to the last item
-- **Enter/Space**: Select the focused item
-- **Escape**: Close the menu
+- __Up/Down arrows__: Move focus between menu items
+- __Home__: Move focus to the first item
+- __End__: Move focus to the last item
+- __Enter/Space__: Select the focused item
+- __Escape__: Close the menu
 
 ## Implementation Details
 
 The accessibility audit tools are implemented using the following technologies:
 
-- **axe-core**: For automated accessibility testing
-- **React**: For building the user interface
-- **TypeScript**: For type safety and better developer experience
-- **Material-UI**: For accessible UI components
+- __axe-core__: For automated accessibility testing
+- __React__: For building the user interface
+- __TypeScript__: For type safety and better developer experience
+- __Material-UI__: For accessible UI components
 
-The tools are designed to be extensible and can be customized to meet specific requirements. 
+The tools are designed to be extensible and can be customized to meet specific requirements.

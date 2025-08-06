@@ -1,6 +1,7 @@
 # AeroSuite API Contract Standards
 
-This document outlines the standardized API contract patterns implemented across the AeroSuite platform.
+This document outlines the standardized API contract patterns implemented across the AeroSuite
+platform.
 
 ## Response Format
 
@@ -20,7 +21,7 @@ All API endpoints follow a consistent response format:
   },
   "timestamp": "2023-06-15T10:30:00.000Z"
 }
-```
+```bash
 
 ### Paginated Response
 
@@ -44,7 +45,7 @@ All API endpoints follow a consistent response format:
   },
   "timestamp": "2023-06-15T10:30:00.000Z"
 }
-```
+```bash
 
 ### Error Response
 
@@ -63,7 +64,7 @@ All API endpoints follow a consistent response format:
   },
   "timestamp": "2023-06-15T10:30:00.000Z"
 }
-```
+```bash
 
 ## Common Error Codes
 
@@ -97,7 +98,8 @@ Sort results by one or more fields:
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| sort | string | createdAt:-1 | Comma-separated list of fields to sort by. Prefix with - for descending order. |
+| sort | string | createdAt:-1 | Comma-separated list of fields to sort by. Prefix with - for
+descending order. |
 
 Example: `GET /api/customers?sort=name,-createdAt`
 
@@ -150,30 +152,30 @@ All authenticated endpoints require one of the following:
 
 API endpoints are subject to rate limiting. The following headers are included in responses:
 
-```
+```bash
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 99
 X-RateLimit-Reset: 1623760800
-```
+```bash
 
 ## Versioning
 
 API versioning is supported through URL path prefixes:
 
-```
+```bash
 /api/v1/customers
 /api/v2/customers
-```
+```bash
 
 ## Implementation
 
 The standardized API contracts are implemented using:
 
-1. **BaseController**: A base controller class that all controllers extend
-2. **ApiResponse**: A utility class for creating standardized responses
-3. **validateRequest**: A middleware for consistent validation error handling
-4. **controllerHandler**: A wrapper for controller methods to ensure consistent error handling
-5. **errorHandler**: A middleware for standardized error responses
+1. __BaseController__: A base controller class that all controllers extend
+2. __ApiResponse__: A utility class for creating standardized responses
+3. __validateRequest__: A middleware for consistent validation error handling
+4. __controllerHandler__: A wrapper for controller methods to ensure consistent error handling
+5. __errorHandler__: A middleware for standardized error responses
 
 ## Example Usage
 
@@ -181,14 +183,14 @@ The standardized API contracts are implemented using:
 // Controller method
 async getCustomers(req, res) {
   const { page, limit, skip, sort, filter } = this.getQueryOptions(req);
-  
+
   const customers = await CustomerModel.find(filter)
     .sort(sort)
     .skip(skip)
     .limit(limit);
-  
+
   const total = await CustomerModel.countDocuments(filter);
-  
+
   this.sendPaginated(res, customers, page, limit, total, 'Customers retrieved successfully');
 }
-``` 
+```bash

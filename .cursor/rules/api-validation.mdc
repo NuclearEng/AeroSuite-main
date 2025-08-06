@@ -1,0 +1,42 @@
+# API Validation Standards
+
+## Backend Validation
+- Use Joi or express-validator for input validation
+- Validate all request parameters
+- Implement proper error responses
+- Use consistent error message format
+- Validate data types and formats
+- Implement request rate limiting
+
+## Frontend API Integration
+- Use axios for HTTP requests
+- Implement proper error handling
+- Use TypeScript interfaces for API responses
+- Handle loading states properly
+- Implement retry logic for failed requests
+- Use interceptors for common headers
+
+## Error Handling
+- Return consistent error response format
+- Use appropriate HTTP status codes
+- Log errors for debugging
+- Don't expose sensitive information in errors
+- Implement proper error boundaries
+
+## Data Validation
+- Validate on both client and server
+- Use TypeScript for type safety
+- Implement proper data sanitization
+- Handle edge cases and null values
+- Validate file uploads properly
+
+## Security
+- Implement proper CORS configuration
+- Validate JWT tokens
+- Sanitize user inputs
+- Implement proper authentication middleware
+- Use HTTPS in production
+description:
+globs:
+alwaysApply: false
+---

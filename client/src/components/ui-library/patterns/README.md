@@ -1,14 +1,17 @@
 # Component Composition Patterns
 
-This directory contains implementations of various component composition patterns for the AeroSuite UI library.
+This directory contains implementations of various component composition patterns for the AeroSuite
+UI library.
 
 ## Patterns Overview
 
 ### 1. Compound Component Pattern
 
-The Compound Component pattern allows components to share state and behavior while maintaining separation of concerns. It creates a parent component that manages state and provides context to child components.
+The Compound Component pattern allows components to share state and behavior while maintaining
+separation of concerns. It creates a parent component that manages state and provides context to
+child components.
 
-**Example**: `CompoundSelect` - A select component with Option sub-components.
+__Example__: `CompoundSelect` - A select component with Option sub-components.
 
 ```jsx
 import { CompoundSelect } from 'src/components/ui-library';
@@ -21,13 +24,15 @@ import { CompoundSelect } from 'src/components/ui-library';
     <CompoundSelect.Option value="option4">Option 4</CompoundSelect.Option>
   </CompoundSelect.OptionGroup>
 </CompoundSelect>
-```
+```bash
 
 ### 2. Provider Pattern
 
-The Provider pattern uses React Context to share state and functionality across components without prop drilling. It creates a provider component that manages state and makes it available to all child components through a custom hook.
+The Provider pattern uses React Context to share state and functionality across components without
+prop drilling. It creates a provider component that manages state and makes it available to all
+child components through a custom hook.
 
-**Example**: `ThemeProvider` - A theme provider that manages theme state.
+__Example__: `ThemeProvider` - A theme provider that manages theme state.
 
 ```jsx
 import { ThemeProvider, useTheme } from 'src/components/ui-library';
@@ -46,13 +51,15 @@ const MyComponent = () => {
     </button>
   );
 };
-```
+```bash
 
 ### 3. Higher Order Component (HOC) Pattern
 
-The HOC pattern creates a function that takes a component and returns a new component with enhanced functionality. This pattern is useful for reusing component logic and cross-cutting concerns like loading states, error handling, and authentication.
+The HOC pattern creates a function that takes a component and returns a new component with enhanced
+functionality. This pattern is useful for reusing component logic and cross-cutting concerns like
+loading states, error handling, and authentication.
 
-**Examples**: `withLoading`, `withErrorHandling`, and `withDataFetching` HOCs.
+__Examples__: `withLoading`, `withErrorHandling`, and `withDataFetching` HOCs.
 
 ```jsx
 import { withLoading, withErrorHandling, withDataFetching } from 'src/components/ui-library';
@@ -76,13 +83,15 @@ const UserProfileWithData = withDataFetching(UserProfile, () => fetchUserData(us
 
 // Usage
 <UserProfileWithData />
-```
+```bash
 
 ### 4. Render Props Pattern
 
-The Render Props pattern involves passing a function as a prop to a component, which the component then calls to render part of its UI. This pattern provides flexibility in how components render and share state or behavior.
+The Render Props pattern involves passing a function as a prop to a component, which the component
+then calls to render part of its UI. This pattern provides flexibility in how components render and
+share state or behavior.
 
-**Examples**: `Toggle`, `DataFetcher`, and `MouseTracker` components.
+__Examples__: `Toggle`, `DataFetcher`, and `MouseTracker` components.
 
 ```jsx
 import { Toggle, DataFetcher, MouseTracker } from 'src/components/ui-library';
@@ -111,13 +120,14 @@ import { Toggle, DataFetcher, MouseTracker } from 'src/components/ui-library';
     <div>Mouse position: {x}, {y}</div>
   )}
 </MouseTracker>
-```
+```bash
 
 ### 5. Composition Pattern
 
-The Composition pattern involves building components that accept and render children or specific props that contain React elements. This pattern enables flexible and reusable component structures.
+The Composition pattern involves building components that accept and render children or specific
+props that contain React elements. This pattern enables flexible and reusable component structures.
 
-**Examples**: `Layout`, `CompositionCard`, `Split`, and `CompositionTabs` components.
+__Examples__: `Layout`, `CompositionCard`, `Split`, and `CompositionTabs` components.
 
 ```jsx
 import { Layout, CompositionCard, Split, CompositionTabs } from 'src/components/ui-library';
@@ -157,15 +167,15 @@ import { Layout, CompositionCard, Split, CompositionTabs } from 'src/components/
   ]}
   onChange={handleTabChange}
 />
-```
+```bash
 
 ## Benefits of Component Composition Patterns
 
-1. **Reusability**: Patterns enable code reuse across the application
-2. **Flexibility**: Components can be combined in different ways to create complex UIs
-3. **Maintainability**: Patterns promote separation of concerns and clean code
-4. **Testability**: Components built with these patterns are easier to test
-5. **Developer Experience**: Patterns provide consistent and intuitive APIs
+1. __Reusability__: Patterns enable code reuse across the application
+2. __Flexibility__: Components can be combined in different ways to create complex UIs
+3. __Maintainability__: Patterns promote separation of concerns and clean code
+4. __Testability__: Components built with these patterns are easier to test
+5. __Developer Experience__: Patterns provide consistent and intuitive APIs
 
 ## Best Practices
 
@@ -173,4 +183,4 @@ import { Layout, CompositionCard, Split, CompositionTabs } from 'src/components/
 2. Keep components focused on a single responsibility
 3. Document component APIs and usage examples
 4. Use TypeScript for better type safety and developer experience
-5. Test components in isolation and in combination 
+5. Test components in isolation and in combination

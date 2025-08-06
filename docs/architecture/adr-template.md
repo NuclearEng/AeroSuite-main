@@ -6,7 +6,8 @@
 
 ## Context
 
-Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.
+Describe the context and problem statement, e.g., in free form using two to three sentences. You
+may want to articulate the problem in form of a question.
 
 ## Decision Drivers
 
@@ -23,7 +24,8 @@ Describe the context and problem statement, e.g., in free form using two to thre
 
 ## Decision
 
-Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | ... | comes out best (see below)].
+Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion
+decision driver | which resolves force force | ... | comes out best (see below)].
 
 ## Consequences
 
@@ -52,4 +54,4 @@ Chosen option: "[option 1]", because [justification. e.g., only option, which me
 
 * [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
 * [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
-* ... <!-- numbers of links can vary --> 
+* ... <!-- numbers of links can vary -->

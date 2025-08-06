@@ -2,7 +2,9 @@
 
 ## Overview
 
-This Data Retention Policy outlines the guidelines and procedures for retaining and disposing of data within the AeroSuite platform. It is designed to ensure compliance with applicable laws and regulations, minimize data storage requirements, and protect sensitive information.
+This Data Retention Policy outlines the guidelines and procedures for retaining and disposing of
+data within the AeroSuite platform. It is designed to ensure compliance with applicable laws and
+regulations, minimize data storage requirements, and protect sensitive information.
 
 ## Scope
 
@@ -23,7 +25,8 @@ This policy applies to all data stored within the AeroSuite system, including bu
 | Data Category | Retention Period | Justification |
 |---------------|------------------|---------------|
 | Account Information | 7 years after account deactivation | Business records, legal requirements |
-| Personal Information | Active period + 1 year after account deactivation | Service provision, legal requirements |
+| Personal Information | Active period + 1 year after account deactivation | Service provision,
+legal requirements |
 | Authentication Data | Active period only (deleted upon deactivation) | Security best practices |
 | User Activity Logs | 2 years | Security monitoring, service improvement |
 | User Preferences | Active period only (deleted upon deactivation) | Service provision |
@@ -92,10 +95,10 @@ When data is deleted, the following methods are used:
 
 AeroSuite respects the following data subject rights:
 
-1. **Right to Erasure**: Users can request deletion of their personal data
-2. **Right to Restriction**: Users can request limitation of processing their data
-3. **Right to Object**: Users can object to processing based on legitimate interests
-4. **Right to Data Portability**: Users can request their data in a structured format
+1. __Right to Erasure__: Users can request deletion of their personal data
+2. __Right to Restriction__: Users can request limitation of processing their data
+3. __Right to Object__: Users can object to processing based on legitimate interests
+4. __Right to Data Portability__: Users can request their data in a structured format
 
 ## Legal Holds
 
@@ -115,10 +118,10 @@ Exceptions to this policy may be granted:
 
 ## Responsibilities
 
-1. **Data Protection Officer**: Oversees implementation of this policy
-2. **IT Department**: Implements technical controls for retention and deletion
-3. **Department Managers**: Ensure compliance within their departments
-4. **All Employees**: Follow procedures and report any policy violations
+1. __Data Protection Officer__: Oversees implementation of this policy
+2. __IT Department__: Implements technical controls for retention and deletion
+3. __Department Managers__: Ensure compliance within their departments
+4. __All Employees__: Follow procedures and report any policy violations
 
 ## Compliance Monitoring
 
@@ -128,7 +131,8 @@ Exceptions to this policy may be granted:
 
 ## Policy Review
 
-This Data Retention Policy will be reviewed annually and updated as necessary to reflect changes in business practices, legal requirements, or technology.
+This Data Retention Policy will be reviewed annually and updated as necessary to reflect changes in
+business practices, legal requirements, or technology.
 
 ## Effective Date
 
@@ -138,4 +142,4 @@ This policy is effective as of May 15, 2023.
 
 | Version | Date | Description of Changes | Approved By |
 |---------|------|-------------------------|------------|
-| 1.0 | May 15, 2023 | Initial policy | AeroSuite Management | 
+| 1.0 | May 15, 2023 | Initial policy | AeroSuite Management |

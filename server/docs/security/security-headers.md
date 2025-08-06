@@ -1,20 +1,25 @@
 # Security Headers Implementation
 
-This document provides an overview of the security headers implemented in the AeroSuite application to protect against common web vulnerabilities.
+This document provides an overview of the security headers implemented in the AeroSuite application
+to protect against common web vulnerabilities.
 
 ## Overview
 
-Security headers are HTTP response headers that, when set, can enhance the security of web applications by enabling browser security features and mitigating common web vulnerabilities. The AeroSuite application implements a comprehensive set of security headers to protect against various attacks.
+Security headers are HTTP response headers that, when set, can enhance the security of web
+applications by enabling browser security features and mitigating common web vulnerabilities. The
+AeroSuite application implements a comprehensive set of security headers to protect against various
+attacks.
 
 ## Implemented Security Headers
 
 ### Content Security Policy (CSP)
 
-Content Security Policy is a defense-in-depth mechanism that helps prevent various types of attacks, including Cross-Site Scripting (XSS) and data injection attacks.
+Content Security Policy is a defense-in-depth mechanism that helps prevent various types of
+attacks, including Cross-Site Scripting (XSS) and data injection attacks.
 
-```
+```bash
 Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.aerosuite.com; ...
-```
+```bash
 
 Our CSP implementation:
 - Restricts loading resources to trusted sources only
@@ -24,11 +29,12 @@ Our CSP implementation:
 
 ### HTTP Strict Transport Security (HSTS)
 
-HSTS ensures that browsers only connect to the application over HTTPS, preventing protocol downgrade attacks and cookie hijacking.
+HSTS ensures that browsers only connect to the application over HTTPS, preventing protocol
+downgrade attacks and cookie hijacking.
 
-```
+```bash
 Strict-Transport-Security: max-age=15552000; includeSubDomains; preload
-```
+```bash
 
 Our HSTS implementation:
 - Sets a long max-age (180 days)
@@ -37,47 +43,50 @@ Our HSTS implementation:
 
 ### X-Content-Type-Options
 
-This header prevents browsers from MIME-sniffing a response away from the declared content type, reducing the risk of drive-by downloads and MIME confusion attacks.
+This header prevents browsers from MIME-sniffing a response away from the declared content type,
+reducing the risk of drive-by downloads and MIME confusion attacks.
 
-```
+```bash
 X-Content-Type-Options: nosniff
-```
+```bash
 
 ### X-Frame-Options
 
-This header protects against clickjacking attacks by preventing the page from being embedded in frames.
+This header protects against clickjacking attacks by preventing the page from being embedded in
+frames.
 
-```
+```bash
 X-Frame-Options: DENY
-```
+```bash
 
 ### X-XSS-Protection
 
 This header enables the browser's built-in XSS filtering capabilities.
 
-```
+```bash
 X-XSS-Protection: 1; mode=block
-```
+```bash
 
 ### Referrer-Policy
 
 This header controls how much referrer information should be included with requests.
 
-```
+```bash
 Referrer-Policy: strict-origin-when-cross-origin
-```
+```bash
 
 ### Permissions-Policy
 
 This header (formerly Feature-Policy) allows control over browser features and APIs.
 
-```
+```bash
 Permissions-Policy: camera=(), microphone=(), geolocation=(self), interest-cohort=()
-```
+```bash
 
 ## CORS Configuration
 
-Cross-Origin Resource Sharing (CORS) is a security feature implemented by browsers that restricts web pages from making requests to a different domain than the one that served the original page.
+Cross-Origin Resource Sharing (CORS) is a security feature implemented by browsers that restricts
+web pages from making requests to a different domain than the one that served the original page.
 
 Our CORS implementation:
 - Restricts access to trusted origins only
@@ -116,4 +125,4 @@ To verify the security headers implementation:
 2. Test security headers in a staging environment before deploying to production
 3. Monitor CSP violation reports to identify potential issues
 4. Keep the Helmet.js library updated to the latest version
-5. Follow the principle of least privilege when configuring CSP directives 
+5. Follow the principle of least privilege when configuring CSP directives
