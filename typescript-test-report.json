@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-08-06T05:01:36.711Z",
+  "source": "stdin",
+  "summary": {
+    "totalErrors": 8,
+    "autoFixable": 7,
+    "fixed": 0,
+    "remaining": 8
+  },
+  "errorTypes": {
+    "cannotBeUsedAsJSX": 2,
+    "argumentNotAssignable": 1,
+    "cannotFindName": 2,
+    "noDeclarationFile": 1,
+    "implicitAny": 1,
+    "typeIsNotFunction": 1
+  },
+  "filesAffected": 7,
+  "topIssues": [
+    {
+      "type": "cannotBeUsedAsJSX",
+      "count": 2
+    },
+    {
+      "type": "cannotFindName",
+      "count": 2
+    },
+    {
+      "type": "argumentNotAssignable",
+      "count": 1
+    },
+    {
+      "type": "noDeclarationFile",
+      "count": 1
+    },
+    {
+      "type": "implicitAny",
+      "count": 1
+    }
+  ]
+}

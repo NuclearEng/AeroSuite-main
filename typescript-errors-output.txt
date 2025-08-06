@@ -1,0 +1,6 @@
+
+> aerosuite@1.0.0 typescript:feed-build
+> node scripts/typescript-error-feeder.js --build
+
+🏗️  Capturing build errors...
+

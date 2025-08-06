@@ -1,0 +1,78 @@
+ERROR in src/App.tsx:26:12
+TS2786: 'HelmetProvider' cannot be used as a JSX component.
+  Its instance type 'HelmetProvider' is not a valid JSX element.
+    Property 'refs' is missing in type 'HelmetProvider' but required in type 'ElementClass'.
+    24 |       <ThemeProvider>
+    25 |         <LocalizationProvider dateAdapter={AdapterDateFns}>
+  > 26 |           <HelmetProvider>
+       |            ^^^^^^^^^^^^^^
+    27 |             <SnackbarProvider 
+    28 |               maxSnack={5} 
+    29 |               anchorOrigin={{ 
+ERROR in src/App.tsx:27:14
+TS2786: 'SnackbarProvider' cannot be used as a JSX component.
+  Its instance type 'SnackbarProvider' is not a valid JSX element.
+    Property 'refs' is missing in type 'SnackbarProvider' but required in type 'ElementClass'.
+    25 |         <LocalizationProvider dateAdapter={AdapterDateFns}>
+    26 |           <HelmetProvider>
+  > 27 |             <SnackbarProvider 
+       |              ^^^^^^^^^^^^^^^^
+    28 |               maxSnack={5} 
+    29 |               anchorOrigin={{ 
+    30 |                 vertical: 'top', 
+ERROR in src/components/auth/TwoFactorSetup.tsx:73:19
+TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string | null>'.
+  Type 'undefined' is not assignable to type 'SetStateAction<string | null>'.
+    71 |       
+    72 |       if (method === 'app') {
+  > 73 |         setQrCode(response.qrCode);
+       |                   ^^^^^^^^^^^^^^^
+    74 |         setSecret(response.secret);
+    75 |       }
+    76 |       
+ERROR in src/components/common/ThemeSettings.tsx:174:14
+TS2304: Cannot find name 'ColorLens'.
+    172 |         >
+    173 |           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+  > 174 |             <ColorLens sx={{ color: theme.palette.primary.main, mr: 1.5 }} />
+       |              ^^^^^^^^^
+    175 |             <Box>
+    176 |               <Typography variant="subtitle1" fontWeight="medium">Theme Colors</Typography>
+    177 |               <Typography variant="body2" color="text.secondary">
+ERROR in src/components/common/FeedbackForm.tsx:147:51
+TS2304: Cannot find name 'err'.
+    145 |       if (onSuccess) onSuccess();
+    146 |     } catch (_err) {
+  > 147 |       console.error('Error submitting feedback:', err);
+        |                                                   ^^^
+    148 |       setError(t('feedback.errors.submissionFailed'));
+    149 |     } finally {
+    150 |       setLoading(false);
+ERROR in src/components/common/SearchModal.tsx:35:26
+TS7016: Could not find a declaration file for module 'lodash'. '/Users/tannercoker/AeroSuite-main/node_modules/lodash/lodash.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lodash` if it exists or add a new declaration (.d.ts) file containing `declare module 'lodash';`
+    33 |   FilterList as FilterIcon,
+    34 | } from '@mui/icons-material';
+  > 35 | import { debounce } from 'lodash';
+       |                          ^^^^^^^^
+    36 |
+    37 | interface SearchResult {
+    38 |   id: string;
+ERROR in src/components/dashboard/DashboardCustomizer.tsx:269:15
+TS7006: Parameter 'provided' implicitly has an 'any' type.
+    267 |         <DragDropContext onDragEnd={handleDragEnd}>
+    268 |           <Droppable droppableId="widgets-list">
+  > 269 |             {(provided) => (
+        |               ^^^^^^^^
+    270 |               <List 
+    271 |                 {...provided.droppableProps}
+    272 |                 ref={provided.innerRef}
+ERROR in src/utils/auth.ts:134:12
+TS18046: 'response' is of type 'unknown'.
+    132 |   try {
+    133 |     const response = await api.get('/v2/auth/sessions');
+  > 134 |     return response.data.sessions || [];
+        |            ^^^^^^^^
+    135 |   } catch (_error) {
+    136 |     console.error('Error fetching user sessions:', _error);
+    137 |     return [];

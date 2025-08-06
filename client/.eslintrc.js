@@ -38,6 +38,11 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
         '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-unused-expressions': ['error', { 
+          allowShortCircuit: true,
+          allowTernary: true,
+          allowTaggedTemplates: true 
+        }],
       },
     },
   ],
