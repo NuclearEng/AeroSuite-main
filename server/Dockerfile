@@ -13,7 +13,18 @@ COPY package*.json ./
 # Install all dependencies (including dev for build)
 RUN npm install --legacy-peer-deps
 
-# Stage 2: Production
+# Stage 2: Production dependencies
+FROM node:18-alpine AS prod-deps
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm install --only=production --legacy-peer-deps && \
+    npm cache clean --force
+
+# Stage 3: Production
 FROM node:18-alpine AS production
 
 # Install dumb-init first
@@ -23,21 +34,19 @@ RUN apk add --no-cache dumb-init
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 -G nodejs
 
-# Switch to nodejs user for all subsequent operations
-USER nodejs
-
-# Create working directory as the nodejs user
+# Create working directory
 WORKDIR /app
 
-# Copy package files as nodejs user (no chown needed)
+# Copy production dependencies (installed as root)
+COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=deps /app/package*.json ./
 
-# Install only production dependencies as nodejs user
-RUN npm install --only=production --legacy-peer-deps && \
-    npm cache clean --force
+# Create necessary directories
+RUN mkdir -p logs uploads temp && \
+    chown -R nodejs:nodejs /app
 
-# Create necessary directories (already owned by nodejs since we're running as that user)
-RUN mkdir -p logs uploads temp
+# Switch to nodejs user for all subsequent operations
+USER nodejs
 
 # Copy application code (will be owned by nodejs automatically)
 COPY . .
