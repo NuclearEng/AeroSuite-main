@@ -39,17 +39,17 @@ FROM nginx:stable-alpine AS production
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Simple nginx config for SPA
-RUN echo 'server {\n\
-    listen 80;\n\
-    server_name localhost;\n\
-    root /usr/share/nginx/html;\n\
-    index index.html;\n\
-    location / {\n\
-        try_files $uri $uri/ /index.html;\n\
-    }\n\
-    gzip on;\n\
-    gzip_types text/plain text/css text/javascript application/javascript application/json;\n\
-    gzip_min_length 1000;\n\
+RUN echo 'server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+    gzip on;
+    gzip_types text/plain text/css text/javascript application/javascript application/json;
+    gzip_min_length 1000;
 }' > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
