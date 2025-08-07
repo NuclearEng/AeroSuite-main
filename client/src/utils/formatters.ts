@@ -31,7 +31,14 @@ export const getCurrentLocale = (): Locale => {
 export const formatDate = (dateString?: string, formatStr = 'MMM d, yyyy'): string => {
   if (!dateString) return 'N/A';
   try {
+    // First check if the string is a valid date
     const date = typeof dateString === 'string' ? parseISO(dateString) : new Date(dateString);
+    
+    // Check if the date is valid
+    if (isNaN(date.getTime())) {
+      return 'Invalid date';
+    }
+    
     return format(date, formatStr);
   } catch (_error) {
     console.error('Error formatting date:', _error);
