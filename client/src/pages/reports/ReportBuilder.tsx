@@ -105,7 +105,7 @@ const ReportBuilder: React.FC = () => {
       const data = await reportService.getReportTemplates();
       setTemplates(data);
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to load report templates');
     } finally {
       setLoading(false);
@@ -165,7 +165,7 @@ const ReportBuilder: React.FC = () => {
       setCurrentAction('view');
       fetchTemplates();
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to save report template');
       setErrorMessage(err.message || 'Failed to save report template');
     } finally {
@@ -186,7 +186,7 @@ const ReportBuilder: React.FC = () => {
       fetchTemplates();
       setTabValue(0);
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to delete report template');
       setErrorMessage(err.message || 'Failed to delete report template');
     } finally {
@@ -252,7 +252,7 @@ const ReportBuilder: React.FC = () => {
       // Refresh templates list
       fetchTemplates();
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to duplicate report template');
     } finally {
       setLoading(false);

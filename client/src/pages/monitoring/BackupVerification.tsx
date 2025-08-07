@@ -79,7 +79,7 @@ const BackupVerification: React.FC = () => {
       const failuresData = await backupVerificationService.getVerificationFailures(5);
       setFailures(failuresData);
     } catch (_err) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError('Failed to load backup verification data. Please try again.');
     } finally {
       setLoading(false);
@@ -100,7 +100,7 @@ const BackupVerification: React.FC = () => {
         loadData();
       }, 5000);
     } catch (_err) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError('Failed to trigger verification. Please try again.');
     } finally {
       setVerifying(false);

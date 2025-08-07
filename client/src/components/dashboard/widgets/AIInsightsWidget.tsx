@@ -74,7 +74,7 @@ const AIInsightsWidget: React.FC = () => {
         }))
       );
     } catch (err) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError('Failed to load insights. Please try again later.');
     } finally {
       setLoading(false);

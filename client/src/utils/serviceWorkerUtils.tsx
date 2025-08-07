@@ -129,7 +129,7 @@ export const subscribeToPushNotifications = async (publicVapidKey: string) => {
     
     return subscription;
   } catch (_error) {
-    console.error("Error:", _error);
+    console.error("Error:", err);
     return null;
   }
 };
@@ -207,7 +207,7 @@ export const registerServiceWorker = async (): Promise<ServiceWorkerRegistration
     const registration = await wb.register();
     return registration || null;
   } catch (_error) {
-    console.error("Error:", _error);
+    console.error("Error:", err);
     return null;
   }
 };
@@ -229,7 +229,7 @@ export const unregisterServiceWorker = async (): Promise<boolean> => {
     }
     return false;
   } catch (_error) {
-    console.error("Error:", _error);
+    console.error("Error:", err);
     return false;
   }
 };
@@ -249,7 +249,7 @@ export const updateServiceWorker = async (): Promise<void> => {
       await registration.update();
     }
   } catch (_error) {
-    console.error("Error:", _error);
+    console.error("Error:", err);
   }
 };
 

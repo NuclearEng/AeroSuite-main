@@ -41,7 +41,6 @@ export function useKeyboardNavigation(
       setController(null);
     };
   }, [
-    containerRef.current,
     options.itemSelector,
     options.vertical,
     options.horizontal,

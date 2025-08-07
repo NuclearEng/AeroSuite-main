@@ -67,7 +67,7 @@ const AnomalyDetectionWidget: React.FC = () => {
 
       setLastUpdated(new Date().toISOString());
     } catch (err) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError('Failed to load anomaly detection data. Please try again later.');
     } finally {
       setLoading(false);

@@ -76,7 +76,7 @@ const RealtimeNotifications: React.FC = () => {
         console.error('Failed to reconnect to notification server after maximum attempts');
       });
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
     }
   }, [isAuthenticated, user, getToken]);
   

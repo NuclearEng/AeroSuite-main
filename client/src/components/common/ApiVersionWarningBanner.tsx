@@ -50,7 +50,7 @@ const ApiVersionWarningBanner: React.FC = () => {
       console.log('Migration guide:', guide);
       // Implementation for displaying guide would go here
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
     }
   };
   

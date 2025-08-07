@@ -289,7 +289,7 @@ const CalendarPage: React.FC = () => {
     } catch (err: any) {
       // Surface backend validation errors
       setFormErrors({ general: err?.message || 'Error saving event' });
-      console.error("Error:", _error);
+      console.error("Error:", err);
     }
   };
 

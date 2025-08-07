@@ -87,7 +87,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
         const sources = await reportService.getDataSources();
         setDataSources(sources);
       } catch (err) {
-        console.error("Error:", _error);
+        console.error("Error:", err);
       } finally {
         setDataSourcesLoading(false);
       }

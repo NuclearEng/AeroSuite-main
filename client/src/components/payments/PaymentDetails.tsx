@@ -45,7 +45,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
       const data = await PaymentService.getPaymentById(paymentId);
       setPayment(data);
     } catch (_err) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError('Failed to load payment details. Please try again.');
     } finally {
       setLoading(false);
@@ -71,7 +71,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
         onRefund(updatedPayment);
       }
     } catch (_err) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError('Failed to process refund. Please try again.');
     } finally {
       setProcessing(false);
