@@ -1,38 +1,19 @@
-Prioritizing agents due to previous failures: devSecOps, ux
-Best agent: devSecOps
+Best agent: cypress
 Best answer:
-Previous findings:
-Vuln: npm error Missing script: "scan-vuln"
-npm error
-npm error To see a list of scripts, run:
-npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_697Z-debug-0.log
 
-RBAC: npm error Missing script: "check-rbac"
-npm error
-npm error To see a list of scripts, run:
-npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_54_960Z-debug-0.log
+Cypress Test Results for Login:
+- Tests Run: 0
+- Tests Failed: 0
+- Tests Passed: 0
+- Success Rate: NaN%
 
-Encryption: npm error Missing script: "check-encryption"
-npm error
-npm error To see a list of scripts, run:
-npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_204Z-debug-0.log
+❌ Some tests failed!
 
-CSP: npm error Missing script: "check-csp"
-npm error
-npm error To see a list of scripts, run:
-npm error   npm run
-npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_logs/2025-06-15T04_53_55_441Z-debug-0.log
+Test Output:
 
----
-Vuln: Vulnerability scan for Login
+DevTools listening on ws://127.0.0.1:49847/devtools/browser/1a01c1ec-1b47-4d3d-a2c3-dbd2619f95bf
+Missing baseUrl in compilerOptions. tsconfig-paths will be skipped
 
-RBAC: RBAC check for Login
-
-Encryption: Encryption check for Login
-
-CSP: CSP check for Login
-
+  
 (Memory updated)
+Agent failed: cypress

@@ -98,7 +98,7 @@ const NotificationCenter: React.FC = () => {
       try {
         setPreferences(JSON.parse(savedPreferences));
       } catch (_err) {
-        console.error("Error:", _error);
+        console.error("Error:", err);
       }
     }
   }, [dispatch]);

@@ -120,7 +120,7 @@ const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({
       
       setDialogOpen(false);
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setSnackbarMessage('Error generating report');
       setSnackbarSeverity('error');
       setSnackbarOpen(true);

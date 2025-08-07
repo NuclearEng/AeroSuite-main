@@ -114,7 +114,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
       />
     );
     
@@ -143,7 +143,7 @@ describe('FormBuilder Component', () => {
         fields={mockFields}
         defaultValues={defaultValues}
         onSubmit={handleSubmit}
-      / as any>
+      />
     );
     
     // Fill in required fields
@@ -176,7 +176,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
       />
     );
     
@@ -211,7 +211,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
         showReset={true}
       />
     );
@@ -248,7 +248,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Prefilled Form"
         fields={mockFields}
         defaultValues={prefilledValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
       />
     );
     
@@ -267,7 +267,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Test Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
         submitText="Save Changes"
       />
     );
@@ -280,7 +280,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Loading Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
         loading={true}
       />
     );
@@ -296,7 +296,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Custom Layout Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
         layout={{
           name: { xs: 12, md: 6 },
           email: { xs: 12, md: 6 },
@@ -316,7 +316,7 @@ describe('FormBuilder Component', () => {
       <FormBuilder title="Styled Form"
         fields={mockFields}
         defaultValues={defaultValues}
-        onSubmit={() = as any> {}}
+        onSubmit={() => {}}
         sx={{ padding: '24px' }}
       />
     );

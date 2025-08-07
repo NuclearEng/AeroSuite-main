@@ -121,7 +121,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
       setSuccess('Profile updated successfully');
       setIsEditing(false);
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to update profile');
     } finally {
       setLoading(false);

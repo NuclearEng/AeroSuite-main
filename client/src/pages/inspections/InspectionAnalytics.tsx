@@ -156,7 +156,7 @@ const InspectionAnalytics: React.FC = () => {
       setAnalyticsData(response.data.data);
     } catch (err: any) {
       setError(err.message || 'Failed to load analytics data');
-      console.error("Error:", _error);
+      console.error("Error:", err);
     } finally {
       setLoading(false);
     }

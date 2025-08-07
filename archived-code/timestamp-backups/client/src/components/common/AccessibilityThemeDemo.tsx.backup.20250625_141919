@@ -1,0 +1,337 @@
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  Button,
+  Chip,
+  Divider,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Switch,
+  FormControlLabel,
+  useTheme
+} from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { auditPaletteContrast, ThemeContrastAudit } from '../../utils/accessibilityThemeHelper';
+import { 
+  lightPalette, 
+  darkPalette,
+  purpleLightPalette,
+  purpleDarkPalette,
+  emeraldLightPalette,
+  emeraldDarkPalette,
+  amberLightPalette,
+  amberDarkPalette,
+  roseLightPalette,
+  roseDarkPalette,
+  grayLightPalette,
+  grayDarkPalette,
+  createThemeOptions
+} from '../../theme/themeConfig';
+
+type ThemeVariant = 'blue' | 'purple' | 'emerald' | 'amber' | 'rose' | 'gray';
+
+/**
+ * Component to demonstrate theme accessibility improvements
+ */
+const AccessibilityThemeDemo: React.FC = () => {
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [variant, setVariant] = useState<ThemeVariant>('blue');
+  const [useAccessible, setUseAccessible] = useState<boolean>(true);
+  
+  // Get the original palette based on selected mode and variant
+  const getOriginalPalette = () => {
+    switch (variant) {
+      case 'purple':
+        return mode === 'light' ? purpleLightPalette : purpleDarkPalette;
+      case 'emerald':
+        return mode === 'light' ? emeraldLightPalette : emeraldDarkPalette;
+      case 'amber':
+        return mode === 'light' ? amberLightPalette : amberDarkPalette;
+      case 'rose':
+        return mode === 'light' ? roseLightPalette : roseDarkPalette;
+      case 'gray':
+        return mode === 'light' ? grayLightPalette : grayDarkPalette;
+      default:
+        return mode === 'light' ? lightPalette : darkPalette;
+    }
+  };
+  
+  // Create themes for comparison
+  const originalTheme = createTheme({
+    palette: getOriginalPalette(),
+  });
+  
+  const accessibleTheme = createTheme(createThemeOptions(mode, variant));
+  
+  // Audit both themes
+  const originalAudit = auditPaletteContrast(getOriginalPalette());
+  const accessibleAudit = auditPaletteContrast(accessibleTheme.palette);
+  
+  // Handle theme mode change
+  const handleModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMode(event.target.checked ? 'dark' : 'light');
+  };
+  
+  // Handle variant change
+  const handleVariantChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setVariant(event.target.value as ThemeVariant);
+  };
+  
+  // Handle accessibility toggle
+  const handleAccessibilityToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUseAccessible(event.target.checked);
+  };
+  
+  // Current theme based on selection
+  const currentTheme = useAccessible ? accessibleTheme : originalTheme;
+  const currentAudit = useAccessible ? accessibleAudit : originalAudit;
+  
+  return (
+    <ThemeProvider theme={currentTheme}>
+      <Paper sx={{ p: 3 }}>
+        <Typography variant="h5" gutterBottom>
+          Theme Accessibility Demo
+        </Typography>
+        
+        <Box sx={{ mb: 3 }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={4}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={mode === 'dark'}
+                    onChange={handleModeChange}
+                    color="primary"
+                  />
+                }
+                label={`${mode.charAt(0).toUpperCase() + mode.slice(1)} Mode`}
+              />
+            </Grid>
+            
+            <Grid item xs={12} md={4}>
+              <FormControl fullWidth>
+                <InputLabel id="theme-variant-label">Theme Variant</InputLabel>
+                <Select
+                  labelId="theme-variant-label"
+                  id="theme-variant-select"
+                  value={variant}
+                  label="Theme Variant"
+                  onChange={handleVariantChange as any}
+                >
+                  <MenuItem value="blue">Blue</MenuItem>
+                  <MenuItem value="purple">Purple</MenuItem>
+                  <MenuItem value="emerald">Emerald</MenuItem>
+                  <MenuItem value="amber">Amber</MenuItem>
+                  <MenuItem value="rose">Rose</MenuItem>
+                  <MenuItem value="gray">Gray</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            
+            <Grid item xs={12} md={4}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={useAccessible}
+                    onChange={handleAccessibilityToggle}
+                    color="primary"
+                  />
+                }
+                label={`${useAccessible ? 'Accessible' : 'Original'} Theme`}
+              />
+            </Grid>
+          </Grid>
+        </Box>
+        
+        <Divider sx={{ my: 3 }} />
+        
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            Contrast Audit Results
+          </Typography>
+          
+          <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+            <Chip 
+              label={`Passes All: ${currentAudit.passesAll ? 'Yes' : 'No'}`} 
+              color={currentAudit.passesAll ? 'success' : 'error'} 
+              variant="outlined" 
+            />
+            <Chip 
+              label={`Failures: ${currentAudit.failureCount}`} 
+              color={currentAudit.failureCount > 0 ? 'error' : 'success'} 
+              variant="outlined" 
+            />
+          </Box>
+          
+          <Grid container spacing={2}>
+            {currentAudit.checks.map((check, index) => (
+              <Grid item xs={12} md={6} key={index}>
+                <Paper 
+                  variant="outlined" 
+                  sx={{ 
+                    p: 2, 
+                    borderColor: check.passes.aa ? 'success.main' : 'error.main',
+                    borderWidth: 2
+                  }}
+                >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                    <Typography variant="subtitle2">
+                      Contrast Ratio: {check.ratio.toFixed(2)}:1
+                    </Typography>
+                    <Chip 
+                      label={check.passes.aa ? 'Passes AA' : 'Fails AA'} 
+                      color={check.passes.aa ? 'success' : 'error'} 
+                      size="small" 
+                    />
+                  </Box>
+                  
+                  <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                    <Box sx={{ 
+                      width: 40, 
+                      height: 40, 
+                      bgcolor: check.color,
+                      border: '1px solid #ccc',
+                      borderRadius: 1
+                    }} />
+                    <Typography variant="body2">
+                      Text: {check.color}
+                    </Typography>
+                  </Box>
+                  
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Box sx={{ 
+                      width: 40, 
+                      height: 40, 
+                      bgcolor: check.background,
+                      border: '1px solid #ccc',
+                      borderRadius: 1
+                    }} />
+                    <Typography variant="body2">
+                      Background: {check.background}
+                    </Typography>
+                  </Box>
+                  
+                  {check.suggestedColor && (
+                    <Box sx={{ mt: 2, p: 1, bgcolor: 'info.light', borderRadius: 1 }}>
+                      <Typography variant="caption">
+                        Suggested color: {check.suggestedColor}
+                      </Typography>
+                    </Box>
+                  )}
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+        
+        <Divider sx={{ my: 3 }} />
+        
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="h6" gutterBottom>
+            Theme Preview
+          </Typography>
+          
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Paper sx={{ p: 3, bgcolor: 'background.default' }}>
+                <Typography variant="h5" color="text.primary" gutterBottom>
+                  Default Background
+                </Typography>
+                <Typography variant="body1" color="text.primary" paragraph>
+                  This is primary text on the default background.
+                </Typography>
+                <Typography variant="body1" color="text.secondary" paragraph>
+                  This is secondary text on the default background.
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                  <Button variant="contained" color="primary">Primary Button</Button>
+                  <Button variant="contained" color="secondary">Secondary Button</Button>
+                  <Button variant="contained" color="error">Error Button</Button>
+                  <Button variant="contained" color="warning">Warning Button</Button>
+                  <Button variant="contained" color="info">Info Button</Button>
+                  <Button variant="contained" color="success">Success Button</Button>
+                </Box>
+              </Paper>
+            </Grid>
+            
+            <Grid item xs={12} md={6}>
+              <Paper sx={{ p: 3, bgcolor: 'background.paper' }}>
+                <Typography variant="h5" color="text.primary" gutterBottom>
+                  Paper Background
+                </Typography>
+                <Typography variant="body1" color="text.primary" paragraph>
+                  This is primary text on the paper background.
+                </Typography>
+                <Typography variant="body1" color="text.secondary" paragraph>
+                  This is secondary text on the paper background.
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                  <Button variant="outlined" color="primary">Primary Button</Button>
+                  <Button variant="outlined" color="secondary">Secondary Button</Button>
+                  <Button variant="outlined" color="error">Error Button</Button>
+                  <Button variant="outlined" color="warning">Warning Button</Button>
+                  <Button variant="outlined" color="info">Info Button</Button>
+                  <Button variant="outlined" color="success">Success Button</Button>
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Box>
+        
+        <Box sx={{ mb: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={2}>
+              <Paper sx={{ p: 2, bgcolor: 'primary.main', height: '100%' }}>
+                <Typography variant="subtitle1" color="primary.contrastText">
+                  Primary
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper sx={{ p: 2, bgcolor: 'secondary.main', height: '100%' }}>
+                <Typography variant="subtitle1" color="secondary.contrastText">
+                  Secondary
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper sx={{ p: 2, bgcolor: 'error.main', height: '100%' }}>
+                <Typography variant="subtitle1" color="error.contrastText">
+                  Error
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper sx={{ p: 2, bgcolor: 'warning.main', height: '100%' }}>
+                <Typography variant="subtitle1" color="warning.contrastText">
+                  Warning
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper sx={{ p: 2, bgcolor: 'info.main', height: '100%' }}>
+                <Typography variant="subtitle1" color="info.contrastText">
+                  Info
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={2}>
+              <Paper sx={{ p: 2, bgcolor: 'success.main', height: '100%' }}>
+                <Typography variant="subtitle1" color="success.contrastText">
+                  Success
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Box>
+      </Paper>
+    </ThemeProvider>
+  );
+};
+
+export default AccessibilityThemeDemo; 

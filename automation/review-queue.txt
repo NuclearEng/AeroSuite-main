@@ -856,3 +856,22 @@ npm error A complete log of this run can be found in: /Users/tannercoker/.npm/_l
 
 (Memory updated)
 ---
+Module: Login
+Issues:
+cypress: 
+Cypress Test Results for Login:
+- Tests Run: 0
+- Tests Failed: 0
+- Tests Passed: 0
+- Success Rate: NaN%
+
+❌ Some tests failed!
+
+Test Output:
+
+DevTools listening on ws://127.0.0.1:49847/devtools/browser/1a01c1ec-1b47-4d3d-a2c3-dbd2619f95bf
+Missing baseUrl in compilerOptions. tsconfig-paths will be skipped
+
+  
+(Memory updated)
+---

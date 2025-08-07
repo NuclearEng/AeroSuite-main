@@ -93,7 +93,7 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
 
       setOrders(response.orders || []);
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to load orders');
     } finally {
       setLoading(false);
@@ -136,7 +136,7 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
       loadOrders();
       if (onOrderUpdated) onOrderUpdated();
     } catch (error: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(error.message || 'Failed to delete order');
     } finally {
       setDeleteDialogOpen(false);

@@ -1,0 +1,584 @@
+/**
+ * AeroSuite Client Data Caching Utilities
+ * 
+ * This file provides advanced client-side data caching strategies to:
+ * 1. Reduce network requests by storing responses locally
+ * 2. Improve performance by serving cached data immediately while fetching updates
+ * 3. Enable offline capabilities by making previously fetched data available
+ * 4. Optimize user experience with background data synchronization
+ */
+
+import { Cache, PersistentCache, IndexedDBCache } from './caching';
+
+export enum CacheStrategy {
+  MEMORY = 'memory',         // In-memory cache (lost on page refresh)
+  LOCAL_STORAGE = 'localStorage', // Persistent but limited size
+  INDEXED_DB = 'indexedDB',  // Persistent with large capacity
+  STALE_WHILE_REVALIDATE = 'staleWhileRevalidate', // Return stale data immediately, update in background
+  CACHE_FIRST = 'cacheFirst', // Try cache first, fall back to network
+  NETWORK_FIRST = 'networkFirst', // Try network first, fall back to cache
+  CACHE_ONLY = 'cacheOnly',  // Only use cache (offline mode)
+  NETWORK_ONLY = 'networkOnly' // Only use network (disable cache)
+}
+
+export interface CacheOptions {
+  strategy?: CacheStrategy;
+  ttl?: number;
+  key?: string;
+  version?: string;
+  backgroundSync?: boolean;
+  invalidateOn?: string[];
+  maxEntries?: number;
+  compression?: boolean;
+}
+
+export interface CachedResponse<T> {
+  data: T;
+  timestamp: number;
+  source: 'cache' | 'network';
+  isFresh: boolean;
+}
+
+// Default TTL values in milliseconds
+export const DEFAULT_TTL = {
+  SHORT: 60 * 1000,          // 1 minute
+  MEDIUM: 5 * 60 * 1000,     // 5 minutes
+  LONG: 30 * 60 * 1000,      // 30 minutes
+  VERY_LONG: 24 * 60 * 60 * 1000, // 1 day
+  PERMANENT: 365 * 24 * 60 * 60 * 1000 // 1 year
+};
+
+// Default cache options
+const DEFAULT_OPTIONS: CacheOptions = {
+  strategy: CacheStrategy.STALE_WHILE_REVALIDATE,
+  ttl: DEFAULT_TTL.MEDIUM,
+  backgroundSync: false,
+  maxEntries: 100,
+  compression: false
+};
+
+/**
+ * Main client data cache manager
+ */
+class ClientDataCache {
+  private readonly memoryCache: Cache<any>;
+  private readonly storageCache: PersistentCache<any>;
+  private readonly idbCache: IndexedDBCache<any>;
+  private readonly pendingSyncs: Map<string, Promise<any>>;
+  private readonly listeners: Map<string, Array<(data: any) => void>>;
+  private readonly version: string;
+  
+  constructor(version = '1.0') {
+    this.version = version;
+    this.memoryCache = new Cache<any>(500, DEFAULT_TTL.MEDIUM);
+    this.storageCache = new PersistentCache<any>('aerosuite-data', DEFAULT_TTL.LONG);
+    this.idbCache = new IndexedDBCache<any>('aerosuite-data', 'client-cache', DEFAULT_TTL.VERY_LONG);
+    this.pendingSyncs = new Map();
+    this.listeners = new Map();
+    
+    // Initialize IndexedDB
+    this.idbCache.initDatabase().catch(err => {
+      console.warn('Failed to initialize IndexedDB cache, falling back to localStorage', err);
+    });
+    
+    // Set up a periodic cleanup task
+    this.setupCleanupTask();
+  }
+  
+  /**
+   * Fetch data with caching according to specified strategy
+   * 
+   * @param fetchFn Function that returns a Promise with the data
+   * @param options Caching options
+   * @returns Promise with cached or fresh data
+   */
+  async fetch<T>(
+    fetchFn: () => Promise<T>,
+    options: CacheOptions = {}
+  ): Promise<CachedResponse<T>> {
+    const opts = { ...DEFAULT_OPTIONS, ...options };
+    const cacheKey = this.getCacheKey(opts.key || fetchFn.toString());
+    
+    switch (opts.strategy) {
+      case CacheStrategy.CACHE_ONLY:
+        return this.cacheOnlyStrategy<T>(cacheKey, opts);
+        
+      case CacheStrategy.NETWORK_ONLY:
+        return this.networkOnlyStrategy<T>(fetchFn, cacheKey, opts);
+        
+      case CacheStrategy.CACHE_FIRST:
+        return this.cacheFirstStrategy<T>(fetchFn, cacheKey, opts);
+        
+      case CacheStrategy.NETWORK_FIRST:
+        return this.networkFirstStrategy<T>(fetchFn, cacheKey, opts);
+        
+      case CacheStrategy.STALE_WHILE_REVALIDATE:
+      default:
+        return this.staleWhileRevalidateStrategy<T>(fetchFn, cacheKey, opts);
+    }
+  }
+
+  /**
+   * Cache data directly without fetching
+   * 
+   * @param key Cache key
+   * @param data Data to cache
+   * @param options Caching options
+   */
+  async set<T>(key: string, data: T, options: CacheOptions = {}): Promise<void> {
+    const opts = { ...DEFAULT_OPTIONS, ...options };
+    const cacheKey = this.getCacheKey(key);
+    const ttl = opts.ttl || DEFAULT_TTL.MEDIUM;
+    
+    // Always update memory cache
+    this.memoryCache.set(cacheKey, data, ttl);
+    
+    // Update persistent cache based on strategy
+    if (opts.strategy !== CacheStrategy.MEMORY) {
+      try {
+        if (this.isIndexedDBAvailable() && opts.strategy === CacheStrategy.INDEXED_DB) {
+          await this.idbCache.set(cacheKey, data, ttl);
+        } else {
+          this.storageCache.set(cacheKey, data, ttl);
+        }
+      } catch (error) {
+        console.warn(`Failed to persist data for key: ${key}`, error);
+      }
+    }
+    
+    // Notify listeners
+    this.notifyListeners(cacheKey, data);
+  }
+  
+  /**
+   * Get data from cache without fetching
+   * 
+   * @param key Cache key
+   * @param options Caching options
+   * @returns Cached data or undefined if not found
+   */
+  async get<T>(key: string, options: CacheOptions = {}): Promise<T | undefined> {
+    const opts = { ...DEFAULT_OPTIONS, ...options };
+    const cacheKey = this.getCacheKey(key);
+    
+    // Try memory cache first
+    let data = this.memoryCache.get(cacheKey) as T | undefined;
+    if (data !== undefined) return data;
+    
+    // Try persistent cache if needed
+    if (opts.strategy !== CacheStrategy.MEMORY) {
+      try {
+        if (this.isIndexedDBAvailable() && opts.strategy === CacheStrategy.INDEXED_DB) {
+          data = await this.idbCache.get(cacheKey) as T | undefined;
+        } else {
+          data = this.storageCache.get(cacheKey) as T | undefined;
+        }
+        
+        // If found in persistent cache, update memory cache
+        if (data !== undefined) {
+          this.memoryCache.set(cacheKey, data, opts.ttl);
+        }
+      } catch (error) {
+        console.warn(`Failed to retrieve data for key: ${key}`, error);
+      }
+    }
+    
+    return data;
+  }
+  
+  /**
+   * Remove item from all caches
+   * 
+   * @param key Cache key
+   */
+  async invalidate(key: string): Promise<void> {
+    const cacheKey = this.getCacheKey(key);
+    
+    // Remove from memory cache
+    this.memoryCache.delete(cacheKey);
+    
+    // Remove from persistent caches
+    try {
+      this.storageCache.delete(cacheKey);
+      if (this.isIndexedDBAvailable()) {
+        await this.idbCache.delete(cacheKey);
+      }
+    } catch (error) {
+      console.warn(`Failed to invalidate data for key: ${key}`, error);
+    }
+  }
+  
+  /**
+   * Clear all cached data
+   */
+  async clearAll(): Promise<void> {
+    this.memoryCache.clear();
+    this.storageCache.clear();
+    
+    if (this.isIndexedDBAvailable()) {
+      await this.idbCache.clear();
+    }
+  }
+  
+  /**
+   * Subscribe to updates for a specific cache key
+   * 
+   * @param key Cache key
+   * @param listener Callback function
+   * @returns Unsubscribe function
+   */
+  subscribe<T>(key: string, listener: (data: T) => void): () => void {
+    const cacheKey = this.getCacheKey(key);
+    
+    if (!this.listeners.has(cacheKey)) {
+      this.listeners.set(cacheKey, []);
+    }
+    
+    const listeners = this.listeners.get(cacheKey)!;
+    listeners.push(listener as (data: any) => void);
+    
+    // Return unsubscribe function
+    return () => {
+      const index = listeners.indexOf(listener as (data: any) => void);
+      if (index >= 0) {
+        listeners.splice(index, 1);
+      }
+    };
+  }
+  
+  /**
+   * Preload data into cache
+   * 
+   * @param key Cache key
+   * @param fetchFn Function to fetch the data
+   * @param options Caching options
+   */
+  async preload<T>(
+    key: string,
+    fetchFn: () => Promise<T>,
+    options: CacheOptions = {}
+  ): Promise<void> {
+    const opts = { ...DEFAULT_OPTIONS, ...options };
+    const cacheKey = this.getCacheKey(key);
+    
+    try {
+      const data = await fetchFn();
+      await this.set(cacheKey, data, opts);
+    } catch (error) {
+      console.warn(`Failed to preload data for key: ${key}`, error);
+    }
+  }
+  
+  /**
+   * Check if data is fresh (not expired)
+   * 
+   * @param key Cache key
+   * @returns True if data exists and is fresh
+   */
+  async isFresh(key: string): Promise<boolean> {
+    const cacheKey = this.getCacheKey(key);
+    
+    // Check memory cache first
+    if (this.memoryCache.has(cacheKey)) {
+      return true;
+    }
+    
+    // Check persistent cache
+    try {
+      if (this.isIndexedDBAvailable()) {
+        const data = await this.idbCache.get(cacheKey);
+        return data !== undefined;
+      } else {
+        return this.storageCache.has(cacheKey);
+      }
+    } catch {
+      return false;
+    }
+  }
+  
+  // Private implementation methods
+  
+  private async cacheOnlyStrategy<T>(
+    cacheKey: string,
+    options: CacheOptions
+  ): Promise<CachedResponse<T>> {
+    // Try memory cache first
+    let data = this.memoryCache.get(cacheKey) as T | undefined;
+    
+    // Try persistent cache if needed
+    if (data === undefined && options.strategy !== CacheStrategy.MEMORY) {
+      try {
+        if (this.isIndexedDBAvailable() && options.strategy === CacheStrategy.INDEXED_DB) {
+          data = await this.idbCache.get(cacheKey) as T | undefined;
+        } else {
+          data = this.storageCache.get(cacheKey) as T | undefined;
+        }
+      } catch (error) {
+        console.warn(`Failed to retrieve data for key: ${cacheKey}`, error);
+      }
+    }
+    
+    if (data === undefined) {
+      throw new Error(`No cached data found for key: ${cacheKey}`);
+    }
+    
+    return {
+      data,
+      timestamp: Date.now(),
+      source: 'cache',
+      isFresh: true
+    };
+  }
+  
+  private async networkOnlyStrategy<T>(
+    fetchFn: () => Promise<T>,
+    cacheKey: string,
+    options: CacheOptions
+  ): Promise<CachedResponse<T>> {
+    const data = await fetchFn();
+    
+    // Cache the result for future use
+    await this.set(cacheKey, data, options);
+    
+    return {
+      data,
+      timestamp: Date.now(),
+      source: 'network',
+      isFresh: true
+    };
+  }
+  
+  private async cacheFirstStrategy<T>(
+    fetchFn: () => Promise<T>,
+    cacheKey: string,
+    options: CacheOptions
+  ): Promise<CachedResponse<T>> {
+    // Try to get from cache first
+    try {
+      // Try memory cache first
+      let data = this.memoryCache.get(cacheKey) as T | undefined;
+      
+      // Try persistent cache if needed
+      if (data === undefined && options.strategy !== CacheStrategy.MEMORY) {
+        if (this.isIndexedDBAvailable() && options.strategy === CacheStrategy.INDEXED_DB) {
+          data = await this.idbCache.get(cacheKey) as T | undefined;
+        } else {
+          data = this.storageCache.get(cacheKey) as T | undefined;
+        }
+        
+        // If found in persistent cache, update memory cache
+        if (data !== undefined) {
+          this.memoryCache.set(cacheKey, data, options.ttl);
+        }
+      }
+      
+      if (data !== undefined) {
+        return {
+          data,
+          timestamp: Date.now(),
+          source: 'cache',
+          isFresh: true
+        };
+      }
+    } catch (error) {
+      console.warn(`Cache read failed for key: ${cacheKey}`, error);
+    }
+    
+    // If not in cache or cache error, fetch from network
+    const data = await fetchFn();
+    
+    // Cache the result for future use
+    await this.set(cacheKey, data, options);
+    
+    return {
+      data,
+      timestamp: Date.now(),
+      source: 'network',
+      isFresh: true
+    };
+  }
+  
+  private async networkFirstStrategy<T>(
+    fetchFn: () => Promise<T>,
+    cacheKey: string,
+    options: CacheOptions
+  ): Promise<CachedResponse<T>> {
+    try {
+      // Try network first
+      const data = await fetchFn();
+      
+      // Cache the result for future use
+      await this.set(cacheKey, data, options);
+      
+      return {
+        data,
+        timestamp: Date.now(),
+        source: 'network',
+        isFresh: true
+      };
+    } catch (error) {
+      // On network error, try to get from cache
+      try {
+        // Try memory cache first
+        let data = this.memoryCache.get(cacheKey) as T | undefined;
+        
+        // Try persistent cache if needed
+        if (data === undefined && options.strategy !== CacheStrategy.MEMORY) {
+          if (this.isIndexedDBAvailable() && options.strategy === CacheStrategy.INDEXED_DB) {
+            data = await this.idbCache.get(cacheKey) as T | undefined;
+          } else {
+            data = this.storageCache.get(cacheKey) as T | undefined;
+          }
+        }
+        
+        if (data !== undefined) {
+          return {
+            data,
+            timestamp: Date.now(),
+            source: 'cache',
+            isFresh: false
+          };
+        }
+      } catch (cacheError) {
+        console.warn(`Cache read failed for key: ${cacheKey}`, cacheError);
+      }
+      
+      // If both network and cache fail, rethrow the original error
+      throw error;
+    }
+  }
+  
+  private async staleWhileRevalidateStrategy<T>(
+    fetchFn: () => Promise<T>,
+    cacheKey: string,
+    options: CacheOptions
+  ): Promise<CachedResponse<T>> {
+    let cacheData: T | undefined;
+    let fromCache = false;
+    
+    // Try to get data from cache
+    try {
+      // Try memory cache first
+      cacheData = this.memoryCache.get(cacheKey) as T | undefined;
+      
+      // Try persistent cache if needed
+      if (cacheData === undefined && options.strategy !== CacheStrategy.MEMORY) {
+        if (this.isIndexedDBAvailable() && options.strategy === CacheStrategy.INDEXED_DB) {
+          cacheData = await this.idbCache.get(cacheKey) as T | undefined;
+        } else {
+          cacheData = this.storageCache.get(cacheKey) as T | undefined;
+        }
+        
+        // If found in persistent cache, update memory cache
+        if (cacheData !== undefined) {
+          this.memoryCache.set(cacheKey, cacheData, options.ttl);
+        }
+      }
+      
+      fromCache = cacheData !== undefined;
+    } catch (error) {
+      console.warn(`Cache read failed for key: ${cacheKey}`, error);
+    }
+    
+    // Start fetching fresh data in the background
+    if (!this.pendingSyncs.has(cacheKey)) {
+      const syncPromise = fetchFn()
+        .then(async (freshData) => {
+          // Update caches with fresh data
+          await this.set(cacheKey, freshData, options);
+          this.pendingSyncs.delete(cacheKey);
+          return freshData;
+        })
+        .catch((error) => {
+          console.error(`Background sync failed for key: ${cacheKey}`, error);
+          this.pendingSyncs.delete(cacheKey);
+          throw error;
+        });
+      
+      this.pendingSyncs.set(cacheKey, syncPromise);
+      
+      // If background sync is true, we'll just wait for it to complete in the background
+      // Otherwise, we'll await the promise before returning
+      if (!options.backgroundSync && !fromCache) {
+        const freshData = await syncPromise;
+        return {
+          data: freshData,
+          timestamp: Date.now(),
+          source: 'network',
+          isFresh: true
+        };
+      }
+    }
+    
+    // If we have cached data, return it immediately
+    if (fromCache) {
+      return {
+        data: cacheData as T,
+        timestamp: Date.now(),
+        source: 'cache',
+        isFresh: false // Marked as stale since we're revalidating
+      };
+    }
+    
+    // If no cached data and background sync is enabled, wait for fetch to complete
+    const freshData = await this.pendingSyncs.get(cacheKey)!;
+    return {
+      data: freshData,
+      timestamp: Date.now(),
+      source: 'network',
+      isFresh: true
+    };
+  }
+  
+  private getCacheKey(key: string): string {
+    return `${this.version}:${key}`;
+  }
+  
+  private notifyListeners(key: string, data: any): void {
+    const listeners = this.listeners.get(key);
+    if (listeners) {
+      listeners.forEach(listener => {
+        try {
+          listener(data);
+        } catch (error) {
+          console.error(`Error in cache listener for key: ${key}`, error);
+        }
+      });
+    }
+  }
+  
+  private setupCleanupTask(): void {
+    // Clean up expired cache entries periodically
+    const cleanup = () => {
+      this.memoryCache.evictExpired();
+      this.storageCache.evictExpired();
+      
+      if (this.isIndexedDBAvailable()) {
+        this.idbCache.evictExpired().catch(err => {
+          console.warn('Failed to clean up IndexedDB cache', err);
+        });
+      }
+    };
+    
+    // Run cleanup every 5 minutes
+    setInterval(cleanup, 5 * 60 * 1000);
+    
+    // Clean up once on initialization
+    setTimeout(cleanup, 1000);
+  }
+  
+  private isIndexedDBAvailable(): boolean {
+    try {
+      return typeof window !== 'undefined' && 
+             'indexedDB' in window && 
+             window.indexedDB !== null;
+    } catch {
+      return false;
+    }
+  }
+}
+
+// Create singleton instance
+export const clientDataCache = new ClientDataCache();
+
+export default clientDataCache; 

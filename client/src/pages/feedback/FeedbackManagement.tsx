@@ -94,7 +94,7 @@ const FeedbackManagement: React.FC = () => {
       setFeedback(response.data);
       setTotalItems(response.pagination.total);
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
     } finally {
       setLoading(false);
     }
@@ -105,7 +105,7 @@ const FeedbackManagement: React.FC = () => {
       const stats = await feedbackService.getFeedbackStatistics(filters);
       setStatistics(stats);
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
     }
   };
 
@@ -187,7 +187,7 @@ const FeedbackManagement: React.FC = () => {
       }
     } catch (error: any) {
       setErrorMessage(error?.message || 'Error updating feedback');
-      console.error("Error:", _error);
+      console.error("Error:", err);
     }
   };
 
@@ -204,7 +204,7 @@ const FeedbackManagement: React.FC = () => {
         }
       } catch (error: any) {
         setErrorMessage(error?.message || 'Error deleting feedback');
-        console.error("Error:", _error);
+        console.error("Error:", err);
       }
     }
   };

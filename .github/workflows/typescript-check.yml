@@ -14,16 +14,16 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
     
     - name: Install dependencies
       run: |
-        npm ci
-        cd client && npm ci
-        cd ../server && npm ci
+        npm ci --no-fund --legacy-peer-deps
+        cd client && npm ci --no-fund --legacy-peer-deps --force
+        cd ../server && npm ci --no-fund --legacy-peer-deps
     
     - name: Run TypeScript checks
       run: |

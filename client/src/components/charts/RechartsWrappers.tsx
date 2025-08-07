@@ -20,22 +20,22 @@ import {
   ZAxis as RbdZAxis
 } from 'recharts';
 
-// Create wrapper components for all Recharts components
-export const BarChart: React.FC<any> = (props) => <RbdBarChart {...props} />;
-export const LineChart: React.FC<any> = (props) => <RbdLineChart {...props} />;
-export const PieChart: React.FC<any> = (props) => <RbdPieChart {...props} />;
-export const ComposedChart: React.FC<any> = (props) => <RbdComposedChart {...props} />;
-export const Bar: React.FC<any> = (props) => <RbdBar {...props} />;
-export const Line: React.FC<any> = (props) => <RbdLine {...props} />;
-export const XAxis: React.FC<any> = (props) => <RbdXAxis {...props} />;
-export const YAxis: React.FC<any> = (props) => <RbdYAxis {...props} />;
-export const CartesianGrid: React.FC<any> = (props) => <RbdCartesianGrid {...props} />;
-export const Tooltip: React.FC<any> = (props) => <RbdTooltip {...props} />;
-export const Legend: React.FC<any> = (props) => <RbdLegend {...props} />;
-export const ResponsiveContainer: React.FC<any> = (props) => <RbdResponsiveContainer {...props} />;
-export const Cell: React.FC<any> = (props) => <RbdCell {...props} />;
-export const Pie: React.FC<any> = (props) => <RbdPie {...props} />;
-export const Area: React.FC<any> = (props) => <RbdArea {...props} />;
-export const ScatterChart: React.FC<any> = (props) => <RbdScatterChart {...props} />;
-export const Scatter: React.FC<any> = (props) => <RbdScatter {...props} />;
-export const ZAxis: React.FC<any> = (props) => <RbdZAxis {...props} />;
+// Re-export the original components directly
+export const BarChart = RbdBarChart;
+export const LineChart = RbdLineChart;
+export const PieChart = RbdPieChart;
+export const ComposedChart = RbdComposedChart;
+export const Bar = RbdBar;
+export const Line = RbdLine;
+export const XAxis = RbdXAxis;
+export const YAxis = RbdYAxis;
+export const CartesianGrid = RbdCartesianGrid;
+export const Tooltip = RbdTooltip;
+export const Legend = RbdLegend;
+export const ResponsiveContainer = RbdResponsiveContainer;
+export const Cell = RbdCell;
+export const Pie = RbdPie;
+export const Area = RbdArea;
+export const ScatterChart = RbdScatterChart;
+export const Scatter = RbdScatter;
+export const ZAxis = RbdZAxis;

@@ -1,4 +1,4 @@
-// Usage: npx ts-node automation/orchestrator.ts [--modules=Login,Reports] [--agents=softwareArchitect,devSecOps,testAutomation,qa,devOps,productLogic,ux,compliance]
+// Usage: npx ts-node automation/orchestrator.ts [--modules=Login,Reports] [--agents=softwareArchitect,devSecOps,testAutomation,qa,devOps,productLogic,ux,compliance,cypress]
 import { runSoftwareArchitectAgent } from './agents/softwareArchitectAgent';
 import { runDevSecOpsAgent } from './agents/devSecOpsAgent';
 import { runTestAutomationAgent } from './agents/testAutomationAgent';
@@ -21,6 +21,7 @@ import { runDockerAgent } from './agents/dockerAgent';
 import { runNodejsAgent } from './agents/nodejsAgent';
 import { runNginxUnitAgent } from './agents/nginxUnitAgent';
 import { runRedisAgent } from './agents/redisAgent';
+import { runCypressAgent } from './agents/cypressAgent';
 
 type AgentResult = { passed: boolean; details: string };
 type ModuleResult = {
@@ -56,6 +57,7 @@ const allAgents = [
   'nodejs',
   'nginxUnit',
   'redis',
+  'cypress',
   // systems agent is global, not per module
 ];
 
@@ -78,6 +80,7 @@ const agentFns: Record<string, (m: string) => Promise<AgentResult>> = {
   nodejs: runNodejsAgent,
   nginxUnit: runNginxUnitAgent,
   redis: runRedisAgent,
+  cypress: runCypressAgent,
   // systems agent is not per module
 };
 

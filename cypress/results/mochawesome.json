@@ -1,0 +1,442 @@
+{
+  "stats": {
+    "suites": 4,
+    "tests": 13,
+    "passes": 1,
+    "pending": 0,
+    "failures": 12,
+    "start": "2025-08-07T02:49:56.444Z",
+    "end": "2025-08-07T02:50:35.865Z",
+    "duration": 39421,
+    "testsRegistered": 13,
+    "passPercent": 7.6923076923076925,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "473bcd96-9909-49b9-8d71-f8d5b573c6aa",
+      "title": "",
+      "fullFile": "cypress/e2e/api-tests.cy.js",
+      "file": "cypress/e2e/api-tests.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "324d0630-3410-403c-8bed-d50ab2b3e690",
+          "title": "API Health & Connectivity",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should have a healthy backend API",
+              "fullTitle": "API Health & Connectivity should have a healthy backend API",
+              "timedOut": null,
+              "duration": 947,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.task('checkApiHealth').then(isHealthy => {\n  expect(isHealthy).to.be.true;\n});",
+              "err": {
+                "message": "AssertionError: expected false to be true",
+                "estack": "AssertionError: expected false to be true\n    at Object.proxyGetter [as get] (http://localhost:50127/__cypress/runner/cypress_runner.js:80289:22)\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:23:30)\n    at getRet (http://localhost:50127/__cypress/runner/cypress_runner.js:120941:20)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (http://localhost:50127/__cypress/runner/cypress_runner.js:4285:29)",
+                "diff": null
+              },
+              "uuid": "0a16c078-7974-4873-be51-dcb8f1a7616a",
+              "parentUUID": "324d0630-3410-403c-8bed-d50ab2b3e690",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should be able to connect to health endpoint",
+              "fullTitle": "API Health & Connectivity should be able to connect to health endpoint",
+              "timedOut": null,
+              "duration": 1414,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: `${Cypress.env('apiUrl')}/api/health`,\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.be.oneOf([200, 404, 500]);\n  cy.log(`Health endpoint response: ${response.status}`);\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5002/api/health\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > AggregateError\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5002/api/health\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5002/api/health\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > AggregateError\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5002/api/health\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:136350:70)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:4173:37)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:28:7)\n\nFrom Node.js Internals:\n  RequestError: AggregateError\n      at new r (<embedded>:227:431690)\n      at ee.callback (<embedded>:227:437691)\n      at e.callback.s.callback [as _callback] (<embedded>:227:437137)\n      at s._callback.s.callback.s.callback (<embedded>:290:105750)\n      at ee.emit (node:events:518:28)\n      at ee.onRequestError (<embedded>:290:114692)\n      at ClientRequest.emit (node:events:530:35)\n      at emitErrorEvent (node:_http_client:101:11)\n      at Socket.socketErrorListener (node:_http_client:504:5)\n      at Socket.emit (node:events:518:28)\n      at emitErrorNT (node:internal/streams/destroy:169:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:128:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "a32e9413-540f-4211-902b-07467efd8819",
+              "parentUUID": "324d0630-3410-403c-8bed-d50ab2b3e690",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle API connection gracefully",
+              "fullTitle": "API Health & Connectivity should handle API connection gracefully",
+              "timedOut": null,
+              "duration": 344,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Test that the app handles API failures gracefully\ncy.visit('/');\n// Wait for page to be ready\ncy.get('body').should('be.visible');\n// Check if there are any console errors related to API\ncy.window().then(win => {\n  const consoleErrors = win.console.error;\n  if (consoleErrors) {\n    cy.log('Console errors detected:', consoleErrors);\n  }\n});",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:39:7)",
+                "diff": null
+              },
+              "uuid": "83ffa0c7-9dc9-46dc-81d0-913fae2f8858",
+              "parentUUID": "324d0630-3410-403c-8bed-d50ab2b3e690",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should show proper error handling for API failures",
+              "fullTitle": "API Health & Connectivity should show proper error handling for API failures",
+              "timedOut": null,
+              "duration": 436,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Mock API failure and check error handling\ncy.intercept('GET', `${Cypress.env('apiUrl')}/api/health`, {\n  statusCode: 500,\n  body: {\n    error: 'Internal Server Error'\n  }\n}).as('healthCheck');\ncy.visit('/');\ncy.wait('@healthCheck');\n// Verify the app doesn't crash\ncy.get('body').should('be.visible');",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:60:7)",
+                "diff": null
+              },
+              "uuid": "e885a5d3-315d-4385-9903-a341106849ce",
+              "parentUUID": "324d0630-3410-403c-8bed-d50ab2b3e690",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "0a16c078-7974-4873-be51-dcb8f1a7616a",
+            "a32e9413-540f-4211-902b-07467efd8819",
+            "83ffa0c7-9dc9-46dc-81d0-913fae2f8858",
+            "e885a5d3-315d-4385-9903-a341106849ce"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 3141,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "1d4ddb56-2d01-4378-9f03-b4f7703ee110",
+          "title": "API Endpoints & Integration",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should verify all critical API endpoints",
+              "fullTitle": "API Endpoints & Integration should verify all critical API endpoints",
+              "timedOut": null,
+              "duration": 884,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const endpoints = ['/api/health', '/api/auth/login', '/api/inspections', '/api/customers', '/api/suppliers'];\nendpoints.forEach(endpoint => {\n  cy.request({\n    url: `${Cypress.env('apiUrl')}${endpoint}`,\n    failOnStatusCode: false\n  }).then(response => {\n    cy.log(`${endpoint}: ${response.status}`);\n    // Don't fail the test, just log the status\n    expect(response.status).to.be.a('number');\n  });\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5002/api/health\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5002\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5002/api/health\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5002/api/health\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5002\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5002/api/health\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:136350:70)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:4173:37)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:79:9)\nat Array.forEach (<anonymous>)\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:78:14)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5002\n      at new r (<embedded>:227:431690)\n      at ee.callback (<embedded>:227:437691)\n      at e.callback.s.callback [as _callback] (<embedded>:227:437137)\n      at s._callback.s.callback.s.callback (<embedded>:290:105750)\n      at ee.emit (node:events:518:28)\n      at ee.onRequestError (<embedded>:290:114692)\n      at ClientRequest.emit (node:events:530:35)\n      at emitErrorEvent (node:_http_client:101:11)\n      at Socket.socketErrorListener (node:_http_client:504:5)\n      at Socket.emit (node:events:518:28)\n      at emitErrorNT (node:internal/streams/destroy:169:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:128:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "b7429704-bec8-4bc6-8a12-8b1d305ef3f2",
+              "parentUUID": "1d4ddb56-2d01-4378-9f03-b4f7703ee110",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle WebSocket connections",
+              "fullTitle": "API Endpoints & Integration should handle WebSocket connections",
+              "timedOut": null,
+              "duration": 143,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Test WebSocket connectivity\ncy.window().then(win => {\n  return new Cypress.Promise(resolve => {\n    const ws = new win.WebSocket('ws://localhost:3000/ws');\n    ws.onopen = () => {\n      cy.log('WebSocket connection established');\n      ws.close();\n      resolve();\n    };\n    ws.onerror = error => {\n      cy.log('WebSocket connection failed:', error);\n      resolve(); // Don't fail the test\n    };\n    // Timeout after 5 seconds\n    setTimeout(() => {\n      cy.log('WebSocket connection timeout');\n      resolve();\n    }, 5000);\n  });\n});",
+              "err": {},
+              "uuid": "e5df7eff-5a58-4d86-8538-7233295dc94e",
+              "parentUUID": "1d4ddb56-2d01-4378-9f03-b4f7703ee110",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should fetch and display inspections",
+              "fullTitle": "API Endpoints & Integration should fetch and display inspections",
+              "timedOut": null,
+              "duration": 465,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('GET', `${Cypress.env('apiUrl')}/api/inspections`, {\n  statusCode: 200,\n  body: [{\n    id: 1,\n    title: 'Test Inspection',\n    status: 'pending'\n  }]\n}).as('getInspections');\ncy.visit('/inspections');\ncy.wait('@getInspections');\ncy.get('[data-testid=\"inspection-item\"]').should('have.length', 1);",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/inspections\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/inspections\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/inspections\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/inspections\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:124:7)",
+                "diff": null
+              },
+              "uuid": "021629c6-ce11-472e-be5e-0501464dabe1",
+              "parentUUID": "1d4ddb56-2d01-4378-9f03-b4f7703ee110",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle API errors gracefully",
+              "fullTitle": "API Endpoints & Integration should handle API errors gracefully",
+              "timedOut": null,
+              "duration": 387,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('GET', `${Cypress.env('apiUrl')}/api/inspections`, {\n  statusCode: 500,\n  body: {\n    error: 'Internal Server Error'\n  }\n}).as('apiError');\ncy.visit('/inspections');\ncy.wait('@apiError');\ncy.get('[data-testid=\"error-message\"]').should('be.visible');",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/inspections\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/inspections\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/inspections\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/inspections\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:135:7)",
+                "diff": null
+              },
+              "uuid": "d37163f1-93bf-4a93-af27-b36d5ffdf1a9",
+              "parentUUID": "1d4ddb56-2d01-4378-9f03-b4f7703ee110",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should create new inspection",
+              "fullTitle": "API Endpoints & Integration should create new inspection",
+              "timedOut": null,
+              "duration": 872,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.login('test@aerosuite.com', 'test123');\ncy.intercept('POST', `${Cypress.env('apiUrl')}/api/inspections`, {\n  statusCode: 201,\n  body: {\n    id: 2,\n    title: 'New Inspection',\n    status: 'pending'\n  }\n}).as('createInspection');\ncy.visit('/inspections/new');\ncy.get('input[name=\"title\"]').type('New Inspection');\ncy.get('button[type=\"submit\"]').click();\ncy.wait('@createInspection');\ncy.url().should('include', '/inspections');",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/login\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/login\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n\nThis error occurred while creating the session. Because the session setup failed, we failed the test.",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/login\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/login\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n\nThis error occurred while creating the session. Because the session setup failed, we failed the test.\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Object.eval [as setup] (webpack://aerosuite/./cypress/support/commands.js:12:9)\n    at Context.<anonymous> (http://localhost:50127/__cypress/runner/cypress_runner.js:136556:38)\n    at getRet (http://localhost:50127/__cypress/runner/cypress_runner.js:120941:20)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (http://localhost:50127/__cypress/runner/cypress_runner.js:4285:29)\n    at Context.thenFn (http://localhost:50127/__cypress/runner/cypress_runner.js:120952:66)\n    at Context.then (http://localhost:50127/__cypress/runner/cypress_runner.js:121203:21)\n    at wrapped (http://localhost:50127/__cypress/runner/cypress_runner.js:141524:19)",
+                "diff": null
+              },
+              "uuid": "5c93e1c9-3d2a-4501-98ea-97e2fb621062",
+              "parentUUID": "1d4ddb56-2d01-4378-9f03-b4f7703ee110",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "e5df7eff-5a58-4d86-8538-7233295dc94e"
+          ],
+          "failures": [
+            "b7429704-bec8-4bc6-8a12-8b1d305ef3f2",
+            "021629c6-ce11-472e-be5e-0501464dabe1",
+            "d37163f1-93bf-4a93-af27-b36d5ffdf1a9",
+            "5c93e1c9-3d2a-4501-98ea-97e2fb621062"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 2751,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "e0383ac8-6f6f-4ba4-b702-dc71b5d95675",
+          "title": "API Error Handling",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should handle network errors",
+              "fullTitle": "API Error Handling should handle network errors",
+              "timedOut": null,
+              "duration": 364,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('GET', `${Cypress.env('apiUrl')}/api/health`, {\n  forceNetworkError: true\n}).as('networkError');\ncy.visit('/');\ncy.wait('@networkError');\ncy.get('[data-testid=\"error-message\"]').should('be.visible');",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:162:7)",
+                "diff": null
+              },
+              "uuid": "0f727468-d6fe-4b89-b771-b24fbe2af3c2",
+              "parentUUID": "e0383ac8-6f6f-4ba4-b702-dc71b5d95675",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle server errors",
+              "fullTitle": "API Error Handling should handle server errors",
+              "timedOut": null,
+              "duration": 1701,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('GET', `${Cypress.env('apiUrl')}/api/health`, {\n  statusCode: 503,\n  body: {\n    error: 'Service Unavailable'\n  }\n}).as('serverError');\ncy.visit('/');\ncy.wait('@serverError');\ncy.get('[data-testid=\"error-message\"]').should('be.visible');",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:173:7)",
+                "diff": null
+              },
+              "uuid": "1a1a4b8d-b8f4-4a12-ba42-0d55db3e4cf0",
+              "parentUUID": "e0383ac8-6f6f-4ba4-b702-dc71b5d95675",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "0f727468-d6fe-4b89-b771-b24fbe2af3c2",
+            "1a1a4b8d-b8f4-4a12-ba42-0d55db3e4cf0"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 2065,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "5abcfd70-2406-4287-8e0a-64f526066315",
+          "title": "API Performance",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should load within acceptable time",
+              "fullTitle": "API Performance should load within acceptable time",
+              "timedOut": null,
+              "duration": 361,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/', {\n  timeout: 10000\n});\ncy.get('body').should('be.visible');",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:181:7)",
+                "diff": null
+              },
+              "uuid": "03b3e368-5c51-4802-974f-a50f23eca075",
+              "parentUUID": "5abcfd70-2406-4287-8e0a-64f526066315",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should handle large datasets",
+              "fullTitle": "API Performance should handle large datasets",
+              "timedOut": null,
+              "duration": 860,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Mock large dataset\nconst largeDataset = Array.from({\n  length: 100\n}, (_, i) => ({\n  id: i + 1,\n  title: `Inspection ${i + 1}`,\n  status: 'pending'\n}));\ncy.intercept('GET', `${Cypress.env('apiUrl')}/api/inspections`, {\n  statusCode: 200,\n  body: largeDataset\n}).as('getLargeDataset');\ncy.visit('/inspections');\ncy.wait('@getLargeDataset');\ncy.get('[data-testid=\"inspection-item\"]').should('have.length', 100);",
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\n/inspections\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/inspections\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found",
+                "estack": "CypressError: `cy.visit()` failed trying to load:\n\n/inspections\n\nWe failed looking for this file at the path:\n\n/Users/tannercoker/AeroSuite-main/inspections\n\nThe internal Cypress web server responded with:\n\n  > 404: Not Found\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135035:76)\n    at visitFailedByErr (http://localhost:50127/__cypress/runner/cypress_runner.js:134441:12)\n    at <unknown> (http://localhost:50127/__cypress/runner/cypress_runner.js:135018:13)\n    at tryCatcher (http://localhost:50127/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (http://localhost:50127/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (http://localhost:50127/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (http://localhost:50127/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (http://localhost:50127/__cypress/runner/cypress_runner.js:1667:18)\n    at _drainQueueStep (http://localhost:50127/__cypress/runner/cypress_runner.js:2377:12)\n    at _drainQueue (http://localhost:50127/__cypress/runner/cypress_runner.js:2370:9)\n    at Async._drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2386:5)\n    at Async.drainQueues (http://localhost:50127/__cypress/runner/cypress_runner.js:2256:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://aerosuite/./cypress/e2e/api-tests.cy.js:198:7)",
+                "diff": null
+              },
+              "uuid": "f82acf85-3f2b-4d1b-8977-c750e70aa925",
+              "parentUUID": "5abcfd70-2406-4287-8e0a-64f526066315",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "03b3e368-5c51-4802-974f-a50f23eca075",
+            "f82acf85-3f2b-4d1b-8977-c750e70aa925"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 1221,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

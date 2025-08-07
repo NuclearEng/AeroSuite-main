@@ -12,6 +12,8 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+// Fix for chalk v5+ which is ESM only
+const chalkFn = chalk.default || chalk;
 const ora = require('ora');
 const { program } = require('commander');
 
@@ -36,7 +38,7 @@ const options = program.opts();
 // If no specific scan is selected, run all scans
 if (!options.dependencyScan && !options.codeScan && !options.apiScan && 
     !options.owaspScan && !options.secretsScan && !options.full) {
-  console.log(chalk.yellow('No scan type specified, running all scans'));
+  console.log(chalkFn.yellow('No scan type specified, running all scans'));
   options.full = true;
 }
 
@@ -73,8 +75,8 @@ const scanResults = {
 
 // Run security scans
 async function runSecurityScans() {
-  console.log(chalk.blue.bold('Starting AeroSuite Security Scan'));
-  console.log(chalk.blue(`Timestamp: ${timestamp}`));
+  console.log(chalkFn.blue.bold('Starting AeroSuite Security Scan'));
+  console.log(chalkFn.blue(`Timestamp: ${timestamp}`));
   console.log();
   
   let exitCode = 0;
@@ -146,7 +148,7 @@ async function runSecurityScans() {
       process.exit(exitCode);
     }
   } catch (error) {
-    console.error(chalk.red('Error running security scans:'), error);
+    console.error(chalkFn.red('Error running security scans:'), error);
     if (options.ci) {
       process.exit(1);
     }
@@ -430,7 +432,7 @@ async function generateReport() {
   const htmlReport = generateHtmlReport(scanResults);
   fs.writeFileSync(htmlReportFile, htmlReport);
   
-  console.log(chalk.green(`\nSecurity scan reports generated:`));
+  console.log(chalkFn.green(`\nSecurity scan reports generated:`));
   console.log(`- JSON report: ${reportFile}`);
   console.log(`- HTML report: ${htmlReportFile}`);
 }
@@ -534,7 +536,7 @@ function generateHtmlReport(results) {
 
 // Display summary of scan results
 function displaySummary() {
-  console.log(chalk.blue.bold('\nSecurity Scan Summary:'));
+  console.log(chalkFn.blue.bold('\nSecurity Scan Summary:'));
   console.log('-'.repeat(50));
   
   Object.keys(scanResults.summary).forEach(scanType => {
@@ -543,16 +545,16 @@ function displaySummary() {
     
     switch (result.status) {
       case 'pass':
-        statusColor = chalk.green;
+        statusColor = chalkFn.green;
         break;
       case 'fail':
-        statusColor = chalk.red;
+        statusColor = chalkFn.red;
         break;
       case 'error':
-        statusColor = chalk.yellow;
+        statusColor = chalkFn.yellow;
         break;
       default:
-        statusColor = chalk.gray;
+        statusColor = chalkFn.gray;
     }
     
     let summary = `${scanType}: ${statusColor(result.status)}`;
@@ -573,7 +575,7 @@ function displaySummary() {
   });
   
   console.log('-'.repeat(50));
-  console.log(chalk.blue(`Reports saved to ${reportDir} directory`));
+  console.log(chalkFn.blue(`Reports saved to ${reportDir} directory`));
 }
 
 // Run all security scans

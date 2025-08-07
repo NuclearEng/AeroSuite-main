@@ -20,6 +20,8 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+// Fix for chalk v5+ which is ESM only
+const chalkFn = chalk.default || chalk;
 const yargs = require('yargs/helpers');
 
 // Configuration with defaults
@@ -69,7 +71,7 @@ function loadConfig() {
       const fileConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
       config = { ...config, ...fileConfig };
     } catch (error) {
-      console.error(chalk.red(`Error loading config file: ${error.message}`));
+      console.error(chalkFn.red(`Error loading config file: ${error.message}`));
     }
   }
 
@@ -91,7 +93,7 @@ function loadConfig() {
 function saveConfig(config) {
   const configPath = path.resolve(process.cwd(), '.coverage-config.json');
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
-  console.log(chalk.green(`Configuration saved to ${configPath}`));
+  console.log(chalkFn.green(`Configuration saved to ${configPath}`));
 }
 
 /**
@@ -102,7 +104,7 @@ function createJestConfig(config) {
   const jestConfigPath = path.resolve(process.cwd(), config.jestConfigPath);
   
   if (!fs.existsSync(jestConfigPath)) {
-    console.error(chalk.red(`Jest config not found at ${jestConfigPath}`));
+    console.error(chalkFn.red(`Jest config not found at ${jestConfigPath}`));
     process.exit(1);
   }
   
@@ -134,16 +136,16 @@ function createJestConfig(config) {
  * Run tests with coverage
  */
 function runTestsWithCoverage(jestConfigPath) {
-  console.log(chalk.blue('Running tests with coverage...'));
+  console.log(chalkFn.blue('Running tests with coverage...'));
   
   try {
     execSync(`jest --config ${jestConfigPath} --coverage --colors`, {
       stdio: 'inherit'
     });
-    console.log(chalk.green('✓ Tests completed successfully'));
+    console.log(chalkFn.green('✓ Tests completed successfully'));
     return true;
   } catch (error) {
-    console.error(chalk.red('✗ Tests failed'));
+    console.error(chalkFn.red('✗ Tests failed'));
     return false;
   }
 }
@@ -152,13 +154,13 @@ function runTestsWithCoverage(jestConfigPath) {
  * Generate a coverage badge
  */
 function generateCoverageBadge(config) {
-  console.log(chalk.blue('Generating coverage badge...'));
+  console.log(chalkFn.blue('Generating coverage badge...'));
   
   // Read the coverage summary
   const coverageSummaryPath = path.resolve(process.cwd(), 'coverage/coverage-summary.json');
   
   if (!fs.existsSync(coverageSummaryPath)) {
-    console.error(chalk.yellow('Coverage summary not found, skipping badge generation'));
+    console.error(chalkFn.yellow('Coverage summary not found, skipping badge generation'));
     return;
   }
   
@@ -211,7 +213,7 @@ function generateCoverageBadge(config) {
     }
     
     fs.writeFileSync(badgeOutputPath, badgeSvg);
-    console.log(chalk.green(`Coverage badge saved to ${config.badgeOutputPath}`));
+    console.log(chalkFn.green(`Coverage badge saved to ${config.badgeOutputPath}`));
     
     // Save summary for the dashboard
     const summaryOutputPath = path.resolve(process.cwd(), config.summaryOutputPath);
@@ -224,7 +226,7 @@ function generateCoverageBadge(config) {
     }, null, 2));
     
   } catch (error) {
-    console.error(chalk.red(`Error generating badge: ${error.message}`));
+    console.error(chalkFn.red(`Error generating badge: ${error.message}`));
   }
 }
 
@@ -232,13 +234,13 @@ function generateCoverageBadge(config) {
  * Generate HTML dashboard for coverage reports
  */
 function generateCoverageDashboard(config) {
-  console.log(chalk.blue('Generating coverage dashboard...'));
+  console.log(chalkFn.blue('Generating coverage dashboard...'));
   
   // Read coverage summary
   const summaryPath = path.resolve(process.cwd(), config.summaryOutputPath);
   
   if (!fs.existsSync(summaryPath)) {
-    console.error(chalk.yellow('Coverage summary not found, skipping dashboard generation'));
+    console.error(chalkFn.yellow('Coverage summary not found, skipping dashboard generation'));
     return;
   }
   
@@ -253,7 +255,7 @@ function generateCoverageDashboard(config) {
       try {
         history = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
       } catch (error) {
-        console.error(chalk.yellow(`Error reading history file: ${error.message}`));
+        console.error(chalkFn.yellow(`Error reading history file: ${error.message}`));
       }
     }
     
@@ -507,10 +509,10 @@ function generateCoverageDashboard(config) {
     }
     
     fs.writeFileSync(dashboardOutputPath, dashboardHtml);
-    console.log(chalk.green(`Coverage dashboard saved to ${config.dashboardOutputPath}`));
+    console.log(chalkFn.green(`Coverage dashboard saved to ${config.dashboardOutputPath}`));
     
   } catch (error) {
-    console.error(chalk.red(`Error generating dashboard: ${error.message}`));
+    console.error(chalkFn.red(`Error generating dashboard: ${error.message}`));
   }
 }
 
@@ -527,23 +529,23 @@ function getCoverageClass(coverage, threshold) {
  * Main function
  */
 async function main() {
-  console.log(chalk.blue('🧪 AeroSuite Test Coverage Setup'));
-  console.log(chalk.blue('================================'));
+  console.log(chalkFn.blue('🧪 AeroSuite Test Coverage Setup'));
+  console.log(chalkFn.blue('================================'));
   
   // Load configuration
   const config = loadConfig();
   
   // Check if this is an initialization call
   if (args.init) {
-    console.log(chalk.blue('Initializing test coverage configuration...'));
+    console.log(chalkFn.blue('Initializing test coverage configuration...'));
     saveConfig(config);
-    console.log(chalk.green('✓ Configuration initialized'));
+    console.log(chalkFn.green('✓ Configuration initialized'));
     return;
   }
   
   // Create Jest configuration
   const jestConfigPath = createJestConfig(config);
-  console.log(chalk.green(`✓ Created temporary Jest config at ${jestConfigPath}`));
+  console.log(chalkFn.green(`✓ Created temporary Jest config at ${jestConfigPath}`));
   
   // Run tests with coverage
   const success = runTestsWithCoverage(jestConfigPath);
@@ -558,19 +560,19 @@ async function main() {
   
   // Clean up temporary Jest config
   fs.unlinkSync(jestConfigPath);
-  console.log(chalk.green('✓ Cleaned up temporary Jest config'));
+  console.log(chalkFn.green('✓ Cleaned up temporary Jest config'));
   
-  console.log(chalk.blue('================================'));
+  console.log(chalkFn.blue('================================'));
   if (success) {
-    console.log(chalk.green('✓ Test coverage reporting completed successfully'));
+    console.log(chalkFn.green('✓ Test coverage reporting completed successfully'));
   } else {
-    console.log(chalk.yellow('⚠ Tests completed with issues'));
+    console.log(chalkFn.yellow('⚠ Tests completed with issues'));
     process.exit(1);
   }
 }
 
 // Run the main function
 main().catch(error => {
-  console.error(chalk.red(`Fatal error: ${error.message}`));
+  console.error(chalkFn.red(`Fatal error: ${error.message}`));
   process.exit(1);
 }); 

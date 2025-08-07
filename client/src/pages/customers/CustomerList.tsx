@@ -61,7 +61,7 @@ const CustomerList: React.FC = () => {
       const response = await customerService.getCustomers();
       setCustomers(response.customers || []);
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to load customers');
       setSnackbar({
         open: true,
@@ -131,7 +131,7 @@ const CustomerList: React.FC = () => {
       });
       loadCustomers();
     } catch (error: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setSnackbar({
         open: true,
         message: `Failed to delete customer: ${error.message || 'Unknown error'}`,

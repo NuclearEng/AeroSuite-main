@@ -133,7 +133,7 @@ const QualityMetricsWidget: React.FC<QualityMetricsWidgetProps> = ({
         setLoading(false);
       }, 800);
     } catch (err: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setError(err.message || 'Failed to load quality metrics');
       setLoading(false);
     }

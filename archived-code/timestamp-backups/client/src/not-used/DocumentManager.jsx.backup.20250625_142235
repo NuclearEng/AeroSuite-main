@@ -1,0 +1,626 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  Box,
+  Button,
+  Typography,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Grid,
+  CircularProgress,
+  Tooltip,
+  Stack
+} from '@mui/material';
+import {
+  CloudUpload as UploadIcon,
+  GetApp as DownloadIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Description as FileIcon,
+  Visibility as ViewIcon,
+  MoreVert as MoreIcon,
+  Image as ImageIcon,
+  PictureAsPdf as PdfIcon,
+  InsertDriveFile as TextIcon,
+  Archive as ArchiveIcon,
+  Code as CodeIcon,
+  HourglassEmpty as PendingIcon
+} from '@mui/icons-material';
+import axios from 'axios';
+import { format } from 'date-fns';
+
+/**
+ * Document Manager Component
+ * 
+ * A reusable component for managing documents that can be attached to different entity types
+ */
+const DocumentManager = ({ 
+  entityType,  // Type of entity (supplier, customer, inspection, etc.)
+  entityId,    // ID of the entity
+  readOnly = false, // Whether the component is in read-only mode
+  title = 'Documents',
+  onDocumentsChange = null // Callback for when documents are added/removed
+}) => {
+  const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedDocument, setSelectedDocument] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    category: 'other',
+    tags: ''
+  });
+
+  // Document categories
+  const categories = [
+    { value: 'report', label: 'Report' },
+    { value: 'inspection', label: 'Inspection' },
+    { value: 'certificate', label: 'Certificate' },
+    { value: 'manual', label: 'Manual' },
+    { value: 'specification', label: 'Specification' },
+    { value: 'contract', label: 'Contract' },
+    { value: 'invoice', label: 'Invoice' },
+    { value: 'image', label: 'Image' },
+    { value: 'drawing', label: 'Drawing' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  // Load documents
+  const loadDocuments = useCallback(async () => {
+    if (!entityType || !entityId) return;
+    
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await axios.get(`/api/documents/entity/${entityType}/${entityId}`);
+      setDocuments(response.data.data || []);
+    } catch (err) {
+      console.error('Failed to load documents:', err);
+      setError('Failed to load documents. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  }, [entityType, entityId]);
+
+  // Load documents on component mount and when entity changes
+  useEffect(() => {
+    loadDocuments();
+  }, [loadDocuments]);
+
+  // Handle file selection
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setFormData({
+        ...formData,
+        title: file.name // Default title to filename
+      });
+    }
+  };
+
+  // Handle form input changes
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Handle document upload
+  const handleUpload = async () => {
+    if (!selectedFile) return;
+    
+    const uploadData = new FormData();
+    uploadData.append('document', selectedFile);
+    uploadData.append('title', formData.title);
+    uploadData.append('description', formData.description);
+    uploadData.append('category', formData.category);
+    uploadData.append('tags', formData.tags);
+    
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `/api/documents/entity/${entityType}/${entityId}`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      
+      // Add new document to the list
+      setDocuments([...documents, response.data.data]);
+      
+      // Notify parent of change if callback provided
+      if (onDocumentsChange) {
+        onDocumentsChange([...documents, response.data.data]);
+      }
+      
+      // Reset form
+      setUploadDialogOpen(false);
+      setSelectedFile(null);
+      setFormData({
+        title: '',
+        description: '',
+        category: 'other',
+        tags: ''
+      });
+    } catch (err) {
+      console.error('Failed to upload document:', err);
+      setError('Failed to upload document. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle document download
+  const handleDownload = async (document) => {
+    try {
+      window.open(`/api/documents/download/${document.documentId}`, '_blank');
+    } catch (err) {
+      console.error('Failed to download document:', err);
+      setError('Failed to download document. Please try again.');
+    }
+  };
+
+  // Handle opening edit dialog
+  const handleEditClick = (document) => {
+    setSelectedDocument(document);
+    setFormData({
+      title: document.title || '',
+      description: document.description || '',
+      category: document.category || 'other',
+      tags: document.tags ? document.tags.join(', ') : ''
+    });
+    setEditDialogOpen(true);
+  };
+
+  // Handle document update
+  const handleUpdate = async () => {
+    if (!selectedDocument) return;
+    
+    try {
+      setLoading(true);
+      const response = await axios.put(
+        `/api/documents/${selectedDocument.documentId}`,
+        formData
+      );
+      
+      // Update document in the list
+      const updatedDocuments = documents.map(doc => 
+        doc.documentId === selectedDocument.documentId ? response.data.data : doc
+      );
+      setDocuments(updatedDocuments);
+      
+      // Notify parent of change if callback provided
+      if (onDocumentsChange) {
+        onDocumentsChange(updatedDocuments);
+      }
+      
+      // Reset form
+      setEditDialogOpen(false);
+      setSelectedDocument(null);
+    } catch (err) {
+      console.error('Failed to update document:', err);
+      setError('Failed to update document. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle opening delete confirmation dialog
+  const handleDeleteClick = (document) => {
+    setSelectedDocument(document);
+    setConfirmDeleteOpen(true);
+  };
+
+  // Handle document deletion
+  const handleDelete = async () => {
+    if (!selectedDocument) return;
+    
+    try {
+      setLoading(true);
+      await axios.delete(`/api/documents/${selectedDocument.documentId}`);
+      
+      // Remove document from the list
+      const updatedDocuments = documents.filter(doc => doc.documentId !== selectedDocument.documentId);
+      setDocuments(updatedDocuments);
+      
+      // Notify parent of change if callback provided
+      if (onDocumentsChange) {
+        onDocumentsChange(updatedDocuments);
+      }
+      
+      // Reset
+      setConfirmDeleteOpen(false);
+      setSelectedDocument(null);
+    } catch (err) {
+      console.error('Failed to delete document:', err);
+      setError('Failed to delete document. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get appropriate icon for document type
+  const getDocumentIcon = (document) => {
+    switch (document.type) {
+      case 'image':
+        return <ImageIcon />;
+      case 'pdf':
+        return <PdfIcon />;
+      case 'text':
+        return <TextIcon />;
+      case 'archive':
+        return <ArchiveIcon />;
+      case 'spreadsheet':
+      case 'presentation':
+      case 'document':
+        return <FileIcon />;
+      case 'cad':
+        return <CodeIcon />;
+      default:
+        return <FileIcon />;
+    }
+  };
+
+  // Format file size
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  return (
+    <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h6" component="h2">
+          {title}
+        </Typography>
+        
+        {!readOnly && (
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<UploadIcon />}
+            onClick={() => setUploadDialogOpen(true)}
+          >
+            Upload Document
+          </Button>
+        )}
+      </Box>
+      
+      {error && (
+        <Box mb={2}>
+          <Typography color="error">{error}</Typography>
+        </Box>
+      )}
+      
+      {loading && documents.length === 0 ? (
+        <Box display="flex" justifyContent="center" p={4}>
+          <CircularProgress />
+        </Box>
+      ) : documents.length === 0 ? (
+        <Box textAlign="center" p={4} bgcolor="background.paper">
+          <Typography color="textSecondary">No documents available</Typography>
+        </Box>
+      ) : (
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell width="40%">Document</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Size</TableCell>
+                <TableCell>Uploaded</TableCell>
+                <TableCell align="right">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {documents.map((document) => (
+                <TableRow key={document.documentId}>
+                  <TableCell>
+                    <Box display="flex" alignItems="center">
+                      {getDocumentIcon(document)}
+                      <Box ml={2}>
+                        <Typography variant="body1">
+                          {document.title || document.originalFilename}
+                        </Typography>
+                        {document.description && (
+                          <Typography variant="body2" color="textSecondary">
+                            {document.description}
+                          </Typography>
+                        )}
+                        {document.tags && document.tags.length > 0 && (
+                          <Box mt={1}>
+                            {document.tags.map((tag, index) => (
+                              <Chip 
+                                key={index} 
+                                label={tag} 
+                                size="small" 
+                                sx={{ mr: 0.5, mb: 0.5 }} 
+                              />
+                            ))}
+                          </Box>
+                        )}
+                      </Box>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Chip 
+                      label={document.category.charAt(0).toUpperCase() + document.category.slice(1)} 
+                      size="small" 
+                    />
+                  </TableCell>
+                  <TableCell>{formatFileSize(document.size)}</TableCell>
+                  <TableCell>
+                    {document.createdAt ? format(new Date(document.createdAt), 'MMM d, yyyy') : '-'}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Stack direction="row" spacing={1} justifyContent="flex-end">
+                      {document.thumbnail?.hasThumbnail && (
+                        <Tooltip title="Preview">
+                          <IconButton size="small" onClick={() => window.open(`/api/documents/preview/${document.documentId}`, '_blank')}>
+                            <ViewIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                      <Tooltip title="Download">
+                        <IconButton size="small" onClick={() => handleDownload(document)}>
+                          <DownloadIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      {!readOnly && (
+                        <>
+                          <Tooltip title="Edit">
+                            <IconButton size="small" onClick={() => handleEditClick(document)}>
+                              <EditIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Delete">
+                            <IconButton size="small" onClick={() => handleDeleteClick(document)}>
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </>
+                      )}
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      
+      {/* Upload Dialog */}
+      <Dialog open={uploadDialogOpen} onClose={() => setUploadDialogOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Upload Document</DialogTitle>
+        <DialogContent>
+          <DialogContentText paragraph>
+            Please select a file to upload and provide document details.
+          </DialogContentText>
+          
+          <Box mt={2} mb={3}>
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={<UploadIcon />}
+              fullWidth
+            >
+              Select File
+              <input
+                type="file"
+                hidden
+                onChange={handleFileSelect}
+              />
+            </Button>
+            
+            {selectedFile && (
+              <Box mt={1} display="flex" alignItems="center">
+                <FileIcon sx={{ mr: 1 }} />
+                <Typography variant="body2">
+                  {selectedFile.name} ({formatFileSize(selectedFile.size)})
+                </Typography>
+              </Box>
+            )}
+          </Box>
+          
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                name="title"
+                label="Title"
+                value={formData.title}
+                onChange={handleInputChange}
+                fullWidth
+                required
+              />
+            </Grid>
+            
+            <Grid item xs={12}>
+              <TextField
+                name="description"
+                label="Description"
+                value={formData.description}
+                onChange={handleInputChange}
+                fullWidth
+                multiline
+                rows={2}
+              />
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  label="Category"
+                >
+                  {categories.map((category) => (
+                    <MenuItem key={category.value} value={category.value}>
+                      {category.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="tags"
+                label="Tags (comma separated)"
+                value={formData.tags}
+                onChange={handleInputChange}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setUploadDialogOpen(false)}>Cancel</Button>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={handleUpload}
+            disabled={!selectedFile || !formData.title || loading}
+            startIcon={loading ? <CircularProgress size={20} /> : null}
+          >
+            Upload
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
+      {/* Edit Dialog */}
+      <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Edit Document</DialogTitle>
+        <DialogContent>
+          <Grid container spacing={2} sx={{ mt: 1 }}>
+            <Grid item xs={12}>
+              <TextField
+                name="title"
+                label="Title"
+                value={formData.title}
+                onChange={handleInputChange}
+                fullWidth
+                required
+              />
+            </Grid>
+            
+            <Grid item xs={12}>
+              <TextField
+                name="description"
+                label="Description"
+                value={formData.description}
+                onChange={handleInputChange}
+                fullWidth
+                multiline
+                rows={2}
+              />
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  label="Category"
+                >
+                  {categories.map((category) => (
+                    <MenuItem key={category.value} value={category.value}>
+                      {category.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="tags"
+                label="Tags (comma separated)"
+                value={formData.tags}
+                onChange={handleInputChange}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={handleUpdate}
+            disabled={!formData.title || loading}
+            startIcon={loading ? <CircularProgress size={20} /> : null}
+          >
+            Save Changes
+          </Button>
+        </DialogActions>
+      </Dialog>
+      
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={confirmDeleteOpen} onClose={() => setConfirmDeleteOpen(false)}>
+        <DialogTitle>Delete Document</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this document?
+            {selectedDocument && (
+              <>
+                <br />
+                <br />
+                <strong>{selectedDocument.title || selectedDocument.originalFilename}</strong>
+              </>
+            )}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDeleteOpen(false)}>Cancel</Button>
+          <Button 
+            variant="contained" 
+            color="error" 
+            onClick={handleDelete}
+            disabled={loading}
+            startIcon={loading ? <CircularProgress size={20} /> : null}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Paper>
+  );
+};
+
+export default DocumentManager; 
