@@ -82,9 +82,18 @@ export async function runDockerBuildAgent(module: string): Promise<DockerBuildRe
           results.push(`⚠️ ${dockerfile} doesn't explicitly set USER (running as root)`);
         }
         
+        // Check for health check
+        if (!dockerfileContent.toLowerCase().includes('healthcheck')) {
+          results.push(`⚠️ ${dockerfile} doesn't include a HEALTHCHECK directive`);
+        } else {
+          results.push(`✅ ${dockerfile} includes a HEALTHCHECK directive`);
+        }
+        
         // Check if Dockerfile can be parsed
         try {
-          execSync(`docker build -t test-${dockerfile.replace(/\//g, '-')} -f ${dockerfilePath} --target deps . --no-cache`, {
+          // Use lowercase tag names to avoid Docker errors
+          const safeTag = `test-${path.basename(path.dirname(dockerfile))}-dockerfile`.toLowerCase();
+          execSync(`docker build -t ${safeTag} -f ${dockerfilePath} --target deps . --no-cache`, {
             cwd: path.join(projectRoot, path.dirname(dockerfile)),
             stdio: 'pipe'
           });
@@ -143,6 +152,27 @@ export async function runDockerBuildAgent(module: string): Promise<DockerBuildRe
       } catch (error: any) {
         results.push(`⚠️ Could not check client TypeScript: ${error.message}`);
       }
+    }
+
+    // Check container health status
+    results.push('\n=== Container Health Status Check ===');
+    try {
+      const containerStatus = execSync('docker ps --format "{{.Names}} {{.Status}}"', { 
+        cwd: projectRoot,
+        stdio: 'pipe' 
+      }).toString();
+      
+      results.push('Current container status:');
+      results.push(containerStatus);
+      
+      // Check for unhealthy containers
+      if (containerStatus.toLowerCase().includes('unhealthy')) {
+        results.push('⚠️ One or more containers are in unhealthy state');
+      } else if (containerStatus.toLowerCase().includes('health')) {
+        results.push('✅ All containers with health checks are healthy');
+      }
+    } catch (error: any) {
+      results.push(`⚠️ Could not check container health status: ${error.message}`);
     }
 
     // Check for common error patterns
