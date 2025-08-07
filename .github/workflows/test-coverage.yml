@@ -19,7 +19,7 @@ jobs:
         node-version: '18'
     
     - name: Install dependencies
-      run: npm install --legacy-peer-deps
+      run: npm install --no-fund --legacy-peer-deps --force
     
     - name: Run tests with coverage
       run: npm run test:ci

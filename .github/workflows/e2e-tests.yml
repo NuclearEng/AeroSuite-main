@@ -49,7 +49,7 @@ jobs:
       # Install npm dependencies without using cache
       - name: Install dependencies
         run: |
-          npm install --legacy-peer-deps
+          npm install --no-fund --legacy-peer-deps --force
           npm run postinstall || true
       
       - name: Seed test database
@@ -130,10 +130,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
       
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-fund --legacy-peer-deps --force
       
       - name: Download all artifacts
         uses: actions/download-artifact@v4
