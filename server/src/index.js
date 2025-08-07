@@ -369,6 +369,11 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Friendly root route for quick confirmation in browser
+app.get('/', (req, res) => {
+  res.status(200).send('AeroSuite API is running. Try /api/health');
+});
+
 // Add API health endpoint for CI/CD workflows
 app.get('/api/health', (req, res) => {
   const status = healthCheckManager.getOverallStatus();

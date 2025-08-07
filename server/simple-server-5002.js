@@ -35,6 +35,10 @@ app.use((err, req, res, next) => {
 });
 
 // Routes
+app.get('/', (req, res) => {
+  res.status(200).send('Simple API server is running. Try /api/health');
+});
+
 app.get('/api/health', (req, res, next) => {
   try {
     res.json({ 
