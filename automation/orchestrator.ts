@@ -22,6 +22,17 @@ import { runNodejsAgent } from './agents/nodejsAgent';
 import { runNginxUnitAgent } from './agents/nginxUnitAgent';
 import { runRedisAgent } from './agents/redisAgent';
 import { runCypressAgent } from './agents/cypressAgent';
+import { runA11yAgent } from './agents/a11yAgent';
+import { runAIModelAgent } from './agents/aiModelAgent';
+import { runBugAgent } from './agents/bugAgent';
+import { runCodeQualityAgent } from './agents/codeQualityAgent';
+import { runLintAgent } from './agents/lintAgent';
+import { runParallelismAgent } from './agents/parallelismAgent';
+import { runPerformanceAgent } from './agents/performanceAgent';
+import { runSecurityAgent } from './agents/securityAgent';
+import { runTestCoverageAgent } from './agents/testCoverageAgent';
+import { runUxUatAgent } from './agents/uxUatAgent';
+import { runPreBuildAgent } from './agents/preBuildAgent';
 
 type AgentResult = { passed: boolean; details: string };
 type ModuleResult = {
@@ -39,6 +50,7 @@ const allModules = [
   // ...add more modules as needed
 ];
 const allAgents = [
+  'preBuild', // Run first to catch errors early
   'softwareArchitect',
   'devSecOps',
   'testAutomation',
@@ -58,10 +70,21 @@ const allAgents = [
   'nginxUnit',
   'redis',
   'cypress',
+  'a11y',
+  'aiModel',
+  'bug',
+  'codeQuality',
+  'lint',
+  'parallelism',
+  'performance',
+  'security',
+  'testCoverage',
+  'uxUat',
   // systems agent is global, not per module
 ];
 
 const agentFns: Record<string, (m: string) => Promise<AgentResult>> = {
+  preBuild: runPreBuildAgent,
   softwareArchitect: runSoftwareArchitectAgent,
   devSecOps: runDevSecOpsAgent,
   testAutomation: runTestAutomationAgent,
@@ -81,6 +104,16 @@ const agentFns: Record<string, (m: string) => Promise<AgentResult>> = {
   nginxUnit: runNginxUnitAgent,
   redis: runRedisAgent,
   cypress: runCypressAgent,
+  a11y: runA11yAgent,
+  aiModel: runAIModelAgent,
+  bug: runBugAgent,
+  codeQuality: runCodeQualityAgent,
+  lint: runLintAgent,
+  parallelism: runParallelismAgent,
+  performance: runPerformanceAgent,
+  security: runSecurityAgent,
+  testCoverage: runTestCoverageAgent,
+  uxUat: runUxUatAgent,
   // systems agent is not per module
 };
 
@@ -162,7 +195,13 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error('Fatal error in orchestrator:', err);
-  process.exit(1);
-}); 
+// Export the main function for testing
+module.exports = { main };
+
+// Run the main function if this file is executed directly
+if (require.main === module) {
+  main().catch(err => {
+    console.error('Fatal error in orchestrator:', err);
+    process.exit(1);
+  });
+} 

@@ -1,0 +1,85 @@
+# ---- Base Stage ----
+FROM node:18-slim AS base
+WORKDIR /app
+
+# ---- Dependencies Stage ----
+FROM base AS deps
+# Install build dependencies for native modules
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3 make g++ && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy package files for better caching
+COPY package*.json ./
+
+# Install dependencies with deterministic builds
+RUN npm install --legacy-peer-deps
+
+# ---- Build Stage ----
+FROM base AS build
+# Copy deps from previous stage
+COPY --from=deps /app/node_modules ./node_modules
+COPY package*.json ./
+
+# Copy source code (filtered by .dockerignore)
+COPY . .
+
+# Build the application
+ENV NODE_ENV=production
+RUN npm run build:optimized
+
+# ---- Production Stage ----
+FROM nginx:stable-alpine AS production
+
+# Create nginx user and group
+RUN addgroup -g 101 -S nginx 2>/dev/null || true && \
+    adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx 2>/dev/null || true
+
+# Create a custom nginx.conf that doesn't require root permissions
+RUN echo 'user nginx;\n\
+worker_processes auto;\n\
+pid /var/run/nginx.pid;\n\
+events {\n\
+    worker_connections 1024;\n\
+}\n\
+http {\n\
+    include /etc/nginx/mime.types;\n\
+    default_type application/octet-stream;\n\
+    sendfile on;\n\
+    access_log /var/log/nginx/access.log;\n\
+    error_log /var/log/nginx/error.log;\n\
+    client_body_temp_path /var/cache/nginx/client_temp;\n\
+    proxy_temp_path /var/cache/nginx/proxy_temp;\n\
+    fastcgi_temp_path /var/cache/nginx/fastcgi_temp;\n\
+    uwsgi_temp_path /var/cache/nginx/uwsgi_temp;\n\
+    scgi_temp_path /var/cache/nginx/scgi_temp;\n\
+    server {\n\
+        listen 80;\n\
+        server_name localhost;\n\
+        location / {\n\
+            root /usr/share/nginx/html;\n\
+            index index.html index.htm;\n\
+            try_files $uri $uri/ /index.html;\n\
+        }\n\
+    }\n\
+}\n' > /etc/nginx/nginx.conf
+
+# Create required directories with proper permissions
+RUN mkdir -p /var/cache/nginx/client_temp /var/cache/nginx/proxy_temp \
+             /var/cache/nginx/fastcgi_temp /var/cache/nginx/uwsgi_temp \
+             /var/cache/nginx/scgi_temp /var/log/nginx /var/run && \
+    chown -R nginx:nginx /var/cache/nginx /var/log/nginx /var/run && \
+    chmod -R 755 /var/cache/nginx
+
+# Copy built assets from build stage
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Set ownership of static files in one go
+RUN chown -R nginx:nginx /usr/share/nginx/html
+
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:80 || exit 1
+
+CMD ["nginx", "-g", "daemon off;"]
