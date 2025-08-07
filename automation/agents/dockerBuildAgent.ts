@@ -127,7 +127,7 @@ export async function runDockerBuildAgent(module: string): Promise<DockerBuildRe
               
               // Show first few errors
               const errorLines = output.split('\n')
-                .filter(line => line.includes('error TS'))
+                .filter((line: string) => line.includes('error TS'))
                 .slice(0, 5);
               
               results.push(errorLines.join('\n'));
