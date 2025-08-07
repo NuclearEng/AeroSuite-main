@@ -37,20 +37,7 @@ FROM nginx:stable-alpine AS production
 # nginx already runs as nginx user by default in alpine
 # Just copy the built files - nginx:alpine handles permissions
 COPY --from=build /app/build /usr/share/nginx/html
-
-# Simple nginx config for SPA
-RUN echo 'server {
-    listen 80;
-    server_name localhost;
-    root /usr/share/nginx/html;
-    index index.html;
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-    gzip on;
-    gzip_types text/plain text/css text/javascript application/javascript application/json;
-    gzip_min_length 1000;
-}' > /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
