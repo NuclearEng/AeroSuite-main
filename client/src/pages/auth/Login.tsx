@@ -103,7 +103,7 @@ const Login: React.FC = () => {
   };
 
   const handleResendVerification = () => {
-    navigate('/resend-verification');
+    navigate('/auth/resend-verification');
   };
 
   return (
@@ -161,7 +161,7 @@ const Login: React.FC = () => {
             <Box sx={{ mt: 3 }}>
               <Link
               component={RouterLink}
-              to="/login"
+              to="/auth/login"
               variant="body2"
               onClick={() => setEmailVerificationRequired(false)}>
 
@@ -263,7 +263,7 @@ const Login: React.FC = () => {
 
                 <Link
                 component={RouterLink}
-                to="/forgot-password"
+                to="/auth/forgot-password"
                 variant="body2"
                 underline="hover">
 
@@ -299,7 +299,7 @@ const Login: React.FC = () => {
                 Don't have an account?{' '}
                 <Link
                 component={RouterLink}
-                to="/register"
+                to="/auth/register"
                 variant="body2"
                 underline="hover">
 

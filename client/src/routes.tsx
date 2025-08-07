@@ -39,6 +39,11 @@ const PerformanceMetrics = lazy(() => import('./pages/monitoring/PerformanceMetr
 
 // Auth pages
 const Login = lazy(() => import('./pages/auth/Login'));
+const Register = lazy(() => import('./pages/auth/Register'));
+const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/auth/ResetPassword'));
+const VerifyEmail = lazy(() => import('./pages/auth/VerifyEmail'));
+const ResendVerification = lazy(() => import('./pages/auth/ResendVerification'));
 
 // Create a loading component
 const LoadingFallback = () => (
@@ -49,7 +54,7 @@ const LoadingFallback = () => (
 
 // Create a simple not found component
 const NotFound = () =>
-<div style={{ padding: '2rem', textAlign: 'center' }}>
+  <div style={{ padding: '2rem', textAlign: 'center' }}>
     <h1>404 - Page Not Found</h1>
     <p>The page you're looking for doesn't exist.</p>
   </div>;
@@ -61,6 +66,11 @@ const AppRoutes: React.FC = () => {
       <Routes>
         {/* Auth Routes */}
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
+        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+        <Route path="/auth/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/auth/verify-email/:token" element={<VerifyEmail />} />
+        <Route path="/auth/resend-verification" element={<ResendVerification />} />
 
         {/* Main Layout Routes */}
         <Route path="/" element={<MainLayout />}>

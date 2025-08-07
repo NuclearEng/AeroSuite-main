@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Typography, Container, Paper, Button, TextField, Link, Alert, IconButton, InputAdornment } from '@mui/material';
 import { Link as RouterLink, useParams, useNavigate } from 'react-router-dom';
 import { Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon } from '@mui/icons-material';
+import AuthService from '../../services/auth.service';
 
 const ResetPassword: React.FC = () => {
   const { token } = useParams<{ token: string }>();
@@ -11,8 +12,9 @@ const ResetPassword: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -32,13 +34,21 @@ const ResetPassword: React.FC = () => {
       return;
     }
 
-    // For demo, just show success
-    setSuccess(true);
-    
-    // In real app, would submit to API with token
-    setTimeout(() => {
-      navigate('/login');
-    }, 3000);
+    if (!token) {
+      setError('Invalid or expired reset token. Please request a new password reset link.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await AuthService.resetPassword({ password, passwordConfirm: confirmPassword, token });
+      setSuccess(true);
+      setTimeout(() => navigate('/auth/login'), 3000);
+    } catch (err: any) {
+      setError(err.message || 'Failed to reset password');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -87,7 +97,7 @@ const ResetPassword: React.FC = () => {
                   autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  disabled={!token || success}
+                  disabled={!token || success || loading}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -112,7 +122,7 @@ const ResetPassword: React.FC = () => {
                   id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  disabled={!token || success}
+                  disabled={!token || success || loading}
                 />
                 
                 <Button
@@ -120,16 +130,16 @@ const ResetPassword: React.FC = () => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  disabled={!token || success}
+                  disabled={!token || success || loading}
                 >
-                  Reset Password
+                  {loading ? 'Resetting...' : 'Reset Password'}
                 </Button>
               </Box>
             </>
           )}
           
           <Box sx={{ textAlign: 'center', mt: 2 }}>
-            <Link component={RouterLink} to="/login" variant="body2">
+            <Link component={RouterLink} to="/auth/login" variant="body2">
               Back to Login
             </Link>
           </Box>

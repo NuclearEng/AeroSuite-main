@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import { Box, Typography, Container, Paper, Button, TextField, Link, Alert } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import AuthService from '../../services/auth.service';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    setError(null);
+    if (!email) return;
+    try {
+      await AuthService.forgotPassword({ email });
       setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || 'Failed to send reset link');
     }
   };
 
@@ -30,6 +37,7 @@ const ForgotPassword: React.FC = () => {
               <Typography variant="body2" color="text.secondary" align="center" paragraph>
                 Enter your email address and we'll send you a link to reset your password
               </Typography>
+              {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
               
               <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <TextField
@@ -57,7 +65,7 @@ const ForgotPassword: React.FC = () => {
                 <Box sx={{ textAlign: 'center', mt: 2 }}>
                   <Link 
                     component={RouterLink} 
-                    to="/login" 
+                    to="/auth/login" 
                     variant="body2"
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   >
@@ -80,7 +88,7 @@ const ForgotPassword: React.FC = () => {
               </Typography>
               <Button
                 component={RouterLink}
-                to="/login"
+                to="/auth/login"
                 variant="outlined"
                 fullWidth
                 sx={{ mt: 2 }}

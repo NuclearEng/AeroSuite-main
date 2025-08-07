@@ -106,7 +106,7 @@ const ResendVerification: React.FC = () => {
               <Box sx={{ textAlign: 'center', mt: 2 }}>
                 <Typography variant="body2">
                   Remember your password?{' '}
-                  <Link component={RouterLink} to="/login" variant="body2">
+                  <Link component={RouterLink} to="/auth/login" variant="body2">
                     Back to Login
                   </Link>
                 </Typography>
