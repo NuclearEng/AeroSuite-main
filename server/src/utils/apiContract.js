@@ -6,7 +6,7 @@
  */
 
 const { validationResult } = require('express-validator');
-const { AppError } = require('./errorHandler');
+const { AppError, errorHandler } = require('./errorHandler');
 
 /**
  * Standard response structure for all API endpoints
@@ -118,32 +118,6 @@ const controllerHandler = (handler) => async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-/**
- * Standard error handling middleware
- */
-const errorHandler = (err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const errorCode = err.code || 'INTERNAL_ERROR';
-  const errorMessage = err.message || 'Something went wrong';
-  const errorDetails = err.isOperational ? err.details : null;
-  
-  // Log error
-  console.error(`[ERROR] ${req.method} ${req.path} - ${statusCode} ${errorMessage}`, {
-    requestId: req.id,
-    error: err,
-    stack: err.stack,
-  });
-  
-  res.status(statusCode).json(
-    ApiResponse.error(
-      errorMessage,
-      errorCode,
-      errorDetails,
-      { requestId: req.id }
-    )
-  );
 };
 
 /**

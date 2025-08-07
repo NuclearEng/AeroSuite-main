@@ -5,6 +5,35 @@
  */
 
 /**
+ * Logger class for context-aware logging
+ */
+class Logger {
+  constructor(contextName = 'App') {
+    this.contextName = contextName;
+  }
+  
+  info(message, ...args) {
+    console.log(`[${new Date().toISOString()}] [INFO] [${this.contextName}] ${message}`, ...args);
+  }
+  
+  debug(message, ...args) {
+    console.log(`[${new Date().toISOString()}] [DEBUG] [${this.contextName}] ${message}`, ...args);
+  }
+  
+  warn(message, ...args) {
+    console.warn(`[${new Date().toISOString()}] [WARN] [${this.contextName}] ${message}`, ...args);
+  }
+  
+  error(message, ...args) {
+    console.error(`[${new Date().toISOString()}] [ERROR] [${this.contextName}] ${message}`, ...args);
+  }
+  
+  withContext(context, req) {
+    return context;
+  }
+}
+
+/**
  * Simple logger implementation
  */
 const logger = {
@@ -22,7 +51,15 @@ const logger = {
   
   error: (message, ...args) => {
     console.error(`[${new Date().toISOString()}] [ERROR] ${message}`, ...args);
+  },
+  
+  withContext: (context, req) => {
+    return context;
+  },
+  
+  createContextLogger: (contextName) => {
+    return new Logger(contextName);
   }
 };
 
-module.exports = { logger }; 
+module.exports = { logger, Logger }; 
