@@ -94,7 +94,7 @@ const EnhancedSSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({
           setProviders([]);
         }
       } catch (_error) {
-        console.error("Error:", err);
+        console.error("Error:", _error);
         setProviders([]);
         setLoadError('Failed to load authentication providers');
         if (onError) {
