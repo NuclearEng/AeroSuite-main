@@ -125,7 +125,8 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
   onRefresh
 }) => {
   const theme = useTheme();
-  const chartRef = useRef<ChartJS<keyof ChartTypeRegistry>>(null);
+  // Use a more generic type that works with all chart types
+  const chartRef = useRef<ChartJS>(null);
 
   // State
   const [chartType, setChartType] = useState<ChartType>(defaultChartType);
