@@ -153,7 +153,7 @@ const EditCustomer: React.FC = () => {
 
         setError(null);
       } catch (err: any) {
-        console.error("Error:", _error);
+        console.error("Error:", err);
         setError(err.message || 'Failed to load customer data');
       } finally {
         setLoading(false);

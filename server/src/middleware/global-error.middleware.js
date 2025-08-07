@@ -83,6 +83,34 @@ const globalErrorHandler = (err, req, res, next) => {
     statusCode = 400;
     errorCode = 'INVALID_URI';
     errorMessage = 'Invalid URI';
+  } else if (err.name === 'MulterError') {
+    // File upload errors
+    statusCode = 400;
+    errorCode = 'FILE_UPLOAD_ERROR';
+    errorMessage = err.message;
+  } else if (err.name === 'PayloadTooLargeError' || err.status === 413) {
+    // Request entity too large
+    statusCode = 413;
+    errorCode = 'PAYLOAD_TOO_LARGE';
+    errorMessage = 'Request payload too large';
+  } else if (err.name === 'RateLimitExceededError' || err.status === 429) {
+    // Rate limit exceeded
+    statusCode = 429;
+    errorCode = 'RATE_LIMIT_EXCEEDED';
+    errorMessage = 'Rate limit exceeded. Please try again later.';
+    
+    // Add retry-after header
+    res.set('Retry-After', '60');
+  } else if (err.name === 'MongooseError') {
+    // Generic Mongoose errors
+    statusCode = 500;
+    errorCode = 'DATABASE_ERROR';
+    errorMessage = 'Database operation failed';
+  } else if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') {
+    // External service connection errors
+    statusCode = 503;
+    errorCode = 'SERVICE_UNAVAILABLE';
+    errorMessage = 'External service unavailable';
   } else {
     // Unhandled errors (500 Internal Server Error)
     statusCode = 500;
@@ -120,6 +148,9 @@ const globalErrorHandler = (err, req, res, next) => {
       }
     );
   }
+  
+  // Add security headers for error responses
+  res.set('X-Content-Type-Options', 'nosniff');
   
   // Send standardized error response
   res.status(statusCode).json(

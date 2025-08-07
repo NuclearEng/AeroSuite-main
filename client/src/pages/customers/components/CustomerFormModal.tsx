@@ -154,7 +154,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
             tags: customer.tags || []
           });
         } catch (_error) {
-          console.error("Error:", _error);
+          console.error("Error:", err);
         } finally {
           setLoading(false);
         }
@@ -289,7 +289,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
       // Close the modal
       onClose();
     } catch (error: any) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setErrors((prev) => ({
         ...prev,
         submit: error.message || 'Failed to save customer. Please try again.'

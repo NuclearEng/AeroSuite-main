@@ -92,7 +92,7 @@ const Settings: React.FC = () => {
           setConsentSettings(settings);
         }
       } catch (_error) {
-        console.error("Error:", _error);
+        console.error("Error:", err);
       }
     };
 
@@ -130,7 +130,7 @@ const Settings: React.FC = () => {
         severity: 'success'
       });
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setNotification({
         open: true,
         message: 'Failed to save privacy settings',
@@ -159,7 +159,7 @@ const Settings: React.FC = () => {
         severity: 'success'
       });
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setExportError('Failed to export data. Please try again later.');
     } finally {
       setIsExporting(false);
@@ -232,7 +232,7 @@ const Settings: React.FC = () => {
       localStorage.removeItem('user');
       window.location.href = '/login?deleted=true';
     } catch (_error) {
-      console.error("Error:", _error);
+      console.error("Error:", err);
       setNotification({
         open: true,
         message: 'Failed to delete account. Please contact support.',

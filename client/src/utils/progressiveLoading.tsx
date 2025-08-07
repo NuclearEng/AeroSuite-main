@@ -443,7 +443,7 @@ export function useCriticalPathRendering(
           }, 0);
         }
       } catch (_error) {
-        console.error("Error:", _error);
+        console.error("Error:", err);
       }
     };
     

@@ -107,8 +107,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         try {
           const placeholder = await getTinyPlaceholder(src);
           setPlaceholderSrc(placeholder);
-        } catch (_error) {
-          console.error("Error:", _error);
+        } catch (err) {
+          console.error("Error:", err);
         }
       };
 

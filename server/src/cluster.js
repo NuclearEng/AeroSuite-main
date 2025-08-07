@@ -97,4 +97,5 @@ http_request_duration_seconds_count{method="GET",route="/api/health"} 5
   });
 }
 
-module.exports = express; 
+// Export the cluster module instead of express
+module.exports = cluster; 
