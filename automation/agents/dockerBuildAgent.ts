@@ -148,22 +148,43 @@ export async function runDockerBuildAgent(module: string): Promise<DockerBuildRe
     // Check for common error patterns
     results.push('\n=== Common Error Pattern Check ===');
     try {
-      const output = execSync(
+      // Check for undefined variable errors
+      const errOutput = execSync(
         `grep -r "console.error(\\"Error:\\", err)" client/src || true`,
         { cwd: projectRoot, stdio: 'pipe' }
       ).toString();
       
-      const matchCount = output.split('\n').filter(Boolean).length;
+      const errMatchCount = errOutput.split('\n').filter(Boolean).length;
       
-      if (matchCount > 0) {
-        results.push(`⚠️ Found ${matchCount} potential undefined variable errors`);
-        const sampleLines = output.split('\n').filter(Boolean).slice(0, 3);
+      if (errMatchCount > 0) {
+        results.push(`⚠️ Found ${errMatchCount} potential undefined variable errors`);
+        const sampleLines = errOutput.split('\n').filter(Boolean).slice(0, 3);
         results.push(sampleLines.join('\n'));
-        if (matchCount > 3) {
-          results.push(`... and ${matchCount - 3} more instances`);
+        if (errMatchCount > 3) {
+          results.push(`... and ${errMatchCount - 3} more instances`);
         }
       } else {
-        results.push('✅ No common error patterns detected');
+        results.push('✅ No undefined variable errors detected');
+      }
+      
+      // Check for Chart.js TypeScript errors
+      const chartOutput = execSync(
+        `grep -r "useRef<ChartJS<keyof ChartTypeRegistry>" client/src || true`,
+        { cwd: projectRoot, stdio: 'pipe' }
+      ).toString();
+      
+      const chartMatchCount = chartOutput.split('\n').filter(Boolean).length;
+      
+      if (chartMatchCount > 0) {
+        results.push(`⚠️ Found ${chartMatchCount} potential Chart.js type errors`);
+        const sampleLines = chartOutput.split('\n').filter(Boolean).slice(0, 3);
+        results.push(sampleLines.join('\n'));
+        if (chartMatchCount > 3) {
+          results.push(`... and ${chartMatchCount - 3} more instances`);
+        }
+        results.push('⚠️ Chart.js refs should use generic ChartJS type instead of ChartJS<keyof ChartTypeRegistry>');
+      } else {
+        results.push('✅ No Chart.js type errors detected');
       }
     } catch (error: any) {
       results.push(`⚠️ Could not check for error patterns: ${error.message}`);

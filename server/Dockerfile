@@ -19,17 +19,15 @@ FROM node:18-alpine AS production
 # Install dumb-init first
 RUN apk add --no-cache dumb-init
 
-# Create user and setup directories with proper permissions
+# Create user
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001 -G nodejs && \
-    mkdir -p /app && \
-    chown -R nodejs:nodejs /app
+    adduser -S nodejs -u 1001 -G nodejs
 
 # Create working directory
 WORKDIR /app
 
-# Copy package files with correct ownership
-COPY --chown=nodejs:nodejs --from=deps /app/package*.json ./
+# Copy package files (no chown needed)
+COPY --from=deps /app/package*.json ./
 
 # Now switch to nodejs user after files are properly owned
 USER nodejs
