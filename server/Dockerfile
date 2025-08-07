@@ -23,11 +23,13 @@ RUN apk add --no-cache dumb-init
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 -G nodejs
 
-# Create working directory
+# Create working directory and set permissions
 WORKDIR /app
+RUN chown -R nodejs:nodejs /app
 
-# Copy package files (no chown needed)
+# Copy package files
 COPY --from=deps /app/package*.json ./
+RUN chown nodejs:nodejs /app/package*.json
 
 # Now switch to nodejs user after files are properly owned
 USER nodejs
@@ -39,8 +41,15 @@ RUN npm install --only=production --legacy-peer-deps && \
 # Create necessary directories (already owned by nodejs since we're running as that user)
 RUN mkdir -p logs uploads temp
 
-# Copy application code (will be owned by nodejs automatically)
+# Switch back to root for copying files
+USER root
+
+# Copy application code and fix permissions
 COPY . .
+RUN chown -R nodejs:nodejs /app
+
+# Switch back to nodejs user
+USER nodejs
 
 # Environment defaults
 ENV NODE_ENV=production \
