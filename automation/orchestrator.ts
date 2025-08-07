@@ -33,6 +33,7 @@ import { runSecurityAgent } from './agents/securityAgent';
 import { runTestCoverageAgent } from './agents/testCoverageAgent';
 import { runUxUatAgent } from './agents/uxUatAgent';
 import { runPreBuildAgent } from './agents/preBuildAgent';
+import { runDockerBuildAgent } from './agents/dockerBuildAgent';
 
 type AgentResult = { passed: boolean; details: string };
 type ModuleResult = {
@@ -51,6 +52,7 @@ const allModules = [
 ];
 const allAgents = [
   'preBuild', // Run first to catch errors early
+  'dockerBuild', // Run Docker validation tests
   'softwareArchitect',
   'devSecOps',
   'testAutomation',
@@ -85,6 +87,7 @@ const allAgents = [
 
 const agentFns: Record<string, (m: string) => Promise<AgentResult>> = {
   preBuild: runPreBuildAgent,
+  dockerBuild: runDockerBuildAgent,
   softwareArchitect: runSoftwareArchitectAgent,
   devSecOps: runDevSecOpsAgent,
   testAutomation: runTestAutomationAgent,

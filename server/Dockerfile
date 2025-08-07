@@ -1,4 +1,4 @@
-# Multi-stage build for AeroSuite Backend - Fast version without chown
+# Multi-stage build for AeroSuite Backend - Fixed permissions version
 
 # Stage 1: Dependencies
 FROM node:18-alpine AS deps
@@ -19,18 +19,20 @@ FROM node:18-alpine AS production
 # Install dumb-init first
 RUN apk add --no-cache dumb-init
 
-# Create user and switch to it early
+# Create user and setup directories with proper permissions
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001 -G nodejs
+    adduser -S nodejs -u 1001 -G nodejs && \
+    mkdir -p /app && \
+    chown -R nodejs:nodejs /app
 
-# Switch to nodejs user for all subsequent operations
-USER nodejs
-
-# Create working directory as the nodejs user
+# Create working directory
 WORKDIR /app
 
-# Copy package files as nodejs user (no chown needed)
-COPY --from=deps /app/package*.json ./
+# Copy package files with correct ownership
+COPY --chown=nodejs:nodejs --from=deps /app/package*.json ./
+
+# Now switch to nodejs user after files are properly owned
+USER nodejs
 
 # Install only production dependencies as nodejs user
 RUN npm install --only=production --legacy-peer-deps && \
