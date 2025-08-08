@@ -46,15 +46,15 @@ const VerifyEmail = lazy(() => import('./pages/auth/VerifyEmail'));
 const ResendVerification = lazy(() => import('./pages/auth/ResendVerification'));
 
 // Create a loading component
-const LoadingFallback = () => (
-  <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+const LoadingFallback = () =>
+<Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
     <CircularProgress />
-  </Box>
-);
+  </Box>;
+
 
 // Create a simple not found component
 const NotFound = () =>
-  <div style={{ padding: '2rem', textAlign: 'center' }}>
+<div style={{ padding: '2rem', textAlign: 'center' }}>
     <h1>404 - Page Not Found</h1>
     <p>The page you're looking for doesn't exist.</p>
   </div>;
@@ -64,7 +64,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
-        {/* Auth Routes */}
+        
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
         <Route path="/auth/forgot-password" element={<ForgotPassword />} />
@@ -72,18 +72,18 @@ const AppRoutes: React.FC = () => {
         <Route path="/auth/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/auth/resend-verification" element={<ResendVerification />} />
 
-        {/* Main Layout Routes */}
+        
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           
-          {/* Customer Routes */}
+          
           <Route path="customers">
             <Route index element={<CustomerList />} />
             <Route path="create" element={<CreateCustomer />} />
           </Route>
           
-          {/* Supplier Routes */}
+          
           <Route path="suppliers">
             <Route index element={<SupplierList />} />
             <Route path="create" element={<CreateSupplier />} />
@@ -91,36 +91,36 @@ const AppRoutes: React.FC = () => {
             <Route path="enhanced-table" element={<EnhancedSupplierTable />} />
           </Route>
           
-          {/* Inspection Routes */}
+          
           <Route path="inspections">
             <Route index element={<InspectionList />} />
             <Route path="schedule" element={<ScheduleInspection />} />
           </Route>
           
-          {/* Report Routes */}
+          
           <Route path="reports">
             <Route index element={<ReportBuilder />} />
             <Route path="builder" element={<ReportBuilder />} />
             <Route path="visualization" element={<DataVisualization />} />
           </Route>
           
-          {/* Other Routes */}
+          
           <Route path="metrics" element={<ApplicationMetrics />} />
           <Route path="ai-analysis" element={<AIAnalysis />} />
           <Route path="monitoring/performance" element={<PerformanceMetrics />} />
           
-          {/* Settings & Profile */}
+          
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
           <Route path="help" element={<Help />} />
           <Route path="modals-and-forms" element={<ModalsAndFormsTester />} />
           
-          {/* 404 Not Found */}
+          
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </Suspense>
-  );
+    </Suspense>);
+
 };
 
 export default AppRoutes;

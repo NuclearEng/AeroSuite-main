@@ -206,22 +206,22 @@ const EditSupplier: React.FC = () => {
 
     if (!name) return;
 
-      // Handle nested fields (using dot notation in name)
-  if (name.includes('.')) {
-    const [parent, child] = name.split('.');
-    setFormValues((prev) => {
-      if (parent === 'address') {
-        return {
-          ...prev,
-          address: {
-            ...prev.address,
-            [child]: value
-          }
-        };
-      }
-      return prev;
-    });
-  } else {
+    // Handle nested fields (using dot notation in name)
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      setFormValues((prev) => {
+        if (parent === 'address') {
+          return {
+            ...prev,
+            address: {
+              ...prev.address,
+              [child]: value
+            }
+          };
+        }
+        return prev;
+      });
+    } else {
       setFormValues((prev) => ({
         ...prev,
         [name]: value
@@ -597,7 +597,7 @@ const EditSupplier: React.FC = () => {
                   onChange={(_, value) => handleCertificationsChange(value)}
                   renderTags={(value, getTagProps) =>
                   value.map((option, index) =>
-                  <Chip
+                  <Chip key={index}
                   label={option}
                   {...getTagProps({ index })}
                   color="primary"
@@ -624,7 +624,7 @@ const EditSupplier: React.FC = () => {
                   onChange={(_, value) => handleTagsChange(value)}
                   renderTags={(value, getTagProps) =>
                   value.map((option, index) =>
-                  <Chip
+                  <Chip key={index}
                   label={option}
                   {...getTagProps({ index })}
                   color="secondary"

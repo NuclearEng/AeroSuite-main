@@ -39,60 +39,60 @@ const SEO: React.FC<SEOProps> = ({
   const helmetData = {
     title: metaTitle,
     meta: [
-      { name: 'description', content: metaDescription },
-      { name: 'keywords', content: keywords },
-      
-      // Open Graph / Facebook
-      { property: 'og:type', content: 'website' },
-      { property: 'og:title', content: ogTitle || metaTitle },
-      { property: 'og:description', content: ogDescription || metaDescription },
-      { property: 'og:image', content: ogImage },
-      ...(ogUrl ? [{ property: 'og:url', content: ogUrl }] : []),
-      
-      // Twitter
-      { name: 'twitter:card', content: twitterCard },
-      { name: 'twitter:title', content: ogTitle || metaTitle },
-      { name: 'twitter:description', content: ogDescription || metaDescription },
-      { name: 'twitter:image', content: ogImage },
-      
-      // No index directive if specified
-      ...(noIndex ? [{ name: 'robots', content: 'noindex' }] : [])
-    ],
+    { name: 'description', content: metaDescription },
+    { name: 'keywords', content: keywords },
+
+    // Open Graph / Facebook
+    { property: 'og:type', content: 'website' },
+    { property: 'og:title', content: ogTitle || metaTitle },
+    { property: 'og:description', content: ogDescription || metaDescription },
+    { property: 'og:image', content: ogImage },
+    ...(ogUrl ? [{ property: 'og:url', content: ogUrl }] : []),
+
+    // Twitter
+    { name: 'twitter:card', content: twitterCard },
+    { name: 'twitter:title', content: ogTitle || metaTitle },
+    { name: 'twitter:description', content: ogDescription || metaDescription },
+    { name: 'twitter:image', content: ogImage },
+
+    // No index directive if specified
+    ...(noIndex ? [{ name: 'robots', content: 'noindex' }] : [])],
+
     link: [
-      // Canonical URL
-      ...(canonicalUrl ? [{ rel: 'canonical', href: canonicalUrl }] : [])
-    ],
+    // Canonical URL
+    ...(canonicalUrl ? [{ rel: 'canonical', href: canonicalUrl }] : [])],
+
     script: [
-      // Structured data for rich results
-      ...(Object.keys(structuredData).length > 0 ? [
-        {
-          type: 'application/ld+json',
-          innerHTML: JSON.stringify(structuredData)
-        }
-      ] : [])
-    ]
+    // Structured data for rich results
+    ...(Object.keys(structuredData).length > 0 ? [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(structuredData)
+    }] :
+    [])]
+
   };
 
   return (
     <React.Fragment>
-      {/* 
-        Note: This component returns metadata that should be placed within a HelmetProvider
-        in the application's root component. The actual Helmet component is not rendered here
-        to avoid TypeScript JSX element issues.
-      */}
-      {/* 
-        Usage example in App.tsx:
-        <HelmetProvider>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            ...
-          </Routes>
-        </HelmetProvider>
-      */}
-      {/* Helmet data is returned for documentation purposes */}
+      
+
+
+
+
+      
+
+
+
+
+
+
+
+
+      
       {null}
-    </React.Fragment>
-  );
+    </React.Fragment>);
+
 };
 
 export default SEO;
