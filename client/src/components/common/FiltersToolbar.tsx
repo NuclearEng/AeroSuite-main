@@ -640,7 +640,10 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                 onClick={(e) => handleFilterSelectorClick(e, filterDef)}
                 size={size}
                 sx={{
-                  transition: animations.microInteraction,
+                  transition: (theme) => theme.transitions.create(['background-color', 'box-shadow', 'transform'], {
+                    duration: theme.transitions.duration.short,
+                    easing: theme.transitions.easing.easeInOut,
+                  }),
                   '&:hover': {
                     backgroundColor: theme.palette.primary.main + '20'
                   }

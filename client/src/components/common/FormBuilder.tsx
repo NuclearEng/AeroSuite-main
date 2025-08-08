@@ -37,7 +37,6 @@ import {
   Warning as WarningIcon } from
 '@mui/icons-material';
 import { LoadingButton } from './index';
-import { animations } from '../../theme/theme';
 
 // Types for field validation
 export type ValidationRule = {
