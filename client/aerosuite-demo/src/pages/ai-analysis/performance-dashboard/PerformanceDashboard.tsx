@@ -135,12 +135,12 @@ function PerformanceDashboard() {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line
+     
   }, [modelId, metricType, timeWindow]);
 
   useEffect(() => {
     fetchCompareData();
-    // eslint-disable-next-line
+     
   }, [compareModelId, compareMetricType, timeWindow]);
 
   // Real-time polling
@@ -156,7 +156,7 @@ function PerformanceDashboard() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-    // eslint-disable-next-line
+     
   }, [realTime, modelId, metricType, compareModelId, compareMetricType, timeWindow]);
 
   return (

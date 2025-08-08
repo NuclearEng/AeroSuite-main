@@ -506,7 +506,7 @@ export function useIncrementalHydration(
     }
     
     let isMounted = true;
-    let currentBatch = 0;
+    const currentBatch = 0;
     
     // Sort components by priority and visibility
     const sortedComponents = [...components].sort((a, b) => {

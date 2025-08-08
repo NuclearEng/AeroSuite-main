@@ -279,7 +279,7 @@ export function getSuggestedColor(
   const shouldGoLighter = bgLuminance < 0.5;
   
   // Start with current color
-  let adjustedColor = { ...fgRGB };
+  const adjustedColor = { ...fgRGB };
   let adjustedRatio = currentRatio;
   let iterations = 0;
   
@@ -361,7 +361,7 @@ export function getAccessiblePalette(baseColor: string): {
     '#121212';
   
   // Create accent color (analogous color with good contrast)
-  let accentRgb = { ...baseRgb };
+  const accentRgb = { ...baseRgb };
   
   // Shift hue by adjusting RGB values
   if (baseRgb.r > baseRgb.g && baseRgb.r > baseRgb.b) {

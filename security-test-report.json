@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-06T06:39:13.190Z",
+  "timestamp": "2025-08-08T04:35:22.381Z",
   "passed": 3,
   "failed": 2,
   "tests": [
@@ -8,7 +8,7 @@
       "key": "dependencyAudit",
       "passed": false,
       "error": "Dependency audit failed",
-      "details": "Command failed: cd client && npm audit --json > ../npm-audit-client.json\nnpm warn config ignoring workspace config at /Users/tannercoker/AeroSuite-main/client/.npmrc\n"
+      "details": "Command failed: cd client && npm audit --json > ../npm-audit-client.json"
     },
     {
       "name": "Secret/API Key Scanning",

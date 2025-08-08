@@ -193,7 +193,7 @@ const SupplierPerformanceCharts: React.FC<SupplierPerformanceChartsProps> = ({ s
     const labels = sortedHistory.map(item => format(new Date(item.period), 'MMM yyyy'));
     
     // Create datasets based on selected metric type
-    let datasets = [];
+    const datasets = [];
     
     if (metricType === 'all' || metricType === 'quality') {
       datasets.push({

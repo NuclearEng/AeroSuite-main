@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-06T06:39:15.925Z",
+  "timestamp": "2025-08-08T04:35:26.359Z",
   "passed": 1,
   "failed": 4,
   "tests": [
@@ -8,14 +8,14 @@
       "key": "bundleSizeAnalysis",
       "passed": false,
       "error": "Bundle analysis failed",
-      "details": "Command failed: cd client && npm run build\nnpm warn config ignoring workspace config at /Users/tannercoker/AeroSuite-main/client/.npmrc\nnpm error Lifecycle script `build` failed with error:\nnpm error code 1\nnpm error path /Users/tannercoker/AeroSuite-main/client\nnpm error workspace aerosuite-client@1.0.0\nnpm error location /Users/tannercoker/AeroSuite-main/client\nnpm error command failed\nnpm error command sh -c react-scripts build\n"
+      "details": "Command failed: cd client && npm run build\nsh: react-scripts: command not found\n"
     },
     {
       "name": "Code Splitting Analysis",
       "key": "codeSplittingCheck",
       "passed": false,
       "lazyComponents": 1,
-      "dynamicImports": 94,
+      "dynamicImports": 118,
       "files": {
         "lazy": [
           {
@@ -55,6 +55,10 @@
           {
             "file": "client/src/reportWebVitals.ts",
             "dynamicImports": 1
+          },
+          {
+            "file": "client/src/routes.tsx",
+            "dynamicImports": 24
           },
           {
             "file": "client/src/utils/apiClient.test.ts",
@@ -180,8 +184,23 @@
           "count": 1
         },
         {
+          "file": "client/src/components/common/GlobalEnhancements.tsx",
+          "issue": "Event listener without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/GlobalEnhancements.tsx",
+          "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
           "file": "client/src/components/common/OfflineIndicator.tsx",
           "issue": "setInterval without cleanup",
+          "count": 1
+        },
+        {
+          "file": "client/src/components/common/PerformanceWrapper.tsx",
+          "issue": "setTimeout without cleanup (in useEffect)",
           "count": 1
         },
         {
@@ -596,6 +615,10 @@
           "issue": "Using array index as React key"
         },
         {
+          "file": "client/src/components/common/PerformanceWrapper.tsx",
+          "issue": "Component not optimized with PureComponent or React.memo"
+        },
+        {
           "file": "client/src/components/common/ProgressiveDataTable.tsx",
           "issue": "Using array index as React key"
         },
@@ -972,7 +995,7 @@
           "issue": "Inline function in render method"
         }
       ],
-      "count": 140
+      "count": 141
     }
   ]
 }

@@ -597,7 +597,7 @@ const EditSupplier: React.FC = () => {
                   onChange={(_, value) => handleCertificationsChange(value)}
                   renderTags={(value, getTagProps) =>
                   value.map((option, index) =>
-                  <Chip key={index}
+                  <Chip
                   label={option}
                   {...getTagProps({ index })}
                   color="primary"
@@ -624,7 +624,7 @@ const EditSupplier: React.FC = () => {
                   onChange={(_, value) => handleTagsChange(value)}
                   renderTags={(value, getTagProps) =>
                   value.map((option, index) =>
-                  <Chip key={index}
+                  <Chip
                   label={option}
                   {...getTagProps({ index })}
                   color="secondary"

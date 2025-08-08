@@ -54,7 +54,7 @@ function RetrainingDashboard() {
       socket.disconnect();
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
     };
-    // eslint-disable-next-line
+     
   }, [modelId]);
 
   useEffect(() => {

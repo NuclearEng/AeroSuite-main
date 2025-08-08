@@ -122,7 +122,7 @@ export const ResponsiveGridItem: React.FC<GridProps> = ({
   const { isMobile, isTablet, isDesktop } = useResponsive();
   
   // Determine appropriate grid sizes based on screen
-  let gridProps = {
+  const gridProps = {
     xs,
     sm: isMobile ? xs : sm,
     md: isMobile ? xs : isTablet ? sm : md,

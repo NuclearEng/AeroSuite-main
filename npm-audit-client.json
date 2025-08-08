@@ -41,20 +41,6 @@
         "isSemVerMajor": true
       }
     },
-    "compression": {
-      "name": "compression",
-      "severity": "low",
-      "isDirect": true,
-      "via": [
-        "on-headers"
-      ],
-      "effects": [],
-      "range": "1.0.3 - 1.8.0",
-      "nodes": [
-        "node_modules/compression"
-      ],
-      "fixAvailable": true
-    },
     "css-select": {
       "name": "css-select",
       "severity": "high",
@@ -138,37 +124,6 @@
         "version": "0.0.0",
         "isSemVerMajor": true
       }
-    },
-    "on-headers": {
-      "name": "on-headers",
-      "severity": "low",
-      "isDirect": false,
-      "via": [
-        {
-          "source": 1106812,
-          "name": "on-headers",
-          "dependency": "on-headers",
-          "title": "on-headers is vulnerable to http response header manipulation",
-          "url": "https://github.com/advisories/GHSA-76c9-3jph-rj3q",
-          "severity": "low",
-          "cwe": [
-            "CWE-241"
-          ],
-          "cvss": {
-            "score": 3.4,
-            "vectorString": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:N"
-          },
-          "range": "<1.1.0"
-        }
-      ],
-      "effects": [
-        "compression"
-      ],
-      "range": "<1.1.0",
-      "nodes": [
-        "node_modules/on-headers"
-      ],
-      "fixAvailable": true
     },
     "postcss": {
       "name": "postcss",
@@ -395,19 +350,19 @@
   "metadata": {
     "vulnerabilities": {
       "info": 0,
-      "low": 2,
+      "low": 0,
       "moderate": 3,
       "high": 8,
       "critical": 1,
-      "total": 14
+      "total": 12
     },
     "dependencies": {
-      "prod": 2022,
+      "prod": 2034,
       "dev": 897,
       "optional": 42,
       "peer": 0,
       "peerOptional": 0,
-      "total": 2957
+      "total": 2969
     }
   }
 }
