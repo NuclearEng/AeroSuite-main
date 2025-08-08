@@ -16,8 +16,8 @@ export const queryClient = new QueryClient({
     queries: {
       // Cache data for 5 minutes
       staleTime: 5 * 60 * 1000,
-      // Keep cache for 10 minutes
-      cacheTime: 10 * 60 * 1000,
+      // Garbage collect cache after 10 minutes (replaces cacheTime in v5)
+      gcTime: 10 * 60 * 1000,
       // Retry failed requests 3 times with exponential backoff
       retry: (failureCount, error) => {
         if (error instanceof AxiosError) {

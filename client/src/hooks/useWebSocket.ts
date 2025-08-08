@@ -26,7 +26,7 @@ export const useWebSocket = () => {
         // Connect to WebSocket
         websocketService.connect(wsUrl, token);
       } catch (_error) {
-        console.error('Failed to connect to WebSocket:', error);
+        console.error('Failed to connect to WebSocket:', _error);
       }
     };
     
@@ -95,7 +95,7 @@ export const useWebSocket = () => {
       // Connect to WebSocket
       websocketService.connect(wsUrl, token);
     } catch (_error) {
-      console.error('Failed to reconnect to WebSocket:', error);
+      console.error('Failed to reconnect to WebSocket:', _error);
     }
   }, [getToken]);
   

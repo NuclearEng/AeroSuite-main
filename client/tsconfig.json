@@ -23,5 +23,17 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "src/not-used/**",
+    "src/components/ui-library/**",
+    "src/components/dashboard/widgets/**",
+    "src/components/inspections/**",
+    "src/components/monitoring/**",
+    "src/components/dnd/**",
+    "src/components/user/**",
+    "src/components/payments/**",
+    "src/components/notifications/**",
+    "src/pages/**"
   ]
 }

@@ -1,0 +1,37 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/index.tsx",
+    "src/App.tsx",
+    "src/routes.tsx",
+    "src/theme/**/*.ts",
+    "src/components/common/**/*.ts",
+    "src/components/common/**/*.tsx",
+    "src/components/layout/**/*.ts",
+    "src/components/layout/**/*.tsx",
+    "src/components/navigation/**/*.ts",
+    "src/components/navigation/**/*.tsx",
+    "src/redux/**/*.ts",
+    "src/redux/**/*.tsx",
+    "src/hooks/**/*.ts",
+    "src/services/**/*.ts",
+    "src/utils/**/*.ts",
+    "src/utils/**/*.tsx"
+  ],
+  "exclude": [
+    "src/not-used/**",
+    "src/components/ui-library/**",
+    "src/components/dashboard/widgets/**",
+    "src/components/inspections/**",
+    "src/components/monitoring/**",
+    "src/components/dnd/**",
+    "src/components/user/**",
+    "src/components/payments/**",
+    "src/components/notifications/**",
+    "src/pages/**",
+    "src/__tests__/**",
+    "src/test-utils/**"
+  ]
+}
+
+

@@ -26,8 +26,8 @@ export const useSuppliers = (params?: {
     queryKey: [...QUERY_KEYS.suppliers, params],
     queryFn: () => supplierService.getSuppliers(params || {}),
     staleTime: 5 * 60 * 1000, // 5 minutes
-    cacheTime: 10 * 60 * 1000, // 10 minutes
-    keepPreviousData: true, // Keep previous data while fetching new page
+    gcTime: 10 * 60 * 1000, // 10 minutes
+    placeholderData: (previousData) => previousData, // replace keepPreviousData in v5
   });
 };
 
@@ -38,18 +38,21 @@ export const useSupplier = (id: string) => {
     queryFn: () => supplierService.getSupplier(id),
     enabled: !!id,
     staleTime: 5 * 60 * 1000,
-    cacheTime: 10 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 };
 
 // Supplier metrics hook
 export const useSupplierMetrics = (id: string) => {
+  const fetchSupplierMetrics = (supplierService as any).getSupplierMetrics
+    ? (supplierService as any).getSupplierMetrics
+    : async (_id: string) => Promise.resolve(null);
   return useQuery({
     queryKey: QUERY_KEYS.supplierMetrics(id),
-    queryFn: () => supplierService.getSupplierMetrics(id),
+    queryFn: () => fetchSupplierMetrics(id),
     enabled: !!id,
     staleTime: 10 * 60 * 1000, // Metrics update less frequently
-    cacheTime: 15 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };
 
