@@ -72,10 +72,10 @@ const AccessibilityTesting = () => {
       setTestResults(results);
       logA11yViolations(results);
     } catch (_error) {
-      console.error('Error running accessibility test:', error);
+      console.error('Error running accessibility test:', _error);
       setTestResults({
         error: true,
-        message: error.message,
+        message: _error.message,
         violations: [],
         passes: [],
         incomplete: [],

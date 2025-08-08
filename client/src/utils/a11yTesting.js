@@ -30,7 +30,7 @@ export const runA11yTests = async (element, options = {}) => {
     
     return results;
   } catch (_error) {
-    console.error('Error running accessibility tests:', error);
+    console.error('Error running accessibility tests:', _error);
     return { violations: [], passes: [], incomplete: [], inapplicable: [] };
   }
 };

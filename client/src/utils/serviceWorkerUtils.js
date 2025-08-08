@@ -121,7 +121,7 @@ export const subscribeToPushNotifications = async (publicVapidKey) => {
     
     return subscription;
   } catch (_error) {
-    console.error('Error subscribing to push notifications:', error);
+    console.error('Error subscribing to push notifications:', _error);
     return null;
   }
 };
@@ -199,7 +199,7 @@ export const registerServiceWorker = async () => {
     const registration = await wb.register();
     return registration;
   } catch (_error) {
-    console.error('Service worker registration failed:', error);
+    console.error('Service worker registration failed:', _error);
     return null;
   }
 };
@@ -221,7 +221,7 @@ export const unregisterServiceWorker = async () => {
     }
     return false;
   } catch (_error) {
-    console.error('Service worker unregistration failed:', error);
+    console.error('Service worker unregistration failed:', _error);
     return false;
   }
 };
@@ -241,7 +241,7 @@ export const updateServiceWorker = async () => {
       await registration.update();
     }
   } catch (_error) {
-    console.error('Error updating service worker:', error);
+    console.error('Error updating service worker:', _error);
   }
 };
 

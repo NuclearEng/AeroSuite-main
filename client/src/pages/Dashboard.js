@@ -181,7 +181,7 @@ const Dashboard = () => {
           aria-live="polite"
         >
           <Typography variant="body2">
-            You're viewing cached dashboard data while offline. Some features may be limited.
+            You&apos;re viewing cached dashboard data while offline. Some features may be limited.
           </Typography>
         </Box>
       )}

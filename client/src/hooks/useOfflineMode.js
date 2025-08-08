@@ -78,7 +78,7 @@ const useOfflineMode = () => {
       const cachedData = localStorage.getItem(`offline_${key}`);
       return cachedData ? JSON.parse(cachedData) : null;
     } catch (_error) {
-      console.error('Error getting cached data:', error);
+      console.error('Error getting cached data:', _error);
       return null;
     }
   };
@@ -93,7 +93,7 @@ const useOfflineMode = () => {
       // In a real app, this would store data in IndexedDB
       localStorage.setItem(`offline_${key}`, JSON.stringify(data));
     } catch (_error) {
-      console.error('Error caching data:', error);
+      console.error('Error caching data:', _error);
     }
   };
 
@@ -119,7 +119,7 @@ const useOfflineMode = () => {
       // Save updated queue
       localStorage.setItem('offline_action_queue', JSON.stringify(queue));
     } catch (_error) {
-      console.error('Error queueing offline action:', error);
+      console.error('Error queueing offline action:', _error);
     }
   };
 
