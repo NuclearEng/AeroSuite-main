@@ -83,7 +83,7 @@ ErrorComponent: ComponentType<{error: Error | null;onReset: () => void;}> = Defa
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-      console.error("Error:", _err)orInfo);
+      console.error('Error in WithErrorHandling HOC:', error, errorInfo);
       if (this.props.onError) {
         this.props.onError(error);
       }
@@ -138,7 +138,7 @@ ErrorComponent: ComponentType<{error: Error | null;onReset: () => void;}> = Defa
         const result = await fetchData();
         setData(result);
       } catch (_err) {
-        setError(err instanceof Error ? err : new Error('An unknown error occurred'));
+        setError(_err instanceof Error ? _err : new Error('An unknown error occurred'));
       } finally {
         setIsLoading(false);
       }

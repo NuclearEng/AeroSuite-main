@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, CssBaseline, Snackbar, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
+// Deprecated legacy theme import removed. New theme system is under src/theme/themeConfig.ts and ThemeProvider.tsx
 import theme from './theme';
 import ResponsiveLayout from './components/layout/ResponsiveLayout';
 import Dashboard from './pages/Dashboard';

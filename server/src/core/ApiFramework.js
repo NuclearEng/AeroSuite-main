@@ -228,7 +228,7 @@ class ApiFramework {
     middlewareChain.push(wrappedHandler);
     
     // Register route
-    const routePath = path.replace(/:([^\/]+)/g, '{$1}');
+    const routePath = path.replace(/:([^/]+)/g, '{$1}');
     versionConfig.router[method.toLowerCase()](path, ...middlewareChain);
     
     // Update documentation

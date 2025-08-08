@@ -11,8 +11,26 @@ const router = express.Router();
 const feedbackController = require('../controllers/feedback.controller');
 const { authenticate } = require('../middleware/auth.middleware');
 const { authorize } = require('../middleware/authorization.middleware');
+const SecureFileUpload = require('../utils/secureFileUpload');
 const multer = require('multer');
-const upload = multer({ storage: multer.memoryStorage() });
+
+// Configure secure upload: quarantine to disk then process
+const secureUpload = new SecureFileUpload({
+  allowedMimeTypes: [
+    'image/jpeg', 'image/png', 'image/gif',
+    'application/pdf', 'text/csv',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  ],
+  maxFileSize: 10 * 1024 * 1024,
+  uploadDir: require('path').join(process.cwd(), 'uploads', 'feedback')
+});
+
+const upload = multer({
+  storage: secureUpload.createMulterStorage(),
+  fileFilter: secureUpload.createFileFilter(),
+  limits: { fileSize: 10 * 1024 * 1024 }
+});
 
 /**
  * @route   POST /api/feedback
@@ -21,7 +39,29 @@ const upload = multer({ storage: multer.memoryStorage() });
  */
 router.post(
   '/',
-  upload.array('attachments', 5), // Allow up to 5 file attachments
+  upload.array('attachments', 5),
+  async (req, res, next) => {
+    try {
+      // Process uploaded files through security pipeline
+      if (Array.isArray(req.files)) {
+        const processed = [];
+        for (const file of req.files) {
+          const result = await secureUpload.processUploadedFile(file);
+          processed.push(result);
+        }
+        // Attach processed file metadata to request for controller usage
+        req.body.attachments = processed.map(p => ({
+          filename: p.filename,
+          path: p.relativePath,
+          mimetype: p.mimetype,
+          size: p.size
+        }));
+      }
+      next();
+    } catch (err) {
+      return res.status(400).json({ success: false, message: err.message || 'Invalid attachment' });
+    }
+  },
   feedbackController.createFeedback
 );
 

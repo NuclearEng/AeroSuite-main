@@ -18,6 +18,7 @@ const notificationRoutes = require('../notification.routes'); // Reuse v1 implem
 const documentRoutes = require('../document.routes'); // Reuse v1 implementation
 const permissionRoutes = require('./permission.routes'); // v2-specific implementation
 const backupVerificationRoutes = require('./backup-verification.routes'); // v2-specific implementation
+const verificationRoutes = require('./verification.routes');
 
 // Mount routes
 router.use('/auth', authRoutes);
@@ -29,6 +30,7 @@ router.use('/notifications', notificationRoutes);
 router.use('/documents', documentRoutes);
 router.use('/permissions', permissionRoutes);
 router.use('/backups/verification', backupVerificationRoutes);
+router.use('/verification', verificationRoutes);
 
 // Add API documentation endpoint specific to v2
 router.get('/docs', (req, res) => {
@@ -45,7 +47,8 @@ router.get('/docs', (req, res) => {
       { path: '/notifications', methods: ['GET', 'POST', 'DELETE'] },
       { path: '/documents', methods: ['GET', 'POST', 'PUT', 'DELETE'] },
       { path: '/permissions', methods: ['GET', 'POST', 'PUT', 'DELETE'] },
-      { path: '/backups/verification', methods: ['GET', 'POST'] }
+      { path: '/backups/verification', methods: ['GET', 'POST'] },
+      { path: '/verification', methods: ['GET', 'POST'] }
     ]
   });
 });

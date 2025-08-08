@@ -552,18 +552,15 @@ const apiClient = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
+  withCredentials: true,
 });
 
 // Request interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    // Get token from localStorage
-    const token = localStorage.getItem('token');
-    
-    // Add token to headers if it exists
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // Prefer secure HttpOnly cookie; if legacy localStorage token exists, attach as Bearer
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null;
+    if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
     
     return config;
   },

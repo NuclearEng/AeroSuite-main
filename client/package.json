@@ -81,6 +81,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "eslint .",
     "dev": "BROWSER=none react-scripts start",
     "analyze": "ANALYZE=true npm run build:optimized",
     "build:optimized": "node --max-old-space-size=8192 node_modules/.bin/react-app-rewired build",

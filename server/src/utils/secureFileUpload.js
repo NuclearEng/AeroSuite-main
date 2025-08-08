@@ -101,7 +101,7 @@ class SecureFileUpload {
   async scanForMalware(buffer) {
     // Basic pattern matching for common malware signatures
     const malwarePatterns = [
-      /\x4D\x5A[\x00-\xFF]{58}\x50\x45\x00\x00/, // PE executable
+      /MZ[\s\S]{58}PE\u0000\u0000/, // PE executable (human-readable fallback)
       /<script[^>]*>[\s\S]*?<\/script>/gi, // Script tags
       /eval\s*\(/gi, // Eval functions
       /\bexec\s*\(/gi, // Exec functions

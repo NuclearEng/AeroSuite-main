@@ -172,7 +172,7 @@ const RequestBatchingDemo: React.FC = () => {
       setIndividualTime(Math.round(endTime - startTime));
       setIndividualResponses(results);
     } catch (_err) {
-      console.error("Error:", _err)));
+      console.error('Error:', _err);
     }
   };
   
@@ -254,7 +254,7 @@ const RequestBatchingDemo: React.FC = () => {
       setBatchedTime(Math.round(endTime - startTime));
       setBatchedResponses(finalResults);
     } catch (_err) {
-      console.error("Error:", _err)));
+      console.error('Error:', _err);
     }
   };
   

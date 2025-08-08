@@ -26,7 +26,7 @@ router.post(
   apiSecurity.validateRequest.body({
     firstName: { type: 'string', required: true, pattern: /^[a-zA-Z\s\-']{2,50}$/ },
     lastName: { type: 'string', required: true, pattern: /^[a-zA-Z\s\-']{2,50}$/ },
-    email: { type: 'string', required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ },
+    email: { type: 'string', required: true, pattern: /^[\w.-]+@[\w-]+(?:\.[\w-]+)+$/ },
     password: { type: 'string', required: true, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/ },
     role: { type: 'string', pattern: /^(admin|manager|inspector|customer|viewer)$/ },
     customerId: { type: 'string', pattern: /^[0-9a-fA-F]{24}$/ }
@@ -77,7 +77,7 @@ router.post(
 router.get(
   '/verify-email/:token',
   apiSecurity.validateRequest.params({
-    token: { type: 'string', pattern: /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/ }
+    token: { type: 'string', pattern: /^[A-Za-z0-9\-_=]+\.[A-Za-z0-9\-_=]+\.?[A-Za-z0-9\-_.+/=]*$/ }
   }),
   authController.verifyEmail
 );
@@ -90,7 +90,7 @@ router.get(
 router.post(
   '/resend-verification',
   apiSecurity.validateRequest.body({
-    email: { type: 'string', required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ }
+    email: { type: 'string', required: true, pattern: /^[\w.-]+@[\w-]+(?:\.[\w-]+)+$/ }
   }),
   [
     body('email')
@@ -111,7 +111,7 @@ router.post(
 router.post(
   '/login',
   apiSecurity.validateRequest.body({
-    email: { type: 'string', required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ },
+    email: { type: 'string', required: true, pattern: /^[\w.-]+@[\w-]+(?:\.[\w-]+)+$/ },
     password: { type: 'string', required: true }
   }),
   [
@@ -226,7 +226,7 @@ router.put(
   apiSecurity.validateRequest.body({
     firstName: { type: 'string', pattern: /^[a-zA-Z\s\-']{2,50}$/ },
     lastName: { type: 'string', pattern: /^[a-zA-Z\s\-']{2,50}$/ },
-    phoneNumber: { type: 'string', pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/ },
+    phoneNumber: { type: 'string', pattern: /^[+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/ },
     preferences: { type: 'object' }
   }),
   [
@@ -302,7 +302,7 @@ router.post(
   '/2fa/verify-login',
   apiSecurity.validateRequest.body({
     token: { type: 'string', required: true, pattern: /^[0-9]{6}$/ },
-    tempToken: { type: 'string', required: true, pattern: /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/ }
+    tempToken: { type: 'string', required: true, pattern: /^[A-Za-z0-9\-_=]+\.[A-Za-z0-9\-_=]+\.?[A-Za-z0-9\-_.+/=]*$/ }
   }),
   [
     body('token')

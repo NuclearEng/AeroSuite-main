@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { CssBaseline } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
@@ -48,7 +47,6 @@ const App: React.FC = () => {
 
               <QueryClientProvider client={queryClient}>
                 <BrowserRouter>
-                  <CssBaseline />
                   <ErrorBoundary>
                     <GlobalEnhancements>
                       <AppRoutes />

@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../theme/theme';
+import { createTheme } from '@mui/material/styles';
+import { createThemeOptions } from '../../theme/themeConfig';
+const theme = createTheme(createThemeOptions('light', 'blue'));
 import ErrorBoundary from '../../components/common/ErrorBoundary';
 
 // Mock console.error to avoid test output pollution

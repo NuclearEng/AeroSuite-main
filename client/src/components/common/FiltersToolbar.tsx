@@ -39,7 +39,7 @@ import {
   KeyboardArrowDown as ArrowDownIcon,
   KeyboardArrowUp as ArrowUpIcon } from
 '@mui/icons-material';
-import { animations } from '../../theme/theme';
+// normalized to MUI transitions; legacy animations removed
 
 // Types for filter options
 export type FilterType =
@@ -655,12 +655,15 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
             label={`+${hiddenFilters.length} more`}
             onClick={handleFilterButtonClick}
             size={size}
-            sx={{
-              transition: animations.microInteraction,
-              '&:hover': {
-                backgroundColor: theme.palette.primary.main + '20'
-              }
-            }} />
+                sx={{
+                  transition: (theme) => theme.transitions.create(['background-color', 'box-shadow', 'transform'], {
+                    duration: theme.transitions.duration.short,
+                    easing: theme.transitions.easing.easeInOut,
+                  }),
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.main + '20'
+                  }
+                }} />
 
           }
             

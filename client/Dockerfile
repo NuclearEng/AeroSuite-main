@@ -24,11 +24,10 @@ COPY package*.json ./
 # Copy source code (filtered by .dockerignore)
 COPY . .
 
-# Build the application with TypeScript checks disabled
+# Build the application with strict checks in production
 ENV NODE_ENV=production
-ENV TSC_COMPILE_ON_ERROR=true
-ENV ESLINT_NO_DEV_ERRORS=true
-ENV DISABLE_ESLINT_PLUGIN=true
+ARG CI_BUILD=true
+ENV CI=$CI_BUILD
 RUN npm run build
 
 # ---- Production Stage ----
@@ -39,6 +38,7 @@ FROM nginx:stable-alpine AS production
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Consider running on non-root port when possible
 EXPOSE 80
 
 RUN apk add --no-cache curl

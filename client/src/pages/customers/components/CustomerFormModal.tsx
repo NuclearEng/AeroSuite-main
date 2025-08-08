@@ -154,7 +154,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
             tags: customer.tags || []
           });
         } catch (_error) {
-          console.error("Error:", err);
+          console.error("Error:", _error);
         } finally {
           setLoading(false);
         }
@@ -289,7 +289,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
       // Close the modal
       onClose();
     } catch (error: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setErrors((prev) => ({
         ...prev,
         submit: error.message || 'Failed to save customer. Please try again.'
@@ -304,13 +304,14 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
       open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md">
+      maxWidth="md"
+      aria-labelledby="customer-form-title">
 
-      <DialogTitle>
+      <DialogTitle id="customer-form-title">
         {isEdit ? 'Edit Customer' : 'Add New Customer'}
       </DialogTitle>
       
-      <DialogContent dividers>
+      <DialogContent dividers sx={{ p: 3 }}>
         {loading ?
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
             <CircularProgress />

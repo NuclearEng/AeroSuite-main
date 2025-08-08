@@ -349,12 +349,12 @@ class InspectionRepository extends Repository {
   }
 
   /**
-   * Find inspections by supplier ID
+   * Find inspections by supplier ID with mock pagination (demo)
    * @param {string} supplierId - The supplier ID
    * @param {Object} options - Query options (pagination, etc.)
    * @returns {Promise<Object>} - The inspections for the supplier
    */
-  async findBySupplier(supplierId, options = { page: 1, limit: 10 }) {
+  async findBySupplierPaginated(supplierId, options = { page: 1, limit: 10 }) {
     try {
       // In a real implementation, this would query the inspection collection
       // For now, return mock data

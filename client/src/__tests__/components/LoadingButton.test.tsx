@@ -2,7 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../theme/theme';
+import { createTheme } from '@mui/material/styles';
+import { createThemeOptions } from '../../theme/themeConfig';
+const theme = createTheme(createThemeOptions('light', 'blue'));
 import LoadingButton from '../../components/common/LoadingButton';
 
 describe('LoadingButton Component', () => {

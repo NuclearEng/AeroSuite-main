@@ -62,27 +62,24 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Navigate to automation directory
-cd "$AUTOMATION_DIR" || { echo "❌ Failed to navigate to automation directory"; exit 1; }
+# Navigate to repo root (script's base dir)
+cd "$BASE_DIR" || { echo "❌ Failed to navigate to repo base directory"; exit 1; }
 
-# Set up command
+# Build orchestrator flags
+ORCH_FLAGS=""
 if [ -n "$AGENTS" ]; then
-  echo "🚀 Running agent: $AGENTS"
-  if [ "$VERBOSE" = true ]; then
-    echo "📝 Verbose mode enabled"
-    npx ts-node agents/${AGENTS}Agent.ts "$MODULE"
-  else
-    npx ts-node agents/${AGENTS}Agent.ts "$MODULE"
-  fi
-else
-  echo "🚀 Running orchestrator for module: $MODULE"
-  if [ "$VERBOSE" = true ]; then
-    echo "📝 Verbose mode enabled"
-    npx ts-node orchestrator.ts "$MODULE"
-  else
-    npx ts-node orchestrator.ts "$MODULE"
-  fi
+  ORCH_FLAGS="$ORCH_FLAGS --agents=$AGENTS"
 fi
+if [ "$MODULE" != "all" ]; then
+  ORCH_FLAGS="$ORCH_FLAGS --modules=$MODULE"
+fi
+
+echo "🚀 Running orchestrator ${MODULE:+for module: $MODULE} ${AGENTS:+with agents: $AGENTS}"
+if [ "$VERBOSE" = true ]; then
+  echo "📝 Verbose mode enabled"
+fi
+
+npx ts-node automation/orchestrator.ts $ORCH_FLAGS
 
 # Check exit status
 EXIT_CODE=$?

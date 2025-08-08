@@ -3,7 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import theme from '../../theme/theme';
+import { createTheme } from '@mui/material/styles';
+import { createThemeOptions } from '../../theme/themeConfig';
+const theme = createTheme(createThemeOptions('light', 'blue'));
 import PageHeader from '../../components/common/PageHeader';
 
 describe('PageHeader Component', () => {

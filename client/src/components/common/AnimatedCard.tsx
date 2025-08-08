@@ -11,7 +11,7 @@ import {
   SxProps,
   Theme
 } from '@mui/material';
-import { animations } from '../../theme/theme';
+import { useTheme } from '@mui/material/styles';
 
 interface AnimatedCardProps extends CardProps {
   title?: string;
@@ -42,20 +42,29 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({
   // Define hover effects
   const hoverStyles: Record<string, SxProps<Theme>> = {
     lift: {
-      transition: animations.cardHover,
+      transition: theme.transitions.create(['transform', 'box-shadow'], {
+        duration: theme.transitions.duration.short,
+        easing: theme.transitions.easing.easeInOut,
+      }),
       '&:hover': {
-        transform: 'translateY(-8px)',
-        boxShadow: '0 12px 20px rgba(0, 0, 0, 0.1)',
+        transform: 'translateY(-6px)',
+        boxShadow: theme.shadows[4],
       },
     },
     glow: {
-      transition: animations.cardHover,
+      transition: theme.transitions.create('box-shadow', {
+        duration: theme.transitions.duration.short,
+        easing: theme.transitions.easing.easeInOut,
+      }),
       '&:hover': {
         boxShadow: `0 0 20px ${theme.palette.primary.main}40`,
       },
     },
     border: {
-      transition: animations.cardHover,
+      transition: theme.transitions.create('border-color', {
+        duration: theme.transitions.duration.short,
+        easing: theme.transitions.easing.easeInOut,
+      }),
       '&:hover': {
         borderColor: theme.palette.primary.main,
       },

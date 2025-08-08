@@ -175,7 +175,7 @@ const MicroInteractionsDemo: React.FC = () => {
               Animated Buttons
             </Typography>
             <Typography variant="body2" paragraph>
-              Buttons with various hover, click, and state animations.
+              Buttons with various hover, click, and state animations, using MUI theme transitions for consistency.
             </Typography>
             
             <Grid container spacing={3}>
@@ -548,7 +548,7 @@ const MicroInteractionsDemo: React.FC = () => {
               Form Interactions
             </Typography>
             <Typography variant="body2" paragraph>
-              Interactive form elements with micro-animations.
+              Interactive form elements with micro-animations, aligned with theme.transitions.
             </Typography>
             
             <Grid container spacing={3}>

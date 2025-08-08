@@ -49,6 +49,21 @@ fi
 
 echo "✅ Simple server started successfully on port 5002 (PID: $SIMPLE_SERVER_PID)"
 
+# Start the API proxy server on port 80
+echo "🔌 Starting API proxy server on port 80..."
+sudo node server/api-proxy.js > logs/api-proxy.log 2>&1 &
+API_PROXY_PID=$!
+
+# Check if API proxy server started successfully
+sleep 2
+if ! curl -s http://api.aerosuite.com/ > /dev/null; then
+  echo "❌ Failed to start API proxy server. Please check the logs."
+  echo "📄 Log file: logs/api-proxy.log"
+  echo "⚠️ Continuing anyway, but there may be issues..."
+else
+  echo "✅ API proxy server started successfully (PID: $API_PROXY_PID)"
+fi
+
 # Print URLs
 echo ""
 echo "🌐 AeroSuite is now running!"

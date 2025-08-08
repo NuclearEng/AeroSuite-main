@@ -77,7 +77,8 @@ class BaseERPService {
     const maxRetries = options.retryAttempts || this.globalConfig.retryAttempts;
     const retryDelay = options.retryDelay || this.globalConfig.retryDelay;
     
-    while (true) {
+    // Retry loop with explicit condition to avoid constant conditions
+    while (retries <= maxRetries) {
       try {
         const response = await this.httpClient.request({
           method,
@@ -106,6 +107,8 @@ class BaseERPService {
         logger.warn(`ERP request failed, retrying (${retries}/${maxRetries}): ${error.message}`);
         await this.sleep(retryDelay);
       }
+      // If loop exits naturally, throw last error
+      throw new Error('ERP request failed after maximum retries');
     }
   }
   

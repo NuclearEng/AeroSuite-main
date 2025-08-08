@@ -216,10 +216,6 @@ class AuditLogService {
         req,
         eventType,
         severity = 'LOW',
-        userId,
-        userEmail,
-        userName,
-        userRole,
         targetType,
         targetId,
         targetName,
@@ -232,6 +228,12 @@ class AuditLogService {
         errorMessage,
         complianceTags = []
       } = eventData;
+
+      // Use reassignable variables for user info
+      let userId = eventData.userId;
+      let userEmail = eventData.userEmail;
+      let userName = eventData.userName;
+      let userRole = eventData.userRole;
       
       // Extract request information
       let ipAddress = '127.0.0.1';

@@ -148,10 +148,11 @@ class SupplierImportExportService {
         case 'excel':
           suppliersToImport = await this.parseAndValidateExcel(filePath);
           break;
-        case 'json':
+        case 'json': {
           const fileData = fs.readFileSync(filePath, 'utf8');
           suppliersToImport = JSON.parse(fileData);
           break;
+        }
         default:
           throw new ValidationError(`Unsupported file type: ${fileType}`);
       }

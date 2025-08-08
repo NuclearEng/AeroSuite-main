@@ -131,7 +131,7 @@ const CustomerList: React.FC = () => {
       });
       loadCustomers();
     } catch (error: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setSnackbar({
         open: true,
         message: `Failed to delete customer: ${error.message || 'Unknown error'}`,
@@ -252,7 +252,8 @@ const CustomerList: React.FC = () => {
           <IconButton
         size="small"
         onClick={() => handleDeleteCustomer(params.row)}
-        title="Delete">
+        title="Delete"
+        data-testid={`delete-${params.row._id}`}>
 
             <DeleteIcon fontSize="small" />
           </IconButton>
@@ -398,7 +399,7 @@ const CustomerList: React.FC = () => {
           <Button onClick={() => setDeleteDialogOpen(false)} color="inherit">
             Cancel
           </Button>
-          <Button onClick={confirmDeleteCustomer} color="error" variant="contained" disabled={loading}>
+          <Button onClick={confirmDeleteCustomer} color="error" variant="contained" disabled={loading} data-testid="confirm-delete">
             {loading ? 'Deleting...' : 'Delete'}
           </Button>
         </DialogActions>

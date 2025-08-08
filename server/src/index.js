@@ -98,31 +98,26 @@ app.use(autoScaling.createRequestTrackerMiddleware());
 // Apply security middleware
 app.use(helmet({
   contentSecurityPolicy: {
+    useDefaults: true,
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:", "https://*"],
-      connectSrc: ["'self'", "https://*"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "https://fonts.googleapis.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       objectSrc: ["'none'"],
-      mediaSrc: ["'self'"],
-      frameSrc: ["'self'"],
+      frameAncestors: ["'none'"],
+      upgradeInsecureRequests: [],
     },
   },
-  xssFilter: true,
   hsts: {
-    maxAge: 31536000, // 1 year in seconds
+    maxAge: 31536000,
     includeSubDomains: true,
     preload: true
   },
   noSniff: true,
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
-  expectCt: {
-    maxAge: 86400, // 24 hours in seconds
-    enforce: true
-  },
-  permittedCrossDomainPolicies: { permittedPolicies: 'none' },
   frameguard: { action: 'deny' },
   dnsPrefetchControl: { allow: false }
 }));
@@ -143,16 +138,24 @@ app.use((req, res, next) => {
   next();
 });
 
-// Configure CORS with more secure options
-const corsOptions = {
-  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
+// Configure CORS with strict origin validation
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map(o => o.trim()).filter(Boolean);
+const defaultDevOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+const isProduction = process.env.NODE_ENV === 'production';
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow non-browser requests (no origin)
+    if (!origin) return callback(null, true);
+    const list = allowedOrigins.length ? allowedOrigins : (isProduction ? [] : defaultDevOrigins);
+    if (list.includes(origin)) return callback(null, true);
+    return callback(new Error('CORS origin not allowed'));
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-API-Key', 'X-CSRF-Token'],
   exposedHeaders: ['X-Request-ID'],
   credentials: true,
-  maxAge: 86400 // 24 hours
-};
-app.use(cors(corsOptions));
+  maxAge: 86400
+}));
 
 app.use(compression()); // Add compression for better performance
 app.use(express.json({ limit: '10mb' })); // Increase payload limit

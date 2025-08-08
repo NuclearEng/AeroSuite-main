@@ -2,7 +2,9 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../theme';
+import { createTheme } from '@mui/material/styles';
+import { createThemeOptions } from '../theme/themeConfig';
+const theme = createTheme(createThemeOptions('light', 'blue'));
 
 /**
  * Custom render function that wraps components with necessary providers

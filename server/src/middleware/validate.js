@@ -29,16 +29,10 @@ const validate = (validations) => {
 };
 
 /**
- * Validation middleware
- * Standardizes validation error handling across all routes
- */
-const { validationResult } = require('express-validator');
-
-/**
  * Validation middleware that checks for validation errors
  * and returns a standardized error response
  */
-exports.validate = (req, res, next) => {
+const validateDirect = (req, res, next) => {
   const errors = validationResult(req);
   
   if (errors.isEmpty()) {
@@ -64,7 +58,7 @@ exports.validate = (req, res, next) => {
  * Creates specific validation error handler for specific use cases
  * @param {string} customMessage - Custom error message
  */
-exports.createValidator = (customMessage) => {
+const createValidator = (customMessage) => {
   return (req, res, next) => {
     const errors = validationResult(req);
     
@@ -86,4 +80,4 @@ exports.createValidator = (customMessage) => {
   };
 };
 
-module.exports = validate; 
+module.exports = { validate, validateDirect, createValidator };

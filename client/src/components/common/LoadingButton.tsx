@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, ButtonProps, CircularProgress } from '@mui/material';
-import { animations } from '../../theme/theme';
+import { useTheme } from '@mui/material/styles';
 
 interface LoadingButtonProps extends ButtonProps {
   loading?: boolean;
@@ -19,6 +19,7 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
   sx,
   ...props
 }) => {
+  const theme = useTheme();
   // Determine if the button should be disabled
   const isDisabled = disabled || loading;
   
@@ -39,7 +40,10 @@ const LoadingButton: React.FC<LoadingButtonProps> = ({
       sx={{
         position: 'relative',
         '& .MuiCircularProgress-root': {
-          transition: animations.fadeIn,
+          transition: theme.transitions.create('opacity', {
+            duration: theme.transitions.duration.shorter,
+            easing: theme.transitions.easing.easeInOut,
+          }),
         },
         ...sx,
       }}

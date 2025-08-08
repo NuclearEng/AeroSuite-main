@@ -1,28 +1,38 @@
 /**
  * Logger Utility
  * 
- * Provides logging functionality for the application
+ * Provides logging functionality for the application.
+ * Exported in a backwards-compatible way so both of these work:
+ *  - const logger = require('../utils/logger');
+ *  - const { logger, Logger } = require('../utils/logger');
  */
 
-/**
- * Simple logger implementation
- */
-const logger = {
-  info: (message, ...args) => {
-    console.log(`[${new Date().toISOString()}] [INFO] ${message}`, ...args);
-  },
-  
-  debug: (message, ...args) => {
-    console.log(`[${new Date().toISOString()}] [DEBUG] ${message}`, ...args);
-  },
-  
-  warn: (message, ...args) => {
-    console.warn(`[${new Date().toISOString()}] [WARN] ${message}`, ...args);
-  },
-  
-  error: (message, ...args) => {
-    console.error(`[${new Date().toISOString()}] [ERROR] ${message}`, ...args);
+class Logger {
+  constructor(context = 'App') {
+    this.context = context;
   }
-};
 
-module.exports = { logger }; 
+  info(message, ...args) {
+    console.log(`[${new Date().toISOString()}] [INFO] [${this.context}] ${message}`, ...args);
+  }
+
+  debug(message, ...args) {
+    console.log(`[${new Date().toISOString()}] [DEBUG] [${this.context}] ${message}`, ...args);
+  }
+
+  warn(message, ...args) {
+    console.warn(`[${new Date().toISOString()}] [WARN] [${this.context}] ${message}`, ...args);
+  }
+
+  error(message, ...args) {
+    console.error(`[${new Date().toISOString()}] [ERROR] [${this.context}] ${message}`, ...args);
+  }
+}
+
+// Default singleton logger
+const defaultLogger = new Logger('Server');
+
+// Support both default and named exports
+module.exports = defaultLogger;
+module.exports.logger = defaultLogger;
+module.exports.Logger = Logger;

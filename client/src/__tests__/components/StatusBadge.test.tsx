@@ -1,7 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../theme/theme';
+import { createTheme } from '@mui/material/styles';
+import { createThemeOptions } from '../../theme/themeConfig';
+const theme = createTheme(createThemeOptions('light', 'blue'));
 import StatusBadge, { StatusType } from '../../components/common/StatusBadge';
 
 describe('StatusBadge Component', () => {

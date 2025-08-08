@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import { ThemeProvider as MuiThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { responsiveFontSizes } from '@mui/material/styles';
 import { createThemeOptions, ThemeVariant } from './themeConfig';
 import { useAppSelector } from '../redux/store';
 
@@ -97,8 +98,27 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Generate theme based on current mode and variant
   const theme = useMemo(() => {
     const themeOptions = createThemeOptions(mode, variant);
-    return createTheme(themeOptions);
+    const createdTheme = createTheme(themeOptions);
+    return responsiveFontSizes(createdTheme);
   }, [mode, variant]);
+
+  // Expose key theme colors as CSS variables for global CSS usage
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute('data-theme-mode', mode);
+    root.setAttribute('data-theme-variant', variant);
+    const palette = theme.palette;
+    root.style.setProperty('--color-primary', palette.primary.main);
+    root.style.setProperty('--color-secondary', palette.secondary?.main || palette.primary.main);
+    root.style.setProperty('--color-error', palette.error.main);
+    root.style.setProperty('--color-warning', palette.warning.main);
+    root.style.setProperty('--color-info', palette.info.main);
+    root.style.setProperty('--color-success', palette.success.main);
+    root.style.setProperty('--color-text', palette.text.primary);
+    root.style.setProperty('--color-text-secondary', palette.text.secondary);
+    root.style.setProperty('--color-bg', palette.background.default);
+    root.style.setProperty('--color-paper', palette.background.paper);
+  }, [theme, mode, variant]);
 
   return (
     <ThemeContext.Provider value={themeContextValue}>

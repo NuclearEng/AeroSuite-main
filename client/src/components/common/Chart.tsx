@@ -15,7 +15,7 @@ import {
   Filler } from
 'chart.js';
 import { Line, Bar, Pie, Doughnut, PolarArea, Radar, Scatter, Bubble } from 'react-chartjs-2';
-import { animations } from '../../theme/theme';
+// normalized to MUI transitions; legacy animations removed
 
 // Register ChartJS components
 ChartJS.register(
@@ -240,7 +240,10 @@ const Chart: React.FC<ChartProps> = ({
         height: 'auto',
         borderRadius,
         overflow: 'hidden',
-        transition: animations.microInteraction
+        transition: (theme) => theme.transitions.create(['background-color', 'box-shadow', 'transform'], {
+          duration: theme.transitions.duration.short,
+          easing: theme.transitions.easing.easeInOut,
+        })
       }}>
 
       

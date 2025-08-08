@@ -3,7 +3,9 @@ import { render, RenderOptions } from '@testing-library/react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import { configureStore, combineReducers, Action } from '@reduxjs/toolkit';
-import theme from '../theme/theme';
+import { createTheme } from '@mui/material/styles';
+import { createThemeOptions } from '../theme/themeConfig';
+const theme = createTheme(createThemeOptions('light', 'blue'));
 import CssBaseline from '@mui/material/CssBaseline';
 import { SnackbarProvider } from 'notistack';
 

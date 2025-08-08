@@ -25,7 +25,7 @@ import {
   Paper,
   Container } from
 '@mui/material';
-import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
+// duplicate removed
 import {
   BarChart as BarChartIcon,
   PieChart as PieChartIcon,
@@ -40,31 +40,12 @@ import {
   BugReport as BugReportIcon,
   AccessTime as AccessTimeIcon } from
 '@mui/icons-material';
-import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
+// duplicate removed
 import { PageHeader } from '../../components/common';
 import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
-import {
-  BarChart,
-  LineChart,
-  PieChart,
-  ComposedChart,
-  Bar,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend as RechartsLegend,
-  ResponsiveContainer,
-  Cell,
-  Pie,
-  Area,
-  ScatterChart,
-  Scatter,
-  ZAxis } from
-'recharts';
+// remove direct recharts import to avoid duplicate identifiers
 import api from '../../services/api';
-import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
+// duplicate removed
 import { format, subMonths } from 'date-fns';
 import InspectionStatsDashboard from '../../components/inspections/InspectionStatsDashboard';
 

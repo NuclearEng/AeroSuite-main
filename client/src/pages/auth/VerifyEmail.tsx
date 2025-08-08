@@ -61,14 +61,14 @@ const VerifyEmail: React.FC = () => {
               <Typography variant="body1" paragraph color="text.secondary">
                 Your email address has been successfully verified. You can now log in to your account.
               </Typography>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={() => navigate('/login')}
-                sx={{ mt: 2 }}
-              >
-                Log In
-              </Button>
+                              <Button
+                  variant="contained"
+                  size="large"
+                  onClick={() => navigate('/auth/login')}
+                  sx={{ mt: 2 }}
+                >
+                  Log In
+                </Button>
             </Box>
           ) : (
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 3 }}>
@@ -80,14 +80,14 @@ const VerifyEmail: React.FC = () => {
               <Typography variant="body1" paragraph>
                 The verification link may have expired or is invalid.
               </Typography>
-              <Button
-                variant="outlined"
-                component={RouterLink}
-                to="/resend-verification"
-                sx={{ mt: 2 }}
-              >
-                Resend Verification Email
-              </Button>
+                              <Button
+                  variant="outlined"
+                  component={RouterLink}
+                  to="/auth/resend-verification"
+                  sx={{ mt: 2 }}
+                >
+                  Resend Verification Email
+                </Button>
             </Box>
           )}
         </Paper>

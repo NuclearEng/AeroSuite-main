@@ -120,7 +120,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const UserMenuButton = styled(IconButton)(({ theme }) => ({
   padding: 4,
   marginLeft: theme.spacing(1),
-  transition: 'transform 0.2s ease-in-out',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shorter,
+    easing: theme.transitions.easing.easeInOut,
+  }),
   '&:hover': {
     transform: 'scale(1.1)',
   },
@@ -290,7 +293,10 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isDrawerOpen }) => {
           edge="start"
           sx={{
             marginRight: 0.5,
-            transition: 'transform 0.2s ease-in-out',
+            transition: (theme) => theme.transitions.create('transform', {
+              duration: theme.transitions.duration.shorter,
+              easing: theme.transitions.easing.easeInOut,
+            }),
             transform: isDrawerOpen ? 'rotate(180deg)' : 'rotate(0deg)',
           }}
         >

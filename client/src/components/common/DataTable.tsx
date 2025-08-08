@@ -62,7 +62,7 @@ import {
 '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 import { SkeletonLoader } from './index';
-import { animations } from '../../theme/theme';
+// normalized to MUI transitions; legacy animations removed
 
 // Types
 export type Order = 'asc' | 'desc';
@@ -657,7 +657,10 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
               sx={{
                 maxWidth: { xs: '100%', sm: 300 },
                 backgroundColor: 'background.paper',
-                transition: animations.microInteraction,
+                transition: (theme) => theme.transitions.create(['background-color', 'box-shadow', 'transform'], {
+                  duration: theme.transitions.duration.short,
+                  easing: theme.transitions.easing.easeInOut,
+                }),
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 8
                 }
@@ -1042,7 +1045,10 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
                           selected={isItemSelected}
                           sx={{
                             cursor: onRowClick || selectable || rowSelection !== 'none' ? 'pointer' : 'default',
-                            transition: animations.microInteraction,
+                            transition: (theme) => theme.transitions.create(['opacity', 'transform'], {
+                              duration: theme.transitions.duration.shorter,
+                              easing: theme.transitions.easing.easeInOut,
+                            }),
                             ...(zebra && {
                               '&:nth-of-type(odd)': {
                                 bgcolor: theme.palette.mode === 'light' ?
@@ -1141,7 +1147,10 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
                               onClick={(e) => handleMenuOpen(e, row)}
                               sx={{
                                 opacity: 0.7,
-                                transition: animations.microInteraction,
+                                transition: (theme) => theme.transitions.create(['opacity', 'transform'], {
+                                  duration: theme.transitions.duration.shorter,
+                                  easing: theme.transitions.easing.easeInOut,
+                                }),
                                 '&:hover': {
                                   opacity: 1
                                 }

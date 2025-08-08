@@ -21,7 +21,7 @@ import {
   Help as HelpIcon } from
 '@mui/icons-material';
 import { LoadingButton } from './index';
-import { animations } from '../../theme/theme';
+// theme animations have been normalized via MUI transitions
 
 export type ConfirmationDialogType = 'info' | 'warning' | 'error' | 'success' | 'confirm' | 'delete' | 'custom';
 
@@ -187,7 +187,10 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
           onClick={onClose}
           aria-label="close"
           sx={{
-            transition: animations.microInteraction,
+            transition: (theme) => theme.transitions.create('transform', {
+              duration: theme.transitions.duration.shorter,
+              easing: theme.transitions.easing.easeInOut,
+            }),
             '&:hover': {
               transform: 'rotate(90deg)'
             }

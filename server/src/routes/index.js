@@ -242,6 +242,8 @@ router.post('/docs/regenerate', (req, res) => {
   try {
     // Regenerate API documentation
     apiDocumentationService.generateAllSpecs();
+    // Merge verification resource docs into base spec and regenerate
+    apiDocumentationService.mergeResourceDocs('verification', { basePath: '/api/v2' });
     
     res.json({
       success: true,

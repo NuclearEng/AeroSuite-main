@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Verification API
+  version: 1.0.0
+paths:
+  /verification/orders:
+    post:
+      summary: Create verification order
+      operationId: createVerificationOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerificationOrder'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/VerificationOrder'
+  /verification/orders/{orderId}/send-result:
+    post:
+      summary: Send verification result to customer
+      operationId: sendVerificationResult
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Result sent
+        '502':
+          description: Failed to send
+components:
+  schemas:
+    VerificationOrder:
+      type: object
+      required: [orderId, customerId, orderDetails]
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        orderDetails:
+          type: object
+    VerificationResult:
+      type: object
+      required: [resultId, orderId, status, details]
+      properties:
+        resultId:
+          type: string
+        orderId:
+          type: string
+        status:
+          type: string
+          enum: [success, failure, partial, pending]
+        details:
+          type: object
+

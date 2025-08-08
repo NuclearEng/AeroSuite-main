@@ -1,5 +1,4 @@
 import { SxProps, Theme } from '@mui/material';
-import { animations } from '../theme/theme';
 
 /**
  * Interface for animation options
@@ -352,10 +351,13 @@ export const createHoverAnimation = (
     };
   }
   
-  return {
-    transition: animations.microInteraction || `all ${duration}ms ${easing}`,
-    '&:hover': hoverStyles
-  };
+  return (theme: Theme) => ({
+    transition: theme.transitions.create('all', {
+      duration: duration,
+      easing: theme.transitions.easing.easeInOut,
+    }),
+    '&:hover': hoverStyles,
+  });
 };
 
 /**

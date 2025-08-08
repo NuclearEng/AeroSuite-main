@@ -140,7 +140,7 @@ const Layout = () => {
             <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
             <MenuItem onClick={() => navigate('/settings')}>Settings</MenuItem>
             <Divider />
-            <MenuItem onClick={() => navigate('/login')}>
+            <MenuItem onClick={() => navigate('/auth/login')}>
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>

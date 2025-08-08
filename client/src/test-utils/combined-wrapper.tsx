@@ -2,7 +2,9 @@ import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../theme';
+import { createTheme } from '@mui/material/styles';
+import { createThemeOptions } from '../theme/themeConfig';
+const theme = createTheme(createThemeOptions('light', 'blue'));
 
 /**
  * Renders a component wrapped in both Router and Theme providers for testing

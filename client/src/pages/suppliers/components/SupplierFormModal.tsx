@@ -158,7 +158,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
             tags: supplier.tags || []
           });
         } catch (_error) {
-          console.error("Error:", error);
+          console.error("Error:", _error);
         } finally {
           setLoading(false);
         }
@@ -307,13 +307,14 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
       open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md">
+      maxWidth="md"
+      aria-labelledby="supplier-form-title">
 
-      <DialogTitle>
+      <DialogTitle id="supplier-form-title">
         {isEdit ? 'Edit Supplier' : 'Add New Supplier'}
       </DialogTitle>
       
-      <DialogContent dividers>
+      <DialogContent dividers sx={{ p: 3 }}>
         {loading ?
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
             <CircularProgress />

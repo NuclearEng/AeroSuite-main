@@ -35,6 +35,10 @@ jest.mock('./agents/testCoverageAgent');
 jest.mock('./agents/uxUatAgent');
 jest.mock('./agents/preBuildAgent');
 jest.mock('./agents/dockerBuildAgent');
+jest.mock('./agents/clientUnitAgent');
+jest.mock('./agents/serverTestAgent');
+jest.mock('./agents/scriptTestAgent');
+jest.mock('./agents/comprehensiveRunnerAgent');
 jest.mock('./utils/logger');
 jest.mock('./agents/memoryAgent');
 
@@ -78,6 +82,10 @@ describe('orchestrator', () => {
     const { runPreBuildAgent } = require('./agents/preBuildAgent');
     const { runDockerBuildAgent } = require('./agents/dockerBuildAgent');
     const { logResult, summarizeResults } = require('./utils/logger');
+    const { runClientUnitAgent } = require('./agents/clientUnitAgent');
+    const { runServerTestAgent } = require('./agents/serverTestAgent');
+    const { runScriptTestAgent } = require('./agents/scriptTestAgent');
+    const { runComprehensiveRunnerAgent } = require('./agents/comprehensiveRunnerAgent');
     const { saveMemory, loadMemory } = require('./agents/memoryAgent');
     
     // Mock implementations
@@ -113,6 +121,10 @@ describe('orchestrator', () => {
     runUxUatAgent.mockResolvedValue(mockResult);
     runPreBuildAgent.mockResolvedValue(mockResult);
     runDockerBuildAgent.mockResolvedValue(mockResult);
+    runClientUnitAgent.mockResolvedValue(mockResult);
+    runServerTestAgent.mockResolvedValue(mockResult);
+    runScriptTestAgent.mockResolvedValue(mockResult);
+    runComprehensiveRunnerAgent.mockResolvedValue(mockResult);
     runHumanReviewAgent.mockResolvedValue(undefined);
     logResult.mockImplementation(() => {});
     summarizeResults.mockImplementation(() => {});

@@ -39,7 +39,10 @@ const AnimatedListItemButton = styled(ListItemButton)(({ theme }) => ({
   borderRadius: 12,
   margin: '4px 12px',
   padding: '10px 12px',
-  transition: 'all 0.3s ease',
+  transition: theme.transitions.create(['background-color', 'transform', 'box-shadow'], {
+    duration: theme.transitions.duration.short,
+    easing: theme.transitions.easing.easeInOut,
+  }),
   position: 'relative',
   overflow: 'hidden',
   '&::before': {
@@ -84,7 +87,10 @@ const Logo = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   padding: theme.spacing(2),
   '& svg': {
-    transition: 'transform 0.3s ease'
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.short,
+      easing: theme.transitions.easing.easeInOut,
+    })
   },
   '&:hover svg': {
     transform: 'rotate(5deg) scale(1.1)'
@@ -104,7 +110,10 @@ const LogoIcon = styled('div')(({ theme }) => ({
   marginRight: 12,
   fontWeight: 'bold',
   fontSize: 18,
-  transition: 'all 0.3s ease',
+  transition: theme.transitions.create(['transform', 'box-shadow'], {
+    duration: theme.transitions.duration.short,
+    easing: theme.transitions.easing.easeInOut,
+  }),
   '&:hover': {
     transform: 'scale(1.1)',
     boxShadow: `0 0 0 4px ${alpha(theme.palette.primary.main, 0.3)}`
@@ -519,7 +528,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           boxSizing: 'border-box',
           border: 'none',
           boxShadow: theme.shadows[3],
-          transition: theme.transitions.create(['width'], {
+          transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen
           }),

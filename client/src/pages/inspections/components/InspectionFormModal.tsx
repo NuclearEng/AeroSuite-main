@@ -141,7 +141,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
             tags: inspection.tags || []
           });
         } catch (_error) {
-          console.error("Error:", err);
+          console.error("Error:", _error);
         } finally {
           setLoading(false);
         }
@@ -159,7 +159,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
         const response = await customerService.getCustomers({ limit: 100 });
         setCustomers(response.customers || []);
       } catch (_error) {
-        console.error("Error:", err);
+        console.error("Error:", _error);
       } finally {
         setLoadingCustomers(false);
       }
@@ -171,7 +171,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
         const response = await supplierService.getSuppliers({ limit: 100 });
         setSuppliers(response.suppliers || []);
       } catch (_error) {
-        console.error("Error:", err);
+        console.error("Error:", _error);
       } finally {
         setLoadingSuppliers(false);
       }
@@ -275,7 +275,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
       onSave(savedInspection);
       onClose();
     } catch (error: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -286,13 +286,14 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
       open={open}
       onClose={onClose}
       fullWidth
-      maxWidth="md">
+      maxWidth="md"
+      aria-labelledby="inspection-form-title">
 
-      <DialogTitle>
+      <DialogTitle id="inspection-form-title">
         {isEdit ? 'Edit Inspection' : 'Schedule New Inspection'}
       </DialogTitle>
       
-      <DialogContent dividers>
+      <DialogContent dividers sx={{ p: 3 }}>
         {loading ?
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
             <CircularProgress />

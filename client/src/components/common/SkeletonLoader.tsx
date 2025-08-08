@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { Box, Skeleton, SxProps, Theme, useTheme } from '@mui/material';
-import { animations } from '../../theme/theme';
 
 type SkeletonVariant = 'text' | 'rectangular' | 'circular' | 'card' | 'list' | 'table' | 'dashboard';
 

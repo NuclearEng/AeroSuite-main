@@ -550,13 +550,14 @@ class AIFramework extends EventEmitter {
       case 'tensorflow':
         await model.instance.save(`file://${path}`);
         break;
-      case 'brain':
+      case 'brain': {
         const fs = require('fs').promises;
         await fs.writeFile(
           `${path}/model.json`,
           JSON.stringify(model.instance.toJSON())
         );
         break;
+      }
       case 'custom':
         if (model.instance.save) {
           await model.instance.save(path);

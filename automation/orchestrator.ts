@@ -34,6 +34,10 @@ import { runTestCoverageAgent } from './agents/testCoverageAgent';
 import { runUxUatAgent } from './agents/uxUatAgent';
 import { runPreBuildAgent } from './agents/preBuildAgent';
 import { runDockerBuildAgent } from './agents/dockerBuildAgent';
+import { runClientUnitAgent } from './agents/clientUnitAgent';
+import { runServerTestAgent } from './agents/serverTestAgent';
+import { runScriptTestAgent } from './agents/scriptTestAgent';
+import { runComprehensiveRunnerAgent } from './agents/comprehensiveRunnerAgent';
 
 type AgentResult = { passed: boolean; details: string };
 type ModuleResult = {
@@ -85,6 +89,14 @@ const allAgents = [
   // systems agent is global, not per module
 ];
 
+// Global agents to run once per orchestrator invocation
+const globalAgents = [
+  'clientUnit',
+  'serverTest',
+  'scriptTest',
+  'comprehensiveRunner'
+] as const;
+
 const agentFns: Record<string, (m: string) => Promise<AgentResult>> = {
   preBuild: runPreBuildAgent,
   dockerBuild: runDockerBuildAgent,
@@ -118,6 +130,11 @@ const agentFns: Record<string, (m: string) => Promise<AgentResult>> = {
   testCoverage: runTestCoverageAgent,
   uxUat: runUxUatAgent,
   // systems agent is not per module
+  // Global one-shot test agents
+  clientUnit: runClientUnitAgent,
+  serverTest: runServerTestAgent,
+  scriptTest: runScriptTestAgent,
+  comprehensiveRunner: runComprehensiveRunnerAgent,
 };
 
 function parseArgs() {
@@ -134,6 +151,12 @@ async function main() {
   // Run systems agent globally (once per orchestrator run)
   const systemsResult = await runSystemsAgent();
   logResult('SYSTEMS', { systems: systemsResult });
+  // Run global test agents once
+  const globalResults: Record<string, AgentResult> = {};
+  await Promise.all(globalAgents.map(async (ga) => {
+    globalResults[ga] = await agentFns[ga]('GLOBAL');
+  }));
+  logResult('GLOBAL', globalResults);
   for (const module of modules) {
     // 1. Check orchestrator memory for previous failures/priorities
     const orchestratorMemory = await loadMemory('orchestrator', module);

@@ -293,7 +293,8 @@ const ModalsAndFormsTester: React.FC = () => {
               <Button
                 variant="contained"
                 color="error"
-                onClick={() => setDeleteModalOpen(true)}>
+                onClick={() => setDeleteModalOpen(true)}
+                data-testid="open-delete-modal">
 
                 Open Delete Modal
               </Button>
@@ -316,7 +317,8 @@ const ModalsAndFormsTester: React.FC = () => {
             <CardActions>
               <Button
                 variant="contained"
-                onClick={() => setSearchModalOpen(true)}>
+                onClick={() => setSearchModalOpen(true)}
+                data-testid="open-search-modal">
 
                 Open Search Modal
               </Button>
@@ -339,7 +341,8 @@ const ModalsAndFormsTester: React.FC = () => {
             <CardActions>
               <Button
                 variant="contained"
-                onClick={() => setNotificationModalOpen(true)}>
+                onClick={() => setNotificationModalOpen(true)}
+                data-testid="open-notification-modal">
 
                 Open Notifications Modal
               </Button>
@@ -362,7 +365,8 @@ const ModalsAndFormsTester: React.FC = () => {
             <CardActions>
               <Button
                 variant="contained"
-                onClick={() => setEditProfileModalOpen(true)}>
+                onClick={() => setEditProfileModalOpen(true)}
+                data-testid="open-edit-profile-modal">
 
                 Open Edit Profile Modal
               </Button>
@@ -385,7 +389,8 @@ const ModalsAndFormsTester: React.FC = () => {
             <CardActions>
               <Button
                 variant="contained"
-                onClick={() => setFilterModalOpen(true)}>
+                onClick={() => setFilterModalOpen(true)}
+                data-testid="open-filter-modal">
 
                 Open Filter Modal
               </Button>
@@ -408,7 +413,8 @@ const ModalsAndFormsTester: React.FC = () => {
             <CardActions>
               <Button
                 variant="contained"
-                onClick={() => setFileUploadModalOpen(true)}>
+                onClick={() => setFileUploadModalOpen(true)}
+                data-testid="open-file-upload-modal">
 
                 Open File Upload Modal
               </Button>

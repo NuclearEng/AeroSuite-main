@@ -42,8 +42,8 @@ const initialState: AuthState = {
     lastName: 'Doe',
     role: 'Admin'
   },
-  token: localStorage.getItem('token') || 'mock-token-for-development',
-  isAuthenticated: true, // Set to true for development
+  token: null,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
@@ -53,9 +53,12 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await api.post<{ user: User; token: string }>('/auth/login', { email, password });
-      localStorage.setItem('token', response.token);
-      return response;
+      const response = await api.post<{ user: User; token?: string }>('/auth/login', { email, password });
+      // Prefer HttpOnly cookie set by server; only persist token if explicitly returned
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+      }
+      return response as any;
     } catch (error: any) {
       return rejectWithValue(error.message || 'Login failed');
     }
