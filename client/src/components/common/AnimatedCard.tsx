@@ -101,7 +101,7 @@ const AnimatedCard: React.FC<AnimatedCardProps> = ({
       {title && (
         <CardHeader
           title={
-            <Typography variant="cardTitle">{title}</Typography>
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>{title}</Typography>
           }
           subheader={subtitle && (
             <Typography variant="body2" color="text.secondary">
