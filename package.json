@@ -201,7 +201,8 @@
     "scan-vuln": "echo 'Vulnerability scan passed (placeholder). Replace with real scan.'",
     "check-rbac": "echo 'RBAC check passed (placeholder). Replace with real check.'",
     "check-encryption": "echo 'Encryption check passed (placeholder). Replace with real check.'",
-    "check-csp": "echo 'CSP check passed (placeholder). Replace with real check.'"
+    "check-csp": "echo 'CSP check passed (placeholder). Replace with real check.'",
+    "scan:code": "bash ./scripts/code-scan.sh"
   },
   "eslintConfig": {
     "extends": [
