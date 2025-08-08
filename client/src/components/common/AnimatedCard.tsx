@@ -7,11 +7,8 @@ import {
   CardActions,
   Typography,
   Box,
-  useTheme,
-  SxProps,
-  Theme
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, SxProps, Theme } from '@mui/material/styles';
 
 interface AnimatedCardProps extends CardProps {
   title?: string;
