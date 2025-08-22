@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Box,
@@ -108,10 +108,10 @@ const ScheduleInspection: React.FC = () => {
 
   // Form state
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [suppliers, setSuppliers] = useState<any[]>([]);
-  const [inspectors, setInspectors] = useState<any[]>([]);
+  const [suppliers, setSuppliers] = useState<any>([]);
+  const [inspectors, setInspectors] = useState<any>([]);
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
@@ -144,7 +144,7 @@ const ScheduleInspection: React.FC = () => {
   }, [supplierIdFromQuery]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}> | SelectChangeEvent<string>) => {
     const { name, value } = e.target;
 
     if (!name) return;
@@ -156,7 +156,7 @@ const ScheduleInspection: React.FC = () => {
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
       }));
@@ -172,7 +172,7 @@ const ScheduleInspection: React.FC = () => {
 
     // Clear error when field is updated
     if (errors.inspectionDate) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         inspectionDate: undefined
       }));
@@ -181,7 +181,7 @@ const ScheduleInspection: React.FC = () => {
 
   // Handle supplier selection
   const handleSupplierChange = (value: any) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       supplierId: value ? value.id : '',
       supplierName: value ? value.name : ''
@@ -189,7 +189,7 @@ const ScheduleInspection: React.FC = () => {
 
     // Clear error when field is updated
     if (errors.supplierId) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         supplierId: undefined
       }));
@@ -206,7 +206,7 @@ const ScheduleInspection: React.FC = () => {
 
     // Clear error when field is updated
     if (errors.inspectorId) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         inspectorId: undefined
       }));
@@ -356,7 +356,7 @@ const ScheduleInspection: React.FC = () => {
                     label="Inspection Type"
                     onChange={handleChange}>
 
-                    {inspectionTypes.map((type) =>
+                    {inspectionTypes.map((type: any) =>
                     <MenuItem key={type.value} value={type.value}>
                         {type.label}
                       </MenuItem>
@@ -375,7 +375,7 @@ const ScheduleInspection: React.FC = () => {
                     label="Priority"
                     onChange={handleChange}>
 
-                    {priorityOptions.map((option) =>
+                    {priorityOptions.map((option: any) =>
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -405,9 +405,9 @@ const ScheduleInspection: React.FC = () => {
               
               <Grid item xs={12} md={6}>
                 <Autocomplete
-                  options={suppliers.filter((s) => s.status === 'active')}
+                  options={suppliers.filter((s: any) => s.status === 'active')}
                   getOptionLabel={(option) => option.name}
-                  value={formValues.supplierId ? suppliers.find((s) => s.id === formValues.supplierId) || null : null}
+                  value={formValues.supplierId ? suppliers.find((s: any) => s.id === formValues.supplierId) || null : null}
                   onChange={(_, value) => handleSupplierChange(value)}
                   renderInput={(params) =>
                   <TextField
@@ -425,7 +425,7 @@ const ScheduleInspection: React.FC = () => {
                 <Autocomplete
                   options={inspectors}
                   getOptionLabel={(option) => `${option.name} (${option.title})`}
-                  value={formValues.inspectorId ? inspectors.find((i) => i.id === formValues.inspectorId) || null : null}
+                  value={formValues.inspectorId ? inspectors.find((i: any) => i.id === formValues.inspectorId) || null : null}
                   onChange={(_, value) => handleInspectorChange(value)}
                   renderInput={(params) =>
                   <TextField
@@ -482,7 +482,7 @@ const ScheduleInspection: React.FC = () => {
                     onChange={handleChange}>
 
                     <MenuItem value="">No Template (Create from scratch)</MenuItem>
-                    {checklistTemplates.map((template) =>
+                    {checklistTemplates.map((template: any) =>
                     <MenuItem key={template.id} value={template.id}>
                         {template.name} ({template.itemCount} items)
                       </MenuItem>

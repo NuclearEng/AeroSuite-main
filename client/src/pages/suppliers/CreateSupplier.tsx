@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -136,7 +136,7 @@ const CreateSupplier: React.FC = () => {
 
   // Form state
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -178,7 +178,7 @@ const CreateSupplier: React.FC = () => {
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
       }));
@@ -230,7 +230,7 @@ const CreateSupplier: React.FC = () => {
 
     if (words.length >= 2) {
       // Use first letter of each word for multi-word names
-      code = words.slice(0, 3).map((word) => word.charAt(0)).join('');
+      code = words.slice(0, 3).map((word: any) => word.charAt(0)).join('');
     } else {
       // Use first 3 letters for single-word names
       code = formValues.name.substring(0, 3);
@@ -385,7 +385,7 @@ const CreateSupplier: React.FC = () => {
                     label="Industry"
                     onChange={handleChange}>
 
-                    {industryOptions.map((option) =>
+                    {industryOptions.map((option: any) =>
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -404,7 +404,7 @@ const CreateSupplier: React.FC = () => {
                     label="Status"
                     onChange={handleChange}>
 
-                    {statusOptions.map((option) =>
+                    {statusOptions.map((option: any) =>
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -542,7 +542,7 @@ const CreateSupplier: React.FC = () => {
                   value={formValues.certifications}
                   onChange={(_, value) => handleCertificationsChange(value)}
                   renderTags={(value, getTagProps) =>
-                  value.map((option, index) =>
+                  value.map((option, index: any) =>
                   <Chip
                   label={option}
                   {...getTagProps({ index })}
@@ -569,7 +569,7 @@ const CreateSupplier: React.FC = () => {
                   value={formValues.supplierTags}
                   onChange={(_, value) => handleTagsChange(value)}
                   renderTags={(value, getTagProps) =>
-                  value.map((option, index) =>
+                  value.map((option, index: any) =>
                   <Chip
                   label={option}
                   {...getTagProps({ index })}

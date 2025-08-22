@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -79,11 +79,11 @@ const SearchModal: React.FC<SearchModalProps> = ({
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [results, setResults] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [filters, setFilters] = useState<SearchFilters>({});
+  const [filters, setFilters] = useState<any>({});
   const [showFilterDialog, setShowFilterDialog] = useState(false);
 
   // Debounced search function
@@ -264,7 +264,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
 
         {!loading && !error && results.length > 0 && (
           <List>
-            {results.map((result, index) => (
+            {results.map((result: any, index: number) => (
               <React.Fragment key={result.id}>
                 <ListItemButton onClick={() => handleResultClick(result)}>
                   <ListItemText
@@ -298,7 +298,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                 />
               </ListItem>
             ) : (
-              recentSearches.map((search, index) => (
+              recentSearches.map((search, index: any) => (
                 <React.Fragment key={index}>
                   <ListItemButton onClick={() => handleRecentSearchClick(search)}>
                     <ListItemText primary={search} />
@@ -320,7 +320,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
                 />
               </ListItem>
             ) : (
-              trendingSearches.map((search, index) => (
+              trendingSearches.map((search, index: any) => (
                 <React.Fragment key={index}>
                   <ListItemButton onClick={() => handleRecentSearchClick(search)}>
                     <ListItemText 

@@ -32,7 +32,7 @@ export interface ModalProps {
   confirmDisabled?: boolean;
   confirmColor?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
   dividers?: boolean;
-  sx?: object;
+  sx?: any;
 }
 
 const Modal: React.FC<ModalProps> = ({

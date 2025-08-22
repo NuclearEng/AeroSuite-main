@@ -84,7 +84,7 @@ export function ProgressiveDataTable<T>({
           <Table stickyHeader aria-label="progressive data table">
             <TableHead>
               <TableRow>
-                {columns.map((column) =>
+                {columns.map((column: any) =>
                 <TableCell
                   key={column.id}
                   align={column.align}
@@ -96,9 +96,9 @@ export function ProgressiveDataTable<T>({
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.from(new Array(5)).map((_, index) =>
+              {Array.from(new Array(5)).map((_, index: any) =>
               <TableRow hover tabIndex={-1} key={index}>
-                  {columns.map((column) =>
+                  {columns.map((column: any) =>
                 <TableCell key={column.id} align={column.align}>
                       <Skeleton animation="wave" />
                     </TableCell>
@@ -156,7 +156,7 @@ export function ProgressiveDataTable<T>({
         <Table stickyHeader aria-label="progressive data table">
           <TableHead>
             <TableRow>
-              {columns.map((column) =>
+              {columns.map((column: any) =>
               <TableCell
                 key={column.id}
                 align={column.align}
@@ -168,12 +168,12 @@ export function ProgressiveDataTable<T>({
             </TableRow>
           </TableHead>
           <TableBody>
-            {visibleData.map((row, index) => {
+            {visibleData.map((row, index: any) => {
               const rowId = generateRowId(row, index);
 
               return (
                 <TableRow hover tabIndex={-1} key={rowId}>
-                  {columns.map((column) => {
+                  {columns.map((column: any) => {
                     const value = getCellValue(row, column.id);
                     return (
                       <TableCell key={column.id} align={column.align}>

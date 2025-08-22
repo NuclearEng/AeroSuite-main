@@ -61,14 +61,14 @@ function a11yProps(index: number) {
  */
 const LoadingStatesDemo: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [selectedVariant, setSelectedVariant] = useState<SkeletonScreenVariant>('card');
-  const [count, setCount] = useState<number>(5);
-  const [animation, setAnimation] = useState<'pulse' | 'wave'>('pulse');
-  const [withHeader, setWithHeader] = useState<boolean>(true);
-  const [withActions, setWithActions] = useState<boolean>(true);
-  const [withImage, setWithImage] = useState<boolean>(true);
-  const [withFooter, setWithFooter] = useState<boolean>(true);
-  const [columns, setColumns] = useState<number>(3);
+  const [selectedVariant, setSelectedVariant] = useState<any>('card');
+  const [count, setCount] = useState<any>(5);
+  const [animation, setAnimation] = useState<any>('pulse');
+  const [withHeader, setWithHeader] = useState<any>(true);
+  const [withActions, setWithActions] = useState<any>(true);
+  const [withImage, setWithImage] = useState<any>(true);
+  const [withFooter, setWithFooter] = useState<any>(true);
+  const [columns, setColumns] = useState<any>(3);
   
   // Loading state for demo buttons
   const loadingState1 = useLoadingState({ minLoadingTime: 1000 });

@@ -22,7 +22,8 @@ import {
   Tab } from
 '@mui/material';
 import { PageHeader } from '../components/common';
-import { analyzeModuleSizes, bundleOptimizationGuide } from '../utils/bundleOptimization';
+import bundleOptimization from '../utils/bundleOptimization';
+const { analyzeModuleSizes, bundleOptimizationGuide } = bundleOptimization as any;
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -148,7 +149,7 @@ const BundleOptimizationDemo: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Object.entries(moduleAnalysis).map(([moduleName, info]) =>
+                  {Object.entries(moduleAnalysis).map(([moduleName, info]: any) =>
                   <TableRow key={moduleName} hover>
                       <TableCell>
                         <Typography variant="subtitle2">{moduleName}</Typography>
@@ -225,7 +226,7 @@ ANALYZE=true npm run build`}
                     Import Optimization
                   </Typography>
                   <Box component="ul" sx={{ pl: 2 }}>
-                    {bundleOptimizationGuide.imports.map((tip, index) =>
+                    {bundleOptimizationGuide.imports.map((tip: any, index: number) =>
                     <Box component="li" key={index} sx={{ mb: 1 }}>
                         <Typography variant="body2">{tip}</Typography>
                       </Box>
@@ -335,7 +336,7 @@ function MyComponent() {
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                       <Box component="ul" sx={{ pl: 2 }}>
-                        {bundleOptimizationGuide.tools.map((tip, index) =>
+                        {bundleOptimizationGuide.tools.map((tip: any, index: number) =>
                         <Box component="li" key={index} sx={{ mb: 1 }}>
                             <Typography variant="body2">{tip}</Typography>
                           </Box>
@@ -344,7 +345,7 @@ function MyComponent() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Box component="ul" sx={{ pl: 2 }}>
-                        {bundleOptimizationGuide.dependencies.map((tip, index) =>
+                        {bundleOptimizationGuide.dependencies.map((tip: any, index: number) =>
                         <Box component="li" key={index} sx={{ mb: 1 }}>
                             <Typography variant="body2">{tip}</Typography>
                           </Box>
@@ -505,7 +506,7 @@ module.exports = override(
     'babel-plugin-transform-imports',
     {
       '@mui/material': {
-        transform: '@mui/material/${member}',
+        transform: '@mui/material/$\{member}',
         preventFullImport: true
       }
     }

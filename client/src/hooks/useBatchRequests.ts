@@ -42,7 +42,7 @@ export function useBatchRequests() {
       
       return results;
     } catch (_err) {
-      const error = err instanceof Error ? err : new Error(String(err));
+      const error = _err instanceof Error ? _err : new Error(String(_err));
       setError(error);
       throw error;
     } finally {
@@ -75,7 +75,7 @@ export function useBatchRequests() {
       
       return results;
     } catch (_err) {
-      const error = err instanceof Error ? err : new Error(String(err));
+      const error = _err instanceof Error ? _err : new Error(String(_err));
       setError(error);
       throw error;
     } finally {
@@ -109,7 +109,7 @@ export function useBatchRequests() {
       
       return results;
     } catch (_err) {
-      const error = err instanceof Error ? err : new Error(String(err));
+      const error = _err instanceof Error ? _err : new Error(String(_err));
       setError(error);
       throw error;
     } finally {
@@ -149,7 +149,7 @@ export function useBatchRequests() {
       
       return mappedResults as T;
     } catch (_err) {
-      const error = err instanceof Error ? err : new Error(String(err));
+      const error = _err instanceof Error ? _err : new Error(String(_err));
       setError(error);
       throw error;
     } finally {

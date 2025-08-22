@@ -1,0 +1,601 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate, Link as RouterLink } from 'react-router-dom';
+import {
+  Box,
+  Typography,
+  Button,
+  IconButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Avatar,
+  useTheme,
+  useMediaQuery,
+  Snackbar,
+  Alert,
+  Rating,
+  Grid,
+  Card,
+  CardActionArea,
+  CardContent } from
+'@mui/material';
+import {
+  Add as AddIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Business as BusinessIcon,
+  NetworkCheck as NetworkIcon,
+  AssessmentOutlined as AssessmentIcon,
+  CloudUpload as ImportIcon,
+  CloudDownload as ExportIcon,
+  BarChart as BarChartIcon,
+  Share as ShareIcon,
+  CheckCircle as CheckCircleIcon,
+  DesignServices as DesignServicesIcon,
+  TableChart as TableChartIcon } from
+'@mui/icons-material';
+import {
+  DataTable,
+  FiltersToolbar,
+  PageHeader,
+  StatusBadge,
+  ConfirmationDialog } from
+'../../components/common';
+import { HeadCell } from '../../components/common/DataTable';
+import supplierService, { Supplier, SupplierListParams } from '../../services/supplier.service';
+import { formatDate } from '../../utils';
+import Papa from 'papaparse';
+import { SupplierFormModal } from './components';
+import SupplierImportExport from '../../components/suppliers/SupplierImportExport';
+
+const SupplierList: React.FC = () => {
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // State variables
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeFilters, setActiveFilters] = useState<any[]>([]);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [supplierToDelete, setSupplierToDelete] = useState<string | null>(null);
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: 'success' | 'error' | 'info' | 'warning';
+  }>({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+  const [error, setError] = useState<string | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  const REQUIRED_COLUMNS = ['name', 'code', 'industry', 'status', 'primaryContactName', 'primaryContactEmail'];
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [currentSupplier, setCurrentSupplier] = useState<Supplier | null>(null);
+
+  // Filter definitions for FiltersToolbar
+  const filterDefinitions = [
+  {
+    id: 'status',
+    label: 'Status',
+    type: 'select' as const,
+    options: [
+    { value: 'active', label: 'Active' },
+    { value: 'inactive', label: 'Inactive' },
+    { value: 'pending', label: 'Pending' }],
+
+    showClearButton: true
+  },
+  {
+    id: 'industry',
+    label: 'Industry',
+    type: 'multiSelect' as const,
+    options: [
+    { value: 'Aerospace', label: 'Aerospace' },
+    { value: 'Aviation', label: 'Aviation' },
+    { value: 'Manufacturing', label: 'Manufacturing' },
+    { value: 'Electronics', label: 'Electronics' },
+    { value: 'Materials', label: 'Materials' }]
+
+  },
+  {
+    id: 'minRating',
+    label: 'Minimum Rating',
+    type: 'select' as const,
+    options: [
+    { value: '1', label: '1+ Star' },
+    { value: '2', label: '2+ Stars' },
+    { value: '3', label: '3+ Stars' },
+    { value: '4', label: '4+ Stars' },
+    { value: '4.5', label: '4.5+ Stars' }],
+
+    showClearButton: true
+  }];
+
+
+  // Column definitions for DataTable
+  const columns: HeadCell<Supplier>[] = [
+  {
+    id: 'name' as keyof Supplier,
+    label: 'Supplier',
+    numeric: false,
+    format: (value: any, row?: Supplier) => {
+      if (!row) return value;
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {row.logo ?
+          <Avatar src={row.logo} alt={value} sx={{ mr: 2 }} /> :
+
+          <Avatar sx={{ mr: 2, bgcolor: theme.palette.primary.main }}>
+                {value.charAt(0)}
+              </Avatar>
+          }
+            <Box>
+              <Typography variant="body1" fontWeight={500}>
+                {value}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {row.code}
+              </Typography>
+            </Box>
+          </Box>);
+
+    }
+  },
+  {
+    id: 'industry' as keyof Supplier,
+    label: 'Industry',
+    numeric: false
+  },
+  {
+    id: 'primaryContactName' as keyof Supplier,
+    label: 'Primary Contact',
+    numeric: false,
+    format: (value: any, row?: Supplier) => {
+      if (!row) return value;
+      return (
+        <Box>
+            <Typography variant="body2">{value}</Typography>
+            <Typography variant="caption" color="text.secondary">
+              {row.primaryContactEmail}
+            </Typography>
+          </Box>);
+
+    }
+  },
+  {
+    id: 'overallRating' as keyof Supplier,
+    label: 'Rating',
+    numeric: true,
+    format: (value: any) => {
+      if (!value) {
+        return <Typography variant="body2" color="text.secondary">N/A</Typography>;
+      }
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Rating value={value} precision={0.1} readOnly size="small" />
+            <Typography variant="body2" sx={{ ml: 1 }}>
+              {value.toFixed(1)}
+            </Typography>
+          </Box>);
+
+    }
+  },
+  {
+    id: 'status' as keyof Supplier,
+    label: 'Status',
+    numeric: false,
+    format: (value: any) => {
+      return <StatusBadge status={value as any} />;
+    }
+  }];
+
+
+  // Load suppliers with filtering, pagination, etc.
+  const loadSuppliers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Build params from filters
+      const params: SupplierListParams = {
+        page: page + 1, // API uses 1-based indexing
+        limit: rowsPerPage,
+        search: searchTerm
+      };
+
+      // Add active filters to params
+      activeFilters.forEach((filter) => {
+        if (filter.id === 'status') {
+          params.status = filter.value;
+        } else if (filter.id === 'industry') {
+          params.industry = Array.isArray(filter.value) ?
+          filter.value.join(',') :
+          filter.value;
+        } else if (filter.id === 'minRating') {
+          params.minRating = Number(filter.value);
+        }
+      });
+
+      const response = await supplierService.getSuppliers(params);
+
+      setSuppliers(response.suppliers);
+      setTotalCount(response.total);
+    } catch (err: any) {
+      console.error("Error:", error);
+      setError(err.message || 'Failed to load suppliers');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Load suppliers when parameters change
+  useEffect(() => {
+    loadSuppliers();
+  }, [page, rowsPerPage, searchTerm, activeFilters]);
+
+  // Handle page change
+  const handleChangePage = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  // Handle rows per page change
+  const handleChangeRowsPerPage = (newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
+    setPage(0);
+  };
+
+  // Handle search change
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    setPage(0);
+  };
+
+  // Handle filter changes
+  const handleFilterChange = (filters: any[]) => {
+    setActiveFilters(filters);
+    setPage(0);
+  };
+
+  // Handle supplier row click
+  const handleRowClick = (supplier: Supplier) => {
+    navigate(`/suppliers/${supplier._id}`);
+  };
+
+  // Handle create new supplier
+  const handleCreateSupplier = () => {
+    setCreateModalOpen(true);
+  };
+
+  // Handle edit supplier
+  const handleEditSupplier = (supplier: Supplier) => {
+    setCurrentSupplier(supplier);
+    setEditModalOpen(true);
+  };
+
+  // Handle supplier saved from modal
+  const handleSupplierSaved = (supplier: Supplier) => {
+    // Refresh the supplier list
+    loadSuppliers();
+
+    // Show success message
+    setSnackbar({
+      open: true,
+      message: `Supplier ${currentSupplier ? 'updated' : 'created'} successfully`,
+      severity: 'success'
+    });
+  };
+
+  // Handle delete supplier
+  const handleDeleteClick = (supplier: Supplier) => {
+    setSupplierToDelete(supplier._id);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!supplierToDelete) return;
+
+    try {
+      setLoading(true);
+      await supplierService.deleteSupplier(supplierToDelete);
+
+      // Remove from state
+      setSuppliers((prevSuppliers) =>
+      prevSuppliers.filter((s) => s._id !== supplierToDelete)
+      );
+
+      // Show success message
+      setSnackbar({
+        open: true,
+        message: 'Supplier deleted successfully',
+        severity: 'success'
+      });
+    } catch (err: any) {
+      console.error("Error:", error);
+      setSnackbar({
+        open: true,
+        message: err.message || 'Failed to delete supplier',
+        severity: 'error'
+      });
+    } finally {
+      setDeleteDialogOpen(false);
+      setSupplierToDelete(null);
+      setLoading(false);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
+  const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'].includes(file.type)) {
+      setImportError('Invalid file type. Please upload a CSV or Excel file.');
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      setImportError('File is too large (max 5MB).');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target?.result as string;
+        const result = Papa.parse(text, { header: true });
+        if (!Array.isArray(result.data) || result.data.length === 0) {
+          setImportError('File is empty or invalid format.');
+          return;
+        }
+        // Validate required columns
+        const columns = Object.keys(result.data[0] || {});
+        const missing = REQUIRED_COLUMNS.filter((col) => !columns.includes(col));
+        if (missing.length > 0) {
+          setImportError(`Missing required columns: ${missing.join(', ')}`);
+          return;
+        }
+        setImportError(null);
+        // TODO: send result.data to backend for import (with permission check)
+        // TODO: handle backend errors and show user-facing error UI
+      } catch (err: any) {
+        setImportError('Failed to parse file.');
+      }
+    };
+    reader.onerror = () => {
+      setImportError('Failed to read file.');
+    };
+    reader.readAsText(file);
+  };
+
+  return (
+    <Box>
+      <PageHeader
+        title="Suppliers"
+        subtitle="Manage your suppliers and vendor relationships"
+        breadcrumbs={[
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Suppliers' }]
+        }
+        actions={
+        <Box>
+            <Button
+            variant="outlined"
+            startIcon={<AssessmentIcon />}
+            component={RouterLink}
+            to="/suppliers/risk-assessment"
+            sx={{ mr: 1 }}>
+
+              Risk Assessment
+            </Button>
+            <Button
+            variant="outlined"
+            startIcon={<BarChartIcon />}
+            component={RouterLink}
+            to="/suppliers/analytics"
+            sx={{ mr: 1 }}>
+
+              Analytics
+            </Button>
+            <Button
+            variant="outlined"
+            startIcon={<CheckCircleIcon />}
+            component={RouterLink}
+            to="/suppliers/audit-checklist"
+            sx={{ mr: 1 }}>
+
+              Audit Checklist
+            </Button>
+            <Button
+            variant="outlined"
+            startIcon={<DesignServicesIcon />}
+            component={RouterLink}
+            to="/suppliers/enhanced-form"
+            sx={{ mr: 1 }}>
+
+              Enhanced Form
+            </Button>
+            <Button
+            variant="outlined"
+            startIcon={<TableChartIcon />}
+            component={RouterLink}
+            to="/suppliers/enhanced-table"
+            sx={{ mr: 1 }}>
+
+              Enhanced Table
+            </Button>
+            <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleCreateSupplier}>
+
+              {isMobile ? 'Add' : 'Add Supplier'}
+            </Button>
+          </Box>
+        } />
+
+
+      <FiltersToolbar
+        filters={filterDefinitions}
+        activeFilters={activeFilters}
+        onFilterChange={handleFilterChange}
+        searchTerm={searchTerm}
+        onSearchChange={handleSearchChange}
+        showSearch
+        loading={loading}
+        showActiveFilters
+        showFilterButton
+        collapsible
+        defaultCollapsed />
+
+
+      <Box sx={{ mb: 2 }}>
+        <Button
+          variant="outlined"
+          startIcon={<ImportIcon />}
+          component="label"
+          sx={{ mr: 2 }}>
+
+          Import Suppliers
+          <input type="file" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" hidden onChange={handleFileImport} />
+        </Button>
+        {importError && <Alert severity="error" sx={{ ml: 2 }}>{importError}</Alert>}
+      </Box>
+
+      <DataTable
+        rows={suppliers}
+        headCells={columns}
+        loading={loading}
+        pagination
+        defaultSortBy="name"
+        onRowClick={handleRowClick}
+        error={error || undefined}
+        refetch={loadSuppliers}
+        actions={[
+        {
+          label: 'Edit',
+          onClick: (selectedRows) => handleEditSupplier(selectedRows[0]),
+          icon: <EditIcon />,
+          color: 'primary'
+        },
+        {
+          label: 'Delete',
+          onClick: (selectedRows) => handleDeleteClick(selectedRows[0]),
+          icon: <DeleteIcon />,
+          color: 'error'
+        }]
+        }
+        emptyStateMessage="No suppliers found. Add your first supplier to get started."
+        rowsPerPageOptions={[10, 25, 50, 100]} />
+
+
+      
+      <ConfirmationDialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Supplier"
+        message="Are you sure you want to delete this supplier? This action cannot be undone."
+        confirmButtonText="Delete"
+        type="delete"
+        loading={loading} />
+
+
+      
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled">
+
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+
+      
+      <Grid container spacing={3} sx={{ mb: 3 }}>
+        <Grid item xs={12} md={4}>
+          <Card variant="outlined">
+            <CardActionArea onClick={() => navigate('/suppliers/network')}>
+              <CardContent>
+                <Box display="flex" flexDirection="column" alignItems="center" p={2}>
+                  <NetworkIcon sx={{ fontSize: 48, color: 'primary.main', mb: 1 }} />
+                  <Typography variant="h6" align="center">Supplier Network</Typography>
+                  <Typography variant="body2" color="text.secondary" align="center">
+                    Visualize supplier relationships and analyze supply chain networks
+                  </Typography>
+                </Box>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        
+        <Grid item xs={12} md={4}>
+          <Card variant="outlined">
+            <CardActionArea onClick={() => navigate('/suppliers/risk-assessment')}>
+              <CardContent>
+                <Box display="flex" flexDirection="column" alignItems="center" p={2}>
+                  <AssessmentIcon sx={{ fontSize: 48, color: 'primary.main', mb: 1 }} />
+                  <Typography variant="h6" align="center">Risk Assessment</Typography>
+                  <Typography variant="body2" color="text.secondary" align="center">
+                    Evaluate and track risk factors for your suppliers
+                  </Typography>
+                </Box>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+        
+        <Grid item xs={12} md={4}>
+          <Card variant="outlined">
+            <CardActionArea onClick={() => navigate('/suppliers/analytics')}>
+              <CardContent>
+                <Box display="flex" flexDirection="column" alignItems="center" p={2}>
+                  <BarChartIcon sx={{ fontSize: 48, color: 'primary.main', mb: 1 }} />
+                  <Typography variant="h6" align="center">Supplier Analytics</Typography>
+                  <Typography variant="body2" color="text.secondary" align="center">
+                    Analyze performance metrics and compare suppliers
+                  </Typography>
+                </Box>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      </Grid>
+
+      
+      <SupplierFormModal
+        open={createModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+        onSave={handleSupplierSaved} />
+
+      
+      
+      <SupplierFormModal
+        open={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        onSave={handleSupplierSaved}
+        isEdit
+        supplierId={currentSupplier?._id} />
+
+
+      <SupplierImportExport />
+    </Box>);
+
+};
+
+export default SupplierList;

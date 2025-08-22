@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -45,8 +45,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
 
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
+  const [success, setSuccess] = useState<any>(null);
 
   // Form state
   const [formValues, setFormValues] = useState({
@@ -121,7 +121,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ editable = true, userId }) =>
       setSuccess('Profile updated successfully');
       setIsEditing(false);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to update profile');
     } finally {
       setLoading(false);

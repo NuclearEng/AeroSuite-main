@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { ChangeEvent, useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -93,7 +93,7 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
   const { t } = useTranslation();
   // State
   const [tabValue, setTabValue] = useState(0);
-  const [period, setPeriod] = useState<'3months' | '6months' | '1year' | '2years'>('6months');
+  const [period, setPeriod] = useState<any>('6months');
   const [comparisonMode, setComparisonMode] = useState(false);
 
   // Use the supplier analytics hook
@@ -385,7 +385,7 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
         <Divider />
         <CardContent>
           <Grid container spacing={2}>
-            {recommendedActions.map((action, index) =>
+            {recommendedActions.map((action, index: any) =>
             <Grid item xs={12} md={6} key={index}>
                 <Paper
                 elevation={0}
@@ -427,7 +427,7 @@ const SupplierAnalyticsDashboard: React.FC<SupplierAnalyticsDashboardProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {analyticsData.riskAssessment.factors.map((factor: {name: string;level: string;impact: string;description: string;}, index: number) =>
+              {analyticsData.riskAssessment.factors.map((factor: {name: string;level: string;impact: string;description: string;}, index: number: any) =>
               <TableRow key={index}>
                   <TableCell>{factor.name}</TableCell>
                   <TableCell>

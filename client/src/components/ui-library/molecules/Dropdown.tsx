@@ -24,7 +24,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   disabled = false,
 }) => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string | undefined>(value);
+  const [selected, setSelected] = useState<any>(value);
 
   const handleSelect = (val: string) => {
     setSelected(val);

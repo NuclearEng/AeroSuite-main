@@ -123,8 +123,8 @@ const demoScripts = [
 const ResourcePrioritizationDemo: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [domainUrl, setDomainUrl] = useState('https://example.com');
-  const [preconnectStatus, setPreconnectStatus] = useState<string | null>(null);
-  const [isImagePrioritized, setIsImagePrioritized] = useState<Record<string, boolean>>({});
+  const [preconnectStatus, setPreconnectStatus] = useState<any>(null);
+  const [isImagePrioritized, setIsImagePrioritized] = useState<any>({});
   const [priorityQueue] = useState(() => new ResourcePriorityQueue());
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -144,7 +144,7 @@ const ResourcePrioritizationDemo: React.FC = () => {
     const imgElement = document.querySelector(`img[src="${imageUrl}"]`) as HTMLImageElement;
     if (imgElement) {
       resourcePrioritization.prioritizeImage(imgElement, priority);
-      setIsImagePrioritized(prev => ({ ...prev, [imageUrl]: true }));
+      setIsImagePrioritized((prev: any) => ({ ...prev, [imageUrl]: true }));
     }
   };
 
@@ -261,7 +261,7 @@ const ResourcePrioritizationDemo: React.FC = () => {
         </Typography>
 
         <Grid container spacing={3} className="demo-images">
-          {demoImages.map((image, index) => (
+          {demoImages.map((image, index: any) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card>
                 <Box sx={{ position: 'relative', overflow: 'hidden' }}>
@@ -370,7 +370,7 @@ const ResourcePrioritizationDemo: React.FC = () => {
                 Script Resources
               </Typography>
               <List>
-                {demoScripts.map((script, index) => (
+                {demoScripts.map((script, index: any) => (
                   <ListItem key={index} divider={index < demoScripts.length - 1}>
                     <ListItemText
                       primary={script.title}

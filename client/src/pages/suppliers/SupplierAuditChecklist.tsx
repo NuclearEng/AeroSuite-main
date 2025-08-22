@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import {
   Container,
@@ -57,7 +57,7 @@ const SupplierAuditChecklist: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
-  const [auditInfo, setAuditInfo] = useState<Partial<SupplierAudit>>({
+  const [auditInfo, setAuditInfo] = useState<any>({
     title: '',
     auditType: 'initial',
     auditDate: new Date(),
@@ -94,7 +94,7 @@ const SupplierAuditChecklist: React.FC = () => {
   useEffect(() => {
     if (selectedSupplier && !currentAudit) {
       createNewAuditWithTemplate();
-      setAuditInfo((prev) => ({
+      setAuditInfo((prev: any) => ({
         ...prev,
         title: `${selectedSupplier.name} - Supplier Audit`
       }));
@@ -332,7 +332,7 @@ const SupplierAuditChecklist: React.FC = () => {
               Audit Team
             </Typography>
             
-            {auditInfo.auditTeam && auditInfo.auditTeam.map((member, index) =>
+            {auditInfo.auditTeam && auditInfo.auditTeam.map((member: any, index: number) =>
             <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <TextField
                 label="Name"
@@ -509,7 +509,7 @@ const SupplierAuditChecklist: React.FC = () => {
                       </Typography>
                       <Typography variant="h5">
                         {checklist.reduce((count, item) =>
-                      count + (item.findings?.filter((f) => f.type === 'observation').length || 0), 0
+                      count + (item.findings?.filter((f: any) => f.type === 'observation').length || 0), 0
                       )}
                       </Typography>
                     </Grid>
@@ -520,7 +520,7 @@ const SupplierAuditChecklist: React.FC = () => {
                       </Typography>
                       <Typography variant="h5" color="warning.main">
                         {checklist.reduce((count, item) =>
-                      count + (item.findings?.filter((f) => f.type === 'minor-nc').length || 0), 0
+                      count + (item.findings?.filter((f: any) => f.type === 'minor-nc').length || 0), 0
                       )}
                       </Typography>
                     </Grid>
@@ -531,7 +531,7 @@ const SupplierAuditChecklist: React.FC = () => {
                       </Typography>
                       <Typography variant="h5" color="error.main">
                         {checklist.reduce((count, item) =>
-                      count + (item.findings?.filter((f) => f.type === 'major-nc').length || 0), 0
+                      count + (item.findings?.filter((f: any) => f.type === 'major-nc').length || 0), 0
                       )}
                       </Typography>
                     </Grid>
@@ -542,7 +542,7 @@ const SupplierAuditChecklist: React.FC = () => {
                       </Typography>
                       <Typography variant="h5" color="error.dark">
                         {checklist.reduce((count, item) =>
-                      count + (item.findings?.filter((f) => f.type === 'critical-nc').length || 0), 0
+                      count + (item.findings?.filter((f: any) => f.type === 'critical-nc').length || 0), 0
                       )}
                       </Typography>
                     </Grid>
@@ -604,7 +604,7 @@ const SupplierAuditChecklist: React.FC = () => {
         <DialogContent>
           {audits.length > 0 ?
           <Grid container spacing={2}>
-              {audits.map((audit) =>
+              {audits.map((audit: any) =>
             <Grid item xs={12} sm={6} key={audit._id}>
                   <Card variant="outlined">
                     <CardContent>

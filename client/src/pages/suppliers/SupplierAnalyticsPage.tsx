@@ -62,8 +62,8 @@ const SupplierAnalyticsPage: React.FC = () => {
   const navigate = useNavigate();
   const [tabValue, setTabValue] = useState(0);
   const [supplier, setSupplier] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
 
   useEffect(() => {
     if (id) {

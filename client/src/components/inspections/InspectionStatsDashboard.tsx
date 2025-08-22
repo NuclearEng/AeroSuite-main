@@ -61,12 +61,12 @@ const InspectionStatsDashboard: React.FC = () => {
   }
 
   // Prepare data for pie chart
-  const statusData = Object.entries(stats.statusCounts).map(([status, count]) => ({
+  const statusData = Object.entries(stats.statusCounts).map(([status, count]: any) => ({
     name: status.charAt(0).toUpperCase() + status.slice(1),
     value: count
   }));
 
-  const typeData = Object.entries(stats.typeCounts).map(([type, count]) => ({
+  const typeData = Object.entries(stats.typeCounts).map(([type, count]: any) => ({
     name: type.charAt(0).toUpperCase() + type.slice(1),
     value: count
   }));
@@ -176,7 +176,7 @@ const InspectionStatsDashboard: React.FC = () => {
                     fill="#8884d8"
                     dataKey="value">
 
-                    {statusData.map((entry, index) =>
+                    {statusData.map((entry, index: any) =>
                     <Cell key={`cell-${index}`} fill={statusColors[index % statusColors.length]} />
                     )}
                   </Pie>
@@ -205,7 +205,7 @@ const InspectionStatsDashboard: React.FC = () => {
                     fill="#8884d8"
                     dataKey="value">
 
-                    {typeData.map((entry, index) =>
+                    {typeData.map((entry, index: any) =>
                     <Cell key={`cell-${index}`} fill={typeColors[index % typeColors.length]} />
                     )}
                   </Pie>
@@ -222,7 +222,7 @@ const InspectionStatsDashboard: React.FC = () => {
           <CardHeader title="Top Supplier Performance" />
           <CardContent>
             <List>
-              {stats.supplierPerformance.map((supplier) =>
+              {stats.supplierPerformance.map((supplier: any) =>
               <React.Fragment key={supplier.id}>
                   <ListItem>
                     <ListItemText

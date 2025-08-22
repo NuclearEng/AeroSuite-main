@@ -78,8 +78,8 @@ const OfflineIndicator: React.FC = () => {
   const { isOffline } = useOfflineMode();
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [pendingChanges, setPendingChanges] = useState<number>(0);
-  const [databaseSize, setDatabaseSize] = useState<number>(0);
+  const [pendingChanges, setPendingChanges] = useState<any>(0);
+  const [databaseSize, setDatabaseSize] = useState<any>(0);
 
   // Show snackbar when offline status changes
   useEffect(() => {
@@ -99,7 +99,7 @@ const OfflineIndicator: React.FC = () => {
         const size = await persistenceService.getDatabaseSize();
         setDatabaseSize(size);
       } catch (_error) {
-        console.error("Error:", err);
+        console.error("Error:", _error);
       }
     };
 

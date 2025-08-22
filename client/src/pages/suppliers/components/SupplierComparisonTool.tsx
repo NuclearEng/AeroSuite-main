@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -89,14 +89,14 @@ interface SupplierMetrics {
 const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ currentSupplierId }) => {
   const { t } = useTranslation();
   // State
-  const [suppliers, setSuppliers] = useState<SupplierOption[]>([]);
-  const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([currentSupplierId]);
-  const [comparisonData, setComparisonData] = useState<SupplierMetrics[]>([]);
-  const [comparisonMetrics, setComparisonMetrics] = useState<string[]>(['quality', 'delivery', 'responsiveness', 'cost']);
-  const [chartType, setChartType] = useState<'bar' | 'radar'>('bar');
+  const [suppliers, setSuppliers] = useState<any>([]);
+  const [selectedSuppliers, setSelectedSuppliers] = useState<any>([currentSupplierId]);
+  const [comparisonData, setComparisonData] = useState<any>([]);
+  const [comparisonMetrics, setComparisonMetrics] = useState<any>(['quality', 'delivery', 'responsiveness', 'cost']);
+  const [chartType, setChartType] = useState<any>('bar');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [period, setPeriod] = useState<'3months' | '6months' | '1year'>('6months');
+  const [error, setError] = useState<any>(null);
+  const [period, setPeriod] = useState<any>('6months');
 
   // Load suppliers for selection
   useEffect(() => {
@@ -107,7 +107,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
           status: 'active'
         });
 
-        const supplierOptions = response.suppliers.map((supplier) => ({
+        const supplierOptions = response.suppliers.map((supplier: any) => ({
           id: supplier._id,
           name: supplier.name,
           code: supplier.code
@@ -115,7 +115,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
 
         setSuppliers(supplierOptions);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load suppliers');
       }
     };
@@ -135,7 +135,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
         setLoading(true);
         setError(null);
 
-        const promises = selectedSuppliers.map((supplierId) =>
+        const promises = selectedSuppliers.map((supplierId: any) =>
         supplierService.getSupplierAnalytics(supplierId, {
           period: period === '3months' ? 'month' : period === '6months' ? 'month' : 'quarter',
           metrics: comparisonMetrics
@@ -145,7 +145,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
         const results = await Promise.all(promises);
 
         // Transform the results into the format we need
-        const supplierMetrics: SupplierMetrics[] = results.map((result, index) => {
+        const supplierMetrics: SupplierMetrics[] = results.map((result, index: any) => {
           const supplierId = selectedSuppliers[index];
           const supplierInfo = suppliers.find((s) => s.id === supplierId);
 
@@ -158,7 +158,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
 
         setComparisonData(supplierMetrics);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load comparison data');
       } finally {
         setLoading(false);
@@ -182,7 +182,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
     // Don't allow removing the current supplier
     if (supplierId === currentSupplierId) return;
 
-    setSelectedSuppliers(selectedSuppliers.filter((id) => id !== supplierId));
+    setSelectedSuppliers(selectedSuppliers.filter((id: any) => id !== supplierId));
   };
 
   // Handle period change
@@ -213,12 +213,12 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
 
   // Prepare chart data
   const chartData = {
-    labels: comparisonMetrics.map((metric) =>
+    labels: comparisonMetrics.map((metric: any) =>
     metric.charAt(0).toUpperCase() + metric.slice(1)
     ),
-    datasets: comparisonData.map((supplier, index) => ({
+    datasets: comparisonData.map((supplier, index: any) => ({
       label: supplier.name,
-      data: comparisonMetrics.map((metric) => supplier.metrics[metric] || 0),
+      data: comparisonMetrics.map((metric: any) => supplier.metrics[metric] || 0),
       backgroundColor: `rgba(${index * 50}, ${255 - index * 30}, ${150 + index * 20}, 0.6)`,
       borderColor: `rgba(${index * 50}, ${255 - index * 30}, ${150 + index * 20}, 1)`,
       borderWidth: 1
@@ -287,7 +287,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
           <TableHead>
             <TableRow>
               <TableCell>Metric</TableCell>
-              {comparisonData.map((supplier) =>
+              {comparisonData.map((supplier: any) =>
               <TableCell key={supplier.supplierId}>
                   {supplier.name}
                   {supplier.supplierId !== currentSupplierId &&
@@ -304,12 +304,12 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
             </TableRow>
           </TableHead>
           <TableBody>
-            {comparisonMetrics.map((metric) =>
+            {comparisonMetrics.map((metric: any) =>
             <TableRow key={metric}>
                 <TableCell component="th" scope="row" sx={{ textTransform: 'capitalize' }}>
                   {metric}
                 </TableCell>
-                {comparisonData.map((supplier) =>
+                {comparisonData.map((supplier: any) =>
               <TableCell key={supplier.supplierId}>
                     {supplier.metrics[metric]?.toFixed(1)}%
                     <LinearProgress
@@ -330,9 +330,9 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
               <TableCell component="th" scope="row">
                 <strong>Overall Score</strong>
               </TableCell>
-              {comparisonData.map((supplier) => {
+              {comparisonData.map((supplier: any) => {
                 // Calculate average of all metrics
-                const metricValues = comparisonMetrics.map((metric) => supplier.metrics[metric] || 0);
+                const metricValues = comparisonMetrics.map((metric: any) => supplier.metrics[metric] || 0);
                 const average = metricValues.reduce((sum, value) => sum + value, 0) / metricValues.length;
 
                 return (
@@ -384,7 +384,7 @@ const SupplierComparisonTool: React.FC<SupplierComparisonToolProps> = ({ current
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <Autocomplete
-                options={suppliers.filter((s) => !selectedSuppliers.includes(s.id))}
+                options={suppliers.filter((s: any) => !selectedSuppliers.includes(s.id))}
                 getOptionLabel={(option) => `${option.name} (${option.code})`}
                 renderInput={(params) =>
                 <TextField

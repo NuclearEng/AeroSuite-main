@@ -46,9 +46,9 @@ const EnhancedSSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({
   variant = 'standard',
   showDivider = true
 }: SSOLoginButtonsProps) => {
-  const [providers, setProviders] = useState<string[]>([]);
+  const [providers, setProviders] = useState<any>([]);
   const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<any>(null);
   const theme = useTheme();
   
   // Delay showing the loading spinner to avoid flickering
@@ -166,7 +166,7 @@ const EnhancedSSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({
           {variant === 'compact' ? (
             // Compact view with icons only
             <Box display="flex" justifyContent="center" gap={2}>
-              {providers.map((provider) => {
+              {providers.map((provider: any) => {
                 const config = providerConfigs[provider];
                 return (
                   <Tooltip key={provider} title={`Sign in with ${config.name}`}>
@@ -196,7 +196,7 @@ const EnhancedSSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({
           ) : (
             // Standard view with buttons and text
             <Box display="flex" flexDirection="column" gap={2}>
-              {providers.map((provider) => {
+              {providers.map((provider: any) => {
                 const config = providerConfigs[provider];
                 return (
                   <Button

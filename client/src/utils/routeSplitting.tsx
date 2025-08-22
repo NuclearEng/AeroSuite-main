@@ -153,7 +153,7 @@ export function getRouteConfig(path: string): RouteConfig {
  * @returns Array of route modules with metadata
  */
 export function getAllRouteModules(): RouteModule[] {
-  return Object.entries(routeImports).map(([path, importFn]) => {
+  return Object.entries(routeImports).map(([path, importFn]: any) => {
     const config = getRouteConfig(path);
     return {
       path,

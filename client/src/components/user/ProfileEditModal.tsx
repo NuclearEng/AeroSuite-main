@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -78,15 +78,15 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   initialData,
   userId
 }) => {
-  const [formValues, setFormValues] = useState<ProfileFormData>({
+  const [formValues, setFormValues] = useState<any>({
     ...initialFormValues,
     ...initialData
   });
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState<string | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string | undefined>(initialData?.avatarUrl);
+  const [apiError, setApiError] = useState<any>(null);
+  const [avatarPreview, setAvatarPreview] = useState<any>(initialData?.avatarUrl);
 
   // Load user data if needed
   useEffect(() => {
@@ -107,7 +107,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           });
           setAvatarPreview(userData.avatarUrl);
         } catch (error: any) {
-          console.error("Error:", err);
+          console.error("Error:", error);
           setApiError(error.message || 'Failed to load user profile data');
         } finally {
           setLoading(false);
@@ -121,7 +121,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   }, [userId, open, initialData]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
 
     if (!name) return;
@@ -255,7 +255,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         throw new Error('User ID is required for profile update');
       }
     } catch (error: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setApiError(error.message || 'Failed to save profile changes');
     } finally {
       setIsSubmitting(false);
@@ -413,7 +413,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
                   label="Department"
                   onChange={handleChange as any}>
 
-                    {departmentOptions.map((option) =>
+                    {departmentOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>

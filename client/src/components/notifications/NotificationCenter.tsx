@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { ChangeEvent, useState, useEffect, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Badge,
@@ -65,11 +65,11 @@ const NotificationCenter: React.FC = () => {
   );
 
   // Local state
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
-  const [settingsAnchorEl, setSettingsAnchorEl] = useState<null | HTMLElement>(null);
-  const [activeTab, setActiveTab] = useState<number>(0);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [filterAnchorEl, setFilterAnchorEl] = useState<any>(null);
+  const [settingsAnchorEl, setSettingsAnchorEl] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<any>(0);
+  const [searchQuery, setSearchQuery] = useState<any>('');
   const [filters, setFilters] = useState({
     showInfo: true,
     showSuccess: true,
@@ -90,10 +90,10 @@ const NotificationCenter: React.FC = () => {
 
   // Load notifications when component mounts
   useEffect(() => {
-    dispatch(fetchNotifications());
+    dispatch(fetchNotifications() as any);
 
     // Load preferences from local storage
-    const savedPreferences = persistenceService.getItem('notificationPreferences');
+    const savedPreferences = (persistenceService as any).getItem('notificationPreferences');
     if (savedPreferences) {
       try {
         setPreferences(JSON.parse(savedPreferences));
@@ -108,7 +108,7 @@ const NotificationCenter: React.FC = () => {
     if (preferences.enableRealTimeNotifications) {
       const handleNotification = (data: any) => {
         // Add the notification to the Redux store
-        dispatch(addNotification(data));
+        dispatch(addNotification(data) as any);
 
         // Show browser notification if enabled
         if (preferences.desktopNotifications) {
@@ -158,13 +158,13 @@ const NotificationCenter: React.FC = () => {
   // Save preferences to local storage
   const savePreferences = useCallback((newPreferences: typeof preferences) => {
     setPreferences(newPreferences);
-    persistenceService.setItem('notificationPreferences', JSON.stringify(newPreferences));
+    (persistenceService as any).setItem('notificationPreferences', JSON.stringify(newPreferences));
   }, []);
 
   // Handle opening the notification menu
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-    dispatch(fetchNotifications()); // Refresh notifications when opening menu
+    dispatch(fetchNotifications() as any); // Refresh notifications when opening menu
   };
 
   // Handle closing the notification menu
@@ -195,7 +195,7 @@ const NotificationCenter: React.FC = () => {
   // Handle notification click
   const handleNotificationClick = (notification: Notification) => {
     if (!notification.read) {
-      dispatch(markAsRead(notification._id));
+      dispatch(markAsRead(notification._id) as any);
     }
 
     // Navigate to link if provided
@@ -213,7 +213,7 @@ const NotificationCenter: React.FC = () => {
 
   // Handle marking all as read
   const handleMarkAllAsRead = () => {
-    dispatch(markAllAsRead());
+    dispatch(markAllAsRead() as any);
   };
 
   // Handle filter change
@@ -314,13 +314,13 @@ const NotificationCenter: React.FC = () => {
 
     // Filter by tab
     if (activeTab === 1) {
-      filtered = filtered.filter((notification) => !notification.read);
+      filtered = filtered.filter((notification: any) => !notification.read);
     } else if (activeTab === 2) {
-      filtered = filtered.filter((notification) => notification.read);
+      filtered = filtered.filter((notification: any) => notification.read);
     }
 
     // Filter by type
-    filtered = filtered.filter((notification) => {
+    filtered = filtered.filter((notification: any) => {
       if (notification.type === 'info' && !filters.showInfo) return false;
       if (notification.type === 'success' && !filters.showSuccess) return false;
       if (notification.type === 'warning' && !filters.showWarning) return false;
@@ -477,7 +477,7 @@ const NotificationCenter: React.FC = () => {
             <Button
             size="small"
             sx={{ mt: 1 }}
-            onClick={() => dispatch(fetchNotifications())}>
+            onClick={() => dispatch(fetchNotifications() as any)}>
 
               Retry
             </Button>
@@ -492,7 +492,7 @@ const NotificationCenter: React.FC = () => {
         
         {!loading && !error && filteredNotifications.length > 0 &&
         <List sx={{ width: '100%', p: 0 }}>
-            {Object.entries(groupedNotifications).map(([date, notifications]) =>
+            {Object.entries(groupedNotifications).map(([date, notifications]: any) =>
           <React.Fragment key={date}>
                 {preferences.groupSimilarNotifications &&
             <ListItem sx={{ bgcolor: 'background.default', py: 0.5 }}>
@@ -502,7 +502,7 @@ const NotificationCenter: React.FC = () => {
                   </ListItem>
             }
                 
-                {notifications.map((notification) =>
+                {notifications.map((notification: any) =>
             <React.Fragment key={notification._id}>
                     <ListItem
                 alignItems="flex-start"

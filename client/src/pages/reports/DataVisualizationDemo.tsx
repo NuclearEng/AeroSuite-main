@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -139,11 +139,11 @@ const DataVisualizationDemo: React.FC = () => {
   const navigate = useNavigate();
   
   // State
-  const [selectedDataset, setSelectedDataset] = useState<string>('monthly');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [refreshKey, setRefreshKey] = useState<number>(0);
-  const [randomize, setRandomize] = useState<boolean>(false);
+  const [selectedDataset, setSelectedDataset] = useState<any>('monthly');
+  const [loading, setLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+  const [refreshKey, setRefreshKey] = useState<any>(0);
+  const [randomize, setRandomize] = useState<any>(false);
   
   // Get current dataset
   const currentDataset = sampleDatasets[selectedDataset as keyof typeof sampleDatasets];
@@ -172,7 +172,7 @@ const DataVisualizationDemo: React.FC = () => {
     
     // Simulate API call
     setTimeout(() => {
-      setRefreshKey(prev => prev + 1);
+      setRefreshKey((prev: number) => prev + 1);
       setLoading(false);
     }, 800);
   };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 // Legacy theme removed. This JS App entry is deprecated; use App.tsx with ThemeProvider.
@@ -153,40 +153,42 @@ const App = () => {
     <AuthContext.Provider value={{ isAuthenticated: true, user: { name: 'Demo User' } }}>
       <ThemeProvider theme={accessibleTheme}>
         <CssBaseline />
-        {isOffline && (
-          <div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: '#f44336',
-              color: 'white',
-              padding: '4px 16px',
-              textAlign: 'center',
-              zIndex: 2000,
-            }}
-          >
-            You are currently offline. Some features may be limited.
-          </div>
-        )}
-        <Routes>
-          <Route path="/" element={<ResponsiveLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="suppliers" element={<SupplierList />} />
-            <Route path="suppliers/:id" element={<SupplierDetails />} />
-            <Route path="customers" element={<CustomerList />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-        
-        {/* Service worker update notification */}
-        {updateAvailable && (
-          <ServiceWorkerUpdateNotification 
-            onAccept={handleServiceWorkerUpdate} 
-            onDismiss={dismissUpdate} 
-          />
-        )}
+        <BrowserRouter>
+          {isOffline && (
+            <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                backgroundColor: '#f44336',
+                color: 'white',
+                padding: '4px 16px',
+                textAlign: 'center',
+                zIndex: 2000,
+              }}
+            >
+              You are currently offline. Some features may be limited.
+            </div>
+          )}
+          <Routes>
+            <Route path="/" element={<ResponsiveLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="suppliers" element={<SupplierList />} />
+              <Route path="suppliers/:id" element={<SupplierDetails />} />
+              <Route path="customers" element={<CustomerList />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+          
+          {/* Service worker update notification */}
+          {updateAvailable && (
+            <ServiceWorkerUpdateNotification 
+              onAccept={handleServiceWorkerUpdate} 
+              onDismiss={dismissUpdate} 
+            />
+          )}
+        </BrowserRouter>
       </ThemeProvider>
     </AuthContext.Provider>
   );

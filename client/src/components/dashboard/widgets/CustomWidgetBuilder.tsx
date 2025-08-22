@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -62,7 +62,7 @@ interface CustomWidgetBuilderProps {
 const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSave }) => {
   const dispatch = useAppDispatch();
   const [activeStep, setActiveStep] = useState(0);
-  const [widgetConfig, setWidgetConfig] = useState<Partial<WidgetMeta> & {dataSource?: string;visualization?: string;apiEndpoint?: string;}>({
+  const [widgetConfig, setWidgetConfig] = useState<any>({
     id: `custom-${uuidv4().slice(0, 8)}`,
     title: '',
     description: '',
@@ -82,7 +82,7 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
   });
 
   // Form validation
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<any>({});
 
   // Validate current step
   const validateStep = () => {
@@ -113,10 +113,18 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
   };
 
   // Handle input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
     if (name) {
-      setWidgetConfig((prev) => ({ ...prev, [name]: value }));
+      setWidgetConfig((prev: any) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  // Handle select changes
+  const handleSelectChange = (e: any) => {
+    const { name, value } = e.target;
+    if (name) {
+      setWidgetConfig((prev: any) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -306,7 +314,7 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
               <Select
                 name="defaultSize"
                 value={widgetConfig.defaultSize}
-                onChange={handleChange}
+                onChange={handleSelectChange}
                 label="Size">
 
                 <MenuItem value="small">Small</MenuItem>
@@ -325,10 +333,10 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
               <Select
                 name="dataSource"
                 value={widgetConfig.dataSource}
-                onChange={handleChange}
+                onChange={handleSelectChange}
                 label="Data Source">
 
-                {dataSources.map((source) =>
+                {dataSources.map((source: any) =>
                 <MenuItem key={source.id} value={source.id}>{source.name}</MenuItem>
                 )}
               </Select>
@@ -358,10 +366,10 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
               <Select
                 name="visualization"
                 value={widgetConfig.visualization}
-                onChange={handleChange}
+                onChange={handleSelectChange}
                 label="Visualization Type">
 
-                {visualizationTypes.map((type) =>
+                {visualizationTypes.map((type: any) =>
                 <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
                 )}
               </Select>
@@ -426,7 +434,7 @@ const CustomWidgetBuilder: React.FC<CustomWidgetBuilderProps> = ({ onClose, onSa
       </Box>
 
       <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
-        {steps.map((label) =>
+        {steps.map((label: any) =>
         <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>

@@ -41,10 +41,10 @@ const SupplierEdit: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // State
-  const [supplier, setSupplier] = useState<Supplier | null>(null);
+  const [supplier, setSupplier] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
@@ -67,7 +67,7 @@ const SupplierEdit: React.FC = () => {
         const data = await supplierService.getSupplier(id);
         setSupplier(data);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load supplier');
       } finally {
         setLoading(false);
@@ -293,7 +293,7 @@ const SupplierEdit: React.FC = () => {
       }, 1500);
 
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
 
       // Show error message
       setSnackbar({

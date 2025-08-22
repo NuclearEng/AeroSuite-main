@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -95,9 +95,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [values, setValues] = useState<FilterValues>(initialValues);
+  const [values, setValues] = useState<any>(initialValues);
   const [searchTerm, setSearchTerm] = useState('');
-  const [expandedSections, setExpandedSections] = useState<string[]>([]);
+  const [expandedSections, setExpandedSections] = useState<any>([]);
 
   // Reset filters to initial values
   const resetFilters = () => {
@@ -122,14 +122,14 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle checkbox change
   const handleCheckboxChange = (id: string, value: string | number) => {
-    setValues((prev) => {
+    setValues((prev: any) => {
       const currentValues = prev[id] as string[] || [];
       const valueExists = currentValues.includes(value.toString());
 
       if (valueExists) {
         return {
           ...prev,
-          [id]: currentValues.filter((v) => v !== value.toString())
+          [id]: currentValues.filter((v: any) => v !== value.toString())
         };
       } else {
         return {
@@ -142,7 +142,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle radio change
   const handleRadioChange = (id: string, value: string | number) => {
-    setValues((prev) => ({
+    setValues((prev: any) => ({
       ...prev,
       [id]: value
     }));
@@ -150,7 +150,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle select change
   const handleSelectChange = (id: string, value: string | number | string[]) => {
-    setValues((prev) => ({
+    setValues((prev: any) => ({
       ...prev,
       [id]: value
     }));
@@ -158,7 +158,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle date change
   const handleDateChange = (id: string, value: Date | null) => {
-    setValues((prev) => ({
+    setValues((prev: any) => ({
       ...prev,
       [id]: value
     }));
@@ -166,7 +166,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle date range change
   const handleDateRangeChange = (id: string, index: number, value: Date | null) => {
-    setValues((prev) => {
+    setValues((prev: any) => {
       const currentRange = Array.isArray(prev[id]) ? prev[id] as (Date | null)[] : [null, null];
       const newRange = [...currentRange] as (Date | null)[];
       newRange[index] = value;
@@ -179,7 +179,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle text input change
   const handleTextChange = (id: string, value: string) => {
-    setValues((prev) => ({
+    setValues((prev: any) => ({
       ...prev,
       [id]: value
     }));
@@ -187,7 +187,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle range change
   const handleRangeChange = (id: string, value: number | number[]) => {
-    setValues((prev) => {
+    setValues((prev: any) => {
       return {
         ...prev,
         [id]: value as FilterOptionValue
@@ -197,7 +197,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle boolean toggle
   const handleBooleanChange = (id: string) => {
-    setValues((prev) => ({
+    setValues((prev: any) => ({
       ...prev,
       [id]: !prev[id]
     }));
@@ -232,9 +232,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Handle section toggle
   const handleSectionToggle = (section: string) => {
-    setExpandedSections((prev) =>
+    setExpandedSections((prev: any[]) =>
     prev.includes(section) ?
-    prev.filter((s) => s !== section) :
+    prev.filter((s: string) => s !== section) :
     [...prev, section]
     );
   };
@@ -244,7 +244,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
     const sections: {[key: string]: FilterOption[];} = {};
 
     // Add options without section to "General" section
-    const generalOptions = filterOptions.filter((option) => !option.section);
+    const generalOptions = filterOptions.filter((option: any) => !option.section);
     if (generalOptions.length > 0) {
       sections['General'] = generalOptions;
     }
@@ -265,7 +265,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Count active filters
   const countActiveFilters = () => {
-    return Object.keys(values).filter((key) => {
+    return Object.keys(values).filter((key: any) => {
       const value = values[key];
       if (value === null || value === undefined) return false;
       if (Array.isArray(value) && value.length === 0) return false;
@@ -285,7 +285,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
           <FormControl component="fieldset" fullWidth margin="normal">
             <FormLabel component="legend">{label}</FormLabel>
             <FormGroup>
-              {options.map((opt) =>
+              {options.map((opt: any) =>
               <FormControlLabel
                 key={`${id}-${opt.value}`}
                 control={
@@ -309,7 +309,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
               value={value || ''}
               onChange={(e) => handleRadioChange(id, e.target.value)}>
 
-              {options.map((opt) =>
+              {options.map((opt: any) =>
               <FormControlLabel
                 key={`${id}-${opt.value}`}
                 value={opt.value}
@@ -334,7 +334,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
               <MenuItem value="">
                 <em>All</em>
               </MenuItem>
-              {options.map((opt) =>
+              {options.map((opt: any) =>
               <MenuItem key={`${id}-${opt.value}`} value={opt.value}>
                   {opt.label}
                 </MenuItem>
@@ -355,7 +355,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
               input={<OutlinedInput />}
               renderValue={(selected) =>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                  {(selected as string[]).map((value) => {
+                  {(selected as string[]).map((value: any) => {
                   const opt = options.find((o) => o.value.toString() === value);
                   return (
                     <Chip
@@ -368,7 +368,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
                 </Box>
               }>
 
-              {options.map((opt) =>
+              {options.map((opt: any) =>
               <MenuItem key={`${id}-${opt.value}`} value={opt.value.toString()}>
                   {opt.label}
                 </MenuItem>
@@ -577,7 +577,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
       }
 
       <DialogContent dividers>
-        {Object.entries(filterSections).map(([section, options]) =>
+        {Object.entries(filterSections).map(([section, options]: any) =>
         <Box key={section} sx={{ mb: 2 }}>
             <Accordion
             expanded={expandedSections.includes(section)}
@@ -599,7 +599,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
                 <Typography variant="subtitle1">{section}</Typography>
               </AccordionSummary>
               <AccordionDetails sx={{ pt: 0 }}>
-                {options.map((option) =>
+                {options.map((option: any) =>
               <Box key={option.id}>
                     {RenderFilterOption(option)}
                   </Box>

@@ -83,7 +83,7 @@ export function useProgressiveLoading<T>(
   config: ProgressiveLoadingConfig = {}
 ): [ProgressiveStage, RenderFunction<T>, ProgressiveLoadingState] {
   const mergedConfig = { ...defaultConfig, ...config };
-  const [stage, setStage] = useState<ProgressiveStage>('initial');
+  const [stage, setStage] = useState<any>('initial');
   const [progress, setProgress] = useState(0);
   const stageTimestamps = useRef<Record<ProgressiveStage, number>>({
     initial: Date.now(),
@@ -152,7 +152,7 @@ export function useProgressiveLoading<T>(
   
   // Get the current renderer
   const getCurrentRenderer = useCallback((props: T) => {
-    const renderer = renderers[stage] || renderers.full;
+    const renderer = (renderers as any)[stage] || renderers.full;
     return renderer(props);
   }, [renderers, stage]);
   
@@ -197,7 +197,7 @@ export function ProgressiveImage({
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLowResLoaded, setIsLowResLoaded] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState<string | null>(null);
+  const [currentSrc, setCurrentSrc] = useState<any>(null);
   const fullImageRef = useRef<HTMLImageElement>(null);
   
   // Load low resolution image first if available
@@ -269,9 +269,9 @@ export function useProgressiveDataLoading<T>(
     priority = LoadPriority.MEDIUM
   } = options;
   
-  const [data, setData] = useState<Partial<T>>(initialData);
+  const [data, setData] = useState<any>(initialData);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<any>(null);
   const [progress, setProgress] = useState(0);
   const fullDataRef = useRef<T | null>(null);
   const streamingStepsRef = useRef<Partial<T>[]>([]);
@@ -442,8 +442,8 @@ export function useCriticalPathRendering(
             });
           }, 0);
         }
-      } catch (_error) {
-        console.error("Error:", err);
+      } catch (error) {
+        console.error("Error:", error);
       }
     };
     
@@ -481,7 +481,7 @@ export function useIncrementalHydration(
     hydrateAboveTheFoldFirst = true
   } = options;
   
-  const [hydratedComponents, setHydratedComponents] = useState<Set<string>>(new Set());
+  const [hydratedComponents, setHydratedComponents] = useState<any>(new Set());
   const [isComplete, setIsComplete] = useState(false);
   const [progress, setProgress] = useState(0);
   const pendingComponentsRef = useRef<typeof components>([...components]);
@@ -547,9 +547,9 @@ export function useIncrementalHydration(
       const batch = pendingComponents.splice(0, batchSize);
       
       // Update hydrated components
-      setHydratedComponents(prev => {
+      setHydratedComponents((prev: any) => {
         const updated = new Set(prev);
-        batch.forEach(component => updated.add(component.id));
+        batch.forEach((component: any) => updated.add(component.id));
         return updated;
       });
       
@@ -709,9 +709,9 @@ export function useProgressiveDataListLoading<T>(
     onLoadComplete = () => {},
   } = options;
 
-  const [displayedData, setDisplayedData] = useState<T[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loadedAll, setLoadedAll] = useState<boolean>(false);
+  const [displayedData, setDisplayedData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<any>(false);
+  const [loadedAll, setLoadedAll] = useState<any>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const loadedCountRef = useRef<number>(0);
 
@@ -735,7 +735,7 @@ export function useProgressiveDataListLoading<T>(
     const newBatch = data.slice(loadedCountRef.current, endIndex);
     loadedCountRef.current = endIndex;
 
-    setDisplayedData(current => [...current, ...newBatch]);
+    setDisplayedData((current: any) => [...current, ...newBatch]);
 
     if (loadedCountRef.current >= data.length || loadedCountRef.current >= maxItems) {
       setLoadedAll(true);
@@ -938,9 +938,9 @@ export function useProgressivePagination<T>(
 ): ProgressivePaginationResult<T> {
   const { pageSize = 20, maxLoadedPages = 5 } = options;
   
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [loadedPages, setLoadedPages] = useState<number[]>([1]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<any>(1);
+  const [loadedPages, setLoadedPages] = useState<any>([1]);
+  const [isLoading, setIsLoading] = useState<any>(false);
   
   const totalPages = Math.ceil(data.length / pageSize);
   
@@ -950,7 +950,7 @@ export function useProgressivePagination<T>(
     return data.slice(startIndex, startIndex + pageSize);
   }, [currentPage, data, pageSize]);
   
-  const [currentPageData, setCurrentPageData] = useState<T[]>(getCurrentPageData());
+  const [currentPageData, setCurrentPageData] = useState<any>(getCurrentPageData());
   
   // Update page data when current page or data changes
   useEffect(() => {
@@ -968,7 +968,7 @@ export function useProgressivePagination<T>(
       await new Promise(resolve => setTimeout(resolve, 300));
       
       // Add to loaded pages and maintain max loaded pages limit
-      setLoadedPages(prevPages => {
+      setLoadedPages((prevPages: any) => {
         const newPages = [...prevPages, page];
         if (newPages.length > maxLoadedPages) {
           // Remove pages that are furthest from the current page

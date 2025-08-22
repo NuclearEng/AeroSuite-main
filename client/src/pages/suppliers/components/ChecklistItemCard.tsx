@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -56,8 +56,8 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
   const [expanded, setExpanded] = useState(false);
   const [editing, setEditing] = useState(false);
   const [showFindingForm, setShowFindingForm] = useState(false);
-  const [editedItem, setEditedItem] = useState<Partial<ChecklistItem>>(item);
-  const [newFinding, setNewFinding] = useState<NonNullable<ChecklistItem['findings']>[0]>({
+  const [editedItem, setEditedItem] = useState<any>(item);
+  const [newFinding, setNewFinding] = useState<any>({
     type: 'observation',
     description: '',
     correctiveAction: '',
@@ -88,8 +88,18 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
     setEditing(false);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
+    if (name) {
+      setEditedItem({
+        ...editedItem,
+        [name]: value
+      });
+    }
+  };
+
+  const handleSelectChange = (event: any) => {
+    const { name, value } = event.target;
     if (name) {
       setEditedItem({
         ...editedItem,
@@ -105,8 +115,18 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
     });
   };
 
-  const handleNewFindingChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleNewFindingChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
+    if (name) {
+      setNewFinding({
+        ...newFinding,
+        [name]: value
+      });
+    }
+  };
+
+  const handleNewFindingSelectChange = (event: any) => {
+    const { name, value } = event.target;
     if (name) {
       setNewFinding({
         ...newFinding,
@@ -218,10 +238,10 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
             <Select
               name="evidence"
               value={editedItem.evidence || ''}
-              onChange={handleInputChange}
+              onChange={handleSelectChange}
               label="Select Option">
 
-              {item.options?.map((option, index) =>
+              {item.options?.map((option, index: any) =>
               <MenuItem key={index} value={option}>
                   {option}
                 </MenuItem>
@@ -357,10 +377,10 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
                     <Select
                     name="category"
                     value={editedItem.category || ''}
-                    onChange={handleInputChange}
+                    onChange={handleSelectChange}
                     label="Category">
 
-                      {Object.entries(CATEGORY_INFO).map(([key, value]) =>
+                      {Object.entries(CATEGORY_INFO).map(([key, value]: any) =>
                     <MenuItem key={key} value={key}>
                           {value.label}
                         </MenuItem>
@@ -389,7 +409,7 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
                     <Select
                     name="responseType"
                     value={editedItem.responseType || 'yes-no'}
-                    onChange={handleInputChange}
+                    onChange={handleSelectChange}
                     label="Response Type">
 
                       <MenuItem value="yes-no">Yes/No</MenuItem>
@@ -423,7 +443,7 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
                   value={editedItem.options ? editedItem.options.join(', ') : ''}
                   onChange={(e) => setEditedItem({
                     ...editedItem,
-                    options: e.target.value.split(',').map((opt) => opt.trim())
+                    options: e.target.value.split(',').map((opt: any) => opt.trim())
                   })}
                   variant="outlined"
                   size="small"
@@ -463,10 +483,10 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
                   <Select
                   name="type"
                   value={newFinding.type}
-                  onChange={handleNewFindingChange}
+                  onChange={handleNewFindingSelectChange}
                   label="Finding Type">
 
-                    {Object.entries(FINDING_TYPE_INFO).map(([key, value]) =>
+                    {Object.entries(FINDING_TYPE_INFO).map(([key, value]: any) =>
                   <MenuItem key={key} value={key}>
                         {value.label}
                       </MenuItem>
@@ -541,7 +561,7 @@ const ChecklistItemCard: React.FC<ChecklistItemCardProps> = ({
             
             {item.findings && item.findings.length > 0 ?
             <Stack spacing={1}>
-                {item.findings.map((finding, index) => {
+                {item.findings.map((finding, index: any) => {
                 const findingInfo = FINDING_TYPE_INFO[finding.type as keyof typeof FINDING_TYPE_INFO];
                 return (
                   <Box

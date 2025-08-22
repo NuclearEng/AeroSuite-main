@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { ChangeEvent, useState, useCallback, useRef } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -94,11 +94,11 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   multiple = true
 }) => {
   const theme = useTheme();
-  const [files, setFiles] = useState<UploadedFile[]>([]);
+  const [files, setFiles] = useState<any>([]);
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [overallProgress, setOverallProgress] = useState(0);
 
   // Create a unique ID for each file
@@ -134,14 +134,14 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
     // Add accepted files to the list
     setError(null);
-    const newFiles = acceptedFiles.map((file) => ({
+    const newFiles = acceptedFiles.map((file: any) => ({
       id: `file-${fileIdCounter.current++}`,
       file,
       progress: 0,
       status: 'queued' as const
     }));
 
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    setFiles((prevFiles: any[]) => [...prevFiles, ...newFiles]);
   }, [files, maxFiles, maxSize]);
 
   // Custom drop zone state
@@ -208,7 +208,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
   const processFiles = (selectedFiles: File[]) => {
     // Filter files by type if needed
     const filteredFiles = acceptedFileTypes ?
-    selectedFiles.filter((file) => {
+    selectedFiles.filter((file: any) => {
       return acceptedFileTypes.some((type) => {
         return file.type.match(new RegExp(type.replace('*', '.*')));
       });
@@ -216,8 +216,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     selectedFiles;
 
     // Filter files by size
-    const validFiles = filteredFiles.filter((file) => file.size <= maxSize);
-    const oversizedFiles = filteredFiles.filter((file) => file.size > maxSize);
+    const validFiles = filteredFiles.filter((file: any) => file.size <= maxSize);
+    const oversizedFiles = filteredFiles.filter((file: any) => file.size > maxSize);
 
     if (oversizedFiles.length > 0) {
       setError(`${oversizedFiles.length} file(s) exceed the maximum size of ${formatBytes(maxSize)}`);
@@ -232,14 +232,14 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
     // Add valid files to the list
     if (validFiles.length > 0) {
       setError(null);
-      const newFiles = validFiles.map((file) => ({
+      const newFiles = validFiles.map((file: any) => ({
         id: `file-${fileIdCounter.current++}`,
         file,
         progress: 0,
         status: 'queued' as const
       }));
 
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+      setFiles((prevFiles: any[]) => [...prevFiles, ...newFiles]);
     }
   };
 
@@ -250,7 +250,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
   // Remove a file from the list
   const removeFile = (id: string) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file.id !== id));
+    setFiles((prevFiles: any[]) => prevFiles.filter((file: any) => file.id !== id));
   };
 
   // Get file icon based on mime type
@@ -297,8 +297,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
     try {
       // Update file statuses
-      setFiles((prevFiles) =>
-      prevFiles.map((file) => ({
+      setFiles((prevFiles: any[]) =>
+      prevFiles.map((file: any) => ({
         ...file,
         status: 'uploading'
       }))
@@ -306,8 +306,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
       // Start upload progress simulation
       uploadInterval = setInterval(() => {
-        setFiles((prevFiles) => {
-          const updatedFiles = prevFiles.map((file) => {
+        setFiles((prevFiles: any[]) => {
+          const updatedFiles = prevFiles.map((file: any) => {
             if (file.status === 'uploading' && file.progress < 99) {
               return {
                 ...file,
@@ -319,7 +319,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
           // Calculate overall progress
           const totalProgress = updatedFiles.reduce(
-            (sum, file) => sum + file.progress,
+            (sum: number, file: any) => sum + file.progress,
             0
           );
           const averageProgress = totalProgress / updatedFiles.length;
@@ -331,7 +331,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
       // Perform actual upload
       await onUpload(
-        files.map((f) => f.file),
+        files.map((f: any) => f.file),
         category || undefined,
         description || undefined
       );
@@ -339,8 +339,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       // Stop progress simulation and mark files as completed
       clearInterval(uploadInterval);
 
-      setFiles((prevFiles) =>
-      prevFiles.map((file) => ({
+      setFiles((prevFiles: any[]) =>
+      prevFiles.map((file: any) => ({
         ...file,
         progress: 100,
         status: 'completed'
@@ -366,8 +366,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       setError(err.message || 'Upload failed');
 
       // Mark files as error
-      setFiles((prevFiles) =>
-      prevFiles.map((file) => ({
+      setFiles((prevFiles: any[]) =>
+      prevFiles.map((file: any) => ({
         ...file,
         status: 'error',
         error: 'Upload failed'
@@ -535,7 +535,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        {categories.map((cat) =>
+                        {categories.map((cat: any) =>
                     <MenuItem key={cat.id} value={cat.id}>
                             {cat.name}
                           </MenuItem>
@@ -594,7 +594,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 
               <Paper variant="outlined" sx={{ maxHeight: 300, overflow: 'auto' }}>
                 <List dense>
-                  {files.map((fileItem, index) =>
+                  {files.map((fileItem: any, index: number) =>
                 <React.Fragment key={fileItem.id}>
                       <ListItem>
                         <ListItemIcon>

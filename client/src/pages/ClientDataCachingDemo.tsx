@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { ChangeEvent, useState, useCallback, useRef } from 'react';
 import {
   Box,
   Container,
@@ -138,7 +138,7 @@ const ClientDataCachingDemo: React.FC = () => {
   // Demo state
   const [tabValue, setTabValue] = useState(0);
   const [entityType, setEntityType] = useState('users');
-  const [cacheStrategy, setCacheStrategy] = useState<CacheStrategy>(CacheStrategy.STALE_WHILE_REVALIDATE);
+  const [cacheStrategy, setCacheStrategy] = useState<any>(CacheStrategy.STALE_WHILE_REVALIDATE);
   const [ttlOption, setTTLOption] = useState('MEDIUM');
   const [isOffline, setIsOffline] = useState(false);
   const [customCacheKey, setCustomCacheKey] = useState('demo-custom-data');
@@ -268,7 +268,7 @@ const ClientDataCachingDemo: React.FC = () => {
     } catch (_error) {
       setManualCacheResult({
         success: false,
-        message: `Error storing value: ${error instanceof Error ? error.message : String(error)}`
+        message: `Error storing value: ${_error instanceof Error ? _error.message : String(_error)}`
       });
     }
   };
@@ -290,7 +290,7 @@ const ClientDataCachingDemo: React.FC = () => {
     } catch (_error) {
       setManualCacheResult({
         success: false,
-        message: `Error retrieving value: ${error instanceof Error ? error.message : String(error)}`
+        message: `Error retrieving value: ${_error instanceof Error ? _error.message : String(_error)}`
       });
     }
   };
@@ -308,7 +308,7 @@ const ClientDataCachingDemo: React.FC = () => {
     } catch (_error) {
       setManualCacheResult({
         success: false,
-        message: `Error clearing cache: ${error instanceof Error ? error.message : String(error)}`
+        message: `Error clearing cache: ${_error instanceof Error ? _error.message : String(_error)}`
       });
     }
   };

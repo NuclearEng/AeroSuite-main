@@ -31,11 +31,11 @@ interface ThemeProviderProps {
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Use localStorage for initial theme preference
   const prefersDarkMode = localStorage.getItem('darkMode') === 'true';
-  const [mode, setMode] = useState<'light' | 'dark'>(prefersDarkMode ? 'dark' : 'light');
+  const [mode, setMode] = useState<any>(prefersDarkMode ? 'dark' : 'light');
   
   // Use localStorage for initial theme variant
   const savedVariant = localStorage.getItem('themeVariant') as ThemeVariant | null;
-  const [variant, setVariant] = useState<ThemeVariant>(savedVariant || 'blue');
+  const [variant, setVariant] = useState<any>(savedVariant || 'blue');
   
   // Use Redux store for persisted theme preference if available
   const uiState = useAppSelector((state) => state.ui);

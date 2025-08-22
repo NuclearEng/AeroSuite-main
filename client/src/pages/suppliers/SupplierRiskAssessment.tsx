@@ -280,7 +280,7 @@ const SupplierRiskAssessment: React.FC = () => {
 
               <CardContent>
                 {savedAssessments.length > 0 ?
-                savedAssessments.map((assessment) =>
+                savedAssessments.map((assessment: any) =>
                 <AssessmentCard
                   key={assessment._id}
                   assessment={assessment}

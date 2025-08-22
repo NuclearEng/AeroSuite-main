@@ -82,7 +82,7 @@ export function ProgressiveTable<T>({
             </TableRow>
           </TableHead>
           <TableBody>
-            {Array.from({ length: rowsPerPage }).map((_, index) => (
+            {Array.from({ length: rowsPerPage }).map((_, index: any) => (
               <TableRow key={`skeleton-row-${index}`} hover>
                 {sortedColumns.map(column => (
                   <TableCell key={`skeleton-cell-${column.id}-${index}`}>

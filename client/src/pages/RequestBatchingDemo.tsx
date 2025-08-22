@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -100,12 +100,12 @@ const RequestBatchingDemo: React.FC = () => {
   } = useBatchRequests();
   
   // Demo state
-  const [individualResponses, setIndividualResponses] = useState<ResponseData[]>([]);
-  const [batchedResponses, setBatchedResponses] = useState<ResponseData[]>([]);
-  const [individualTime, setIndividualTime] = useState<number>(0);
-  const [batchedTime, setBatchedTime] = useState<number>(0);
-  const [requestCount, setRequestCount] = useState<number>(5);
-  const [useRealApi, setUseRealApi] = useState<boolean>(false);
+  const [individualResponses, setIndividualResponses] = useState<any>([]);
+  const [batchedResponses, setBatchedResponses] = useState<any>([]);
+  const [individualTime, setIndividualTime] = useState<any>(0);
+  const [batchedTime, setBatchedTime] = useState<any>(0);
+  const [requestCount, setRequestCount] = useState<any>(5);
+  const [useRealApi, setUseRealApi] = useState<any>(false);
   
   // Handle request count change
   const handleRequestCountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -198,18 +198,18 @@ const RequestBatchingDemo: React.FC = () => {
           if (request.type === 'supplier') {
             return {
               endpoint: `/suppliers/${request.id}`,
-              method: 'GET'
+              method: 'GET' as "GET" | "DELETE" | "POST" | "PUT"
             };
           } else if (request.type === 'customer') {
             return {
               endpoint: `/customers/${request.id}`,
-              method: 'GET'
+              method: 'GET' as "GET" | "DELETE" | "POST" | "PUT"
             };
           } else {
             // Mock product API (doesn't exist in the real API)
             return {
               endpoint: `/products/${request.id}`,
-              method: 'GET'
+              method: 'GET' as "GET" | "DELETE" | "POST" | "PUT"
             };
           }
         } else {
@@ -217,7 +217,7 @@ const RequestBatchingDemo: React.FC = () => {
           // In a real scenario, these would be actual API endpoints
           return {
             endpoint: `/${request.type}s/${request.id}`,
-            method: 'GET'
+            method: 'GET' as "GET" | "DELETE" | "POST" | "PUT"
           };
         }
       });
@@ -227,13 +227,13 @@ const RequestBatchingDemo: React.FC = () => {
       
       // If not using real API, simulate responses
       const finalResults: ResponseData[] = useRealApi ? 
-        batchedResults.map((data, index) => ({
-          type: requests[index].type,
+        batchedResults.map((data, index: any) => ({
+          type: requests[index].type as "supplier" | "customer" | "product",
           id: requests[index].id,
           data,
           time: 0 // Individual request times aren't available in batched requests
         })) :
-        requests.map((request, index) => {
+        await Promise.all(requests.map(async (request, index: any) => {
           let mockData: any;
           if (request.type === 'supplier') {
             mockData = await mockApi.getSupplier(request.id);
@@ -243,12 +243,12 @@ const RequestBatchingDemo: React.FC = () => {
             mockData = await mockApi.getProduct(request.id);
           }
           return {
-            type: request.type,
+            type: request.type as "supplier" | "customer" | "product",
             id: request.id,
             data: mockData,
             time: 0
           };
-        });
+        }));
       
       const endTime = performance.now();
       setBatchedTime(Math.round(endTime - startTime));
@@ -416,7 +416,7 @@ const RequestBatchingDemo: React.FC = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {individualResponses.map((response, index) => (
+                        {individualResponses.map((response: any, index: number) => (
                           <TableRow key={index}>
                             <TableCell>
                               <Chip
@@ -514,7 +514,7 @@ const RequestBatchingDemo: React.FC = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {batchedResponses.map((response, index) => (
+                        {batchedResponses.map((response: any, index: number) => (
                           <TableRow key={index}>
                             <TableCell>
                               <Chip

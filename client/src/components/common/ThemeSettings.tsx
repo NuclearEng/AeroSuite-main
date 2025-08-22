@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -182,7 +182,7 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
           </Box>
           
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
-            {themeColors.map((color) =>
+            {themeColors.map((color: any) =>
             <Box key={color.value} sx={{ position: 'relative' }}>
                 <Tooltip title={color.label} arrow>
                   <ColorCircle
@@ -237,7 +237,7 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
               name="font-size-group"
               defaultValue="medium">
 
-                {fontSizes.map((size) =>
+                {fontSizes.map((size: any) =>
               <FormControlLabel
                 key={size.value}
                 value={size.value}
@@ -277,7 +277,7 @@ const ThemeSettings: React.FC<ThemeSettingsProps> = ({
               name="animations-group"
               defaultValue="on">
 
-                {animationOptions.map((option) =>
+                {animationOptions.map((option: any) =>
               <FormControlLabel
                 key={option.value}
                 value={option.value}

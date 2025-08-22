@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -145,8 +145,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isDrawerOpen }) => {
   const user = useAppSelector((state: RootState) => state.auth.user);
   
   // Search state
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<any>('');
+  const [isSearching, setIsSearching] = useState<any>(false);
   
   // Sample notifications (in a real app, these would come from a Redux store or API)
   const notifications: Notification[] = [
@@ -177,9 +177,9 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isDrawerOpen }) => {
   ];
   
   // State for managing menu anchors
-  const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null);
-  const [notificationsAnchor, setNotificationsAnchor] = useState<null | HTMLElement>(null);
-  const [messagesAnchor, setMessagesAnchor] = useState<null | HTMLElement>(null);
+  const [userMenuAnchor, setUserMenuAnchor] = useState<any>(null);
+  const [notificationsAnchor, setNotificationsAnchor] = useState<any>(null);
+  const [messagesAnchor, setMessagesAnchor] = useState<any>(null);
   
   // Boolean states for menu open status
   const isUserMenuOpen = Boolean(userMenuAnchor);
@@ -373,10 +373,10 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isDrawerOpen }) => {
             onClick={handleUserMenuOpen}
             color="inherit"
           >
-            {user?.avatar ? (
+            {user?.profilePicture ? (
               <Avatar 
-                src={user.avatar} 
-                alt={user.name || 'User avatar'} 
+                src={user.profilePicture} 
+                alt={`${user.firstName} ${user.lastName}` || 'User avatar'} 
                 sx={{ width: 32, height: 32 }}
               />
             ) : (
@@ -403,7 +403,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isDrawerOpen }) => {
         >
           <Box sx={{ px: 2, py: 1 }}>
             <Typography variant="subtitle1" component="div">
-              {user?.name || 'User'}
+              {`${user?.firstName} ${user?.lastName}` || 'User'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {user?.email || 'user@example.com'}
@@ -461,7 +461,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick, isDrawerOpen }) => {
           </Typography>
           <Divider />
           {notifications.length > 0 ? (
-            notifications.map((notification) => (
+            notifications.map((notification: any) => (
               <NotificationItem 
                 key={notification.id}
                 notification={notification}

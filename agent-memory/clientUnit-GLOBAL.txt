@@ -1,0 +1,9 @@
+Command: npm test -w client -- --watchAll=false --runInBand
+sh: react-scripts: command not found
+npm error Lifecycle script `test` failed with error:
+npm error code 127
+npm error path /Users/tannercoker/AeroSuite-main-1/client
+npm error workspace aerosuite-client@1.0.0
+npm error location /Users/tannercoker/AeroSuite-main-1/client
+npm error command failed
+npm error command sh -c react-scripts test --watchAll=false --runInBand

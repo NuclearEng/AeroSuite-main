@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -39,9 +39,9 @@ type ThemeVariant = 'blue' | 'purple' | 'emerald' | 'amber' | 'rose' | 'gray';
  * Component to demonstrate theme accessibility improvements
  */
 const AccessibilityThemeDemo: React.FC = () => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
-  const [variant, setVariant] = useState<ThemeVariant>('blue');
-  const [useAccessible, setUseAccessible] = useState<boolean>(true);
+  const [mode, setMode] = useState<any>('light');
+  const [variant, setVariant] = useState<any>('blue');
+  const [useAccessible, setUseAccessible] = useState<any>(true);
   
   // Get the original palette based on selected mode and variant
   const getOriginalPalette = () => {
@@ -78,7 +78,7 @@ const AccessibilityThemeDemo: React.FC = () => {
   };
   
   // Handle variant change
-  const handleVariantChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleVariantChange = (event: React.ChangeEvent<{ value: any }>) => {
     setVariant(event.target.value as ThemeVariant);
   };
   
@@ -169,7 +169,7 @@ const AccessibilityThemeDemo: React.FC = () => {
           </Box>
           
           <Grid container spacing={2}>
-            {currentAudit.checks.map((check, index) => (
+            {currentAudit.checks.map((check, index: any) => (
               <Grid item xs={12} md={6} key={index}>
                 <Paper 
                   variant="outlined" 

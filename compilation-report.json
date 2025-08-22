@@ -1,0 +1,439 @@
+{
+  "timestamp": "2025-08-22T16:57:36.254Z",
+  "totalErrors": 38,
+  "errors": [
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+      "line": 507,
+      "column": 62,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "',' expected.",
+      "raw": "507"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+      "line": 507,
+      "column": 67,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'=>' expected.",
+      "raw": "507"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+      "line": 507,
+      "column": 69,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'}' expected.",
+      "raw": "507"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+      "line": 507,
+      "column": 70,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "507"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/AnomalyDetectionWidget.tsx",
+      "line": 509,
+      "column": 14,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "509"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 142,
+      "column": 64,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "',' expected.",
+      "raw": "142"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 142,
+      "column": 69,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'=>' expected.",
+      "raw": "142"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 142,
+      "column": 71,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'}' expected.",
+      "raw": "142"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 142,
+      "column": 72,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "142"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 159,
+      "column": 16,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "159"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 196,
+      "column": 68,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "',' expected.",
+      "raw": "196"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 196,
+      "column": 73,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'=>' expected.",
+      "raw": "196"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 196,
+      "column": 75,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'}' expected.",
+      "raw": "196"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 196,
+      "column": 76,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "196"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 201,
+      "column": 20,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "201"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 209,
+      "column": 64,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "',' expected.",
+      "raw": "209"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 209,
+      "column": 69,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'=>' expected.",
+      "raw": "209"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 209,
+      "column": 71,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'}' expected.",
+      "raw": "209"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 209,
+      "column": 72,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "209"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/components/dashboard/widgets/CustomWidgetBuilder.tsx",
+      "line": 214,
+      "column": 16,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "214"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 572,
+      "column": 75,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "',' expected.",
+      "raw": "572"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 572,
+      "column": 80,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'=>' expected.",
+      "raw": "572"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 572,
+      "column": 82,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'}' expected.",
+      "raw": "572"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 572,
+      "column": 83,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "572"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 581,
+      "column": 20,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "581"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 599,
+      "column": 65,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "',' expected.",
+      "raw": "599"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 599,
+      "column": 70,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'=>' expected.",
+      "raw": "599"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 599,
+      "column": 72,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'}' expected.",
+      "raw": "599"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 599,
+      "column": 73,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "599"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/inspections/InspectionDetail.tsx",
+      "line": 621,
+      "column": 16,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "621"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 330,
+      "column": 80,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "',' expected.",
+      "raw": "330"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 330,
+      "column": 85,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'=>' expected.",
+      "raw": "330"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 330,
+      "column": 87,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "'}' expected.",
+      "raw": "330"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 330,
+      "column": 88,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "330"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 340,
+      "column": 18,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "340"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 354,
+      "column": 67,
+      "severity": "error",
+      "code": "TS1005",
+      "message": "')' expected.",
+      "raw": "354"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 354,
+      "column": 90,
+      "severity": "error",
+      "code": "TS1382",
+      "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+      "raw": "354"
+    },
+    {
+      "type": "typescript",
+      "source": "client",
+      "file": "/Users/tannercoker/AeroSuite-main-1/src/pages/suppliers/components/SupplierAnalytics.tsx",
+      "line": 373,
+      "column": 18,
+      "severity": "error",
+      "code": "TS1381",
+      "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+      "raw": "373"
+    }
+  ],
+  "summary": {
+    "byType": {
+      "typescript": 38
+    },
+    "byFile": {
+      "src/components/dashboard/widgets/AnomalyDetectionWidget.tsx": 5,
+      "src/components/dashboard/widgets/CustomWidgetBuilder.tsx": 15,
+      "src/pages/inspections/InspectionDetail.tsx": 10,
+      "src/pages/suppliers/components/SupplierAnalytics.tsx": 8
+    },
+    "bySeverity": {
+      "error": 38,
+      "warning": 0
+    }
+  }
+}

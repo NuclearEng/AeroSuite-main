@@ -75,14 +75,14 @@ const FeatureFlagsManager: React.FC = () => {
 
   // Local state
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterEnvironment, setFilterEnvironment] = useState<string>('');
-  const [filterStatus, setFilterStatus] = useState<string>('');
+  const [filterEnvironment, setFilterEnvironment] = useState<any>('');
+  const [filterStatus, setFilterStatus] = useState<any>('');
   const [syncing, setSyncing] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState({ type: 'success', message: '' });
 
   // Edit dialog state
-  const [editDialog, setEditDialog] = useState<EditDialogState>({
+  const [editDialog, setEditDialog] = useState<any>({
     open: false,
     flagKey: '',
     flagData: {},
@@ -90,7 +90,7 @@ const FeatureFlagsManager: React.FC = () => {
   });
 
   // Delete confirmation dialog
-  const [deleteDialog, setDeleteDialog] = useState<{open: boolean;flagKey: string;}>({
+  const [deleteDialog, setDeleteDialog] = useState<any>({
     open: false,
     flagKey: ''
   });
@@ -399,7 +399,7 @@ const FeatureFlagsManager: React.FC = () => {
                 </TableCell>
               </TableRow> :
 
-            filteredFlags.map(([key, flag]) =>
+            filteredFlags.map(([key, flag]: any) =>
             <TableRow key={key} hover>
                   <TableCell>
                     <Typography variant="body2" sx={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
@@ -439,7 +439,7 @@ const FeatureFlagsManager: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-                      {flag.environmentsEnabled.map((env) =>
+                      {flag.environmentsEnabled.map((env: any) =>
                   <Chip
                     key={env}
                     label={env}
@@ -557,7 +557,7 @@ const FeatureFlagsManager: React.FC = () => {
                 Enabled Environments
               </Typography>
               <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                {['development', 'staging', 'production'].map((env) =>
+                {['development', 'staging', 'production'].map((env: any) =>
                 <FormControlLabel
                   key={env}
                   control={
@@ -575,7 +575,7 @@ const FeatureFlagsManager: React.FC = () => {
                       } else {
                         handleEditInputChange(
                           'environmentsEnabled',
-                          environments.filter((e) => e !== env)
+                          environments.filter((e: any) => e !== env)
                         );
                       }
                     }} />

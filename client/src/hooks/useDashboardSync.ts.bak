@@ -1,0 +1,165 @@
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { syncWithServer } from '../redux/slices/dashboard.slice';
+import dashboardPreferencesService, { DashboardPreferences } from '../services/dashboardPreferences.service';
+
+/**
+ * Hook for synchronizing dashboard preferences with the server
+ * 
+ * @param autoSync Whether to automatically sync with server on changes
+ * @returns Object with sync methods and sync status
+ */
+const useDashboardSync = (autoSync = true) => {
+  const dispatch = useAppDispatch();
+  const { widgets, layout } = useAppSelector(state => state.dashboard);
+  const { isAuthenticated, user } = useAppSelector(state => state.auth);
+  
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
+  const [syncError, setSyncError] = useState<string | null>(null);
+  const [syncStatus, setSyncStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  
+  // Use a ref to track the initial load
+  const initialLoadDone = useRef(false);
+  
+  // Use a ref to hold the debounce timer
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Load preferences from server on initial load
+  useEffect(() => {
+    if (isAuthenticated && !initialLoadDone.current) {
+      loadFromServer();
+      initialLoadDone.current = true;
+    }
+  }, [isAuthenticated]);
+  
+  // Sync preferences to server when they change
+  useEffect(() => {
+    if (autoSync && isAuthenticated && lastSyncTime && initialLoadDone.current) {
+      // Clear any existing timer
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+      
+      // Set a new debounce timer
+      debounceTimerRef.current = setTimeout(() => {
+        saveToServer();
+        debounceTimerRef.current = null;
+      }, 2000); // Debounce for 2 seconds
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [widgets, layout, autoSync, isAuthenticated]);
+  
+  /**
+   * Load dashboard preferences from server
+   */
+  const loadFromServer = useCallback(async () => {
+    try {
+      setIsSyncing(true);
+      setSyncStatus('loading');
+      setSyncError(null);
+      
+      const preferences = await dashboardPreferencesService.getPreferences();
+      
+      // Only update if we received valid data
+      if (preferences && Object.keys(preferences.widgets || {}).length > 0) {
+        dispatch(syncWithServer(preferences));
+        setSyncStatus('success');
+        console.log('Dashboard preferences loaded from server');
+      } else {
+        console.log('No dashboard preferences found on server, using defaults');
+      }
+      
+      setLastSyncTime(new Date());
+    } catch (_error) {
+      console.error('Failed to load dashboard preferences:', error);
+      setSyncError('Failed to load preferences from server');
+      setSyncStatus('error');
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [dispatch, isAuthenticated]);
+  
+  /**
+   * Save dashboard preferences to server
+   */
+  const saveToServer = useCallback(async () => {
+    try {
+      setIsSyncing(true);
+      setSyncStatus('loading');
+      setSyncError(null);
+      
+      const preferences: DashboardPreferences = {
+        widgets,
+        layout
+      };
+      
+      const success = await dashboardPreferencesService.savePreferences(preferences);
+      
+      if (success) {
+        setSyncStatus('success');
+        console.log('Dashboard preferences saved to server');
+      } else {
+        setSyncStatus('error');
+        setSyncError('Failed to save preferences to server');
+      }
+      
+      setLastSyncTime(new Date());
+    } catch (_error) {
+      console.error('Failed to save dashboard preferences:', error);
+      setSyncError('Failed to save preferences to server');
+      setSyncStatus('error');
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [widgets, layout, dispatch]);
+  
+  /**
+   * Reset dashboard preferences on server
+   */
+  const resetOnServer = useCallback(async () => {
+    try {
+      setIsSyncing(true);
+      setSyncStatus('loading');
+      setSyncError(null);
+      
+      const success = await dashboardPreferencesService.resetPreferences();
+      
+      if (success) {
+        setSyncStatus('success');
+        console.log('Dashboard preferences reset on server');
+        // Load from server to get the defaults
+        await loadFromServer();
+      } else {
+        setSyncStatus('error');
+        setSyncError('Failed to reset preferences on server');
+      }
+      
+      setLastSyncTime(new Date());
+    } catch (_error) {
+      console.error('Failed to reset dashboard preferences:', error);
+      setSyncError('Failed to reset preferences on server');
+      setSyncStatus('error');
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [dispatch, loadFromServer]);
+  
+  return {
+    loadFromServer,
+    saveToServer,
+    resetOnServer,
+    isSyncing,
+    lastSyncTime,
+    syncError,
+    syncStatus
+  };
+};
+
+export default useDashboardSync; 

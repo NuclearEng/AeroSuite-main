@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -33,13 +33,13 @@ const ColorContrastChecker: React.FC<ColorContrastCheckerProps> = ({
   initialForeground = '#000000',
   initialBackground = '#FFFFFF'
 }) => {
-  const [foreground, setForeground] = useState<string>(initialForeground);
-  const [background, setBackground] = useState<string>(initialBackground);
-  const [contrastResult, setContrastResult] = useState<ContrastResult | null>(null);
-  const [suggestedColor, setSuggestedColor] = useState<string | null>(null);
-  const [foregroundRgb, setForegroundRgb] = useState<RGB>({ r: 0, g: 0, b: 0 });
-  const [backgroundRgb, setBackgroundRgb] = useState<RGB>({ r: 255, g: 255, b: 255 });
-  const [error, setError] = useState<string | null>(null);
+  const [foreground, setForeground] = useState<any>(initialForeground);
+  const [background, setBackground] = useState<any>(initialBackground);
+  const [contrastResult, setContrastResult] = useState<any>(null);
+  const [suggestedColor, setSuggestedColor] = useState<any>(null);
+  const [foregroundRgb, setForegroundRgb] = useState<any>({ r: 0, g: 0, b: 0 });
+  const [backgroundRgb, setBackgroundRgb] = useState<any>({ r: 255, g: 255, b: 255 });
+  const [error, setError] = useState<any>(null);
 
   // Update contrast result when colors change
   useEffect(() => {

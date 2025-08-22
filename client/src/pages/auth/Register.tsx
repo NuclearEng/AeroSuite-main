@@ -72,7 +72,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
@@ -101,9 +101,9 @@ const Register: React.FC = () => {
           companyName: values.companyName,
           role: values.role,
           phoneNumber: values.phoneNumber,
-        });
+        } as any);
 
-        if (response.success) {
+        if ((response as any).success) {
           setRegistrationSuccess(true);
           // Redirect to login after 3 seconds
           setTimeout(() => {

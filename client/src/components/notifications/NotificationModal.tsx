@@ -74,7 +74,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [activeTab, setActiveTab] = useState(0);
-  const [filters, setFilters] = useState<string[]>([]);
+  const [filters, setFilters] = useState<any>([]);
 
   // Count unread notifications
   const unreadCount = notifications.filter(notification => !notification.read).length;
@@ -114,7 +114,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   // Handle filter change
   const handleFilterChange = (category: string) => {
     const newFilters = filters.includes(category)
-      ? filters.filter(f => f !== category)
+      ? filters.filter((f: any) => f !== category)
       : [...filters, category];
     
     setFilters(newFilters);
@@ -261,7 +261,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
               Filter by category:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {categories.map((category) => (
+              {categories.map((category: any) => (
                 <Chip
                   key={category}
                   label={category}
@@ -278,7 +278,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                   Active filters:
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                  {filters.map((filter) => (
+                  {filters.map((filter: any) => (
                     <Chip
                       key={filter}
                       label={filter}
@@ -301,7 +301,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                 />
               </ListItem>
             ) : (
-              filteredNotifications.map((notification, index) => (
+              filteredNotifications.map((notification, index: any) => (
                 <React.Fragment key={notification.id}>
                   <ListItem
                     button

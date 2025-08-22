@@ -1,0 +1,690 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  Chip,
+  Button,
+  IconButton,
+  Avatar,
+  Tab,
+  Tabs,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  useTheme,
+  Tooltip,
+  LinearProgress,
+  Alert,
+  Snackbar,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions } from
+'@mui/material';
+import {
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  ArrowBack as ArrowBackIcon,
+  Business as BusinessIcon,
+  Email as EmailIcon,
+  Phone as PhoneIcon,
+  LocationOn as LocationIcon,
+  CalendarToday as CalendarIcon,
+  Person as PersonIcon,
+  Assessment as AssessmentIcon,
+  FactCheck as InspectionIcon,
+  Add as AddIcon,
+  Description as DescriptionIcon,
+  LocalShipping as ShippingIcon,
+  Assignment as AssignmentIcon,
+  Refresh as RefreshIcon } from
+'@mui/icons-material';
+import {
+  PageHeader,
+  DataTable,
+  StatusBadge,
+  ConfirmationDialog } from
+'../../components/common';
+import { HeadCell } from '../../components/common/DataTable';
+import { formatDate } from '../../utils';
+import CustomerActivityHistory from '../../components/customers/CustomerActivityHistory';
+import CustomerOrderList from './components/CustomerOrderList';
+import customerService, { Customer } from '../../services/customer.service';
+import { CustomerFormModal } from './components';
+
+// Mock data - replace with API call
+const mockCustomer = {
+  _id: '1',
+  name: 'Boeing',
+  code: 'BOE',
+  description: 'Leading aerospace company and manufacturer of commercial jetliners, defense products, and space systems.',
+  industry: 'Aerospace',
+  status: 'active',
+  logo: 'https://via.placeholder.com/150?text=Boeing',
+  primaryContactName: 'John Smith',
+  primaryContactEmail: 'jsmith@boeing.example.com',
+  primaryContactPhone: '+1 (206) 555-1234',
+  billingAddress: {
+    street: '100 N Riverside Plaza',
+    city: 'Chicago',
+    state: 'IL',
+    zipCode: '60606',
+    country: 'USA'
+  },
+  shippingAddress: {
+    street: '100 N Riverside Plaza',
+    city: 'Chicago',
+    state: 'IL',
+    zipCode: '60606',
+    country: 'USA'
+  },
+  contractStartDate: '2023-01-01',
+  contractEndDate: '2025-12-31',
+  serviceLevel: 'premium',
+  notes: 'Key customer with multiple suppliers. Requires monthly inspection reports.',
+  customFields: {
+    customerCategory: 'Strategic',
+    accountManager: 'Sarah Johnson',
+    priorityLevel: 'High'
+  }
+};
+
+// Mock inspections data
+const mockInspections = [
+{
+  id: 'INS001',
+  inspectionDate: '2023-05-15T09:00:00.000Z',
+  inspectionType: 'Quality Audit',
+  supplierName: 'Supplier A',
+  inspector: 'Jane Doe',
+  status: 'completed',
+  score: 92
+},
+{
+  id: 'INS002',
+  inspectionDate: '2023-06-20T10:30:00.000Z',
+  inspectionType: 'Process Audit',
+  supplierName: 'Supplier B',
+  inspector: 'John Smith',
+  status: 'scheduled',
+  score: null
+},
+{
+  id: 'INS003',
+  inspectionDate: '2023-04-10T14:00:00.000Z',
+  inspectionType: 'First Article',
+  supplierName: 'Supplier C',
+  inspector: 'Robert Johnson',
+  status: 'completed',
+  score: 85
+}];
+
+
+// Mock suppliers data
+const mockSuppliers = [
+{
+  id: 'SUP001',
+  name: 'Supplier A',
+  industry: 'Electronics',
+  status: 'active',
+  rating: 4.5
+},
+{
+  id: 'SUP002',
+  name: 'Supplier B',
+  industry: 'Mechanical',
+  status: 'active',
+  rating: 4.2
+},
+{
+  id: 'SUP003',
+  name: 'Supplier C',
+  industry: 'Plastics',
+  status: 'inactive',
+  rating: 3.8
+}];
+
+
+// TabPanel component
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`customer-tabpanel-${index}`}
+      aria-labelledby={`customer-tab-${index}`}
+      {...other}>
+
+      {value === index &&
+      <Box sx={{ py: 3 }}>
+          {children}
+        </Box>
+      }
+    </div>);
+
+};
+
+const CustomerDetail: React.FC = () => {
+  const { id } = useParams<{id: string;}>();
+  const navigate = useNavigate();
+  const theme = useTheme();
+
+  // State
+  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [inspections, setInspections] = useState<any[]>([]);
+  const [suppliers, setSuppliers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [tabValue, setTabValue] = useState(0);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: 'success' | 'error' | 'info' | 'warning';
+  }>({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
+
+  // Modal states
+  const [editModalOpen, setEditModalOpen] = useState(false);
+
+  // Load customer data - replace with API call
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchCustomer = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await customerService.getCustomer(id);
+        setCustomer(data);
+        setInspections(mockInspections);
+        setSuppliers(mockSuppliers);
+      } catch (err: any) {
+        console.error("Error:", error);
+        setError(err.message || 'Failed to load customer details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCustomer();
+  }, [id]);
+
+  // Handle tab change
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
+
+  // Handle delete dialog
+  const handleDeleteClick = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!customer) return;
+
+    try {
+      setLoading(true);
+      await customerService.deleteCustomer(customer._id);
+      navigate('/customers');
+    } catch (err: any) {
+      console.error("Error:", error);
+      setError(err.message || 'Failed to delete customer');
+      setLoading(false);
+    }
+  };
+
+  // Handle edit customer
+  const handleEditCustomer = () => {
+    setEditModalOpen(true);
+  };
+
+  // Handle snackbar close
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
+  // Handle customer update
+  const handleCustomerUpdated = (updatedCustomer: Customer) => {
+    setCustomer(updatedCustomer);
+    setEditModalOpen(false);
+  };
+
+  // DataTable columns for inspections
+  const inspectionColumns: HeadCell<any>[] = [
+  { id: 'id', label: 'ID', numeric: false },
+  { id: 'inspectionDate', label: 'Date', numeric: false, format: (value) => formatDate(value) },
+  { id: 'inspectionType', label: 'Type', numeric: false },
+  { id: 'supplierName', label: 'Supplier', numeric: false },
+  { id: 'inspector', label: 'Inspector', numeric: false },
+  { id: 'status', label: 'Status', numeric: false, format: (value) => <StatusBadge status={value} /> },
+  { id: 'score', label: 'Score', numeric: true, format: (value) => value ? `${value}%` : 'N/A' }];
+
+
+  // DataTable columns for suppliers
+  const supplierColumns: HeadCell<any>[] = [
+  { id: 'name', label: 'Name', numeric: false },
+  { id: 'industry', label: 'Industry', numeric: false },
+  { id: 'status', label: 'Status', numeric: false, format: (value) => <StatusBadge status={value} /> },
+  { id: 'rating', label: 'Rating', numeric: true, format: (value) => value.toFixed(1) }];
+
+
+  if (loading) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>);
+
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ mt: 2 }}>
+        <Alert severity="error">{error}</Alert>
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/customers')}
+          sx={{ mt: 2 }}>
+
+          Back to Customers
+        </Button>
+      </Box>);
+
+  }
+
+  if (!customer) {
+    return (
+      <Box sx={{ mt: 2 }}>
+        <Alert severity="warning">Customer not found</Alert>
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBackIcon />}
+          onClick={() => navigate('/customers')}
+          sx={{ mt: 2 }}>
+
+          Back to Customers
+        </Button>
+      </Box>);
+
+  }
+
+  return (
+    <Box>
+      <PageHeader
+        title={customer.name}
+        subtitle={`Customer Code: ${customer.code}`}
+        breadcrumbs={[
+        { label: 'Dashboard', href: '/dashboard' },
+        { label: 'Customers', href: '/customers' },
+        { label: customer.name }]
+        }
+        actions={
+        <>
+            <Button
+            variant="outlined"
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/customers')}
+            sx={{ mr: 1 }}>
+
+              Back
+            </Button>
+            <Button
+            variant="outlined"
+            startIcon={<EditIcon />}
+            onClick={handleEditCustomer}
+            sx={{ mr: 1 }}>
+
+              Edit
+            </Button>
+            <Button
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={handleDeleteClick}>
+
+              Delete
+            </Button>
+          </>
+        } />
+
+
+      
+      <Box sx={{ mb: 3 }}>
+        <StatusBadge
+          status={customer.status}
+          size="medium" />
+
+      </Box>
+
+      
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          aria-label="customer tabs"
+          variant="scrollable"
+          scrollButtons="auto">
+
+          <Tab label="Overview" id="customer-tab-0" aria-controls="customer-tabpanel-0" />
+          <Tab label="Orders" id="customer-tab-1" aria-controls="customer-tabpanel-1" />
+          <Tab label="Inspections" id="customer-tab-2" aria-controls="customer-tabpanel-2" />
+          <Tab label="Documents" id="customer-tab-3" aria-controls="customer-tabpanel-3" />
+          <Tab label="Activity History" id="customer-tab-4" aria-controls="customer-tabpanel-4" />
+        </Tabs>
+      </Box>
+
+      
+      <TabPanel value={tabValue} index={0}>
+        <Grid container spacing={3}>
+          
+          <Grid item xs={12}>
+            <Card>
+              <CardHeader
+                title="Customer Information"
+                action={
+                <Tooltip title="Edit Customer">
+                    <IconButton onClick={handleEditCustomer}>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                } />
+
+              <CardContent>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                      <Avatar
+                        src={customer.logo}
+                        alt={customer.name}
+                        variant="rounded"
+                        sx={{ width: 60, height: 60, mr: 2 }}>
+
+                        {customer.name.charAt(0)}
+                      </Avatar>
+                      <Box>
+                        <Typography variant="h6">{customer.name}</Typography>
+                        <Chip
+                          label={customer.code}
+                          size="small"
+                          sx={{ mt: 0.5 }} />
+
+                      </Box>
+                    </Box>
+                    
+                    <Typography variant="body2" paragraph>
+                      {customer.description}
+                    </Typography>
+                    
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <BusinessIcon color="action" sx={{ mr: 1 }} />
+                      <Typography variant="body2">
+                        <strong>Industry:</strong> {customer.industry}
+                      </Typography>
+                    </Box>
+                    
+                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                      <CalendarIcon color="action" sx={{ mr: 1 }} />
+                      <Typography variant="body2">
+                        <strong>Contract Period:</strong> {formatDate(customer.contractStartDate)} - {formatDate(customer.contractEndDate)}
+                      </Typography>
+                    </Box>
+                    
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <PersonIcon color="action" sx={{ mr: 1 }} />
+                      <Typography variant="body2">
+                        <strong>Service Level:</strong> <span style={{ textTransform: 'capitalize' }}>{customer.serviceLevel}</span>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Primary Contact
+                    </Typography>
+                    <List disablePadding>
+                      <ListItem disablePadding sx={{ mb: 1 }}>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <PersonIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={customer.primaryContactName}
+                          primaryTypographyProps={{ variant: 'body2' }} />
+
+                      </ListItem>
+                      
+                      <ListItem disablePadding sx={{ mb: 1 }}>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <EmailIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={customer.primaryContactEmail}
+                          primaryTypographyProps={{ variant: 'body2' }} />
+
+                      </ListItem>
+                      
+                      <ListItem disablePadding>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <PhoneIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={customer.primaryContactPhone}
+                          primaryTypographyProps={{ variant: 'body2' }} />
+
+                      </ListItem>
+                    </List>
+                  </Grid>
+                  
+                  <Grid item xs={12} md={6} lg={4}>
+                    <Typography variant="subtitle1" gutterBottom>
+                      Billing Address
+                    </Typography>
+                    <List disablePadding>
+                      <ListItem disablePadding sx={{ mb: 1 }}>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <LocationIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={`${customer.billingAddress.street}, ${customer.billingAddress.city}`}
+                          secondary={`${customer.billingAddress.state}, ${customer.billingAddress.zipCode}, ${customer.billingAddress.country}`}
+                          primaryTypographyProps={{ variant: 'body2' }}
+                          secondaryTypographyProps={{ variant: 'body2' }} />
+
+                      </ListItem>
+                    </List>
+                    
+                    {customer.shippingAddress &&
+                    <>
+                        <Typography variant="subtitle1" gutterBottom sx={{ mt: 2 }}>
+                          Shipping Address
+                        </Typography>
+                        <List disablePadding>
+                          <ListItem disablePadding>
+                            <ListItemIcon sx={{ minWidth: 30 }}>
+                              <LocationIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText
+                            primary={`${customer.shippingAddress.street}, ${customer.shippingAddress.city}`}
+                            secondary={`${customer.shippingAddress.state}, ${customer.shippingAddress.zipCode}, ${customer.shippingAddress.country}`}
+                            primaryTypographyProps={{ variant: 'body2' }}
+                            secondaryTypographyProps={{ variant: 'body2' }} />
+
+                          </ListItem>
+                        </List>
+                      </>
+                    }
+                  </Grid>
+                </Grid>
+                
+                {customer.notes &&
+                <>
+                    <Divider sx={{ my: 2 }} />
+                    <Typography variant="subtitle1" gutterBottom>
+                      Notes
+                    </Typography>
+                    <Typography variant="body2">
+                      {customer.notes}
+                    </Typography>
+                  </>
+                }
+                
+                {customer.customFields && Object.keys(customer.customFields).length > 0 &&
+                <>
+                    <Divider sx={{ my: 2 }} />
+                    <Typography variant="subtitle1" gutterBottom>
+                      Additional Information
+                    </Typography>
+                    <Grid container spacing={2}>
+                      {Object.entries(customer.customFields).map(([key, value]) =>
+                    <Grid item xs={12} sm={6} md={4} key={key}>
+                          <Typography variant="body2">
+                            <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:</strong> {value as string}
+                          </Typography>
+                        </Grid>
+                    )}
+                    </Grid>
+                  </>
+                }
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </TabPanel>
+
+      
+      <TabPanel value={tabValue} index={1}>
+        <CustomerOrderList
+          customerId={customer._id}
+          showHeader={false} />
+
+      </TabPanel>
+
+      
+      <TabPanel value={tabValue} index={2}>
+        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={() => navigate('/inspections/schedule?customerId=' + id)}>
+
+            Schedule Inspection
+          </Button>
+        </Box>
+        
+        <DataTable
+          rows={inspections}
+          headCells={inspectionColumns}
+          title="Customer Inspections"
+          loading={false}
+          pagination
+          defaultSortBy="inspectionDate"
+          defaultOrder="desc"
+          onRowClick={(row) => navigate(`/inspections/${row.id}`)}
+          emptyStateMessage="No inspections found for this customer" />
+
+      </TabPanel>
+
+      
+      <TabPanel value={tabValue} index={3}>
+        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={() => navigate('/suppliers/create?customerId=' + id)}>
+
+            Add Supplier
+          </Button>
+        </Box>
+        
+        <DataTable
+          rows={suppliers}
+          headCells={supplierColumns}
+          title="Associated Suppliers"
+          loading={false}
+          pagination
+          defaultSortBy="name"
+          onRowClick={(row) => navigate(`/suppliers/${row.id}`)}
+          emptyStateMessage="No suppliers associated with this customer" />
+
+      </TabPanel>
+
+      
+      <TabPanel value={tabValue} index={4}>
+        <Box sx={{ p: 4, textAlign: 'center' }}>
+          <Typography variant="h6" gutterBottom>
+            Documents
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Document management will be implemented in the next phase.
+          </Typography>
+        </Box>
+      </TabPanel>
+
+      
+      <TabPanel value={tabValue} index={5}>
+        <CustomerActivityHistory customerId={id || ''} />
+      </TabPanel>
+
+      
+      <CustomerFormModal
+        open={editModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        onSave={handleCustomerUpdated}
+        initialData={customer}
+        isEdit={true}
+        customerId={customer._id} />
+
+
+      
+      <ConfirmationDialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Customer"
+        content="Are you sure you want to delete this customer? This action cannot be undone."
+        confirmText="Delete"
+        confirmColor="error" />
+
+
+      
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: '100%' }}>
+
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </Box>);
+
+};
+
+export default CustomerDetail;

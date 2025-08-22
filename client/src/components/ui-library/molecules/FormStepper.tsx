@@ -36,7 +36,7 @@ const FormStepper: React.FC<FormStepperProps> = ({
   return (
     <Box>
       <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 3 }}>
-        {steps.map((step, idx) => (
+        {steps.map((step, idx: any) => (
           <Step key={step.label} onClick={() => onStepChange(idx)}>
             <StepLabel>{step.label}</StepLabel>
           </Step>

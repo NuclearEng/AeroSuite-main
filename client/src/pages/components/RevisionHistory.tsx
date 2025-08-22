@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -58,7 +58,7 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
     changedBy: '',
     status: 'active' as 'active' | 'deprecated' | 'archived'
   });
-  const [compareRevisions, setCompareRevisions] = useState<{a?: string;b?: string;}>({});
+  const [compareRevisions, setCompareRevisions] = useState<any>({});
 
   // Status rendering helpers
   const GetStatusChip = (status: string) => {
@@ -112,7 +112,7 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
 
   // Handle compare selection
   const handleCompareSelect = (revisionId: string, position: 'a' | 'b') => {
-    setCompareRevisions((prev) => ({
+    setCompareRevisions((prev: any) => ({
       ...prev,
       [position]: revisionId
     }));
@@ -175,7 +175,7 @@ const RevisionHistory: React.FC<RevisionHistoryProps> = ({ componentId }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {revisions.map((revision) =>
+              {revisions.map((revision: any) =>
             <TableRow
               key={revision._id}
               sx={{

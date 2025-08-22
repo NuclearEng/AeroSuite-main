@@ -212,7 +212,7 @@ const ModalsAndFormsTester: React.FC = () => {
   // State for feedback
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info' | 'warning'>('success');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<any>('success');
 
   // Handle modal functions
   const handleDeleteConfirm = async () => {
@@ -226,7 +226,7 @@ const ModalsAndFormsTester: React.FC = () => {
 
   const handleSearch = async (query: string) => {
     await new Promise((resolve) => setTimeout(resolve, 500)); // Simulate API call
-    return mockSearchResults.filter((item) =>
+    return mockSearchResults.filter((item: any) =>
     item.title.toLowerCase().includes(query.toLowerCase()) ||
     item.description.toLowerCase().includes(query.toLowerCase())
     );
@@ -436,14 +436,16 @@ const ModalsAndFormsTester: React.FC = () => {
       <SearchModal
         open={searchModalOpen}
         onClose={() => setSearchModalOpen(false)}
-        initialQuery=""
         onSearch={async (query) => {
           // Mock search delay
           await new Promise((resolve) => setTimeout(resolve, 500));
-          return mockSearchResults.filter((item) =>
-          item.title.toLowerCase().includes(query.toLowerCase()) ||
-          item.description.toLowerCase().includes(query.toLowerCase())
-          );
+          return mockSearchResults.filter((item: any) =>
+            item.title.toLowerCase().includes(query.toLowerCase()) ||
+            item.description.toLowerCase().includes(query.toLowerCase())
+          ).map((item: any) => ({
+            ...item,
+            type: item.type as "user" | "supplier" | "inspection" | "customer" | "report"
+          }));
         }}
         onResultClick={(result) => showSnackbar(`Selected: ${result.title}`, 'info')}
         showFilters={true}
@@ -457,7 +459,10 @@ const ModalsAndFormsTester: React.FC = () => {
       <NotificationModal
         open={notificationModalOpen}
         onClose={() => setNotificationModalOpen(false)}
-        notifications={sampleNotifications}
+        notifications={sampleNotifications.map((notif: any) => ({
+          ...notif,
+          type: notif.type as "error" | "warning" | "info" | "success"
+        }))}
         onMarkAllRead={handleMarkAllNotificationsRead}
         onDeleteAll={handleDeleteAllNotifications}
         onNotificationClick={handleNotificationClick} />

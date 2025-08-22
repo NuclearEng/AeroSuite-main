@@ -79,9 +79,9 @@ export function ProgressiveForm({
   hydrateAboveTheFoldFirst = true
 }: ProgressiveFormProps) {
   // State for form values
-  const [values, setValues] = useState<Record<string, any>>(initialValues);
-  const [errors, setErrors] = useState<Record<string, string | null>>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [values, setValues] = useState<any>>(initialValues);
+  const [errors, setErrors] = useState<any>>({});
+  const [touched, setTouched] = useState<any>>({});
 
   // Ref to track if form is mounted
   const isMounted = useRef(true);
@@ -105,7 +105,7 @@ export function ProgressiveForm({
     progress,
     isHydrated
   } = useIncrementalHydration(
-    fields.map((field) => ({
+    fields.map((field: any) => ({
       id: field.id,
       priority: field.priority
     })),
@@ -303,7 +303,7 @@ export function ProgressiveForm({
         }
         
         
-        {Object.entries(fieldsBySection).map(([sectionId, sectionFields]) =>
+        {Object.entries(fieldsBySection).map(([sectionId, sectionFields]: any) =>
         RenderSection(sectionId, sectionFields)
         )}
         

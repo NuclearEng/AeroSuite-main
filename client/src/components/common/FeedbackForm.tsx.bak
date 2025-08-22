@@ -1,0 +1,492 @@
+import React, { useState, useRef } from 'react';
+import { 
+  Box, 
+  Button, 
+  TextField, 
+  Typography, 
+  Rating, 
+  FormControl, 
+  FormLabel, 
+  RadioGroup, 
+  FormControlLabel, 
+  Radio, 
+  Checkbox, 
+  CircularProgress,
+  Snackbar,
+  Alert,
+  Paper,
+  Grid,
+  Divider,
+  IconButton,
+  Tooltip
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { 
+  Send as SendIcon, 
+  AttachFile as AttachFileIcon,
+  Close as CloseIcon,
+  Help as HelpIcon
+} from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
+import { feedbackService } from '../../services/feedback.service';
+
+interface FeedbackFormProps {
+  source?: string;
+  context?: {
+    page?: string;
+    feature?: string;
+    metadata?: Record<string, any>;
+  };
+  onSuccess?: () => void;
+  onCancel?: () => void;
+  initialFeedbackType?: string;
+  compact?: boolean;
+  customerId?: string;
+}
+
+const FeedbackForm: React.FC<FeedbackFormProps> = ({
+  source = 'app',
+  context = {},
+  onSuccess,
+  onCancel,
+  initialFeedbackType = 'general',
+  compact = false,
+  customerId
+}) => {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Form state
+  const [feedbackType, setFeedbackType] = useState<string>(initialFeedbackType);
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const [rating, setRating] = useState<number | null>(null);
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [allowContact, setAllowContact] = useState<boolean>(false);
+  const [files, setFiles] = useState<File[]>([]);
+  
+  // UI state
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showContactFields, setShowContactFields] = useState<boolean>(false);
+  
+  // Handle file selection
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const newFiles = Array.from(event.target.files);
+      setFiles(prevFiles => [...prevFiles, ...newFiles].slice(0, 5)); // Limit to 5 files
+    }
+  };
+  
+  // Remove a file
+  const handleRemoveFile = (index: number) => {
+    setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
+  };
+  
+  // Handle form submission
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    // Validate required fields
+    if (!content.trim()) {
+      setError(t('feedback.errors.contentRequired'));
+      return;
+    }
+    
+    if (feedbackType === 'general' && rating === null) {
+      setError(t('feedback.errors.ratingRequired'));
+      return;
+    }
+    
+    // Prepare form data for file upload
+    const formData = new FormData();
+    formData.append('feedbackType', feedbackType);
+    formData.append('source', source);
+    formData.append('content', content);
+    
+    if (title) formData.append('title', title);
+    if (rating !== null) formData.append('rating', rating.toString());
+    
+    // Add context information
+    if (context.page || context.feature || Object.keys(context.metadata || {}).length > 0) {
+      formData.append('context', JSON.stringify(context));
+    }
+    
+    // Add contact information if provided
+    if (showContactFields && (name || email || phone)) {
+      const contactInfo = {
+        name,
+        email,
+        phone,
+        allowContact
+      };
+      formData.append('contactInfo', JSON.stringify(contactInfo));
+    }
+    
+    // Add customer ID if provided
+    if (customerId) {
+      formData.append('customer', customerId);
+    }
+    
+    // Add files if any
+    files.forEach(file => {
+      formData.append('attachments', file);
+    });
+    
+    try {
+      setLoading(true);
+      await feedbackService.submitFeedback(formData);
+      setSuccess(true);
+      resetForm();
+      if (onSuccess) onSuccess();
+    } catch (_err) {
+      console.error("Error:", error);
+      setError(t('feedback.errors.submissionFailed'));
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  // Reset form after successful submission
+  const resetForm = () => {
+    setFeedbackType(initialFeedbackType);
+    setTitle('');
+    setContent('');
+    setRating(null);
+    setName('');
+    setEmail('');
+    setPhone('');
+    setAllowContact(false);
+    setFiles([]);
+    setShowContactFields(false);
+  };
+  
+  // Handle snackbar close
+  const handleCloseSnackbar = () => {
+    setError(null);
+    setSuccess(false);
+  };
+  
+  // Render compact form
+  if (compact) {
+    return (
+      <Paper elevation={0} sx={{ p: 2, border: `1px solid ${theme.palette.divider}` }}>
+        <form onSubmit={handleSubmit}>
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="subtitle1" fontWeight="bold">
+              {t('feedback.quickFeedback')}
+            </Typography>
+          </Box>
+          
+          <TextField
+            fullWidth
+            multiline
+            rows={3}
+            placeholder={t('feedback.placeholders.quickFeedback')}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            variant="outlined"
+            size="small"
+            sx={{ mb: 2 }}
+          />
+          
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Button
+              variant="text"
+              onClick={() => setShowContactFields(!showContactFields)}
+              size="small"
+            >
+              {showContactFields ? t('feedback.hideContact') : t('feedback.addContact')}
+            </Button>
+            
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="small"
+              disabled={loading}
+              endIcon={loading ? <CircularProgress size={16} /> : <SendIcon />}
+            >
+              {t('feedback.send')}
+            </Button>
+          </Box>
+          
+          {showContactFields && (
+            <Box sx={{ mt: 2 }}>
+              <TextField
+                fullWidth
+                label={t('feedback.fields.email')}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                variant="outlined"
+                size="small"
+                sx={{ mb: 1 }}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={allowContact}
+                    onChange={(e) => setAllowContact(e.target.checked)}
+                    size="small"
+                  />
+                }
+                label={t('feedback.allowContact')}
+              />
+            </Box>
+          )}
+        </form>
+        
+        <Snackbar open={!!error} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+            {error}
+          </Alert>
+        </Snackbar>
+        
+        <Snackbar open={success} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+          <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+            {t('feedback.successMessage')}
+          </Alert>
+        </Snackbar>
+      </Paper>
+    );
+  }
+  
+  // Render full form
+  return (
+    <Paper elevation={3} sx={{ p: 3 }}>
+      <form onSubmit={handleSubmit}>
+        <Typography variant="h5" component="h2" gutterBottom>
+          {t('feedback.title')}
+        </Typography>
+        
+        <Divider sx={{ mb: 3 }} />
+        
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <FormControl component="fieldset">
+              <FormLabel component="legend">
+                {t('feedback.fields.feedbackType')}
+              </FormLabel>
+              <RadioGroup
+                row
+                value={feedbackType}
+                onChange={(e) => setFeedbackType(e.target.value)}
+              >
+                <FormControlLabel
+                  value="general"
+                  control={<Radio />}
+                  label={t('feedback.types.general')}
+                />
+                <FormControlLabel
+                  value="feature"
+                  control={<Radio />}
+                  label={t('feedback.types.feature')}
+                />
+                <FormControlLabel
+                  value="bug"
+                  control={<Radio />}
+                  label={t('feedback.types.bug')}
+                />
+                <FormControlLabel
+                  value="suggestion"
+                  control={<Radio />}
+                  label={t('feedback.types.suggestion')}
+                />
+                <FormControlLabel
+                  value="support"
+                  control={<Radio />}
+                  label={t('feedback.types.support')}
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+          
+          {feedbackType === 'general' && (
+            <Grid item xs={12}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography component="legend" sx={{ mr: 2 }}>
+                  {t('feedback.fields.rating')}
+                </Typography>
+                <Rating
+                  name="feedback-rating"
+                  value={rating}
+                  onChange={(_, newValue) => setRating(newValue)}
+                  size="large"
+                />
+                <Tooltip title={t('feedback.ratingTooltip')}>
+                  <IconButton size="small" sx={{ ml: 1 }}>
+                    <HelpIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </Grid>
+          )}
+          
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label={t('feedback.fields.title')}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder={t('feedback.placeholders.title')}
+            />
+          </Grid>
+          
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label={t('feedback.fields.content')}
+              multiline
+              rows={5}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+              placeholder={t('feedback.placeholders.content')}
+            />
+          </Grid>
+          
+          <Grid item xs={12}>
+            <Box sx={{ mb: 2 }}>
+              <Button
+                variant="outlined"
+                startIcon={<AttachFileIcon />}
+                onClick={() => fileInputRef.current?.click()}
+                disabled={files.length >= 5}
+              >
+                {t('feedback.attachFiles')}
+              </Button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+                multiple
+                accept="image/*,.pdf,.doc,.docx"
+              />
+              <Typography variant="caption" sx={{ ml: 2 }}>
+                {t('feedback.maxFiles', { max: 5 })}
+              </Typography>
+            </Box>
+            
+            {files.length > 0 && (
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" gutterBottom>
+                  {t('feedback.attachments')}:
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                  {files.map((file, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        bgcolor: 'background.default',
+                        borderRadius: 1,
+                        p: 0.5,
+                        pl: 1
+                      }}
+                    >
+                      <Typography variant="body2" noWrap sx={{ maxWidth: 150 }}>
+                        {file.name}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => handleRemoveFile(index)}
+                      >
+                        <CloseIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            )}
+          </Grid>
+          
+          <Grid item xs={12}>
+            <Typography variant="subtitle1" gutterBottom>
+              {t('feedback.contactInfo')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              {t('feedback.contactInfoDescription')}
+            </Typography>
+            
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  fullWidth
+                  label={t('feedback.fields.name')}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  fullWidth
+                  label={t('feedback.fields.email')}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  type="email"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  fullWidth
+                  label={t('feedback.fields.phone')}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+            
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={allowContact}
+                  onChange={(e) => setAllowContact(e.target.checked)}
+                />
+              }
+              label={t('feedback.allowContact')}
+              sx={{ mt: 1 }}
+            />
+          </Grid>
+        </Grid>
+        
+        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+          {onCancel && (
+            <Button variant="outlined" onClick={onCancel}>
+              {t('common.cancel')}
+            </Button>
+          )}
+          
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={loading}
+            startIcon={loading ? <CircularProgress size={20} /> : <SendIcon />}
+          >
+            {t('feedback.submit')}
+          </Button>
+        </Box>
+      </form>
+      
+      <Snackbar open={!!error} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+          {error}
+        </Alert>
+      </Snackbar>
+      
+      <Snackbar open={success} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+          {t('feedback.successMessage')}
+        </Alert>
+      </Snackbar>
+    </Paper>
+  );
+};
+
+export default FeedbackForm; 

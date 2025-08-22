@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -76,7 +76,7 @@ const CreateCustomer: React.FC = () => {
 
   // Form state
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sameAsShipping, setSameAsShipping] = useState(true);
   const [snackbar, setSnackbar] = useState<{
@@ -90,7 +90,7 @@ const CreateCustomer: React.FC = () => {
   });
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
 
     if (!name) return;
@@ -98,15 +98,15 @@ const CreateCustomer: React.FC = () => {
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [parent]: {
-          ...prev[parent as keyof typeof prev],
+          ...(prev[parent as keyof typeof prev] || {}),
           [child]: value
         }
       }));
     } else {
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [name]: value
       }));
@@ -114,9 +114,20 @@ const CreateCustomer: React.FC = () => {
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
+      }));
+    }
+  };
+
+  // Handle select field changes
+  const handleSelectChange = (e: any) => {
+    const { name, value } = e.target;
+    if (name) {
+      setFormValues((prev: any) => ({
+        ...prev,
+        [name]: value
       }));
     }
   };
@@ -184,7 +195,7 @@ const CreateCustomer: React.FC = () => {
 
     try {
       // Call API to create customer
-      await customerService.createCustomer(formValues);
+      await customerService.createCustomer(formValues as any);
 
       // Show success message
       setSnackbar({
@@ -290,7 +301,7 @@ const CreateCustomer: React.FC = () => {
                     name="industry"
                     value={formValues.industry}
                     label="Industry"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="Aerospace">Aerospace</MenuItem>
                     <MenuItem value="Automotive">Automotive</MenuItem>
@@ -312,7 +323,7 @@ const CreateCustomer: React.FC = () => {
                     name="status"
                     value={formValues.status}
                     label="Status"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="active">Active</MenuItem>
                     <MenuItem value="inactive">Inactive</MenuItem>
@@ -329,7 +340,7 @@ const CreateCustomer: React.FC = () => {
                     name="serviceLevel"
                     value={formValues.serviceLevel}
                     label="Service Level"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="standard">Standard</MenuItem>
                     <MenuItem value="premium">Premium</MenuItem>
@@ -599,7 +610,7 @@ const CreateCustomer: React.FC = () => {
                     name="customFields.priorityLevel"
                     value={formValues.customFields.priorityLevel}
                     label="Priority Level"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="">None</MenuItem>
                     <MenuItem value="Low">Low</MenuItem>

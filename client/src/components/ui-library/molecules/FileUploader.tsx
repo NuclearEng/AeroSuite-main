@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 // If using MUI, import Box, Button, Typography, LinearProgress, etc. Otherwise, use styled-components or CSS modules.
 // import { Box, Button, Typography, LinearProgress } from '@mui/material';
 
@@ -35,10 +35,10 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
 
   const handleFiles = (files: FileList | null) => {
     if (!files) return;
@@ -145,7 +145,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
       {selectedFiles.length > 0 && (
         <div style={{ marginBottom: 12 }}>
           <ul style={{ listStyle: 'none', padding: 0 }}>
-            {selectedFiles.map(file => (
+            {selectedFiles.map((file: any) => (
               <li key={file.name} style={{ fontSize: 14 }}>
                 {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
               </li>

@@ -31,9 +31,9 @@ interface PaymentDetailsProps {
  * Task: TS367 - Payment gateway integration
  */
 const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) => {
-  const [payment, setPayment] = useState<Payment | null>(null);
+  const [payment, setPayment] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [refundDialogOpen, setRefundDialogOpen] = useState(false);
   const [refundReason, setRefundReason] = useState('');
   const [processing, setProcessing] = useState(false);
@@ -45,7 +45,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
       const data = await PaymentService.getPaymentById(paymentId);
       setPayment(data);
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError('Failed to load payment details. Please try again.');
     } finally {
       setLoading(false);
@@ -71,7 +71,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ paymentId, onRefund }) 
         onRefund(updatedPayment);
       }
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError('Failed to process refund. Please try again.');
     } finally {
       setProcessing(false);

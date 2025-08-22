@@ -297,13 +297,7 @@ describe('FormBuilder Component', () => {
         fields={mockFields}
         defaultValues={defaultValues}
         onSubmit={() => {}}
-        layout={{
-          name: { xs: 12, md: 6 },
-          email: { xs: 12, md: 6 },
-          age: { xs: 12, md: 4 },
-          category: { xs: 12, md: 4 },
-          description: { xs: 12 }
-        }}
+        layout="grid"
       />
     );
     

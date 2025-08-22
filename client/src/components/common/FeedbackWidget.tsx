@@ -36,7 +36,7 @@ const FeedbackWidget: React.FC<FeedbackWidgetProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const location = useLocation();
   
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<any>(false);
   
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);

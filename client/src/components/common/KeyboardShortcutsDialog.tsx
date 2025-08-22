@@ -56,7 +56,7 @@ const KeyboardShortcutsDialog: React.FC<KeyboardShortcutsDialogProps> = ({
     .map(group => {
       // Filter shortcuts in this group
       const filteredShortcuts = Object.entries(group.shortcuts)
-        .filter(([id, shortcut]) => {
+        .filter(([id, shortcut]: any) => {
           const searchLower = searchTerm.toLowerCase();
           const typedShortcut = shortcut as KeyboardShortcut;
           return (
@@ -177,7 +177,7 @@ const KeyboardShortcutsDialog: React.FC<KeyboardShortcutsDialogProps> = ({
           </Box>
         ) : (
           <Grid container spacing={3}>
-            {filteredGroups.map((group) => (
+            {filteredGroups.map((group: any) => (
               <Grid item xs={12} md={6} key={group.name}>
                 <Paper 
                   elevation={0}
@@ -198,7 +198,7 @@ const KeyboardShortcutsDialog: React.FC<KeyboardShortcutsDialogProps> = ({
                   </Typography>
                   <Divider sx={{ mb: 1 }} />
                   <List dense disablePadding>
-                    {Object.entries(group.shortcuts).map(([id, shortcutEntry]) => {
+                    {Object.entries(group.shortcuts).map(([id, shortcutEntry]: any) => {
                       const shortcut = shortcutEntry as KeyboardShortcut;
                       return (
                         <ListItem

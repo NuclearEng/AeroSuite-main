@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -17,7 +17,8 @@ import {
   Grid,
   TextField,
   Tooltip,
-  IconButton } from
+  IconButton,
+  SelectChangeEvent } from
 '@mui/material';
 import {
   TimelineOutlined,
@@ -26,6 +27,7 @@ import {
   ShowChart,
   Refresh,
   Info,
+  InfoOutlined,
   ErrorOutline,
   CheckCircleOutline } from
 '@mui/icons-material';
@@ -43,13 +45,13 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsToolti
  * Related to: AI016 - AI-Powered Data Insights
  */
 const AnomalyDetectionWidget: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [component, setComponent] = useState<string>('C-1042');
+  const [loading, setLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+  const [component, setComponent] = useState<any>('C-1042');
   const [data, setData] = useState<any>(null);
-  const [selectedSeverity, setSelectedSeverity] = useState<string>('all');
-  const [timeRange, setTimeRange] = useState<string>('1w'); // 1d, 1w, 1m, 3m
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [selectedSeverity, setSelectedSeverity] = useState<any>('all');
+  const [timeRange, setTimeRange] = useState<any>('1w'); // 1d, 1w, 1m, 3m
+  const [lastUpdated, setLastUpdated] = useState<any>(null);
 
   // Fetch anomaly data from the API
   const fetchAnomalyData = async () => {
@@ -80,10 +82,10 @@ const AnomalyDetectionWidget: React.FC = () => {
     const points = timeRange === '1d' ? 24 : timeRange === '1w' ? 168 : timeRange === '1m' ? 300 : 500;
     const measurements = [];
     const anomalies = {
-      low: [],
-      medium: [],
-      high: [],
-      critical: []
+      low: [] as any[],
+      medium: [] as any[],
+      high: [] as any[],
+      critical: [] as any[]
     };
 
     const now = new Date();
@@ -105,7 +107,7 @@ const AnomalyDetectionWidget: React.FC = () => {
         timestamp: timestamp.toISOString(),
         value: parseFloat(value.toFixed(3)),
         isAnomaly: false,
-        severity: null
+        severity: null as 'critical' | 'high' | 'medium' | 'low' | null
       };
 
       // Add anomalies
@@ -182,18 +184,18 @@ const AnomalyDetectionWidget: React.FC = () => {
   };
 
   // Handle component change
-  const handleComponentChange = (event: React.ChangeEvent<{value: unknown;}>) => {
-    setComponent(event.target.value as string);
+  const handleComponentChange = (event: SelectChangeEvent<string>) => {
+    setComponent(event.target.value);
   };
 
   // Handle time range change
-  const handleTimeRangeChange = (event: React.ChangeEvent<{value: unknown;}>) => {
-    setTimeRange(event.target.value as string);
+  const handleTimeRangeChange = (event: SelectChangeEvent<string>) => {
+    setTimeRange(event.target.value);
   };
 
   // Handle severity filter change
-  const handleSeverityChange = (event: React.ChangeEvent<{value: unknown;}>) => {
-    setSelectedSeverity(event.target.value as string);
+  const handleSeverityChange = (event: SelectChangeEvent<string>) => {
+    setSelectedSeverity(event.target.value);
   };
 
   // Handle refresh button click
@@ -331,7 +333,7 @@ const AnomalyDetectionWidget: React.FC = () => {
               dot={(props: any) => {
                 const { cx, cy, payload } = props;
 
-                if (payload.isAnomaly) {
+                if (payload?.isAnomaly) {
                   return (
                     <circle
                       cx={cx}
@@ -339,12 +341,17 @@ const AnomalyDetectionWidget: React.FC = () => {
                       r={4}
                       fill={getSeverityColor(payload.severity)}
                       stroke="white"
-                      strokeWidth={2} />);
-
-
+                      strokeWidth={2} />
+                  );
                 }
 
-                return null; // Don't render normal points
+                return (
+                  <circle
+                    cx={cx}
+                    cy={cy}
+                    r={2}
+                    fill="#8884d8" />
+                ); // Render normal points as smaller circles
               }}
               activeDot={{ r: 8 }} />
 

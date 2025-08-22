@@ -31,9 +31,9 @@ import { ProfileEditModal } from '../../components/user';
 import userService, { User } from '../../services/user.service';
 
 const Profile: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   // Snackbar state
@@ -55,7 +55,7 @@ const Profile: React.FC = () => {
         const userData = await userService.getCurrentUser();
         setUser(userData);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load user profile');
       } finally {
         setLoading(false);

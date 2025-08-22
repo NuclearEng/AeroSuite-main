@@ -63,7 +63,7 @@ export const LazyLoadedImage: React.FC<LazyLoadedImageProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<any>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   

@@ -569,7 +569,7 @@ export default function ProgressiveLoadingDemo() {
           </Typography>
           
           <Grid container spacing={3}>
-            {products.filter(Boolean).map((product) =>
+            {products.filter(Boolean).map((product: any) =>
             <Grid item key={product.id} xs={12} sm={6} md={4}>
                 <ProgressiveRender
                 skeletonComponent={ProductCardSkeleton}
@@ -593,7 +593,7 @@ export default function ProgressiveLoadingDemo() {
             
             {products.length === 0 && isLoading &&
             <>
-                {[1, 2, 3].map((index) =>
+                {[1, 2, 3].map((index: any) =>
               <Grid item key={index} xs={12} sm={6} md={4}>
                     <ProductCardSkeleton />
                   </Grid>
@@ -645,7 +645,7 @@ export default function ProgressiveLoadingDemo() {
           </Paper>
           
           <Grid container spacing={3}>
-            {products.filter(Boolean).map((product) =>
+            {products.filter(Boolean).map((product: any) =>
             <Grid item key={product.id} xs={12}>
                 <Paper sx={{ p: 2 }}>
                   <Grid container spacing={2}>

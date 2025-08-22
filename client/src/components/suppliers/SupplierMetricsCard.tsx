@@ -181,7 +181,7 @@ const SupplierMetricsCard: React.FC<SupplierMetricsCardProps> = ({ supplierId })
             {metrics.recentInspections.length > 0 ? (
               <List dense>
                 <Divider />
-                {metrics.recentInspections.map((inspection) => (
+                {metrics.recentInspections.map((inspection: any) => (
                   <React.Fragment key={inspection.id}>
                     <ListItem>
                       <ListItemIcon>

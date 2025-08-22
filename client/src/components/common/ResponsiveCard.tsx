@@ -12,7 +12,7 @@ import {
 '@mui/material';
 import useResponsive from '../../hooks/useResponsive';
 
-interface ResponsiveCardProps extends CardProps {
+interface ResponsiveCardProps extends Omit<CardProps, 'title'> {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
   headerAction?: React.ReactNode;

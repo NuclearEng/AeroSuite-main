@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -128,7 +128,7 @@ const a11yProps = (index: number) => {
 
 const QualityMetricsDashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [tabValue, setTabValue] = useState(0);
   const [timeRange, setTimeRange] = useState('6m');
   const [qualityData, setQualityData] = useState(mockQualityData);
@@ -150,7 +150,7 @@ const QualityMetricsDashboard: React.FC = () => {
         setLoading(false);
       }, 800);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to load quality metrics');
       setLoading(false);
     }
@@ -412,7 +412,7 @@ const QualityMetricsDashboard: React.FC = () => {
                           fill="#8884d8"
                           dataKey="value">
 
-                            {qualityData.inspectionResults.map((entry, index) =>
+                            {qualityData.inspectionResults.map((entry, index: any) =>
                           <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                           )}
                           </Pie>

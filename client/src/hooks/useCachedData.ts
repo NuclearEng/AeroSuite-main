@@ -66,8 +66,8 @@ function useCachedData<T>(
       const result = await api.get<T>(url, axiosConfig, cacheOptions);
       setData(result);
     } catch (_err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch data'));
-      console.error('Error fetching data:', err);
+      setError(_err instanceof Error ? _err : new Error('Failed to fetch data'));
+      console.error('Error fetching data:', _err);
     } finally {
       setLoading(false);
     }

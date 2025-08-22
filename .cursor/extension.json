@@ -1,0 +1,35 @@
+{
+  "name": "AeroSuite Error Feeder",
+  "version": "1.0.0",
+  "description": "Real-time compilation error display for AeroSuite",
+  "activationEvents": [
+    "onLanguage:typescript",
+    "onLanguage:javascript",
+    "workspaceContains:**/.cursor-diagnostics.json"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "aerosuite.showErrors",
+        "title": "Show Compilation Errors",
+        "category": "AeroSuite"
+      },
+      {
+        "command": "aerosuite.clearErrors",
+        "title": "Clear Compilation Errors",
+        "category": "AeroSuite"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "aerosuite.showErrors",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e"
+      }
+    ]
+  },
+  "scripts": {
+    "watch": "node ../scripts/compilation-error-feeder.js --watch",
+    "check": "node ../scripts/compilation-error-feeder.js"
+  }
+}

@@ -266,7 +266,7 @@ const Dashboard: React.FC = () => {
                 <Divider />
                 <CardContent sx={{ p: 0 }}>
                   <List>
-                    {upcomingInspections.map((inspection) =>
+                    {upcomingInspections.map((inspection: any) =>
                   <ListItem
                     key={inspection.id}
                     divider
@@ -339,7 +339,7 @@ const Dashboard: React.FC = () => {
                 <Divider />
                 <CardContent sx={{ p: 0 }}>
                   <List>
-                    {recentInspections.map((inspection) =>
+                    {recentInspections.map((inspection: any) =>
                   <ListItem
                     key={inspection.id}
                     divider

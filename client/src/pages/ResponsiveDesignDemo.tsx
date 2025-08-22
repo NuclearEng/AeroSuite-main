@@ -37,7 +37,7 @@ import {
 import useResponsive from '../hooks/useResponsive';
 import TouchTargetWrapper from '../components/common/TouchTargetWrapper';
 import ResponsiveLayoutAudit from '../components/common/ResponsiveLayoutAudit';
-import { ResponsiveGrid, ResponsiveGridItem } from '../components/layout/ResponsiveGrid';
+import ResponsiveGrid, { ResponsiveGridItem } from '../components/layout/ResponsiveGrid';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -203,7 +203,7 @@ const ResponsiveDesignDemo: React.FC = () => {
                   <CardHeader title="Standard List" />
                   <CardContent>
                     <List>
-                      {['Item 1', 'Item 2', 'Item 3'].map((item, index) => (
+                      {['Item 1', 'Item 2', 'Item 3'].map((item, index: any) => (
                         <ListItem key={index} disablePadding>
                           <ListItemButton>
                             <ListItemIcon>
@@ -223,7 +223,7 @@ const ResponsiveDesignDemo: React.FC = () => {
                   <CardHeader title="Enhanced Touch Target List" />
                   <CardContent>
                     <List>
-                      {['Item 1', 'Item 2', 'Item 3'].map((item, index) => (
+                      {['Item 1', 'Item 2', 'Item 3'].map((item, index: any) => (
                         <ListItem key={index} disablePadding>
                           <TouchTargetWrapper sx={{ width: '100%' }}>
                             <ListItemButton sx={{ py: isMobile ? 1.5 : 1 }}>
@@ -257,7 +257,7 @@ const ResponsiveDesignDemo: React.FC = () => {
                 Standard Grid
               </Typography>
               <Grid container spacing={2}>
-                {cardData.map((card, index) => (
+                {cardData.map((card, index: any) => (
                   <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                     <Card>
                       <CardHeader title={card.title} />
@@ -275,7 +275,7 @@ const ResponsiveDesignDemo: React.FC = () => {
                 Responsive Grid
               </Typography>
               <ResponsiveGrid spacing={{ xs: 1, sm: 2, md: 3 }}>
-                {cardData.map((card, index) => (
+                {cardData.map((card, index: any) => (
                   <ResponsiveGridItem key={index} xs={12} sm={6} md={4} lg={3}>
                     <Card>
                       <CardHeader title={card.title} />
@@ -301,7 +301,7 @@ const ResponsiveDesignDemo: React.FC = () => {
                 tabletDirection="row"
                 desktopDirection="row"
               >
-                {cardData.slice(0, 3).map((card, index) => (
+                {cardData.slice(0, 3).map((card, index: any) => (
                   <ResponsiveGridItem key={index} xs={12} sm={4} md={4}>
                     <Card>
                       <CardHeader title={card.title} />

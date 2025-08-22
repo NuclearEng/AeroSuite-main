@@ -75,11 +75,11 @@ function a11yProps(index: number) {
 const MicroInteractionsDemo: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [feedbackType, setFeedbackType] = useState<'success' | 'error' | 'info' | 'warning'>('success');
+  const [feedbackType, setFeedbackType] = useState<any>('success');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [likedItems, setLikedItems] = useState<number[]>([]);
+  const [likedItems, setLikedItems] = useState<any>([]);
   const [showReducedMotion, setShowReducedMotion] = useState(prefersReducedMotion());
   
   // Animation hooks
@@ -123,7 +123,7 @@ const MicroInteractionsDemo: React.FC = () => {
   // Handle like toggle
   const handleLikeToggle = (index: number) => {
     if (likedItems.includes(index)) {
-      setLikedItems(likedItems.filter(item => item !== index));
+      setLikedItems(likedItems.filter((item: any) => item !== index));
     } else {
       setLikedItems([...likedItems, index]);
     }
@@ -479,7 +479,7 @@ const MicroInteractionsDemo: React.FC = () => {
                   <CardHeader title="Staggered List Animation" />
                   <CardContent>
                     <List>
-                      {['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map((item, index) => (
+                      {['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map((item, index: any) => (
                         <ListItem
                           key={index}
                           sx={listAnimations[index]}
@@ -516,7 +516,7 @@ const MicroInteractionsDemo: React.FC = () => {
                   <CardHeader title="Interactive Cards" />
                   <CardContent>
                     <Grid container spacing={2}>
-                      {[1, 2, 3, 4].map((item, index) => (
+                      {[1, 2, 3, 4].map((item, index: any) => (
                         <Grid item xs={6} key={index}>
                           <Card 
                             sx={{

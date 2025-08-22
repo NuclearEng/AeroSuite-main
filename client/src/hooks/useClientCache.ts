@@ -231,7 +231,7 @@ export function useClientCache<T>(
         return;
       }
       
-      const error = err instanceof Error ? err : new Error(String(err));
+      const error = _err instanceof Error ? _err : new Error(String(_err));
       setError(error);
       
       if (onError) {
@@ -341,7 +341,7 @@ export function useClientCache<T>(
     } catch (_err) {
       if (!mountedRef.current) return;
       
-      const error = err instanceof Error ? err : new Error(String(err));
+      const error = _err instanceof Error ? _err : new Error(String(_err));
       setError(error);
       
       if (onError) {
@@ -453,7 +453,7 @@ export function useClientPreference<T>(
             setValue(cachedValue);
           }
         } catch (_error) {
-          console.warn(`Failed to load preference: ${key}`, error);
+          console.warn(`Failed to load preference: ${key}`, _error);
         }
         
         initialized.current = true;
@@ -473,7 +473,7 @@ export function useClientPreference<T>(
         ttl: DEFAULT_TTL.PERMANENT
       });
     } catch (_error) {
-      console.warn(`Failed to save preference: ${key}`, error);
+      console.warn(`Failed to save preference: ${key}`, _error);
     }
   }, [key]);
   

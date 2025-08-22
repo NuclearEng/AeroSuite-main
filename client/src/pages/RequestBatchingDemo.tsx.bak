@@ -1,0 +1,659 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  Divider,
+  Button,
+  Card,
+  CardContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  CircularProgress,
+  Alert,
+  Chip,
+  useTheme,
+  alpha,
+  Stack,
+  TextField,
+  FormControlLabel,
+  Switch
+} from '@mui/material';
+import { PageHeader } from '../components/common';
+import useBatchRequests from '../hooks/useBatchRequests';
+import { supplierService, customerService } from '../services/cachedApiService';
+
+// Simulate network delay for demo purposes
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Mock API service that simulates API calls
+const mockApi = {
+  getSupplier: async (id: number) => {
+    await sleep(300 + Math.random() * 700); // Random delay between 300-1000ms
+    return {
+      id,
+      name: `Supplier ${id}`,
+      email: `supplier${id}@example.com`,
+      phone: `+1-555-${id.toString().padStart(4, '0')}`,
+      location: 'Seattle, WA'
+    };
+  },
+  
+  getCustomer: async (id: number) => {
+    await sleep(300 + Math.random() * 700); // Random delay between 300-1000ms
+    return {
+      id,
+      name: `Customer ${id}`,
+      email: `customer${id}@example.com`,
+      phone: `+1-777-${id.toString().padStart(4, '0')}`,
+      location: 'Chicago, IL'
+    };
+  },
+  
+  getProduct: async (id: number) => {
+    await sleep(300 + Math.random() * 700); // Random delay between 300-1000ms
+    return {
+      id,
+      name: `Product ${id}`,
+      price: Math.floor(10 + Math.random() * 990) / 10,
+      inStock: Math.random() > 0.3
+    };
+  }
+};
+
+// Type for request objects
+interface RequestData {
+  id: number;
+  type: 'supplier' | 'customer' | 'product';
+}
+
+// Type for response results
+interface ResponseData {
+  type: 'supplier' | 'customer' | 'product';
+  id: number;
+  data: any;
+  time: number;
+}
+
+// Generate IDs for demo
+const generateIds = (count: number): number[] => {
+  return Array.from({ length: count }, (_, i) => i + 1);
+};
+
+const RequestBatchingDemo: React.FC = () => {
+  const theme = useTheme();
+  
+  // Access the batch requests hook
+  const {
+    batchGet,
+    batchPost,
+    batchMixed,
+    fetchMultiple,
+    loading,
+    error,
+    cancelAll
+  } = useBatchRequests();
+  
+  // Demo state
+  const [individualResponses, setIndividualResponses] = useState<ResponseData[]>([]);
+  const [batchedResponses, setBatchedResponses] = useState<ResponseData[]>([]);
+  const [individualTime, setIndividualTime] = useState<number>(0);
+  const [batchedTime, setBatchedTime] = useState<number>(0);
+  const [requestCount, setRequestCount] = useState<number>(5);
+  const [useRealApi, setUseRealApi] = useState<boolean>(false);
+  
+  // Handle request count change
+  const handleRequestCountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    if (!isNaN(value) && value > 0 && value <= 20) {
+      setRequestCount(value);
+    }
+  };
+  
+  // Run individual requests (the traditional way)
+  const runIndividualRequests = async () => {
+    setIndividualResponses([]);
+    setBatchedResponses([]);
+    
+    const ids = generateIds(requestCount);
+    const startTime = performance.now();
+    
+    try {
+      // Create a mix of different request types
+      const requests: RequestData[] = ids.map(id => {
+        const type = id % 3 === 0 ? 'product' : id % 2 === 0 ? 'customer' : 'supplier';
+        return { id, type };
+      });
+      
+      // Execute requests one by one
+      const results: ResponseData[] = [];
+      
+      for (const request of requests) {
+        const requestStart = performance.now();
+        let data;
+        
+        if (useRealApi) {
+          // Use the real API if enabled
+          if (request.type === 'supplier') {
+            data = await supplierService.getSupplier(request.id);
+          } else if (request.type === 'customer') {
+            data = await customerService.getCustomer(request.id);
+          } else {
+            // Mock product API (doesn't exist in the real API)
+            data = await mockApi.getProduct(request.id);
+          }
+        } else {
+          // Use mock API
+          if (request.type === 'supplier') {
+            data = await mockApi.getSupplier(request.id);
+          } else if (request.type === 'customer') {
+            data = await mockApi.getCustomer(request.id);
+          } else {
+            data = await mockApi.getProduct(request.id);
+          }
+        }
+        
+        const requestEnd = performance.now();
+        
+        results.push({
+          type: request.type,
+          id: request.id,
+          data,
+          time: Math.round(requestEnd - requestStart)
+        });
+      }
+      
+      const endTime = performance.now();
+      setIndividualTime(Math.round(endTime - startTime));
+      setIndividualResponses(results);
+    } catch (_err) {
+      console.error('Error:', _err);
+    }
+  };
+  
+  // Run batched requests
+  const runBatchedRequests = async () => {
+    setIndividualResponses([]);
+    setBatchedResponses([]);
+    
+    const ids = generateIds(requestCount);
+    const startTime = performance.now();
+    
+    try {
+      // Create a mix of different request types
+      const requests = ids.map(id => {
+        const type = id % 3 === 0 ? 'product' : id % 2 === 0 ? 'customer' : 'supplier';
+        return { id, type };
+      });
+      
+      // Convert to batch request format
+      const batchRequests = requests.map(request => {
+        if (useRealApi) {
+          // Use real API endpoints if enabled
+          if (request.type === 'supplier') {
+            return {
+              endpoint: `/suppliers/${request.id}`,
+              method: 'GET'
+            };
+          } else if (request.type === 'customer') {
+            return {
+              endpoint: `/customers/${request.id}`,
+              method: 'GET'
+            };
+          } else {
+            // Mock product API (doesn't exist in the real API)
+            return {
+              endpoint: `/products/${request.id}`,
+              method: 'GET'
+            };
+          }
+        } else {
+          // For demo purposes, we'll just mock the endpoints
+          // In a real scenario, these would be actual API endpoints
+          return {
+            endpoint: `/${request.type}s/${request.id}`,
+            method: 'GET'
+          };
+        }
+      });
+      
+      // Execute batched requests
+      const batchedResults = await batchMixed(batchRequests);
+      
+      // If not using real API, simulate responses
+      const finalResults: ResponseData[] = useRealApi ? 
+        batchedResults.map((data, index) => ({
+          type: requests[index].type,
+          id: requests[index].id,
+          data,
+          time: 0 // Individual request times aren't available in batched requests
+        })) :
+        requests.map((request, index) => {
+          let mockData: any;
+          if (request.type === 'supplier') {
+            mockData = await mockApi.getSupplier(request.id);
+          } else if (request.type === 'customer') {
+            mockData = await mockApi.getCustomer(request.id);
+          } else {
+            mockData = await mockApi.getProduct(request.id);
+          }
+          return {
+            type: request.type,
+            id: request.id,
+            data: mockData,
+            time: 0
+          };
+        });
+      
+      const endTime = performance.now();
+      setBatchedTime(Math.round(endTime - startTime));
+      setBatchedResponses(finalResults);
+    } catch (_err) {
+      console.error('Error:', _err);
+    }
+  };
+  
+  return (
+    <Box>
+      <PageHeader
+        title="Request Batching Demo"
+        subtitle="Demonstrate batching multiple API requests into a single network request"
+        breadcrumbs={[
+          { label: 'Dashboard', href: '/dashboard' },
+          { label: 'Demo', href: '/demo' },
+          { label: 'Request Batching' },
+        ]}
+      />
+      
+      <Paper sx={{ p: 2, mb: 3 }}>
+        <Typography variant="h6" gutterBottom>
+          Request Batching Overview
+        </Typography>
+        <Typography variant="body2" paragraph>
+          Request batching combines multiple API requests into a single HTTP request to reduce
+          network overhead, decrease latency, and improve performance, especially for mobile
+          and high-latency connections.
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Alert severity="info">
+              <Typography variant="subtitle2">Benefits of Request Batching</Typography>
+              <ul style={{ marginTop: 8, marginBottom: 0 }}>
+                <li>Reduced HTTP overhead and fewer round trips</li>
+                <li>Fewer connection setups and TLS handshakes</li>
+                <li>Better utilization of HTTP/2 multiplexing</li>
+                <li>Simplified request state management in client code</li>
+              </ul>
+            </Alert>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Alert severity="warning">
+              <Typography variant="subtitle2">Considerations</Typography>
+              <ul style={{ marginTop: 8, marginBottom: 0 }}>
+                <li>All-or-nothing failure modes</li>
+                <li>Potentially increased latency for the fastest requests</li>
+                <li>More complex error handling</li>
+                <li>Batching overhead for very small requests</li>
+              </ul>
+            </Alert>
+          </Grid>
+        </Grid>
+      </Paper>
+      
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            Demo Configuration
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          
+          <Grid container spacing={3} alignItems="center">
+            <Grid item xs={12} md={4}>
+              <TextField
+                label="Number of Requests"
+                type="number"
+                fullWidth
+                value={requestCount}
+                onChange={handleRequestCountChange}
+                InputProps={{ inputProps: { min: 1, max: 20 } }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={useRealApi}
+                    onChange={(e) => setUseRealApi(e.target.checked)}
+                  />
+                }
+                label="Use Real API (if unchecked, uses simulation)"
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={runIndividualRequests}
+                  disabled={loading}
+                >
+                  Run Individual Requests
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  fullWidth
+                  onClick={runBatchedRequests}
+                  disabled={loading}
+                >
+                  Run Batched Requests
+                </Button>
+              </Stack>
+            </Grid>
+          </Grid>
+          
+          {loading && (
+            <Box display="flex" justifyContent="center" mt={3}>
+              <CircularProgress />
+            </Box>
+          )}
+          
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error.message}
+            </Alert>
+          )}
+        </CardContent>
+      </Card>
+      
+      <Grid container spacing={3}>
+        {/* Individual Requests Results */}
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Individual Requests
+              </Typography>
+              <Divider sx={{ mb: 2 }} />
+              
+              {individualResponses.length > 0 ? (
+                <>
+                  <Box
+                    sx={{
+                      mb: 2,
+                      p: 1,
+                      borderRadius: 1,
+                      bgcolor: alpha(theme.palette.info.main, 0.1),
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Typography variant="subtitle2">
+                      Total Time: {individualTime}ms
+                    </Typography>
+                    <Chip
+                      label={`${individualResponses.length} Requests`}
+                      color="primary"
+                      size="small"
+                    />
+                  </Box>
+                  
+                  <TableContainer sx={{ maxHeight: 400 }}>
+                    <Table stickyHeader size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Type</TableCell>
+                          <TableCell>ID</TableCell>
+                          <TableCell>Name</TableCell>
+                          <TableCell align="right">Time (ms)</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {individualResponses.map((response, index) => (
+                          <TableRow key={index}>
+                            <TableCell>
+                              <Chip
+                                label={response.type}
+                                color={
+                                  response.type === 'supplier' ? 'primary' :
+                                  response.type === 'customer' ? 'secondary' : 'default'
+                                }
+                                size="small"
+                              />
+                            </TableCell>
+                            <TableCell>{response.id}</TableCell>
+                            <TableCell>{response.data.name}</TableCell>
+                            <TableCell align="right">{response.time}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </>
+              ) : (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  height={200}
+                  bgcolor={alpha(theme.palette.background.default, 0.5)}
+                  borderRadius={1}
+                >
+                  <Typography color="text.secondary">
+                    Click "Run Individual Requests" to see results
+                  </Typography>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        {/* Batched Requests Results */}
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Batched Requests
+              </Typography>
+              <Divider sx={{ mb: 2 }} />
+              
+              {batchedResponses.length > 0 ? (
+                <>
+                  <Box
+                    sx={{
+                      mb: 2,
+                      p: 1,
+                      borderRadius: 1,
+                      bgcolor: alpha(theme.palette.success.main, 0.1),
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Typography variant="subtitle2">
+                      Total Time: {batchedTime}ms
+                    </Typography>
+                    <Chip
+                      label={`${batchedResponses.length} Requests in 1 Batch`}
+                      color="success"
+                      size="small"
+                    />
+                  </Box>
+                  
+                  {individualTime > 0 && batchedTime > 0 && (
+                    <Box
+                      sx={{
+                        mb: 2,
+                        p: 1,
+                        borderRadius: 1,
+                        bgcolor: alpha(theme.palette.success.main, 0.05),
+                        textAlign: 'center'
+                      }}
+                    >
+                      <Typography variant="subtitle2" color="success.main">
+                        {Math.round((1 - batchedTime / individualTime) * 100)}% faster!
+                      </Typography>
+                    </Box>
+                  )}
+                  
+                  <TableContainer sx={{ maxHeight: 400 }}>
+                    <Table stickyHeader size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Type</TableCell>
+                          <TableCell>ID</TableCell>
+                          <TableCell>Name</TableCell>
+                          <TableCell align="right">Status</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {batchedResponses.map((response, index) => (
+                          <TableRow key={index}>
+                            <TableCell>
+                              <Chip
+                                label={response.type}
+                                color={
+                                  response.type === 'supplier' ? 'primary' :
+                                  response.type === 'customer' ? 'secondary' : 'default'
+                                }
+                                size="small"
+                              />
+                            </TableCell>
+                            <TableCell>{response.id}</TableCell>
+                            <TableCell>{response.data.name}</TableCell>
+                            <TableCell align="right">
+                              <Chip
+                                label="Success"
+                                color="success"
+                                size="small"
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </>
+              ) : (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  height={200}
+                  bgcolor={alpha(theme.palette.background.default, 0.5)}
+                  borderRadius={1}
+                >
+                  <Typography color="text.secondary">
+                    Click "Run Batched Requests" to see results
+                  </Typography>
+                </Box>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+      
+      <Card sx={{ mt: 3 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            How It Works
+          </Typography>
+          <Divider sx={{ mb: 2 }} />
+          
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="subtitle2" gutterBottom>
+                Traditional Approach
+              </Typography>
+              <Box
+                component="img"
+                src="/assets/images/individual-requests.png"
+                alt="Individual Requests Diagram"
+                sx={{
+                  width: '100%',
+                  height: 'auto',
+                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: 1,
+                  mb: 2
+                }}
+              />
+              <Typography variant="body2">
+                In the traditional approach, each API request requires a separate HTTP request,
+                including connection setup, headers, and authentication. This leads to higher
+                latency and overhead, especially when making many requests.
+              </Typography>
+            </Grid>
+            
+            <Grid item xs={12} md={6}>
+              <Typography variant="subtitle2" gutterBottom>
+                Batched Approach
+              </Typography>
+              <Box
+                component="img"
+                src="/assets/images/batched-requests.png"
+                alt="Batched Requests Diagram"
+                sx={{
+                  width: '100%',
+                  height: 'auto',
+                  border: `1px solid ${theme.palette.divider}`,
+                  borderRadius: 1,
+                  mb: 2
+                }}
+              />
+              <Typography variant="body2">
+                With request batching, multiple API calls are combined into a single HTTP request.
+                The server processes all requests and returns all responses in a single payload.
+                This significantly reduces network overhead and improves performance.
+              </Typography>
+            </Grid>
+          </Grid>
+          
+          <Box mt={3}>
+            <Typography variant="subtitle2" gutterBottom>
+              Implementation Details
+            </Typography>
+            <Typography variant="body2" paragraph>
+              Our batching system includes:
+            </Typography>
+            <ul>
+              <li>
+                <Typography variant="body2">
+                  <strong>Client-side batching queue:</strong> Collects requests and periodically sends them as a batch
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2">
+                  <strong>Automatic flush:</strong> Sends queued requests after a delay or when the queue reaches a size threshold
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2">
+                  <strong>Server-side batch processor:</strong> Executes all requests in parallel and returns combined results
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2">
+                  <strong>Promise-based API:</strong> Makes batching transparent to application code
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="body2">
+                  <strong>Integration with caching:</strong> Avoids redundant requests and further improves performance
+                </Typography>
+              </li>
+            </ul>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
+  );
+};
+
+export default RequestBatchingDemo; 

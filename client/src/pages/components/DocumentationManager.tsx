@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -66,10 +66,10 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
     updateDocument
   } = useComponentDocumentation(componentId);
 
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeCategory, setActiveCategory] = useState<any>('all');
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<ComponentDocument | null>(null);
+  const [selectedDocument, setSelectedDocument] = useState<any>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -150,7 +150,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
 
     // Convert tags string to array
     if (formData.tags) {
-      const tagsArray = formData.tags.split(',').map((tag) => tag.trim());
+      const tagsArray = formData.tags.split(',').map((tag: any) => tag.trim());
       tagsArray.forEach((tag) => data.append('tags[]', tag));
     }
 
@@ -174,7 +174,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
       description: formData.description,
       category: formData.category as ComponentDocument['category'],
       version: formData.version,
-      tags: formData.tags.split(',').map((tag) => tag.trim())
+      tags: formData.tags.split(',').map((tag: any) => tag.trim())
     };
 
     const success = await updateDocument(selectedDocument._id, updates);
@@ -222,7 +222,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
   // Filter documents by active category
   const filteredDocuments = activeCategory === 'all' ?
   documents :
-  documents.filter((doc) => doc.category === activeCategory);
+  documents.filter((doc: any) => doc.category === activeCategory);
 
   if (loading && documents.length === 0) {
     return (
@@ -277,7 +277,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
               icon={<FolderIcon />}
               iconPosition="start" />
 
-              {Object.entries(categories).map(([category, count]) =>
+              {Object.entries(categories).map(([category, count]: any) =>
             <Tab
               key={category}
               label={`${category.charAt(0).toUpperCase() + category.slice(1)} (${count})`}
@@ -297,7 +297,7 @@ const DocumentationManager: React.FC<DocumentationManagerProps> = ({ componentId
           </Paper>
 
           <Grid container spacing={2}>
-            {filteredDocuments.map((document) =>
+            {filteredDocuments.map((document: any) =>
           <Grid item xs={12} sm={6} md={4} key={document._id}>
                 <Card variant="outlined">
                   <CardContent>

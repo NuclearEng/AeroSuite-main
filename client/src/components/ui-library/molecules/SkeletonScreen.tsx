@@ -131,7 +131,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
       
       
       <Box sx={{ display: 'flex', mb: 1 }}>
-        {Array.from({ length: columns }).map((_, i) =>
+        {Array.from({ length: columns }).map((_, i: any) =>
       <Box key={i} sx={{ flex: 1, px: 1 }}>
             <Skeleton variant="text" height={24} animation={animation} />
           </Box>
@@ -144,9 +144,9 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
       </Box>
       
       
-      {Array.from({ length: count }).map((_, i) =>
+      {Array.from({ length: count }).map((_, i: any) =>
     <Box key={i} sx={{ display: 'flex', py: 1.5, borderBottom: `1px solid ${theme.palette.divider}` }}>
-          {Array.from({ length: columns }).map((_, j) =>
+          {Array.from({ length: columns }).map((_, j: any) =>
       <Box key={j} sx={{ flex: 1, px: 1 }}>
               <Skeleton variant="text" height={20} animation={animation} />
             </Box>
@@ -209,7 +209,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
         </Box>
     }
       
-      {Array.from({ length: count }).map((_, i) =>
+      {Array.from({ length: count }).map((_, i: any) =>
     <Box
       key={i}
       sx={{
@@ -246,7 +246,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
   // Grid skeleton
   const RenderGridSkeleton = () =>
   <Grid container spacing={spacing}>
-      {Array.from({ length: count }).map((_, i) =>
+      {Array.from({ length: count }).map((_, i: any) =>
     <Grid item xs={12} sm={6} md={12 / columns} key={i}>
           <Card sx={{ height: '100%' }}>
             {withImage &&
@@ -323,7 +323,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
           <Box sx={{ p: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 1 }}>
             <Skeleton variant="text" height={24} width="60%" animation={animation} sx={{ mb: 2 }} />
             
-            {Array.from({ length: 4 }).map((_, i) =>
+            {Array.from({ length: 4 }).map((_, i: any) =>
           <Box key={i} sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                 <Skeleton variant="text" height={16} width="40%" animation={animation} />
                 <Skeleton variant="text" height={16} width="40%" animation={animation} />
@@ -348,7 +348,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
     }
       
       <Grid container spacing={3}>
-        {Array.from({ length: rows * columns }).map((_, i) =>
+        {Array.from({ length: rows * columns }).map((_, i: any) =>
       <Grid item xs={12} sm={12 / columns} key={i}>
             <Skeleton variant="text" height={16} width="40%" animation={animation} sx={{ mb: 1 }} />
             <Skeleton variant="rectangular" height={56} animation={animation} />
@@ -392,7 +392,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
       
       {withFooter &&
     <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
-          {Array.from({ length: 4 }).map((_, i) =>
+          {Array.from({ length: 4 }).map((_, i: any) =>
       <Skeleton key={i} variant="rectangular" width={60} height={24} animation={animation} />
       )}
         </Box>
@@ -405,7 +405,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
   <Box sx={{ width: '100%' }}>
       
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        {Array.from({ length: 4 }).map((_, i) =>
+        {Array.from({ length: 4 }).map((_, i: any) =>
       <Grid item xs={12} sm={6} md={3} key={i}>
             <Card sx={{ p: 2 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -443,7 +443,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
       <Card sx={{ p: 2 }}>
         <Skeleton variant="text" height={24} width={150} animation={animation} sx={{ mb: 2 }} />
         <Box>
-          {Array.from({ length: 5 }).map((_, i) =>
+          {Array.from({ length: 5 }).map((_, i: any) =>
         <Box key={i} sx={{ display: 'flex', py: 1.5, borderBottom: `1px solid ${theme.palette.divider}` }}>
               <Box sx={{ width: 40 }}>
                 <Skeleton variant="circular" width={32} height={32} animation={animation} />
@@ -506,7 +506,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
       <Box>
         <Skeleton variant="text" height={32} width="30%" animation={animation} sx={{ mb: 2 }} />
         <Grid container spacing={3}>
-          {Array.from({ length: 3 }).map((_, i) =>
+          {Array.from({ length: 3 }).map((_, i: any) =>
         <Grid item xs={12} md={4} key={i}>
               <Card>
                 <Skeleton variant="rectangular" height={200} animation={animation} />
@@ -525,7 +525,7 @@ const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
   // Feed skeleton
   const RenderFeedSkeleton = () =>
   <Box sx={{ width: '100%' }}>
-      {Array.from({ length: count }).map((_, i) =>
+      {Array.from({ length: count }).map((_, i: any) =>
     <Card key={i} sx={{ mb: 2 }}>
           <CardHeader
         avatar={<Skeleton variant="circular" width={40} height={40} animation={animation} />}

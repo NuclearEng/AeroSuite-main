@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -64,10 +64,10 @@ const ImageOptimizationDemo: React.FC = () => {
 
   // State for image optimization options
   const [selectedImage, setSelectedImage] = useState(sampleImages[0]);
-  const [size, setSize] = useState<ImageSize>(ImageSize.MEDIUM);
-  const [format, setFormat] = useState<ImageFormat>(ImageFormat.WEBP);
-  const [quality, setQuality] = useState<ImageQuality>(ImageQuality.HIGH);
-  const [loading, setLoading] = useState<ImageLoadingStrategy>(ImageLoadingStrategy.LAZY);
+  const [size, setSize] = useState<any>(ImageSize.MEDIUM);
+  const [format, setFormat] = useState<any>(ImageFormat.WEBP);
+  const [quality, setQuality] = useState<any>(ImageQuality.HIGH);
+  const [loading, setLoading] = useState<any>(ImageLoadingStrategy.LAZY);
   const [blur, setBlur] = useState(true);
   const [comparison, setComparison] = useState(false);
 
@@ -169,7 +169,7 @@ const ImageOptimizationDemo: React.FC = () => {
                   label="Sample Image"
                   onChange={handleImageChange}>
 
-                  {sampleImages.map((image, index) =>
+                  {sampleImages.map((image, index: any) =>
                   <MenuItem key={index} value={image.url}>
                       {image.alt}
                     </MenuItem>

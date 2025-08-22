@@ -25,7 +25,9 @@ const GlobalEnhancements: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     });
     
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, [enqueueSnackbar]);
   
   // Route change announcements for screen readers

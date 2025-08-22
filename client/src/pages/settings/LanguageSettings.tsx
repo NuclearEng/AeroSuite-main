@@ -46,7 +46,7 @@ const LanguageSettings: React.FC = () => {
       
       <Paper elevation={2} sx={{ mb: 4 }}>
         <List sx={{ width: '100%' }}>
-          {languages.map((language, index) => (
+          {languages.map((language, index: any) => (
             <React.Fragment key={language.code}>
               <ListItem disablePadding>
                 <ListItemButton 

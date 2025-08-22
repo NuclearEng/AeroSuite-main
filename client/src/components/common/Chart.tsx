@@ -77,7 +77,7 @@ const Chart: React.FC<ChartProps> = ({
 }) => {
   const theme = useTheme();
   const chartRef = useRef<any>(null);
-  const [chartHeight, setChartHeight] = useState<string | number | undefined>(height);
+  const [chartHeight, setChartHeight] = useState<any>(height);
 
   // Calculate the canvas height based on aspectRatio if not explicitly set
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -20,13 +20,13 @@ export interface DynamicFormProps {
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({ fields, onSubmit, submitLabel = 'Submit', title }) => {
-  const [values, setValues] = useState<Record<string, string>>(
+  const [values, setValues] = useState<any>(
     fields.reduce((acc, field) => {
       acc[field.name] = field.defaultValue || '';
       return acc;
     }, {} as Record<string, string>)
   );
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<any>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });

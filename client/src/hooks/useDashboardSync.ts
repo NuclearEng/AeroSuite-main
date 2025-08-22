@@ -78,7 +78,7 @@ const useDashboardSync = (autoSync = true) => {
       
       setLastSyncTime(new Date());
     } catch (_error) {
-      console.error('Failed to load dashboard preferences:', error);
+      console.error('Failed to load dashboard preferences:', _error);
       setSyncError('Failed to load preferences from server');
       setSyncStatus('error');
     } finally {
@@ -112,7 +112,7 @@ const useDashboardSync = (autoSync = true) => {
       
       setLastSyncTime(new Date());
     } catch (_error) {
-      console.error('Failed to save dashboard preferences:', error);
+      console.error('Failed to save dashboard preferences:', _error);
       setSyncError('Failed to save preferences to server');
       setSyncStatus('error');
     } finally {
@@ -143,7 +143,7 @@ const useDashboardSync = (autoSync = true) => {
       
       setLastSyncTime(new Date());
     } catch (_error) {
-      console.error('Failed to reset dashboard preferences:', error);
+      console.error('Failed to reset dashboard preferences:', _error);
       setSyncError('Failed to reset preferences on server');
       setSyncStatus('error');
     } finally {

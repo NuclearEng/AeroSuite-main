@@ -160,7 +160,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const { mode, toggleTheme } = useThemeContext();
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<any>([]);
   const [activeItem, setActiveItem] = useState('');
 
   // User data (assuming we have a user in redux)
@@ -309,7 +309,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           if (childActiveItem) {
             // Expand the parent if a child is active
             if (!expandedItems.includes(item.id)) {
-              setExpandedItems((prev) => [...prev, item.id]);
+              setExpandedItems((prev: any) => [...prev, item.id]);
             }
             return childActiveItem;
           }
@@ -324,9 +324,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   // Toggle menu item expansion
   const handleExpandClick = (itemId: string) => {
-    setExpandedItems((prev) =>
+    setExpandedItems((prev: any) =>
     prev.includes(itemId) ?
-    prev.filter((id) => id !== itemId) :
+    prev.filter((id: any) => id !== itemId) :
     [...prev, itemId]
     );
   };
@@ -346,7 +346,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   // Render menu items recursively
   const RenderMenuItems = (items: MenuItem[], level = 0) =>
   <>
-      {items.map((item) => {
+      {items.map((item: any) => {
       const isSelected = activeItem === item.id;
       const isExpanded = expandedItems.includes(item.id);
 

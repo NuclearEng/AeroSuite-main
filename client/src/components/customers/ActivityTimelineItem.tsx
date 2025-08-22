@@ -154,26 +154,27 @@ const ActivityTimelineItem: React.FC<ActivityTimelineItemProps> = ({
         }
         
         <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-          {activity.user &&
+          {activity.performedBy &&
           <Chip
             size="small"
             icon={<PersonIcon />}
-            label={activity.user.name}
+            label={`${activity.performedBy.firstName} ${activity.performedBy.lastName}`}
             variant="outlined" />
 
           }
           
-          {activity.relatedItems && activity.relatedItems.map((item, index) =>
+          {activity.relatedEntities?.inspection &&
           <Chip
-            key={index}
             size="small"
-            label={item.name}
+            label={activity.relatedEntities.inspection.title}
             variant="outlined"
-            color="primary"
-            clickable={!!item.link}
-            onClick={item.link ? handleLinkClick(item.link) : undefined} />
-
-          )}
+            color="primary" />}
+          {activity.relatedEntities?.supplier &&
+          <Chip
+            size="small"
+            label={activity.relatedEntities.supplier.name}
+            variant="outlined"
+            color="secondary" />}
         </Box>
       </TimelineContent>
     </TimelineItem>);

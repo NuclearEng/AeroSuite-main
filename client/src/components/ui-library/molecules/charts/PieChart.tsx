@@ -56,7 +56,7 @@ const PieChart: React.FC<PieChartProps> = ({
 
   return (
     <svg width={width} height={height} aria-label={label || 'Pie chart'} role="img">
-      {data.map((d, i) => {
+      {data.map((d, i: any) => {
         const value = Number(d[valueKey]);
         const startAngle = cumulative / total * 360;
         const endAngle = (cumulative + value) / total * 360;
@@ -72,7 +72,7 @@ const PieChart: React.FC<PieChartProps> = ({
 
       })}
       
-      {data.map((d, i) => {
+      {data.map((d, i: any) => {
         const value = Number(d[valueKey]);
         const angle = (cumulative - value / 2) / total * 360;
         const rad = (angle - 90) * (Math.PI / 180);

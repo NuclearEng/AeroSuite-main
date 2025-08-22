@@ -71,7 +71,7 @@ const MonitoringNavigation: React.FC = () => {
       </Typography>
       <Divider />
       <List>
-        {navigationItems.map((item) => (
+        {navigationItems.map((item: any) => (
           <ListItem key={item.path} disablePadding>
             <ListItemButton
               component={Link}

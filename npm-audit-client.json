@@ -1,106 +1,64 @@
 {
   "auditReportVersion": 2,
   "vulnerabilities": {
-    "@svgr/plugin-svgo": {
-      "name": "@svgr/plugin-svgo",
+    "axios": {
+      "name": "axios",
       "severity": "high",
-      "isDirect": false,
-      "via": [
-        "svgo"
-      ],
-      "effects": [
-        "@svgr/webpack"
-      ],
-      "range": "<=5.5.0",
-      "nodes": [
-        "node_modules/@svgr/plugin-svgo"
-      ],
-      "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
-        "isSemVerMajor": true
-      }
-    },
-    "@svgr/webpack": {
-      "name": "@svgr/webpack",
-      "severity": "high",
-      "isDirect": false,
-      "via": [
-        "@svgr/plugin-svgo"
-      ],
-      "effects": [
-        "react-scripts"
-      ],
-      "range": "4.0.0 - 5.5.0",
-      "nodes": [
-        "node_modules/@svgr/webpack"
-      ],
-      "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
-        "isSemVerMajor": true
-      }
-    },
-    "css-select": {
-      "name": "css-select",
-      "severity": "high",
-      "isDirect": false,
-      "via": [
-        "nth-check"
-      ],
-      "effects": [
-        "svgo"
-      ],
-      "range": "<=3.1.0",
-      "nodes": [
-        "node_modules/svgo/node_modules/css-select"
-      ],
-      "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
-        "isSemVerMajor": true
-      }
-    },
-    "form-data": {
-      "name": "form-data",
-      "severity": "critical",
       "isDirect": false,
       "via": [
         {
-          "source": 1106508,
-          "name": "form-data",
-          "dependency": "form-data",
-          "title": "form-data uses unsafe random function in form-data for choosing boundary",
-          "url": "https://github.com/advisories/GHSA-fjxv-7rqg-78g4",
-          "severity": "critical",
+          "source": 1097679,
+          "name": "axios",
+          "dependency": "axios",
+          "title": "Axios Cross-Site Request Forgery Vulnerability",
+          "url": "https://github.com/advisories/GHSA-wf5p-g6vw-rhxx",
+          "severity": "moderate",
           "cwe": [
-            "CWE-330"
+            "CWE-352"
+          ],
+          "cvss": {
+            "score": 6.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N"
+          },
+          "range": ">=0.8.1 <0.28.0"
+        },
+        {
+          "source": 1103617,
+          "name": "axios",
+          "dependency": "axios",
+          "title": "axios Requests Vulnerable To Possible SSRF and Credential Leakage via Absolute URL",
+          "url": "https://github.com/advisories/GHSA-jr5f-v2jv-69x6",
+          "severity": "high",
+          "cwe": [
+            "CWE-918"
           ],
           "cvss": {
             "score": 0,
             "vectorString": null
           },
-          "range": ">=3.0.0 <3.0.4"
+          "range": "<0.30.0"
         }
       ],
-      "effects": [],
-      "range": "3.0.0 - 3.0.3",
+      "effects": [
+        "openapi-validator"
+      ],
+      "range": "<=0.29.0",
       "nodes": [
-        "node_modules/jsdom/node_modules/form-data"
+        "node_modules/openapi-validator/node_modules/axios"
       ],
       "fixAvailable": true
     },
-    "nth-check": {
-      "name": "nth-check",
+    "cross-spawn": {
+      "name": "cross-spawn",
       "severity": "high",
       "isDirect": false,
       "via": [
         {
-          "source": 1095141,
-          "name": "nth-check",
-          "dependency": "nth-check",
-          "title": "Inefficient Regular Expression Complexity in nth-check",
-          "url": "https://github.com/advisories/GHSA-rp65-9cf3-cjxr",
+          "source": 1104663,
+          "name": "cross-spawn",
+          "dependency": "cross-spawn",
+          "title": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+          "url": "https://github.com/advisories/GHSA-3xgq-45jj-v275",
           "severity": "high",
           "cwe": [
             "CWE-1333"
@@ -109,197 +67,53 @@
             "score": 7.5,
             "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
           },
-          "range": "<2.0.1"
+          "range": "<6.0.6"
         }
       ],
       "effects": [
-        "css-select"
+        "react-app-rewired"
       ],
-      "range": "<2.0.1",
+      "range": "<6.0.6",
       "nodes": [
-        "node_modules/svgo/node_modules/nth-check"
+        "node_modules/react-app-rewired/node_modules/cross-spawn"
       ],
       "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
+        "name": "react-app-rewired",
+        "version": "2.2.1",
         "isSemVerMajor": true
       }
     },
-    "postcss": {
-      "name": "postcss",
-      "severity": "moderate",
+    "openapi-validator": {
+      "name": "openapi-validator",
+      "severity": "high",
       "isDirect": false,
       "via": [
-        {
-          "source": 1094544,
-          "name": "postcss",
-          "dependency": "postcss",
-          "title": "PostCSS line return parsing error",
-          "url": "https://github.com/advisories/GHSA-7fh5-64p2-3v2j",
-          "severity": "moderate",
-          "cwe": [
-            "CWE-74",
-            "CWE-144"
-          ],
-          "cvss": {
-            "score": 5.3,
-            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N"
-          },
-          "range": "<8.4.31"
-        }
+        "axios"
       ],
-      "effects": [
-        "resolve-url-loader"
-      ],
-      "range": "<8.4.31",
+      "effects": [],
+      "range": ">=0.14.2-alpha.0",
       "nodes": [
-        "node_modules/resolve-url-loader/node_modules/postcss"
+        "node_modules/openapi-validator"
       ],
-      "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
-        "isSemVerMajor": true
-      }
+      "fixAvailable": true
     },
-    "react-scripts": {
-      "name": "react-scripts",
+    "react-app-rewired": {
+      "name": "react-app-rewired",
       "severity": "high",
       "isDirect": true,
       "via": [
-        "@svgr/webpack",
-        "resolve-url-loader",
-        "webpack-dev-server"
+        "cross-spawn"
       ],
       "effects": [],
-      "range": ">=0.1.0",
+      "range": "0.1.0 - 2.0.0 || 2.0.2-next.0",
       "nodes": [
-        "node_modules/react-scripts"
+        "node_modules/react-app-rewired"
       ],
       "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
+        "name": "react-app-rewired",
+        "version": "2.2.1",
         "isSemVerMajor": true
       }
-    },
-    "resolve-url-loader": {
-      "name": "resolve-url-loader",
-      "severity": "moderate",
-      "isDirect": false,
-      "via": [
-        "postcss"
-      ],
-      "effects": [
-        "react-scripts"
-      ],
-      "range": "0.0.1-experiment-postcss || 3.0.0-alpha.1 - 4.0.0",
-      "nodes": [
-        "node_modules/resolve-url-loader"
-      ],
-      "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
-        "isSemVerMajor": true
-      }
-    },
-    "svgo": {
-      "name": "svgo",
-      "severity": "high",
-      "isDirect": false,
-      "via": [
-        "css-select"
-      ],
-      "effects": [
-        "@svgr/plugin-svgo"
-      ],
-      "range": "1.0.0 - 1.3.2",
-      "nodes": [
-        "node_modules/svgo"
-      ],
-      "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
-        "isSemVerMajor": true
-      }
-    },
-    "webpack-dev-server": {
-      "name": "webpack-dev-server",
-      "severity": "moderate",
-      "isDirect": false,
-      "via": [
-        {
-          "source": 1105256,
-          "name": "webpack-dev-server",
-          "dependency": "webpack-dev-server",
-          "title": "webpack-dev-server users' source code may be stolen when they access a malicious web site with non-Chromium based browser",
-          "url": "https://github.com/advisories/GHSA-9jgg-88mc-972h",
-          "severity": "moderate",
-          "cwe": [
-            "CWE-346"
-          ],
-          "cvss": {
-            "score": 6.5,
-            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N"
-          },
-          "range": "<=5.2.0"
-        },
-        {
-          "source": 1105257,
-          "name": "webpack-dev-server",
-          "dependency": "webpack-dev-server",
-          "title": "webpack-dev-server users' source code may be stolen when they access a malicious web site",
-          "url": "https://github.com/advisories/GHSA-4v9v-hfq4-rm2v",
-          "severity": "moderate",
-          "cwe": [
-            "CWE-749"
-          ],
-          "cvss": {
-            "score": 5.3,
-            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N"
-          },
-          "range": "<=5.2.0"
-        }
-      ],
-      "effects": [
-        "react-scripts"
-      ],
-      "range": "<=5.2.0",
-      "nodes": [
-        "node_modules/webpack-dev-server"
-      ],
-      "fixAvailable": {
-        "name": "react-scripts",
-        "version": "0.0.0",
-        "isSemVerMajor": true
-      }
-    },
-    "ws": {
-      "name": "ws",
-      "severity": "high",
-      "isDirect": false,
-      "via": [
-        {
-          "source": 1098392,
-          "name": "ws",
-          "dependency": "ws",
-          "title": "ws affected by a DoS when handling a request with many HTTP headers",
-          "url": "https://github.com/advisories/GHSA-3h5v-q93c-6h6q",
-          "severity": "high",
-          "cwe": [
-            "CWE-476"
-          ],
-          "cvss": {
-            "score": 7.5,
-            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-          },
-          "range": ">=8.0.0 <8.17.1"
-        }
-      ],
-      "effects": [],
-      "range": "8.0.0 - 8.17.0",
-      "nodes": [
-        "node_modules/ws"
-      ],
-      "fixAvailable": true
     },
     "xlsx": {
       "name": "xlsx",
@@ -351,18 +165,18 @@
     "vulnerabilities": {
       "info": 0,
       "low": 0,
-      "moderate": 3,
-      "high": 8,
-      "critical": 1,
-      "total": 12
+      "moderate": 0,
+      "high": 5,
+      "critical": 0,
+      "total": 5
     },
     "dependencies": {
-      "prod": 2034,
-      "dev": 897,
-      "optional": 42,
-      "peer": 0,
+      "prod": 803,
+      "dev": 1328,
+      "optional": 125,
+      "peer": 123,
       "peerOptional": 0,
-      "total": 2969
+      "total": 2168
     }
   }
 }

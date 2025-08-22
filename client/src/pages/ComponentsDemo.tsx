@@ -10,7 +10,7 @@ import {
 
 const ComponentsDemo: React.FC = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<any[]>([]);
+  const [activeFilters, setActiveFilters] = useState<any>([]);
   const [searchTerm, setSearchTerm] = useState('');
   
   // Demo data for DataTable

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Paper,
@@ -42,9 +42,9 @@ const PaymentHistory: React.FC<PaymentHistoryProps> = ({
   showTitle = true,
   status
 }) => {
-  const [payments, setPayments] = useState<Payment[]>([]);
+  const [payments, setPayments] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const PaymentHistory: React.FC<PaymentHistoryProps> = ({
       setPayments(response.payments);
       setTotalCount(response.pagination.total);
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError('Failed to load payment history. Please try again.');
     } finally {
       setLoading(false);
@@ -68,7 +68,7 @@ const PaymentHistory: React.FC<PaymentHistoryProps> = ({
     fetchPayments();
   }, [page, limit, status]);
 
-  const handleChangePage = (_event: unknown, newPage: number) => {
+  const handleChangePage = (_event: any, newPage: number) => {
     setPage(newPage);
   };
 
@@ -143,7 +143,7 @@ const PaymentHistory: React.FC<PaymentHistoryProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {payments.map((payment) => (
+                {payments.map((payment: any) => (
                   <TableRow key={payment._id} hover>
                     <TableCell>{formatDate(payment.createdAt)}</TableCell>
                     <TableCell>

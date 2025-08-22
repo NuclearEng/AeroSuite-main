@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -92,8 +92,8 @@ const QualityManagement: React.FC = () => {
 
   const [tabValue, setTabValue] = useState(0);
   const [openMetricDialog, setOpenMetricDialog] = useState(false);
-  const [currentMetric, setCurrentMetric] = useState<string>('');
-  const [metricValue, setMetricValue] = useState<number>(0);
+  const [currentMetric, setCurrentMetric] = useState<any>('');
+  const [metricValue, setMetricValue] = useState<any>(0);
   const [openNcDialog, setOpenNcDialog] = useState(false);
   const [ncFormData, setNcFormData] = useState({
     description: '',
@@ -391,7 +391,7 @@ const QualityManagement: React.FC = () => {
         </Box>
         
         <Grid container spacing={3}>
-          {Object.entries(metrics).map(([key, metric]) =>
+          {Object.entries(metrics).map(([key, metric]: any) =>
           <Grid item xs={12} md={6} lg={4} key={key}>
               <Card variant="outlined">
                 <CardContent>
@@ -418,7 +418,7 @@ const QualityManagement: React.FC = () => {
                   {metric.history && metric.history.length > 0 &&
                 <Box height={100} mt={2}>
                       <LineChart
-                    data={metric.history.map((h) => ({
+                    data={metric.history.map((h: any) => ({
                       x: new Date(h.date),
                       y: h.value
                     }))}
@@ -492,7 +492,7 @@ const QualityManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {nonConformances.map((nc) =>
+                {nonConformances.map((nc: any) =>
               <TableRow key={nc.ncNumber}>
                     <TableCell>{nc.ncNumber}</TableCell>
                     <TableCell>{nc.description}</TableCell>
@@ -562,7 +562,7 @@ const QualityManagement: React.FC = () => {
         <Alert severity="info">No quality documents uploaded</Alert> :
 
         <List>
-            {qualityDocuments.map((doc) =>
+            {qualityDocuments.map((doc: any) =>
           <ListItem
             key={doc._id}
             secondaryAction={
@@ -631,7 +631,7 @@ const QualityManagement: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {auditHistory.map((audit) =>
+                {auditHistory.map((audit: any) =>
               <TableRow key={audit.auditId}>
                     <TableCell>
                       {format(new Date(audit.auditDate), 'MMM dd, yyyy')}

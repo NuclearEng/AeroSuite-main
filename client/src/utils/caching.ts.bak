@@ -1,0 +1,547 @@
+/**
+ * AeroSuite Caching Utilities
+ * 
+ * This file contains utilities for implementing caching strategies
+ * throughout the application, optimizing API requests and data storage.
+ */
+
+/**
+ * Cache implementation with expiration and capacity limits
+ */
+export class Cache<T> {
+  private cache: Map<string, { value: T; timestamp: number }>;
+  private maxSize: number;
+  private defaultTTL: number;
+
+  /**
+   * Create a new cache instance
+   * @param maxSize Maximum number of items in the cache
+   * @param defaultTTL Default time-to-live in milliseconds
+   */
+  constructor(maxSize = 100, defaultTTL = 5 * 60 * 1000) {
+    this.cache = new Map();
+    this.maxSize = maxSize;
+    this.defaultTTL = defaultTTL;
+  }
+
+  /**
+   * Set a value in the cache with optional TTL
+   * @param key Cache key
+   * @param value Value to store
+   * @param ttl Time-to-live in milliseconds (optional)
+   */
+  set(key: string, value: T, ttl?: number): void {
+    // Clear space if needed
+    if (this.cache.size >= this.maxSize) {
+      this.evictOldest();
+    }
+
+    // Store the value with current timestamp
+    this.cache.set(key, {
+      value,
+      timestamp: Date.now() + (ttl ?? this.defaultTTL),
+    });
+  }
+
+  /**
+   * Get a value from the cache
+   * @param key Cache key
+   * @returns Cached value or undefined if not found or expired
+   */
+  get(key: string): T | undefined {
+    const item = this.cache.get(key);
+    
+    // Return undefined if not in cache
+    if (!item) return undefined;
+    
+    // Check if item has expired
+    if (Date.now() > item.timestamp) {
+      this.cache.delete(key);
+      return undefined;
+    }
+    
+    return item.value;
+  }
+
+  /**
+   * Check if a key exists in the cache and isn't expired
+   * @param key Cache key
+   * @returns True if key exists and isn't expired
+   */
+  has(key: string): boolean {
+    const item = this.cache.get(key);
+    if (!item) return false;
+    
+    if (Date.now() > item.timestamp) {
+      this.cache.delete(key);
+      return false;
+    }
+    
+    return true;
+  }
+
+  /**
+   * Delete a key from the cache
+   * @param key Cache key
+   * @returns True if the item was successfully removed
+   */
+  delete(key: string): boolean {
+    return this.cache.delete(key);
+  }
+
+  /**
+   * Clear all items from the cache
+   */
+  clear(): void {
+    this.cache.clear();
+  }
+
+  /**
+   * Get the number of items in the cache
+   */
+  size(): number {
+    return this.cache.size;
+  }
+
+  /**
+   * Get all keys in the cache
+   */
+  keys(): string[] {
+    return Array.from(this.cache.keys());
+  }
+
+  /**
+   * Evict all expired items from the cache
+   * @returns Number of items evicted
+   */
+  evictExpired(): number {
+    const now = Date.now();
+    let evicted = 0;
+    
+    for (const [key, item] of this.cache.entries()) {
+      if (now > item.timestamp) {
+        this.cache.delete(key);
+        evicted++;
+      }
+    }
+    
+    return evicted;
+  }
+
+  /**
+   * Evict the oldest item from the cache
+   * @returns True if an item was evicted
+   */
+  private evictOldest(): boolean {
+    if (this.cache.size === 0) return false;
+    
+    let oldestKey: string | null = null;
+    let oldestTimestamp = Infinity;
+    
+    for (const [key, item] of this.cache.entries()) {
+      if (item.timestamp < oldestTimestamp) {
+        oldestKey = key;
+        oldestTimestamp = item.timestamp;
+      }
+    }
+    
+    if (oldestKey) {
+      return this.cache.delete(oldestKey);
+    }
+    
+    return false;
+  }
+}
+
+/**
+ * Cache decorator for memoizing function results
+ * @param ttl Time-to-live in milliseconds
+ * @returns Decorated function with caching
+ */
+export function memoize<T extends (...args: any[]) => any>(
+  fn: T,
+  ttl = 5 * 60 * 1000
+): (...args: Parameters<T>) => ReturnType<T> {
+  const cache = new Cache<ReturnType<T>>(100, ttl);
+  
+  return (...args: Parameters<T>): ReturnType<T> => {
+    const key = JSON.stringify(args);
+    
+    if (cache.has(key)) {
+      return cache.get(key) as ReturnType<T>;
+    }
+    
+    const result = fn(...args);
+    
+    // Handle promises
+    if (result instanceof Promise) {
+      return result.then((value) => {
+        cache.set(key, value);
+        return value;
+      }) as ReturnType<T>;
+    }
+    
+    cache.set(key, result);
+    return result;
+  };
+}
+
+/**
+ * Create a cached version of an API call
+ * @param fetchFn Function that returns a Promise
+ * @param ttl Time-to-live in milliseconds
+ * @returns Cached function
+ */
+export function cachedFetch<T>(
+  fetchFn: (...args: any[]) => Promise<T>,
+  ttl = 5 * 60 * 1000
+): (...args: any[]) => Promise<T> {
+  return memoize(fetchFn, ttl);
+}
+
+/**
+ * Cache that persists to localStorage
+ */
+export class PersistentCache<T> {
+  private prefix: string;
+  private defaultTTL: number;
+  
+  /**
+   * Create a new persistent cache
+   * @param prefix Prefix for localStorage keys
+   * @param defaultTTL Default time-to-live in milliseconds
+   */
+  constructor(prefix = 'cache', defaultTTL = 24 * 60 * 60 * 1000) {
+    this.prefix = prefix;
+    this.defaultTTL = defaultTTL;
+  }
+  
+  /**
+   * Set a value in the persistent cache
+   * @param key Cache key
+   * @param value Value to store
+   * @param ttl Time-to-live in milliseconds (optional)
+   */
+  set(key: string, value: T, ttl?: number): void {
+    const prefixedKey = `${this.prefix}:${key}`;
+    const item = {
+      value,
+      timestamp: Date.now() + (ttl ?? this.defaultTTL),
+    };
+    
+    try {
+      localStorage.setItem(prefixedKey, JSON.stringify(item));
+    } catch (_error) {
+      console.error('Error storing item in localStorage:', _error);
+    }
+  }
+  
+  /**
+   * Get a value from the persistent cache
+   * @param key Cache key
+   * @returns Cached value or undefined if not found or expired
+   */
+  get(key: string): T | undefined {
+    const prefixedKey = `${this.prefix}:${key}`;
+    
+    try {
+      const itemJson = localStorage.getItem(prefixedKey);
+      if (!itemJson) return undefined;
+      
+      const item = JSON.parse(itemJson) as { value: T; timestamp: number };
+      
+      // Check if item has expired
+      if (Date.now() > item.timestamp) {
+        localStorage.removeItem(prefixedKey);
+        return undefined;
+      }
+      
+      return item.value;
+    } catch (_error) {
+      console.error('Error retrieving item from localStorage:', _error);
+      return undefined;
+    }
+  }
+  
+  /**
+   * Check if a key exists in the persistent cache
+   * @param key Cache key
+   * @returns True if key exists and isn't expired
+   */
+  has(key: string): boolean {
+    return this.get(key) !== undefined;
+  }
+  
+  /**
+   * Delete a key from the persistent cache
+   * @param key Cache key
+   */
+  delete(key: string): void {
+    const prefixedKey = `${this.prefix}:${key}`;
+    localStorage.removeItem(prefixedKey);
+  }
+  
+  /**
+   * Clear all items from this persistent cache
+   */
+  clear(): void {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(`${this.prefix}:`)) {
+        localStorage.removeItem(key);
+      }
+    }
+  }
+  
+  /**
+   * Evict all expired items from the persistent cache
+   * @returns Number of items evicted
+   */
+  evictExpired(): number {
+    let evicted = 0;
+    const now = Date.now();
+    
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(`${this.prefix}:`)) {
+        try {
+          const itemJson = localStorage.getItem(key);
+          if (!itemJson) continue;
+          
+          const item = JSON.parse(itemJson) as { value: T; timestamp: number };
+          
+          if (now > item.timestamp) {
+            localStorage.removeItem(key);
+            evicted++;
+          }
+        } catch (_error) {
+          // Skip this item if there's an error
+          console.error('Error checking expiration:', _error);
+        }
+      }
+    }
+    
+    return evicted;
+  }
+}
+
+/**
+ * Cache implementation using IndexedDB for larger data storage
+ */
+export class IndexedDBCache<T> {
+  private dbName: string;
+  private storeName: string;
+  private defaultTTL: number;
+  
+  /**
+   * Create a new IndexedDB cache
+   * @param dbName Database name
+   * @param storeName Store name
+   * @param defaultTTL Default time-to-live in milliseconds
+   */
+  constructor(dbName = 'appCache', storeName = 'cache', defaultTTL = 24 * 60 * 60 * 1000) {
+    this.dbName = dbName;
+    this.storeName = storeName;
+    this.defaultTTL = defaultTTL;
+    this.initDatabase();
+  }
+  
+  /**
+   * Initialize the IndexedDB database
+   */
+  private async initDatabase(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.dbName, 1);
+      
+      request.onupgradeneeded = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+        
+        // Create object store if it doesn't exist
+        if (!db.objectStoreNames.contains(this.storeName)) {
+          db.createObjectStore(this.storeName, { keyPath: 'key' });
+        }
+      };
+      
+      request.onsuccess = () => resolve();
+      request.onerror = (event) => reject((event.target as IDBOpenDBRequest).error);
+    });
+  }
+  
+  /**
+   * Get a database connection
+   */
+  private getDB(): Promise<IDBDatabase> {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.dbName, 1);
+      
+      request.onsuccess = (event) => {
+        resolve((event.target as IDBOpenDBRequest).result);
+      };
+      
+      request.onerror = (event) => {
+        reject((event.target as IDBOpenDBRequest).error);
+      };
+    });
+  }
+  
+  /**
+   * Set a value in the IndexedDB cache
+   * @param key Cache key
+   * @param value Value to store
+   * @param ttl Time-to-live in milliseconds (optional)
+   */
+  async set(key: string, value: T, ttl?: number): Promise<void> {
+    const db = await this.getDB();
+    const transaction = db.transaction(this.storeName, 'readwrite');
+    const store = transaction.objectStore(this.storeName);
+    
+    const item = {
+      key,
+      value,
+      timestamp: Date.now() + (ttl ?? this.defaultTTL),
+    };
+    
+    return new Promise((resolve, reject) => {
+      const request = store.put(item);
+      
+      request.onsuccess = () => resolve();
+      request.onerror = (event) => reject((event.target as IDBRequest).error);
+      
+      transaction.oncomplete = () => db.close();
+    });
+  }
+  
+  /**
+   * Get a value from the IndexedDB cache
+   * @param key Cache key
+   * @returns Cached value or undefined if not found or expired
+   */
+  async get(key: string): Promise<T | undefined> {
+    const db = await this.getDB();
+    const transaction = db.transaction(this.storeName, 'readonly');
+    const store = transaction.objectStore(this.storeName);
+    
+    return new Promise((resolve, reject) => {
+      const request = store.get(key);
+      
+      request.onsuccess = (event) => {
+        const result = (event.target as IDBRequest).result;
+        
+        if (!result) {
+          resolve(undefined);
+          return;
+        }
+        
+        // Check if item has expired
+        if (Date.now() > result.timestamp) {
+          this.delete(key);
+          resolve(undefined);
+          return;
+        }
+        
+        resolve(result.value);
+      };
+      
+      request.onerror = (event) => reject((event.target as IDBRequest).error);
+      
+      transaction.oncomplete = () => db.close();
+    });
+  }
+  
+  /**
+   * Delete a key from the IndexedDB cache
+   * @param key Cache key
+   */
+  async delete(key: string): Promise<void> {
+    const db = await this.getDB();
+    const transaction = db.transaction(this.storeName, 'readwrite');
+    const store = transaction.objectStore(this.storeName);
+    
+    return new Promise((resolve, reject) => {
+      const request = store.delete(key);
+      
+      request.onsuccess = () => resolve();
+      request.onerror = (event) => reject((event.target as IDBRequest).error);
+      
+      transaction.oncomplete = () => db.close();
+    });
+  }
+  
+  /**
+   * Clear all items from the IndexedDB cache
+   */
+  async clear(): Promise<void> {
+    const db = await this.getDB();
+    const transaction = db.transaction(this.storeName, 'readwrite');
+    const store = transaction.objectStore(this.storeName);
+    
+    return new Promise((resolve, reject) => {
+      const request = store.clear();
+      
+      request.onsuccess = () => resolve();
+      request.onerror = (event) => reject((event.target as IDBRequest).error);
+      
+      transaction.oncomplete = () => db.close();
+    });
+  }
+  
+  /**
+   * Evict all expired items from the IndexedDB cache
+   * @returns Number of items evicted
+   */
+  async evictExpired(): Promise<number> {
+    const db = await this.getDB();
+    const transaction = db.transaction(this.storeName, 'readwrite');
+    const store = transaction.objectStore(this.storeName);
+    
+    return new Promise((resolve, reject) => {
+      const request = store.openCursor();
+      let evicted = 0;
+      const now = Date.now();
+      
+      request.onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest).result as IDBCursorWithValue;
+        
+        if (cursor) {
+          const item = cursor.value;
+          
+          if (now > item.timestamp) {
+            const deleteRequest = cursor.delete();
+            evicted++;
+            
+            deleteRequest.onerror = (event) => reject((event.target as IDBRequest).error);
+          }
+          
+          cursor.continue();
+        } else {
+          resolve(evicted);
+        }
+      };
+      
+      request.onerror = (event) => reject((event.target as IDBRequest).error);
+      
+      transaction.oncomplete = () => db.close();
+    });
+  }
+}
+
+/**
+ * Cache for storing API responses
+ */
+export const apiCache = new Cache<any>(200, 10 * 60 * 1000); // 10 minutes default TTL
+
+/**
+ * Persistent cache for user preferences
+ */
+export const preferencesCache = new PersistentCache<any>('prefs', 365 * 24 * 60 * 60 * 1000); // 1 year default TTL
+
+// Export default object with all caching utilities
+export default {
+  Cache,
+  PersistentCache,
+  IndexedDBCache,
+  memoize,
+  cachedFetch,
+  apiCache,
+  preferencesCache
+}; 

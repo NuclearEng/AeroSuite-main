@@ -150,7 +150,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             </Alert>
 
             <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
-              {recoveryActions.map((action, index) => (
+              {recoveryActions.map((action, index: any) => (
                 <Button
                   key={index}
                   variant={action.primary ? 'contained' : 'outlined'}

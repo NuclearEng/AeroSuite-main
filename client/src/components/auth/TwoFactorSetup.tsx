@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Paper,
   Typography,
@@ -40,15 +40,15 @@ interface TwoFactorSetupProps {
 
 const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel }) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [method, setMethod] = useState<'app' | 'email' | 'sms'>('app');
+  const [method, setMethod] = useState<any>('app');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
 
   // Setup data
-  const [qrCode, setQrCode] = useState<string | null>(null);
-  const [secret, setSecret] = useState<string | null>(null);
+  const [qrCode, setQrCode] = useState<any>(null);
+  const [secret, setSecret] = useState<any>(null);
   const [verificationCode, setVerificationCode] = useState('');
-  const [backupCodes, setBackupCodes] = useState<string[]>([]);
+  const [backupCodes, setBackupCodes] = useState<any>([]);
 
   const handleNext = () => {
     setActiveStep((prevStep) => prevStep + 1);
@@ -300,7 +300,7 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
       </Typography>
       
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        {backupCodes.map((code, index) =>
+        {backupCodes.map((code: any, index: any) =>
       <Grid item xs={6} sm={4} key={index}>
             <Card variant="outlined">
               <CardContent sx={{ py: 1, px: 2, textAlign: 'center', fontFamily: 'monospace' }}>
@@ -342,7 +342,7 @@ const TwoFactorSetup: React.FC<TwoFactorSetupProps> = ({ onComplete, onCancel })
       <Divider sx={{ mb: 3 }} />
       
       <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-        {steps.map((label) =>
+        {steps.map((label: any) =>
         <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>

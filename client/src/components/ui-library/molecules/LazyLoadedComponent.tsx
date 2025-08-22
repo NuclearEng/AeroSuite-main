@@ -129,23 +129,26 @@ export function LazyLoadedComponent<T = any>({
   onError,
   className = ''
 }: LazyLoadedComponentProps<T>) {
+  const defaultPlaceholderHeight = height || 200;
+  const defaultFallback = placeholder || (showLoading ? <DefaultPlaceholder height={height} width={width} /> : null);
+  
   const {
     ref,
     Component,
     isVisible,
     isLoaded,
-    placeholderHeight = height || 200,
-    fallback = placeholder || (showLoading ? <DefaultPlaceholder height={height} width={width} /> : null)
+    placeholderHeight = defaultPlaceholderHeight,
+    fallback = defaultFallback
   } = useVisibilityLazyLoad<T>(importFn, {
     rootMargin,
     threshold,
-    placeholderHeight,
-    fallback,
+    placeholderHeight: defaultPlaceholderHeight,
+    fallback: defaultFallback,
     onVisible,
     onLoad
   });
   
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<any>(null);
   
   // Handle errors during rendering
   useEffect(() => {

@@ -67,23 +67,23 @@ const AIAnalysisPage: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   // State management
-  const [inputMethod, setInputMethod] = useState<'paste' | 'upload'>('paste');
-  const [inputData, setInputData] = useState<string>('');
-  const [dataFormat, setDataFormat] = useState<'json' | 'csv'>('json');
-  const [analysisOptions, setAnalysisOptions] = useState<AnalysisOptions>({
+  const [inputMethod, setInputMethod] = useState<any>('paste');
+  const [inputData, setInputData] = useState<any>('');
+  const [dataFormat, setDataFormat] = useState<any>('json');
+  const [analysisOptions, setAnalysisOptions] = useState<any>({
     analysisType: 'auto',
     includeOutliers: true,
     detailedStats: true
   });
-  const [loading, setLoading] = useState<boolean>(false);
-  const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
-  const [activeTab, setActiveTab] = useState<number>(0);
-  const [inputError, setInputError] = useState<string>('');
-  const [history, setHistory] = useState<string[]>([]);
-  const [future, setFuture] = useState<string[]>([]);
-  const [previewData, setPreviewData] = useState<unknown>(null);
-  const [showPreview, setShowPreview] = useState<boolean>(false);
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState<any>(false);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<any>(0);
+  const [inputError, setInputError] = useState<any>('');
+  const [history, setHistory] = useState<any>([]);
+  const [future, setFuture] = useState<any>([]);
+  const [previewData, setPreviewData] = useState<any>(null);
+  const [showPreview, setShowPreview] = useState<any>(false);
+  const [validationErrors, setValidationErrors] = useState<any>([]);
 
   const DataArraySchema = z.array(z.object({}).passthrough());
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -147,9 +147,9 @@ const AIAnalysisPage: React.FC = () => {
   };
 
   // Parse input data based on format
-  const parseInputData = (): unknown => {
+  const parseInputData = (): any => {
     try {
-      let parsed: unknown;
+      let parsed: any;
       if (dataFormat === 'json') {
         parsed = JSON.parse(inputData);
       } else if (dataFormat === 'csv') {
@@ -162,7 +162,7 @@ const AIAnalysisPage: React.FC = () => {
       if (!validateInput(parsed)) return null;
       return parsed;
     } catch (_error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage = _error instanceof Error ? _error.message : 'Unknown error';
       setInputError(`Error parsing ${dataFormat.toUpperCase()} data: ${errorMessage}`);
       enqueueSnackbar(`Error parsing ${dataFormat.toUpperCase()} data: ${errorMessage}`, {
         variant: 'error'
@@ -171,7 +171,7 @@ const AIAnalysisPage: React.FC = () => {
     }
   };
 
-  const validateInput = (data: unknown): boolean => {
+  const validateInput = (data: any): boolean => {
     if (!data || typeof data === 'string' && data.trim() === '') {
       setInputError('Input cannot be empty or whitespace.');
       return false;
@@ -201,8 +201,8 @@ const AIAnalysisPage: React.FC = () => {
       setAnalysis(response.data.analysis);
       enqueueSnackbar('Analysis completed successfully', { variant: 'success' });
     } catch (_error) {
-      const errorMessage = axios.isAxiosError(error) ?
-      (error as AxiosError<{message: string;}>).response?.data?.message || error.message :
+      const errorMessage = axios.isAxiosError(_error) ?
+      (_error as AxiosError<{message: string;}>).response?.data?.message || _error.message :
       'Unknown error';
       enqueueSnackbar(`Analysis failed: ${errorMessage}`, {
         variant: 'error'
@@ -218,7 +218,7 @@ const AIAnalysisPage: React.FC = () => {
 
     return (
       <Grid container spacing={3} sx={{ mt: 2 }}>
-        {Object.entries(analysis.summary).map(([key, stats]) =>
+        {Object.entries(analysis.summary).map(([key, stats]: any) =>
         <Grid item xs={12} md={6} lg={4} key={key}>
             <Card>
               <CardContent>
@@ -268,12 +268,12 @@ const AIAnalysisPage: React.FC = () => {
     const chartData: ChartData[] = [];
     if (analysis.receivedType === 'array' && analysis.itemCount > 0) {
       Object.entries(analysis.summary).forEach(([key, stats]) => {
-        if (Array.isArray(stats.values) && stats.values.length > 0) {
+        if (Array.isArray((stats as any).values) && (stats as any).values.length > 0) {
           // Use actual values to compute histogram
           chartData.push({
             field: key,
             type: 'bar',
-            data: computeHistogram(stats.values)
+            data: computeHistogram((stats as any).values)
           });
         }
       });
@@ -292,7 +292,7 @@ const AIAnalysisPage: React.FC = () => {
           Data Visualization
         </Typography>
         <Grid container spacing={3}>
-          {chartData.map((chart, index) =>
+          {chartData.map((chart: any, index: number) =>
           <Grid item xs={12} md={6} key={index}>
               <Paper sx={{ p: 2, height: 300 }}>
                 <Typography variant="subtitle1" gutterBottom>
@@ -363,7 +363,7 @@ const AIAnalysisPage: React.FC = () => {
                 Outliers Detected
               </Typography>
               <ul>
-                {analysis.outliers.map((outlier, index) =>
+                {analysis.outliers.map((outlier: any, index: number) =>
               <li key={index}>
                     <Typography variant="body2">
                       {outlier.field}: {String(outlier.value)} ({outlier.reason})
@@ -381,7 +381,7 @@ const AIAnalysisPage: React.FC = () => {
                 Correlations Detected
               </Typography>
               <ul>
-                {analysis.correlations.map((corr, index) =>
+                {analysis.correlations.map((corr: any, index: number) =>
               <li key={index}>
                     <Typography variant="body2">
                       {corr.field1} ↔ {corr.field2}: {corr.coefficient.toFixed(2)} 
@@ -398,7 +398,7 @@ const AIAnalysisPage: React.FC = () => {
   };
 
   const handleInputChange = (value: string): void => {
-    setHistory((h) => [...h, inputData]);
+    setHistory((h: any) => [...h, inputData]);
     setFuture([]);
     setInputData(value);
     setShowPreview(true);
@@ -407,16 +407,16 @@ const AIAnalysisPage: React.FC = () => {
 
   const handleUndo = (): void => {
     if (history.length === 0) return;
-    setFuture((f) => [inputData, ...f]);
+    setFuture((f: any) => [inputData, ...f]);
     setInputData(history[history.length - 1]);
-    setHistory((h) => h.slice(0, -1));
+    setHistory((h: any) => h.slice(0, -1));
   };
 
   const handleRedo = (): void => {
     if (future.length === 0) return;
-    setHistory((h) => [...h, inputData]);
+    setHistory((h: any) => [...h, inputData]);
     setInputData(future[0]);
-    setFuture((f) => f.slice(1));
+    setFuture((f: any) => f.slice(1));
   };
 
   const handleClearAll = (): void => {
@@ -446,7 +446,7 @@ const AIAnalysisPage: React.FC = () => {
 
   const handlePreview = (): void => {
     try {
-      let parsed: unknown;
+      let parsed: any;
       if (dataFormat === 'json') {
         parsed = JSON.parse(inputData);
       } else if (dataFormat === 'csv') {
@@ -476,7 +476,7 @@ const AIAnalysisPage: React.FC = () => {
     } else {
       // Simple CSV export for summary
       const keys = Object.keys(analysis.summary || {});
-      const rows = keys.map((k) => {
+      const rows = keys.map((k: any) => {
         const s = analysis.summary[k];
         return `${k},${s.min},${s.max},${s.mean},${s.median || ''}`;
       });
@@ -612,7 +612,7 @@ const AIAnalysisPage: React.FC = () => {
             {validationErrors.length > 0 &&
             <Paper sx={{ p: 2, mt: 2, bgcolor: '#fff3e0' }}>
                 <Typography color="error" variant="body2">Validation Errors:</Typography>
-                <ul>{validationErrors.map((err, i) => <li key={i}><Typography color="error" variant="body2">{err}</Typography></li>)}</ul>
+                <ul>{validationErrors.map((err: any, i: number) => <li key={i}><Typography color="error" variant="body2">{err}</Typography></li>)}</ul>
               </Paper>
             }
             

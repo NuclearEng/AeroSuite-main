@@ -42,7 +42,7 @@ export const ResourcePrioritization: React.FC<ResourcePrioritizationProps> = ({
     // Set up resource hints for prefetching
     if (prefetchAssets.length > 0) {
       setupResourceHints({
-        prefetch: prefetchAssets.map((asset) => ({
+        prefetch: prefetchAssets.map((asset: any) => ({
           href: asset.url,
           as: asset.type as any // Type conversion needed due to enum vs string literal type
         }))

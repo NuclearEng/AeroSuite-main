@@ -86,7 +86,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   // State for tracking image loading
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [placeholderSrc, setPlaceholderSrc] = useState<string | null>(null);
+  const [placeholderSrc, setPlaceholderSrc] = useState<any>(null);
 
   // Generate the optimized image URL
   const options: ImageOptimizationOptions = {
@@ -108,7 +108,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           const placeholder = await getTinyPlaceholder(src);
           setPlaceholderSrc(placeholder);
         } catch (_error) {
-          console.error("Error:", err);
+          console.error("Error:", _error);
         }
       };
 

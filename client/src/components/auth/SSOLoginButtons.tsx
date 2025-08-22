@@ -18,7 +18,7 @@ interface SSOLoginButtonsProps {
  * Renders login buttons for available SSO providers
  */
 const SSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({ onError, redirectUrl }) => {
-  const [providers, setProviders] = useState<string[]>([]);
+  const [providers, setProviders] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const _navigate = useNavigate();
 
@@ -103,7 +103,7 @@ const SSOLoginButtons: React.FC<SSOLoginButtonsProps> = ({ onError, redirectUrl 
       </Divider>
       
       <Box display="flex" flexDirection="column" gap={2} mt={3}>
-        {providers.map((provider) => (
+        {providers.map((provider: any) => (
           <Button
             key={provider}
             variant="outlined"

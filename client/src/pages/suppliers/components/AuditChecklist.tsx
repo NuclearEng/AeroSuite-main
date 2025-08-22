@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -53,10 +53,10 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
   loading = false,
   readOnly = false
 }) => {
-  const [activeTab, setActiveTab] = useState<string>('all');
+  const [activeTab, setActiveTab] = useState<any>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [newItem, setNewItem] = useState<ChecklistItem>({
+  const [newItem, setNewItem] = useState<any>({
     category: 'quality',
     question: '',
     description: '',
@@ -67,7 +67,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
   // Group checklist items by category
   const groupedItems = React.useMemo(() => {
     // Filter based on search and active tab
-    const filteredItems = checklist.filter((item) => {
+    const filteredItems = checklist.filter((item: any) => {
       const matchesSearch =
       searchTerm === '' ||
       item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -92,7 +92,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
   // Calculate stats
   const stats = React.useMemo(() => {
     const totalItems = checklist.length;
-    const completedItems = checklist.filter((item) => item.score !== undefined).length;
+    const completedItems = checklist.filter((item: any) => item.score !== undefined).length;
     const findings = checklist.reduce((count, item) => count + (item.findings?.length || 0), 0);
 
     return {
@@ -115,8 +115,18 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
     setShowAddDialog(false);
   };
 
-  const handleNewItemChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleNewItemChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
+    if (name) {
+      setNewItem({
+        ...newItem,
+        [name]: value
+      });
+    }
+  };
+
+  const handleNewItemSelectChange = (event: any) => {
+    const { name, value } = event.target;
     if (name) {
       setNewItem({
         ...newItem,
@@ -148,7 +158,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
         sx={{ mb: 3 }}>
 
         <Tab label="All Categories" value="all" />
-        {Object.entries(CATEGORY_INFO).map(([key, info]) =>
+        {Object.entries(CATEGORY_INFO).map(([key, info]: any) =>
         <Tab
           key={key}
           label={info.label}
@@ -195,7 +205,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
 
     return (
       <>
-        {categoryKeys.map((category) => {
+        {categoryKeys.map((category: any) => {
           const items = groupedItems[category];
           const categoryInfo = CATEGORY_INFO[category as keyof typeof CATEGORY_INFO] || {
             label: category,
@@ -230,7 +240,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 </Typography>
               </Box>
               
-              {items.map((item) =>
+              {items.map((item: any) =>
               <ChecklistItemCard
                 key={item._id || item.question}
                 item={item}
@@ -363,10 +373,10 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 <Select
                   name="category"
                   value={newItem.category}
-                  onChange={handleNewItemChange}
+                  onChange={handleNewItemSelectChange}
                   label="Category">
 
-                  {Object.entries(CATEGORY_INFO).map(([key, value]) =>
+                  {Object.entries(CATEGORY_INFO).map(([key, value]: any) =>
                   <MenuItem key={key} value={key}>
                       {value.label}
                     </MenuItem>
@@ -381,7 +391,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 <Select
                   name="responseType"
                   value={newItem.responseType}
-                  onChange={handleNewItemChange}
+                  onChange={handleNewItemSelectChange}
                   label="Response Type">
 
                   <MenuItem value="yes-no">Yes/No</MenuItem>
@@ -425,7 +435,7 @@ const AuditChecklist: React.FC<AuditChecklistProps> = ({
                 value={newItem.options ? newItem.options.join(', ') : ''}
                 onChange={(e) => setNewItem({
                   ...newItem,
-                  options: e.target.value.split(',').map((opt) => opt.trim())
+                  options: e.target.value.split(',').map((opt: any) => opt.trim())
                 })}
                 helperText="Enter options separated by commas" />
 

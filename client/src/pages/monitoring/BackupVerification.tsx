@@ -47,15 +47,15 @@ import backupVerificationService, {
  */
 const BackupVerification: React.FC = () => {
   // State
-  const [stats, setStats] = useState<BackupVerificationStats | null>(null);
-  const [logs, setLogs] = useState<BackupLog[]>([]);
-  const [failures, setFailures] = useState<BackupLog[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [verifying, setVerifying] = useState<boolean>(false);
-  const [timeRange, setTimeRange] = useState<number>(30);
-  const [detailsOpen, setDetailsOpen] = useState<boolean>(false);
-  const [selectedLog, setSelectedLog] = useState<BackupLog | null>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [logs, setLogs] = useState<any>([]);
+  const [failures, setFailures] = useState<any>([]);
+  const [loading, setLoading] = useState<any>(true);
+  const [error, setError] = useState<any>(null);
+  const [verifying, setVerifying] = useState<any>(false);
+  const [timeRange, setTimeRange] = useState<any>(30);
+  const [detailsOpen, setDetailsOpen] = useState<any>(false);
+  const [selectedLog, setSelectedLog] = useState<any>(null);
 
   // Load data
   useEffect(() => {
@@ -79,7 +79,7 @@ const BackupVerification: React.FC = () => {
       const failuresData = await backupVerificationService.getVerificationFailures(5);
       setFailures(failuresData);
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError('Failed to load backup verification data. Please try again.');
     } finally {
       setLoading(false);
@@ -100,7 +100,7 @@ const BackupVerification: React.FC = () => {
         loadData();
       }, 5000);
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError('Failed to trigger verification. Please try again.');
     } finally {
       setVerifying(false);
@@ -286,7 +286,7 @@ const BackupVerification: React.FC = () => {
               </TableHead>
               <TableBody>
                 {logs.length > 0 ?
-              logs.map((log) =>
+              logs.map((log: any) =>
               <TableRow key={log._id}>
                       <TableCell>{formatDate(log.verificationDate)}</TableCell>
                       <TableCell>{log.backupLocation}</TableCell>
@@ -327,7 +327,7 @@ const BackupVerification: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {failures.map((failure) =>
+                    {failures.map((failure: any) =>
                 <TableRow key={failure._id}>
                         <TableCell>{formatDate(failure.verificationDate)}</TableCell>
                         <TableCell>{failure.backupLocation}</TableCell>

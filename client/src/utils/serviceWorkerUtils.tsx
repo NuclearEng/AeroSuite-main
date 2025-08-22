@@ -52,7 +52,7 @@ export const ServiceWorkerUpdateNotification: React.FC<ServiceWorkerUpdateNotifi
  * @returns Object with isUpdateAvailable flag and updateServiceWorker function
  */
 export const useServiceWorkerUpdates = () => {
-  const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
+  const [waitingWorker, setWaitingWorker] = useState<any>(null);
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const useServiceWorkerUpdates = () => {
   const updateServiceWorker = () => {
     if (waitingWorker) {
       waitingWorker.postMessage({ type: 'SKIP_WAITING' });
-      waitingWorker.addEventListener('statechange', (e) => {
+      waitingWorker.addEventListener('statechange', (e: any) => {
         if ((e.target as ServiceWorker).state === 'activated') {
           window.location.reload();
         }
@@ -129,7 +129,7 @@ export const subscribeToPushNotifications = async (publicVapidKey: string) => {
     
     return subscription;
   } catch (_error) {
-    console.error("Error:", err);
+    console.error("Error:", _error);
     return null;
   }
 };
@@ -207,7 +207,7 @@ export const registerServiceWorker = async (): Promise<ServiceWorkerRegistration
     const registration = await wb.register();
     return registration || null;
   } catch (_error) {
-    console.error("Error:", err);
+    console.error("Error:", _error);
     return null;
   }
 };
@@ -229,7 +229,7 @@ export const unregisterServiceWorker = async (): Promise<boolean> => {
     }
     return false;
   } catch (_error) {
-    console.error("Error:", err);
+    console.error("Error:", _error);
     return false;
   }
 };
@@ -249,7 +249,7 @@ export const updateServiceWorker = async (): Promise<void> => {
       await registration.update();
     }
   } catch (_error) {
-    console.error("Error:", err);
+    console.error("Error:", _error);
   }
 };
 

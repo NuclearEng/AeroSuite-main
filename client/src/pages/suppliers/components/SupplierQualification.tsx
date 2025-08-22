@@ -212,7 +212,7 @@ const SupplierQualification: React.FC<SupplierQualificationProps> = ({ supplierI
                     size="small" />
 
                   )}
-                  {qualificationData.certifications.filter((cert) => cert.status === 'active').length === 0 &&
+                  {qualificationData.certifications.filter((cert: any) => cert.status === 'active').length === 0 &&
                   <Typography variant="body2" fontStyle="italic">
                       No active certifications
                     </Typography>
@@ -254,7 +254,7 @@ const SupplierQualification: React.FC<SupplierQualificationProps> = ({ supplierI
 
             <CardContent>
               <List>
-                {qualificationData.requirements.map((req, index) =>
+                {qualificationData.requirements.map((req, index: any) =>
                 <ListItem
                   key={index}
                   divider={index < qualificationData.requirements.length - 1}
@@ -318,7 +318,7 @@ const SupplierQualification: React.FC<SupplierQualificationProps> = ({ supplierI
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {qualificationData.certifications.map((cert, index) =>
+                  {qualificationData.certifications.map((cert, index: any) =>
                   <TableRow key={index}>
                       <TableCell>{cert.name}</TableCell>
                       <TableCell>{format(parseISO(cert.issuedDate), 'MMM d, yyyy')}</TableCell>
@@ -373,7 +373,7 @@ const SupplierQualification: React.FC<SupplierQualificationProps> = ({ supplierI
               </TableRow>
             </TableHead>
             <TableBody>
-              {qualificationData.auditHistory.map((audit, index) =>
+              {qualificationData.auditHistory.map((audit, index: any) =>
               <TableRow key={index}>
                   <TableCell>{format(parseISO(audit.date), 'MMM d, yyyy')}</TableCell>
                   <TableCell>{audit.type}</TableCell>

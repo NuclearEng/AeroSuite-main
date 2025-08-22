@@ -321,9 +321,9 @@ options: CodeSplitOptions = {})
  * @returns Object with the import function and loading status
  */
 export function useDynamicImport<T>(importFn: () => Promise<T>) {
-  const [module, setModule] = React.useState<T | null>(null);
+  const [module, setModule] = React.useState<any>(null);
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<Error | null>(null);
+  const [error, setError] = React.useState<any>(null);
 
   const load = React.useCallback(async () => {
     if (module) return module;
@@ -357,7 +357,7 @@ export async function loadModules<T extends Record<string, () => Promise<any>>>(
 imports: T)
 : Promise<{ [K in keyof T]: Awaited<ReturnType<T[K]>> }> {
   const keys = Object.keys(imports);
-  const importPromises = keys.map((key) => imports[key]());
+  const importPromises = keys.map((key: any) => imports[key]());
 
   const modules = await Promise.all(importPromises);
 
@@ -385,7 +385,7 @@ options: CodeSplitOptions & {rootMargin?: string;} = {})
   } = options;
 
   const [loaded, setLoaded] = useState(false);
-  const [Component, setComponent] = useState<React.FC<React.ComponentProps<T>> | null>(null);
+  const [Component, setComponent] = useState<any>(null);
   const { ref, inView } = useInView({ rootMargin, triggerOnce: true }) as any;
 
   useEffect(() => {

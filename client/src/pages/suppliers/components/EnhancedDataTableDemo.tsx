@@ -65,7 +65,7 @@ const EnhancedDataTableDemo: React.FC = () => {
   const [dense, setDense] = useState(false);
   const [rowExpandable, setRowExpandable] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [error, setError] = useState<any>(undefined);
 
   // Define columns
   const columns: HeadCell<SupplierData>[] = [

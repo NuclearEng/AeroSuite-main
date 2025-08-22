@@ -44,8 +44,8 @@ import metricsService from '../../../services/metricsService';
  */
 const PerformanceMetricsDashboard = ({ simplified = false }) => {
   const theme = useTheme();
-  const [metrics, setMetrics] = useState(null);
-  const [formattedMetrics, setFormattedMetrics] = useState(null);
+  const [metrics, setMetrics] = useState<any>(null);
+  const [formattedMetrics, setFormattedMetrics] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [autoRefresh, setAutoRefresh] = useState(false);
@@ -62,7 +62,7 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
       setError(null);
     } catch (err) {
       console.error("Error:", err);
-      setError('Failed to load performance metrics. Please try again.');
+      setError('Failed to load performance metrics. Please try again.' as any);
     } finally {
       setLoading(false);
     }
@@ -85,7 +85,7 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
       const interval = setInterval(() => {
         fetchMetrics();
       }, 10000); // Refresh every 10 seconds
-      setRefreshInterval(interval);
+      setRefreshInterval(interval as any);
     } else if (refreshInterval) {
       clearInterval(refreshInterval);
       setRefreshInterval(null);
@@ -99,7 +99,7 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
   }, [autoRefresh, fetchMetrics]);
 
   // Handle tab change
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (event: any, newValue: any) => {
     setActiveTab(newValue);
   };
 
@@ -500,11 +500,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                 <DataVisualization
                 type="line"
                 data={formattedMetrics.requests.performance}
-                height={200}
-                options={{
-                  showLegend: false,
-                  showGrid: true
-                }} />
+                series={formattedMetrics.requests.performance}
+                height={200} />
 
               </Paper>
             </Grid>
@@ -514,11 +511,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
                 <DataVisualization
                 type="pie"
                 data={formattedMetrics.requests.statusCodes}
-                height={200}
-                options={{
-                  showLegend: true,
-                  showGrid: false
-                }} />
+                series={formattedMetrics.requests.statusCodes}
+                height={200} />
 
               </Paper>
             </Grid>
@@ -614,7 +608,7 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
   };
 
   // Tab panel component
-  function TabPanel(props) {
+  function TabPanel(props: any) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -635,7 +629,7 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
   }
 
   // Helper function for tab accessibility
-  function a11yProps(index) {
+  function a11yProps(index: any) {
     return {
       id: `metrics-tab-${index}`,
       'aria-controls': `metrics-tabpanel-${index}`
@@ -654,11 +648,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="bar"
               data={formattedMetrics.system.cpu}
-              height={250}
-              options={{
-                showLegend: false,
-                showGrid: true
-              }} />
+              series={formattedMetrics.system.cpu}
+              height={250} />
 
           </Paper>
         </Grid>
@@ -668,11 +659,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="pie"
               data={formattedMetrics.system.memory}
-              height={250}
-              options={{
-                showLegend: true,
-                showGrid: false
-              }} />
+              series={formattedMetrics.system.memory}
+              height={250} />
 
           </Paper>
         </Grid>
@@ -682,11 +670,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="pie"
               data={formattedMetrics.system.disk}
-              height={250}
-              options={{
-                showLegend: true,
-                showGrid: false
-              }} />
+              series={formattedMetrics.system.disk}
+              height={250} />
 
           </Paper>
         </Grid>
@@ -706,11 +691,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="bar"
               data={formattedMetrics.requests.statusCodes}
-              height={250}
-              options={{
-                showLegend: false,
-                showGrid: true
-              }} />
+              series={formattedMetrics.requests.statusCodes}
+              height={250} />
 
           </Paper>
         </Grid>
@@ -720,12 +702,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="bar"
               data={formattedMetrics.requests.endpoints}
-              height={250}
-              options={{
-                showLegend: false,
-                showGrid: true,
-                horizontal: true
-              }} />
+              series={formattedMetrics.requests.endpoints}
+              height={250} />
 
           </Paper>
         </Grid>
@@ -735,11 +713,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="bar"
               data={formattedMetrics.requests.performance}
-              height={250}
-              options={{
-                showLegend: false,
-                showGrid: true
-              }} />
+              series={formattedMetrics.requests.performance}
+              height={250} />
 
           </Paper>
         </Grid>
@@ -759,11 +734,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="pie"
               data={formattedMetrics.errors}
-              height={250}
-              options={{
-                showLegend: true,
-                showGrid: false
-              }} />
+              series={formattedMetrics.errors}
+              height={250} />
 
           </Paper>
         </Grid>
@@ -783,11 +755,8 @@ const PerformanceMetricsDashboard = ({ simplified = false }) => {
             <DataVisualization
               type="bar"
               data={formattedMetrics.database.performance}
-              height={250}
-              options={{
-                showLegend: false,
-                showGrid: true
-              }} />
+              series={formattedMetrics.database.performance}
+              height={250} />
 
           </Paper>
         </Grid>

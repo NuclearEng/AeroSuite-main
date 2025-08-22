@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -252,10 +252,10 @@ type TimePeriod = '24h' | '7d' | '30d' | '90d' | 'all';
 
 const ErrorAnalyticsDashboard: React.FC = () => {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [analyticsData, setAnalyticsData] = useState<ErrorAnalyticsData | null>(null);
-  const [timePeriod, setTimePeriod] = useState<TimePeriod>('7d');
+  const [loading, setLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+  const [analyticsData, setAnalyticsData] = useState<any>(null);
+  const [timePeriod, setTimePeriod] = useState<any>('7d');
 
   // Load error analytics data
   useEffect(() => {
@@ -593,7 +593,7 @@ const ErrorAnalyticsDashboard: React.FC = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {analyticsData.recentErrors.map((error) =>
+                  {analyticsData.recentErrors.map((error: any) =>
                 <TableRow key={error.id} hover>
                       <TableCell>
                         <Chip

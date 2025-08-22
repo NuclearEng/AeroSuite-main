@@ -1,0 +1,422 @@
+import { useState, useEffect, useCallback } from 'react';
+import { useSnackbar } from 'notistack';
+import axios from 'axios';
+import supplierService, { Supplier } from '../../../services/supplier.service';
+
+// Audit types
+export interface ChecklistItem {
+  _id?: string;
+  category: string;
+  question: string;
+  description?: string;
+  responseType: 'yes-no' | 'scale' | 'text' | 'multiple-choice';
+  options?: string[];
+  score?: number;
+  weight: number;
+  evidence?: string;
+  notes?: string;
+  attachments?: Array<{
+    name: string;
+    url: string;
+    uploadDate: Date;
+  }>;
+  findings?: Array<{
+    type: 'observation' | 'minor-nc' | 'major-nc' | 'critical-nc';
+    description?: string;
+    correctiveAction?: string;
+    dueDate?: Date;
+  }>;
+}
+
+export interface SupplierAudit {
+  _id?: string;
+  supplierId: string;
+  auditNumber: string;
+  title: string;
+  auditType: 'initial' | 'surveillance' | 'recertification' | 'follow-up' | 'special';
+  auditDate: Date;
+  scheduledDate?: Date;
+  completionDate?: Date;
+  auditTeam: Array<{
+    name: string;
+    role?: string;
+    email?: string;
+  }>;
+  auditorName: string;
+  auditScope?: string;
+  status: 'planned' | 'in-progress' | 'completed' | 'cancelled' | 'delayed';
+  result: 'pass' | 'conditional' | 'fail' | 'pending';
+  checklist: ChecklistItem[];
+  overallScore?: number;
+  findings?: {
+    observations: number;
+    minorNonConformities: number;
+    majorNonConformities: number;
+    criticalNonConformities: number;
+  };
+  summary?: string;
+  recommendations?: string;
+  nextAuditDate?: Date;
+  attachments?: Array<{
+    name: string;
+    url: string;
+    type: 'report' | 'evidence' | 'procedure' | 'certificate' | 'other';
+    uploadDate: Date;
+  }>;
+}
+
+// Category information for UI display
+export const CATEGORY_INFO = {
+  quality: { 
+    label: 'Quality Management', 
+    color: '#2196f3',
+    icon: 'check_circle'
+  },
+  process: { 
+    label: 'Process Control', 
+    color: '#4caf50',
+    icon: 'settings'
+  },
+  facilities: { 
+    label: 'Facilities & Equipment', 
+    color: '#ff9800',
+    icon: 'domain'
+  },
+  environmental: { 
+    label: 'Environmental Management', 
+    color: '#009688',
+    icon: 'eco'
+  },
+  social: { 
+    label: 'Social Responsibility', 
+    color: '#9c27b0',
+    icon: 'people'
+  },
+  financial: { 
+    label: 'Financial Stability', 
+    color: '#f44336',
+    icon: 'account_balance'
+  },
+  documentation: { 
+    label: 'Documentation & Records', 
+    color: '#607d8b',
+    icon: 'description'
+  }
+};
+
+// Finding type information
+export const FINDING_TYPE_INFO = {
+  'observation': { 
+    label: 'Observation', 
+    color: '#4caf50',
+    description: 'Suggestion for improvement, not a nonconformity'
+  },
+  'minor-nc': { 
+    label: 'Minor Nonconformity', 
+    color: '#ff9800',
+    description: 'Single failure or lapse in conformance that doesn\'t impact system effectiveness'
+  },
+  'major-nc': { 
+    label: 'Major Nonconformity', 
+    color: '#f44336',
+    description: 'Failure that raises significant doubt about system effectiveness'
+  },
+  'critical-nc': { 
+    label: 'Critical Nonconformity', 
+    color: '#9c27b0',
+    description: 'Failure that poses immediate risk to product/service quality or safety'
+  }
+};
+
+const useSupplierAudit = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(true);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
+  const [audits, setAudits] = useState<SupplierAudit[]>([]);
+  const [currentAudit, setCurrentAudit] = useState<SupplierAudit | null>(null);
+  const [checklist, setChecklist] = useState<ChecklistItem[]>([]);
+  const [defaultTemplates, setDefaultTemplates] = useState<Record<string, ChecklistItem[]>>({});
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch suppliers
+  useEffect(() => {
+    const fetchSuppliers = async () => {
+      try {
+        setLoading(true);
+        const response = await supplierService.getSuppliers();
+        setSuppliers((response as any).data || response);
+      } catch (_err) {
+        console.error('Error fetching suppliers:', _err);
+        enqueueSnackbar('Failed to load suppliers', { variant: 'error' });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSuppliers();
+  }, [enqueueSnackbar]);
+
+  // Fetch default checklist templates
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const response = await axios.get('/api/supplier-audits/templates/default');
+        setDefaultTemplates(response.data.data);
+      } catch (_err) {
+        console.error('Error fetching checklist templates:', _err);
+        enqueueSnackbar('Failed to load checklist templates', { variant: 'error' });
+      }
+    };
+
+    fetchTemplates();
+  }, [enqueueSnackbar]);
+
+  // Fetch audits for a supplier
+  const fetchSupplierAudits = useCallback(async (supplierId: string) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/suppliers/${supplierId}/audits`);
+      setAudits(response.data.data);
+      return response.data.data;
+    } catch (_err) {
+      console.error('Error fetching supplier audits:', _err);
+      enqueueSnackbar('Failed to load audits', { variant: 'error' });
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  }, [enqueueSnackbar]);
+
+  // Handle supplier selection change
+  const handleSupplierChange = useCallback(async (supplier: Supplier | null) => {
+    setSelectedSupplier(supplier);
+    
+    if (!supplier) {
+      setAudits([]);
+      setCurrentAudit(null);
+      return;
+    }
+    
+    await fetchSupplierAudits(supplier._id);
+  }, [fetchSupplierAudits]);
+
+  // Create new audit
+  const createAudit = useCallback(async (auditData: Partial<SupplierAudit>) => {
+    if (!selectedSupplier) {
+      setError('Please select a supplier');
+      setTimeout(() => setError(null), 3000);
+      return null;
+    }
+    
+    try {
+      setLoading(true);
+      
+      // Ensure supplier ID is set
+      const data = {
+        ...auditData,
+        supplierId: selectedSupplier._id
+      };
+      
+      const response = await axios.post('/api/supplier-audits', data);
+      const newAudit = response.data.data;
+      
+      // Update audits list
+      setAudits(prev => [newAudit, ...prev]);
+      
+      enqueueSnackbar('Audit created successfully', { variant: 'success' });
+      return newAudit;
+    } catch (_err) {
+      console.error('Error creating audit:', _err);
+      enqueueSnackbar('Failed to create audit', { variant: 'error' });
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedSupplier, enqueueSnackbar]);
+
+  // Update audit
+  const updateAudit = useCallback(async (auditId: string, auditData: Partial<SupplierAudit>) => {
+    try {
+      setLoading(true);
+      
+      const response = await axios.put(`/api/supplier-audits/${auditId}`, auditData);
+      const updatedAudit = response.data.data;
+      
+      // Update audits list and current audit
+      setAudits(prev => 
+        prev.map(audit => audit._id === auditId ? updatedAudit : audit)
+      );
+      
+      if (currentAudit?._id === auditId) {
+        setCurrentAudit(updatedAudit);
+      }
+      
+      enqueueSnackbar('Audit updated successfully', { variant: 'success' });
+      return updatedAudit;
+    } catch (_err) {
+      console.error('Error updating audit:', _err);
+      enqueueSnackbar('Failed to update audit', { variant: 'error' });
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }, [currentAudit, enqueueSnackbar]);
+
+  // Delete audit
+  const deleteAudit = useCallback(async (auditId: string) => {
+    try {
+      setLoading(true);
+      await axios.delete(`/api/supplier-audits/${auditId}`);
+      
+      // Remove from audits list
+      setAudits(prev => prev.filter(audit => audit._id !== auditId));
+      
+      // Reset current audit if it's the one being deleted
+      if (currentAudit?._id === auditId) {
+        setCurrentAudit(null);
+      }
+      
+      enqueueSnackbar('Audit deleted successfully', { variant: 'success' });
+      return true;
+    } catch (_err) {
+      console.error('Error deleting audit:', _err);
+      enqueueSnackbar('Failed to delete audit', { variant: 'error' });
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [currentAudit, enqueueSnackbar]);
+
+  // Load audit details
+  const loadAuditDetails = useCallback(async (auditId: string) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/supplier-audits/${auditId}`);
+      const auditData = response.data.data;
+      
+      setCurrentAudit(auditData);
+      setChecklist(auditData.checklist);
+      
+      return auditData;
+    } catch (_err) {
+      console.error('Error loading audit details:', _err);
+      enqueueSnackbar('Failed to load audit details', { variant: 'error' });
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }, [enqueueSnackbar]);
+
+  // Handle checklist item update
+  const updateChecklistItem = useCallback((itemId: string, updates: Partial<ChecklistItem>) => {
+    setChecklist(prevChecklist => 
+      prevChecklist.map(item => 
+        (item._id === itemId || (item._id === undefined && item.question === itemId)) 
+          ? { ...item, ...updates } 
+          : item
+      )
+    );
+  }, []);
+
+  // Create a new checklist item
+  const addChecklistItem = useCallback((item: ChecklistItem) => {
+    setChecklist(prev => [...prev, item]);
+  }, []);
+
+  // Remove a checklist item
+  const removeChecklistItem = useCallback((itemId: string) => {
+    setChecklist(prev => prev.filter(item => 
+      !(item._id === itemId || (item._id === undefined && item.question === itemId))
+    ));
+  }, []);
+
+  // Add a finding to a checklist item
+  const addFinding = useCallback((itemId: string, finding: NonNullable<ChecklistItem['findings']>[0]) => {
+    setChecklist(prevChecklist => 
+      prevChecklist.map(item => {
+        if (item._id === itemId || (item._id === undefined && item.question === itemId)) {
+          const findings = item.findings || [];
+          return {
+            ...item,
+            findings: [...findings, finding]
+          };
+        }
+        return item;
+      })
+    );
+  }, []);
+
+  // Remove a finding from a checklist item
+  const removeFinding = useCallback((itemId: string, findingIndex: number) => {
+    setChecklist(prevChecklist => 
+      prevChecklist.map(item => {
+        if ((item._id === itemId || (item._id === undefined && item.question === itemId)) && item.findings) {
+          return {
+            ...item,
+            findings: item.findings.filter((_, index) => index !== findingIndex)
+          };
+        }
+        return item;
+      })
+    );
+  }, []);
+
+  // Create a new audit with default template
+  const createNewAuditWithTemplate = useCallback(() => {
+    if (!selectedSupplier) {
+      setError('Please select a supplier first');
+      return;
+    }
+    
+    // Prepare default checklist from templates
+    let defaultChecklist: ChecklistItem[] = [];
+    Object.values(defaultTemplates).forEach(categoryItems => {
+      defaultChecklist = [...defaultChecklist, ...categoryItems];
+    });
+    
+    // Create a new audit object with defaults
+    const newAudit: Partial<SupplierAudit> = {
+      supplierId: selectedSupplier._id,
+      title: `${selectedSupplier.name} - Supplier Audit`,
+      auditType: 'initial',
+      auditDate: new Date(),
+      scheduledDate: new Date(),
+      auditTeam: [{ name: 'Current User', role: 'Lead Auditor' }],
+      auditorName: 'Current User',
+      status: 'planned',
+      result: 'pending',
+      checklist: defaultChecklist
+    };
+    
+    setCurrentAudit(newAudit as SupplierAudit);
+    setChecklist(defaultChecklist);
+  }, [selectedSupplier, defaultTemplates]);
+
+  return {
+    loading,
+    suppliers,
+    selectedSupplier,
+    audits,
+    currentAudit,
+    checklist,
+    defaultTemplates,
+    error,
+    handleSupplierChange,
+    fetchSupplierAudits,
+    createAudit,
+    updateAudit,
+    deleteAudit,
+    loadAuditDetails,
+    updateChecklistItem,
+    addChecklistItem,
+    removeChecklistItem,
+    addFinding,
+    removeFinding,
+    createNewAuditWithTemplate,
+    setCurrentAudit,
+    setChecklist
+  };
+};
+
+export default useSupplierAudit; 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { ChangeEvent, useState, useRef } from 'react';
 import { 
   Box, 
   Button, 
@@ -58,33 +58,33 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Form state
-  const [feedbackType, setFeedbackType] = useState<string>(initialFeedbackType);
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [rating, setRating] = useState<number | null>(null);
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
-  const [allowContact, setAllowContact] = useState<boolean>(false);
-  const [files, setFiles] = useState<File[]>([]);
+  const [feedbackType, setFeedbackType] = useState<any>(initialFeedbackType);
+  const [title, setTitle] = useState<any>('');
+  const [content, setContent] = useState<any>('');
+  const [rating, setRating] = useState<any>(null);
+  const [name, setName] = useState<any>('');
+  const [email, setEmail] = useState<any>('');
+  const [phone, setPhone] = useState<any>('');
+  const [allowContact, setAllowContact] = useState<any>(false);
+  const [files, setFiles] = useState<any>([]);
   
   // UI state
-  const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [showContactFields, setShowContactFields] = useState<boolean>(false);
+  const [loading, setLoading] = useState<any>(false);
+  const [success, setSuccess] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+  const [showContactFields, setShowContactFields] = useState<any>(false);
   
   // Handle file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const newFiles = Array.from(event.target.files);
-      setFiles(prevFiles => [...prevFiles, ...newFiles].slice(0, 5)); // Limit to 5 files
+      setFiles((prevFiles: any[]) => [...prevFiles, ...newFiles].slice(0, 5)); // Limit to 5 files
     }
   };
   
   // Remove a file
   const handleRemoveFile = (index: number) => {
-    setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
+    setFiles((prevFiles: any[]) => prevFiles.filter((_, i: number) => i !== index));
   };
   
   // Handle form submission
@@ -133,7 +133,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
     }
     
     // Add files if any
-    files.forEach(file => {
+    files.forEach((file: any) => {
       formData.append('attachments', file);
     });
     
@@ -144,7 +144,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
       resetForm();
       if (onSuccess) onSuccess();
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", _err);
       setError(t('feedback.errors.submissionFailed'));
     } finally {
       setLoading(false);
@@ -378,7 +378,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({
                   {t('feedback.attachments')}:
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                  {files.map((file, index) => (
+                  {files.map((file: any, index: number) => (
                     <Box
                       key={index}
                       sx={{

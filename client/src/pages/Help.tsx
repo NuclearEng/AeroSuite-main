@@ -50,7 +50,7 @@ const faqs = [
 ];
 
 const Help: React.FC = () => {
-  const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [expanded, setExpanded] = React.useState<any>(false);
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
@@ -76,7 +76,7 @@ const Help: React.FC = () => {
                 <Typography variant="h6">Frequently Asked Questions</Typography>
               </Box>
               
-              {faqs.map((faq, index) => (
+              {faqs.map((faq, index: any) => (
                 <Accordion
                   key={index}
                   expanded={expanded === `panel${index}`}

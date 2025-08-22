@@ -26,7 +26,7 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
   onEventClick,
   onDateClick
 }) => {
-  const [activeFilter, setActiveFilter] = useState<EventType | null>(null);
+  const [activeFilter, setActiveFilter] = useState<any>(null);
   
   const { 
     events, 
@@ -158,7 +158,7 @@ const CalendarWidget: React.FC<CalendarWidgetProps> = ({
             eventTextColor="#ffffff"
             nowIndicator={true}
             weekends={true}
-            eventContent={(eventInfo) => {
+            eventContent={(eventInfo: any) => {
               return (
                 <Tooltip title={eventInfo.event.extendedProps.description || eventInfo.event.title}>
                   <Box

@@ -5,7 +5,7 @@ import FormBuilder, { FormSection } from '../../../components/common/FormBuilder
 const EnhancedSupplierForm: React.FC = () => {
   const [showProgress, setShowProgress] = useState(true);
   const [instantValidation, setInstantValidation] = useState(false);
-  const [formValues, setFormValues] = useState<Record<string, any>>({});
+  const [formValues, setFormValues] = useState<any>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   
   // Define form sections with validation rules

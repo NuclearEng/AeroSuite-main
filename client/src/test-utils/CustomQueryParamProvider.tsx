@@ -14,7 +14,7 @@ export const QueryParamProvider: React.FC<QueryParamProviderProps> = ({
   ReactRouterRoute
 }) => {
   return (
-    <OriginalQueryParamProvider adapter={adapter} ReactRouterRoute={ReactRouterRoute}>
+    <OriginalQueryParamProvider ReactRouterRoute={ReactRouterRoute}>
       {children}
     </OriginalQueryParamProvider>
   );

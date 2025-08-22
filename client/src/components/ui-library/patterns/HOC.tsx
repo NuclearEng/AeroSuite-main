@@ -128,8 +128,8 @@ ErrorComponent: ComponentType<{error: Error | null;onReset: () => void;}> = Defa
 {
   return function WithDataFetching(props: P) {
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
-    const [data, setData] = useState<T | null>(null);
+    const [error, setError] = useState<any>(null);
+    const [data, setData] = useState<any>(null);
 
     const fetchDataAndHandleStates = async () => {
       try {

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { ChangeEvent, useState, useRef } from 'react';
 import {
   Box,
   Button,
@@ -89,7 +89,7 @@ interface ImportResult {
  */
 const SupplierImportExport: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [importFile, setImportFile] = useState<File | null>(null);
+  const [importFile, setImportFile] = useState<any>(null);
   const [updateExisting, setUpdateExisting] = useState(true);
   const [exportFormat, setExportFormat] = useState('csv');
   const [exportStatus, setExportStatus] = useState('');
@@ -99,10 +99,10 @@ const SupplierImportExport: React.FC = () => {
     search: ''
   });
   const [loading, setLoading] = useState(false);
-  const [importResult, setImportResult] = useState<ImportResult | null>(null);
+  const [importResult, setImportResult] = useState<any>(null);
   const [importProgress, setImportProgress] = useState(0);
-  const [importJobId, setImportJobId] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [importJobId, setImportJobId] = useState<any>(null);
+  const [successMessage, setSuccessMessage] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const { importSuppliers, exportSuppliers, getImportTemplate } = useSupplierApi();
@@ -208,7 +208,7 @@ const SupplierImportExport: React.FC = () => {
         }
       }
     } catch (_err) {
-      handleError(err);
+      handleError(_err);
     } finally {
       setLoading(false);
     }
@@ -416,7 +416,7 @@ const SupplierImportExport: React.FC = () => {
                           Errors:
                         </Typography>
                         <Paper variant="outlined" sx={{ maxHeight: 200, overflow: 'auto', p: 1, mt: 1 }}>
-                          {importResult.errors.map((error, index) => (
+                          {importResult.errors.map((error: any, index: number) => (
                             <Typography key={index} variant="body2" color="error" sx={{ mb: 0.5 }}>
                               • {error}
                             </Typography>

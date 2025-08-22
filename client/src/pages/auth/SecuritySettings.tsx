@@ -37,21 +37,21 @@ const SecuritySettings: React.FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
 
   // Two-factor auth state
   const [showTwoFactorSetup, setShowTwoFactorSetup] = useState(false);
   const [showDisableDialog, setShowDisableDialog] = useState(false);
   const [password, setPassword] = useState('');
   const [disableLoading, setDisableLoading] = useState(false);
-  const [disableError, setDisableError] = useState<string | null>(null);
+  const [disableError, setDisableError] = useState<any>(null);
 
   // Backup codes state
   const [showBackupCodesDialog, setShowBackupCodesDialog] = useState(false);
   const [passwordForBackupCodes, setPasswordForBackupCodes] = useState('');
   const [backupCodesLoading, setBackupCodesLoading] = useState(false);
-  const [backupCodesError, setBackupCodesError] = useState<string | null>(null);
-  const [backupCodes, setBackupCodes] = useState<string[]>([]);
+  const [backupCodesError, setBackupCodesError] = useState<any>(null);
+  const [backupCodes, setBackupCodes] = useState<any>([]);
 
   // Fetch user profile on mount
   useEffect(() => {
@@ -76,7 +76,7 @@ const SecuritySettings: React.FC = () => {
       const userData = await AuthService.getCurrentUser();
       setUser(userData);
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     }
   };
 
@@ -357,7 +357,7 @@ const SecuritySettings: React.FC = () => {
               </Typography>
               
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                {backupCodes.map((code, index) =>
+                {backupCodes.map((code, index: any) =>
               <Paper
                 key={index}
                 variant="outlined"

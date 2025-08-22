@@ -1,0 +1,363 @@
+/**
+ * Progressive Loader Utility
+ * 
+ * Handles loading and processing of large datasets in chunks to avoid UI blocking
+ * and provide a smooth user experience with large data operations.
+ * 
+ * This module implements several progressive loading strategies:
+ * 
+ * 1. Chunk-based processing - Breaks large arrays into smaller chunks for processing
+ * 2. Progressive data loading - Loads data from an API in paginated chunks
+ * 3. Batch processing - Processes items in batches with configurable delays
+ * 
+ * These strategies help prevent UI freezing when working with large datasets by:
+ * - Breaking work into smaller units
+ * - Yielding to the browser's event loop between operations
+ * - Providing progress feedback to users during long operations
+ * 
+ * Performance characteristics:
+ * - Time complexity: O(n) for all operations (linear with dataset size)
+ * - Space complexity: O(n) as all results are stored in memory
+ * - Processing overhead: Small constant overhead per chunk/batch
+ */
+
+/**
+ * Configuration options for progressive loading
+ */
+export interface ProgressiveLoaderOptions {
+  /** Size of each chunk to process at once */
+  chunkSize?: number;
+  /** Delay between processing chunks (ms) */
+  chunkDelay?: number;
+  /** Callback for progress updates */
+  onProgress?: (processed: number, total: number) => void;
+  /** Callback when all items are processed */
+  onComplete?: (results: any[]) => void;
+  /** Callback for any errors during processing */
+  onError?: (error: Error) => void;
+}
+
+/**
+ * Processes a large array of items progressively to avoid UI blocking
+ * 
+ * @param {T[]} items - Array of items to process
+ * @param {Function} processFunction - Function to process each item
+ * @param {ProgressiveLoaderOptions} options - Configuration options
+ * @returns {Promise<R[]>} A promise that resolves when all items are processed
+ * 
+ * @description
+ * This function implements a "chunked processing" algorithm that:
+ * 1. Divides the input array into smaller chunks (default: 50 items per chunk)
+ * 2. Processes each chunk completely before moving to the next
+ * 3. Yields to the browser between chunks using setTimeout
+ * 4. Tracks progress and reports it via callback
+ * 5. Handles both synchronous and asynchronous processing functions
+ * 
+ * The algorithm maintains the order of items in the result array, matching
+ * the order of the input array regardless of when each item completes processing.
+ * 
+ * Time complexity: O(n) where n is the number of items
+ * Space complexity: O(n) for storing all results
+ * 
+ * @example
+ * // Process 1000 items with default settings
+ * const results = await processProgressively(largeArray, item => {
+ *   // Process each item
+ *   return transformItem(item);
+ * });
+ * 
+ * @example
+ * // Process with custom chunk size and progress reporting
+ * await processProgressively(largeArray, processItem, {
+ *   chunkSize: 20,
+ *   chunkDelay: 50, // 50ms delay between chunks
+ *   onProgress: (processed, total) => {
+ *     progressBar.value = (processed / total) * 100;
+ *   }
+ * });
+ */
+export const processProgressively = async <T, R>(
+  items: T[],
+  processFunction: (item: T, index: number) => Promise<R> | R,
+  options: ProgressiveLoaderOptions = {}
+): Promise<R[]> => {
+  const {
+    chunkSize = 50,
+    chunkDelay = 0,
+    onProgress,
+    onComplete,
+    onError
+  } = options;
+
+  const results: R[] = [];
+  const total = items.length;
+  let processed = 0;
+
+  try {
+    // Process items in chunks
+    for (let i = 0; i < total; i += chunkSize) {
+      const chunk = items.slice(i, i + chunkSize);
+      
+      // Process current chunk
+      const chunkPromises = chunk.map((item, idx) => {
+        try {
+          return processFunction(item, i + idx);
+        } catch (_err) {
+          if (onError) {
+            onError(_err instanceof Error ? _err : new Error(String(_err)));
+          }
+          throw _err;
+        }
+      });
+      
+      // Wait for all items in the chunk to be processed
+      const chunkResults = await Promise.all(chunkPromises);
+      results.push(...chunkResults);
+      
+      // Update processed count and call progress callback
+      processed += chunk.length;
+      if (onProgress) {
+        onProgress(processed, total);
+      }
+      
+      // Add delay between chunks if specified
+      if (chunkDelay > 0 && i + chunkSize < total) {
+        await new Promise(resolve => setTimeout(resolve, chunkDelay));
+      }
+    }
+    
+    // Call complete callback with all results
+    if (onComplete) {
+      onComplete(results);
+    }
+    
+    return results;
+  } catch (_error) {
+    if (onError) {
+      onError(_error instanceof Error ? _error : new Error(String(_error)));
+    }
+    throw _error;
+  }
+};
+
+/**
+ * Loads data in chunks with a loading indicator
+ * 
+ * @param {Function} dataLoader - Function that loads a chunk of data
+ * @param {Object} options - Configuration options
+ * @returns {Promise<T[]>} A promise that resolves with all loaded data
+ * 
+ * @description
+ * This function implements a "progressive pagination" algorithm for loading
+ * large datasets from an API or other data source. It:
+ * 
+ * 1. Loads data in pages (chunks) using the provided dataLoader function
+ * 2. Continues loading until there's no more data or maxItems is reached
+ * 3. Aggregates all loaded data into a single result array
+ * 4. Reports progress after each chunk is loaded
+ * 
+ * The algorithm is designed for APIs that support pagination with offset/limit
+ * parameters, but can be adapted for cursor-based pagination by transforming
+ * the offset parameter in the dataLoader function.
+ * 
+ * Time complexity: O(n/p) API calls where n is total items and p is page size
+ * Space complexity: O(n) for storing all results
+ * 
+ * When to use:
+ * - Loading large datasets from APIs with pagination support
+ * - When you need to load all data before processing
+ * - When you want to show progress during loading
+ * 
+ * @example
+ * // Load all users from a paginated API
+ * const allUsers = await loadProgressively(
+ *   (offset, limit) => api.getUsers({ offset, limit }),
+ *   {
+ *     pageSize: 50,
+ *     onProgress: (loaded) => {
+ *       console.log(`Loaded ${loaded} users`);
+ *     }
+ *   }
+ * );
+ */
+export const loadProgressively = async <T>(
+  dataLoader: (offset: number, limit: number) => Promise<{
+    data: T[];
+    hasMore: boolean;
+  }>,
+  options: {
+    initialOffset?: number;
+    pageSize?: number;
+    maxItems?: number;
+    onProgress?: (loaded: number, total?: number) => void;
+    onComplete?: (results: T[]) => void;
+    onError?: (error: Error) => void;
+  } = {}
+): Promise<T[]> => {
+  const {
+    initialOffset = 0,
+    pageSize = 100,
+    maxItems = Infinity,
+    onProgress,
+    onComplete,
+    onError
+  } = options;
+
+  const results: T[] = [];
+  let offset = initialOffset;
+  let hasMore = true;
+  let loaded = 0;
+
+  try {
+    // Keep loading chunks until there's no more data or we reach maxItems
+    while (hasMore && loaded < maxItems) {
+      // Calculate limit for this request
+      const limit = Math.min(pageSize, maxItems - loaded);
+      
+      // Load the next chunk
+      const response = await dataLoader(offset, limit);
+      const { data, hasMore: moreAvailable } = response;
+      
+      // Add results to the collection
+      results.push(...data);
+      
+      // Update counters
+      loaded += data.length;
+      offset += data.length;
+      hasMore = moreAvailable && data.length > 0 && loaded < maxItems;
+      
+      // Call progress callback
+      if (onProgress) {
+        onProgress(loaded);
+      }
+    }
+    
+    // Call complete callback
+    if (onComplete) {
+      onComplete(results);
+    }
+    
+    return results;
+  } catch (_error) {
+    if (onError) {
+      onError(_error instanceof Error ? _error : new Error(String(_error)));
+    }
+    throw _error;
+  }
+};
+
+/**
+ * Creates a throttled version of a function that processes items in batches
+ * 
+ * @param {Function} processFn - Function to process each batch of items
+ * @param {Object} options - Configuration options
+ * @returns {Function} A function that can be called with items to process
+ * 
+ * @description
+ * This function creates a higher-order batch processor that:
+ * 
+ * 1. Takes a processing function that works on batches of items
+ * 2. Returns a new function that automatically handles batching
+ * 3. Processes the input array in smaller batches to avoid UI blocking
+ * 4. Optionally adds delays between batch processing
+ * 
+ * Unlike processProgressively which processes items individually,
+ * this function is designed for operations that are more efficient
+ * when performed on batches (e.g., batch API calls, bulk database operations).
+ * 
+ * Algorithm characteristics:
+ * - Preserves the order of items in the result array
+ * - Handles errors for the entire batch
+ * - Supports configurable batch sizes and delays
+ * 
+ * When to use:
+ * - When processing items in batches is more efficient than individually
+ * - For bulk API operations that accept multiple items
+ * - When you want to control the rate of processing
+ * 
+ * @example
+ * // Create a batch processor for API calls
+ * const batchSaveUsers = createBatchProcessor(
+ *   async (users) => {
+ *     // Save multiple users in one API call
+ *     return api.bulkCreateUsers(users);
+ *   },
+ *   { 
+ *     maxBatchSize: 50,
+ *     processingDelay: 1000, // 1 second between batches to avoid rate limiting
+ *     onBatchComplete: (results) => {
+ *       console.log(`Saved batch of ${results.length} users`);
+ *     }
+ *   }
+ * );
+ * 
+ * // Use the batch processor
+ * const savedUsers = await batchSaveUsers(largeArrayOfUsers);
+ */
+export const createBatchProcessor = <T, R>(
+  processFn: (items: T[]) => Promise<R[]>,
+  options: {
+    maxBatchSize?: number;
+    processingDelay?: number;
+    onBatchComplete?: (results: R[]) => void;
+    onError?: (error: Error) => void;
+  } = {}
+): ((items: T[]) => Promise<R[]>) => {
+  const {
+    maxBatchSize = 100,
+    processingDelay = 0,
+    onBatchComplete,
+    onError
+  } = options;
+
+  return async (items: T[]): Promise<R[]> => {
+    const results: R[] = [];
+    
+    try {
+      // Process items in batches
+      for (let i = 0; i < items.length; i += maxBatchSize) {
+        const batch = items.slice(i, i + maxBatchSize);
+        
+        // Process the batch
+        const batchResults = await processFn(batch);
+        results.push(...batchResults);
+        
+        // Call batch complete callback
+        if (onBatchComplete) {
+          onBatchComplete(batchResults);
+        }
+        
+        // Add delay between batches if specified
+        if (processingDelay > 0 && i + maxBatchSize < items.length) {
+          await new Promise(resolve => setTimeout(resolve, processingDelay));
+        }
+      }
+      
+      return results;
+    } catch (_error) {
+      if (onError) {
+        onError(_error instanceof Error ? _error : new Error(String(_error)));
+      }
+      throw _error;
+    }
+  };
+};
+
+// Type definition for requestIdleCallback which is not included in the standard TypeScript lib
+// This is a no-op if the browser already has the types defined
+interface IdleRequestOptions {
+  timeout: number;
+}
+
+interface IdleDeadline {
+  didTimeout: boolean;
+  timeRemaining: () => number;
+}
+
+type IdleRequestCallback = (deadline: IdleDeadline) => void;
+
+// Only declare these types if they're not already declared in the global namespace
+// This prevents conflicts with other libraries or TypeScript versions that might declare them
+interface RequestIdleCallbackHandle {}
+
+// Use module augmentation instead of global declaration to avoid conflicts 

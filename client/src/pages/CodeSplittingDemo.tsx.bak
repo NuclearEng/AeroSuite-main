@@ -1,0 +1,413 @@
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Alert,
+  Chip,
+  CircularProgress,
+  useTheme,
+  alpha,
+  Tabs,
+  Tab,
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Switch,
+  FormControlLabel } from
+'@mui/material';
+import { PageHeader } from '../components/common';
+import { useDynamicImport } from '../utils/codeSplitting';
+import {
+  Speed as SpeedIcon,
+  Visibility as VisibilityIcon,
+  TouchApp as TouchAppIcon,
+  Route as RouteIcon,
+  Image as ImageIcon,
+  Code as CodeIcon } from
+'@mui/icons-material';
+import LazyLoadedImage from '../components/ui-library/molecules/LazyLoadedImage';
+import LazyLoadedComponent from '../components/ui-library/molecules/LazyLoadedComponent';
+import { usePrefetchRoutesOnHover } from '../hooks/useLazyRoute';
+
+// Components to be dynamically imported
+const HeavyComponent1 = () => import('../components/demo/HeavyComponent1');
+const HeavyComponent2 = () => import('../components/demo/HeavyComponent2');
+const HeavyComponent3 = () => import('../components/demo/HeavyComponent3');
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`code-splitting-tabpanel-${index}`}
+      aria-labelledby={`code-splitting-tab-${index}`}
+      {...other}>
+
+      {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
+    </div>);
+
+};
+
+// Demo images for lazy loading
+const demoImages = [
+{
+  src: 'https://source.unsplash.com/random/800x400?aerospace',
+  alt: 'Aerospace Image 1'
+},
+{
+  src: 'https://source.unsplash.com/random/800x400?aircraft',
+  alt: 'Aircraft Image'
+},
+{
+  src: 'https://source.unsplash.com/random/800x400?manufacturing',
+  alt: 'Manufacturing Image'
+},
+{
+  src: 'https://source.unsplash.com/random/800x400?technology',
+  alt: 'Technology Image'
+}];
+
+
+// Demo components for lazy loading
+const demoComponents = [
+{
+  name: 'Chart Component',
+  importFn: () => import('../components/ui-library/molecules/charts/LineChart')
+},
+{
+  name: 'Data Grid Component',
+  importFn: () => import('../components/ui-library/organisms/DataGrid')
+},
+{
+  name: 'Form Builder Component',
+  importFn: () => import('../components/ui-library/organisms/FormBuilder')
+}];
+
+
+// Demo routes for prefetching
+const demoRoutes = [
+'/dashboard',
+'/customers',
+'/suppliers',
+'/inspections'];
+
+
+const CodeSplittingDemo: React.FC = () => {
+  const theme = useTheme();
+  const [tabValue, setTabValue] = useState(0);
+  const [activeComponent, setActiveComponent] = useState<number | null>(null);
+  const [loadComponentOnDemand, setLoadComponentOnDemand] = useState(false);
+
+  // Use dynamic imports for each heavy component
+  const heavyComponent1 = useDynamicImport(HeavyComponent1);
+  const heavyComponent2 = useDynamicImport(HeavyComponent2);
+  const heavyComponent3 = useDynamicImport(HeavyComponent3);
+
+  const { hoverProps, isPrefetching } = usePrefetchRoutesOnHover(demoRoutes);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
+
+  const loadComponent = async (componentNumber: number) => {
+    setActiveComponent(componentNumber);
+    try {
+      switch (componentNumber) {
+        case 1:
+          await heavyComponent1.load();
+          break;
+        case 2:
+          await heavyComponent2.load();
+          break;
+        case 3:
+          await heavyComponent3.load();
+          break;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // Render the dynamically loaded component
+  const RenderComponent = () => {
+    if (activeComponent === 1 && heavyComponent1.module) {
+      const Component = heavyComponent1.module.default;
+      return <Component />;
+    } else if (activeComponent === 2 && heavyComponent2.module) {
+      const Component = heavyComponent2.module.default;
+      return <Component />;
+    } else if (activeComponent === 3 && heavyComponent3.module) {
+      const Component = heavyComponent3.module.default;
+      return <Component />;
+    }
+    return null;
+  };
+
+  const isLoading = heavyComponent1.loading || heavyComponent2.loading || heavyComponent3.loading;
+
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Code Splitting and Lazy Loading Demo
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        This page demonstrates the various lazy loading techniques implemented in RF033 (Code Splitting) and RF034 (Lazy Loading).
+      </Typography>
+      
+      
+      <Card sx={{ mb: 4 }}>
+        <CardHeader title="Overview" />
+        <CardContent>
+          <Typography variant="body1" paragraph>
+            Lazy loading is a technique that defers the loading of non-critical resources until they are needed.
+            This improves initial page load performance and reduces unnecessary bandwidth usage.
+          </Typography>
+          
+          <List>
+            <ListItem>
+              <ListItemIcon>
+                <SpeedIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Improved Performance"
+                secondary="Reduces initial bundle size and improves time-to-interactive" />
+
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <VisibilityIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Visibility-Based Loading"
+                secondary="Components load only when they become visible in the viewport" />
+
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <RouteIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Route-Based Splitting"
+                secondary="Routes are loaded on demand when navigating" />
+
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <TouchAppIcon color="primary" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Interaction-Based Prefetching"
+                secondary="Resources are prefetched based on user interactions" />
+
+            </ListItem>
+          </List>
+        </CardContent>
+      </Card>
+      
+      
+      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+        <ImageIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
+        Image Lazy Loading
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Scroll down to see images load only when they come into view
+      </Typography>
+      
+      <Grid container spacing={3}>
+        {demoImages.map((image, index) =>
+        <Grid item xs={12} md={6} key={index}>
+            <Paper elevation={2} sx={{ p: 2 }}>
+              <Typography variant="subtitle1" gutterBottom>
+                Image {index + 1}
+              </Typography>
+              <LazyLoadedImage
+              src={image.src}
+              alt={image.alt}
+              height={300}
+              width="100%"
+              placeholder={
+              <Box
+                sx={{
+                  height: 300,
+                  width: '100%',
+                  bgcolor: 'grey.200',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+
+                    <Typography variant="body2" color="text.secondary">
+                      Loading image...
+                    </Typography>
+                  </Box>
+              }
+              blurEffect={true} />
+
+            </Paper>
+          </Grid>
+        )}
+      </Grid>
+      
+      
+      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+        <CodeIcon sx={{ mr: 1, verticalAlign: 'middle' }} />
+        Component Lazy Loading
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Components are loaded only when they become visible in the viewport
+      </Typography>
+      
+      <Grid container spacing={3}>
+        {demoComponents.map((component, index) =>
+        <Grid item xs={12} md={4} key={index}>
+            <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+              <Typography variant="subtitle1" gutterBottom>
+                {component.name}
+              </Typography>
+              <LazyLoadedComponent
+              importFn={component.importFn}
+              componentProps={{
+                data: [
+                { name: 'Jan', value: 400 },
+                { name: 'Feb', value: 300 },
+                { name: 'Mar', value: 600 },
+                { name: 'Apr', value: 800 },
+                { name: 'May', value: 500 }]
+
+              }}
+              height={250}
+              rootMargin="50px" />
+
+            </Paper>
+          </Grid>
+        )}
+      </Grid>
+      
+      
+      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+        On-Demand Component Loading
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Load a component only when explicitly requested
+      </Typography>
+      
+      <Card>
+        <CardContent>
+          <FormControlLabel
+            control={
+            <Switch
+              checked={loadComponentOnDemand}
+              onChange={() => setLoadComponentOnDemand(!loadComponentOnDemand)} />
+
+            }
+            label="Load Calendar Component" />
+
+          
+          <Box sx={{ mt: 2, minHeight: 300 }}>
+            {loadComponentOnDemand &&
+            <LazyLoadedComponent
+              importFn={() => import('../components/ui-library/organisms/Calendar')}
+              height={300} />
+
+            }
+          </Box>
+        </CardContent>
+      </Card>
+      
+      
+      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+        Route Prefetching on Hover
+      </Typography>
+      <Typography variant="body2" color="text.secondary" paragraph>
+        Routes are prefetched when hovering over links
+      </Typography>
+      
+      <Card>
+        <CardContent>
+          <Box {...hoverProps}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ mr: 2 }}>
+
+              Hover to Prefetch Routes
+            </Button>
+            
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              Status: {isPrefetching ? 'Prefetching routes...' : 'Not prefetching'}
+            </Typography>
+            
+            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+              (Check network tab in dev tools to see prefetching in action)
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
+      
+      
+      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+        Implementation Details
+      </Typography>
+      
+      <Card>
+        <CardContent>
+          <Typography variant="body2" paragraph>
+            This demo showcases the following lazy loading techniques:
+          </Typography>
+          
+          <List dense>
+            <ListItem>
+              <ListItemText
+                primary="LazyLoadedImage Component"
+                secondary="Loads images only when they scroll into view" />
+
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="LazyLoadedComponent"
+                secondary="Generic wrapper for lazy loading any component" />
+
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="useVisibilityLazyLoad Hook"
+                secondary="Loads components when they become visible in the viewport" />
+
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="usePrefetchRoutesOnHover Hook"
+                secondary="Prefetches routes when hovering over links" />
+
+            </ListItem>
+            <ListItem>
+              <ListItemText
+                primary="useAdvancedLazyLoad Hook"
+                secondary="Advanced lazy loading with priority-based loading" />
+
+            </ListItem>
+          </List>
+        </CardContent>
+      </Card>
+    </Container>);
+
+};
+
+export default CodeSplittingDemo;

@@ -31,8 +31,8 @@ interface ColorCombination {
  */
 const ColorContrastAudit: React.FC = () => {
   const theme = useTheme();
-  const [colorCombinations, setColorCombinations] = useState<ColorCombination[]>([]);
-  const [failingCombinations, setFailingCombinations] = useState<ColorCombination[]>([]);
+  const [colorCombinations, setColorCombinations] = useState<any>([]);
+  const [failingCombinations, setFailingCombinations] = useState<any>([]);
   
   // Define the background colors to test against
   const backgroundColors = [
@@ -142,7 +142,7 @@ const ColorContrastAudit: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {colorCombinations.map((combo, index) => (
+            {colorCombinations.map((combo, index: any) => (
               <TableRow key={index}>
                 <TableCell>{combo.name}</TableCell>
                 <TableCell>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Container,
@@ -89,14 +89,14 @@ const eventSchema = z.object({
 const CalendarPage: React.FC = () => {
   // State for event dialog
   const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [isNewEvent, setIsNewEvent] = useState(true);
 
   // State for integration dialog
   const [isIntegrationDialogOpen, setIsIntegrationDialogOpen] = useState(false);
 
   // State for event form
-  const [eventForm, setEventForm] = useState<Omit<CalendarEvent, 'id'> & {id?: string;}>({
+  const [eventForm, setEventForm] = useState<any> & {id?: string;}>({
     title: '',
     start: '',
     end: '',
@@ -114,10 +114,10 @@ const CalendarPage: React.FC = () => {
 
   // State for sync status
   const [isSyncing, setIsSyncing] = useState(false);
-  const [syncMessage, setSyncMessage] = useState<{type: 'success' | 'error';message: string;} | null>(null);
+  const [syncMessage, setSyncMessage] = useState<any>(null);
 
   // State for form errors
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState<any>>({});
 
   // Get calendar data and functions from hook
   const {
@@ -289,7 +289,7 @@ const CalendarPage: React.FC = () => {
     } catch (err: any) {
       // Surface backend validation errors
       setFormErrors({ general: err?.message || 'Error saving event' });
-      console.error("Error:", err);
+      console.error("Error:", error);
     }
   };
 
@@ -503,7 +503,7 @@ const CalendarPage: React.FC = () => {
                 onChange={handleSelectChange}
                 label="Event Type">
 
-                {Object.entries(eventTypeLabels).map(([value, label]) =>
+                {Object.entries(eventTypeLabels).map(([value, label]: any) =>
                 <MenuItem key={value} value={value}>
                     <Box display="flex" alignItems="center">
                       <Box
@@ -713,7 +713,7 @@ const CalendarPage: React.FC = () => {
             Connect to external calendar services to sync your events.
           </Typography>
           
-          {integrations.map((integration) =>
+          {integrations.map((integration: any) =>
           <Paper key={integration.id} variant="outlined" sx={{ p: 2, mb: 2 }}>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { 
   Box, 
   TextField, 
@@ -32,7 +32,7 @@ interface ProfileSetupStepProps {
  */
 const ProfileSetupStep: React.FC<ProfileSetupStepProps> = ({ profileData, setProfileData }) => {
   const theme = useTheme();
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<any>(null);
 
   // Handle text field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

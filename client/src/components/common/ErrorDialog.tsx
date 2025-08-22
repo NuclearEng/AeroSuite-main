@@ -185,7 +185,7 @@ const ErrorDialog: React.FC<ErrorDialogProps> = ({
       <DialogActions>
         {actions.length > 0 ? (
           // Show custom actions if provided
-          actions.map((action, index) => (
+          actions.map((action, index: any) => (
             <Button
               key={index}
               onClick={() => {

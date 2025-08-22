@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { ChangeEvent, useState, useRef } from 'react';
 
 export interface SearchBarProps {
   value?: string;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -123,11 +123,11 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
   isEdit = false,
   supplierId
 }) => {
-  const [formValues, setFormValues] = useState<SupplierFormData>({
+  const [formValues, setFormValues] = useState<any>({
     ...initialFormValues,
     ...initialData
   });
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(isEdit);
 
@@ -169,7 +169,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
   }, [isEdit, supplierId, open]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
 
     if (!name) return;
@@ -177,7 +177,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [parent]: {
           ...(prev[parent as keyof typeof prev] as Record<string, unknown>),
@@ -185,7 +185,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
         }
       }));
     } else {
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [name]: value
       }));
@@ -193,7 +193,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
       }));
@@ -202,7 +202,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
 
   // Handle tag changes
   const handleTagsChange = (newValue: string[]) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       tags: newValue
     }));
@@ -218,13 +218,13 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
 
     if (words.length >= 2) {
       // Use first letter of each word for multi-word names
-      code = words.slice(0, 3).map((word) => word.charAt(0)).join('');
+      code = words.slice(0, 3).map((word: any) => word.charAt(0)).join('');
     } else {
       // Use first 3 letters for single-word names
       code = formValues.name.substring(0, 3);
     }
 
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       code: code.toUpperCase()
     }));
@@ -379,7 +379,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
                   label="Industry"
                   onChange={handleChange as any}>
 
-                    {industryOptions.map((option) =>
+                    {industryOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -398,7 +398,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
                   label="Status"
                   onChange={handleChange as any}>
 
-                    {statusOptions.map((option) =>
+                    {statusOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -477,7 +477,7 @@ const SupplierFormModal: React.FC<SupplierFormModalProps> = ({
                 value={formValues.tags}
                 onChange={(_, newValue) => handleTagsChange(newValue)}
                 renderTags={(value, getTagProps) =>
-                value.map((option, index) =>
+                value.map((option, index: any) =>
                 <Chip
                   label={option}
                   {...getTagProps({ index })}

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import performanceMonitoringService, { 
   initPerformanceMonitoring,
-  PerformanceMetricType
+  PerformanceMetric
 } from '../services/performanceMonitoring.service';
 
 /**
@@ -37,7 +37,7 @@ export const usePerformanceMonitoring = (
   useEffect(() => {
     // Track component mount time
     const mountDuration = performance.now() - mountTimeRef.current;
-    performanceMonitoringService.trackCustomMetric(
+    (performanceMonitoringService as any).trackCustomMetric(
       `${componentName}:mount`,
       mountDuration,
       { componentName }
@@ -45,27 +45,27 @@ export const usePerformanceMonitoring = (
     
     // Track resource timing if enabled
     if (trackResourceTiming) {
-      performanceMonitoringService.trackResourceTiming();
+      (performanceMonitoringService as any).trackResourceTiming();
     }
     
     // Track paint timing if enabled
     if (trackPaintTiming) {
-      performanceMonitoringService.trackPaintTiming();
+      (performanceMonitoringService as any).trackPaintTiming();
     }
     
     // Track layout shifts if enabled
     if (trackLayoutShift) {
-      performanceMonitoringService.trackLayoutShift();
+      (performanceMonitoringService as any).trackLayoutShift();
     }
     
     // Track long tasks if enabled
     if (trackLongTasks) {
-      performanceMonitoringService.trackLongTasks();
+      (performanceMonitoringService as any).trackLongTasks();
     }
     
     // Track memory usage if enabled
     if (trackMemoryUsage) {
-      performanceMonitoringService.trackMemoryUsage();
+      (performanceMonitoringService as any).trackMemoryUsage();
     }
     
     // Track component unmount
@@ -73,7 +73,7 @@ export const usePerformanceMonitoring = (
       const unmountTime = performance.now();
       const lifetimeDuration = unmountTime - mountTimeRef.current;
       
-      performanceMonitoringService.trackCustomMetric(
+      (performanceMonitoringService as any).trackCustomMetric(
         `${componentName}:unmount`,
         lifetimeDuration,
         { 
@@ -88,7 +88,7 @@ export const usePerformanceMonitoring = (
   useEffect(() => {
     const renderDuration = performance.now() - renderStartTimeRef.current;
     
-    performanceMonitoringService.trackCustomMetric(
+    (performanceMonitoringService as any).trackCustomMetric(
       `${componentName}:render`,
       renderDuration,
       { componentName }
@@ -126,7 +126,7 @@ export const usePerformanceMonitoring = (
     delete interactionTimerRef.current[interactionId];
     
     // Track the interaction
-    performanceMonitoringService.trackCustomMetric(
+    (performanceMonitoringService as any).trackCustomMetric(
       interactionId,
       duration,
       {
@@ -146,7 +146,7 @@ export const usePerformanceMonitoring = (
    * @param metadata Additional metadata
    */
   const trackMetric = (name: string, value: number, metadata?: Record<string, any>) => {
-    performanceMonitoringService.trackCustomMetric(
+    (performanceMonitoringService as any).trackCustomMetric(
       `${componentName}:${name}`,
       value,
       {
@@ -168,7 +168,7 @@ export const usePerformanceMonitoring = (
     return () => {
       const updateDuration = performance.now() - updateStartTime;
       
-      performanceMonitoringService.trackCustomMetric(
+      (performanceMonitoringService as any).trackCustomMetric(
         `${componentName}:update`,
         updateDuration,
         {

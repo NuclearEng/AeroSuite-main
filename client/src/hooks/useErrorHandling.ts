@@ -69,7 +69,7 @@ export const useErrorHandling = (options: UseErrorHandlingOptions = {}) => {
       try {
         return await fn(...args);
       } catch (_err) {
-        handleAppError(err);
+        handleAppError(_err);
         return undefined;
       }
     };
@@ -84,7 +84,7 @@ export const useErrorHandling = (options: UseErrorHandlingOptions = {}) => {
     try {
       return await fn();
     } catch (_err) {
-      handleAppError(err);
+      handleAppError(_err);
       return undefined;
     }
   }, [handleAppError]);

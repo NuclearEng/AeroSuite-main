@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import {
   Box,
   TextField,
@@ -60,7 +60,7 @@ const TagInput: React.FC<TagInputProps> = ({
       />
       
       <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {tags.map((tag, index) => (
+        {tags.map((tag, index: any) => (
           <Chip
             key={index}
             label={tag}
@@ -77,7 +77,7 @@ const TagInput: React.FC<TagInputProps> = ({
           Suggestions:
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
-          {suggestions.map((tag) => (
+          {suggestions.map((tag: any) => (
             <Chip
               key={tag}
               label={tag}

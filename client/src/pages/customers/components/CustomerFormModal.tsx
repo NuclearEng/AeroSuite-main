@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -118,11 +118,11 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   isEdit = false,
   customerId
 }) => {
-  const [formValues, setFormValues] = useState<CustomerFormData>({
+  const [formValues, setFormValues] = useState<any>({
     ...initialFormValues,
     ...initialData
   });
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(isEdit);
 
@@ -165,7 +165,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
   }, [isEdit, customerId, open]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
 
     if (!name) return;
@@ -173,7 +173,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [parent]: {
           ...(prev[parent as keyof typeof prev] as Record<string, unknown>),
@@ -181,7 +181,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
         }
       }));
     } else {
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [name]: value
       }));
@@ -189,7 +189,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
       }));
@@ -198,7 +198,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
 
   // Handle tag changes
   const handleTagsChange = (newValue: string[]) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       tags: newValue
     }));
@@ -214,13 +214,13 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
 
     if (words.length >= 2) {
       // Use first letter of each word for multi-word names
-      code = words.slice(0, 3).map((word) => word.charAt(0)).join('');
+      code = words.slice(0, 3).map((word: any) => word.charAt(0)).join('');
     } else {
       // Use first 3 letters for single-word names
       code = formValues.name.substring(0, 3);
     }
 
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       code: code.toUpperCase()
     }));
@@ -290,7 +290,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
       onClose();
     } catch (error: any) {
       console.error("Error:", error);
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         submit: error.message || 'Failed to save customer. Please try again.'
       }));
@@ -376,7 +376,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
                   label="Industry"
                   onChange={handleChange as any}>
 
-                    {industryOptions.map((option) =>
+                    {industryOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -395,7 +395,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
                   label="Status"
                   onChange={handleChange as any}>
 
-                    {statusOptions.map((option) =>
+                    {statusOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -414,7 +414,7 @@ const CustomerFormModal: React.FC<CustomerFormModalProps> = ({
                   label="Service Level"
                   onChange={handleChange as any}>
 
-                    {serviceLevelOptions.map((option) =>
+                    {serviceLevelOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>

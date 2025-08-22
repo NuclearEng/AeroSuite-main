@@ -24,7 +24,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ columns, onDragEnd }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', py: 2 }}>
-        {columns.map((column) => (
+        {columns.map((column: any) => (
           <Droppable droppableId={column.id} key={column.id}>
             {(provided) => (
               <Paper
@@ -34,7 +34,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ columns, onDragEnd }) => {
                 aria-label={`Kanban column: ${column.title}`}
               >
                 <Typography variant="h6" sx={{ mb: 2 }}>{column.title}</Typography>
-                {column.cards.map((card, idx) => (
+                {column.cards.map((card: any, idx: number) => (
                   <Draggable draggableId={card.id} index={idx} key={card.id}>
                     {(provided) => (
                       <Paper

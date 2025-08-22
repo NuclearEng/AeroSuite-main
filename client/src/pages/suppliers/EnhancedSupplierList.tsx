@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { ChangeEvent, useState, useCallback, useMemo } from 'react';
 import {
   Box,
   Paper,
@@ -84,14 +84,14 @@ const EnhancedSupplierList: React.FC = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
-  const [orderBy, setOrderBy] = useState<string>('name');
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
-  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [orderBy, setOrderBy] = useState<any>('name');
+  const [order, setOrder] = useState<any>('asc');
+  const [selected, setSelected] = useState<any>>(new Set());
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [bulkDeleteDialogOpen, setBulkDeleteDialogOpen] = useState(false);
-  const [supplierToDelete, setSupplierToDelete] = useState<string | null>(null);
-  const [filterMenuAnchor, setFilterMenuAnchor] = useState<null | HTMLElement>(null);
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [supplierToDelete, setSupplierToDelete] = useState<any>(null);
+  const [filterMenuAnchor, setFilterMenuAnchor] = useState<any>(null);
+  const [statusFilter, setStatusFilter] = useState<any>('all');
 
   // Debounced search
   const debouncedSearch = useDebounce(searchQuery, 300);
@@ -125,7 +125,7 @@ const EnhancedSupplierList: React.FC = () => {
 
   const handleSelectAll = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = new Set(suppliers.map((s) => s._id));
+      const newSelected = new Set(suppliers.map((s: any) => s._id));
       setSelected(newSelected);
       a11y.announce(`Selected all ${suppliers.length} suppliers`);
     } else {
@@ -146,7 +146,7 @@ const EnhancedSupplierList: React.FC = () => {
     setSelected(newSelected);
   }, [selected]);
 
-  const handleChangePage = useCallback((event: unknown, newPage: number) => {
+  const handleChangePage = useCallback((event: any, newPage: number) => {
     setPage(newPage);
   }, []);
 
@@ -173,7 +173,7 @@ const EnhancedSupplierList: React.FC = () => {
 
   const handleExport = useCallback((format: 'excel' | 'pdf') => {
     const dataToExport = selected.size > 0 ?
-    suppliers.filter((s) => selected.has(s._id)) :
+    suppliers.filter((s: any) => selected.has(s._id)) :
     suppliers;
 
     if (format === 'excel') {
@@ -329,7 +329,7 @@ const EnhancedSupplierList: React.FC = () => {
                     }} />
 
                 </TableCell>
-                {columns.map((column) =>
+                {columns.map((column: any) =>
                 <TableCell
                   key={column.id}
                   align={column.align || 'left'}
@@ -357,7 +357,7 @@ const EnhancedSupplierList: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {suppliers.map((supplier) => {
+              {suppliers.map((supplier: any) => {
                 const isItemSelected = selected.has(supplier._id);
                 const labelId = `enhanced-table-checkbox-${supplier._id}`;
 
@@ -382,7 +382,7 @@ const EnhancedSupplierList: React.FC = () => {
                         }} />
 
                     </TableCell>
-                    {columns.map((column) =>
+                    {columns.map((column: any) =>
                     <TableCell
                       key={column.id}
                       align={column.align || 'left'}

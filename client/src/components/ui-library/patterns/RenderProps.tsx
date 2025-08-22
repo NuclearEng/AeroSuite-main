@@ -86,9 +86,9 @@ export function DataFetcher<T>({
   onSuccess,
   onError
 }: DataFetcherProps<T>): JSX.Element {
-  const [data, setData] = useState<T | null>(initialData);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [data, setData] = useState<any>(initialData);
+  const [isLoading, setIsLoading] = useState<any>(true);
+  const [error, setError] = useState<any>(null);
   
   const fetchData = async () => {
     setIsLoading(true);
@@ -142,7 +142,7 @@ interface MouseTrackerProps {
 }
 
 export const MouseTracker: React.FC<MouseTrackerProps> = ({ children }) => {
-  const [position, setPosition] = useState<MousePosition>({ x: 0, y: 0 });
+  const [position, setPosition] = useState<any>({ x: 0, y: 0 });
   
   const handleMouseMove = (event: MouseEvent) => {
     setPosition({

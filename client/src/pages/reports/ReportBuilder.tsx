@@ -82,16 +82,16 @@ const ReportBuilder: React.FC = () => {
 
   // State
   const [tabValue, setTabValue] = useState(0);
-  const [templates, setTemplates] = useState<ReportTemplate[]>([]);
-  const [selectedTemplate, setSelectedTemplate] = useState<ReportTemplate | null>(null);
+  const [templates, setTemplates] = useState<any>([]);
+  const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
+  const [success, setSuccess] = useState<any>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
-  const [currentAction, setCurrentAction] = useState<'create' | 'edit' | 'view'>('view');
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [currentAction, setCurrentAction] = useState<any>('view');
+  const [formErrors, setFormErrors] = useState<any>({});
+  const [errorMessage, setErrorMessage] = useState<any>(null);
 
   // Load templates
   useEffect(() => {

@@ -87,16 +87,16 @@ const FormUXDemo: React.FC = () => {
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
   const [instantValidation, setInstantValidation] = useState(true);
   const [smartSuggestions, setSmartSuggestions] = useState(true);
-  const [formValues, setFormValues] = useState<Record<string, any>>({});
-  const [savedValues, setSavedValues] = useState<Record<string, any>>({});
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [formValues, setFormValues] = useState<any>>({});
+  const [savedValues, setSavedValues] = useState<any>>({});
+  const [lastSaved, setLastSaved] = useState<any>(null);
   const [saveSnackbarOpen, setSaveSnackbarOpen] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
-  const [saveStatus, setSaveStatus] = useState<'success' | 'error' | 'info'>('success');
-  const [suggestions, setSuggestions] = useState<Record<string, any[]>>({});
-  const [showSuggestionFor, setShowSuggestionFor] = useState<string | null>(null);
-  const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout | null>(null);
-  const [formHistory, setFormHistory] = useState<Array<{timestamp: Date;values: Record<string, any>;}>>([]);
+  const [saveStatus, setSaveStatus] = useState<any>('success');
+  const [suggestions, setSuggestions] = useState<any>>({});
+  const [showSuggestionFor, setShowSuggestionFor] = useState<any>(null);
+  const [autoSaveTimer, setAutoSaveTimer] = useState<any>(null);
+  const [formHistory, setFormHistory] = useState<any>;}>>([]);
 
   // Define form sections with validation rules
   const formSections: FormSection[] = [
@@ -442,21 +442,21 @@ const FormUXDemo: React.FC = () => {
 
     switch (fieldName) {
       case 'companyName':
-        fieldSuggestions = userDataSuggestions.companies.map((company) => company.name);
+        fieldSuggestions = userDataSuggestions.companies.map((company: any) => company.name);
         break;
       case 'email':
         // Generate email suggestions based on contact name if available
         if (formValues.contactName) {
           const name = formValues.contactName.toLowerCase().replace(/\s+/g, '.');
-          fieldSuggestions = userDataSuggestions.commonDomains.map((domain) => `${name}@${domain}`);
+          fieldSuggestions = userDataSuggestions.commonDomains.map((domain: any) => `${name}@${domain}`);
         } else {
           fieldSuggestions = ['example@gmail.com', 'example@company.com'];
         }
         break;
       case 'phone':
-        fieldSuggestions = userDataSuggestions.phoneFormats.map((format) =>
+        fieldSuggestions = userDataSuggestions.phoneFormats.map((format: any) =>
         format.replace(/#+/g, (match) => {
-          return Array(match.length).fill(0).map(() => Math.floor(Math.random() * 10)).join('');
+          return Array(match.length).fill(0).map((: any) => Math.floor(Math.random() * 10)).join('');
         })
         );
         break;
@@ -505,7 +505,7 @@ const FormUXDemo: React.FC = () => {
 
     return (
       <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {suggestions[fieldName].map((suggestion, index) =>
+        {suggestions[fieldName].map((suggestion, index: any) =>
         <Chip
           key={index}
           label={suggestion}
@@ -590,7 +590,7 @@ const FormUXDemo: React.FC = () => {
             </Alert> :
 
           <Grid container spacing={2}>
-              {formHistory.map((entry, index) =>
+              {formHistory.map((entry, index: any) =>
             <Grid item xs={12} sm={6} md={4} key={index}>
                   <Card variant="outlined">
                     <CardHeader

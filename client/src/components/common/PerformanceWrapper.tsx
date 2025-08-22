@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo, ReactNode } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useInView, InViewHookResponse } from 'react-intersection-observer';
 
 interface PerformanceWrapperProps {
   children: ReactNode;
@@ -44,7 +44,7 @@ const PerformanceWrapper: React.FC<PerformanceWrapperProps> = ({
   memoize = true,
   memoDeps = [],
 }) => {
-  const { ref, inView } = useInView({
+  const [ref, inView] = useInView({
     threshold,
     rootMargin,
     triggerOnce: true,
@@ -98,7 +98,7 @@ export function withPerformance<P extends object>(
 
   WrappedComponent.displayName = `withPerformance(${Component.displayName || Component.name})`;
 
-  return memo(WrappedComponent);
+  return memo(WrappedComponent) as unknown as React.FC<P>;
 }
 
 /**
@@ -194,7 +194,7 @@ export function VirtualList<T>({
             right: 0,
           }}
         >
-          {visibleItems.map((item, index) => (
+          {visibleItems.map((item, index: any) => (
             <div
               key={startIndex + index}
               style={{ height: itemHeight }}

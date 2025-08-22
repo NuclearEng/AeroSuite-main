@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -112,7 +112,8 @@ export interface FormSection {
 }
 
 export interface FormBuilderProps {
-  sections: FormSection[];
+  sections?: FormSection[];
+  fields?: any[]; // Support legacy fields prop for backward compatibility
   initialValues?: Record<string, any>;
   onSubmit: (values: Record<string, any>, isValid: boolean) => void;
   submitButtonText?: string;
@@ -122,6 +123,12 @@ export interface FormBuilderProps {
   title?: string;
   subtitle?: string;
   elevation?: number;
+  defaultValues?: Record<string, any>;
+  onSubmitCapture?: (e: React.FormEvent) => void;
+  showReset?: boolean;
+  submitText?: string;
+  layout?: 'horizontal' | 'vertical' | 'grid';
+  sx?: any;
   showValidationSummary?: boolean;
   resetOnSubmit?: boolean;
   validateOnChange?: boolean;
@@ -209,13 +216,13 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
   };
 
   // Initialize state
-  const [formValues, setFormValues] = useState<Record<string, any>>(getInitialFormValues());
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
-  const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
-  const [validating, setValidating] = useState<Record<string, boolean>>({});
-  const [validationSeverity, setValidationSeverity] = useState<Record<string, 'error' | 'warning' | 'validating' | 'success' | 'none'>>({});
-  const [validationTimeouts, setValidationTimeouts] = useState<Record<string, NodeJS.Timeout>>({});
+  const [formValues, setFormValues] = useState<any>(getInitialFormValues());
+  const [errors, setErrors] = useState<any>({});
+  const [touched, setTouched] = useState<any>({});
+  const [showPassword, setShowPassword] = useState<any>({});
+  const [validating, setValidating] = useState<any>({});
+  const [validationSeverity, setValidationSeverity] = useState<any>({});
+  const [validationTimeouts, setValidationTimeouts] = useState<any>({});
   const [formProgress, setFormProgress] = useState(0);
 
   // Update form values when initialValues change
@@ -227,9 +234,9 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
   const calculateFormProgress = () => {
     if (!showProgressIndicator) return;
 
-    const requiredFields = allFields.filter((field) =>
+    const requiredFields = allFields.filter((field: any) =>
     !field.hidden && (field.required ||
-    field.validation?.some((rule) => rule.type === 'required'))
+    field.validation?.some((rule: any) => rule.type === 'required'))
     );
 
     if (requiredFields.length === 0) {
@@ -237,7 +244,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
       return;
     }
 
-    const filledRequiredFields = requiredFields.filter((field) => {
+    const filledRequiredFields = requiredFields.filter((field: any) => {
       const value = formValues[field.name];
       return value !== undefined && value !== null && value !== '';
     });
@@ -366,18 +373,18 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
 
     // Set validating state to show spinner
     if (validateOnChange) {
-      setValidating((prev) => ({ ...prev, [field.name]: true }));
+      setValidating((prev: any) => ({ ...prev, [field.name]: true }));
 
       // Debounce validation to prevent excessive validation while typing
       const timeout = setTimeout(() => {
         const result = validateField(field, value);
 
-        setErrors((prev) => ({ ...prev, [field.name]: result.isValid ? '' : result.message }));
-        setValidationSeverity((prev) => ({ ...prev, [field.name]: result.severity }));
-        setValidating((prev) => ({ ...prev, [field.name]: false }));
+        setErrors((prev: any) => ({ ...prev, [field.name]: result.isValid ? '' : result.message }));
+        setValidationSeverity((prev: any) => ({ ...prev, [field.name]: result.severity }));
+        setValidating((prev: any) => ({ ...prev, [field.name]: false }));
 
         // Remove this timeout from the tracked timeouts
-        setValidationTimeouts((prev) => {
+        setValidationTimeouts((prev: any) => {
           const newTimeouts = { ...prev };
           delete newTimeouts[field.name];
           return newTimeouts;
@@ -385,7 +392,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
       }, validationFeedbackDelay);
 
       // Track the new timeout
-      setValidationTimeouts((prev) => ({ ...prev, [field.name]: timeout }));
+      setValidationTimeouts((prev: any) => ({ ...prev, [field.name]: timeout }));
     }
 
     // Call field's onChange handler if provided
@@ -408,7 +415,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
         clearTimeout(validationTimeouts[field.name]);
 
         // Remove this timeout from the tracked timeouts
-        setValidationTimeouts((prev) => {
+        setValidationTimeouts((prev: any) => {
           const newTimeouts = { ...prev };
           delete newTimeouts[field.name];
           return newTimeouts;
@@ -416,9 +423,9 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
       }
 
       const result = validateField(field, formValues[field.name]);
-      setErrors((prev) => ({ ...prev, [field.name]: result.isValid ? '' : result.message }));
-      setValidationSeverity((prev) => ({ ...prev, [field.name]: result.severity }));
-      setValidating((prev) => ({ ...prev, [field.name]: false }));
+      setErrors((prev: any) => ({ ...prev, [field.name]: result.isValid ? '' : result.message }));
+      setValidationSeverity((prev: any) => ({ ...prev, [field.name]: result.severity }));
+      setValidating((prev: any) => ({ ...prev, [field.name]: false }));
     }
   };
 
@@ -454,7 +461,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
 
   // Toggle password visibility
   const handleTogglePassword = (fieldName: string) => {
-    setShowPassword((prev) => ({ ...prev, [fieldName]: !prev[fieldName] }));
+    setShowPassword((prev: any) => ({ ...prev, [fieldName]: !prev[fieldName] }));
   };
 
   // Enhanced hasError to check for validation severity
@@ -622,7 +629,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
               aria-describedby={`${field.name}-helper-text`}
               renderValue={field.type === 'multiselect' ? (selected) =>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                  {(selected as any[]).map((value) => {
+                  {(selected as any[]).map((value: any) => {
                   const option = field.options?.find((opt) => opt.value === value);
                   return (
                     <Chip key={String(value)} label={option?.label || value} size="small" />);
@@ -631,7 +638,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
                 </Box> :
               undefined}>
 
-              {field.options?.map((option) =>
+              {field.options?.map((option: any) =>
               <MenuItem
                 key={String(option.value)}
                 value={typeof option.value === 'boolean' ? String(option.value) : option.value}
@@ -756,7 +763,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
               onChange={(e) => handleChange(field, e.target.value)}
               onBlur={() => handleBlur(field)}>
 
-              {field.options?.map((option) =>
+              {field.options?.map((option: any) =>
               <FormControlLabel
                 key={String(option.value)}
                 value={option.value}
@@ -834,7 +841,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
 
   // Enhanced validation summary with severity levels
   const RenderValidationSummary = () => {
-    const errorMessages = Object.entries(errors).filter(([_, message]) => message);
+    const errorMessages = Object.entries(errors).filter(([_, message]: any) => message);
 
     if (!showValidationSummary || errorMessages.length === 0) {
       return null;
@@ -855,27 +862,25 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
           severity="error"
           sx={{ mb: 2 }}
           icon={<ErrorIcon />}>
-
+          <Box>
             <Typography variant="subtitle2">
               Please fix the following {errorCount} error{errorCount !== 1 ? 's' : ''}:
             </Typography>
             <Box component="ul" sx={{ m: 0, pl: 4 }}>
-              {errorMessages.
-            filter(([field, _]) => validationSeverity[field] === 'error').
-            map(([field, message]) => {
-              const fieldDef = allFields.find((f) => f.name === field);
-              return (
-                <Typography
-                  key={field}
-                  component="li"
-                  variant="body2"
-                  sx={{ mb: 0.5 }}>
-
-                      {fieldDef?.label}: {message}
-                    </Typography>);
-
-            })}
+              {errorMessages
+                .filter(([field, _]) => validationSeverity[field] === 'error')
+                .map(([field, message]) => {
+                  const fieldDef = allFields.find((f) => f.name === field);
+                  return (
+                    <li key={field} style={{ marginBottom: '4px' }}>
+                      <Typography variant="body2">
+                        {`${fieldDef?.label}: ${message}`}
+                      </Typography>
+                    </li>
+                  );
+                })}
             </Box>
+          </Box>
           </Alert>
         }
         
@@ -884,27 +889,25 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
           severity="warning"
           sx={{ mb: 2 }}
           icon={<WarningIcon />}>
-
+          <Box>
             <Typography variant="subtitle2">
               {warningCount} warning{warningCount !== 1 ? 's' : ''}:
             </Typography>
             <Box component="ul" sx={{ m: 0, pl: 4 }}>
-              {errorMessages.
-            filter(([field, _]) => validationSeverity[field] === 'warning').
-            map(([field, message]) => {
-              const fieldDef = allFields.find((f) => f.name === field);
-              return (
-                <Typography
-                  key={field}
-                  component="li"
-                  variant="body2"
-                  sx={{ mb: 0.5 }}>
-
-                      {fieldDef?.label}: {message}
-                    </Typography>);
-
-            })}
+              {errorMessages
+                .filter(([field, _]) => validationSeverity[field] === 'warning')
+                .map(([field, message]) => {
+                  const fieldDef = allFields.find((f) => f.name === field);
+                  return (
+                    <li key={field} style={{ marginBottom: '4px' }}>
+                      <Typography variant="body2">
+                        {`${fieldDef?.label}: ${message}`}
+                      </Typography>
+                    </li>
+                  );
+                })}
             </Box>
+          </Box>
           </Alert>
         }
       </Box>);
@@ -974,7 +977,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
                 Form Completion: {formProgress}%
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {Object.keys(touched).length} of {allFields.filter((f) => !f.hidden).length} fields visited
+                {Object.keys(touched).length} of {allFields.filter((f: any) => !f.hidden).length} fields visited
               </Typography>
             </Box>
             <LinearProgress
@@ -993,7 +996,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
         }
         
         
-        {sections.map((section, sectionIndex) =>
+        {sections.map((section, sectionIndex: any) =>
         <Box
           key={sectionIndex}
           sx={{
@@ -1023,7 +1026,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
             
             
             <Grid container spacing={section.spacing || 2}>
-              {(section.fields || []).map((field) => {
+              {(section.fields || []).map((field: any) => {
               if (field.hidden) return null;
 
               // Calculate grid size based on columns or field's specific sizes

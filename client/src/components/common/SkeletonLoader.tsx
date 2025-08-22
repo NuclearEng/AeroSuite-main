@@ -39,7 +39,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 
   // Generate multiple items
   const renderMultiple = (renderFn: () => ReactElement) => {
-    return [...Array(count)].map((_, index) =>
+    return [...Array(count)].map((_, index: any) =>
     <Box key={index} sx={{ mb: index < count - 1 ? 1 : 0 }}>
         {renderFn()}
       </Box>
@@ -167,7 +167,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
             borderColor: 'divider'
           }}>
 
-          {[...Array(5)].map((_, idx) =>
+          {[...Array(5)].map((_, idx: any) =>
           <Box key={idx} sx={{ flex: idx === 0 ? 2 : 1, px: 1 }}>
               <BaseSkeleton variant="text" width="80%" height={24} />
             </Box>
@@ -175,7 +175,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         </Box>
         
         
-        {[...Array(count)].map((_, rowIdx) =>
+        {[...Array(count)].map((_, rowIdx: any) =>
         <Box
           key={rowIdx}
           sx={{
@@ -186,7 +186,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
             borderColor: 'divider'
           }}>
 
-            {[...Array(5)].map((_, colIdx) =>
+            {[...Array(5)].map((_, colIdx: any) =>
           <Box key={colIdx} sx={{ flex: colIdx === 0 ? 2 : 1, px: 1 }}>
                 <BaseSkeleton
               variant={colIdx < 2 ? "text" : "rectangular"}
@@ -211,7 +211,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
       <Box sx={{ width: '100%', ...sx }}>
         
         <Box sx={{ display: 'flex', gap: 2, mb: 3, flexWrap: 'wrap' }}>
-          {[...Array(4)].map((_, idx) =>
+          {[...Array(4)].map((_, idx: any) =>
           <Box
             key={idx}
             sx={{

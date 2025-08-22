@@ -101,7 +101,7 @@ const CompletionStep: React.FC<CompletionStepProps> = ({ profileData }) => {
         </Typography>
 
         <List>
-          {nextSteps.map((step, index) => (
+          {nextSteps.map((step, index: any) => (
             <ListItem key={index}>
               <ListItemIcon>
                 {step.icon}

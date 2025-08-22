@@ -84,7 +84,7 @@ const ScreenReaderCompatibility: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [announceMessage, setAnnounceMessage] = useState('');
   const [showLiveRegionMessage, setShowLiveRegionMessage] = useState(false);
-  const [liveRegionPoliteness, setLiveRegionPoliteness] = useState<'polite' | 'assertive'>('polite');
+  const [liveRegionPoliteness, setLiveRegionPoliteness] = useState<any>('polite');
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);

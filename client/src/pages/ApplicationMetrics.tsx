@@ -48,7 +48,7 @@ const ApplicationMetrics: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3} sx={{ mt: 2 }}>
-        {metrics.map((metric, index) => (
+        {metrics.map((metric, index: any) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
             <Card>
               <CardContent>

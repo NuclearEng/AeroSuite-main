@@ -1,0 +1,15 @@
+Command: node scripts/comprehensive-test-runner.js
+npm error Lifecycle script `type-check` failed with error:
+npm error code 1
+npm error path /Users/tannercoker/AeroSuite-main-1/client
+npm error workspace aerosuite-client@1.0.0
+npm error location /Users/tannercoker/AeroSuite-main-1/client
+npm error command failed
+npm error command sh -c tsc --noEmit
+npm error Lifecycle script `type-check` failed with error:
+npm error code 1
+npm error path /Users/tannercoker/AeroSuite-main-1/client
+npm error workspace aerosuite-client@1.0.0
+npm error location /Users/tannercoker/AeroSuite-main-1/client
+npm error command failed
+npm error command sh -c tsc --noEmit

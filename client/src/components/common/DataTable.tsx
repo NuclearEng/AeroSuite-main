@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { ChangeEvent, useState, useMemo, useEffect, useRef } from 'react';
 import {
   Box,
   Table,
@@ -202,22 +202,22 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
   const theme = useTheme();
 
   // States
-  const [orderBy, setOrderBy] = useState<keyof T | undefined>(defaultSortBy);
-  const [order, setOrder] = useState<Order>(defaultOrder);
-  const [selected, setSelected] = useState<T[]>([]);
+  const [orderBy, setOrderBy] = useState<any>(defaultSortBy);
+  const [order, setOrder] = useState<any>(defaultOrder);
+  const [selected, setSelected] = useState<any>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [moreActionsRow, setMoreActionsRow] = useState<T | null>(null);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [moreActionsRow, setMoreActionsRow] = useState<any>(null);
 
   // New states for enhanced features
-  const [columnWidths, setColumnWidths] = useState<Record<string, number>>({});
-  const [filters, setFilters] = useState<Record<string, any>>(initialFilters || {});
-  const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
-  const [filterColumn, setFilterColumn] = useState<keyof T | null>(null);
-  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
-  const [exportAnchorEl, setExportAnchorEl] = useState<null | HTMLElement>(null);
+  const [columnWidths, setColumnWidths] = useState<any>({});
+  const [filters, setFilters] = useState<any>(initialFilters || {});
+  const [filterAnchorEl, setFilterAnchorEl] = useState<any>(null);
+  const [filterColumn, setFilterColumn] = useState<any>(null);
+  const [expandedRows, setExpandedRows] = useState<any>({});
+  const [exportAnchorEl, setExportAnchorEl] = useState<any>(null);
 
   // Reset selection when rows change
   useEffect(() => {
@@ -245,7 +245,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
   // Filter rows based on search term and column filters
   const filteredRows = useMemo(() => {
     if (!searchTerm && Object.keys(filters).length === 0) return safeRows;
-    return safeRows.filter((row) => {
+    return safeRows.filter((row: any) => {
       // First apply search term filter
       const matchesSearchTerm = !searchTerm || Object.keys(row).some((key) => {
         const value = row[key];
@@ -344,7 +344,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
   // Handle row selection
   const handleSelect = (row: T) => {
     const selectedIndex = selected.findIndex(
-      (r) => r[keyField] === row[keyField]
+      (r: any) => r[keyField] === row[keyField]
     );
 
     let newSelected: T[] = [];
@@ -380,7 +380,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
   };
 
   // Handle page change
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
 
@@ -412,7 +412,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
 
   // Check if row is selected
   const isSelected = (row: T) => {
-    return selected.findIndex((r) => r[keyField] === row[keyField]) !== -1;
+    return selected.findIndex((r: any) => r[keyField] === row[keyField]) !== -1;
   };
 
   // Handle menu open for row actions
@@ -455,7 +455,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
 
   // Handle column resize
   const handleColumnResize = (columnId: keyof T, newWidth: number) => {
-    setColumnWidths((prevWidths) => ({
+    setColumnWidths((prevWidths: any) => ({
       ...prevWidths,
       [String(columnId)]: Math.max(
         headCells.find((h) => h.id === columnId)?.minWidth || 100,
@@ -487,7 +487,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
       delete newFilters[String(columnId)];
       setFilters(newFilters);
     } else {
-      setFilters((prevFilters) => ({
+      setFilters((prevFilters: any) => ({
         ...prevFilters,
         [String(columnId)]: value
       }));
@@ -513,7 +513,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
 
   // Handle row expansion toggle
   const handleRowExpand = (rowKey: string) => {
-    setExpandedRows((prev) => ({
+    setExpandedRows((prev: any) => ({
       ...prev,
       [rowKey]: !prev[rowKey]
     }));
@@ -541,9 +541,9 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
 
       if (format === 'csv') {
         // Generate CSV
-        const headers = headCells.map((cell) => cell.label).join(',');
-        const rows = sortedRows.map((row) =>
-        headCells.map((cell) => {
+        const headers = headCells.map((cell: any) => cell.label).join(',');
+        const rows = sortedRows.map((row: any) =>
+        headCells.map((cell: any) => {
           const value = row[cell.id];
           return typeof value === 'string' && value.includes(',') ?
           `"${value}"` :
@@ -800,7 +800,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
               }
               
               
-              {safeHeadCells.map((headCell) => {
+              {safeHeadCells.map((headCell: any) => {
                 const isFiltered = filters[String(headCell.id)] !== undefined;
                 const width = columnWidths[String(headCell.id)] || headCell.width;
 
@@ -940,14 +940,14 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
           <TableBody>
             
             {loading ?
-            Array.from({ length: rowsPerPage }).map((_, index) =>
+            Array.from({ length: rowsPerPage }).map((_, index: any) =>
             <TableRow key={index}>
                   {selectable &&
               <TableCell padding="checkbox">
                       <Skeleton variant="rectangular" width={24} height={24} />
                     </TableCell>
               }
-                  {safeHeadCells.map((_, cellIndex) =>
+                  {safeHeadCells.map((_, cellIndex: any) =>
               <TableCell key={cellIndex}>
                       <SkeletonLoader width="100%" />
                     </TableCell>
@@ -1028,7 +1028,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
 
                 <>
                         
-                        {paginatedRows.map((row, index) => {
+                        {paginatedRows.map((row, index: any) => {
                     const isItemSelected = isSelected(row);
                     const labelId = `enhanced-table-checkbox-${index}`;
                     const rowKey = row[keyField] ? String(row[keyField]) : `row-${index}`;
@@ -1100,7 +1100,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
                           }
                                 
                                 
-                                {safeHeadCells.map((headCell, cellIndex) => {
+                                {safeHeadCells.map((headCell, cellIndex: any) => {
                             const value = row[headCell.id];
                             const cellContent = headCell.format ?
                             headCell.format(value, row) :
@@ -1254,7 +1254,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
         
         {actions.length > 0 && onEdit && <Divider />}
         
-        {actions.map((action, index) =>
+        {actions.map((action, index: any) =>
         <MenuItem
           key={index}
           onClick={() => {
@@ -1371,7 +1371,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
                       }}
                       renderValue={(selected) =>
                       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {(selected as any[]).map((value) => {
+                            {(selected as any[]).map((value: any) => {
                           const option = column.filterOptions?.find((o) => o.value === value);
                           return (
                             <Chip key={String(value)} label={option?.label || value} size="small" />);
@@ -1380,7 +1380,7 @@ function DataTable<T extends {[key: string]: any;}>(props: DataTableProps<T>) {
                           </Box>
                       }>
 
-                        {column.filterOptions.map((option) =>
+                        {column.filterOptions.map((option: any) =>
                       <MenuItem key={String(option.value)} value={option.value}>
                             {option.label}
                           </MenuItem>

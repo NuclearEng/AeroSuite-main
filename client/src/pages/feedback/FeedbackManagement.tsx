@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -61,19 +61,19 @@ const FeedbackManagement: React.FC = () => {
   const navigate = useNavigate();
 
   // State
-  const [loading, setLoading] = useState<boolean>(true);
-  const [feedback, setFeedback] = useState<Feedback[]>([]);
-  const [statistics, setStatistics] = useState<FeedbackStatistics | null>(null);
-  const [totalItems, setTotalItems] = useState<number>(0);
-  const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const [selectedFeedback, setSelectedFeedback] = useState<Feedback | null>(null);
-  const [tabValue, setTabValue] = useState<number>(0);
-  const [filterDialogOpen, setFilterDialogOpen] = useState<boolean>(false);
-  const [filters, setFilters] = useState<FeedbackFilterOptions>({});
-  const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState<any>(true);
+  const [feedback, setFeedback] = useState<any>([]);
+  const [statistics, setStatistics] = useState<any>(null);
+  const [totalItems, setTotalItems] = useState<any>(0);
+  const [page, setPage] = useState<any>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<any>(10);
+  const [selectedFeedback, setSelectedFeedback] = useState<any>(null);
+  const [tabValue, setTabValue] = useState<any>(0);
+  const [filterDialogOpen, setFilterDialogOpen] = useState<any>(false);
+  const [filters, setFilters] = useState<any>({});
+  const [detailDialogOpen, setDetailDialogOpen] = useState<any>(false);
+  const [formErrors, setFormErrors] = useState<any>>({});
+  const [errorMessage, setErrorMessage] = useState<any>(null);
 
   // Load feedback data
   useEffect(() => {
@@ -94,7 +94,7 @@ const FeedbackManagement: React.FC = () => {
       setFeedback(response.data);
       setTotalItems(response.pagination.total);
     } catch (_error) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
@@ -105,7 +105,7 @@ const FeedbackManagement: React.FC = () => {
       const stats = await feedbackService.getFeedbackStatistics(filters);
       setStatistics(stats);
     } catch (_error) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     }
   };
 
@@ -115,7 +115,7 @@ const FeedbackManagement: React.FC = () => {
   };
 
   // Handle page change
-  const handlePageChange = (event: unknown, newPage: number) => {
+  const handlePageChange = (event: any, newPage: number) => {
     setPage(newPage);
   };
 
@@ -187,7 +187,7 @@ const FeedbackManagement: React.FC = () => {
       }
     } catch (error: any) {
       setErrorMessage(error?.message || 'Error updating feedback');
-      console.error("Error:", err);
+      console.error("Error:", error);
     }
   };
 
@@ -204,7 +204,7 @@ const FeedbackManagement: React.FC = () => {
         }
       } catch (error: any) {
         setErrorMessage(error?.message || 'Error deleting feedback');
-        console.error("Error:", err);
+        console.error("Error:", error);
       }
     }
   };
@@ -230,13 +230,13 @@ const FeedbackManagement: React.FC = () => {
     if (!statistics) return { pieData: [], lineData: [] };
 
     // Prepare pie chart data for feedback types
-    const pieData = statistics.byType.map((item) => ({
+    const pieData = statistics.byType.map((item: any) => ({
       name: item._id || '',
       value: item.count
     }));
 
     // Prepare line chart data for recent trends
-    const lineData = statistics.recentTrend.map((item) => ({
+    const lineData = statistics.recentTrend.map((item: any) => ({
       date: item._id,
       count: item.count,
       avgRating: item.avgRating || 0
@@ -464,7 +464,7 @@ const FeedbackManagement: React.FC = () => {
                   Status Breakdown
                 </Typography>
                 <Grid container spacing={2}>
-                  {statistics.byStatus.map((status) =>
+                  {statistics.byStatus.map((status: any) =>
                   <Grid item xs={6} sm={3} md={2} key={status._id}>
                       <Paper
                       elevation={1}

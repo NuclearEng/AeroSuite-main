@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -66,12 +66,12 @@ const UserSettings: React.FC = () => {
   const { mode, setMode } = useThemeContext();
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
   const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] = useState(false);
 
   // Settings state
-  const [settings, setSettings] = useState<UserSettings>({
+  const [settings, setSettings] = useState<any>({
     theme: mode,
     language: 'en',
     notifications: {
@@ -184,7 +184,7 @@ const UserSettings: React.FC = () => {
 
       setSuccess('Settings saved successfully');
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to save settings');
     } finally {
       setLoading(false);

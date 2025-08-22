@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { 
   Box, 
   TextField, 
@@ -92,7 +92,7 @@ export const AutosaveForm: React.FC<AutosaveFormProps> = ({
       setSubmitSuccess(true);
       setTimeout(() => setSubmitSuccess(false), 3000);
     } catch (_error) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -119,7 +119,7 @@ export const AutosaveForm: React.FC<AutosaveFormProps> = ({
         </Alert>
       )}
       
-      {fields.map((field) => (
+      {fields.map((field: any) => (
         <TextField
           key={field.name}
           margin="normal"

@@ -32,8 +32,8 @@ function DataTable<T extends Record<string, any>>({
   loading = false,
   pagination,
 }: DataTableProps<T>) {
-  const [sortKey, setSortKey] = useState<keyof T | null>(null);
-  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+  const [sortKey, setSortKey] = useState<any>(null);
+  const [sortDir, setSortDir] = useState<any>('asc');
 
   const handleSort = (key: keyof T) => {
     let direction: 'asc' | 'desc' = 'asc';
@@ -94,7 +94,7 @@ function DataTable<T extends Record<string, any>>({
               </td>
             </tr>
           ) : (
-            sortedData.map((row, i) => (
+            sortedData.map((row, i: any) => (
               <tr
                 key={i}
                 style={{ cursor: onRowSelect ? 'pointer' : 'default', background: i % 2 === 0 ? '#fff' : '#fafafa' }}

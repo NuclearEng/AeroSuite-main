@@ -62,7 +62,7 @@ const SettingsPage: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [activeTab, setActiveTab] = useState(0);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<any>(null);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
@@ -107,7 +107,7 @@ const SettingsPage: React.FC = () => {
                 },
               }}
             >
-              {tabs.map((tab, index) => (
+              {tabs.map((tab, index: any) => (
                 <Tab
                   key={index}
                   label={tab.label}
@@ -121,7 +121,7 @@ const SettingsPage: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={9} lg={10}>
             <Box p={3}>
-              {tabs.map((tab, index) => (
+              {tabs.map((tab, index: any) => (
                 <TabPanel key={index} value={activeTab} index={index}>
                   {tab.content}
                 </TabPanel>

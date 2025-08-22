@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -108,15 +108,15 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
   isEdit = false,
   inspectionId
 }) => {
-  const [formValues, setFormValues] = useState<InspectionFormData>({
+  const [formValues, setFormValues] = useState<any>({
     ...initialFormValues,
     ...initialData
   });
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(isEdit);
-  const [customers, setCustomers] = useState<any[]>([]);
-  const [suppliers, setSuppliers] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<any>([]);
+  const [suppliers, setSuppliers] = useState<any>([]);
   const [loadingCustomers, setLoadingCustomers] = useState(false);
   const [loadingSuppliers, setLoadingSuppliers] = useState(false);
 
@@ -184,19 +184,19 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
   }, [open]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
 
     if (!name) return;
 
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       [name]: value
     }));
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
       }));
@@ -205,7 +205,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
 
   // Handle date change
   const handleDateChange = (date: Date | null) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       scheduledDate: date
     }));
@@ -213,7 +213,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
 
   // Handle tag changes
   const handleTagsChange = (newValue: string[]) => {
-    setFormValues((prev) => ({
+    setFormValues((prev: any) => ({
       ...prev,
       tags: newValue
     }));
@@ -274,8 +274,8 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
 
       onSave(savedInspection);
       onClose();
-    } catch (error: any) {
-      console.error("Error:", error);
+    } catch (_error: any) {
+      console.error("Error:", _error);
     } finally {
       setIsSubmitting(false);
     }
@@ -331,7 +331,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                   label="Inspection Type"
                   onChange={handleChange as any}>
 
-                    {inspectionTypeOptions.map((option) =>
+                    {inspectionTypeOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -350,7 +350,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                   label="Status"
                   onChange={handleChange as any}>
 
-                    {statusOptions.map((option) =>
+                    {statusOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -369,7 +369,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                   label="Priority"
                   onChange={handleChange as any}>
 
-                    {priorityOptions.map((option) =>
+                    {priorityOptions.map((option: any) =>
                   <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -406,7 +406,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                   onChange={handleChange as any}
                   disabled={loadingCustomers}>
 
-                    {customers.map((customer) =>
+                    {customers.map((customer: any) =>
                   <MenuItem key={customer._id} value={customer._id}>
                         {customer.name}
                       </MenuItem>
@@ -427,7 +427,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                   disabled={loadingSuppliers}>
 
                     <MenuItem value="">None</MenuItem>
-                    {suppliers.map((supplier) =>
+                    {suppliers.map((supplier: any) =>
                   <MenuItem key={supplier._id} value={supplier._id}>
                         {supplier.name}
                       </MenuItem>
@@ -483,7 +483,7 @@ const InspectionFormModal: React.FC<InspectionFormModalProps> = ({
                 value={formValues.tags}
                 onChange={(_, newValue) => handleTagsChange(newValue)}
                 renderTags={(value, getTagProps) =>
-                value.map((option, index) =>
+                value.map((option, index: any) =>
                 <Chip
                   label={option}
                   {...getTagProps({ index })}

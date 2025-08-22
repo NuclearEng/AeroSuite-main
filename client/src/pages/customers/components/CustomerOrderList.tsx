@@ -73,11 +73,11 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
   onOrderUpdated
 }) => {
   const navigate = useNavigate();
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
 
   // Load orders
   const loadOrders = async () => {
@@ -93,7 +93,7 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
 
       setOrders(response.orders || []);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to load orders');
     } finally {
       setLoading(false);
@@ -136,7 +136,7 @@ const CustomerOrderList: React.FC<CustomerOrderListProps> = ({
       loadOrders();
       if (onOrderUpdated) onOrderUpdated();
     } catch (error: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(error.message || 'Failed to delete order');
     } finally {
       setDeleteDialogOpen(false);

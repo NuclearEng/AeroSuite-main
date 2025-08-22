@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
@@ -162,11 +162,11 @@ const EditSupplier: React.FC = () => {
   const { id } = useParams<{id: string;}>();
 
   // Form state
-  const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [formValues, setFormValues] = useState<any>(initialFormValues);
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
@@ -190,7 +190,7 @@ const EditSupplier: React.FC = () => {
         setFormValues(data);
         setError(null);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load supplier data');
       } finally {
         setLoading(false);
@@ -209,7 +209,7 @@ const EditSupplier: React.FC = () => {
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues((prev) => {
+      setFormValues((prev: any) => {
         if (parent === 'address') {
           return {
             ...prev,
@@ -222,7 +222,7 @@ const EditSupplier: React.FC = () => {
         return prev;
       });
     } else {
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [name]: value
       }));
@@ -230,7 +230,7 @@ const EditSupplier: React.FC = () => {
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
       }));
@@ -439,7 +439,7 @@ const EditSupplier: React.FC = () => {
                     label="Industry"
                     onChange={handleChange}>
 
-                    {industryOptions.map((option) =>
+                    {industryOptions.map((option: any) =>
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -458,7 +458,7 @@ const EditSupplier: React.FC = () => {
                     label="Status"
                     onChange={handleChange}>
 
-                    {statusOptions.map((option) =>
+                    {statusOptions.map((option: any) =>
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -596,7 +596,7 @@ const EditSupplier: React.FC = () => {
                   value={formValues.certifications}
                   onChange={(_, value) => handleCertificationsChange(value)}
                   renderTags={(value, getTagProps) =>
-                  value.map((option, index) =>
+                  value.map((option, index: any) =>
                   <Chip
                   label={option}
                   {...getTagProps({ index })}
@@ -623,7 +623,7 @@ const EditSupplier: React.FC = () => {
                   value={formValues.supplierTags}
                   onChange={(_, value) => handleTagsChange(value)}
                   renderTags={(value, getTagProps) =>
-                  value.map((option, index) =>
+                  value.map((option, index: any) =>
                   <Chip
                   label={option}
                   {...getTagProps({ index })}

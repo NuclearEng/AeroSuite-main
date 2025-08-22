@@ -186,11 +186,11 @@ const CustomerDetail: React.FC = () => {
   const theme = useTheme();
 
   // State
-  const [customer, setCustomer] = useState<Customer | null>(null);
-  const [inspections, setInspections] = useState<any[]>([]);
-  const [suppliers, setSuppliers] = useState<any[]>([]);
+  const [customer, setCustomer] = useState<any>(null);
+  const [inspections, setInspections] = useState<any>([]);
+  const [suppliers, setSuppliers] = useState<any>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [tabValue, setTabValue] = useState(0);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [snackbar, setSnackbar] = useState<{
@@ -219,7 +219,7 @@ const CustomerDetail: React.FC = () => {
         setInspections(mockInspections);
         setSuppliers(mockSuppliers);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load customer details');
       } finally {
         setLoading(false);
@@ -247,7 +247,7 @@ const CustomerDetail: React.FC = () => {
       await customerService.deleteCustomer(customer._id);
       navigate('/customers');
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to delete customer');
       setLoading(false);
     }
@@ -554,10 +554,10 @@ const CustomerDetail: React.FC = () => {
                       Additional Information
                     </Typography>
                     <Grid container spacing={2}>
-                      {Object.entries(customer.customFields).map(([key, value]) =>
+                      {Object.entries(customer.customFields).map(([key, value]: any) =>
                     <Grid item xs={12} sm={6} md={4} key={key}>
                           <Typography variant="body2">
-                            <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:</strong> {value as string}
+                            <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, (str: string) => str.toUpperCase())}:</strong> {value as string}
                           </Typography>
                         </Grid>
                     )}
@@ -662,9 +662,7 @@ const CustomerDetail: React.FC = () => {
         onClose={() => setDeleteDialogOpen(false)}
         onConfirm={handleDeleteConfirm}
         title="Delete Customer"
-        content="Are you sure you want to delete this customer? This action cannot be undone."
-        confirmText="Delete"
-        confirmColor="error" />
+        message="Are you sure you want to delete this customer? This action cannot be undone." />
 
 
       

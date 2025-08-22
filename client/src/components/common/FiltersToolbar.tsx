@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Paper,
@@ -90,6 +90,10 @@ export interface FiltersToolbarProps {
   loading?: boolean;
   showActiveFilters?: boolean;
   showFilterButton?: boolean;
+  initialValues?: Record<string, any>;
+  compact?: boolean;
+  sx?: any;
+  showFilterCount?: boolean;
   maxShownFilters?: number;
   collapsible?: boolean;
   defaultCollapsed?: boolean;
@@ -119,9 +123,9 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
   const theme = useTheme();
 
   // State for filters menu
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedFilter, setSelectedFilter] = useState<FilterDefinition | null>(null);
-  const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const [selectedFilter, setSelectedFilter] = useState<any>(null);
+  const [filterAnchorEl, setFilterAnchorEl] = useState<any>(null);
   const [collapsed, setCollapsed] = useState(defaultCollapsed && collapsible);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
 
@@ -216,7 +220,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
 
   // Handle clear filter
   const handleClearFilter = (id: string) => {
-    const currentFilters = safeActiveFilters.filter((f) => f.id !== id);
+    const currentFilters = safeActiveFilters.filter((f: any) => f.id !== id);
     onFilterChange(currentFilters);
   };
 
@@ -347,7 +351,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                   <em>None</em>
                 </MenuItem>
               }
-              {filter.options?.map((option) =>
+              {filter.options?.map((option: any) =>
               <MenuItem key={String(option.value)} value={typeof option.value === 'boolean' ? String(option.value) : option.value}>
                   {option.label}
                 </MenuItem>
@@ -379,7 +383,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
                 return `${selected.length} selected`;
               }}>
 
-              {filter.options?.map((option) =>
+              {filter.options?.map((option: any) =>
               <MenuItem key={String(option.value)} value={typeof option.value === 'boolean' ? String(option.value) : option.value}>
                   <Checkbox checked={(value || []).indexOf(option.value) > -1} />
                   <ListItemText primary={option.label} />
@@ -523,7 +527,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
               value={value || ''}
               onChange={(e) => handleFilterValueChange(filter.id, e.target.value)}>
 
-              {filter.options?.map((option) =>
+              {filter.options?.map((option: any) =>
               <FormControlLabel
                 key={String(option.value)}
                 value={option.value}
@@ -548,7 +552,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
               aria-label={filter.label}
               sx={{ flexWrap: 'wrap' }}>
 
-              {filter.options?.map((option) =>
+              {filter.options?.map((option: any) =>
               <ToggleButton
                 key={String(option.value)}
                 value={option.value}
@@ -628,7 +632,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
         
         {showActiveFilters && visibleFilters.length > 0 &&
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-            {visibleFilters.map((filter) => {
+            {visibleFilters.map((filter: any) => {
             const filterDef = getFilterById(filter.id);
             if (!filterDef) return null;
 
@@ -724,7 +728,7 @@ const FiltersToolbar: React.FC<FiltersToolbarProps> = ({
             gap: 2
           }}>
 
-            {safeFilters.map((filter) =>
+            {safeFilters.map((filter: any) =>
           <Box
             key={filter.id}
             sx={{

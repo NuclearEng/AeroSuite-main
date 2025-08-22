@@ -32,15 +32,15 @@ import customerService, { Customer } from '../../services/customer.service';
 
 const CustomerList: React.FC = () => {
   const navigate = useNavigate();
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [customers, setCustomers] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
 
   // Modal states
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
 
   // Snackbar state
   const [snackbar, setSnackbar] = useState<{
@@ -61,7 +61,7 @@ const CustomerList: React.FC = () => {
       const response = await customerService.getCustomers();
       setCustomers(response.customers || []);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to load customers');
       setSnackbar({
         open: true,

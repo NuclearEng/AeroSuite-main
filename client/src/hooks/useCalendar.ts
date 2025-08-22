@@ -45,7 +45,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       
       const fetchedEvents = await CalendarService.getEvents(start || startDate, end || endDate);
       setEvents(fetchedEvents);
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to load calendar events'));
       console.error('Error loading calendar events:', err);
     } finally {
@@ -61,7 +61,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       
       const fetchedEvents = await CalendarService.getEventsByType(type, start || startDate, end || endDate);
       setEvents(fetchedEvents);
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error(`Failed to load ${type} events`));
       console.error(`Error loading ${type} events:`, err);
     } finally {
@@ -82,7 +82,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       }
       
       return newEvent;
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to create event'));
       console.error('Error creating event:', err);
       return null;
@@ -104,7 +104,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       }
       
       return updatedEvent;
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to update event'));
       console.error('Error updating event:', err);
       return null;
@@ -124,7 +124,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       }
       
       return success;
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to delete event'));
       console.error('Error deleting event:', err);
       return false;
@@ -139,7 +139,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       
       const fetchedIntegrations = await CalendarService.getIntegrations();
       setIntegrations(fetchedIntegrations);
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to load calendar integrations'));
       console.error('Error loading calendar integrations:', err);
     } finally {
@@ -160,7 +160,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       }
       
       return success;
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error(`Failed to connect to ${type} calendar`));
       console.error(`Error connecting to ${type} calendar:`, err);
       return false;
@@ -180,7 +180,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       }
       
       return success;
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error(`Failed to disconnect from ${type} calendar`));
       console.error(`Error disconnecting from ${type} calendar:`, err);
       return false;
@@ -203,7 +203,7 @@ export function useCalendar(options: UseCalendarOptions = {}): UseCalendarResult
       }
       
       return success;
-    } catch (_err) {
+    } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to sync calendars'));
       console.error('Error syncing calendars:', err);
       return false;

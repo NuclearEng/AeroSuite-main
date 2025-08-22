@@ -82,7 +82,7 @@ const AIAnalysis: React.FC = () => {
           <Typography variant="h6" gutterBottom>
             Latest Insights
           </Typography>
-          {insights.map((insight, index) => (
+          {insights.map((insight, index: any) => (
             <Card key={index} sx={{ mb: 2 }}>
               <CardContent>
                 <Box display="flex" alignItems="flex-start">

@@ -126,7 +126,7 @@ const LazyDataTable: React.FC<LazyDataTableProps> = ({
   const RenderSkeleton = () =>
   <Box sx={{ width: '100%' }}>
       <Skeleton variant="rectangular" height={56} animation="wave" />
-      {Array.from({ length: Math.min(5, pageSize) }).map((_, i) =>
+      {Array.from({ length: Math.min(5, pageSize) }).map((_, i: any) =>
     <Skeleton key={i} variant="rectangular" height={52} animation="wave" sx={{ mt: 0.5 }} />
     )}
     </Box>;

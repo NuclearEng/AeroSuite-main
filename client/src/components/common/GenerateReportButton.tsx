@@ -37,12 +37,12 @@ const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({
   fullWidth = false
 }) => {
   // Menu state
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
   const open = Boolean(anchorEl);
   
   // Dialog state
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogAction, setDialogAction] = useState<'download' | 'preview'>('download');
+  const [dialogAction, setDialogAction] = useState<any>('download');
   
   // Options state
   const [includePhotos, setIncludePhotos] = useState(true);
@@ -54,10 +54,10 @@ const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({
   // Snackbar state
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<any>('success');
   
   // Report URL for preview
-  const [reportUrl, setReportUrl] = useState<string | null>(null);
+  const [reportUrl, setReportUrl] = useState<any>(null);
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   
   // Handlers
@@ -120,7 +120,7 @@ const GenerateReportButton: React.FC<GenerateReportButtonProps> = ({
       
       setDialogOpen(false);
     } catch (_error) {
-      console.error("Error:", err);
+      console.error("Error:", _error);
       setSnackbarMessage('Error generating report');
       setSnackbarSeverity('error');
       setSnackbarOpen(true);

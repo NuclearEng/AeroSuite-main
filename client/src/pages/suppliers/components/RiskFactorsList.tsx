@@ -103,7 +103,7 @@ const RiskFactorsList: React.FC<RiskFactorsListProps> = ({
           No risk factors found matching "{searchTerm}"
         </Typography>
       ) : (
-        Object.entries(groupedFactors).map(([category, factors]) => (
+        Object.entries(groupedFactors).map(([category, factors]: any) => (
           <Box key={category} sx={{ mb: 3 }}>
             <Box sx={{ 
               display: 'flex', 
@@ -128,7 +128,7 @@ const RiskFactorsList: React.FC<RiskFactorsListProps> = ({
             </Box>
             
             <Grid container spacing={2}>
-              {factors.map(factor => (
+              {factors.map((factor: any) => (
                 <Grid item xs={12} md={6} lg={4} key={factor._id || factor.name}>
                   <RiskFactorCard
                     factor={factor}

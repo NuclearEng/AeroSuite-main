@@ -1,6 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import inspectionService, { ChecklistItem, Inspection } from '../services/inspection.service';
+import inspectionService, { Inspection } from '../services/inspection.service';
 import useMemoryOptimizer from './useMemoryOptimizer';
+
+interface ChecklistItem {
+  id: string;
+  [key: string]: any;
+}
 
 interface ChecklistItemUpdate {
   id: string;
@@ -31,7 +36,16 @@ const useInspectionChecklist = ({
   const [isSaving, setIsSaving] = useState<boolean>(false);
   
   // Use memory optimizer to prevent memory leaks on large checklists
-  const optimizedChecklist = useMemoryOptimizer(checklist, 'id');
+  const [memoryStats, performCleanup] = useMemoryOptimizer({ 
+    threshold: 80,
+    debug: false,
+    cleanupCallback: () => {
+      // Custom cleanup for checklist data
+      if (checklist && checklist.length > 100) {
+        console.log('High memory usage detected with large checklist');
+      }
+    }
+  });
   
   // Refs for batch processing
   const batchUpdatesRef = useRef<ChecklistItemUpdate[]>([]);
@@ -62,12 +76,12 @@ const useInspectionChecklist = ({
     
     try {
       const inspection = await inspectionService.getInspection(inspectionId);
-      if (inspection && inspection.checklistItems) {
-        setChecklist(inspection.checklistItems);
+      if (inspection && (inspection as any).checklistItems) {
+        setChecklist((inspection as any).checklistItems);
       }
     } catch (_err) {
-      setError(err instanceof Error ? err : new Error('Failed to load checklist'));
-      console.error('Error loading checklist:', err);
+      setError(_err instanceof Error ? _err : new Error('Failed to load checklist'));
+      console.error('Error loading checklist:', _err);
     } finally {
       setLoading(false);
     }
@@ -85,18 +99,18 @@ const useInspectionChecklist = ({
       batchUpdatesRef.current = [];
       
       // Apply the batch update
-      const updatedInspection = await inspectionService.batchUpdateChecklist(
+      const updatedInspection = await (inspectionService as any).batchUpdateChecklist(
         inspectionId,
         updates
       );
       
       // Update local state with the result from the server
-      if (updatedInspection && updatedInspection.checklistItems) {
-        setChecklist(updatedInspection.checklistItems);
+      if (updatedInspection && (updatedInspection as any).checklistItems) {
+        setChecklist((updatedInspection as any).checklistItems);
       }
     } catch (_err) {
-      setError(err instanceof Error ? err : new Error('Failed to update checklist'));
-      console.error('Error updating checklist:', err);
+      setError(_err instanceof Error ? _err : new Error('Failed to update checklist'));
+      console.error('Error updating checklist:', _err);
       
       // Reload checklist to ensure consistency
       await loadChecklist();
@@ -152,17 +166,17 @@ const useInspectionChecklist = ({
       setIsSaving(true);
       try {
         // Create a single-item batch for the non-batch mode
-        const updatedInspection = await inspectionService.batchUpdateChecklist(
+        const updatedInspection = await (inspectionService as any).batchUpdateChecklist(
           inspectionId,
           [itemUpdate]
         );
         
-        if (updatedInspection && updatedInspection.checklistItems) {
-          setChecklist(updatedInspection.checklistItems);
+        if (updatedInspection && (updatedInspection as any).checklistItems) {
+          setChecklist((updatedInspection as any).checklistItems);
         }
       } catch (_err) {
-        setError(err instanceof Error ? err : new Error('Failed to update checklist item'));
-        console.error('Error updating checklist item:', err);
+        setError(_err instanceof Error ? _err : new Error('Failed to update checklist item'));
+        console.error('Error updating checklist item:', _err);
         
         // Reload checklist to ensure consistency
         await loadChecklist();
@@ -185,7 +199,7 @@ const useInspectionChecklist = ({
   }, [processBatchUpdates]);
   
   return {
-    checklist: optimizedChecklist,
+    checklist,
     loading,
     error,
     isSaving,

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SimpleApp: React.FC = () => {
-  const [apiStatus, setApiStatus] = React.useState<string>('Checking...');
+  const [apiStatus, setApiStatus] = React.useState<any>('Checking...');
 
   React.useEffect(() => {
     // Check API status

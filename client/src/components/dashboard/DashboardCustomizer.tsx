@@ -160,7 +160,7 @@ const DashboardCustomizer: React.FC<DashboardCustomizerProps> = ({ onClose }) =>
             Layout Presets
           </Typography>
           <Box display="flex" alignItems="center" flexWrap="wrap" gap={1}>
-            {Object.entries(presets).map(([id, preset]) =>
+            {Object.entries(presets).map(([id, preset]: any) =>
             <Chip
               key={id}
               label={preset.name}
@@ -266,7 +266,7 @@ const DashboardCustomizer: React.FC<DashboardCustomizerProps> = ({ onClose }) =>
         
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="widgets-list">
-            {(provided: unknown) =>
+            {(provided: any) =>
             <List
               {...provided.droppableProps}
               ref={provided.innerRef}
@@ -277,7 +277,7 @@ const DashboardCustomizer: React.FC<DashboardCustomizerProps> = ({ onClose }) =>
                 borderRadius: 1
               }}>
 
-                {widgetsList.map((widget, index) =>
+                {widgetsList.map((widget, index: any) =>
               <Draggable key={widget.id} draggableId={widget.id} index={index}>
                     {(provided: any) =>
                 <ListItem

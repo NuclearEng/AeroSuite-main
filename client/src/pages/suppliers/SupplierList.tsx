@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, Link as RouterLink } from 'react-router-dom';
 import {
   Box,
@@ -56,15 +56,15 @@ const SupplierList: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // State variables
-  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [suppliers, setSuppliers] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeFilters, setActiveFilters] = useState<any[]>([]);
+  const [activeFilters, setActiveFilters] = useState<any>([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [supplierToDelete, setSupplierToDelete] = useState<string | null>(null);
+  const [supplierToDelete, setSupplierToDelete] = useState<any>(null);
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
@@ -74,13 +74,13 @@ const SupplierList: React.FC = () => {
     message: '',
     severity: 'success'
   });
-  const [error, setError] = useState<string | null>(null);
-  const [importError, setImportError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
+  const [importError, setImportError] = useState<any>(null);
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const REQUIRED_COLUMNS = ['name', 'code', 'industry', 'status', 'primaryContactName', 'primaryContactEmail'];
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [currentSupplier, setCurrentSupplier] = useState<Supplier | null>(null);
+  const [currentSupplier, setCurrentSupplier] = useState<any>(null);
 
   // Filter definitions for FiltersToolbar
   const filterDefinitions = [
@@ -214,7 +214,7 @@ const SupplierList: React.FC = () => {
       };
 
       // Add active filters to params
-      activeFilters.forEach((filter) => {
+      activeFilters.forEach((filter: any) => {
         if (filter.id === 'status') {
           params.status = filter.value;
         } else if (filter.id === 'industry') {
@@ -231,7 +231,7 @@ const SupplierList: React.FC = () => {
       setSuppliers(response.suppliers);
       setTotalCount(response.total);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to load suppliers');
     } finally {
       setLoading(false);
@@ -309,8 +309,8 @@ const SupplierList: React.FC = () => {
       await supplierService.deleteSupplier(supplierToDelete);
 
       // Remove from state
-      setSuppliers((prevSuppliers) =>
-      prevSuppliers.filter((s) => s._id !== supplierToDelete)
+      setSuppliers((prevSuppliers: any) =>
+      prevSuppliers.filter((s: any) => s._id !== supplierToDelete)
       );
 
       // Show success message
@@ -320,7 +320,7 @@ const SupplierList: React.FC = () => {
         severity: 'success'
       });
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setSnackbar({
         open: true,
         message: err.message || 'Failed to delete supplier',
@@ -359,7 +359,7 @@ const SupplierList: React.FC = () => {
         }
         // Validate required columns
         const columns = Object.keys(result.data[0] || {});
-        const missing = REQUIRED_COLUMNS.filter((col) => !columns.includes(col));
+        const missing = REQUIRED_COLUMNS.filter((col: any) => !columns.includes(col));
         if (missing.length > 0) {
           setImportError(`Missing required columns: ${missing.join(', ')}`);
           return;

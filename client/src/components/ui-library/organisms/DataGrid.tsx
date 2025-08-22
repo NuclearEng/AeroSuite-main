@@ -13,9 +13,13 @@ const DataGrid: React.FC<DataGridProps> = ({ columns, rows, ...props }) => {
       <MUIDataGrid
         columns={columns}
         rows={rows}
-        pageSize={10}
-        rowsPerPageOptions={[10, 25, 50]}
-        disableSelectionOnClick
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 10 }
+          }
+        }}
+        pageSizeOptions={[10, 25, 50]}
+        disableRowSelectionOnClick
         autoHeight
         aria-label="Data Grid"
         {...props}

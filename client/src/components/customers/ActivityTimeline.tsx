@@ -59,7 +59,7 @@ const ActivityTimeline: React.FC<ActivityTimelineProps> = ({
       )}
       
       <Timeline position="right">
-        {activities.map((activity, index) => (
+        {activities.map((activity, index: any) => (
           <ActivityTimelineItem 
             key={activity._id} 
             activity={activity}

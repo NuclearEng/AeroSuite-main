@@ -341,7 +341,7 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
                 native={field.native}
                 label={field.label}>
 
-                {field.options.map((option) =>
+                {field.options.map((option: any) =>
                 field.native ?
                 <option key={option.value} value={option.value}>
                       {option.label}
@@ -389,7 +389,7 @@ const ResponsiveForm: React.FC<ResponsiveFormProps> = ({
                 onChange={(e) => handleChange(field.id, e.target.value)}
                 row={field.row}>
 
-                {field.options.map((option) =>
+                {field.options.map((option: any) =>
                 <FormControlLabel
                   key={option.value}
                   value={option.value}

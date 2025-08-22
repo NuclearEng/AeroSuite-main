@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-08-08T04:35:26.359Z",
+  "timestamp": "2025-08-21T22:11:09.307Z",
   "passed": 1,
   "failed": 4,
   "tests": [
@@ -8,7 +8,7 @@
       "key": "bundleSizeAnalysis",
       "passed": false,
       "error": "Bundle analysis failed",
-      "details": "Command failed: cd client && npm run build\nsh: react-scripts: command not found\n"
+      "details": "Command failed: cd client && npm run build\nsh: react-scripts: command not found\nnpm error Lifecycle script `build` failed with error:\nnpm error code 127\nnpm error path /Users/tannercoker/AeroSuite-main-1/client\nnpm error workspace aerosuite-client@1.0.0\nnpm error location /Users/tannercoker/AeroSuite-main-1/client\nnpm error command failed\nnpm error command sh -c react-scripts build\n"
     },
     {
       "name": "Code Splitting Analysis",
@@ -97,10 +97,10 @@
           "files": [
             {
               "file": "service-worker.js",
-              "sizeKB": 5
+              "sizeKB": 4
             }
           ],
-          "totalSize": 5
+          "totalSize": 4
         },
         "styles": {
           "files": [],

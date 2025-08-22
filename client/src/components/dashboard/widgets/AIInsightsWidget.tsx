@@ -32,12 +32,12 @@ interface InsightGroup {
  * Part of: AI-Powered Data Insights (AI016)
  */
 const AIInsightsWidget: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [insights, setInsights] = useState<Insight[]>([]);
-  const [currentTab, setCurrentTab] = useState<number>(0);
-  const [insightGroups, setInsightGroups] = useState<InsightGroup[]>([]);
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [loading, setLoading] = useState<any>(true);
+  const [error, setError] = useState<any>(null);
+  const [insights, setInsights] = useState<any>([]);
+  const [currentTab, setCurrentTab] = useState<any>(0);
+  const [insightGroups, setInsightGroups] = useState<any>([]);
+  const [lastUpdated, setLastUpdated] = useState<any>(null);
 
   // Tab options
   const tabs = ['All Insights', 'Critical', 'Trends', 'Recommendations'];
@@ -68,13 +68,13 @@ const AIInsightsWidget: React.FC = () => {
       });
 
       setInsightGroups(
-        Object.keys(grouped).map((category) => ({
+        Object.keys(grouped).map((category: any) => ({
           category,
           insights: grouped[category]
         }))
       );
     } catch (err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError('Failed to load insights. Please try again later.');
     } finally {
       setLoading(false);
@@ -95,11 +95,11 @@ const AIInsightsWidget: React.FC = () => {
   const getFilteredInsights = (): Insight[] => {
     switch (currentTab) {
       case 1: // Critical
-        return insights.filter((insight) => insight.severity === 'critical');
+        return insights.filter((insight: any) => insight.severity === 'critical');
       case 2: // Trends
-        return insights.filter((insight) => insight.type === 'trend');
+        return insights.filter((insight: any) => insight.type === 'trend');
       case 3: // Recommendations
-        return insights.filter((insight) => insight.type === 'recommendation');
+        return insights.filter((insight: any) => insight.type === 'recommendation');
       default: // All
         return insights;
     }
@@ -315,7 +315,7 @@ const AIInsightsWidget: React.FC = () => {
         scrollButtons="auto"
         sx={{ mb: 2 }}>
 
-        {tabs.map((tab, index) =>
+        {tabs.map((tab, index: any) =>
         <Tab key={index} label={tab} />
         )}
       </Tabs>
@@ -334,7 +334,7 @@ const AIInsightsWidget: React.FC = () => {
             <Typography color="text.secondary">No insights available for this filter</Typography>
           </Box> :
 
-        getFilteredInsights().map((insight) => RenderInsightCard(insight))
+        getFilteredInsights().map((insight: any) => RenderInsightCard(insight))
         }
       </Box>
       

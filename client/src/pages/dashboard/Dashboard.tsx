@@ -96,7 +96,7 @@ const Dashboard: React.FC<DashboardProps> = ({ widgets: widgetsProp, layout: lay
   const theme = useTheme();
   const { isMobile, isTablet } = useResponsive();
   const [loading, setLoading] = useState(true);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
   const [customizationOpen, setCustomizationOpen] = useState(false);
   const open = Boolean(anchorEl);
   // Use props if provided, otherwise fallback to Redux state

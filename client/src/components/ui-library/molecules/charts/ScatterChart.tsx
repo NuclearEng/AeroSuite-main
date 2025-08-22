@@ -28,8 +28,8 @@ const ScatterChart: React.FC<ScatterChartProps> = ({
   if (!data || data.length === 0) return <div>No data</div>;
 
   // Find min/max for scaling
-  const xVals = data.map((d) => d[xKey]);
-  const yVals = data.map((d) => d[yKey]);
+  const xVals = data.map((d: any) => d[xKey]);
+  const yVals = data.map((d: any) => d[yKey]);
   const minX = Math.min(...xVals);
   const maxX = Math.max(...xVals);
   const minY = Math.min(...yVals);
@@ -59,7 +59,7 @@ const ScatterChart: React.FC<ScatterChartProps> = ({
         </text>
       }
       
-      {data.map((d, i) =>
+      {data.map((d, i: any) =>
       <circle
         key={i}
         cx={scaleX(d[xKey])}

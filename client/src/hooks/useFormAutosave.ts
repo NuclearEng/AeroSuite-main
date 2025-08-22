@@ -52,7 +52,7 @@ export const useFormAutosave = ({
       const savedData = localStorage.getItem(formId.current);
       return savedData ? JSON.parse(savedData) : initialData;
     } catch (_error) {
-      console.error('Error retrieving saved form data:', error);
+      console.error('Error retrieving saved form data:', _error);
       return initialData;
     }
   };
@@ -69,7 +69,7 @@ export const useFormAutosave = ({
       setLastSaved(new Date());
       if (onSave) onSave(data);
     } catch (_error) {
-      console.error('Error saving form data:', error);
+      console.error('Error saving form data:', _error);
     } finally {
       setIsSaving(false);
     }
@@ -97,7 +97,7 @@ export const useFormAutosave = ({
       }
       return true;
     } catch (_error) {
-      console.error('Form submission error:', error);
+      console.error('Form submission error:', _error);
       return false;
     }
   }, [formData, clearOnSubmit]);

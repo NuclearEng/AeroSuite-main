@@ -48,7 +48,8 @@ const DataVisualizationPage: React.FC = () => {
             </Typography>
             <DataVisualization
               type="bar"
-              data={barChartData}
+              data={barChartData as any}
+              series={[]}
               height={300}
             />
           </Paper>
@@ -61,7 +62,8 @@ const DataVisualizationPage: React.FC = () => {
             </Typography>
             <DataVisualization
               type="line"
-              data={lineChartData}
+              data={lineChartData as any}
+              series={[]}
               height={300}
             />
           </Paper>
@@ -74,7 +76,8 @@ const DataVisualizationPage: React.FC = () => {
             </Typography>
             <DataVisualization
               type="pie"
-              data={pieChartData}
+              data={pieChartData as any}
+              series={[]}
               height={300}
             />
           </Paper>

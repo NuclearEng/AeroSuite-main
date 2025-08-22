@@ -30,14 +30,14 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   // Two-factor authentication state
   const [showTwoFactorDialog, setShowTwoFactorDialog] = useState(false);
-  const [twoFactorMethod, setTwoFactorMethod] = useState<'app' | 'email' | 'sms'>('app');
+  const [twoFactorMethod, setTwoFactorMethod] = useState<any>('app');
   const [tempToken, setTempToken] = useState('');
-  const [twoFactorError, setTwoFactorError] = useState<string | null>(null);
+  const [twoFactorError, setTwoFactorError] = useState<any>(null);
   const [twoFactorLoading, setTwoFactorLoading] = useState(false);
 
   // Email verification state

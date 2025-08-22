@@ -45,9 +45,9 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
   showControls = true,
   onAuditComplete
 }) => {
-  const [auditResults, setAuditResults] = useState<AccessibilityAuditResult | null>(null);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [auditResults, setAuditResults] = useState<any>(null);
+  const [isRunning, setIsRunning] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
 
   // Run audit when component mounts if autoRun is true
   useEffect(() => {
@@ -146,7 +146,7 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
   const getIssueCounts = () => {
     if (!auditResults) return {};
 
-    return auditResults.violations.reduce((counts, violation) => {
+    return auditResults.violations.reduce((counts: any, violation: any) => {
       counts[violation.severity] = (counts[violation.severity] || 0) + 1;
       return counts;
     }, {} as Record<string, number>);
@@ -252,7 +252,7 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
                 Issues
               </Typography>
               
-              {auditResults.violations.map((violation, index) =>
+              {auditResults.violations.map((violation: any, index: any) =>
           <Accordion key={`${violation.id}-${index}`} sx={{ mb: 1 }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
@@ -289,7 +289,7 @@ export const AccessibilityAudit: React.FC<AccessibilityAuditProps> = ({
                     </Typography>
                     
                     <List dense>
-                      {violation.nodes.map((node, nodeIndex) =>
+                      {violation.nodes.map((node: any, nodeIndex: any) =>
                 <ListItem key={nodeIndex} sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                           <ListItemText
                     primary={`Element ${nodeIndex + 1}`}

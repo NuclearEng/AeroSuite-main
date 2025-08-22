@@ -30,15 +30,15 @@ import inspectionService, { Inspection } from '../../services/inspection.service
 
 const InspectionList: React.FC = () => {
   const navigate = useNavigate();
-  const [inspections, setInspections] = useState<Inspection[]>([]);
+  const [inspections, setInspections] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
 
   // Modal states
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedInspection, setSelectedInspection] = useState<Inspection | null>(null);
+  const [selectedInspection, setSelectedInspection] = useState<any>(null);
 
   // Snackbar state
   const [snackbar, setSnackbar] = useState<{
@@ -59,7 +59,7 @@ const InspectionList: React.FC = () => {
       const response = await inspectionService.getInspections();
       setInspections(response.inspections || []);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to load inspections');
       setSnackbar({
         open: true,
@@ -139,7 +139,7 @@ const InspectionList: React.FC = () => {
       const event = new CustomEvent('inspection-deleted', { detail: selectedInspection });
       window.dispatchEvent(event);
     } catch (error: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setSnackbar({
         open: true,
         message: `Failed to delete inspection: ${error.message || 'Unknown error'}`,

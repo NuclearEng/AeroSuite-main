@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -76,11 +76,11 @@ interface SupplierAnalyticsProps {
 }
 
 export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId }) => {
-  const [period, setPeriod] = useState<'3months' | '6months' | '1year' | '2years'>('6months');
-  const [selectedMetric, setSelectedMetric] = useState<string>('quality');
+  const [period, setPeriod] = useState<any>('6months');
+  const [selectedMetric, setSelectedMetric] = useState<any>('quality');
   const [metrics, setMetrics] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
 
   useEffect(() => {
     const loadMetrics = async () => {
@@ -99,7 +99,7 @@ export const SupplierAnalytics: React.FC<SupplierAnalyticsProps> = ({ supplierId
         const data = await response.json();
         setMetrics(data.data);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load supplier metrics');
       } finally {
         setLoading(false);

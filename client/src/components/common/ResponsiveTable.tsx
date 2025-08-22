@@ -160,8 +160,8 @@ function ResponsiveTable<T extends Record<string, any> = any>({
 }: ResponsiveTableProps<T>) {
   const theme = useTheme();
   const { isMobile, isTablet } = useResponsive();
-  const [expandedRows, setExpandedRows] = useState<Record<string | number, boolean>>(initialExpandedRows);
-  const [sort, setSort] = useState<{field: string;direction: 'asc' | 'desc';} | undefined>(initialSort);
+  const [expandedRows, setExpandedRows] = useState<any>(initialExpandedRows);
+  const [sort, setSort] = useState<any>(initialSort);
 
   // Reset expanded rows when data changes
   useEffect(() => {
@@ -180,7 +180,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
 
   // Handle row expansion toggle
   const handleExpandRow = (key: string | number) => {
-    setExpandedRows((prev) => ({
+    setExpandedRows((prev: any) => ({
       ...prev,
       [key]: !prev[key]
     }));
@@ -202,7 +202,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
   };
 
   // Filter columns based on screen size
-  const visibleColumns = columns.filter((column) =>
+  const visibleColumns = columns.filter((column: any) =>
   !(isMobile && column.hideMobile) &&
   !(isTablet && column.hideTablet)
   );
@@ -212,13 +212,13 @@ function ResponsiveTable<T extends Record<string, any> = any>({
     if (isMobile && cardMode) {
       return (
         <Box>
-          {Array.from(new Array(loadingRows)).map((_, index) =>
+          {Array.from(new Array(loadingRows)).map((_, index: any) =>
           <MobileCard key={index}>
               <MobileCardHeader>
                 <Skeleton variant="text" width="60%" height={24} />
               </MobileCardHeader>
               <MobileCardBody>
-                {Array.from(new Array(3)).map((_, i) =>
+                {Array.from(new Array(3)).map((_, i: any) =>
               <MobileRow key={i}>
                     <Skeleton variant="text" width={100} />
                     <Skeleton variant="text" width={120} />
@@ -237,7 +237,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
           <TableHead>
             <TableRow>
               {expandable && <TableCell style={{ width: 40 }} />}
-              {visibleColumns.map((column) =>
+              {visibleColumns.map((column: any) =>
               <TableCell
                 key={column.id}
                 align={column.align || 'left'}
@@ -254,14 +254,14 @@ function ResponsiveTable<T extends Record<string, any> = any>({
             </TableRow>
           </TableHead>
           <TableBody>
-            {Array.from(new Array(loadingRows)).map((_, index) =>
+            {Array.from(new Array(loadingRows)).map((_, index: any) =>
             <TableRow key={index}>
                 {expandable &&
               <TableCell>
                     <Skeleton variant="circular" width={24} height={24} />
                   </TableCell>
               }
-                {visibleColumns.map((column) =>
+                {visibleColumns.map((column: any) =>
               <TableCell key={column.id} align={column.align || 'left'}>
                     <Skeleton variant="text" />
                   </TableCell>
@@ -299,7 +299,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
   if (isMobile && cardMode) {
     return (
       <Box>
-        {data.map((row, rowIndex) => {
+        {data.map((row, rowIndex: any) => {
           const rowKey = keyExtractor(row, rowIndex);
           const isExpanded = !!expandedRows[rowKey];
 
@@ -330,7 +330,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
 
               <MobileCardBody>
                 
-                {visibleColumns.slice(1).map((column) =>
+                {visibleColumns.slice(1).map((column: any) =>
                 <MobileRow key={column.id}>
                     <MobileLabel variant="body2">
                       {column.label}
@@ -409,7 +409,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
           <TableHead>
               <TableRow>
                 {expandable && <TableCell style={{ width: 40 }} />}
-                {visibleColumns.map((column) =>
+                {visibleColumns.map((column: any) =>
               <TableCell
                 key={column.id}
                 align={column.align || 'left'}
@@ -438,7 +438,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
             </TableHead>
           }
           <TableBody>
-            {data.map((row, rowIndex) => {
+            {data.map((row, rowIndex: any) => {
               const rowKey = keyExtractor(row, rowIndex);
               const isExpanded = !!expandedRows[rowKey];
 
@@ -482,7 +482,7 @@ function ResponsiveTable<T extends Record<string, any> = any>({
                       </TableCell>
                     }
                     
-                    {visibleColumns.map((column) =>
+                    {visibleColumns.map((column: any) =>
                     <TableCell
                       key={column.id}
                       align={column.align || 'left'}

@@ -39,7 +39,7 @@ const CustomWidgetManager: React.FC = () => {
   const [managerOpen, setManagerOpen] = useState(false);
 
   // Get all custom widgets
-  const customWidgets = getAllWidgets().filter((widget) => widget.isCustom);
+  const customWidgets = getAllWidgets().filter((widget: any) => widget.isCustom);
 
   // Handle opening the widget builder
   const handleOpenBuilder = () => {
@@ -133,7 +133,7 @@ const CustomWidgetManager: React.FC = () => {
             </Paper> :
 
           <List>
-              {customWidgets.map((widget) =>
+              {customWidgets.map((widget: any) =>
             <React.Fragment key={widget.id}>
                   <ListItem>
                     <ListItemText

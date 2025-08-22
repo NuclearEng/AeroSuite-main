@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import {
   Box,
@@ -60,7 +60,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
   onCancel
 }) => {
   // State
-  const [formData, setFormData] = useState<Partial<ReportTemplate>>({
+  const [formData, setFormData] = useState<any>({
     name: '',
     description: '',
     category: 'general',
@@ -73,9 +73,9 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
     }]
 
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [dataSources, setDataSources] = useState<DataSource[]>([]);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState<number | null>(null);
+  const [errors, setErrors] = useState<any>({});
+  const [dataSources, setDataSources] = useState<any>([]);
+  const [currentSectionIndex, setCurrentSectionIndex] = useState<any>(null);
   const [sectionDialogOpen, setSectionDialogOpen] = useState(false);
   const [dataSourcesLoading, setDataSourcesLoading] = useState(false);
 
@@ -121,18 +121,18 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
   }, [template]);
 
   // Handle field change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}> | SelectChangeEvent<string>) => {
     const { name, value } = e.target;
     if (!name) return;
 
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [name]: value
     }));
 
     // Clear error for this field
     if (errors[name]) {
-      setErrors((prev) => {
+      setErrors((prev: any) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -144,7 +144,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
   const handleSwitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
 
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       [name]: checked
     }));
@@ -164,7 +164,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
 
   // Delete section
   const handleDeleteSection = (index: number) => {
-    setFormData((prev) => {
+    setFormData((prev: any) => {
       const newSections = [...(prev.sections || [])];
       newSections.splice(index, 1);
       return {
@@ -182,7 +182,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
     const [removed] = sections.splice(result.source.index, 1);
     sections.splice(result.destination.index, 0, removed);
 
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       sections
     }));
@@ -190,7 +190,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
 
   // Save section from dialog
   const handleSaveSection = (section: ReportSection) => {
-    setFormData((prev) => {
+    setFormData((prev: any) => {
       const newSections = [...(prev.sections || [])];
 
       if (currentSectionIndex !== null) {
@@ -341,7 +341,7 @@ const ReportTemplateForm: React.FC<ReportTemplateFormProps> = ({
               ref={provided.innerRef}
               sx={{ bgcolor: 'background.paper' }}>
 
-                {formData.sections?.map((section, index) =>
+                {formData.sections?.map((section: any, index: number) =>
               <Draggable
                 key={`section-${index}`}
                 draggableId={`section-${index}`}
@@ -454,12 +454,12 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
   dataSources,
   loading
 }) => {
-  const [sectionData, setSectionData] = useState<ReportSection>({
+  const [sectionData, setSectionData] = useState<any>({
     title: '',
     type: 'text',
     content: ''
   });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<any>({});
 
   // Initialize section data when dialog opens
   useEffect(() => {
@@ -475,18 +475,18 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
   }, [section, open]);
 
   // Handle field change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}> | SelectChangeEvent<string>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}> | SelectChangeEvent<string>) => {
     const { name, value } = e.target;
     if (!name) return;
 
-    setSectionData((prev) => ({
+    setSectionData((prev: any) => ({
       ...prev,
       [name]: value
     }));
 
     // Clear error for this field
     if (errors[name]) {
-      setErrors((prev) => {
+      setErrors((prev: any) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -628,7 +628,7 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
                       {loading ?
                     <MenuItem value="">Loading...</MenuItem> :
 
-                    dataSources.map((source) =>
+                    dataSources.map((source: any) =>
                     <MenuItem key={source.model} value={source.model}>
                             {source.label}
                           </MenuItem>
@@ -658,7 +658,7 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
 
                     dataSources.
                     find((source) => source.model === sectionData.dataSource?.model)?.
-                    fields.map((field) =>
+                    fields.map((field: any) =>
                     <Grid item xs={6} md={4} key={field.id}>
                                 <Chip
                         label={`${field.label} (${field.type})`}
@@ -692,7 +692,7 @@ const SectionDialog: React.FC<SectionDialogProps> = ({
                     name="chartOptions.type"
                     value={sectionData.chartOptions?.type || 'bar'}
                     onChange={(e) => {
-                      setSectionData((prev) => ({
+                      setSectionData((prev: any) => ({
                         ...prev,
                         chartOptions: {
                           ...(prev.chartOptions || {}),

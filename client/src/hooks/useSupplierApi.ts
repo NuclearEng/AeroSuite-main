@@ -57,14 +57,14 @@ export const useSupplierApi = () => {
         {
           maxRetries: 2,
           initialDelay: 2000,
-          onRetry: (attempt) => {
+          onRetry: (attempt: number) => {
             console.log(`Retrying import (attempt ${attempt})...`);
           }
         }
       );
       
       return response.data.data;
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error)) {
         // Handle specific error cases
         if (!error.response) {
@@ -179,7 +179,7 @@ export const useSupplierApi = () => {
       setTimeout(() => {
         document.body.removeChild(iframe);
       }, 5000);
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;
@@ -263,7 +263,7 @@ export const useSupplierApi = () => {
       setTimeout(() => {
         document.body.removeChild(iframe);
       }, 5000);
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;
@@ -312,7 +312,7 @@ export const useSupplierApi = () => {
       );
       
       return response.data.data;
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;
@@ -364,7 +364,7 @@ export const useSupplierApi = () => {
       );
       
       return response.data.data;
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;
@@ -403,7 +403,7 @@ export const useSupplierApi = () => {
       );
       
       return response.data.data.supplier;
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;
@@ -447,7 +447,7 @@ export const useSupplierApi = () => {
       );
       
       return response.data.data.supplier;
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;
@@ -504,7 +504,7 @@ export const useSupplierApi = () => {
       );
       
       return response.data.data.supplier;
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;
@@ -566,7 +566,7 @@ export const useSupplierApi = () => {
         `${API_BASE_URL}/suppliers/${id}`,
         { headers }
       );
-    } catch (_error) {
+    } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const status = error.response.status;
         const responseData = error.response.data;

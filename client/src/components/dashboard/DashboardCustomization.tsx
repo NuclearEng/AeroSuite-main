@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -165,7 +165,7 @@ const DashboardCustomization: React.FC<DashboardCustomizationProps> = ({
             label="Select Preset"
             onChange={handlePresetChange}>
 
-            {Object.entries(presets).map(([id, preset]) =>
+            {Object.entries(presets).map(([id, preset]: any) =>
             <MenuItem key={id} value={id}>
                 {preset.name}
               </MenuItem>
@@ -296,7 +296,7 @@ const DashboardCustomization: React.FC<DashboardCustomizationProps> = ({
         </Typography>
         
         <Grid container spacing={2} sx={{ mt: 1 }}>
-          {sortedWidgets.map((widget) =>
+          {sortedWidgets.map((widget: any) =>
           <Grid item xs={12} key={widget.id}>
               <Card
               variant="outlined"
@@ -318,7 +318,7 @@ const DashboardCustomization: React.FC<DashboardCustomizationProps> = ({
                 }
                 title={
                 <Typography variant="body1">
-                      {widget.id.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                      {widget.id.split('-').map((word: any) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                     </Typography>
                 }
                 sx={{ py: 1 }} />

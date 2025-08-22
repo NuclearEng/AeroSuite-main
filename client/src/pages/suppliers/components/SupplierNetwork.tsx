@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { ChangeEvent, useState, useEffect, useRef, useCallback } from 'react';
 import {
   Box,
   Paper,
@@ -87,14 +87,14 @@ const SupplierNetwork: React.FC = () => {
   const graphRef = useRef<any>(null);
 
   // State
-  const [networkData, setNetworkData] = useState<NetworkData>({ nodes: [], links: [] });
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedTiers, setSelectedTiers] = useState<string[]>(['tier1', 'tier2', 'tier3']);
-  const [showComponents, setShowComponents] = useState<boolean>(true);
-  const [selectedCustomerId, setSelectedCustomerId] = useState<string>('all');
-  const [customers, setCustomers] = useState<any[]>([]);
-  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [networkData, setNetworkData] = useState<any>({ nodes: [], links: [] });
+  const [loading, setLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+  const [selectedTiers, setSelectedTiers] = useState<any>(['tier1', 'tier2', 'tier3']);
+  const [showComponents, setShowComponents] = useState<any>(true);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<any>('all');
+  const [customers, setCustomers] = useState<any>([]);
+  const [suppliers, setSuppliers] = useState<any>([]);
 
   // Load data
   useEffect(() => {
@@ -134,7 +134,7 @@ const SupplierNetwork: React.FC = () => {
       // Generate network data
       generateNetworkData(suppliers, customersData);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError(err.message || 'Failed to load network data');
     } finally {
       setLoading(false);
@@ -151,7 +151,7 @@ const SupplierNetwork: React.FC = () => {
     const links: NetworkLink[] = [];
 
     // Add customer nodes
-    customersData.forEach((customer) => {
+    customersData.forEach((customer: any) => {
       if (selectedCustomerId === 'all' || selectedCustomerId === customer._id) {
         nodes.push({
           id: `c-${customer._id}`,
@@ -163,7 +163,7 @@ const SupplierNetwork: React.FC = () => {
     });
 
     // Add supplier nodes with tiers
-    suppliersData.forEach((supplier, index) => {
+    suppliersData.forEach((supplier: any, index: number) => {
       // Assign a tier if not present (for demonstration)
       const tier = supplier.tier || (
       index % 3 === 0 ? 'tier1' : index % 3 === 1 ? 'tier2' : 'tier3');
@@ -182,7 +182,7 @@ const SupplierNetwork: React.FC = () => {
 
       // Add links to customers
       if (supplier.customers && supplier.customers.length > 0) {
-        supplier.customers.forEach((customer) => {
+        supplier.customers.forEach((customer: any) => {
           if (selectedCustomerId === 'all' || selectedCustomerId === customer._id) {
             links.push({
               source: `s-${supplier._id}`,
@@ -208,10 +208,10 @@ const SupplierNetwork: React.FC = () => {
       // Add links between suppliers (tier dependencies)
       if (tier === 'tier2') {
         // Tier 2 suppliers connect to Tier 1 suppliers
-        const tier1Suppliers = suppliersData.filter((s) => (s.tier || '') === 'tier1').
+        const tier1Suppliers = suppliersData.filter((s: any) => (s.tier || '') === 'tier1').
         slice(0, 2); // Limit connections for clarity
 
-        tier1Suppliers.forEach((tier1Supplier) => {
+        tier1Suppliers.forEach((tier1Supplier: any) => {
           if (selectedTiers.includes('tier1')) {
             links.push({
               source: `s-${supplier._id}`,
@@ -223,10 +223,10 @@ const SupplierNetwork: React.FC = () => {
         });
       } else if (tier === 'tier3') {
         // Tier 3 suppliers connect to Tier 2 suppliers
-        const tier2Suppliers = suppliersData.filter((s) => (s.tier || '') === 'tier2').
+        const tier2Suppliers = suppliersData.filter((s: any) => (s.tier || '') === 'tier2').
         slice(0, 2); // Limit connections for clarity
 
-        tier2Suppliers.forEach((tier2Supplier) => {
+        tier2Suppliers.forEach((tier2Supplier: any) => {
           if (selectedTiers.includes('tier2')) {
             links.push({
               source: `s-${supplier._id}`,
@@ -258,7 +258,7 @@ const SupplierNetwork: React.FC = () => {
         });
 
         // Connect components to their suppliers
-        component.suppliers.forEach((supplier) => {
+        component.suppliers.forEach((supplier: any) => {
           const tier = supplier.tier || 'tier1';
           if (selectedTiers.includes(tier)) {
             links.push({
@@ -363,7 +363,7 @@ const SupplierNetwork: React.FC = () => {
                 label="Customer">
 
                 <MenuItem value="all">All Customers</MenuItem>
-                {customers.map((customer) =>
+                {customers.map((customer: any) =>
                 <MenuItem key={customer._id} value={customer._id}>
                     {customer.name}
                   </MenuItem>
@@ -384,7 +384,7 @@ const SupplierNetwork: React.FC = () => {
                 label="Supplier Tiers"
                 renderValue={(selected) =>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((tier) =>
+                    {selected.map((tier: any) =>
                   <Chip
                     key={tier}
                     label={tier.replace('tier', 'Tier ')}
@@ -551,7 +551,7 @@ const SupplierNetwork: React.FC = () => {
             </Box>
           }
           
-          {selectedTiers.map((tier) =>
+          {selectedTiers.map((tier: any) =>
           <Box key={tier} sx={{ display: 'flex', alignItems: 'center' }}>
               <Box
               sx={{
@@ -579,7 +579,7 @@ const SupplierNetwork: React.FC = () => {
         </Typography>
         
         <Grid container spacing={3}>
-          {Object.entries(tierDescriptions).map(([tier, info]) =>
+          {Object.entries(tierDescriptions).map(([tier, info]: any) =>
           <Grid item key={tier} xs={12} md={4}>
               <Card variant="outlined" sx={{ height: '100%' }}>
                 <CardContent>

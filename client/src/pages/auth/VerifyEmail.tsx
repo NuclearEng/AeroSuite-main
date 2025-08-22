@@ -17,7 +17,7 @@ const VerifyEmail: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {

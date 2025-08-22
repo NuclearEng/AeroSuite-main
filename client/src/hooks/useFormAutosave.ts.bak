@@ -1,0 +1,134 @@
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { debounce } from 'lodash';
+
+interface UseFormAutosaveOptions {
+  /**
+   * The key to use for storing form data in localStorage
+   */
+  storageKey: string;
+  
+  /**
+   * Initial form data
+   */
+  initialData: Record<string, any>;
+  
+  /**
+   * Debounce delay in milliseconds
+   * @default 1000
+   */
+  debounceDelay?: number;
+  
+  /**
+   * Whether to clear saved data on form submission
+   * @default true
+   */
+  clearOnSubmit?: boolean;
+  
+  /**
+   * Optional callback to run when data is saved
+   */
+  onSave?: (data: Record<string, any>) => void;
+}
+
+/**
+ * Hook for automatically saving form data to localStorage
+ * 
+ * @param options Configuration options
+ * @returns Form state and methods
+ */
+export const useFormAutosave = ({
+  storageKey,
+  initialData,
+  debounceDelay = 1000,
+  clearOnSubmit = true,
+  onSave
+}: UseFormAutosaveOptions) => {
+  // Create a unique storage key for this form instance
+  const formId = useRef(`form_autosave_${storageKey}_${Date.now()}`);
+  
+  // Initialize form data from localStorage or use initialData
+  const getSavedData = (): Record<string, any> => {
+    try {
+      const savedData = localStorage.getItem(formId.current);
+      return savedData ? JSON.parse(savedData) : initialData;
+    } catch (_error) {
+      console.error('Error retrieving saved form data:', error);
+      return initialData;
+    }
+  };
+  
+  const [formData, setFormData] = useState<Record<string, any>>(getSavedData);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  
+  // Save form data to localStorage
+  const saveFormData = useCallback((data: Record<string, any>) => {
+    setIsSaving(true);
+    try {
+      localStorage.setItem(formId.current, JSON.stringify(data));
+      setLastSaved(new Date());
+      if (onSave) onSave(data);
+    } catch (_error) {
+      console.error('Error saving form data:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [onSave]);
+  
+  // Create debounced save function
+  const debouncedSave = useCallback(
+    debounce((data: Record<string, any>) => saveFormData(data), debounceDelay),
+    [saveFormData, debounceDelay]
+  );
+  
+  // Update form data and trigger save
+  const updateFormData = useCallback((field: string, value: any) => {
+    const newData = { ...formData, [field]: value };
+    setFormData(newData);
+    debouncedSave(newData);
+  }, [formData, debouncedSave]);
+  
+  // Handle form submission
+  const handleSubmit = useCallback(async (onSubmit: (data: Record<string, any>) => Promise<void>) => {
+    try {
+      await onSubmit(formData);
+      if (clearOnSubmit) {
+        localStorage.removeItem(formId.current);
+      }
+      return true;
+    } catch (_error) {
+      console.error('Form submission error:', error);
+      return false;
+    }
+  }, [formData, clearOnSubmit]);
+  
+  // Clear saved form data
+  const clearSavedData = useCallback(() => {
+    localStorage.removeItem(formId.current);
+    setFormData(initialData);
+    setLastSaved(null);
+  }, [initialData]);
+  
+  // Check for saved data on mount
+  useEffect(() => {
+    const savedData = getSavedData();
+    if (savedData !== initialData) {
+      setFormData(savedData);
+    }
+    
+    // Clean up on unmount
+    return () => {
+      debouncedSave.cancel();
+    };
+  }, [initialData]);
+  
+  return {
+    formData,
+    updateFormData,
+    handleSubmit,
+    clearSavedData,
+    isSaving,
+    lastSaved,
+    hasSavedData: lastSaved !== null
+  };
+}; 

@@ -83,13 +83,13 @@ const OnboardingFlow: React.FC = () => {
   const [profileData, setProfileData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
-    phoneNumber: user?.phoneNumber || '',
-    jobTitle: user?.jobTitle || '',
-    department: user?.department || '',
-    profileImage: user?.profileImage || null
+    phoneNumber: (user as any)?.phoneNumber || '',
+    jobTitle: (user as any)?.jobTitle || '',
+    department: (user as any)?.department || '',
+    profileImage: (user as any)?.profileImage || null
   });
 
-  const [preferences, setPreferences] = useState<UserPreferences>({
+  const [preferences, setPreferences] = useState<any>({
     theme: user?.preferences?.theme || 'light',
     notifications: user?.preferences?.notifications !== false,
     dashboardLayout: user?.preferences?.dashboardLayout || 'standard',
@@ -97,8 +97,8 @@ const OnboardingFlow: React.FC = () => {
     language: user?.preferences?.language || 'en'
   });
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [formErrors, setFormErrors] = useState<any>({});
+  const [errorMessage, setErrorMessage] = useState<any>(null);
 
   // Check if user has already completed onboarding
   useEffect(() => {
@@ -229,7 +229,7 @@ const OnboardingFlow: React.FC = () => {
         </Typography>
         
         <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-          {steps.map((label, index) =>
+          {steps.map((label, index: any) =>
           <Step key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>

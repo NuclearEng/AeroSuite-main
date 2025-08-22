@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -163,7 +163,7 @@ const HeavyComponent3: React.FC = () => {
             />
             
             <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {formData.tags.map((tag, index) => (
+              {formData.tags.map((tag, index: any) => (
                 <Chip
                   key={index}
                   label={tag}
@@ -180,7 +180,7 @@ const HeavyComponent3: React.FC = () => {
                 Suggestions:
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
-                {tagSuggestions.map((tag) => (
+                {tagSuggestions.map((tag: any) => (
                   <Chip
                     key={tag}
                     label={tag}
@@ -207,7 +207,7 @@ const HeavyComponent3: React.FC = () => {
           <Divider>Assignee</Divider>
           
           <List sx={{ bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
-            {teamMembers.map((member) => (
+            {teamMembers.map((member: any) => (
               <ListItem
                 key={member.id}
                 secondaryAction={

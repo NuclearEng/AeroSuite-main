@@ -39,7 +39,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   size = 'medium' 
 }) => {
   const { t, i18n } = useTranslation();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<any>(null);
   
   // Get current language
   const currentLanguage = i18n.language;
@@ -100,7 +100,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           sx: { maxHeight: 300 }
         }}
       >
-        {languages.map((language) => (
+        {languages.map((language: any) => (
           <MenuItem
             key={language.code}
             onClick={() => handleLanguageChange(language.code)}

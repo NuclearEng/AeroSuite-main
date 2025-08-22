@@ -90,6 +90,7 @@ export interface DataVisualizationProps {
   title?: string;
   description?: string;
   series: DataSeries[];
+  data?: any[];
   defaultChartType?: ChartType;
   availableChartTypes?: ChartType[];
   height?: number | string;
@@ -97,6 +98,7 @@ export interface DataVisualizationProps {
   error?: string | null;
   xAxisLabel?: string;
   yAxisLabel?: string;
+  type?: ChartType;
   onRefresh?: () => void;
 }
 
@@ -129,10 +131,10 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
   const chartRef = useRef<ChartJS>(null);
 
   // State
-  const [chartType, setChartType] = useState<ChartType>(defaultChartType);
-  const [animationDuration, setAnimationDuration] = useState<number>(1000);
-  const [showLegend, setShowLegend] = useState<boolean>(true);
-  const [stacked, setStacked] = useState<boolean>(false);
+  const [chartType, setChartType] = useState<any>(defaultChartType);
+  const [animationDuration, setAnimationDuration] = useState<any>(1000);
+  const [showLegend, setShowLegend] = useState<any>(true);
+  const [stacked, setStacked] = useState<any>(false);
 
   // Prepare chart data based on props
   const chartData: ChartData<any, any, any> = useMemo(() => {
@@ -142,12 +144,12 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
       const activeSeries = series[0] || { data: [] };
 
       return {
-        labels: activeSeries.data.map((point) => point.label || point.x.toString()),
+        labels: activeSeries.data.map((point: any) => point.label || point.x.toString()),
         datasets: [
         {
           label: activeSeries.label,
-          data: activeSeries.data.map((point) => point.y),
-          backgroundColor: activeSeries.data.map((point) => point.color || getRandomColor()),
+          data: activeSeries.data.map((point: any) => point.y),
+          backgroundColor: activeSeries.data.map((point: any) => point.color || getRandomColor()),
           borderColor: theme.palette.background.paper,
           borderWidth: 1
         }]
@@ -158,9 +160,9 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
     // For bubble and scatter charts
     if (chartType === 'bubble' || chartType === 'scatter') {
       return {
-        datasets: series.map((s) => ({
+        datasets: series.map((s: any) => ({
           label: s.label,
-          data: s.data.map((point) => ({
+          data: s.data.map((point: any) => ({
             x: typeof point.x === 'string' ? parseFloat(point.x) || 0 : point.x,
             y: point.y,
             r: point.z || 5 // Bubble size
@@ -172,18 +174,18 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
 
     // For other charts (bar, line, radar)
     const labels = Array.from(
-      new Set(series.flatMap((s) => s.data.map((d) => d.x.toString())))
+      new Set(series.flatMap((s) => s.data.map((d: any) => d.x.toString())))
     ).sort();
 
     return {
       labels,
-      datasets: series.map((s) => {
+      datasets: series.map((s: any) => {
         // Create a map for quick lookup of y values by x
-        const dataMap = new Map(s.data.map((d) => [d.x.toString(), d]));
+        const dataMap = new Map(s.data.map((d: any) => [d.x.toString(), d]));
 
         return {
           label: s.label,
-          data: labels.map((label) => dataMap.get(label)?.y || 0),
+          data: labels.map((label: any) => (dataMap.get(label) as any)?.y || 0),
           backgroundColor: s.backgroundColor || s.color || getRandomColor(0.7),
           borderColor: s.borderColor || s.color || getRandomColor(),
           borderWidth: 1,
@@ -264,12 +266,12 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
 
   // Handle legend toggle
   const handleLegendToggle = () => {
-    setShowLegend((prev) => !prev);
+    setShowLegend((prev: any) => !prev);
   };
 
   // Handle stacked toggle
   const handleStackedToggle = () => {
-    setStacked((prev) => !prev);
+    setStacked((prev: any) => !prev);
   };
 
   // Handle export as image
@@ -318,23 +320,23 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
 
     switch (chartType) {
       case 'bar':
-        return <Bar ref={chartRef} data={chartData as ChartData<'bar'>} options={chartOptions as ChartOptions<'bar'>} />;
+        return <Bar ref={chartRef as any} data={chartData as ChartData<'bar'>} options={chartOptions as ChartOptions<'bar'>} />;
       case 'line':
-        return <Line ref={chartRef} data={chartData as ChartData<'line'>} options={chartOptions as ChartOptions<'line'>} />;
+        return <Line ref={chartRef as any} data={chartData as ChartData<'line'>} options={chartOptions as ChartOptions<'line'>} />;
       case 'pie':
-        return <Pie ref={chartRef} data={chartData as ChartData<'pie'>} options={chartOptions as ChartOptions<'pie'>} />;
+        return <Pie ref={chartRef as any} data={chartData as ChartData<'pie'>} options={chartOptions as ChartOptions<'pie'>} />;
       case 'doughnut':
-        return <Doughnut ref={chartRef} data={chartData as ChartData<'doughnut'>} options={chartOptions as ChartOptions<'doughnut'>} />;
+        return <Doughnut ref={chartRef as any} data={chartData as ChartData<'doughnut'>} options={chartOptions as ChartOptions<'doughnut'>} />;
       case 'radar':
-        return <Radar ref={chartRef} data={chartData as ChartData<'radar'>} options={chartOptions as ChartOptions<'radar'>} />;
+        return <Radar ref={chartRef as any} data={chartData as ChartData<'radar'>} options={chartOptions as ChartOptions<'radar'>} />;
       case 'polar':
-        return <PolarArea ref={chartRef} data={chartData as ChartData<'polarArea'>} options={chartOptions as ChartOptions<'polarArea'>} />;
+        return <PolarArea ref={chartRef as any} data={chartData as ChartData<'polarArea'>} options={chartOptions as ChartOptions<'polarArea'>} />;
       case 'bubble':
-        return <Bubble ref={chartRef} data={chartData as ChartData<'bubble'>} options={chartOptions as ChartOptions<'bubble'>} />;
+        return <Bubble ref={chartRef as any} data={chartData as ChartData<'bubble'>} options={chartOptions as ChartOptions<'bubble'>} />;
       case 'scatter':
-        return <Scatter ref={chartRef} data={chartData as ChartData<'scatter'>} options={chartOptions as ChartOptions<'scatter'>} />;
+        return <Scatter ref={chartRef as any} data={chartData as ChartData<'scatter'>} options={chartOptions as ChartOptions<'scatter'>} />;
       default:
-        return <Bar ref={chartRef} data={chartData as ChartData<'bar'>} options={chartOptions as ChartOptions<'bar'>} />;
+        return <Bar ref={chartRef as any} data={chartData as ChartData<'bar'>} options={chartOptions as ChartOptions<'bar'>} />;
     }
   };
 
@@ -390,10 +392,10 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
               aria-label="chart type"
               size="small">
 
-              {availableChartTypes.map((type) =>
+              {availableChartTypes.map((type: any) =>
               <ToggleButton key={type} value={type} aria-label={type}>
                   <Tooltip title={`${type.charAt(0).toUpperCase() + type.slice(1)} chart`}>
-                    {chartTypeIcons[type]}
+                    {chartTypeIcons[type as ChartType]}
                   </Tooltip>
                 </ToggleButton>
               )}

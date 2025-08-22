@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
@@ -113,10 +113,10 @@ const EditCustomer: React.FC = () => {
 
   // Form state
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [addressesAreDifferent, setAddressesAreDifferent] = useState(false);
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
@@ -140,15 +140,15 @@ const EditCustomer: React.FC = () => {
         // Format dates to work with date inputs
         const formattedData = {
           ...data,
-          contractStartDate: data.contractStartDate ? data.contractStartDate.split('T')[0] : '',
-          contractEndDate: data.contractEndDate ? data.contractEndDate.split('T')[0] : ''
+          contractStartDate: (data as any).contractStartDate ? (data as any).contractStartDate.split('T')[0] : '',
+          contractEndDate: (data as any).contractEndDate ? (data as any).contractEndDate.split('T')[0] : ''
         };
 
-        setFormValues(formattedData);
+        setFormValues(formattedData as any);
 
         // Check if shipping address is different from billing
-        const shippingDiffersFromBilling = data.billingAddress && data.shippingAddress &&
-        JSON.stringify(data.billingAddress) !== JSON.stringify(data.shippingAddress);
+        const shippingDiffersFromBilling = (data as any).billingAddress && (data as any).shippingAddress &&
+        JSON.stringify((data as any).billingAddress) !== JSON.stringify((data as any).shippingAddress);
         setAddressesAreDifferent(shippingDiffersFromBilling);
 
         setError(null);
@@ -164,23 +164,36 @@ const EditCustomer: React.FC = () => {
   }, [id]);
 
   // Handle form field changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: unknown;}>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | {name?: string;value: any;}>) => {
     const { name, value } = e.target;
 
     if (!name) return;
 
+    updateFormValue(name, value);
+  };
+
+  // Handle select changes
+  const handleSelectChange = (e: any) => {
+    const { name, value } = e.target;
+    if (!name) return;
+    updateFormValue(name, value);
+  };
+
+  // Common function to update form values
+  const updateFormValue = (name: string, value: any) => {
+
     // Handle nested fields (using dot notation in name)
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [parent]: {
-          ...prev[parent as keyof typeof prev],
+          ...(prev[parent as keyof typeof prev] || {}),
           [child]: value
         }
       }));
     } else {
-      setFormValues((prev) => ({
+      setFormValues((prev: any) => ({
         ...prev,
         [name]: value
       }));
@@ -188,7 +201,7 @@ const EditCustomer: React.FC = () => {
 
     // Clear error when field is updated
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors((prev: any) => ({
         ...prev,
         [name]: undefined
       }));
@@ -270,7 +283,7 @@ const EditCustomer: React.FC = () => {
 
     try {
       // Call API to update customer
-      await customerService.updateCustomer(id!, formValues);
+      await customerService.updateCustomer(id!, formValues as any);
 
       // Show success message
       setSnackbar({
@@ -401,7 +414,7 @@ const EditCustomer: React.FC = () => {
                     name="industry"
                     value={formValues.industry}
                     label="Industry"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="Aerospace">Aerospace</MenuItem>
                     <MenuItem value="Automotive">Automotive</MenuItem>
@@ -423,7 +436,7 @@ const EditCustomer: React.FC = () => {
                     name="status"
                     value={formValues.status}
                     label="Status"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="active">Active</MenuItem>
                     <MenuItem value="inactive">Inactive</MenuItem>
@@ -440,7 +453,7 @@ const EditCustomer: React.FC = () => {
                     name="serviceLevel"
                     value={formValues.serviceLevel}
                     label="Service Level"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="standard">Standard</MenuItem>
                     <MenuItem value="premium">Premium</MenuItem>
@@ -701,7 +714,7 @@ const EditCustomer: React.FC = () => {
                     name="customFields.priorityLevel"
                     value={formValues.customFields.priorityLevel || ''}
                     label="Priority Level"
-                    onChange={handleChange}>
+                    onChange={handleSelectChange}>
 
                     <MenuItem value="">None</MenuItem>
                     <MenuItem value="Low">Low</MenuItem>

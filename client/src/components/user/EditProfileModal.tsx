@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -90,10 +90,10 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 }) => {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [success, setSuccess] = useState(false);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string | undefined>(profile.avatar);
+  const [avatarFile, setAvatarFile] = useState<any>(null);
+  const [avatarPreview, setAvatarPreview] = useState<any>(profile.avatar);
 
   // Initialize form with Formik
   const formik = useFormik({

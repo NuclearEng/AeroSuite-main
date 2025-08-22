@@ -6,6 +6,7 @@ import {
   Grid,
   Button,
   Card,
+  CardHeader,
   CardContent,
   Divider,
   Alert,
@@ -111,7 +112,7 @@ const demoRoutes = [
 const CodeSplittingDemo: React.FC = () => {
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
-  const [activeComponent, setActiveComponent] = useState<number | null>(null);
+  const [activeComponent, setActiveComponent] = useState<any>(null);
   const [loadComponentOnDemand, setLoadComponentOnDemand] = useState(false);
 
   // Use dynamic imports for each heavy component
@@ -140,7 +141,7 @@ const CodeSplittingDemo: React.FC = () => {
           break;
       }
     } catch (error) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     }
   };
 
@@ -231,7 +232,7 @@ const CodeSplittingDemo: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {demoImages.map((image, index) =>
+        {demoImages.map((image, index: any) =>
         <Grid item xs={12} md={6} key={index}>
             <Paper elevation={2} sx={{ p: 2 }}>
               <Typography variant="subtitle1" gutterBottom>
@@ -275,21 +276,23 @@ const CodeSplittingDemo: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {demoComponents.map((component, index) =>
+        {demoComponents.map((component, index: any) =>
         <Grid item xs={12} md={4} key={index}>
             <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
               <Typography variant="subtitle1" gutterBottom>
                 {component.name}
               </Typography>
               <LazyLoadedComponent
-              importFn={component.importFn}
+              importFn={component.importFn as any}
               componentProps={{
                 data: [
                 { name: 'Jan', value: 400 },
                 { name: 'Feb', value: 300 },
                 { name: 'Mar', value: 600 },
                 { name: 'Apr', value: 800 },
-                { name: 'May', value: 500 }]
+                { name: 'May', value: 500 }],
+                xKey: 'name',
+                lineKey: 'value'
 
               }}
               height={250}

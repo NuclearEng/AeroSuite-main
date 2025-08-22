@@ -105,12 +105,12 @@ const SupplierDetail: React.FC = () => {
   const theme = useTheme();
 
   // State
-  const [supplier, setSupplier] = useState<Supplier | null>(null);
+  const [supplier, setSupplier] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [tabValue, setTabValue] = useState(0);
-  const [performanceMetrics, setPerformanceMetrics] = useState<any | null>(null);
-  const [inspections, setInspections] = useState<any[]>([]);
+  const [performanceMetrics, setPerformanceMetrics] = useState<any>(null);
+  const [inspections, setInspections] = useState<any>([]);
   const [inspectionsLoading, setInspectionsLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [snackbar, setSnackbar] = useState<{
@@ -135,7 +135,7 @@ const SupplierDetail: React.FC = () => {
         const data = await supplierService.getSupplier(id);
         setSupplier(data);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load supplier');
       } finally {
         setLoading(false);
@@ -154,7 +154,7 @@ const SupplierDetail: React.FC = () => {
         const data = await supplierService.getSupplierPerformance(id);
         setPerformanceMetrics(data);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         // Don't set error state as this is secondary data
       }
     };
@@ -172,7 +172,7 @@ const SupplierDetail: React.FC = () => {
         const data = await supplierService.getSupplierInspections(id);
         setInspections(data.inspections || []);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         // Don't set error state as this is secondary data
       } finally {
         setInspectionsLoading(false);
@@ -215,7 +215,7 @@ const SupplierDetail: React.FC = () => {
         navigate('/suppliers');
       }, 1500);
     } catch (err: any) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setSnackbar({
         open: true,
         message: err.message || 'Failed to delete supplier',
@@ -568,7 +568,7 @@ const SupplierDetail: React.FC = () => {
               <CardContent>
                 {supplier?.tags && supplier.tags.length > 0 ?
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                    {supplier.tags.map((tag) =>
+                    {supplier.tags.map((tag: any) =>
                   <Chip
                     key={tag}
                     label={tag}
@@ -602,7 +602,7 @@ const SupplierDetail: React.FC = () => {
               <CardContent>
                 {supplier?.certifications && supplier.certifications.length > 0 ?
                 <List>
-                    {supplier.certifications.map((cert, index) =>
+                    {supplier.certifications.map((cert: any, index: number) =>
                   <ListItem key={index} divider={index < supplier.certifications!.length - 1}>
                         <ListItemIcon>
                           <LinkIcon />

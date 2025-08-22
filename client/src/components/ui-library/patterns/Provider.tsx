@@ -41,7 +41,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   initialTheme = 'system', 
   children 
 }) => {
-  const [theme, setTheme] = useState<ThemeType>(initialTheme);
+  const [theme, setTheme] = useState<any>(initialTheme);
   
   // Determine if dark mode is active
   const isDarkMode = React.useMemo(() => {

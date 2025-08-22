@@ -1,0 +1,696 @@
+{
+  "timestamp": "2025-08-22T17:03:20.521Z",
+  "files": {
+    "src/components/dashboard/widgets/AnomalyDetectionWidget.tsx": [
+      {
+        "range": {
+          "start": {
+            "line": 506,
+            "character": 61
+          },
+          "end": {
+            "line": 506,
+            "character": 72
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "',' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 506,
+            "character": 66
+          },
+          "end": {
+            "line": 506,
+            "character": 77
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'=>' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 506,
+            "character": 68
+          },
+          "end": {
+            "line": 506,
+            "character": 79
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'}' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 506,
+            "character": 69
+          },
+          "end": {
+            "line": 506,
+            "character": 80
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 508,
+            "character": 13
+          },
+          "end": {
+            "line": 508,
+            "character": 24
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      }
+    ],
+    "src/components/dashboard/widgets/CustomWidgetBuilder.tsx": [
+      {
+        "range": {
+          "start": {
+            "line": 141,
+            "character": 63
+          },
+          "end": {
+            "line": 141,
+            "character": 74
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "',' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 141,
+            "character": 68
+          },
+          "end": {
+            "line": 141,
+            "character": 79
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'=>' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 141,
+            "character": 70
+          },
+          "end": {
+            "line": 141,
+            "character": 81
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'}' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 141,
+            "character": 71
+          },
+          "end": {
+            "line": 141,
+            "character": 82
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 158,
+            "character": 15
+          },
+          "end": {
+            "line": 158,
+            "character": 26
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 195,
+            "character": 67
+          },
+          "end": {
+            "line": 195,
+            "character": 78
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "',' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 195,
+            "character": 72
+          },
+          "end": {
+            "line": 195,
+            "character": 83
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'=>' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 195,
+            "character": 74
+          },
+          "end": {
+            "line": 195,
+            "character": 85
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'}' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 195,
+            "character": 75
+          },
+          "end": {
+            "line": 195,
+            "character": 86
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 200,
+            "character": 19
+          },
+          "end": {
+            "line": 200,
+            "character": 30
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 208,
+            "character": 63
+          },
+          "end": {
+            "line": 208,
+            "character": 74
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "',' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 208,
+            "character": 68
+          },
+          "end": {
+            "line": 208,
+            "character": 79
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'=>' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 208,
+            "character": 70
+          },
+          "end": {
+            "line": 208,
+            "character": 81
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'}' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 208,
+            "character": 71
+          },
+          "end": {
+            "line": 208,
+            "character": 82
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 213,
+            "character": 15
+          },
+          "end": {
+            "line": 213,
+            "character": 26
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      }
+    ],
+    "src/pages/inspections/InspectionDetail.tsx": [
+      {
+        "range": {
+          "start": {
+            "line": 571,
+            "character": 74
+          },
+          "end": {
+            "line": 571,
+            "character": 85
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "',' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 571,
+            "character": 79
+          },
+          "end": {
+            "line": 571,
+            "character": 90
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'=>' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 571,
+            "character": 81
+          },
+          "end": {
+            "line": 571,
+            "character": 92
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'}' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 571,
+            "character": 82
+          },
+          "end": {
+            "line": 571,
+            "character": 93
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 580,
+            "character": 19
+          },
+          "end": {
+            "line": 580,
+            "character": 30
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 598,
+            "character": 64
+          },
+          "end": {
+            "line": 598,
+            "character": 75
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "',' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 598,
+            "character": 69
+          },
+          "end": {
+            "line": 598,
+            "character": 80
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'=>' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 598,
+            "character": 71
+          },
+          "end": {
+            "line": 598,
+            "character": 82
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'}' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 598,
+            "character": 72
+          },
+          "end": {
+            "line": 598,
+            "character": 83
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 620,
+            "character": 15
+          },
+          "end": {
+            "line": 620,
+            "character": 26
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      }
+    ],
+    "src/pages/suppliers/components/SupplierAnalytics.tsx": [
+      {
+        "range": {
+          "start": {
+            "line": 329,
+            "character": 79
+          },
+          "end": {
+            "line": 329,
+            "character": 90
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "',' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 329,
+            "character": 84
+          },
+          "end": {
+            "line": 329,
+            "character": 95
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'=>' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 329,
+            "character": 86
+          },
+          "end": {
+            "line": 329,
+            "character": 97
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "'}' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 329,
+            "character": 87
+          },
+          "end": {
+            "line": 329,
+            "character": 98
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 339,
+            "character": 17
+          },
+          "end": {
+            "line": 339,
+            "character": 28
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 353,
+            "character": 66
+          },
+          "end": {
+            "line": 353,
+            "character": 77
+          }
+        },
+        "severity": 1,
+        "code": "TS1005",
+        "source": "typescript",
+        "message": "')' expected.",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 353,
+            "character": 89
+          },
+          "end": {
+            "line": 353,
+            "character": 100
+          }
+        },
+        "severity": 1,
+        "code": "TS1382",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'>'}` or `&gt;`?",
+        "tags": []
+      },
+      {
+        "range": {
+          "start": {
+            "line": 372,
+            "character": 17
+          },
+          "end": {
+            "line": 372,
+            "character": 28
+          }
+        },
+        "severity": 1,
+        "code": "TS1381",
+        "source": "typescript",
+        "message": "Unexpected token. Did you mean `{'}'}` or `&rbrace;`?",
+        "tags": []
+      }
+    ],
+    "App.js": [
+      {
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 0,
+            "character": 11
+          }
+        },
+        "severity": 1,
+        "code": "ROUTER_CONTEXT",
+        "source": "react-router",
+        "message": "useRoutes() may be used only in the context of a <Router> component.",
+        "tags": [],
+        "relatedInformation": [
+          {
+            "location": {
+              "uri": "/Users/tannercoker/AeroSuite-main-1/App.js",
+              "range": {
+                "start": {
+                  "line": 0,
+                  "character": 0
+                },
+                "end": {
+                  "line": 0,
+                  "character": 11
+                }
+              }
+            },
+            "message": "Suggestion: Wrap your Routes component in a Router (BrowserRouter, HashRouter, etc.)"
+          }
+        ]
+      }
+    ]
+  }
+}

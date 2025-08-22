@@ -67,7 +67,7 @@ const ResponsiveGrid: React.FC<ResponsiveGridProps> = ({
         rowSpacing={gridRowSpacing}
         {...props}
       >
-        {items.map((item, index) => {
+        {items.map((item, index: any) => {
           // Default props for mobile/non-mobile
           const defaultMobileProps = mobileSingleColumn ? { xs: 12 } : {};
           const defaultDesktopProps = { sm: 6, md: 4, lg: 3 };

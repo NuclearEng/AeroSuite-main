@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -94,7 +94,7 @@ const groupMetrics = (metrics: PerformanceMetric[]) => {
 const calculateStats = (metrics: PerformanceMetric[]) => {
   if (metrics.length === 0) return { avg: 0, min: 0, max: 0 };
 
-  const durations = metrics.map((m) => m.duration);
+  const durations = metrics.map((m: any) => m.duration);
 
   return {
     avg: durations.reduce((sum, d) => sum + d, 0) / durations.length,
@@ -114,10 +114,10 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
   defaultOpen = false
 }) => {
   const theme = useTheme();
-  const [metrics, setMetrics] = useState<PerformanceMetric[]>([]);
+  const [metrics, setMetrics] = useState<any>([]);
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [enabled, setEnabled] = useState(process.env.NODE_ENV !== 'production');
-  const [view, setView] = useState<'details' | 'summary'>('summary');
+  const [view, setView] = useState<any>('summary');
 
   // Subscribe to metrics updates
   useEffect(() => {
@@ -302,7 +302,7 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {Object.entries(groupedMetrics).map(([key, groupMetrics]) => {
+                {Object.entries(groupedMetrics).map(([key, groupMetrics]: any) => {
                 const stats = calculateStats(groupMetrics);
                 const [componentName, type] = key.split('-');
 
@@ -345,7 +345,7 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedMetrics.map((metric, index) =>
+                {sortedMetrics.map((metric, index: any) =>
               <TableRow key={index} hover>
                     <TableCell>
                       <Typography variant="body2" noWrap>

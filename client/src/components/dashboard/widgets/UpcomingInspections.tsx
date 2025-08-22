@@ -77,7 +77,7 @@ const UpcomingInspections: React.FC = () => {
   return (
     <Box>
       <List sx={{ width: '100%', p: 0 }}>
-        {upcomingInspections.map((inspection, index) => (
+        {upcomingInspections.map((inspection, index: any) => (
           <React.Fragment key={inspection.id}>
             <ListItem 
               alignItems="flex-start"

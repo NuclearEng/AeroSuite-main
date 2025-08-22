@@ -58,9 +58,9 @@ const PerformanceMetricsDashboard: React.FC = () => {
   const { t } = useTranslation();
 
   // State
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [tabIndex, setTabIndex] = useState<number>(0);
+  const [loading, setLoading] = useState<any>(true);
+  const [error, setError] = useState<any>(null);
+  const [tabIndex, setTabIndex] = useState<any>(0);
   const [metrics, setMetrics] = useState<any>({});
   const [baselineMetrics, setBaselineMetrics] = useState<any>({});
   const [historicalData, setHistoricalData] = useState<any>({
@@ -83,7 +83,7 @@ const PerformanceMetricsDashboard: React.FC = () => {
 
       setError(null);
     } catch (_err) {
-      console.error("Error:", err);
+      console.error("Error:", error);
       setError('Failed to load performance metrics. Please try again.');
     } finally {
       setLoading(false);

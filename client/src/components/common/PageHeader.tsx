@@ -67,7 +67,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
               separator={<NavigateNextIcon fontSize="small" />}
               aria-label="breadcrumb"
             >
-              {breadcrumbs.map((crumb, index) => {
+              {breadcrumbs.map((crumb, index: any) => {
                 const isLast = index === breadcrumbs.length - 1;
                 return isLast || !crumb.href ? (
                   <Typography 

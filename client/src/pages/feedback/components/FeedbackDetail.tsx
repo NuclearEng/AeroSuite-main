@@ -63,15 +63,15 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
   const theme = useTheme();
 
   // State
-  const [tabValue, setTabValue] = useState<number>(0);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>(feedback.status);
-  const [priority, setPriority] = useState<string>(feedback.priority);
-  const [assignedTo, setAssignedTo] = useState<string | undefined>(feedback.assignedTo?._id);
-  const [responseContent, setResponseContent] = useState<string>(feedback.response?.content || '');
-  const [isPublicResponse, setIsPublicResponse] = useState<boolean>(feedback.response?.isPublic || false);
-  const [note, setNote] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [tabValue, setTabValue] = useState<any>(0);
+  const [editMode, setEditMode] = useState<any>(false);
+  const [status, setStatus] = useState<any>(feedback.status);
+  const [priority, setPriority] = useState<any>(feedback.priority);
+  const [assignedTo, setAssignedTo] = useState<any>(feedback.assignedTo?._id);
+  const [responseContent, setResponseContent] = useState<any>(feedback.response?.content || '');
+  const [isPublicResponse, setIsPublicResponse] = useState<any>(feedback.response?.isPublic || false);
+  const [note, setNote] = useState<any>('');
+  const [loading, setLoading] = useState<any>(false);
 
   // Handle tab change
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -109,7 +109,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
       setEditMode(false);
       setNote('');
     } catch (_error) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
@@ -128,7 +128,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         isFeatured: !feedback.isFeatured
       });
     } catch (_error) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     }
   };
 
@@ -139,7 +139,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         isAddressed: !feedback.isAddressed
       });
     } catch (_error) {
-      console.error("Error:", err);
+      console.error("Error:", error);
     }
   };
 
@@ -251,7 +251,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
               {t('feedback.attachments')}:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {feedback.attachments.map((attachment, index) =>
+              {feedback.attachments.map((attachment, index: any) =>
             <Chip
               key={index}
               icon={<AttachFileIcon />}
@@ -417,7 +417,7 @@ const FeedbackDetail: React.FC<FeedbackDetailProps> = ({
         <Grid item xs={12}>
           <List>
             {feedback.internalNotes && feedback.internalNotes.length > 0 ?
-            feedback.internalNotes.map((note, index) =>
+            feedback.internalNotes.map((note, index: any) =>
             <React.Fragment key={index}>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>

@@ -42,10 +42,10 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 const ReportPreview: React.FC<ReportPreviewProps> = ({ templateId, filters }) => {
   const [loading, setLoading] = useState(false);
   const [excelLoading, setExcelLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
+  const [previewUrl, setPreviewUrl] = useState<any>(null);
   const [zoom, setZoom] = useState(1);
-  const [downloadMenuAnchor, setDownloadMenuAnchor] = useState<null | HTMLElement>(null);
+  const [downloadMenuAnchor, setDownloadMenuAnchor] = useState<any>(null);
   const [progress, setProgress] = useState(0);
   const [isRendering, setIsRendering] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);

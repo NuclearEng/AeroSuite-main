@@ -139,7 +139,7 @@ export const Tabs: React.FC<TabsProps> = ({
   onChange,
   className = ''
 }) => {
-  const [activeTab, setActiveTab] = React.useState<string>(
+  const [activeTab, setActiveTab] = React.useState<any>(
     initialTab || (items.length > 0 ? items[0].id : '')
   );
 

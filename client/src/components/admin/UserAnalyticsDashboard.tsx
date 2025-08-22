@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -223,11 +223,11 @@ const formatPercentage = (value: number): string => {
 // User Analytics Dashboard Component
 const UserAnalyticsDashboard: React.FC = () => {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [timePeriod, setTimePeriod] = useState<string>('7d');
-  const [tabIndex, setTabIndex] = useState<number>(0);
-  const [funnelId, setFunnelId] = useState<string>('supplierCreation');
+  const [loading, setLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+  const [timePeriod, setTimePeriod] = useState<any>('7d');
+  const [tabIndex, setTabIndex] = useState<any>(0);
+  const [funnelId, setFunnelId] = useState<any>('supplierCreation');
 
   // Handle time period change
   const handlePeriodChange = (event: SelectChangeEvent) => {
@@ -261,11 +261,11 @@ const UserAnalyticsDashboard: React.FC = () => {
 
   // Prepare chart data for user growth
   const userGrowthChartData = {
-    labels: mockUserAnalytics.userGrowth.map((item) => formatLocalizedDate(item.date)),
+    labels: mockUserAnalytics.userGrowth.map((item: any) => formatLocalizedDate(item.date)),
     datasets: [
     {
       label: t('userAnalytics.users'),
-      data: mockUserAnalytics.userGrowth.map((item) => item.users),
+      data: mockUserAnalytics.userGrowth.map((item: any) => item.users),
       fill: false,
       backgroundColor: 'rgba(75, 192, 192, 0.6)',
       borderColor: 'rgb(75, 192, 192)',
@@ -276,7 +276,7 @@ const UserAnalyticsDashboard: React.FC = () => {
 
   // Prepare chart data for events by category
   const eventsByCategoryChartData = {
-    labels: Object.keys(mockUserAnalytics.eventsByCategory).map((key) =>
+    labels: Object.keys(mockUserAnalytics.eventsByCategory).map((key: any) =>
     t(`userAnalytics.eventCategories.${key}`)
     ),
     datasets: [
@@ -306,11 +306,11 @@ const UserAnalyticsDashboard: React.FC = () => {
 
   // Prepare chart data for event trend
   const eventTrendChartData = {
-    labels: mockEventAnalytics.eventTrend.map((item) => formatLocalizedDate(item.date)),
+    labels: mockEventAnalytics.eventTrend.map((item: any) => formatLocalizedDate(item.date)),
     datasets: [
     {
       label: t('userAnalytics.events'),
-      data: mockEventAnalytics.eventTrend.map((item) => item.count),
+      data: mockEventAnalytics.eventTrend.map((item: any) => item.count),
       fill: false,
       backgroundColor: 'rgba(153, 102, 255, 0.6)',
       borderColor: 'rgb(153, 102, 255)',
@@ -338,11 +338,11 @@ const UserAnalyticsDashboard: React.FC = () => {
 
   // Prepare chart data for funnel
   const funnelChartData = {
-    labels: currentFunnel.steps.map((step) => step.name),
+    labels: currentFunnel.steps.map((step: any) => step.name),
     datasets: [
     {
       label: t('userAnalytics.users'),
-      data: currentFunnel.steps.map((step) => step.count),
+      data: currentFunnel.steps.map((step: any) => step.count),
       backgroundColor: 'rgba(75, 192, 192, 0.6)',
       borderColor: 'rgb(75, 192, 192)',
       borderWidth: 1
@@ -575,7 +575,7 @@ const UserAnalyticsDashboard: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockUserAnalytics.topPages.map((page) =>
+                    {mockUserAnalytics.topPages.map((page: any) =>
                     <TableRow key={page.path} hover>
                         <TableCell>{page.path}</TableCell>
                         <TableCell align="right">{page.views.toLocaleString()}</TableCell>
@@ -643,7 +643,7 @@ const UserAnalyticsDashboard: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockEventAnalytics.topLabels.map((item) =>
+                    {mockEventAnalytics.topLabels.map((item: any) =>
                     <TableRow key={item.label} hover>
                         <TableCell>{item.label}</TableCell>
                         <TableCell align="right">{item.count.toLocaleString()}</TableCell>
@@ -717,7 +717,7 @@ const UserAnalyticsDashboard: React.FC = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {currentFunnel.steps.map((step, index) =>
+                    {currentFunnel.steps.map((step, index: any) =>
                     <TableRow key={index} hover>
                         <TableCell>{step.name}</TableCell>
                         <TableCell align="right">{step.count.toLocaleString()}</TableCell>

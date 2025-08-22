@@ -21,7 +21,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   return (
     <nav aria-label="breadcrumb">
       <ol style={{ display: 'flex', alignItems: 'center', gap: 8, listStyle: 'none', padding: 0, margin: 0 }}>
-        {items.map((item, idx) => (
+        {items.map((item, idx: any) => (
           <li key={item.label} style={{ display: 'flex', alignItems: 'center' }}>
             {item.href ? (
               <a

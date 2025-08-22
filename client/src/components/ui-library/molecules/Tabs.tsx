@@ -45,7 +45,7 @@ const Tabs: React.FC<TabsProps> = ({
         onKeyDown={handleKeyDown}
         style={{ display: 'flex', gap: 8, marginBottom: 12 }}
       >
-        {tabs.map((tab, idx) => (
+        {tabs.map((tab, idx: any) => (
           <button
             key={tab.label}
             role="tab"

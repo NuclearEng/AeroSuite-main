@@ -30,10 +30,10 @@ import {
  * Component to demonstrate keyboard navigation utilities
  */
 const KeyboardNavigableDemo: React.FC = () => {
-  const [selectedListItem, setSelectedListItem] = useState<number | null>(null);
-  const [selectedGridItem, setSelectedGridItem] = useState<string | null>(null);
-  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
-  const [selectedMenuItem, setSelectedMenuItem] = useState<number | null>(null);
+  const [selectedListItem, setSelectedListItem] = useState<any>(null);
+  const [selectedGridItem, setSelectedGridItem] = useState<any>(null);
+  const [selectedTabIndex, setSelectedTabIndex] = useState<any>(0);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<any>(null);
   
   // Keyboard navigable list
   const { containerRef: listRef, controller: listController } = useKeyboardNavigableList({
@@ -96,7 +96,7 @@ const KeyboardNavigableDemo: React.FC = () => {
               mb: 2
             }}
           >
-            {['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map((item, index) => (
+            {['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'].map((item, index: any) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton
                   selected={selectedListItem === index}
@@ -132,7 +132,7 @@ const KeyboardNavigableDemo: React.FC = () => {
               mb: 2
             }}
           >
-            {['Menu Item 1', 'Menu Item 2', 'Menu Item 3', 'Menu Item 4'].map((item, index) => (
+            {['Menu Item 1', 'Menu Item 2', 'Menu Item 3', 'Menu Item 4'].map((item, index: any) => (
               <ListItem key={index} disablePadding>
                 <ListItemButton
                   role="menuitem"
@@ -198,9 +198,9 @@ const KeyboardNavigableDemo: React.FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {[1, 2, 3].map((row) => (
+                {[1, 2, 3].map((row: any) => (
                   <TableRow key={row}>
-                    {[1, 2, 3].map((col) => (
+                    {[1, 2, 3].map((col: any) => (
                       <TableCell 
                         key={`${row}-${col}`} 
                         role="gridcell"

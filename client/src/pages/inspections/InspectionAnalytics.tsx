@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import { BarChart, LineChart, PieChart, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend as RechartsLegend, ResponsiveContainer, Cell, Pie, Area, ScatterChart, Scatter, ZAxis } from "../../components/charts/RechartsWrappers";
 import {
   Box,
@@ -79,10 +79,10 @@ const TabPanel = (props: TabPanelProps) => {
 const InspectionAnalytics: React.FC = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<any>(null);
   const [tabValue, setTabValue] = useState(0);
-  const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
-  const [exportAnchorEl, setExportAnchorEl] = useState<null | HTMLElement>(null);
+  const [filterAnchorEl, setFilterAnchorEl] = useState<any>(null);
+  const [exportAnchorEl, setExportAnchorEl] = useState<any>(null);
   const [dateRange, setDateRange] = useState({
     startDate: format(subMonths(new Date(), 6), 'yyyy-MM-dd'),
     endDate: format(new Date(), 'yyyy-MM-dd')
@@ -137,7 +137,7 @@ const InspectionAnalytics: React.FC = () => {
       setAnalyticsData(response.data.data);
     } catch (err: any) {
       setError(err.message || 'Failed to load analytics data');
-      console.error("Error:", err);
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
@@ -212,14 +212,14 @@ const InspectionAnalytics: React.FC = () => {
   };
 
   // Generate status chart data
-  const statusChartData = Object.entries(analyticsData.summary.statusCounts || {}).map(([status, count]) => ({
+  const statusChartData = Object.entries(analyticsData.summary.statusCounts || {}).map(([status, count]: any) => ({
     name: status.charAt(0).toUpperCase() + status.slice(1),
     value: count as number,
     color: getStatusColor(status)
   }));
 
   // Generate result chart data
-  const resultChartData = Object.entries(analyticsData.summary.resultCounts || {}).map(([result, count]) => ({
+  const resultChartData = Object.entries(analyticsData.summary.resultCounts || {}).map(([result, count]: any) => ({
     name: result.charAt(0).toUpperCase() + result.slice(1),
     value: count as number,
     color: getResultColor(result)
@@ -563,7 +563,7 @@ const InspectionAnalytics: React.FC = () => {
                             dataKey="value"
                             label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
 
-                              {statusChartData.map((entry, index) =>
+                              {statusChartData.map((entry, index: any) =>
                             <Cell key={`cell-${index}`} fill={entry.color} />
                             )}
                             </Pie>
@@ -594,7 +594,7 @@ const InspectionAnalytics: React.FC = () => {
                             dataKey="value"
                             label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
 
-                              {resultChartData.map((entry, index) =>
+                              {resultChartData.map((entry, index: any) =>
                             <Cell key={`cell-${index}`} fill={entry.color} />
                             )}
                             </Pie>

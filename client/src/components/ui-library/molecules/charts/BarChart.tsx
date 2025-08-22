@@ -28,7 +28,7 @@ const BarChart: React.FC<BarChartProps> = ({
   if (!data || data.length === 0) return <div>No data</div>;
 
   // Find max for scaling
-  const yVals = data.map((d) => Number(d[yKey]));
+  const yVals = data.map((d: any) => Number(d[yKey]));
   const maxY = Math.max(...yVals, 1);
 
   // Padding for axes
@@ -55,7 +55,7 @@ const BarChart: React.FC<BarChartProps> = ({
         </text>
       }
       
-      {data.map((d, i) => {
+      {data.map((d, i: any) => {
         const x = pad + i * barWidth;
         const y = height - pad - scaleY(Number(d[yKey]));
         const h = scaleY(Number(d[yKey]));

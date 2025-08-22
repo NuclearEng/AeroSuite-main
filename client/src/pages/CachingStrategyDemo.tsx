@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -33,7 +33,7 @@ import {
   clearAllCaches,
   evictExpired
 } from '../services/cachedApiService';
-import { useCachedData, useCachedPreference } from '../hooks/useCachedData';
+import useCachedData, { useCachedPreference } from '../hooks/useCachedData';
 import { PageHeader } from '../components/common';
 import { Cache } from '../utils/caching';
 
@@ -96,14 +96,14 @@ const CachingStrategyDemo: React.FC = () => {
   const [apiCallCount, setApiCallCount] = useState(0);
   const [cachingEnabled, setCachingEnabled] = useState(true);
   const [selectedTTL, setSelectedTTL] = useState('SHORT');
-  const [cacheEntries, setCacheEntries] = useState<Array<{ key: string; expires: Date }>>([]);
-  const [dataSource, setDataSource] = useState<'suppliers' | 'customers'>('suppliers');
+  const [cacheEntries, setCacheEntries] = useState<any>([]);
+  const [dataSource, setDataSource] = useState<any>('suppliers');
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<any[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<any>(null);
+  const [error, setError] = useState<any>(null);
   
   // Demo user preference with persistent cache
-  const [theme, setThemePreference] = useCachedPreference<'light' | 'dark'>('theme', 'light');
+  const [themePreference, setThemePreference] = useCachedPreference<'light' | 'dark'>('theme', 'light');
   const [fontSize, setFontSize] = useCachedPreference<number>('fontSize', 16);
   
   // Fetch data using the useCachedData hook for the React hook demo
@@ -113,14 +113,7 @@ const CachingStrategyDemo: React.FC = () => {
     error: hookError,
     refetch: refetchHookData
   } = useCachedData(
-    async () => {
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate delay
-      return dataSource === 'suppliers'
-        ? await mockApi.getSuppliers()
-        : await mockApi.getCustomers();
-    },
-    [dataSource],
-    TTL[selectedTTL as keyof typeof TTL]
+    `demo-data-${dataSource}`
   );
   
   // Handle tab change
@@ -188,7 +181,7 @@ const CachingStrategyDemo: React.FC = () => {
         cached: cachingEnabled && apiCallCount > 1,
       });
     } catch (_err) {
-      setError(`Error fetching data: ${err instanceof Error ? err.message : String(err)}`);
+      setError(`Error fetching data: ${_err instanceof Error ? _err.message : String(_err)}`);
     } finally {
       setIsLoading(false);
     }
@@ -375,7 +368,7 @@ const CachingStrategyDemo: React.FC = () => {
                       No cached data
                     </Typography>
                   ) : (
-                    cacheEntries.map((entry, index) => (
+                    cacheEntries.map((entry: any, index: number) => (
                       <Box
                         key={index}
                         sx={{
@@ -622,7 +615,7 @@ const CachingStrategyDemo: React.FC = () => {
                         overflow: 'auto'
                       }}
                     >
-                      {hookData.map((item: any) => (
+                      {(hookData as any[])?.map((item: any) => (
                         <Box
                           key={item.id}
                           sx={{
@@ -747,8 +740,8 @@ const CachingStrategyDemo: React.FC = () => {
                     mt: 3,
                     p: 2,
                     borderRadius: 1,
-                    bgcolor: theme === 'dark' ? '#2d2d2d' : '#f5f5f5',
-                    color: theme === 'dark' ? '#ffffff' : '#000000',
+                    bgcolor: themePreference === 'dark' ? '#2d2d2d' : '#f5f5f5',
+                    color: themePreference === 'dark' ? '#ffffff' : '#000000',
                   }}
                 >
                   <Typography variant="subtitle2" gutterBottom>

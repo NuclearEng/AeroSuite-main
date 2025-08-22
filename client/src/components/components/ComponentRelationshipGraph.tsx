@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState, useMemo } from 'react';
+import React, { ChangeEvent, useRef, useCallback, useState, useMemo } from 'react';
 import {
   Box,
   Paper,
@@ -87,10 +87,10 @@ const ComponentRelationshipGraph: React.FC<ComponentRelationshipGraphProps> = ({
   
   // State for filters
   const [showLabels, setShowLabels] = useState(true);
-  const [selectedRelationshipTypes, setSelectedRelationshipTypes] = useState<string[]>(
+  const [selectedRelationshipTypes, setSelectedRelationshipTypes] = useState<any>(
     Object.keys(relationshipTypes)
   );
-  const [selectedComponentTypes, setSelectedComponentTypes] = useState<string[]>(
+  const [selectedComponentTypes, setSelectedComponentTypes] = useState<any>(
     Object.keys(componentTypes)
   );
   
@@ -270,7 +270,7 @@ const ComponentRelationshipGraph: React.FC<ComponentRelationshipGraphProps> = ({
                   label="Component Types"
                   renderValue={(selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {(selected as string[]).map((value) => (
+                      {(selected as string[]).map((value: any) => (
                         <Chip 
                           key={value} 
                           label={value} 
@@ -286,7 +286,7 @@ const ComponentRelationshipGraph: React.FC<ComponentRelationshipGraphProps> = ({
                     </Box>
                   )}
                 >
-                  {Object.entries(componentTypes).map(([type, config]) => (
+                  {Object.entries(componentTypes).map(([type, config]: any) => (
                     <MenuItem key={type} value={type}>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Box 
@@ -318,7 +318,7 @@ const ComponentRelationshipGraph: React.FC<ComponentRelationshipGraphProps> = ({
                   label="Relationship Types"
                   renderValue={(selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                      {(selected as string[]).map((value) => (
+                      {(selected as string[]).map((value: any) => (
                         <Chip 
                           key={value} 
                           label={relationshipTypes[value]?.label || value} 
@@ -334,7 +334,7 @@ const ComponentRelationshipGraph: React.FC<ComponentRelationshipGraphProps> = ({
                     </Box>
                   )}
                 >
-                  {Object.entries(relationshipTypes).map(([type, config]) => (
+                  {Object.entries(relationshipTypes).map(([type, config]: any) => (
                     <MenuItem key={type} value={type}>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Box 

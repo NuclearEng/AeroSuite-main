@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { ChangeEvent, useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Card,
@@ -110,13 +110,13 @@ const chartColors = {
 
 const SupplierPerformanceCharts: React.FC<SupplierPerformanceChartsProps> = ({ supplierId }) => {
   // State
-  const [period, setPeriod] = useState<'3months' | '6months' | '1year' | '2years'>('6months');
-  const [chartType, setChartType] = useState<'line' | 'bar' | 'radar' | 'polar'>('line');
-  const [metricType, setMetricType] = useState<'quality' | 'delivery' | 'responsiveness' | 'cost' | 'all'>('all');
+  const [period, setPeriod] = useState<any>('6months');
+  const [chartType, setChartType] = useState<any>('line');
+  const [metricType, setMetricType] = useState<any>('all');
   const [tabValue, setTabValue] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [performanceData, setPerformanceData] = useState<any | null>(null);
+  const [error, setError] = useState<any>(null);
+  const [performanceData, setPerformanceData] = useState<any>(null);
   const [comparisonMode, setComparisonMode] = useState(false);
 
   // Fetch performance data
@@ -135,7 +135,7 @@ const SupplierPerformanceCharts: React.FC<SupplierPerformanceChartsProps> = ({ s
         
         setPerformanceData(data);
       } catch (err: any) {
-        console.error("Error:", err);
+        console.error("Error:", error);
         setError(err.message || 'Failed to load supplier performance data');
       } finally {
         setLoading(false);

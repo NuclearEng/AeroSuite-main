@@ -81,7 +81,7 @@ function useMemoryOptimizer({
         }
       } catch (_e) {
         if (debug) {
-          console.warn('Failed to force garbage collection', e);
+          console.warn('Failed to force garbage collection', _e);
         }
       }
     }

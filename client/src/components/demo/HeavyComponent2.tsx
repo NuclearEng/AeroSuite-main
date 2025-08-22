@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Typography,
@@ -37,7 +37,7 @@ const HeavyComponent2: React.FC = () => {
   const tableData = generateMockData();
   
   // Handle pagination
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
   
@@ -108,7 +108,7 @@ const HeavyComponent2: React.FC = () => {
           <TableBody>
             {tableData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
+              .map((row: any) => (
                 <TableRow key={row.id} hover>
                   <TableCell component="th" scope="row">
                     #{row.id}

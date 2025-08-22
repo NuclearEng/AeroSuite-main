@@ -70,14 +70,14 @@ function a11yProps(index: number) {
 const AccessibilityAuditPage: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [targetSelector, setTargetSelector] = useState('');
-  const [auditResults, setAuditResults] = useState<AccessibilityAuditResult | null>(null);
-  const [focusIssues, setFocusIssues] = useState<any[] | null>(null);
-  const [screenReaderIssues, setScreenReaderIssues] = useState<any[] | null>(null);
-  const [selectedSeverities, setSelectedSeverities] = useState<AccessibilitySeverity[]>([
+  const [auditResults, setAuditResults] = useState<any>(null);
+  const [focusIssues, setFocusIssues] = useState<any>(null);
+  const [screenReaderIssues, setScreenReaderIssues] = useState<any>(null);
+  const [selectedSeverities, setSelectedSeverities] = useState<any>([
   AccessibilitySeverity.CRITICAL,
   AccessibilitySeverity.SERIOUS]
   );
-  const [selectedStandards, setSelectedStandards] = useState<string[]>([
+  const [selectedStandards, setSelectedStandards] = useState<any>([
   'wcag2a',
   'wcag2aa']
   );
@@ -103,7 +103,7 @@ const AccessibilityAuditPage: React.FC = () => {
   const handleSeverityChange = (severity: AccessibilitySeverity) => {
     setSelectedSeverities((prev) => {
       if (prev.includes(severity)) {
-        return prev.filter((s) => s !== severity);
+        return prev.filter((s: any) => s !== severity);
       } else {
         return [...prev, severity];
       }
@@ -113,7 +113,7 @@ const AccessibilityAuditPage: React.FC = () => {
   const handleStandardChange = (standard: string) => {
     setSelectedStandards((prev) => {
       if (prev.includes(standard)) {
-        return prev.filter((s) => s !== standard);
+        return prev.filter((s: any) => s !== standard);
       } else {
         return [...prev, standard];
       }
@@ -213,7 +213,7 @@ const AccessibilityAuditPage: React.FC = () => {
                 
                 
                 <Paper variant="outlined" sx={{ p: 2 }}>
-                  {focusIssues.map((issue, index) =>
+                  {focusIssues.map((issue, index: any) =>
                 <Box key={index} sx={{ mb: 2 }}>
                       <Typography variant="subtitle2">
                         {issue.id}: {issue.description}
@@ -274,7 +274,7 @@ const AccessibilityAuditPage: React.FC = () => {
                 
                 
                 <Paper variant="outlined" sx={{ p: 2 }}>
-                  {screenReaderIssues.map((issue, index) =>
+                  {screenReaderIssues.map((issue, index: any) =>
                 <Box key={index} sx={{ mb: 2 }}>
                       <Typography variant="subtitle2">
                         {issue.id}: {issue.description}

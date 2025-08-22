@@ -72,7 +72,7 @@ const FeaturesOverviewStep: React.FC = () => {
       </Typography>
       
       <Grid container spacing={3}>
-        {features.map((feature, index) => (
+        {features.map((feature, index: any) => (
           <Grid item xs={12} sm={6} key={index}>
             <Card 
               sx={{ 

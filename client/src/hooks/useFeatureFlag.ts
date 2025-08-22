@@ -55,8 +55,8 @@ const useFeatureFlag = (
       
       setError(null);
     } catch (_err) {
-      console.error(`Error checking feature flag ${flagKey}:`, err);
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      console.error(`Error checking feature flag ${flagKey}:`, _err);
+      setError(_err instanceof Error ? _err.message : 'Unknown error');
       
       // Fall back to default value on error
       setIsEnabled(defaultValue);

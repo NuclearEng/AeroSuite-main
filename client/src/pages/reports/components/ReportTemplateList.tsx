@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import {
   Box,
   Paper,
@@ -57,11 +57,11 @@ const ReportTemplateList: React.FC<ReportTemplateListProps> = ({
 }) => {
   // State
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<string>('');
+  const [category, setCategory] = useState<any>('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [orderBy, setOrderBy] = useState<keyof ReportTemplate>('updatedAt');
-  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
+  const [orderBy, setOrderBy] = useState<any>('updatedAt');
+  const [order, setOrder] = useState<any>('desc');
 
   // Handle search change
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +83,7 @@ const ReportTemplateList: React.FC<ReportTemplateListProps> = ({
   };
 
   // Handle page change
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (event: any, newPage: number) => {
     setPage(newPage);
   };
 
@@ -94,7 +94,7 @@ const ReportTemplateList: React.FC<ReportTemplateListProps> = ({
   };
 
   // Filter and sort templates
-  const filteredTemplates = templates.filter((template) => {
+  const filteredTemplates = templates.filter((template: any) => {
     const searchMatch = search === '' ||
     template.name.toLowerCase().includes(search.toLowerCase()) ||
     template.description && template.description.toLowerCase().includes(search.toLowerCase()) ||
@@ -107,8 +107,8 @@ const ReportTemplateList: React.FC<ReportTemplateListProps> = ({
 
   // Sort templates
   const sortedTemplates = [...filteredTemplates].sort((a, b) => {
-    const aValue = a[orderBy];
-    const bValue = b[orderBy];
+    const aValue = (a as any)[orderBy];
+    const bValue = (b as any)[orderBy];
 
     if (!aValue || !bValue) return 0;
 
@@ -218,7 +218,7 @@ const ReportTemplateList: React.FC<ReportTemplateListProps> = ({
       
       
       <Grid container spacing={2}>
-        {paginatedTemplates.map((template) =>
+        {paginatedTemplates.map((template: any) =>
         <Grid item xs={12} sm={6} md={4} key={template._id}>
             <Card
             sx={{
@@ -271,7 +271,7 @@ const ReportTemplateList: React.FC<ReportTemplateListProps> = ({
               }
                 
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
-                  {template.sections.map((section, index) => {
+                  {template.sections.map((section: any, index: number) => {
                   let icon;
                   switch (section.type) {
                     case 'table':

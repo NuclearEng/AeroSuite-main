@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import {
   Box,
   Card,
@@ -96,18 +96,27 @@ const PerformanceRegressionsDashboard: React.FC<PerformanceRegressionsDashboardP
 }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const [regressions, setRegressions] = useState<Regression[]>([]);
-  const [selectedMetric, setSelectedMetric] = useState<string>('firstContentfulPaint');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [regressions, setRegressions] = useState<any>([]);
+  const [selectedMetric, setSelectedMetric] = useState<any>('firstContentfulPaint');
+  const [loading, setLoading] = useState<any>(false);
   
   // Detect regressions
   useEffect(() => {
-    const result = performanceMonitoringService.detectRegressions(
-      currentMetrics,
-      baselineMetrics,
-      threshold
-    );
-    setRegressions(result);
+    const detectRegressions = async () => {
+      try {
+        const regressions = await performanceMonitoringService.getPerformanceRegressions();
+        // Filter based on threshold and metrics
+        const filteredRegressions = regressions.filter(regression => 
+          Math.abs(regression.changePercent) >= threshold
+        );
+        setRegressions(filteredRegressions);
+      } catch (error) {
+        console.error('Error detecting regressions:', error);
+      }
+    };
+    if (currentMetrics && baselineMetrics) {
+      detectRegressions();
+    }
   }, [currentMetrics, baselineMetrics, threshold]);
   
   // Handle refresh
@@ -249,7 +258,7 @@ const PerformanceRegressionsDashboard: React.FC<PerformanceRegressionsDashboardP
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {regressions.map((regression) => (
+                    {regressions.map((regression: any) => (
                       <TableRow key={regression.metric} hover>
                         <TableCell component="th" scope="row">
                           {regression.metric}
@@ -305,7 +314,7 @@ const PerformanceRegressionsDashboard: React.FC<PerformanceRegressionsDashboardP
                   label={t('performanceRegressions.selectMetric')}
                   onChange={handleMetricChange}
                 >
-                  {Object.keys(historicalData.metrics).map((metric) => (
+                  {Object.keys(historicalData.metrics).map((metric: any) => (
                     <MenuItem key={metric} value={metric}>{metric}</MenuItem>
                   ))}
                 </Select>
@@ -334,7 +343,7 @@ const PerformanceRegressionsDashboard: React.FC<PerformanceRegressionsDashboardP
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Object.keys(baselineMetrics).map((metric) => {
+                  {Object.keys(baselineMetrics).map((metric: any) => {
                     const baselineValue = baselineMetrics[metric];
                     const currentValue = currentMetrics[metric] || 0;
                     const percentChange = ((currentValue - baselineValue) / baselineValue) * 100;

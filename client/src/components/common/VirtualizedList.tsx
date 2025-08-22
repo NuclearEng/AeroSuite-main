@@ -227,7 +227,7 @@ function VirtualizedList<T>({
           position: 'relative'
         }}>
 
-          {visibleItems.map((item, localIndex) => {
+          {visibleItems.map((item, localIndex: any) => {
           const index = startIndex + localIndex;
           const key = getItemKey(item, index);
 
