@@ -101,15 +101,15 @@ const inspectionSchema = new mongoose.Schema(
     },
     scheduledDate: {
       type: Date,
-      index: true
+      // index: true
     },
     startDate: {
       type: Date,
-      index: true
+      // index: true
     },
     completionDate: {
       type: Date,
-      index: true
+      // index: true
     },
     status: {
       type: String,

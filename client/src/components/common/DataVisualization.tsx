@@ -47,7 +47,7 @@ import {
   Filler } from
 'chart.js';
 import { Line, Bar, Pie, Doughnut, PolarArea, Radar, Bubble, Scatter, ChartProps } from 'react-chartjs-2';
-import { ChartData, ChartOptions, ChartTypeRegistry } from 'chart.js';
+import { ChartData, ChartOptions } from 'chart.js';
 import { saveAs } from 'file-saver';
 
 // Register Chart.js components
@@ -320,23 +320,23 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
 
     switch (chartType) {
       case 'bar':
-        return <Bar ref={chartRef as any} data={chartData as ChartData<'bar'>} options={chartOptions as ChartOptions<'bar'>} />;
+        return <Bar data={chartData} options={chartOptions} />;
       case 'line':
-        return <Line ref={chartRef as any} data={chartData as ChartData<'line'>} options={chartOptions as ChartOptions<'line'>} />;
+        return <Line data={chartData} options={chartOptions} />;
       case 'pie':
-        return <Pie ref={chartRef as any} data={chartData as ChartData<'pie'>} options={chartOptions as ChartOptions<'pie'>} />;
+        return <Pie data={chartData} options={chartOptions} />;
       case 'doughnut':
-        return <Doughnut ref={chartRef as any} data={chartData as ChartData<'doughnut'>} options={chartOptions as ChartOptions<'doughnut'>} />;
+        return <Doughnut data={chartData} options={chartOptions} />;
       case 'radar':
-        return <Radar ref={chartRef as any} data={chartData as ChartData<'radar'>} options={chartOptions as ChartOptions<'radar'>} />;
+        return <Radar data={chartData} options={chartOptions} />;
       case 'polar':
-        return <PolarArea ref={chartRef as any} data={chartData as ChartData<'polarArea'>} options={chartOptions as ChartOptions<'polarArea'>} />;
+        return <PolarArea data={chartData} options={chartOptions} />;
       case 'bubble':
-        return <Bubble ref={chartRef as any} data={chartData as ChartData<'bubble'>} options={chartOptions as ChartOptions<'bubble'>} />;
+        return <Bubble data={chartData} options={chartOptions} />;
       case 'scatter':
-        return <Scatter ref={chartRef as any} data={chartData as ChartData<'scatter'>} options={chartOptions as ChartOptions<'scatter'>} />;
+        return <Scatter data={chartData} options={chartOptions} />;
       default:
-        return <Bar ref={chartRef as any} data={chartData as ChartData<'bar'>} options={chartOptions as ChartOptions<'bar'>} />;
+        return <Bar data={chartData} options={chartOptions} />;
     }
   };
 

@@ -15,16 +15,30 @@ const ModalsAndFormsTester = lazy(() => import('./pages/ModalsAndFormsTester'));
 // Customer pages
 const CustomerList = lazy(() => import('./pages/customers/CustomerList'));
 const CreateCustomer = lazy(() => import('./pages/customers/CreateCustomer'));
+const CustomerDetail = lazy(() => import('./pages/customers/CustomerDetail'));
+const EditCustomer = lazy(() => import('./pages/customers/EditCustomer'));
+const CustomerOrders = lazy(() => import('./pages/customers/CustomerOrders'));
 
 // Supplier pages
 const SupplierList = lazy(() => import('./pages/suppliers/SupplierList'));
 const CreateSupplier = lazy(() => import('./pages/suppliers/CreateSupplier'));
+const SupplierDetail = lazy(() => import('./pages/suppliers/SupplierDetail'));
+const EditSupplier = lazy(() => import('./pages/suppliers/EditSupplier'));
+const SupplierPerformance = lazy(() => import('./pages/suppliers/SupplierPerformance'));
+const SupplierOrders = lazy(() => import('./pages/suppliers/SupplierOrders'));
+const SupplierQuality = lazy(() => import('./pages/suppliers/SupplierQuality'));
 const EnhancedSupplierForm = lazy(() => import('./pages/suppliers/EnhancedSupplierForm'));
 const EnhancedSupplierTable = lazy(() => import('./pages/suppliers/EnhancedSupplierTable'));
 
 // Inspection pages
 const InspectionList = lazy(() => import('./pages/inspections/InspectionList'));
 const ScheduleInspection = lazy(() => import('./pages/inspections/ScheduleInspection'));
+const InspectionDetail = lazy(() => import('./pages/inspections/InspectionDetail'));
+const ConductInspection = lazy(() => import('./pages/inspections/ConductInspection'));
+const EditInspection = lazy(() => import('./pages/inspections/EditInspection'));
+const QualityMetrics = lazy(() => import('./pages/inspections/QualityMetrics'));
+const InspectorProfile = lazy(() => import('./pages/inspections/InspectorProfile'));
+const KanbanBoard = lazy(() => import('./pages/inspections/KanbanBoard'));
 
 // Report pages
 const ReportBuilder = lazy(() => import('./pages/reports/ReportBuilder'));
@@ -81,12 +95,20 @@ const AppRoutes: React.FC = () => {
           <Route path="customers">
             <Route index element={<CustomerList />} />
             <Route path="create" element={<CreateCustomer />} />
+            <Route path=":id" element={<CustomerDetail />} />
+            <Route path=":id/edit" element={<EditCustomer />} />
+            <Route path=":id/orders" element={<CustomerOrders />} />
           </Route>
           
           
           <Route path="suppliers">
             <Route index element={<SupplierList />} />
             <Route path="create" element={<CreateSupplier />} />
+            <Route path=":id" element={<SupplierDetail />} />
+            <Route path=":id/edit" element={<EditSupplier />} />
+            <Route path=":id/performance" element={<SupplierPerformance />} />
+            <Route path=":id/orders" element={<SupplierOrders />} />
+            <Route path=":id/quality" element={<SupplierQuality />} />
             <Route path="enhanced-form" element={<EnhancedSupplierForm />} />
             <Route path="enhanced-table" element={<EnhancedSupplierTable />} />
           </Route>
@@ -95,6 +117,12 @@ const AppRoutes: React.FC = () => {
           <Route path="inspections">
             <Route index element={<InspectionList />} />
             <Route path="schedule" element={<ScheduleInspection />} />
+            <Route path="kanban" element={<KanbanBoard />} />
+            <Route path=":id" element={<InspectionDetail />} />
+            <Route path=":id/conduct" element={<ConductInspection />} />
+            <Route path=":id/edit" element={<EditInspection />} />
+            <Route path="quality-metrics" element={<QualityMetrics />} />
+            <Route path="inspector-profile" element={<InspectorProfile />} />
           </Route>
           
           

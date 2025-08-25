@@ -10,6 +10,9 @@ const { v4: uuidv4 } = require('uuid');
 const cluster = require('cluster');
 const cookieParser = require('cookie-parser');
 const { logger } = require('./utils/logger');
+const http = require('http');
+const { Server } = require('socket.io');
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
@@ -95,10 +98,10 @@ app.use(distributedSession.createSecurityMiddleware());
 // Auto-scaling request tracking middleware - RF039
 app.use(autoScaling.createRequestTrackerMiddleware());
 
-// Apply security middleware
+// Update helmet config
 app.use(helmet({
   contentSecurityPolicy: {
-    useDefaults: true,
+    useDefaults: false,
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
@@ -108,8 +111,8 @@ app.use(helmet({
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
-      upgradeInsecureRequests: [],
-    },
+      upgradeInsecureRequests: []
+    }
   },
   hsts: {
     maxAge: 31536000,
@@ -488,6 +491,14 @@ app.get('/health/service', async (req, res) => {
   }
 });
 
+// Before 404 handler
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../../client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../client/build', 'index.html'));
+  });
+}
+
 // 404 handler
 app.use((req, res, next) => {
   next(new NotFoundError(`Route ${req.originalUrl} not found`));
@@ -496,8 +507,25 @@ app.use((req, res, next) => {
 // Global error handling middleware
 app.use(errorHandler);
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
 // Start server
-const server = app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT} (PID: ${process.pid})`);
 });
 

@@ -8,7 +8,9 @@
   ],
   "dependencies": {
     "@loadable/server": "5.16.7",
+    "@types/chart.js": "^2.9.41",
     "ajv": "8.12.0",
+    "chart.js": "^4.1.1",
     "compression": "1.8.1",
     "cors": "2.8.5",
     "date-fns": "4.1.0",
@@ -16,6 +18,7 @@
     "helmet": "8.1.0",
     "http-proxy-middleware": "3.0.5",
     "lru-cache": "11.1.0",
+    "react-chartjs-2": "^4.3.1",
     "react-scripts": "0.0.0"
   },
   "scripts": {
@@ -226,14 +229,7 @@
     ]
   },
   "resolutions": {
-    "chart.js": "^4.4.0",
-    "react-chartjs-2": "^5.2.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
-    "react-test-renderer": "18.3.1",
-    "@types/react-test-renderer": "18.3.0"
+    "chart.js": "^4.1.1"
   },
   "devDependencies": {
     "@babel/generator": "7.28.0",
@@ -297,7 +293,7 @@
     "pidusage": "^4.0.1",
     "prettier": "^3.5.3",
     "puppeteer": "^24.17.0",
-    "react-app-rewired": "^0.1.0",
+    "react-app-rewired": "^2.2.1",
     "react-i18next": "15.5.3",
     "react-test-renderer": "18.3.1",
     "source-map-explorer": "^2.5.3",

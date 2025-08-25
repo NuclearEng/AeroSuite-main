@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   AppBar,
@@ -16,10 +16,6 @@ import {
   Typography,
   Button,
   useTheme,
-  Avatar,
-  Menu,
-  MenuItem,
-  Badge,
   Container,
   BottomNavigation,
   BottomNavigationAction
@@ -31,13 +27,12 @@ import {
   Person as CustomerIcon,
   Assessment as ReportsIcon,
   Settings as SettingsIcon,
-  Notifications as NotificationsIcon,
-  AccountCircle,
   ChevronLeft as ChevronLeftIcon
 } from '@mui/icons-material';
 import useResponsive from '../../hooks/useResponsive';
 import useOfflineMode from '../../hooks/useOfflineMode';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import NotificationCenter from '../common/NotificationCenter';
+import InspectionNavigation from '../navigation/InspectionNavigation';
 
 const drawerWidth = 240;
 
@@ -49,41 +44,15 @@ const navItems = [
 
 const ResponsiveLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [userMenuAnchorEl, setUserMenuAnchorEl] = useState(null);
-  const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme();
-  const { isMobile, isTablet } = useResponsive();
+  const { isMobile } = useResponsive();
   const { isOffline } = useOfflineMode();
   const mainContentRef = useRef(null);
-  const isMobileMedia = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  const handleUserMenuOpen = (event) => {
-    setUserMenuAnchorEl(event.currentTarget);
-  };
-
-  const handleUserMenuClose = () => {
-    setUserMenuAnchorEl(null);
-  };
-
-  const handleNotificationsOpen = (event) => {
-    setNotificationsAnchorEl(event.currentTarget);
-  };
-
-  const handleNotificationsClose = () => {
-    setNotificationsAnchorEl(null);
-  };
-
-  const handleNavigation = (path) => {
-    navigate(path);
-    if (isMobile) {
-      setMobileOpen(false);
-    }
   };
 
   const menuItems = [
@@ -118,6 +87,7 @@ const ResponsiveLayout = () => {
             </ListItemButton>
           </ListItem>
         ))}
+        <InspectionNavigation />
       </List>
     </Box>
   );
@@ -182,7 +152,7 @@ const ResponsiveLayout = () => {
             AeroSuite
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
+            {menuItems.map((item) => (
               <Button
                 key={item.text}
                 component={Link}
@@ -196,6 +166,7 @@ const ResponsiveLayout = () => {
               </Button>
             ))}
           </Box>
+          <NotificationCenter />
         </Toolbar>
       </AppBar>
       
@@ -238,6 +209,7 @@ const ResponsiveLayout = () => {
           mt: '64px', // AppBar height
           mb: isMobile ? '56px' : 0 // Bottom navigation height on mobile
         }}
+        ref={mainContentRef}
       >
         <Container maxWidth="lg">
           <Outlet />
@@ -248,7 +220,8 @@ const ResponsiveLayout = () => {
         <BottomNavigation
           value={navItems.findIndex(item => item.path === location.pathname)}
           onChange={(event, newValue) => {
-            // Navigation is handled by the Link component
+            const path = navItems[newValue].path;
+            navigate(path);
           }}
           showLabels
           sx={{ 

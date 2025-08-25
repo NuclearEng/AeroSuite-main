@@ -1,60 +1,15 @@
 {
   "short_name": "AeroSuite",
-  "name": "AeroSuite - Aerospace Supply Chain Management",
+  "name": "AeroSuite Supply Chain",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "maskable_icon.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#1976d2",
-  "background_color": "#ffffff",
-  "orientation": "portrait-primary",
-  "description": "Aerospace supply chain management and inspection platform",
-  "dir": "ltr",
-  "lang": "en-US",
-  "scope": "/",
-  "categories": ["business", "productivity", "utilities"],
-  "screenshots": [
-    {
-      "src": "screenshot1.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Dashboard",
-      "short_name": "Dashboard",
-      "description": "View your dashboard",
-      "url": "/dashboard",
-      "icons": [{ "src": "dashboard_icon.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Suppliers",
-      "short_name": "Suppliers",
-      "description": "Manage suppliers",
-      "url": "/suppliers",
-      "icons": [{ "src": "suppliers_icon.png", "sizes": "192x192" }]
-    }
-  ]
+  "background_color": "#ffffff"
 }

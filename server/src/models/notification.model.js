@@ -57,8 +57,8 @@ const notificationSchema = new mongoose.Schema(
         const date = new Date();
         date.setDate(date.getDate() + 30);
         return date;
-      },
-      index: true
+      }
+      // index: true - handled by explicit index below
     }
   },
   {

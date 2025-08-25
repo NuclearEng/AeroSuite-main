@@ -1,16 +1,11 @@
 import React from 'react';
 import { 
   Grid, 
-  Paper, 
   Typography, 
   Box, 
   Card, 
   CardContent, 
-  CardHeader,
-  Divider,
-  LinearProgress,
   useTheme,
-  Container,
   Button
 } from '@mui/material';
 import {
@@ -23,11 +18,10 @@ import {
 } from '@mui/icons-material';
 import useResponsive from '../hooks/useResponsive';
 import useOfflineMode from '../hooks/useOfflineMode';
-import { VisuallyHidden } from '../components/common/AccessibilityHelpers';
 
 const Dashboard = () => {
   const { isMobile, isTablet } = useResponsive();
-  const { isOffline, isFeatureEnabled } = useOfflineMode();
+  const { isOffline } = useOfflineMode();
   const theme = useTheme();
 
   // Mock data for dashboard
@@ -186,14 +180,14 @@ const Dashboard = () => {
         </Box>
       )}
       
-      <Grid container spacing={isMobile ? 2 : 3}>
+      <Grid container spacing={isTablet ? 3 : 2}>
         {/* Summary Stats */}
         <Grid item xs={12} sm={6} lg={3}>
           <StatCard 
             title="Total Suppliers" 
             value={stats.suppliers.total} 
             subtext={`${stats.suppliers.active} active`}
-            icon={<BusinessIcon sx={{ color: 'primary.main', fontSize: isMobile ? 24 : 32 }} />}
+            icon={<BusinessIcon sx={{ color: theme.palette.primary.main, fontSize: isMobile ? 24 : 32 }} />}
             trend={stats.suppliers.trend}
             color="primary"
           />
@@ -203,7 +197,7 @@ const Dashboard = () => {
             title="Total Customers" 
             value={stats.customers.total} 
             subtext={`${stats.customers.active} active`}
-            icon={<PersonIcon sx={{ color: 'info.main', fontSize: isMobile ? 24 : 32 }} />}
+            icon={<PersonIcon sx={{ color: theme.palette.info.main, fontSize: isMobile ? 24 : 32 }} />}
             trend={stats.customers.trend}
             color="info"
           />
@@ -213,7 +207,7 @@ const Dashboard = () => {
             title="Inspections" 
             value={stats.inspections.total} 
             subtext={`${stats.inspections.completed} completed`}
-            icon={<AssignmentIcon sx={{ color: 'success.main', fontSize: isMobile ? 24 : 32 }} />}
+            icon={<AssignmentIcon sx={{ color: theme.palette.success.main, fontSize: isMobile ? 24 : 32 }} />}
             trend={stats.inspections.trend}
             color="success"
           />
@@ -223,7 +217,7 @@ const Dashboard = () => {
             title="Alerts" 
             value={stats.alerts.total} 
             subtext={`${stats.alerts.critical} critical`}
-            icon={<WarningIcon sx={{ color: 'warning.main', fontSize: isMobile ? 24 : 32 }} />}
+            icon={<WarningIcon sx={{ color: theme.palette.warning.main, fontSize: isMobile ? 24 : 32 }} />}
             trend={0}
             color="warning"
           />
@@ -251,6 +245,7 @@ const Dashboard = () => {
             </Card>
           </Grid>
         ))}
+        {/* Removed isFeatureEnabled('ai') && block */}
       </Grid>
     </Box>
   );

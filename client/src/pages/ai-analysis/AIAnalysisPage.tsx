@@ -55,6 +55,7 @@ import {
   AnalysisApiResponse,
   TimeSeriesPoint } from
 '../../types/analysis.types';
+import OpenAI from 'openai';
 
 /**
  * AI-assisted Data Analysis Page
@@ -84,11 +85,15 @@ const AIAnalysisPage: React.FC = () => {
   const [previewData, setPreviewData] = useState<any>(null);
   const [showPreview, setShowPreview] = useState<any>(false);
   const [validationErrors, setValidationErrors] = useState<any>([]);
+  const [query, setQuery] = useState('');
+  const [analysisResponse, setAnalysisResponse] = useState<any>(null);
 
   const DataArraySchema = z.array(z.object({}).passthrough());
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
   const SAMPLE_DATA = '[{"value":1},{"value":2},{"value":3}]';
+
+  const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY });
 
   // Handle tab change
   const handleTabChange = (_event: SyntheticEvent, newValue: number): void => {
@@ -492,6 +497,19 @@ const AIAnalysisPage: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
+  const handleQuery = async () => {
+    try {
+      const response = await openai.completions.create({
+        model: 'text-davinci-003',
+        prompt: `Analyze this data: ${JSON.stringify(analysis)} with query: ${query}`,
+        max_tokens: 500,
+      });
+      setAnalysisResponse(response.choices[0].text);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" gutterBottom>
@@ -774,6 +792,21 @@ const AIAnalysisPage: React.FC = () => {
           </Paper>
         </Grid>
       </Grid>
+      <Box sx={{ mt: 4 }}>
+        <TextField
+          fullWidth
+          label="Ask AI about your data"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <Button variant="contained" onClick={handleQuery}>Analyze</Button>
+        {analysisResponse && (
+          <Paper sx={{ p: 2, mt: 2 }}>
+            <Typography>{analysisResponse}</Typography>
+          </Paper>
+        )}
+      </Box>
     </Container>);
 
 };
